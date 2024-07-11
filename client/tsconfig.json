@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "module": "ES2020",
+    "target": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "useDefineForClassFields": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "types": ["jest"],
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "components/*": [
+        "src/components/*"
+      ],
+    },
+    "outDir": "./dist"
+  },
+  "include": ["src"],
+}
