@@ -8,3 +8,4 @@ dist
 .env
 
 *storybook.log
+.DS_Store
