@@ -7,11 +7,11 @@ export interface BottomSheetStyleProps {
 }
 
 export interface BottomSheetCustomProps {
-  isOpened: boolean;
+  isOpened?: boolean;
   onChangeOpen?: () => void;
   onChangeClose?: () => void;
   fixedButtonVariants?: ButtonVariants;
-  fixedButtonText: string;
+  fixedButtonText?: string;
 }
 
 export type BottomSheetOptionProps = BottomSheetStyleProps & BottomSheetCustomProps;
