@@ -7,5 +7,6 @@ dist
 
 .env
 
+storybook-static
 *storybook.log
 .DS_Store
