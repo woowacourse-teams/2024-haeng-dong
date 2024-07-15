@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 export default {
   mode: 'development',
-  entry: path.resolve(__dirname, 'lib/index.ts'),
+  entry: path.resolve(__dirname, './src/lib/index.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'HDesign.ts',
@@ -31,6 +31,18 @@ export default {
         test: /\.tsx?$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[hash].[ext]',
+              outputPath: 'assets/images',
+            },
+          },
+        ],
       },
     ],
   },

@@ -1,13 +1,13 @@
 {
   "name": "haengdong-design",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "type": "module",
   "scripts": {
     "start": "webpack serve ",
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "storybook": "storybook dev -p 6006",
-    "lint": "eslint 'lib/**/*.{js,jsx,ts,tsx}'",
+    "lint": "eslint 'src/lib/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --write 'lib/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "build-storybook": "storybook build"
   },
@@ -39,6 +39,7 @@
     "eslint-plugin-react": "^7.34.4",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-storybook": "^0.8.0",
+    "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "globals": "^15.8.0",
     "html-loader": "^5.0.0",

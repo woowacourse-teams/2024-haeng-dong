@@ -1,5 +1,5 @@
 import {css} from '@emotion/react';
-import {Theme} from 'lib/theme/theme.type';
+import {Theme} from '../../theme/theme.type';
 
 export const titleContainerStyle = css({
   display: 'flex',

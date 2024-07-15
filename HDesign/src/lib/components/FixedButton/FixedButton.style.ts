@@ -1,5 +1,5 @@
 import {css} from '@emotion/react';
-import {Theme} from 'lib/theme/theme.type';
+import {Theme} from '../../theme/theme.type';
 import {ButtonVariants} from '../Button/Button.type';
 import {FixedButtonStyleProps} from './FixedButton.type';
 

@@ -1,4 +1,4 @@
-import {Theme} from 'lib/theme/theme.type';
+import {Theme} from '../../theme/theme.type';
 import {ComponentPropsWithoutRef} from 'react';
 import {ButtonVariants} from '../Button/Button.type';
 
