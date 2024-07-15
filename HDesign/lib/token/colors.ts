@@ -33,6 +33,7 @@ export type ColorTokens = Record<string, Color>;
 // TODO: (@soha) 대괄호 사용에 대해 논의
 export const COLORS: ColorTokens = {
   white: PRIMITIVE_COLORS.white,
+  gray: PRIMITIVE_COLORS.gray[400],
   black: PRIMITIVE_COLORS.gray[700],
   primary: PRIMITIVE_COLORS.purple[300],
   onPrimary: PRIMITIVE_COLORS.white,
@@ -40,4 +41,5 @@ export const COLORS: ColorTokens = {
   onSecondary: PRIMITIVE_COLORS.purple[600],
   tertiary: PRIMITIVE_COLORS.gray[200],
   onTertiary: PRIMITIVE_COLORS.gray[700],
+  grayContainer: PRIMITIVE_COLORS.gray[100],
 };
