@@ -1,4 +1,4 @@
-import {Theme} from 'lib/theme/theme.type';
+import {Theme} from '../../theme/theme.type';
 
 export type ButtonSize = 'small' | 'medium' | 'large';
 export type ButtonVariants = 'primary' | 'secondary' | 'tertiary';

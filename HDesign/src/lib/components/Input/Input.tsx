@@ -3,7 +3,7 @@ import React, {forwardRef, useImperativeHandle, useRef} from 'react';
 import {InputProps} from './Input.type';
 import {useTheme} from '../../theme/HDesignProvider';
 import {inputBoxStyle, inputStyle} from './Input.style';
-import inputDelete from '../../assets/inputDelete.svg';
+import inputDelete from '../../../assets/inputDelete.svg';
 import {useInput} from './useInput';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(

@@ -7,13 +7,14 @@ import {useBottomSheet} from './useBottomSheet';
 import FixedButton from '../FixedButton/FixedButton';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
-  children,
   fixedButtonVariants = 'primary',
+  isOpened = false,
+  children,
   fixedButtonText,
   ...props
 }: BottomSheetProps) => {
   const {theme} = useTheme();
-  const {opened, handleClose} = useBottomSheet(props);
+  const {opened, handleClose} = useBottomSheet({isOpened, ...props});
 
   return createPortal(
     <>

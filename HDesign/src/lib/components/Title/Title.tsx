@@ -8,7 +8,7 @@ interface TitleProps {
   description?: string;
 }
 
-export const Title = ({title, description}: TitleProps) => {
+export const Title: React.FC<TitleProps> = ({title, description}: TitleProps) => {
   const {theme} = useTheme();
   return (
     <div css={titleContainerStyle}>

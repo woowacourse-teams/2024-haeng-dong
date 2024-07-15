@@ -1,4 +1,4 @@
-import {Theme} from 'lib/theme/theme.type';
+import {Theme} from '../../theme/theme.type';
 import {ComponentPropsWithoutRef} from 'react';
 import {ButtonVariants} from '../Button/Button.type';
 
@@ -7,11 +7,11 @@ export interface BottomSheetStyleProps {
 }
 
 export interface BottomSheetCustomProps {
-  isOpened: boolean;
+  isOpened?: boolean;
   onChangeOpen?: () => void;
   onChangeClose?: () => void;
   fixedButtonVariants?: ButtonVariants;
-  fixedButtonText: string;
+  fixedButtonText?: string;
 }
 
 export type BottomSheetOptionProps = BottomSheetStyleProps & BottomSheetCustomProps;

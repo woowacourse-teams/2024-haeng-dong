@@ -9,12 +9,16 @@
     "skipLibCheck": true,
 
     "moduleResolution": "bundler",
+    // "allowImportingTsExtensions": true,
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-
+    "declaration": true,
+    "declarationDir": "./dist",
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -31,11 +35,10 @@
     "alwaysStrict": true,
     "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
-    "jsxImportSource": "@emotion/react",
 
     "baseUrl": "./",
     "paths": {}
   },
-  "include": ["lib"],
+  "include": ["src/lib/**/*.tsx", "src/lib/**/*.ts"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

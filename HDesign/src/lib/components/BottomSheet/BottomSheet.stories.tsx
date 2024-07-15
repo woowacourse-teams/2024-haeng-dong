@@ -34,12 +34,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  render: ({...props}) => {
+  args: {
+    fixedButtonVariants: 'primary',
+    fixedButtonText: '하단 고정 버튼이에요',
+  },
+  render: ({...args}) => {
     const [isOpened, setIsOpened] = useState(false);
     return (
       <>
         <Button variants="tertiary" children="show modal" onClick={() => setIsOpened(true)} />
-        <BottomSheet {...props} isOpened={isOpened} onChangeClose={() => setIsOpened(false)} />
+        <BottomSheet {...args} isOpened={isOpened} onChangeClose={() => setIsOpened(false)} />
       </>
     );
   },
