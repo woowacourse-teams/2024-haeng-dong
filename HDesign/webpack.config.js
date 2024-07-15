@@ -1,7 +1,6 @@
 import path from 'path';
 import {fileURLToPath} from 'url';
 
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import {ModifySourcePlugin, ConcatOperation} from 'modify-source-webpack-plugin';
 
@@ -10,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 export default {
   mode: 'development',
-  entry: './lib/index.tsx',
+  entry: './lib/index.ts',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
@@ -28,9 +27,6 @@ export default {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './index.html',
-    }),
     new ForkTsCheckerWebpackPlugin(),
     new ModifySourcePlugin({
       rules: [
