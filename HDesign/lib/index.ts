@@ -1,5 +1,3 @@
-import Button from './components/Button/Button';
-import Text from './components/Text/Text';
-import {HDesignProvider} from './theme/HDesignProvider';
-
-export {Button, Text, HDesignProvider};
+export {default as Button} from './components/Button/Button';
+export {default as Text} from './components/Text/Text';
+export {HDesignProvider} from './theme/HDesignProvider';

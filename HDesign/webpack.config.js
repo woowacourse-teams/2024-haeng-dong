@@ -9,13 +9,21 @@ const __dirname = path.dirname(__filename);
 
 export default {
   mode: 'development',
-  entry: './lib/index.ts',
+  entry: path.resolve(__dirname, 'lib/index.ts'),
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'HDesign.ts',
+    library: {
+      name: 'HDesign',
+      type: 'umd',
+    },
+    globalObject: 'this',
+  },
+  externals: {
+    react: 'React',
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  },
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.min.js',
   },
   module: {
     rules: [

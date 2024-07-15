@@ -13,6 +13,7 @@ export const buttonStyle = (props: Required<ButtonStyleProps>) => {
 const getButtonDefaultStyle = (theme: Theme) =>
   css({
     display: 'flex',
+    justifyContent: 'center',
     lineHeight: '1',
 
     '&:disabled': {

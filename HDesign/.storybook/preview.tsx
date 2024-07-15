@@ -11,6 +11,14 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    viewport: {
+      defaultViewport: {
+        styles: {
+          width: '375px',
+          height: '812px',
+        },
+      },
+    },
   },
   decorators: [
     Story => (

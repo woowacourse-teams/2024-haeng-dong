@@ -34,10 +34,8 @@
     "jsxImportSource": "@emotion/react",
 
     "baseUrl": "./",
-    "paths": {
-      "components/*": ["lib/components/*"]
-    },
-    "outDir": "./dist"
+    "paths": {}
   },
-  "include": ["lib"]
+  "include": ["lib"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
