@@ -34,6 +34,7 @@ export type ColorTokens = Record<string, Color>;
 export const COLORS: ColorTokens = {
   white: PRIMITIVE_COLORS.white,
   gray: PRIMITIVE_COLORS.gray[400],
+  darkGray: PRIMITIVE_COLORS.gray[500],
   black: PRIMITIVE_COLORS.gray[700],
   primary: PRIMITIVE_COLORS.purple[300],
   onPrimary: PRIMITIVE_COLORS.white,

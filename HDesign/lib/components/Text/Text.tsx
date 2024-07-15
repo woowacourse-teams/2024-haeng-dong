@@ -9,7 +9,7 @@ export interface TextProps extends ComponentPropsWithoutRef<'p'> {
   size?: Size | 'bodyBold' | 'smallBodyBold' | 'captionBold';
 }
 
-const Text: React.FC = ({size = 'body', children, ...attributes}: TextProps) => {
+const Text: React.FC<TextProps> = ({size = 'body', children, ...attributes}: TextProps) => {
   return (
     <p css={getSizeStyling(size)} {...attributes}>
       {children}
