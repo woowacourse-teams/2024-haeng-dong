@@ -8,40 +8,45 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default {
-	mode: 'development',
-	entry: './src/index.tsx',
-	resolve: {
-		extensions: ['.js', '.jsx', '.ts', '.tsx'],
-	},
-	output: {
-		path: path.join(__dirname, 'dist'),
-		filename: 'bundle.min.js',
-	},
-	module: {
-		rules: [
-			{
-				test: /\.tsx?$/,
-				loader: 'ts-loader',
-				exclude: /node_modules/,
-			},
-		],
-	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: './index.html',
-		}),
-		new ForkTsCheckerWebpackPlugin(),
-		new ModifySourcePlugin({
-			rules: [
-				{
-					test: /\.tsx$/i,
-					operations: [new ConcatOperation('start', '/** @jsxImportSource @emotion/react */\n\n')],
-				},
-			],
-		}),
-	],
-	devServer: {
-		port: 3000,
-		hot: true,
-	},
+  mode: 'development',
+  entry: './src/index.tsx',
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.min.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './index.html',
+    }),
+    new ForkTsCheckerWebpackPlugin(),
+    new ModifySourcePlugin({
+      rules: [
+        {
+          test: /\.tsx$/i,
+          operations: [new ConcatOperation('start', '/** @jsxImportSource @emotion/react */\n\n')],
+        },
+      ],
+    }),
+  ],
+  devServer: {
+    port: 3000,
+    hot: true,
+    historyApiFallback: true,
+  },
 };
