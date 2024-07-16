@@ -24,6 +24,7 @@ export const GlobalStyle = css`
   a,
   button {
     cursor: revert;
+    line-height: 0;
   }
 
   /* Remove list styles (bullets/numbers) */
@@ -32,12 +33,6 @@ export const GlobalStyle = css`
   menu,
   summary {
     list-style: none;
-  }
-
-  /* For images to not be able to exceed their container */
-  img {
-    max-inline-size: 100%;
-    max-block-size: 100%;
   }
 
   /* Removes spacing between cells in tables */

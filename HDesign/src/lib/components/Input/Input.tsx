@@ -3,7 +3,6 @@ import React, {forwardRef, useImperativeHandle, useRef} from 'react';
 import {InputProps} from './Input.type';
 import {useTheme} from '../../theme/HDesignProvider';
 import {inputBoxStyle, inputStyle} from './Input.style';
-import inputDelete from '../../../assets/inputDelete.svg';
 import {useInput} from './useInput';
 import IconButton from '../IconButton/IconButton';
 
@@ -21,7 +20,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
   return (
     <div css={inputBoxStyle(theme)}>
       <input css={inputStyle(theme)} ref={inputRef} value={value} onChange={handleChange} {...htmlProps} />
-      {value ? <IconButton iconType="inputDelete" onClick={handleClickDelete} /> : null}
+      {value && <IconButton iconType="inputDelete" onClick={handleClickDelete} />}
     </div>
   );
 });

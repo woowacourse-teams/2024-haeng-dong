@@ -13,7 +13,11 @@ export const IconButton: React.FC<IconButtonProps> = forwardRef<HTMLButtonElemen
   {iconType, ...htmlProps}: IconButtonProps,
   ref,
 ) {
-  return <button ref={ref} {...htmlProps} children={ICON[iconType]} />;
+  return (
+    <button ref={ref} {...htmlProps}>
+      {ICON[iconType]}
+    </button>
+  );
 });
 
 export default IconButton;
