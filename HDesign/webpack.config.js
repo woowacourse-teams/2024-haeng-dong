@@ -11,12 +11,10 @@ export default {
   mode: 'development',
   entry: path.resolve(__dirname, './src/lib/index.ts'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'HDesign.ts',
-    library: {
-      name: 'HDesign',
-      type: 'umd',
-    },
+    path: path.resolve(__dirname, './dist'),
+    filename: 'index.js',
+    library: 'haengdong-design',
+    libraryTarget: 'umd',
     globalObject: 'this',
   },
   externals: {

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "webpack serve ",
-    "build": "webpack --mode development",
+    "build": "tsc && webpack --mode development",
     "storybook": "storybook dev -p 6006",
     "lint": "eslint 'src/lib/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --write 'lib/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
