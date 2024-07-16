@@ -5,6 +5,7 @@ import {useTheme} from '../../theme/HDesignProvider';
 import {inputBoxStyle, inputStyle} from './Input.style';
 import inputDelete from '../../../assets/inputDelete.svg';
 import {useInput} from './useInput';
+import IconButton from '../IconButton/IconButton';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
   {value: propsValue, onChange, ...htmlProps}: InputProps,
@@ -20,7 +21,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
   return (
     <div css={inputBoxStyle(theme)}>
       <input css={inputStyle(theme)} ref={inputRef} value={value} onChange={handleChange} {...htmlProps} />
-      {value ? <img src={inputDelete} onClick={handleClickDelete} /> : null}
+      {value ? <IconButton iconType="inputDelete" onClick={handleClickDelete} /> : null}
     </div>
   );
 });

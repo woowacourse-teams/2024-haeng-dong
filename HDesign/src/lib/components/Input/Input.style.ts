@@ -5,7 +5,7 @@ export const inputBoxStyle = (theme: Theme) =>
   css({
     display: 'flex',
     width: '100%',
-    justifyContent: 'space-between',
+    alignContent: 'space-between',
     alignItems: 'center',
     padding: '0.75rem 1rem',
     borderRadius: '1rem',
