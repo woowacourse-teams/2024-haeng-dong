@@ -111,6 +111,5 @@ export const GlobalStyle = css`
   #root {
     display: flex;
     justify-content: center;
-    background-color: #eeeeee;
   }
 `;
