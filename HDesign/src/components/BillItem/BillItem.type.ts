@@ -1,8 +1,8 @@
 export interface BillItemStyleProps {}
 
 export interface BillItemCustomProps {
-  name: string;
-  price: number;
+  name?: string;
+  price?: number;
 }
 
 export type BillItemOptionProps = BillItemStyleProps & BillItemCustomProps;

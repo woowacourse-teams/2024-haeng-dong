@@ -43,4 +43,5 @@ export const COLORS: ColorTokens = {
   tertiary: PRIMITIVE_COLORS.gray[200],
   onTertiary: PRIMITIVE_COLORS.gray[700],
   grayContainer: PRIMITIVE_COLORS.gray[100],
+  lightGrayContainer: PRIMITIVE_COLORS.gray[50],
 };

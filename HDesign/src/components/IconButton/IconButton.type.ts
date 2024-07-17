@@ -1,4 +1,4 @@
-type IconButtonType = 'inputDelete' | 'plus';
+type IconButtonType = 'inputDelete' | 'plus' | 'buljusa';
 
 export interface IconButtonStyleProps {}
 

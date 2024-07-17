@@ -13,7 +13,7 @@ const meta = {
     iconType: {
       description: '',
       control: {type: 'select'},
-      options: ['plus', 'inputDelete'],
+      options: ['plus', 'inputDelete', 'buljusa'],
     },
   },
   args: {
