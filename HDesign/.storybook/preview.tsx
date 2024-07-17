@@ -19,6 +19,15 @@ const preview: Preview = {
         },
       },
     },
+    backgrounds: {
+      default: 'gray',
+      values: [
+        {
+          name: 'gray',
+          value: '#f3f3f3',
+        },
+      ],
+    },
   },
   decorators: [
     Story => (
