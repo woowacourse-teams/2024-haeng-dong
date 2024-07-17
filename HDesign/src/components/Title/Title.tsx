@@ -3,7 +3,8 @@ import Text from '@components/Text/Text';
 
 import {useTheme} from '@theme/HDesignProvider';
 
-import {descriptionStyle, titleContainerStyle, titleStyle} from './Title.style';
+import {descriptionStyle, titleContainerStyle, titleStyle} from '@components/Title/Title.style';
+import {TitleProps} from '@components/Title/Title.type';
 
 export const Title: React.FC<TitleProps> = ({title, description}: TitleProps) => {
   const {theme} = useTheme();
