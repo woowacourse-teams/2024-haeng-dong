@@ -10,16 +10,23 @@ export type PurchaseInformation = {
   price: number;
 };
 
+type ParticipantType = {
+  name: string;
+  type: '늦참' | '탈주';
+};
+
 const Event = () => {
   const {eventId} = useParams();
   const [open, setOpen] = useState(false);
   const [participants, setParticipants] = useState<string[]>([]);
   const [order, setOrder] = useState(0);
 
-  const [purchaseInformation, setPurchaseInformation] = useState<PurchaseInformation>({
-    name: '',
-    price: 0,
-  });
+  const [purchaseInformation, setPurchaseInformation] = useState<(PurchaseInformation | ParticipantType)[]>([
+    {
+      name: '',
+      price: 0,
+    } as PurchaseInformation,
+  ]);
 
   const setParticipantsAndModalClose = (participants: string[]) => {
     setParticipants(participants);
@@ -37,14 +44,26 @@ const Event = () => {
             <h4>{`${order}차`}</h4>
             <p>{`${participants.length}명`}</p>
           </header>
-          <section>
-            <h5>{purchaseInformation.name}</h5>
-            <p>{purchaseInformation.price.toLocaleString()}</p>
-          </section>
-          <footer css={orderFooterStyle}>
+          {purchaseInformation.map((information, index) => (
+            <section key={index} style={{padding: '10px'}}>
+              {'type' in information ? (
+                <>
+                  <h5>
+                    {information.name} {information.type}입니다.
+                  </h5>
+                </>
+              ) : (
+                <>
+                  <h5>{information.name}</h5>
+                  <p>{information.price.toLocaleString()}원</p>
+                </>
+              )}
+            </section>
+          ))}
+          {/* <footer css={orderFooterStyle}>
             <h6>총액</h6>
-            <p>{purchaseInformation.price.toLocaleString()}</p>
-          </footer>
+            <p>{purchaseInformation.reduce((total, info) => 'price' in info ? total + info.price : total, 0).toLocaleString()}원</p>
+          </footer> */}
         </article>
       )}
       <button onClick={() => setOpen(prev => !prev)}>
