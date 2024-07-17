@@ -1,4 +1,3 @@
-import {Theme} from '@theme/theme.type';
 export interface TitleStyleProps {}
 
 export interface TitleCustomProps {

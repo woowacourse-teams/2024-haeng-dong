@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import Text from '@components/Text/Text';
-
-import {useTheme} from '@theme/HDesignProvider';
-
 import {descriptionStyle, titleContainerStyle, titleStyle} from '@components/Title/Title.style';
 import {TitleProps} from '@components/Title/Title.type';
+
+import {useTheme} from '@theme/HDesignProvider';
 
 export const Title: React.FC<TitleProps> = ({title, description}: TitleProps) => {
   const {theme} = useTheme();
