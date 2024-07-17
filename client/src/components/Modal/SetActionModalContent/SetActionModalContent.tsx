@@ -11,8 +11,8 @@ interface SetActionModalContentProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   participants: string[];
   setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
-  purchaseInformation: PurchaseInformation;
-  setPurchaseInformation: React.Dispatch<React.SetStateAction<PurchaseInformation>>;
+  purchaseInformation: any;
+  setPurchaseInformation: any;
 }
 
 const SetActionModalContent = ({
@@ -35,7 +35,11 @@ const SetActionModalContent = ({
       </div>
 
       {actionType === '지출' && (
-        <SetPurchase setPurchaseInformation={setPurchaseInformation} purchaseInformation={purchaseInformation} />
+        <SetPurchase
+          setOpen={setOpen}
+          setPurchaseInformation={setPurchaseInformation}
+          purchaseInformation={purchaseInformation}
+        />
       )}
       {actionType === '인원' && (
         <UpdateParticipants
@@ -43,6 +47,8 @@ const SetActionModalContent = ({
           participantType={participantType}
           participants={participants}
           setParticipants={setParticipants}
+          setPurchaseInformation={setPurchaseInformation}
+          purchaseInformation={purchaseInformation}
         />
       )}
     </>

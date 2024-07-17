@@ -5,9 +5,18 @@ interface UpdateParticipantsProps {
   participantType: string;
   participants: string[];
   setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
+  setPurchaseInformation: any;
+  purchaseInformation: any;
 }
 
-const UpdateParticipants = ({setOpen, participantType, participants, setParticipants}: UpdateParticipantsProps) => {
+const UpdateParticipants = ({
+  setPurchaseInformation,
+  purchaseInformation,
+  setOpen,
+  participantType,
+  participants,
+  setParticipants,
+}: UpdateParticipantsProps) => {
   const [name, setName] = useState('');
 
   const updateParticipant = () => {
@@ -18,6 +27,7 @@ const UpdateParticipants = ({setOpen, participantType, participants, setParticip
       }
 
       setParticipants([...participants, name]);
+      setPurchaseInformation([...purchaseInformation, {name, type: '늦참'}]);
     } else if (participantType === '탈주') {
       if (!participants.includes(name)) {
         alert('그런 사용자는 없습니다. 올바른 이름을 입력해주세요.');
@@ -25,6 +35,7 @@ const UpdateParticipants = ({setOpen, participantType, participants, setParticip
       }
 
       setParticipants(prev => prev.filter(participant => participant !== name));
+      setPurchaseInformation([...purchaseInformation, {name, type: '탈주'}]);
     }
 
     setName('');
