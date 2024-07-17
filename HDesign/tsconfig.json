@@ -1,44 +1,29 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
-    "module": "ES2020",
-    "target": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "useDefineForClassFields": true,
-    "removeComments": true,
+    "outDir": "./dist",
+    "target": "ES5",
     "skipLibCheck": true,
-
-    "moduleResolution": "bundler",
-    // "allowImportingTsExtensions": true,
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
     "declaration": true,
     "declarationDir": "./dist",
-    "emitDeclarationOnly": true,
-    "outDir": "./dist",
-    "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    // "types": ["jest"],
     "esModuleInterop": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
-
-    "baseUrl": "./",
-    "paths": {}
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@token/*": ["src/token/*"],
+      "@theme/*": ["src/theme/*"],
+      "@assets/*": ["src/assets/*"]
+    },
+    "jsxImportSource": "@emotion/react",
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/lib/**/*.tsx", "src/lib/**/*.ts"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+  "include": ["src"],
+  "exclude": ["./node_modules", "dist"]
 }

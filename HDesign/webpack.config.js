@@ -1,62 +1,59 @@
-import path from 'path';
-import {fileURLToPath} from 'url';
+const path = require('path');
+const webpack = require('webpack');
 
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import {ModifySourcePlugin, ConcatOperation} from 'modify-source-webpack-plugin';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-export default {
-  mode: 'development',
-  entry: path.resolve(__dirname, './src/lib/index.ts'),
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'index.js',
-    library: 'haengdong-design',
-    libraryTarget: 'umd',
-    globalObject: 'this',
-  },
-  externals: {
-    react: 'React',
-  },
+module.exports = {
+  mode: 'production',
+  entry: './src/index.tsx',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
+
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
+        use: ['ts-loader'],
       },
       {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[hash].[ext]',
-              outputPath: 'assets/images',
-            },
-          },
-        ],
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.style.js|style.ts$/,
+        use: ['url-loader'],
       },
     ],
   },
-  plugins: [
-    new ForkTsCheckerWebpackPlugin(),
-    new ModifySourcePlugin({
-      rules: [
-        {
-          test: /\.tsx$/i,
-          operations: [new ConcatOperation('start', '/** @jsxImportSource @emotion/react */\n\n')],
-        },
-      ],
-    }),
-  ],
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'bundle.js',
+  },
+
   devServer: {
+    historyApiFallback: true,
     port: 3000,
     hot: true,
+    static: path.resolve(__dirname, 'dist'),
   },
+
+  resolve: {
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@assets': path.resolve(__dirname, './src/assets'),
+      '@token': path.resolve(__dirname, './src/token'),
+      '@theme': path.resolve(__dirname, './src/theme'),
+    },
+  },
+
+  plugins: [
+    new webpack.ProvidePlugin({
+      React: 'react',
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 };

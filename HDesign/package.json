@@ -1,14 +1,19 @@
 {
   "name": "haengdong-design",
-  "version": "0.0.0",
+  "version": "0.0.27",
   "description": "",
-  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "webpack serve ",
-    "build": "tsc && webpack --mode development",
+    "build": "rm -rf dist && mkdir dist && tsc && cp -r ./src/assets ./dist && tsc-alias",
     "storybook": "storybook dev -p 6006",
-    "lint": "eslint 'src/lib/**/*.{js,jsx,ts,tsx}'",
-    "format": "prettier --write 'lib/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "format": "prettier --write {src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "build-storybook": "storybook build"
   },
   "keywords": [],
@@ -27,6 +32,7 @@
     "@storybook/react": "^8.2.2",
     "@storybook/react-webpack5": "^8.2.3",
     "@storybook/test": "^8.2.2",
+    "@svgr/webpack": "^8.1.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
@@ -40,13 +46,11 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-storybook": "^0.8.0",
     "file-loader": "^6.2.0",
-    "fork-ts-checker-webpack-plugin": "^9.0.2",
     "globals": "^15.8.0",
-    "html-loader": "^5.0.0",
-    "html-webpack-plugin": "^5.6.0",
     "prettier": "3.3.2",
     "storybook": "^8.2.2",
     "ts-loader": "^9.5.1",
+    "tsc-alias": "^1.8.10",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.0",
     "webpack": "^5.93.0",
@@ -55,7 +59,6 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
-    "modify-source-webpack-plugin": "^4.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1"

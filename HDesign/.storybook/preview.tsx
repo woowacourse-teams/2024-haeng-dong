@@ -1,7 +1,7 @@
 import React from 'react';
 
 import type {Preview} from '@storybook/react';
-import {HDesignProvider} from '../src/lib/theme/HDesignProvider';
+import {HDesignProvider} from '../src/theme/HDesignProvider';
 
 const preview: Preview = {
   parameters: {
