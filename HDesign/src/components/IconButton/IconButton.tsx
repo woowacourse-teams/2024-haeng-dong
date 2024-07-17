@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import {forwardRef} from 'react';
 
+import {IconButtonProps} from '@components/IconButton/IconButton.type';
+
 import InputDelete from '@assets/inputDelete.svg';
 import Plus from '@assets/plus.svg';
-
-import {IconButtonProps} from '@components/IconButton/IconButton.type';
 
 const ICON = {
   inputDelete: <InputDelete />,

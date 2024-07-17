@@ -4,7 +4,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {useState} from 'react';
 
 import Button from '@components/Button/Button';
-
 import BottomSheet from '@components/BottomSheet/BottomSheet';
 
 const meta = {

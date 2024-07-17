@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import {useTheme} from '@theme/HDesignProvider';
 import Text from '@components/Text/Text';
+
+import {useTheme} from '@theme/HDesignProvider';
 
 import {descriptionStyle, titleContainerStyle, titleStyle} from './Title.style';
 

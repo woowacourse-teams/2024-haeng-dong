@@ -1,6 +1,8 @@
-import {Theme} from '@theme/theme.type';
 import {ComponentPropsWithoutRef} from 'react';
+
 import {ButtonVariants} from '@components/Button/Button.type';
+
+import {Theme} from '@theme/theme.type';
 
 export interface BottomSheetStyleProps {
   theme?: Theme;

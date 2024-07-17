@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import {forwardRef} from 'react';
 
-import {useTheme} from '@theme/HDesignProvider';
-
 import {fixedButtonContainerStyle, fixedButtonStyle} from '@components/FixedButton/FixedButton.style';
 import {FixedButtonProps} from '@components/FixedButton/FixedButton.type';
+
+import {useTheme} from '@theme/HDesignProvider';
 
 export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElement, FixedButtonProps>(function Button(
   {variants = 'primary', ...htmlProps}: FixedButtonProps,

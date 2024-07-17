@@ -1,5 +1,6 @@
-import {Theme} from '@theme/theme.type';
 import {ButtonVariants} from '@components/Button/Button.type';
+
+import {Theme} from '@theme/theme.type';
 
 export interface FixedButtonStyleProps {
   variants?: ButtonVariants;

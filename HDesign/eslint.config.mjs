@@ -85,21 +85,6 @@ export default [
               position: 'before',
             },
             {
-              pattern: '@hooks/*',
-              group: 'internal',
-              position: 'after',
-            },
-            {
-              pattern: '@apis/*',
-              group: 'internal',
-              position: 'after',
-            },
-            {
-              pattern: '@pages/*',
-              group: 'internal',
-              position: 'after',
-            },
-            {
               pattern: '@components/*',
               group: 'internal',
               position: 'after',
@@ -110,12 +95,12 @@ export default [
               position: 'after',
             },
             {
-              pattern: '@utils/*',
+              pattern: '@theme/*',
               group: 'internal',
               position: 'after',
             },
             {
-              pattern: '@constants/*',
+              pattern: '@token/*',
               group: 'internal',
               position: 'after',
             },

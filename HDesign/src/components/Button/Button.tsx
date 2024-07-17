@@ -2,10 +2,10 @@
 
 import React, {forwardRef} from 'react';
 
-import {useTheme} from '@theme/HDesignProvider';
-
 import {buttonStyle} from '@components/Button/Button.style';
 import {ButtonProps} from '@components/Button/Button.type';
+
+import {useTheme} from '@theme/HDesignProvider';
 
 export const Button: React.FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   {variants = 'primary', size = 'medium', ...htmlProps}: ButtonProps,

@@ -1,7 +1,9 @@
 import {css} from '@emotion/react';
-import {Theme} from '@theme/theme.type';
+
 import {ButtonVariants} from '@components/Button/Button.type';
 import {FixedButtonStyleProps} from '@components/FixedButton/FixedButton.type';
+
+import {Theme} from '@theme/theme.type';
 
 export const fixedButtonContainerStyle = (theme: Theme) =>
   css({
