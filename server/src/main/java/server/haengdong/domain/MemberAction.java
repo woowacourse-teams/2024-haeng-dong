@@ -37,6 +37,14 @@ public class MemberAction {
         this.memberGroupId = memberGroupId;
     }
 
+    public boolean isSameName(String name) {
+        return memberName.equals(name);
+    }
+
+    public boolean isAvailable(MemberActionStatus memberActionStatus) {
+        return status.isOpposite(memberActionStatus);
+    }
+
     public void setAction(Action action) {
         this.action = action;
     }

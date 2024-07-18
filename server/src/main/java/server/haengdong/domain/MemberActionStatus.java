@@ -13,4 +13,12 @@ public enum MemberActionStatus {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid status: " + status));
     }
+
+    public static boolean isMemberStatusIn(MemberActionStatus memberActionStatus) {
+        return IN == memberActionStatus;
+    }
+
+    public boolean isOpposite(MemberActionStatus memberActionStatus) {
+        return this != memberActionStatus;
+    }
 }

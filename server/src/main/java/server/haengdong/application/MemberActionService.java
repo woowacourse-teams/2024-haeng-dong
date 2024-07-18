@@ -57,10 +57,11 @@ public class MemberActionService {
         MemberActionStatus memberActionStatus = MemberActionStatus.of(status);
         for (int i = actions.size() - 1; i >= 0; i--) {
             MemberAction action = actions.get(i);
-            if (action.getMemberName().equals(name)) {
-                return action.getStatus() != memberActionStatus;
+            if (action.isSameName(name)) {
+                return action.isAvailable(memberActionStatus);
             }
         }
-        return memberActionStatus == MemberActionStatus.IN;
+
+        return MemberActionStatus.isMemberStatusIn(memberActionStatus);
     }
 }
