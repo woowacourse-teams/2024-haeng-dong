@@ -1,4 +1,5 @@
 import {useState} from 'react';
+
 import {buttonStyle, inputStyle, plusButtonStyle} from './SetInitialParticipants.style';
 
 interface SetInitialParticipantsProps {

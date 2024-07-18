@@ -1,5 +1,6 @@
-import {buttonStyle, switchStyle} from './Switch.style';
 import React from 'react';
+
+import {buttonStyle, switchStyle} from './Switch.style';
 
 interface SwitchProps {
   buttonList: string[];
