@@ -35,10 +35,10 @@ export const StepItem: React.FC<StepItemCustomProps> = ({
         <BillItem {...props} />
       ))}
       <div css={footerStyle}>
-        <Text css={totalTitleStyle(theme)} size="bodyBold">
+        <Text css={totalTitleStyle(theme)} size="captionBold">
           총액
         </Text>
-        <Text css={totalAmountStyle(theme)} size="body">
+        <Text css={totalAmountStyle(theme)} size="caption">
           {bills.reduce((acc, prev) => acc + (prev.price ?? 0), 0).toLocaleString('ko-kr')} 원
         </Text>
       </div>

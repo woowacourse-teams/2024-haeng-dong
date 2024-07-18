@@ -41,5 +41,5 @@ export const totalTitleStyle = (theme: Theme) =>
 
 export const totalAmountStyle = (theme: Theme) =>
   css({
-    color: theme.colors.onSecondary,
+    color: theme.colors.gray,
   });

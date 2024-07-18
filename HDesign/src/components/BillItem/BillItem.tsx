@@ -15,11 +15,11 @@ export const BillItem: React.FC<BillItemProps> = ({name = '', price = 0, ...html
     <div css={billItemStyle(theme)} {...htmlProps}>
       <div css={prefixStyle}>
         <IconButton iconType="buljusa" />
-        <Text css={textStyle(theme)} size="captionBold">
+        <Text css={textStyle(theme)} size="bodyBold">
           {name}
         </Text>
       </div>
-      <Text css={textStyle(theme)} size="caption">
+      <Text css={textStyle(theme)} size="body">
         {price.toLocaleString('ko-kr')} 원
       </Text>
     </div>
