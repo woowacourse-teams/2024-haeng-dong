@@ -1,12 +1,13 @@
 package server.haengdong.persistence;
 
-import java.util.Optional;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import server.haengdong.domain.BillAction;
 import server.haengdong.domain.Event;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event, Long> {
+public interface BillActionRepository extends JpaRepository<BillAction, Long> {
 
-    Optional<Event> findByToken(String token);
+    List<BillAction> findByAction_Event(Event event);
 }

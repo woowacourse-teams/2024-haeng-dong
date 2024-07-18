@@ -1,12 +1,11 @@
 package server.haengdong.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
-import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +19,20 @@ public class BillAction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Action action;
 
     private String title;
 
-    private BigDecimal price;
+    private Long price;
+
+    public BillAction(Action action, String title, Long price) {
+        this.action = action;
+        this.title = title;
+        this.price = price;
+    }
+
+    public Long getSequence() {
+        return action.getSequence();
+    }
 }

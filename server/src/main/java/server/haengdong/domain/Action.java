@@ -23,4 +23,9 @@ public class Action {
     private Event event;
 
     private Long sequence;
+
+    public Action(Event event, Long sequence) {
+        this.event = event;
+        this.sequence = sequence;
+    }
 }
