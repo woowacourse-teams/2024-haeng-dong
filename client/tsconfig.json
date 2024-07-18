@@ -33,9 +33,16 @@
     "forceConsistentCasingInFileNames": true,
     "jsxImportSource": "@emotion/react",
 
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
-      "components/*": ["src/components/*"]
+      "@apis/*": ["apis/*"],
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@constants/*": ["constants/*"],
+      "@hooks/*": ["hooks/*"],
+      "@mocks/*": ["mocks/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"]
     },
     "outDir": "./dist"
   },
