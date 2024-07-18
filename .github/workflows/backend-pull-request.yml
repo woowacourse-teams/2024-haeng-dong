@@ -6,14 +6,14 @@ on:
     paths:
       - 'server/**'
 
-defaults:
-  run:
-    working-directory: ./server
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./server
+
     permissions:
       contents: read
 
