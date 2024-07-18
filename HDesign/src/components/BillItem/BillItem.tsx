@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react';
 import React from 'react';
 
 import {useTheme} from '@theme/HDesignProvider';
@@ -9,12 +8,17 @@ import {billItemStyle, prefixStyle, textStyle} from './BillItem.style';
 import Text from '@components/Text/Text';
 import IconButton from '../IconButton/IconButton';
 
-export const BillItem: React.FC<BillItemProps> = ({name = '', price = 0, ...htmlProps}: BillItemProps) => {
+export const BillItem: React.FC<BillItemProps> = ({
+  name = '',
+  price = 0,
+  hasDragHandle = false,
+  ...htmlProps
+}: BillItemProps) => {
   const {theme} = useTheme();
   return (
-    <div css={billItemStyle(theme)} {...htmlProps}>
+    <div css={billItemStyle(theme, hasDragHandle)} {...htmlProps}>
       <div css={prefixStyle}>
-        <IconButton iconType="buljusa" />
+        {hasDragHandle && <IconButton iconType="buljusa" />}
         <Text css={textStyle(theme)} size="bodyBold">
           {name}
         </Text>
