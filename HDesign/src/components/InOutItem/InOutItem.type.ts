@@ -5,6 +5,7 @@ export interface InOutItemStyleProps {}
 export interface InOutItemCustomProps {
   names?: string[];
   inOutType?: InOutType;
+  hasDragHandle?: boolean;
 }
 
 export type InOutItemOptionProps = InOutItemStyleProps & InOutItemCustomProps;
