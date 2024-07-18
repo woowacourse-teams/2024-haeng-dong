@@ -42,8 +42,8 @@ class EventControllerTest {
         given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
 
         mockMvc.perform(post("/api/events")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("events/" + token));

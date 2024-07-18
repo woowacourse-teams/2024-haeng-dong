@@ -21,7 +21,7 @@ public class EventStep {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Event event;
-    
+
     private String name;
 
     private Long sequence;
