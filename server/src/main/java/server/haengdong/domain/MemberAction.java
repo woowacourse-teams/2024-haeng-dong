@@ -30,4 +30,14 @@ public class MemberAction {
     private MemberActionStatus status;
 
     private Long memberGroupId;
+
+    public MemberAction(String memberName, MemberActionStatus status, Long memberGroupId) {
+        this.memberName = memberName;
+        this.status = status;
+        this.memberGroupId = memberGroupId;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
 }
