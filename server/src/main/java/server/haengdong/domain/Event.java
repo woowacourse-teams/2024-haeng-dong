@@ -20,4 +20,9 @@ public class Event {
     private String name;
 
     private String token;
+
+    public Event(String name, String token) {
+        this.name = name;
+        this.token = token;
+    }
 }
