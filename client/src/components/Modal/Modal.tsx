@@ -1,5 +1,6 @@
 import React from 'react';
 import {css} from '@emotion/react';
+
 import {modalBodyStyle, modalBackdropStyle} from './Modal.style';
 
 interface ModalProps {
