@@ -1,11 +1,11 @@
 import {Theme} from '@/theme/theme.type';
 import {css} from '@emotion/react';
 
-export const billItemStyle = (theme: Theme) =>
+export const billItemStyle = (theme: Theme, hasDragHandle: boolean) =>
   css({
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '0.5rem 0.5rem 0.5rem 0.25rem',
+    padding: hasDragHandle ? '0.5rem 0.5rem 0.5rem 0.25rem' : '0.5rem',
     borderRadius: '0.5rem',
     backgroundColor: theme.colors.lightGrayContainer,
   });
