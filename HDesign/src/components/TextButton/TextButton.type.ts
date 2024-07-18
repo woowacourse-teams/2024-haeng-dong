@@ -7,7 +7,6 @@ export interface TextButtonStyleProps {
 }
 
 export interface TextButtonCustomProps {
-  text: string;
   textSize: TextSize;
 }
 
