@@ -12,6 +12,16 @@ export default {
   entry: './src/index.tsx',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      '@apis': path.resolve(__dirname, 'src/apis/'),
+      '@assets': path.resolve(__dirname, 'src/assets/'),
+      '@components': path.resolve(__dirname, 'src/components/'),
+      '@constants': path.resolve(__dirname, 'src/constants/'),
+      '@hooks': path.resolve(__dirname, 'src/hooks/'),
+      '@mocks': path.resolve(__dirname, 'src/mocks/'),
+      '@pages': path.resolve(__dirname, 'src/pages/'),
+      '@utils': path.resolve(__dirname, 'src/utils/'),
+    },
   },
   output: {
     path: path.join(__dirname, 'dist'),

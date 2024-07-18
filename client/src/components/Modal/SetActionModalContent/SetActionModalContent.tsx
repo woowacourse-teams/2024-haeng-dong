@@ -1,7 +1,7 @@
-import {PurchaseInformation} from '../../../pages/Event/Event';
-import {Switch} from '../../../components/Switch';
-import SetPurchase from './SetPurchase';
+import {Switch} from '@components/Switch';
 import {useState} from 'react';
+
+import SetPurchase from './SetPurchase';
 import UpdateParticipants from './UpdateParticipants';
 import {switchContainerStyle} from './SetActionModalContent.style';
 
