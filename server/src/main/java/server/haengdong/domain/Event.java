@@ -19,5 +19,5 @@ public class Event {
 
     private String name;
 
-    private String key;
+    private String token;
 }

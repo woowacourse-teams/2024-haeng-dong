@@ -22,5 +22,5 @@ public class Action {
     @ManyToOne(fetch = FetchType.LAZY)
     private Event event;
 
-    private Long order;
+    private Long sequence;
 }

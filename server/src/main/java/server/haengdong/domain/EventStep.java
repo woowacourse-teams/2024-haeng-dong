@@ -24,5 +24,5 @@ public class EventStep {
     
     private String name;
 
-    private Long order;
+    private Long sequence;
 }
