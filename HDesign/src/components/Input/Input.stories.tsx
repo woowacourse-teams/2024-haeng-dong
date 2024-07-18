@@ -14,6 +14,10 @@ const meta = {
       description: '',
       control: {type: 'text'},
     },
+    inputType: {
+      // TODO: (@cookie) 스토리북 라디오버튼 보이도록 설정해야 함
+      control: {type: 'radio'},
+    },
   },
   args: {
     disabled: false,
