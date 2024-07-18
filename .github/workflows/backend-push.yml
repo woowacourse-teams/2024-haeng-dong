@@ -43,8 +43,8 @@ jobs:
 
       - name: Build and push
         run: |
-          docker buildx build ./ --platform=linux/arm64 -t ${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev
-          docker push ${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev
+          docker buildx build ./ --platform=linux/arm64 -t ${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev:latest
 
   deploy:
     needs: build
