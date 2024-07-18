@@ -1,43 +1,30 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "module": "ES2020",
-    "target": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "useDefineForClassFields": true,
-    "removeComments": true,
+    "outDir": "./dist",
+    "target": "ES5",
     "skipLibCheck": true,
-
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-
-    "jsx": "react-jsx",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    // "types": ["jest"],
+    "declaration": true,
+    "declarationDir": "./dist",
     "esModuleInterop": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
-    "jsxImportSource": "@emotion/react",
-
-    "baseUrl": "./",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "baseUrl": ".",
     "paths": {
-      "components/*": ["lib/components/*"]
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@token/*": ["src/token/*"],
+      "@theme/*": ["src/theme/*"],
+      "@assets/*": ["src/assets/*"]
     },
-    "outDir": "./dist"
+    "jsxImportSource": "@emotion/react",
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["lib"]
+  "include": ["src"],
+  "exclude": ["./node_modules", "dist"]
 }

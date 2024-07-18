@@ -1,7 +1,7 @@
 import React from 'react';
 
 import type {Preview} from '@storybook/react';
-import {HDesignProvider} from '../lib/theme/HDesignProvider';
+import {HDesignProvider} from '../src/theme/HDesignProvider';
 
 const preview: Preview = {
   parameters: {
@@ -10,6 +10,23 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+    viewport: {
+      defaultViewport: {
+        styles: {
+          width: '375px',
+          height: '812px',
+        },
+      },
+    },
+    backgrounds: {
+      default: 'gray',
+      values: [
+        {
+          name: 'gray',
+          value: '#f3f3f3',
+        },
+      ],
     },
   },
   decorators: [
