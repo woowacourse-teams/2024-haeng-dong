@@ -47,4 +47,23 @@ class BillActionControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+    @DisplayName("title이 비어 있는 경우 지출 내역을 생성할 수 없다.")
+    @Test
+    void saveAllBillAction1() throws Exception {
+        BillActionsSaveRequest request = new BillActionsSaveRequest(
+                List.of(
+                        new BillActionSaveRequest("", 10_000L),
+                        new BillActionSaveRequest("인생맥주", 10_000L)
+                )
+        );
+        String requestBody = objectMapper.writeValueAsString(request);
+        String token = "TOKEN";
+
+        mockMvc.perform(post("/api/events/{token}/actions/bills", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 }
