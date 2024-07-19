@@ -37,8 +37,7 @@ class MemberActionControllerTest {
                 new MemberActionSaveRequest("망쵸", "IN"),
                 new MemberActionSaveRequest("이상", "IN"),
                 new MemberActionSaveRequest("백호", "IN"),
-                new MemberActionSaveRequest("감자", "IN")
-        ), 1L);
+                new MemberActionSaveRequest("감자", "IN")));
 
         String requestBody = objectMapper.writeValueAsString(memberActionSaveListRequest);
 

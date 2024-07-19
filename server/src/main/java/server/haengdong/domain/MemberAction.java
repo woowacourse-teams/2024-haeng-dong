@@ -1,5 +1,6 @@
 package server.haengdong.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,7 +22,7 @@ public class MemberAction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Action action;
 
     private String memberName;
@@ -31,7 +32,8 @@ public class MemberAction {
 
     private Long memberGroupId;
 
-    public MemberAction(String memberName, MemberActionStatus status, Long memberGroupId) {
+    public MemberAction(Action action, String memberName, MemberActionStatus status, Long memberGroupId) {
+        this.action = action;
         this.memberName = memberName;
         this.status = status;
         this.memberGroupId = memberGroupId;
@@ -43,9 +45,5 @@ public class MemberAction {
 
     public boolean isAvailable(MemberActionStatus memberActionStatus) {
         return status.isOpposite(memberActionStatus);
-    }
-
-    public void setAction(Action action) {
-        this.action = action;
     }
 }
