@@ -39,10 +39,8 @@ public class BillActionService {
     }
 
     private long getLastSequence(Event event) {
-        Optional<Action> lastAction = actionRepository.findLastByEvent(event);
-        if (lastAction.isPresent()) {
-            return lastAction.get().getSequence();
-        }
-        return 0L;
+        return actionRepository.findLastByEvent(event)
+                .map(Action::getSequence)
+                .orElse(0L);
     }
 }
