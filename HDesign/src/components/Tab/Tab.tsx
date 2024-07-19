@@ -4,17 +4,9 @@ import React, {useState} from 'react';
 
 import {useTheme} from '@theme/HDesignProvider';
 
-import Text from '@components/Text/Text';
 import {tabListStyle, tabTextStyle, tabStyle, tabItemStyle, indicatorStyle} from './Tab.style';
-
-export interface TabProps {
-  label: string;
-  content: React.ReactNode;
-}
-
-export interface TabsProps {
-  tabs: TabProps[];
-}
+import {TabsProps} from './Tab.type';
+import Text from '@components/Text/Text';
 
 const Tab: React.FC<TabsProps> = ({tabs}) => {
   const {theme} = useTheme();
