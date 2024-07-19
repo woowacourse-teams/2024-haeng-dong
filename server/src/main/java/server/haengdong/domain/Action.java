@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Action {
 
+    private static final long FIRST_SEQUENCE = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,5 +29,13 @@ public class Action {
     public Action(Event event, Long sequence) {
         this.event = event;
         this.sequence = sequence;
+    }
+
+    public static Action createFirst(Event event) {
+        return new Action(event, FIRST_SEQUENCE);
+    }
+
+    public Action next() {
+        return new Action(event, sequence + 1);
     }
 }

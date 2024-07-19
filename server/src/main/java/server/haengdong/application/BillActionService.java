@@ -1,6 +1,5 @@
 package server.haengdong.application;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,20 +25,18 @@ public class BillActionService {
     public void saveAllBillAction(String eventToken, List<BillActionAppRequest> requests) {
         Event event = eventRepository.findByToken(eventToken)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이벤트 토큰입니다."));
-        long lastSequence = getLastSequence(event);
+        Action action = createStartAction(event);
 
-        List<BillAction> billActions = new ArrayList<>();
         for (BillActionAppRequest request : requests) {
-            Action action = new Action(event, ++lastSequence);
             BillAction billAction = request.toBillAction(action);
-            billActions.add(billAction);
+            billActionRepository.save(billAction);
+            action = action.next();
         }
-        billActionRepository.saveAll(billActions);
     }
 
-    private long getLastSequence(Event event) {
+    private Action createStartAction(Event event) {
         return actionRepository.findLastByEvent(event)
-                .map(Action::getSequence)
-                .orElse(0L);
+                .map(Action::next)
+                .orElse(Action.createFirst(event));
     }
 }
