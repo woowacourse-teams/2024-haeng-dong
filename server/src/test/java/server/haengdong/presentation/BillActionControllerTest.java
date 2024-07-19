@@ -1,7 +1,5 @@
 package server.haengdong.presentation;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +40,6 @@ class BillActionControllerTest {
         );
         String requestBody = objectMapper.writeValueAsString(request);
         String token = "TOKEN";
-        doNothing().when(billActionService).saveAllBillAction(any(), any());
 
         mockMvc.perform(post("/api/events/{token}/actions/bills", token)
                         .contentType(MediaType.APPLICATION_JSON)
