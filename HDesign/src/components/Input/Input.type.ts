@@ -4,7 +4,11 @@ export interface InputStyleProps {
   theme?: Theme;
 }
 
-export interface InputCustomProps {}
+export type InputType = 'input' | 'search';
+
+export interface InputCustomProps {
+  inputType?: InputType;
+}
 
 export type InputOptionProps = InputStyleProps & InputCustomProps;
 

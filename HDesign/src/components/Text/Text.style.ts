@@ -1,4 +1,4 @@
-import type {TextProps} from './Text';
+import type {TextProps} from './Text.type';
 
 import {css} from '@emotion/react';
 
@@ -18,6 +18,6 @@ export const getSizeStyling = (size: Required<TextProps>['size']) => {
     caption: css(TYPOGRAPHY.caption),
     tiny: css(TYPOGRAPHY.tiny),
   };
-  console.log(style[size]);
+
   return style[size];
 };

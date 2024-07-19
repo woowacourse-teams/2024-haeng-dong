@@ -11,12 +11,6 @@ export const stepItemStyle = (theme: Theme) =>
     backgroundColor: theme.colors.white,
   });
 
-export const headerStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  paddingInline: '0.5rem',
-});
-
 export const nameStyle = (theme: Theme) =>
   css({
     color: theme.colors.black,
@@ -28,12 +22,6 @@ export const personCountStyle = (theme: Theme) =>
     textDecoration: 'underline',
   });
 
-export const footerStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  paddingInline: '0.5rem',
-});
-
 export const totalTitleStyle = (theme: Theme) =>
   css({
     color: theme.colors.black,
@@ -41,5 +29,5 @@ export const totalTitleStyle = (theme: Theme) =>
 
 export const totalAmountStyle = (theme: Theme) =>
   css({
-    color: theme.colors.onSecondary,
+    color: theme.colors.gray,
   });

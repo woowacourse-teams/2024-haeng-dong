@@ -9,7 +9,7 @@ import {useInput} from '@components/Input/useInput';
 import {useTheme} from '@theme/HDesignProvider';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
-  {value: propsValue, onChange, ...htmlProps}: InputProps,
+  {value: propsValue, onChange, inputType, ...htmlProps}: InputProps,
   ref,
 ) {
   const {theme} = useTheme();
@@ -20,7 +20,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
   const {value, handleChange, handleClickDelete} = useInput({propsValue, onChange, inputRef});
 
   return (
-    <div css={inputBoxStyle(theme)}>
+    <div css={inputBoxStyle(theme, inputType)}>
       <input css={inputStyle(theme)} ref={inputRef} value={value} onChange={handleChange} {...htmlProps} />
       {value && <IconButton iconType="inputDelete" onClick={handleClickDelete} />}
     </div>
