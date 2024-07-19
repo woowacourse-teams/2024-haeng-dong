@@ -2,7 +2,6 @@ package server.haengdong.application;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +18,9 @@ import server.haengdong.persistence.EventRepository;
 @Service
 public class BillActionService {
 
-    private final EventRepository eventRepository;
-    private final ActionRepository actionRepository;
     private final BillActionRepository billActionRepository;
+    private final ActionRepository actionRepository;
+    private final EventRepository eventRepository;
 
     @Transactional
     public void saveAllBillAction(String eventToken, List<BillActionAppRequest> requests) {
