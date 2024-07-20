@@ -33,8 +33,11 @@ jobs:
       - name: Test with Gradle Wrapper
         run: ./gradlew clean build
 
-      - name: Publish Unit Test Results
+      - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: ${{ always() }}
+        if: always()
         with:
-          files: build/test-results/**/*.xml
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json
