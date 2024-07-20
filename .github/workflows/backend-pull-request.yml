@@ -33,6 +33,12 @@ jobs:
       - name: Test with Gradle Wrapper
         run: ./gradlew clean build
 
+      - name: publish unit test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: server/build/test-results/test/TEST-*.xml
+
       - name: add comments to a pull request
         uses: mikepenz/action-junit-report@v3
         if: always()
