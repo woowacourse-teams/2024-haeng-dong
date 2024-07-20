@@ -32,7 +32,8 @@ class BillActionServiceTest {
     @Test
     void saveAllBillAction() {
         String token = "TOKEN";
-        Event event = eventRepository.save(new Event("감자", token));
+        Event event = new Event("감자", token);
+        Event savedEvent = eventRepository.save(event);
 
         List<BillActionAppRequest> requests = List.of(
                 new BillActionAppRequest("뽕족", 10_000L),
@@ -41,7 +42,7 @@ class BillActionServiceTest {
 
         billActionService.saveAllBillAction(token, requests);
 
-        List<BillAction> actions = billActionRepository.findByAction_Event(event)
+        List<BillAction> actions = billActionRepository.findByAction_Event(savedEvent)
                 .stream()
                 .sorted(Comparator.comparing(BillAction::getSequence).reversed())
                 .limit(requests.size())
