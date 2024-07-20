@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BillActionTest {
 
-    @DisplayName("앞뒤 공백을 제거한 title이 2 ~ 30자가 아니면 지출을 생성할 수 없다.")
+    @DisplayName("지출 내역 제목의 앞뒤 공백을 제거한 길이가 2 ~ 30자가 아니면 지출을 생성할 수 없다.")
     @ParameterizedTest
     @ValueSource(strings = {" 감 ", "", " ", "감자감자감자감자감자감자백호백호백호백호백호감자감자감자감자감자감자백호백호백호백호백호"})
     void validateTitle(String title) {
