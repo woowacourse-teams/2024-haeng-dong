@@ -31,7 +31,12 @@ public class MemberAction {
 
     private Long memberGroupId;
 
-    public MemberAction(Action action, String memberName, MemberActionStatus status, Long memberGroupId) {
+    public MemberAction(
+            Action action,
+            String memberName,
+            MemberActionStatus status,
+            Long memberGroupId
+    ) {
         this.action = action;
         this.memberName = memberName;
         this.status = status;
