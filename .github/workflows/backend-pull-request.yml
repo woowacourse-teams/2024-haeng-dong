@@ -5,6 +5,7 @@ on:
     branches: [ "main", "develop" ]
     paths:
       - 'server/**'
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
