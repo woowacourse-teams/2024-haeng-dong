@@ -2,7 +2,7 @@ name: backend-pull-request
 
 on:
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "main", "develop", "feature/#55" ]
     paths:
       - 'server/**'
 
