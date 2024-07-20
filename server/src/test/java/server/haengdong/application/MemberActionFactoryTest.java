@@ -1,7 +1,9 @@
 package server.haengdong.application;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,9 +65,30 @@ class MemberActionFactoryTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("현재 행사에 참여 중인 경우에 퇴장할 수 있다.")
+    @DisplayName("인원 변동 액션을 생성한다.")
     @Test
     void createMemberActionsTest1() {
+        Event event = eventRepository.save(new Event("우당탕탕 행동대장 백엔드 회식", "토다리_토큰"));
+        Action action = new Action(event, 1L);
+        MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
+        memberActionRepository.save(memberAction);
+
+        MemberActionsSaveAppRequest memberActionsSaveAppRequest = new MemberActionsSaveAppRequest(
+                List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
+
+        List<MemberAction> memberActions = memberActionFactory.createMemberActions(memberActionsSaveAppRequest,
+                Arrays.asList(memberAction), action);
+
+        assertThat(memberActions).hasSize(1)
+                .extracting("action", "memberName", "status")
+                .containsExactly(
+                        tuple(action, "토다리", MemberActionStatus.OUT)
+                );
+    }
+
+    @DisplayName("현재 행사에 참여 중인 경우에 퇴장할 수 있다.")
+    @Test
+    void createMemberActionsTest2() {
         Event event = eventRepository.save(new Event("test", "TOKEN"));
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
@@ -81,7 +104,7 @@ class MemberActionFactoryTest {
 
     @DisplayName("행사에서 퇴장한 경우에 입장할 수 있다.")
     @Test
-    void createMemberActionsTest2() {
+    void createMemberActionsTest3() {
         Event event = eventRepository.save(new Event("test", "TOKEN"));
         Action action1 = new Action(event, 1L);
         MemberAction memberAction1 = new MemberAction(action1, "토다리", MemberActionStatus.IN, 1L);
@@ -102,7 +125,7 @@ class MemberActionFactoryTest {
 
     @DisplayName("행사에 입장한 적 없는 경우에 입장할 수 있다.")
     @Test
-    void createMemberActionsTest3() {
+    void createMemberActionsTest4() {
         Event event = eventRepository.save(new Event("test", "TOKEN"));
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
@@ -118,7 +141,7 @@ class MemberActionFactoryTest {
 
     @DisplayName("행사에 입장하지 않았을 경우 퇴장할 수 없다.")
     @Test
-    void createMemberActionTest4() {
+    void createMemberActionTest5() {
         Event event = eventRepository.save(new Event("test", "TOKEN"));
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
@@ -131,7 +154,7 @@ class MemberActionFactoryTest {
 
     @DisplayName("행사에 이미 참여 중인 경우 다시 입장할 수 없다.")
     @Test
-    void createMemberActionTest5() {
+    void createMemberActionTest6() {
         Event event = eventRepository.save(new Event("test", "TOKEN"));
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
