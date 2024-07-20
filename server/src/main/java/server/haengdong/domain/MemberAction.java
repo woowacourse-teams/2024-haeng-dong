@@ -41,6 +41,5 @@ public class MemberAction {
         this.memberName = memberName;
         this.status = status;
         this.memberGroupId = memberGroupId;
-
     }
 }
