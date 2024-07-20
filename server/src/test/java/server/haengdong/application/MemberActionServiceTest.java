@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
-import server.haengdong.application.request.MemberActionSaveListAppRequest;
+import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.Action;
 import server.haengdong.domain.Event;
 import server.haengdong.domain.MemberAction;
@@ -48,7 +48,7 @@ class MemberActionServiceTest {
         MemberAction memberAction = new MemberAction(action, "망쵸", MemberActionStatus.IN, 1L);
         memberActionRepository.save(memberAction);
 
-        assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", new MemberActionSaveListAppRequest(
+        assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("망쵸", "OUT")))))
                 .doesNotThrowAnyException();
     }
@@ -65,15 +65,15 @@ class MemberActionServiceTest {
         MemberAction memberActionTwo = new MemberAction(actionTwo, "망쵸", MemberActionStatus.OUT, 1L);
         memberActionRepository.save(memberActionTwo);
 
-        assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", new MemberActionSaveListAppRequest(
+        assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("망쵸", "IN")))))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("입장하지 않았을 경우 들어올 수 없다")
+    @DisplayName("행사에 입장하지 않았을 경우 퇴장할 수 없다")
     @Test
     void saveMemberActionTest2() {
-        MemberActionSaveListAppRequest appRequest = new MemberActionSaveListAppRequest(
+        MemberActionsSaveAppRequest appRequest = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("TOKEN", "OUT")));
 
         assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", appRequest))

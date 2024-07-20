@@ -43,7 +43,11 @@ public class MemberAction {
         return memberName.equals(name);
     }
 
-    public boolean isAvailable(MemberActionStatus memberActionStatus) {
-        return status.isOpposite(memberActionStatus);
+    public boolean isSameStatus(MemberActionStatus memberActionStatus) {
+        return status == memberActionStatus;
+    }
+
+    public Long getSequence() {
+        return action.getSequence();
     }
 }
