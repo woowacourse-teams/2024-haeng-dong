@@ -14,9 +14,6 @@ jobs:
       run:
         working-directory: ./server
 
-    permissions:
-      contents: read
-
     steps:
       - name: CheckOut
         uses: actions/checkout@v4
