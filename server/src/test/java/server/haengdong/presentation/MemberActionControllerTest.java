@@ -14,9 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import server.haengdong.application.MemberActionService;
-import server.haengdong.presentation.request.MemberActionSaveListRequest;
 import server.haengdong.presentation.request.MemberActionSaveRequest;
-
+import server.haengdong.presentation.request.MemberActionsSaveRequest;
 
 @WebMvcTest(MemberActionController.class)
 class MemberActionControllerTest {
@@ -30,20 +29,20 @@ class MemberActionControllerTest {
     @MockBean
     private MemberActionService memberActionService;
 
-    @DisplayName("참여자 행동을 추가한다")
+    @DisplayName("참여자 행동을 추가한다.")
     @Test
     void saveMemberActionTest() throws Exception {
-        MemberActionSaveListRequest memberActionSaveListRequest = new MemberActionSaveListRequest(List.of(
-                new MemberActionSaveRequest("망쵸", "IN"),
-                new MemberActionSaveRequest("이상", "IN"),
-                new MemberActionSaveRequest("백호", "IN"),
-                new MemberActionSaveRequest("감자", "IN")));
+        MemberActionsSaveRequest memberActionsSaveRequest = new MemberActionsSaveRequest(List.of(
+                new MemberActionSaveRequest("웨디", "IN"),
+                new MemberActionSaveRequest("소하", "IN"),
+                new MemberActionSaveRequest("토다리", "IN"),
+                new MemberActionSaveRequest("쿠키", "IN")));
 
-        String requestBody = objectMapper.writeValueAsString(memberActionSaveListRequest);
+        String requestBody = objectMapper.writeValueAsString(memberActionsSaveRequest);
 
         mockMvc.perform(post("/api/events/TOKEN/actions/members")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

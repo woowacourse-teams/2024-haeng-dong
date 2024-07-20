@@ -2,15 +2,15 @@ package server.haengdong.presentation.request;
 
 import java.util.List;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
-import server.haengdong.application.request.MemberActionSaveListAppRequest;
+import server.haengdong.application.request.MemberActionsSaveAppRequest;
 
-public record MemberActionSaveListRequest(List<MemberActionSaveRequest> actions) {
+public record MemberActionsSaveRequest(List<MemberActionSaveRequest> actions) {
 
-    public MemberActionSaveListAppRequest toAppRequest() {
+    public MemberActionsSaveAppRequest toAppRequest() {
         List<MemberActionSaveAppRequest> appRequests = actions.stream()
                 .map(MemberActionSaveRequest::toAppRequest)
                 .toList();
 
-        return new MemberActionSaveListAppRequest(appRequests);
+        return new MemberActionsSaveAppRequest(appRequests);
     }
 }

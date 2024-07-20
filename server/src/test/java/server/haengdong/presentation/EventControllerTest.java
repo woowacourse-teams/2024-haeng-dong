@@ -32,18 +32,18 @@ class EventControllerTest {
     @MockBean
     private EventService eventService;
 
-    @DisplayName("이벤트를 생성한다")
+    @DisplayName("이벤트를 생성한다.")
     @Test
     void saveEvent() throws Exception {
-        EventSaveRequest eventSaveRequest = new EventSaveRequest("test");
+        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
         String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
         String token = "TOKEN";
         EventAppResponse eventAppResponse = new EventAppResponse(token);
         given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
 
         mockMvc.perform(post("/api/events")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("events/" + token));
