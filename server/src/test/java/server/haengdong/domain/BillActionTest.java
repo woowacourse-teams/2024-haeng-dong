@@ -13,7 +13,7 @@ class BillActionTest {
 
     @DisplayName("지출 내역 제목의 앞뒤 공백을 제거한 길이가 2 ~ 30자가 아니면 지출을 생성할 수 없다.")
     @ParameterizedTest
-    @ValueSource(strings = {" 감 ", "", " ", "감자감자감자감자감자감자백호백호백호백호백호감자감자감자감자감자감자백호백호백호백호백호"})
+    @ValueSource(strings = {" 감 ", "", " ", "1234567890123456789012345678901"})
     void validateTitle(String title) {
         Event event = new Event("name", "token");
         Action action = new Action(event, 1L);
