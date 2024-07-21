@@ -72,14 +72,15 @@ class MemberActionFactoryTest {
 
         MemberActionsSaveAppRequest memberActionsSaveAppRequest = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
+        Action startAction = new Action(event, 2L);
 
         List<MemberAction> memberActions = memberActionFactory.createMemberActions(memberActionsSaveAppRequest,
-                                                                                   List.of(memberAction), action);
+                                                                                   List.of(memberAction), startAction);
 
         assertThat(memberActions).hasSize(1)
-                .extracting("action", "memberName", "status")
+                .extracting(MemberAction::getAction, MemberAction::getMemberName, MemberAction::getStatus)
                 .containsExactly(
-                        tuple(action, "토다리", MemberActionStatus.OUT)
+                        tuple(startAction, "토다리", MemberActionStatus.OUT)
                 );
     }
 
