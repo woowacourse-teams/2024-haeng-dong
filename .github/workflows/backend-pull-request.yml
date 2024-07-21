@@ -2,7 +2,7 @@ name: backend-pull-request
 
 on:
   pull_request:
-    branches: [ "main", "develop", "feature/#55" ]
+    branches: [ "main", "develop" ]
     paths:
       - 'server/**'
 
@@ -36,8 +36,8 @@ jobs:
         with:
           files: server/build/test-results/test/TEST-*.xml
 
-#      - name: add comments to a pull request
-#        uses: mikepenz/action-junit-report@v3
-#        if: always()
-#        with:
-#          report_paths: server/build/test-results/test/TEST-*.xml
+      - name: add comments to a pull request
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: server/build/test-results/test/TEST-*.xml
