@@ -38,16 +38,6 @@ public class MemberActionFactory {
         return createdMemberActions;
     }
 
-    private void validateActions(MemberActionsSaveAppRequest request, List<MemberAction> memberActions) {
-        List<MemberAction> reverseSortedMemberActions = memberActions.stream()
-                .sorted(Comparator.comparing(MemberAction::getSequence).reversed())
-                .toList();
-
-        for (MemberActionSaveAppRequest action : request.actions()) {
-            validateAction(action, reverseSortedMemberActions);
-        }
-    }
-
     private void validateMemberNames(MemberActionsSaveAppRequest request) {
         List<String> memberNames = request.actions().stream()
                 .map(MemberActionSaveAppRequest::name)
@@ -56,6 +46,16 @@ public class MemberActionFactory {
         long uniqueCount = memberNames.stream().distinct().count();
         if (uniqueCount != memberNames.size()) {
             throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateActions(MemberActionsSaveAppRequest request, List<MemberAction> memberActions) {
+        List<MemberAction> reverseSortedMemberActions = memberActions.stream()
+                .sorted(Comparator.comparing(MemberAction::getSequence).reversed())
+                .toList();
+
+        for (MemberActionSaveAppRequest action : request.actions()) {
+            validateAction(action, reverseSortedMemberActions);
         }
     }
 
