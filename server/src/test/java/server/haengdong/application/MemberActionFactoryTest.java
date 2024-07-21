@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +55,7 @@ class MemberActionFactoryTest {
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
-        List<MemberAction> unorderedMemberActions = Arrays.asList(memberAction2, memberAction1);
+        List<MemberAction> unorderedMemberActions = List.of(memberAction2, memberAction1);
         Action startAction = new Action(event, 3L);
 
         assertThatThrownBy(() -> memberActionFactory.createMemberActions(request, unorderedMemberActions, startAction))
@@ -117,7 +115,7 @@ class MemberActionFactoryTest {
         Action startAction = new Action(event, 3L);
 
         assertThatCode(
-                () -> memberActionFactory.createMemberActions(request, Arrays.asList(memberAction1, memberAction2),
+                () -> memberActionFactory.createMemberActions(request, List.of(memberAction1, memberAction2),
                                                               startAction))
                 .doesNotThrowAnyException();
     }
@@ -147,7 +145,7 @@ class MemberActionFactoryTest {
                 List.of(new MemberActionSaveAppRequest("쿠키", "OUT")));
         Action startAction = new Action(event, 2L);
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, new ArrayList<>(), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(), startAction))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -23,7 +23,6 @@ public class MemberActionFactory {
             List<MemberAction> memberActions,
             Action action
     ) {
-        memberActions.sort(Comparator.comparing(MemberAction::getSequence));
         validateActions(request, memberActions);
 
         Long memberGroupId = memberGroupIdProvider.createGroupId();
@@ -39,8 +38,12 @@ public class MemberActionFactory {
     }
 
     private void validateActions(MemberActionsSaveAppRequest request, List<MemberAction> memberActions) {
+        List<MemberAction> reverseSortedMemberActions = memberActions.stream()
+                .sorted(Comparator.comparing(MemberAction::getSequence).reversed())
+                .toList();
+
         for (MemberActionSaveAppRequest action : request.actions()) {
-            validateAction(action, memberActions);
+            validateAction(action, reverseSortedMemberActions);
         }
     }
 
@@ -52,12 +55,10 @@ public class MemberActionFactory {
     }
 
     private boolean isInvalidStatus(List<MemberAction> actions, String name, MemberActionStatus status) {
-        for (int i = actions.size() - 1; i >= 0; i--) {
-            MemberAction action = actions.get(i);
-            if (action.isSameName(name)) {
-                return action.isSameStatus(status);
-            }
-        }
-        return MemberActionStatus.IN != status;
+        return actions.stream()
+                .filter(action -> action.isSameName(name))
+                .findFirst()
+                .map(action -> action.isSameStatus(status))
+                .orElse(MemberActionStatus.IN != status);
     }
 }
