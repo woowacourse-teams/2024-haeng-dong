@@ -24,5 +24,6 @@ public class Event {
     public Event(String name, String token) {
         this.name = name;
         this.token = token;
+
     }
 }
