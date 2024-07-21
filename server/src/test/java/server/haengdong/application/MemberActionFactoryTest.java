@@ -43,7 +43,7 @@ class MemberActionFactoryTest {
         eventRepository.deleteAllInBatch();
     }
 
-    @DisplayName("액션 ID를 기준으로 정렬한 상태로 새로운 멤버 액션 요청을 검증한다.")
+    @DisplayName("이전 멤버 액션이 시퀀스 기준으로 정렬되지 않은 상태에서 새로운 멤버 액션 요청을 검증한다.")
     @Test
     void createMemberActionsTest() {
         Event event = eventRepository.save(new Event("우당탕탕 행동대장 백엔드 회식", "토다리_토큰"));

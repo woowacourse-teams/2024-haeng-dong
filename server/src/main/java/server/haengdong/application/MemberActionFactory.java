@@ -54,11 +54,15 @@ public class MemberActionFactory {
         }
     }
 
-    private boolean isInvalidStatus(List<MemberAction> actions, String name, MemberActionStatus status) {
-        return actions.stream()
-                .filter(action -> action.isSameName(name))
+    private boolean isInvalidStatus(
+            List<MemberAction> memberActions,
+            String memberName,
+            MemberActionStatus memberActionStatus
+    ) {
+        return memberActions.stream()
+                .filter(action -> action.isSameName(memberName))
                 .findFirst()
-                .map(action -> action.isSameStatus(status))
-                .orElse(MemberActionStatus.IN != status);
+                .map(action -> action.isSameStatus(memberActionStatus))
+                .orElse(MemberActionStatus.IN != memberActionStatus);
     }
 }
