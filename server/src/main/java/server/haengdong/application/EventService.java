@@ -20,6 +20,6 @@ public class EventService {
         Event event = request.toEvent(token);
         eventRepository.save(event);
 
-         return EventAppResponse.of(event);
+        return EventAppResponse.of(event);
     }
 }
