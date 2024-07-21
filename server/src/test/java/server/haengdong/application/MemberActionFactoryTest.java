@@ -60,8 +60,7 @@ class MemberActionFactoryTest {
         List<MemberAction> unorderedMemberActions = Arrays.asList(memberAction2, memberAction1);
         Action startAction = new Action(event, 3L);
 
-        assertThatThrownBy(
-                () -> memberActionFactory.createMemberActions(request, unorderedMemberActions, startAction))
+        assertThatThrownBy(() -> memberActionFactory.createMemberActions(request, unorderedMemberActions, startAction))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -77,7 +76,7 @@ class MemberActionFactoryTest {
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
 
         List<MemberAction> memberActions = memberActionFactory.createMemberActions(memberActionsSaveAppRequest,
-                Arrays.asList(memberAction), action);
+                                                                                   List.of(memberAction), action);
 
         assertThat(memberActions).hasSize(1)
                 .extracting("action", "memberName", "status")
@@ -98,7 +97,7 @@ class MemberActionFactoryTest {
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
         Action startAction = new Action(event, 2L);
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, Arrays.asList(memberAction), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
                 .doesNotThrowAnyException();
     }
 
@@ -119,7 +118,7 @@ class MemberActionFactoryTest {
 
         assertThatCode(
                 () -> memberActionFactory.createMemberActions(request, Arrays.asList(memberAction1, memberAction2),
-                        startAction))
+                                                              startAction))
                 .doesNotThrowAnyException();
     }
 
@@ -135,7 +134,7 @@ class MemberActionFactoryTest {
                 List.of(new MemberActionSaveAppRequest("쿠키", "IN")));
         Action startAction = new Action(event, 2L);
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, Arrays.asList(memberAction), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
                 .doesNotThrowAnyException();
     }
 
@@ -164,7 +163,7 @@ class MemberActionFactoryTest {
                 List.of(new MemberActionSaveAppRequest("쿠키", "IN")));
         Action startAction = new Action(event, 2L);
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, Arrays.asList(memberAction), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -40,13 +40,13 @@ public class MemberActionFactory {
 
     private void validateActions(MemberActionsSaveAppRequest request, List<MemberAction> memberActions) {
         for (MemberActionSaveAppRequest action : request.actions()) {
-            validateAction(memberActions, action);
+            validateAction(action, memberActions);
         }
     }
 
-    private void validateAction(List<MemberAction> memberActions, MemberActionSaveAppRequest action) {
-        MemberActionStatus memberActionStatus = MemberActionStatus.of(action.status());
-        if (isInvalidStatus(memberActions, action.name(), memberActionStatus)) {
+    private void validateAction(MemberActionSaveAppRequest request, List<MemberAction> memberActions) {
+        MemberActionStatus memberActionStatus = MemberActionStatus.of(request.status());
+        if (isInvalidStatus(memberActions, request.name(), memberActionStatus)) {
             throw new IllegalArgumentException();
         }
     }
