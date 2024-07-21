@@ -7,6 +7,6 @@ import server.haengdong.domain.Event;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
-
+  
     Optional<Event> findByToken(String token);
 }

@@ -32,10 +32,10 @@ class EventControllerTest {
     @MockBean
     private EventService eventService;
 
-    @DisplayName("이벤트를 생성한다")
+    @DisplayName("이벤트를 생성한다.")
     @Test
     void saveEvent() throws Exception {
-        EventSaveRequest eventSaveRequest = new EventSaveRequest("test");
+        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
         String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
         String token = "TOKEN";
         EventAppResponse eventAppResponse = new EventAppResponse(token);

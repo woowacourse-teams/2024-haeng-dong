@@ -1,5 +1,6 @@
 package server.haengdong.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,7 +22,7 @@ public class MemberAction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Action action;
 
     private String memberName;
@@ -30,4 +31,23 @@ public class MemberAction {
     private MemberActionStatus status;
 
     private Long memberGroupId;
+
+    public MemberAction(Action action, String memberName, MemberActionStatus status, Long memberGroupId) {
+        this.action = action;
+        this.memberName = memberName;
+        this.status = status;
+        this.memberGroupId = memberGroupId;
+    }
+
+    public boolean isSameName(String name) {
+        return memberName.equals(name);
+    }
+
+    public boolean isSameStatus(MemberActionStatus memberActionStatus) {
+        return status == memberActionStatus;
+    }
+
+    public Long getSequence() {
+        return action.getSequence();
+    }
 }
