@@ -23,6 +23,7 @@ public class MemberActionFactory {
             List<MemberAction> memberActions,
             Action action
     ) {
+        validateMemberNames(request);
         validateActions(request, memberActions);
 
         Long memberGroupId = memberGroupIdProvider.createGroupId();
@@ -44,6 +45,17 @@ public class MemberActionFactory {
 
         for (MemberActionSaveAppRequest action : request.actions()) {
             validateAction(action, reverseSortedMemberActions);
+        }
+    }
+
+    private void validateMemberNames(MemberActionsSaveAppRequest request) {
+        List<String> memberNames = request.actions().stream()
+                .map(MemberActionSaveAppRequest::name)
+                .toList();
+
+        long uniqueCount = memberNames.stream().distinct().count();
+        if (uniqueCount != memberNames.size()) {
+            throw new IllegalArgumentException();
         }
     }
 

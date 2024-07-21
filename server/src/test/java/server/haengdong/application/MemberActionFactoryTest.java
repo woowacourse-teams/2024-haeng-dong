@@ -165,4 +165,52 @@ class MemberActionFactoryTest {
         assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("한 명의 사용자는 동시에 여러 번 입장할 수 없다.")
+    @Test
+    void createMemberActionTest7() {
+        Event event = eventRepository.save(new Event("test", "TOKEN"));
+
+        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+                List.of(new MemberActionSaveAppRequest("쿠키", "IN"),
+                        new MemberActionSaveAppRequest("쿠키", "IN")));
+        Action startAction = new Action(event, 1L);
+
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(), startAction))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("한 명의 사용자는 동시에 여러 번 퇴장할 수 없다.")
+    @Test
+    void createMemberActionTest8() {
+        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Action action = new Action(event, 1L);
+        MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
+        memberActionRepository.save(memberAction);
+
+        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+                List.of(new MemberActionSaveAppRequest("쿠키", "OUT"),
+                        new MemberActionSaveAppRequest("쿠키", "OUT")));
+        Action startAction = new Action(event, 2L);
+
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("한 명의 사용자는 입장과 퇴장을 동시에 할 수 없다.")
+    @Test
+    void createMemberActionTest9() {
+        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Action action = new Action(event, 1L);
+        MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
+        memberActionRepository.save(memberAction);
+
+        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+                List.of(new MemberActionSaveAppRequest("쿠키", "IN"),
+                        new MemberActionSaveAppRequest("쿠키", "OUT")));
+        Action startAction = new Action(event, 2L);
+
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
