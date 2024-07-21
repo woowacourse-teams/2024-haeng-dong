@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 
-import java.util.Comparator;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,16 +41,12 @@ class BillActionServiceTest {
 
         billActionService.saveAllBillAction(token, requests);
 
-        List<BillAction> actions = billActionRepository.findByAction_Event(savedEvent)
-                .stream()
-                .sorted(Comparator.comparing(BillAction::getSequence).reversed())
-                .limit(requests.size())
-                .toList();
+        List<BillAction> actions = billActionRepository.findByAction_Event(savedEvent);
 
-        assertThat(actions).extracting("title", "price")
-                .containsExactly(
-                        tuple("인생맥주", 15_000L),
-                        tuple("뽕족", 10_000L)
+        assertThat(actions).extracting(BillAction::getTitle, BillAction::getPrice, BillAction::getSequence)
+                .containsExactlyInAnyOrder(
+                        tuple("뽕족", 10_000L, 1L),
+                        tuple("인생맥주", 15_000L, 2L)
                 );
     }
 
