@@ -1,7 +1,7 @@
 package server.haengdong.application.request;
 
-import server.haengdong.domain.Action;
-import server.haengdong.domain.BillAction;
+import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.BillAction;
 
 public record BillActionAppRequest(
         String title,

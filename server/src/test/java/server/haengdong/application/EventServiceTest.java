@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
-import server.haengdong.domain.EventTokenProvider;
+import server.haengdong.domain.event.EventTokenProvider;
 
 @SpringBootTest
 class EventServiceTest {

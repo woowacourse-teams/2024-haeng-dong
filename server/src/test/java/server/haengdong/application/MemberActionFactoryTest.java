@@ -13,13 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
-import server.haengdong.domain.Action;
-import server.haengdong.domain.Event;
-import server.haengdong.domain.MemberAction;
-import server.haengdong.domain.MemberActionStatus;
-import server.haengdong.persistence.ActionRepository;
-import server.haengdong.persistence.EventRepository;
-import server.haengdong.persistence.MemberActionRepository;
+import server.haengdong.domain.action.Action;
+import server.haengdong.domain.event.Event;
+import server.haengdong.domain.action.MemberAction;
+import server.haengdong.domain.action.MemberActionStatus;
+import server.haengdong.domain.action.ActionRepository;
+import server.haengdong.domain.event.EventRepository;
+import server.haengdong.domain.action.MemberActionRepository;
 
 @SpringBootTest
 class MemberActionFactoryTest {
