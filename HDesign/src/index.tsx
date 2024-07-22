@@ -16,6 +16,8 @@ import TextButton from '@components/TextButton/TextButton';
 import Title from '@components/Title/Title';
 import TopNav from '@components/TopNav/TopNav';
 
+import {MainLayout} from '@layouts/MainLayout';
+
 import {HDesignProvider} from '@theme/HDesignProvider';
 
 export {
@@ -36,5 +38,6 @@ export {
   TextButton,
   Title,
   TopNav,
+  MainLayout,
   HDesignProvider,
 };
