@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
-import server.haengdong.domain.Event;
-import server.haengdong.domain.EventTokenProvider;
-import server.haengdong.persistence.EventRepository;
+import server.haengdong.domain.event.Event;
+import server.haengdong.domain.event.EventTokenProvider;
+import server.haengdong.domain.event.EventRepository;
 
 @RequiredArgsConstructor
 @Service

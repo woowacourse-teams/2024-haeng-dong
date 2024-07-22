@@ -1,8 +1,8 @@
 package server.haengdong.application.request;
 
-import server.haengdong.domain.Action;
-import server.haengdong.domain.MemberAction;
-import server.haengdong.domain.MemberActionStatus;
+import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.MemberAction;
+import server.haengdong.domain.action.MemberActionStatus;
 
 public record MemberActionSaveAppRequest(String name, String status) {
 

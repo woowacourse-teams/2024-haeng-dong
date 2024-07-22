@@ -1,4 +1,4 @@
-package server.haengdong.domain;
+package server.haengdong.domain.action;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

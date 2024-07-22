@@ -1,9 +1,10 @@
-package server.haengdong.domain;
+package server.haengdong.domain.action;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import server.haengdong.domain.event.Event;
 
 class ActionTest {
 

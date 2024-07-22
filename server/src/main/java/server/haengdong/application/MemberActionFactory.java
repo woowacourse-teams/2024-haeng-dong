@@ -7,10 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
-import server.haengdong.domain.Action;
-import server.haengdong.domain.MemberAction;
-import server.haengdong.domain.MemberActionStatus;
-import server.haengdong.domain.MemberGroupIdProvider;
+import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.MemberAction;
+import server.haengdong.domain.action.MemberActionStatus;
+import server.haengdong.domain.action.MemberGroupIdProvider;
 
 @RequiredArgsConstructor
 @Component

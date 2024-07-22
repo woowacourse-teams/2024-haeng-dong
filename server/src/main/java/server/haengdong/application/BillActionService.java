@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.BillActionAppRequest;
-import server.haengdong.domain.Action;
-import server.haengdong.domain.BillAction;
-import server.haengdong.domain.Event;
-import server.haengdong.persistence.ActionRepository;
-import server.haengdong.persistence.BillActionRepository;
-import server.haengdong.persistence.EventRepository;
+import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.BillAction;
+import server.haengdong.domain.event.Event;
+import server.haengdong.domain.action.ActionRepository;
+import server.haengdong.domain.action.BillActionRepository;
+import server.haengdong.domain.event.EventRepository;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
