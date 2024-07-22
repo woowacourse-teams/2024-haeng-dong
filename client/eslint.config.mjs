@@ -32,7 +32,6 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/jsx-uses-vars': 'error',
-      '@typescript-eslint/no-use-before-define': ['error'],
       'import/order': [
         'error',
         {
