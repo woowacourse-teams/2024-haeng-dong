@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class BillAction {
+public class BillAction implements Comparable<BillAction> {
 
     private static final int MIN_TITLE_LENGTH = 2;
     private static final int MAX_TITLE_LENGTH = 30;
@@ -57,5 +57,10 @@ public class BillAction {
 
     public Long getSequence() {
         return action.getSequence();
+    }
+
+    @Override
+    public int compareTo(BillAction o) {
+        return Long.compare(this.getSequence(), o.getSequence());
     }
 }
