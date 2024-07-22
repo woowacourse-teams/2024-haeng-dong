@@ -33,7 +33,6 @@ export default [
       'react/prop-types': 'off',
       'react/jsx-uses-vars': 'error',
       '@typescript-eslint/no-use-before-define': ['error'],
-      '@typescript-eslint/explicit-module-boundary-types': 'error',
       'import/order': [
         'error',
         {
