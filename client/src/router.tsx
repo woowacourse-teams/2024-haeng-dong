@@ -1,11 +1,11 @@
 import {createBrowserRouter} from 'react-router-dom';
 import {ROUTER_URLS} from '@constants/routerUrls';
 import {MainPage} from '@pages/Main';
-import {CreateEventPage} from '@pages/CreateEvent';
-import {CompleteCreateEventPage} from '@pages/CompleteCreateEvent';
+// import {CreateNamePage, CreateCompletePage} from '@pages/Create';
 import {EventPage} from '@pages/Event';
 
 import App from './App';
+import {HomePage} from '@pages/Home';
 
 const router = createBrowserRouter([
   {
@@ -18,16 +18,12 @@ const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: ROUTER_URLS.createEvent,
-        element: <CreateEventPage />,
-      },
-      {
-        path: ROUTER_URLS.completeCreateEvent,
-        element: <CompleteCreateEventPage />,
-      },
-      {
         path: ROUTER_URLS.eventManage,
         element: <EventPage />,
+      },
+      {
+        path: ROUTER_URLS.home,
+        element: <HomePage />,
       },
     ],
   },
