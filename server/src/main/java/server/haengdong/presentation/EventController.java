@@ -3,11 +3,14 @@ package server.haengdong.presentation;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.EventService;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.presentation.request.EventSaveRequest;
+import server.haengdong.presentation.response.EventDetailResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,5 +25,12 @@ public class EventController {
         return ResponseEntity.ok()
                 .location(URI.create("events/" + eventAppResponse.token()))
                 .build();
+    }
+
+    @GetMapping("/api/events/{token}")
+    public ResponseEntity<EventDetailResponse> findEvent(@PathVariable("token") String token) {
+        EventDetailResponse eventDetailResponse = EventDetailResponse.of(eventService.findEvent(token));
+
+        return ResponseEntity.ok(eventDetailResponse);
     }
 }
