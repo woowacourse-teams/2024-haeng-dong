@@ -14,9 +14,6 @@ const meta = {
       description: '',
       control: {type: 'select', options: ['홈', '관리']},
     },
-    initialValue: {
-      description: '',
-    },
     values: {
       description: '',
     },
@@ -26,7 +23,6 @@ const meta = {
   },
   args: {
     value: '홈',
-    initialValue: '홈',
     values: ['홈', '관리'],
     onChange: value => alert(`${value} 선택됨`),
   },
