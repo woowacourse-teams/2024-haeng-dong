@@ -1,6 +1,6 @@
 package server.haengdong.application.request;
 
-import server.haengdong.domain.Event;
+import server.haengdong.domain.event.Event;
 
 public record EventAppRequest(String name) {
 

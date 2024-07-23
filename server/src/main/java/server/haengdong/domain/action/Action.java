@@ -1,4 +1,4 @@
-package server.haengdong.domain;
+package server.haengdong.domain.action;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,11 +9,14 @@ import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.domain.event.Event;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class EventStep {
+public class Action {
+
+    private static final long FIRST_SEQUENCE = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +24,19 @@ public class EventStep {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Event event;
-    
-    private String name;
 
     private Long sequence;
+
+    public Action(Event event, Long sequence) {
+        this.event = event;
+        this.sequence = sequence;
+    }
+
+    public static Action createFirst(Event event) {
+        return new Action(event, FIRST_SEQUENCE);
+    }
+
+    public Action next() {
+        return new Action(event, sequence + 1);
+    }
 }

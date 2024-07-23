@@ -1,4 +1,4 @@
-package server.haengdong.domain;
+package server.haengdong.domain.event;
 
 import java.util.UUID;
 import org.springframework.stereotype.Component;
