@@ -1,8 +1,7 @@
-import {SetInitialParticipants} from '@components/Modal/SetInitialParticipants';
-import {Modal} from '@components/Modal';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {SetActionModalContent} from '@components/Modal/SetActionModalContent';
+
+import {Modal, SetActionModalContent, SetInitialParticipants} from '@components/Modal';
 
 import {orderHeaderStyle} from './Event.style';
 
