@@ -7,7 +7,7 @@ const Main = () => {
   return (
     <section>
       <h1>행동대장</h1>
-      <button onClick={() => navigate(ROUTER_URLS.createEvent)}>행사 생성하기</button>
+      <button onClick={() => navigate(ROUTER_URLS.eventCreateName)}>행사 생성하기</button>
     </section>
   );
 };
