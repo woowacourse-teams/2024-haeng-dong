@@ -8,10 +8,10 @@ import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';
 import {expenseItemStyle, expenseListStyle, expenseItemLeftStyle, TextStyle} from './ExpenseList.style';
 
 // TODO: (@soha) 따로 파일 분리할까 고민중.. 여기서만 사용할 것 같긴 한데.. 흠
-const ExpenseItem = ({name, price}: ExpenseItemProps) => {
+const ExpenseItem = ({name, price, ...buttonProps}: ExpenseItemProps) => {
   const {theme} = useTheme();
   return (
-    <button css={expenseItemStyle}>
+    <button css={expenseItemStyle} {...buttonProps}>
       <Text size="bodyBold" css={TextStyle(theme)}>
         {name}
       </Text>
