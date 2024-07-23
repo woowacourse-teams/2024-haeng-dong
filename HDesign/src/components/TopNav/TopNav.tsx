@@ -11,15 +11,14 @@ import {useEffect, useState} from 'react';
 const TopNav = ({navType}: TopNavProps) => {
   const [nav, setNav] = useState('홈');
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     navigate(PATH_TABLE[nav]);
   }, [nav]);
 
   const PATH_TABLE: Record<string, string> = {
-    홈: '/',
-    관리: '/admin',
+    홈: './',
+    관리: './admin',
   };
 
   const TopNavByType = () => {
