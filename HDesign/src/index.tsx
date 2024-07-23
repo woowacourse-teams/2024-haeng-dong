@@ -18,6 +18,7 @@ import Title from '@components/Title/Title';
 import TopNav from '@components/TopNav/TopNav';
 
 import {MainLayout} from '@layouts/MainLayout';
+import {ContentLayout} from '@layouts/ContentLayout';
 
 import {HDesignProvider} from '@theme/HDesignProvider';
 
@@ -41,5 +42,6 @@ export {
   Title,
   TopNav,
   MainLayout,
+  ContentLayout,
   HDesignProvider,
 };

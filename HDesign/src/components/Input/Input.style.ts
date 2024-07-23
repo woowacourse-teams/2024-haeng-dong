@@ -20,7 +20,6 @@ export const inputBoxStyle = (theme: Theme, inputType: InputType = 'input') =>
   css({
     display: 'flex',
     justifyContent: 'space-between',
-    marginInline: '1rem',
     padding: '0.75rem 1rem',
     borderRadius: '1rem',
     backgroundColor: inputBoxBackgroundColorByInputType(theme, inputType),

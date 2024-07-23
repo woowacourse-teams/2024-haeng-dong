@@ -9,14 +9,14 @@ const Switch = ({value, values, onChange}: SwitchProps) => {
 
   return (
     <div css={switchContainerStyle}>
-      {values.map((value, index) => (
+      {values.map((item, index) => (
         <TextButton
-          key={`${index}_${value}`}
-          textColor={selectedValue === value ? 'black' : 'gray'}
+          key={`${index}_${item}`}
+          textColor={selectedValue === item ? 'black' : 'gray'}
           textSize="bodyBold"
           onClick={() => handleClick(index)}
         >
-          {value}
+          {item}
         </TextButton>
       ))}
     </div>
