@@ -112,4 +112,8 @@ export const GlobalStyle = css`
     display: flex;
     justify-content: center;
   }
+
+  button {
+    cursor: pointer;
+  }
 `;
