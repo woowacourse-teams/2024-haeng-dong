@@ -4,8 +4,8 @@ import {switchContainerStyle} from './Switch.style';
 import {SwitchProps} from './Switch.type';
 import {useSwitch} from './useSwitch';
 
-const Switch = ({value = '', initialValue, values, onChange}: SwitchProps) => {
-  const {selectedValue, handleClick} = useSwitch({value, initialValue, values, onChange});
+const Switch = ({value, values, onChange}: SwitchProps) => {
+  const {selectedValue, handleClick} = useSwitch({value, values, onChange});
 
   return (
     <div css={switchContainerStyle}>
