@@ -4,14 +4,7 @@ import React, {useState} from 'react';
 
 import {useTheme} from '@theme/HDesignProvider';
 
-import {
-  tabListStyle,
-  tabTextStyle,
-  tabStyle,
-  tabItemStyle,
-  indicatorStyle,
-  tabListBorderBottomStyle,
-} from './Tab.style';
+import {tabListStyle, tabTextStyle, tabStyle, tabItemStyle, indicatorStyle} from './Tab.style';
 import {TabsProps} from './Tab.type';
 import Text from '@components/Text/Text';
 
@@ -41,7 +34,6 @@ const Tab: React.FC<TabsProps> = ({tabs}) => {
             </Text>
           </li>
         ))}
-        <div css={tabListBorderBottomStyle(theme)} />
         <div css={indicatorStyle(theme, `${(activeTabIndex * 100) / tabs.length}%`, tabs.length)} />
       </ul>
       {tabs.map((tab, index) => (

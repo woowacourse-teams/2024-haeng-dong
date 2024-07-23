@@ -20,19 +20,20 @@ export const tabListStyle = (theme: Theme) =>
     backgroundColor: theme.colors.white,
 
     cursor: 'pointer',
-  });
 
-export const tabListBorderBottomStyle = (theme: Theme) =>
-  css({
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    zIndex: 1,
+    '&::after': {
+      position: 'absolute',
+      left: 0,
+      bottom: 0,
+      zIndex: 1,
 
-    width: '100%',
-    height: '0.0625rem',
+      width: '100%',
+      height: '0.0625rem',
 
-    backgroundColor: theme.colors.gray,
+      backgroundColor: theme.colors.gray,
+
+      content: '""',
+    },
   });
 
 export const tabItemStyle = css({
