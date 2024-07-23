@@ -1,4 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
+import {reactRouterParameters, withRouter} from 'storybook-addon-react-router-v6';
 
 import TopNav from '@components/TopNav/TopNav';
 import Switch from '../Switch/Switch';
@@ -7,7 +8,11 @@ const meta = {
   title: 'Components/TopNav',
   component: TopNav,
   tags: ['autodocs'],
+  decorators: [withRouter],
   parameters: {
+    reactRouter: reactRouterParameters({
+      routing: './',
+    }),
     layout: 'centered',
   },
   argTypes: {
