@@ -1,8 +1,10 @@
 import {createBrowserRouter} from 'react-router-dom';
-import {ROUTER_URLS} from '@constants/routerUrls';
+
 import {MainPage} from '@pages/Main';
 import {CreateNamePage, CreateCompletePage} from '@pages/Create';
 import {EventPage} from '@pages/Event';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
 

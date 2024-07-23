@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {ROUTER_URLS} from '@constants/routerUrls';
 import {FixedButton, MainLayout, Title} from 'haengdong-design';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 const CompleteCreateEvent = () => {
   const [url, setUrl] = useState('');

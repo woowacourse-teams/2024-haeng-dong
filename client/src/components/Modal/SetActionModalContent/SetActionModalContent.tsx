@@ -1,5 +1,6 @@
-import {Switch} from '@components/Switch';
 import {useState} from 'react';
+
+import {Switch} from '@components/Switch';
 
 import SetPurchase from './SetPurchase';
 import UpdateParticipants from './UpdateParticipants';
