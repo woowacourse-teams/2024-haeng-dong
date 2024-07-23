@@ -1,9 +1,10 @@
 import {useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {css} from '@emotion/react';
+import {TopNav, Title, FixedButton, StepItem, InOutItem} from 'haengdong-design';
 
-import {Modal, SetActionModalContent, SetInitialParticipants} from '@components/Modal';
+import {SetActionModalContent, SetInitialParticipants} from '@components/Modal';
 
-import {orderHeaderStyle} from './Event.style';
+import {EventStyle, ReceiptStyle} from './Event.style';
 
 export type PurchaseInformation = {
   name: string;
@@ -15,8 +16,22 @@ type ParticipantType = {
   type: '늦참' | '탈주';
 };
 
+interface ModalRenderingProps {
+  participants: string[];
+  setParticipantsAndModalClose: (participants: string[]) => void;
+}
+
+const ModalRendering = ({participants, setParticipantsAndModalClose}: ModalRenderingProps) => {
+  switch (participants.length) {
+    case 0:
+      return <SetInitialParticipants setParticipantsAndModalClose={setParticipantsAndModalClose} />;
+
+    default:
+      return <SetActionModalContent participants={participants} />;
+  }
+};
+
 const Event = () => {
-  const {eventId} = useParams();
   const [open, setOpen] = useState(false);
   const [participants, setParticipants] = useState<string[]>([]);
   const [order, setOrder] = useState(0);
@@ -34,57 +49,35 @@ const Event = () => {
     setOpen(false);
   };
 
+  // TODO: (@soha) BottomSheet 확인을 위한 console. 추후 삭제 예정
+  console.log('par: ', participants.length);
+  console.log(open);
+
   return (
-    <section>
-      <h1>{eventId}</h1>
-      <h3>“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요.</h3>
-      {order > 0 && (
-        <article>
-          <header css={orderHeaderStyle}>
-            <h4>{`${order}차`}</h4>
-            <p>{`${participants.length}명`}</p>
-          </header>
-          {purchaseInformation.map((information, index) => (
-            <section key={index} style={{padding: '10px'}}>
-              {'type' in information ? (
-                <>
-                  <h5>
-                    {information.name} {information.type}입니다.
-                  </h5>
-                </>
-              ) : (
-                <>
-                  <h5>{information.name}</h5>
-                  <p>{information.price.toLocaleString()}원</p>
-                </>
-              )}
-            </section>
-          ))}
-          {/* <footer css={orderFooterStyle}>
-            <h6>총액</h6>
-            <p>{purchaseInformation.reduce((total, info) => 'price' in info ? total + info.price : total, 0).toLocaleString()}원</p>
-          </footer> */}
-        </article>
-      )}
-      <button onClick={() => setOpen(prev => !prev)}>
-        {participants.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
-      </button>
-      {open && (
-        <Modal onClose={() => setOpen(false)}>
-          {participants.length === 0 ? (
-            <SetInitialParticipants setParticipantsAndModalClose={setParticipantsAndModalClose} />
-          ) : (
-            <SetActionModalContent
-              setOpen={setOpen}
-              participants={participants}
-              setParticipants={setParticipants}
-              purchaseInformation={purchaseInformation}
-              setPurchaseInformation={setPurchaseInformation}
-            />
-          )}
-        </Modal>
-      )}
-    </section>
+    <div css={EventStyle}>
+      {/* TODO: (@soha) TopNav 에러로 인해 임시로 div 만들어서 사용 */}
+      <div css={css({height: '24px'})}>홈 | 관리</div>
+      {/* <TopNav navType={'home'} /> */}
+      <Title title="행동대장 야유회" description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요." />
+      <section css={ReceiptStyle}>
+        <StepItem
+          name={`${order}차`}
+          personCount={participants.length}
+          bills={[
+            {name: 'QWER', price: 12000, hasDragHandle: true},
+            {name: '배고파요', price: 12000, hasDragHandle: true},
+          ]}
+        />
+        <InOutItem names={['감자', '고구마']} inOutType="out" hasDragHandle={true} />
+        {/* TODO: (@soha) 퍼블리싱을 위해 일단 주석처리 */}
+        {/* {order > 0 && <></>} */}
+        <FixedButton
+          children={participants.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
+          onClick={() => setOpen(prev => !prev)}
+        />
+        {open && ModalRendering({participants, setParticipantsAndModalClose})}
+      </section>
+    </div>
   );
 };
 
