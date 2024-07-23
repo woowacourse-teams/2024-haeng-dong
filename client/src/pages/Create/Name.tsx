@@ -2,13 +2,16 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {ROUTER_URLS} from '@constants/routerUrls';
 import {FixedButton, Input, MainLayout, TextButton, Title, TopNav} from 'haengdong-design';
+import {requestPostEvent} from '@apis/requestPostEvent';
 
 const CreateEvent = () => {
   const [eventTitle, setEventTitle] = useState('');
   const navigate = useNavigate();
 
-  const submitEventTitle = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitEventTitle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const result = await requestPostEvent({name: eventTitle});
+
     navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({title: eventTitle})}`);
   };
 
