@@ -10,7 +10,8 @@ import InOutItem from '@components/InOutItem/InOutItem';
 import Input from '@components/Input/Input';
 import StepItem from '@components/StepItem/StepItem';
 import Switch from '@components/Switch/Switch';
-import Tab from '@components/Tab/Tab';
+import Tab from './components/Tabs/Tab';
+import Tabs from '@/components/Tabs/Tabs';
 import Text from '@components/Text/Text';
 import TextButton from '@components/TextButton/TextButton';
 import Title from '@components/Title/Title';
@@ -34,6 +35,7 @@ export {
   StepItem,
   Switch,
   Tab,
+  Tabs,
   Text,
   TextButton,
   Title,

@@ -4,5 +4,5 @@ export interface TabProps {
 }
 
 export interface TabsProps {
-  tabs: TabProps[];
+  children: React.ReactElement<TabProps>[];
 }
