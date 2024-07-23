@@ -18,6 +18,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   const {theme} = useTheme();
   const {opened, handleClose} = useBottomSheet({isOpened, ...props});
 
+  // TODO: (@todari) : children 길이 길 때 overflow button에 안가리는 영역 처리
   return createPortal(
     <>
       {opened && (
@@ -25,7 +26,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
           <div css={dimmedLayerStyle(theme)} onClick={handleClose} />
           <div css={bottomSheetContainerStyle(theme)}>
             <div css={indicatorStyle(theme)} />
-            // TODO: (@todari) : children 길이 길 때 overflow button에 안가리는 영역
             {children}
             {fixedButtonProps && <FixedButton {...fixedButtonProps} />}
           </div>
