@@ -8,13 +8,12 @@ interface MainLayoutProps extends PropsWithChildren {
 }
 
 export const MainLayout = ({backgroundColor, children}: MainLayoutProps) => {
-  const {theme} = useTheme();
   return (
     <Flex
       backgroundColor={backgroundColor}
       justifyContent="flexStart"
       flexDirection="column"
-      margin="1rem 0 0 0"
+      padding="1rem 0 0 0"
       gap="1rem"
       width="100%"
       height="100%"
