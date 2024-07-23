@@ -12,7 +12,7 @@ export const flexStyle = ({
   margin = '0',
   width = 'auto',
   height = 'auto',
-  backgroundColor = 'white',
+  backgroundColor,
   theme,
   ...rest
 }: FlexProps) =>
