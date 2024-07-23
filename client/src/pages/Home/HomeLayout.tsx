@@ -1,6 +1,7 @@
 import {Flex, MainLayout} from 'haengdong-design';
 import {StepListProvider} from '@hooks/useStepList/useStepList';
 import {useEffect} from 'react';
+
 import HomeContent from './HomeContent';
 
 const HomeLayout = () => {
