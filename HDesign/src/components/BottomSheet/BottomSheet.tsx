@@ -2,7 +2,7 @@
 import {createPortal} from 'react-dom';
 
 import {BottomSheetProps} from '@components/BottomSheet/BottomSheet.type';
-import {useBottomSheet} from '@components/BottomSheet/useBottomSheet';
+import {useBottomSheet} from './useBottomSheet';
 import FixedButton from '@components/FixedButton/FixedButton';
 
 import {useTheme} from '@theme/HDesignProvider';
@@ -10,10 +10,9 @@ import {useTheme} from '@theme/HDesignProvider';
 import {bottomSheetContainerStyle, dimmedLayerStyle, indicatorStyle} from './BottomSheet.style';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
-  fixedButtonVariants = 'primary',
   isOpened = false,
   children,
-  fixedButtonText,
+  fixedButtonProps,
   ...props
 }: BottomSheetProps) => {
   const {theme} = useTheme();
@@ -26,10 +25,9 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
           <div css={dimmedLayerStyle(theme)} onClick={handleClose} />
           <div css={bottomSheetContainerStyle(theme)}>
             <div css={indicatorStyle(theme)} />
+            // TODO: (@todari) : children 길이 길 때 overflow button에 안가리는 영역
             {children}
-            {(fixedButtonVariants || fixedButtonText) && (
-              <FixedButton variants={fixedButtonVariants} children={fixedButtonText} />
-            )}
+            {fixedButtonProps && <FixedButton {...fixedButtonProps} />}
           </div>
         </>
       )}
