@@ -12,7 +12,8 @@ export const searchTermsStyle = (theme: Theme) =>
     position: 'absolute',
     top: '3.5rem',
 
-    width: '100%',
+    width: 'calc(100% - 2rem)',
+    margin: '0 1rem',
     padding: '0.5rem 0',
 
     borderRadius: '1rem',
