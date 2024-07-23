@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.EventService;
 import server.haengdong.application.response.EventAppResponse;
@@ -19,7 +20,7 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping("/api/events")
-    public ResponseEntity<Void> saveEvent(EventSaveRequest request) {
+    public ResponseEntity<Void> saveEvent(@RequestBody EventSaveRequest request) {
         EventAppResponse eventAppResponse = eventService.saveEvent(request.toAppRequest());
 
         return ResponseEntity.ok()
