@@ -1,4 +1,11 @@
 import {useState} from 'react';
+import {Input, Switch} from 'haengdong-design';
+
+import {
+  updateParticipantsInputStyle,
+  updateParticipantsStyle,
+  updateParticipantsSwitchStyle,
+} from './UpdateParticipants.style';
 
 interface UpdateParticipantsProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,9 +50,14 @@ const UpdateParticipants = ({
   };
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
-      <input onChange={event => setName(event.target.value)} value={name} />
-      <button onClick={updateParticipant}>{participantType} 인원 확정</button>
+    <div css={updateParticipantsStyle}>
+      <div css={updateParticipantsSwitchStyle}>
+        {/* <Switch />
+        <Switch /> */}
+      </div>
+      <div css={updateParticipantsInputStyle}>
+        <Input onChange={event => setName(event.target.value)} value={name} />
+      </div>
     </div>
   );
 };
