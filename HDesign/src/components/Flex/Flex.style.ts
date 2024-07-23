@@ -30,5 +30,14 @@ export const flexStyle = ({
     height,
     ...rest,
 
-    backgroundColor: backgroundColor === 'white' ? theme?.colors.white : theme?.colors.grayContainer,
+    backgroundColor: (() => {
+      switch (backgroundColor) {
+        case 'white':
+          return theme?.colors.white;
+        case 'gray':
+          return theme?.colors.grayContainer;
+        default:
+          return 'none';
+      }
+    })(),
   });
