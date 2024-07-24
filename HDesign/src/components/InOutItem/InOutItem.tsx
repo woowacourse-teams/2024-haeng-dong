@@ -9,8 +9,8 @@ import Text from '@components/Text/Text';
 import DragHandleItem from '../DragHandleItem/DragHandleItem';
 
 const IN_OUT_TEXT: Record<InOutType, string> = {
-  IN: '나감',
-  OUT: '들어옴',
+  IN: '들어옴',
+  OUT: '나감',
 };
 
 export const InOutItem: React.FC<InOutItemProps> = ({
@@ -24,7 +24,7 @@ export const InOutItem: React.FC<InOutItemProps> = ({
   // TODO: (@toari) : 사람 수 많을 때 UX writing 처리
   return (
     <DragHandleItem {...htmlProps} hasDragHandle={hasDragHandle}>
-      <Text css={textStyle(theme)} size="captionBold">
+      <Text css={textStyle(theme)} size="bodyBold">
         {names.join(', ')} {IN_OUT_TEXT[inOutType]}
       </Text>
     </DragHandleItem>
