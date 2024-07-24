@@ -23,7 +23,7 @@ const meta = {
     disabled: false,
     placeholder: 'placeholder',
     searchTerms: ['todari', 'cookie'],
-    setKeyword: keyword => console.log(keyword),
+    setState: keyword => console.log(keyword),
   },
 } satisfies Meta<typeof Search>;
 
