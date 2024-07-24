@@ -1,5 +1,15 @@
 body {
   max-width: 768px;
   margin: 0 auto;
-  border: 1px solid gray;
+  height: 100dvh;
+}
+
+section {
+  width: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

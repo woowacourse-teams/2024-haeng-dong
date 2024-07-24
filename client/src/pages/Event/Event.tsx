@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {css} from '@emotion/react';
-import {TopNav, Title, FixedButton, StepItem, InOutItem, BottomSheet} from 'haengdong-design';
+import {TopNav, Title, FixedButton, StepItem, InOutItem, MainLayout} from 'haengdong-design';
 
 import {SetActionModalContent, SetInitialParticipants} from '@components/Modal';
 
@@ -64,7 +64,7 @@ const ModalRendering = ({
 
 const Event = () => {
   const [openBottomSheet, setOpenBottomSheet] = useState(false);
-  const [participants, setParticipants] = useState<string[]>(['소하']);
+  const [participants, setParticipants] = useState<string[]>([]);
   const [order, setOrder] = useState(0);
 
   const [purchaseInformation, setPurchaseInformation] = useState<(PurchaseInformation | ParticipantType)[]>([
@@ -80,7 +80,7 @@ const Event = () => {
   };
 
   return (
-    <div css={EventStyle}>
+    <MainLayout backgroundColor="gray">
       <TopNav navType={'home'} />
       <Title title="행동대장 야유회" description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요." />
       <section css={ReceiptStyle}>
@@ -110,7 +110,7 @@ const Event = () => {
             setPurchaseInformation,
           })}
       </section>
-    </div>
+    </MainLayout>
   );
 };
 
