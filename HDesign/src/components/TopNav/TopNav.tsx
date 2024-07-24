@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import TextButton from '../TextButton/TextButton';
 import {topNavNonStyle, topNavStyle} from './TopNav.style';
 import {TopNavProps} from './TopNav.type';
@@ -11,10 +11,13 @@ import {useState} from 'react';
 const TopNav = ({navType}: TopNavProps) => {
   const [nav, setNav] = useState('홈');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const basePath = location.pathname.split('/').slice(0, -1).join('/');
 
   const PATH_TABLE: Record<string, string> = {
-    홈: '.',
-    관리: './admin',
+    홈: `${basePath}/home`,
+    관리: `${basePath}/admin`,
   };
 
   const handleRoute = (nav: string) => {
