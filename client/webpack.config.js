@@ -3,8 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import {ModifySourcePlugin, ConcatOperation} from 'modify-source-webpack-plugin';
 import {fileURLToPath} from 'url';
-import dotenv from 'dotenv';
-import webpack from 'webpack';
+import Dotenv from 'dotenv-webpack';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -66,10 +65,7 @@ export default {
         },
       ],
     }),
-    new webpack.DefinePlugin({
-      API_BASE_URL: JSON.stringify(process.env.API_BASE_URL),
-    }),
-    new webpack.EnvironmentPlugin(['API_BASE_URL']),
+    new Dotenv(),
   ],
   devServer: {
     port: 3000,
