@@ -6,7 +6,7 @@ type HeadersType = [string, string][] | Record<string, string> | Headers;
 export type ObjectQueryParams = Record<string, string | number | boolean>;
 
 type RequestProps = {
-  baseUrl: string;
+  baseUrl?: string;
   endpoint: string;
   headers?: HeadersType;
   body?: Body | object | null;
@@ -23,6 +23,8 @@ type Options = {
   headers: HeadersType;
   body?: Body | null;
 };
+
+const API_BASE_URL = process.env.API_BASE_URL;
 
 const objectToQueryString = (params: ObjectQueryParams): string => {
   return Object.entries(params)
@@ -57,7 +59,7 @@ export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
   return fetcher({method: 'DELETE', headers, ...args});
 };
 
-const fetcher = ({method, baseUrl, endpoint, headers, body, queryParams}: FetcherProps) => {
+const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: FetcherProps) => {
   // const token = generateBasicToken(USER_ID, USER_PASSWORD);
   const options = {
     method,

@@ -3,6 +3,8 @@ import {BottomSheet, Switch} from 'haengdong-design';
 
 import {InOutType, ParticipantType, PurchaseInformation} from '@pages/Event/Event';
 
+import {Switch} from '@components/Switch';
+
 import SetPurchase from './SetPurchase';
 import UpdateParticipants from './UpdateParticipants';
 import {setActionModalContentStyle, setActionModalContentSwitchContainerStyle} from './SetActionModalContent.style';
