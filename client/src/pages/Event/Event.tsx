@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {css} from '@emotion/react';
-import {TopNav, Title, FixedButton, StepItem, InOutItem} from 'haengdong-design';
+import {TopNav, Title, FixedButton, StepItem, InOutItem, BottomSheet} from 'haengdong-design';
 
 import {SetActionModalContent, SetInitialParticipants} from '@components/Modal';
 
@@ -18,21 +18,29 @@ type ParticipantType = {
 
 interface ModalRenderingProps {
   participants: string[];
-  setParticipantsAndModalClose: (participants: string[]) => void;
+  openBottomSheet: boolean;
+  setEvent: (participants: string[]) => void;
+  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalRendering = ({participants, setParticipantsAndModalClose}: ModalRenderingProps) => {
+const ModalRendering = ({participants, setEvent, setOpenBottomSheet, openBottomSheet}: ModalRenderingProps) => {
   switch (participants.length) {
     case 0:
-      return <SetInitialParticipants setParticipantsAndModalClose={setParticipantsAndModalClose} />;
+      return (
+        <SetInitialParticipants
+          setEvent={setEvent}
+          setOpenBottomSheet={setOpenBottomSheet}
+          openBottomSheet={openBottomSheet}
+        />
+      );
 
     default:
-      return <SetActionModalContent participants={participants} />;
+      return <SetActionModalContent participants={participants} setOpenBottomSheet={setOpenBottomSheet} />;
   }
 };
 
 const Event = () => {
-  const [open, setOpen] = useState(false);
+  const [openBottomSheet, setOpenBottomSheet] = useState(false);
   const [participants, setParticipants] = useState<string[]>([]);
   const [order, setOrder] = useState(0);
 
@@ -43,21 +51,14 @@ const Event = () => {
     } as PurchaseInformation,
   ]);
 
-  const setParticipantsAndModalClose = (participants: string[]) => {
+  const setEvent = (participants: string[]) => {
     setParticipants(participants);
     setOrder(1);
-    setOpen(false);
   };
-
-  // TODO: (@soha) BottomSheet 확인을 위한 console. 추후 삭제 예정
-  console.log('par: ', participants.length);
-  console.log(open);
 
   return (
     <div css={EventStyle}>
-      {/* TODO: (@soha) TopNav 에러로 인해 임시로 div 만들어서 사용 */}
-      <div css={css({height: '24px'})}>홈 | 관리</div>
-      {/* <TopNav navType={'home'} /> */}
+      <TopNav navType={'home'} />
       <Title title="행동대장 야유회" description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요." />
       <section css={ReceiptStyle}>
         <StepItem
@@ -73,9 +74,9 @@ const Event = () => {
         {/* {order > 0 && <></>} */}
         <FixedButton
           children={participants.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
-          onClick={() => setOpen(prev => !prev)}
+          onClick={() => setOpenBottomSheet(prev => !prev)}
         />
-        {open && ModalRendering({participants, setParticipantsAndModalClose})}
+        {openBottomSheet && ModalRendering({participants, setEvent, setOpenBottomSheet, openBottomSheet})}
       </section>
     </div>
   );
