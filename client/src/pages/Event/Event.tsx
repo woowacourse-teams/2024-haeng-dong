@@ -11,9 +11,11 @@ export type PurchaseInformation = {
   price: number;
 };
 
-type ParticipantType = {
+export type InOutType = '늦참' | '탈주';
+
+export type ParticipantType = {
   name: string;
-  type: '늦참' | '탈주';
+  type: InOutType;
 };
 
 interface ModalRenderingProps {
@@ -21,9 +23,20 @@ interface ModalRenderingProps {
   openBottomSheet: boolean;
   setEvent: (participants: string[]) => void;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
+  purchaseInformation: (PurchaseInformation | ParticipantType)[];
+  setPurchaseInformation: React.Dispatch<React.SetStateAction<(PurchaseInformation | ParticipantType)[]>>;
 }
 
-const ModalRendering = ({participants, setEvent, setOpenBottomSheet, openBottomSheet}: ModalRenderingProps) => {
+const ModalRendering = ({
+  participants,
+  setEvent,
+  setOpenBottomSheet,
+  openBottomSheet,
+  setParticipants,
+  purchaseInformation,
+  setPurchaseInformation,
+}: ModalRenderingProps) => {
   switch (participants.length) {
     case 0:
       return (
@@ -35,13 +48,23 @@ const ModalRendering = ({participants, setEvent, setOpenBottomSheet, openBottomS
       );
 
     default:
-      return <SetActionModalContent participants={participants} setOpenBottomSheet={setOpenBottomSheet} />;
+      return (
+        <SetActionModalContent
+          setEvent={setEvent}
+          participants={participants}
+          setOpenBottomSheet={setOpenBottomSheet}
+          openBottomSheet={openBottomSheet}
+          setParticipants={setParticipants}
+          purchaseInformation={purchaseInformation}
+          setPurchaseInformation={setPurchaseInformation}
+        />
+      );
   }
 };
 
 const Event = () => {
   const [openBottomSheet, setOpenBottomSheet] = useState(false);
-  const [participants, setParticipants] = useState<string[]>([]);
+  const [participants, setParticipants] = useState<string[]>(['소하']);
   const [order, setOrder] = useState(0);
 
   const [purchaseInformation, setPurchaseInformation] = useState<(PurchaseInformation | ParticipantType)[]>([
@@ -76,7 +99,16 @@ const Event = () => {
           children={participants.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
           onClick={() => setOpenBottomSheet(prev => !prev)}
         />
-        {openBottomSheet && ModalRendering({participants, setEvent, setOpenBottomSheet, openBottomSheet})}
+        {openBottomSheet &&
+          ModalRendering({
+            participants,
+            setEvent,
+            setOpenBottomSheet,
+            openBottomSheet,
+            setParticipants,
+            purchaseInformation,
+            setPurchaseInformation,
+          })}
       </section>
     </div>
   );

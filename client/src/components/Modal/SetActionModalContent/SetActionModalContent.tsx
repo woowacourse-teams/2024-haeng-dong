@@ -1,58 +1,76 @@
 import {useState} from 'react';
+import {BottomSheet, Switch} from 'haengdong-design';
 
-import {Switch} from '@components/Switch';
+import {InOutType, ParticipantType, PurchaseInformation} from '@pages/Event/Event';
 
 import SetPurchase from './SetPurchase';
 import UpdateParticipants from './UpdateParticipants';
-import {switchContainerStyle} from './SetActionModalContent.style';
+import {setActionModalContentStyle, setActionModalContentSwitchContainerStyle} from './SetActionModalContent.style';
 
-// type ActionType = '지출' | '인원';
+type ActionType = '지출' | '인원';
 
 interface SetActionModalContentProps {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   participants: string[];
+  openBottomSheet: boolean;
+  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setEvent: (participants: string[]) => void;
   setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
-  purchaseInformation: any;
-  setPurchaseInformation: any;
+  purchaseInformation: (PurchaseInformation | ParticipantType)[];
+  setPurchaseInformation: React.Dispatch<React.SetStateAction<(PurchaseInformation | ParticipantType)[]>>;
 }
 
 const SetActionModalContent = ({
-  setOpen,
   participants,
+  openBottomSheet,
+  setOpenBottomSheet,
+  setEvent,
   setParticipants,
   purchaseInformation,
   setPurchaseInformation,
 }: SetActionModalContentProps) => {
-  const [actionType, setActionType] = useState('지출');
-  const [participantType, setParticipantType] = useState('늦참');
+  const [action, setAction] = useState<ActionType>('지출');
+  const [participantAction, setParticipantAction] = useState<InOutType>('늦참');
 
+  const handleActionTypeChange = (value: string) => {
+    setAction(value as ActionType);
+  };
+
+  const handleParticipantTypeChange = (value: string) => {
+    setParticipantAction(value as InOutType);
+  };
   return (
-    <>
-      <div css={switchContainerStyle}>
-        <Switch buttonList={['지출', '인원']} curSwitch={actionType} setSwitch={setActionType} />
-        {actionType === '인원' && (
-          <Switch buttonList={['늦참', '탈주']} curSwitch={participantType} setSwitch={setParticipantType} />
+    <BottomSheet
+      isOpened={openBottomSheet}
+      onChangeClose={() => setOpenBottomSheet(false)}
+      onClick={() => setEvent(participants)}
+    >
+      <div css={setActionModalContentStyle}>
+        <div css={setActionModalContentSwitchContainerStyle}>
+          <Switch value={action} onChange={handleActionTypeChange} values={['지출', '인원']} />
+          {action === '인원' && (
+            <Switch values={['늦참', '탈주']} value={participantAction} onChange={handleParticipantTypeChange} />
+          )}
+        </div>
+
+        {action === '지출' && (
+          <SetPurchase
+            setOpen={setOpenBottomSheet}
+            setPurchaseInformation={setPurchaseInformation}
+            purchaseInformation={purchaseInformation}
+          />
+        )}
+        {action === '인원' && (
+          <UpdateParticipants
+            setOpen={setOpenBottomSheet}
+            participantType={participantAction}
+            participants={participants}
+            setParticipants={setParticipants}
+            setPurchaseInformation={setPurchaseInformation}
+            purchaseInformation={purchaseInformation}
+          />
         )}
       </div>
-
-      {actionType === '지출' && (
-        <SetPurchase
-          setOpen={setOpen}
-          setPurchaseInformation={setPurchaseInformation}
-          purchaseInformation={purchaseInformation}
-        />
-      )}
-      {actionType === '인원' && (
-        <UpdateParticipants
-          setOpen={setOpen}
-          participantType={participantType}
-          participants={participants}
-          setParticipants={setParticipants}
-          setPurchaseInformation={setPurchaseInformation}
-          purchaseInformation={purchaseInformation}
-        />
-      )}
-    </>
+    </BottomSheet>
   );
 };
 
