@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {Input, FixedButton} from 'haengdong-design';
-import {css} from '@emotion/react';
 
 import {PurchaseInformation} from '@pages/Event/Event';
 
