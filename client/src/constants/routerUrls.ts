@@ -4,4 +4,5 @@ export const ROUTER_URLS = {
   eventCreateComplete: '/event/create/complete',
   event: '/event',
   eventManage: '/event/:eventId',
+  home: '/event/:eventId/home',
 };
