@@ -5,6 +5,9 @@ export const setInitialParticipantsStyle = () =>
     display: 'flex',
     flexDirection: 'column',
     gap: '1.5rem',
+    width: '100%',
+    height: '100%',
+    padding: '0 1.5rem',
   });
 
 export const setInitialParticipantsInputGroupStyle = () =>
@@ -12,4 +15,5 @@ export const setInitialParticipantsInputGroupStyle = () =>
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
+    overflow: 'scroll',
   });
