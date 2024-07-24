@@ -8,10 +8,10 @@ public record EventSaveRequest(
 
         @NotBlank
         @Size(min = 2, max = 20)
-        String name
+        String eventName
 ) {
 
     public EventAppRequest toAppRequest() {
-        return new EventAppRequest(name);
+        return new EventAppRequest(eventName);
     }
 }
