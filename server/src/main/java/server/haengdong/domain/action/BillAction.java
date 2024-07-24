@@ -11,6 +11,8 @@ import jakarta.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -45,13 +47,13 @@ public class BillAction implements Comparable<BillAction> {
     private void validateTitle(String title) {
         int titleLength = title.trim().length();
         if (titleLength < MIN_TITLE_LENGTH || titleLength > MAX_TITLE_LENGTH) {
-            throw new IllegalArgumentException("앞뒤 공백을 제거한 지출 내역 제목은 2 ~ 30자여야 합니다.");
+            throw new HaengdongException(HaengdongErrorCode.INVALID_BILL_ACTION_SIZE);
         }
     }
 
     private void validatePrice(Long price) {
         if (price < MIN_PRICE || price > MAX_PRICE) {
-            throw new IllegalArgumentException("지출 금액은 10,000,000 이하의 자연수여야 합니다.");
+            throw new HaengdongException(HaengdongErrorCode.INVALID_PRICE_SIZE);
         }
     }
 
