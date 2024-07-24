@@ -6,9 +6,6 @@ import {TopNavProps} from './TopNav.type';
 import Switch from '../Switch/Switch';
 import {useState} from 'react';
 
-// TODO: (@todari) navigation으로 인해 storybook 동작하지 않는 오류 해결해야함
-// + 페이지 정하는 것에 따라, navigate 경로 수정해 줘야 함
-
 const PATH_TABLE: Record<string, {display: string; path: string}> = {
   home: {display: '홈', path: 'home'},
   admin: {display: '관리', path: 'admin'},
