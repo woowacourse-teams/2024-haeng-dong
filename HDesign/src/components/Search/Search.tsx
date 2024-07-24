@@ -9,14 +9,14 @@ import Flex from '@components/Flex/Flex';
 
 export interface SearchProps extends InputProps {
   searchTerms: string[];
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setState: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Search: React.FC<SearchProps> = ({searchTerms, setKeyword, ...inputProps}: SearchProps) => {
+const Search: React.FC<SearchProps> = ({searchTerms, setState, ...inputProps}: SearchProps) => {
   const {theme} = useTheme();
   const {value, showSearchTerms, handleOnChange, handleOnClick, filterSearchTerms} = useSearch({
     searchTerms,
-    setKeyword,
+    setState,
   });
 
   return (

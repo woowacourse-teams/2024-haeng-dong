@@ -2,16 +2,16 @@ import {useState} from 'react';
 
 interface UseSearchProps {
   searchTerms: string[];
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setState: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const useSearch = ({searchTerms, setKeyword}: UseSearchProps) => {
+const useSearch = ({searchTerms, setState}: UseSearchProps) => {
   const [value, setValue] = useState('');
   const [showSearchTerms, setShowSearchTerms] = useState(false);
 
   const handleOnClick = (searchTerm: string) => {
     setValue(searchTerm);
-    setKeyword(searchTerm);
+    setState(searchTerm);
     setShowSearchTerms(false);
   };
 
