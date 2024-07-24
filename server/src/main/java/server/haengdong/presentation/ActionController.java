@@ -16,8 +16,8 @@ public class ActionController {
 
     private final ActionService actionService;
 
-    @GetMapping("/api/events/{token}/actions/reports")
-    public ResponseEntity<MemberBillReportsResponse> getMemberBillReports(@PathVariable("token") String token) {
+    @GetMapping("/api/events/{eventId}/actions/reports")
+    public ResponseEntity<MemberBillReportsResponse> getMemberBillReports(@PathVariable("eventId") String token) {
         List<MemberBillReportAppResponse> memberBillReports = actionService.getMemberBillReports(token);
 
         return ResponseEntity.ok()
