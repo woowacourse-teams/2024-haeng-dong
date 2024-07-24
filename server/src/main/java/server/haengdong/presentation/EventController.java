@@ -28,8 +28,8 @@ public class EventController {
                 .build();
     }
 
-    @GetMapping("/api/events/{token}")
-    public ResponseEntity<EventDetailResponse> findEvent(@PathVariable("token") String token) {
+    @GetMapping("/api/events/{eventId}")
+    public ResponseEntity<EventDetailResponse> findEvent(@PathVariable("eventId") String token) {
         EventDetailResponse eventDetailResponse = EventDetailResponse.of(eventService.findEvent(token));
 
         return ResponseEntity.ok(eventDetailResponse);
