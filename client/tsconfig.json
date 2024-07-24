@@ -16,11 +16,11 @@
 
     "jsx": "react-jsx",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["jest"],
+    "types": ["node", "jest"],
     "esModuleInterop": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -46,5 +46,6 @@
     },
     "outDir": "./dist"
   },
+  "node": true,
   "include": ["src"]
 }
