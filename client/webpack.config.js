@@ -8,6 +8,8 @@ import Dotenv from 'dotenv-webpack';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// dotenv.config({path: path.join(__dirname, '.env')});
+
 export default {
   mode: 'development',
   entry: './src/index.tsx',

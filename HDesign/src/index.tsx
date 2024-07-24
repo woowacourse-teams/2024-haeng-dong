@@ -8,6 +8,7 @@ import Flex from '@components/Flex/Flex';
 import IconButton from '@components/IconButton/IconButton';
 import InOutItem from '@components/InOutItem/InOutItem';
 import Input from '@components/Input/Input';
+import Search from '@components/Search/Search';
 import StepItem from '@components/StepItem/StepItem';
 import Switch from '@components/Switch/Switch';
 import Tab from './components/Tabs/Tab';
@@ -33,6 +34,7 @@ export {
   IconButton,
   InOutItem,
   Input,
+  Search,
   StepItem,
   Switch,
   Tab,

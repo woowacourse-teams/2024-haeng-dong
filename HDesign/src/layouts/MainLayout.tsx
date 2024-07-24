@@ -1,6 +1,5 @@
 import {PropsWithChildren} from 'react';
 import {Flex} from '..';
-import {useTheme} from '@/theme/HDesignProvider';
 type MainLayoutBackground = 'white' | 'gray';
 
 interface MainLayoutProps extends PropsWithChildren {
