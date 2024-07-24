@@ -1,4 +1,5 @@
 import {useNavigate} from 'react-router-dom';
+import {FixedButton, MainLayout, Title} from 'haengdong-design';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -6,10 +7,11 @@ const Main = () => {
   const navigate = useNavigate();
 
   return (
-    <section>
-      <h1>행동대장</h1>
-      <button onClick={() => navigate(ROUTER_URLS.createEvent)}>행사 생성하기</button>
-    </section>
+    <MainLayout>
+      {/* <TopNav navType="back" /> */}
+      <Title title="행동대장" description="랜딩페이지입니다." />
+      <FixedButton onClick={() => navigate(ROUTER_URLS.eventCreateName)}>행사 생성하기</FixedButton>
+    </MainLayout>
   );
 };
 
