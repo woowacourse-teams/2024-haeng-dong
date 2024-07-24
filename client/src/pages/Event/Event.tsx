@@ -22,20 +22,9 @@ interface ModalRenderingProps {
   openBottomSheet: boolean;
   setEvent: (participants: string[]) => void;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
-  purchaseInformation: (PurchaseInformation | ParticipantType)[];
-  setPurchaseInformation: React.Dispatch<React.SetStateAction<(PurchaseInformation | ParticipantType)[]>>;
 }
 
-const ModalRendering = ({
-  participants,
-  setEvent,
-  setOpenBottomSheet,
-  openBottomSheet,
-  setParticipants,
-  purchaseInformation,
-  setPurchaseInformation,
-}: ModalRenderingProps) => {
+const ModalRendering = ({participants, setEvent, setOpenBottomSheet, openBottomSheet}: ModalRenderingProps) => {
   switch (participants.length) {
     case 0:
       return (
@@ -53,9 +42,6 @@ const ModalRendering = ({
           participants={participants}
           setOpenBottomSheet={setOpenBottomSheet}
           openBottomSheet={openBottomSheet}
-          setParticipants={setParticipants}
-          purchaseInformation={purchaseInformation}
-          setPurchaseInformation={setPurchaseInformation}
         />
       );
   }
@@ -113,9 +99,6 @@ const Event = () => {
             setEvent,
             setOpenBottomSheet,
             openBottomSheet,
-            setParticipants,
-            purchaseInformation,
-            setPurchaseInformation,
           })}
       </section>
     </MainLayout>

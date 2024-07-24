@@ -7,16 +7,13 @@ import SetPurchase from './SetPurchase';
 import UpdateParticipants from './UpdateParticipants';
 import {setActionModalContentStyle, setActionModalContentSwitchContainerStyle} from './SetActionModalContent.style';
 
-type ActionType = '지출' | '인원';
+export type ActionType = '지출' | '인원';
 
 interface SetActionModalContentProps {
   participants: string[];
   openBottomSheet: boolean;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setEvent: (participants: string[]) => void;
-  setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
-  purchaseInformation: (PurchaseInformation | ParticipantType)[];
-  setPurchaseInformation: React.Dispatch<React.SetStateAction<(PurchaseInformation | ParticipantType)[]>>;
 }
 
 const SetActionModalContent = ({
@@ -24,12 +21,9 @@ const SetActionModalContent = ({
   openBottomSheet,
   setOpenBottomSheet,
   setEvent,
-  setParticipants,
-  purchaseInformation,
-  setPurchaseInformation,
 }: SetActionModalContentProps) => {
   const [action, setAction] = useState<ActionType>('지출');
-  const [participantAction, setParticipantAction] = useState<InOutType>('늦참');
+  const [participantAction, setParticipantAction] = useState<InOutType>('탈주');
 
   const handleActionTypeChange = (value: string) => {
     setAction(value as ActionType);
@@ -38,6 +32,7 @@ const SetActionModalContent = ({
   const handleParticipantTypeChange = (value: string) => {
     setParticipantAction(value as InOutType);
   };
+
   return (
     <BottomSheet
       isOpened={openBottomSheet}
@@ -52,21 +47,12 @@ const SetActionModalContent = ({
           )}
         </div>
 
-        {action === '지출' && (
-          <SetPurchase
-            setOpen={setOpenBottomSheet}
-            setPurchaseInformation={setPurchaseInformation}
-            purchaseInformation={purchaseInformation}
-          />
-        )}
+        {action === '지출' && <SetPurchase setOpenBottomSheet={setOpenBottomSheet} />}
         {action === '인원' && (
           <UpdateParticipants
-            setOpen={setOpenBottomSheet}
-            participantType={participantAction}
+            participantAction={participantAction}
             participants={participants}
-            setParticipants={setParticipants}
-            setPurchaseInformation={setPurchaseInformation}
-            purchaseInformation={purchaseInformation}
+            setOpenBottomSheet={setOpenBottomSheet}
           />
         )}
       </div>

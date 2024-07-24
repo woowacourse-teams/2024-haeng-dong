@@ -16,8 +16,6 @@ interface UpdateParticipantsProps {
 const UpdateParticipants = ({participantAction, participants, setOpenBottomSheet}: UpdateParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
 
-  const [updateParticipants, setUpdateParticipants] = useState<string[] | undefined>(participants);
-
   const handleUpdateParticipantsSubmit = () => {
     const newParticipants = () => {
       if (participantAction === '탈주') {
@@ -27,8 +25,7 @@ const UpdateParticipants = ({participantAction, participants, setOpenBottomSheet
       }
     };
 
-    setUpdateParticipants(newParticipants());
-    // TODO: (@soha) api 요청시 newParticipants를 보내면 됨
+    // TODO: (@soha) api 요청시 newParticipants()를 보내면 됨
     setOpenBottomSheet(false);
   };
 

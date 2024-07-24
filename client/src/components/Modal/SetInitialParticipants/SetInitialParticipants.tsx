@@ -15,6 +15,7 @@ const SetInitialParticipants = ({openBottomSheet, setEvent, setOpenBottomSheet}:
 
   const handleSubmit = () => {
     setEvent(getNonEmptyInputs());
+    // TODO:  (@soha) api 요청시 보낼 형태 생성
     setOpenBottomSheet(false);
   };
 
