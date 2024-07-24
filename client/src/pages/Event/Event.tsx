@@ -20,16 +20,25 @@ export type ParticipantType = {
 interface ModalRenderingProps {
   participants: string[];
   openBottomSheet: boolean;
-  setEvent: (participants: string[]) => void;
+
+  setOrder: React.Dispatch<React.SetStateAction<number>>;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const ModalRendering = ({participants, setEvent, setOpenBottomSheet, openBottomSheet}: ModalRenderingProps) => {
+const ModalRendering = ({
+  participants,
+
+  setOrder,
+  setOpenBottomSheet,
+  setParticipants,
+  openBottomSheet,
+}: ModalRenderingProps) => {
   switch (participants.length) {
     case 0:
       return (
         <SetInitialParticipants
-          setEvent={setEvent}
+          setParticipants={setParticipants}
           setOpenBottomSheet={setOpenBottomSheet}
           openBottomSheet={openBottomSheet}
         />
@@ -38,7 +47,7 @@ const ModalRendering = ({participants, setEvent, setOpenBottomSheet, openBottomS
     default:
       return (
         <SetActionModalContent
-          setEvent={setEvent}
+          setOrder={setOrder}
           participants={participants}
           setOpenBottomSheet={setOpenBottomSheet}
           openBottomSheet={openBottomSheet}
@@ -50,7 +59,7 @@ const ModalRendering = ({participants, setEvent, setOpenBottomSheet, openBottomS
 const Event = () => {
   const [openBottomSheet, setOpenBottomSheet] = useState(false);
   const [participants, setParticipants] = useState<string[]>([]);
-  const [order, setOrder] = useState(0);
+  const [order, setOrder] = useState<number>(0);
 
   const [purchaseInformation, setPurchaseInformation] = useState<(PurchaseInformation | ParticipantType)[]>([
     {
@@ -58,11 +67,6 @@ const Event = () => {
       price: 0,
     } as PurchaseInformation,
   ]);
-
-  const setEvent = (participants: string[]) => {
-    setParticipants(participants);
-    setOrder(1);
-  };
 
   return (
     <MainLayout backgroundColor="gray">
@@ -96,7 +100,8 @@ const Event = () => {
         {openBottomSheet &&
           ModalRendering({
             participants,
-            setEvent,
+            setOrder,
+            setParticipants,
             setOpenBottomSheet,
             openBottomSheet,
           })}

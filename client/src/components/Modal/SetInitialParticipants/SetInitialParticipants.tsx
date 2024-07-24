@@ -6,16 +6,20 @@ import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from
 
 interface SetInitialParticipantsProps {
   openBottomSheet: boolean;
-  setEvent: (participants: string[]) => void;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const SetInitialParticipants = ({openBottomSheet, setEvent, setOpenBottomSheet}: SetInitialParticipantsProps) => {
+const SetInitialParticipants = ({
+  openBottomSheet,
+  setOpenBottomSheet,
+  setParticipants,
+}: SetInitialParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
 
   const handleSubmit = () => {
-    setEvent(getNonEmptyInputs());
-    // TODO:  (@soha) api 요청시 보낼 형태 생성
+    setParticipants(getNonEmptyInputs());
+    // TODO:  (@soha) api 요청시 getNonEmptyInputs() 보낼 형태 생성
     setOpenBottomSheet(false);
   };
 
