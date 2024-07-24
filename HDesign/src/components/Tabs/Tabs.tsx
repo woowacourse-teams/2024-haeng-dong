@@ -3,11 +3,12 @@ import React, {useState} from 'react';
 import {css} from '@emotion/react';
 
 import {useTheme} from '@theme/HDesignProvider';
-import {tabListStyle, tabStyle, indicatorStyle, tabItemStyle, tabTextStyle} from './Tabs.style';
+import {tabListStyle, indicatorStyle, tabItemStyle, tabTextStyle} from './Tabs.style';
 import {TabsProps} from './Tab.type';
 import Text from '../Text/Text';
+import Flex from '../Flex/Flex';
 
-const Tabs: React.FC<TabsProps> = ({children}) => {
+const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
   const {theme} = useTheme();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
@@ -15,24 +16,26 @@ const Tabs: React.FC<TabsProps> = ({children}) => {
   const tabItemCount = children.length;
 
   return (
-    <section css={tabStyle}>
+    <Flex flexDirection="column" {...tabsContainerStyle}>
       <ul role="tablist" css={tabListStyle(theme)}>
-        {children.map((tabItem, index) => (
-          <li
-            key={tabItem.props.label}
-            role="tab"
-            id={`tab-${tabItem.props.label}`}
-            css={tabItemStyle}
-            aria-selected={isActive(index)}
-            onClick={() => setActiveTabIndex(index)}
-            aria-controls={`tabpanel-${tabItem.props.label}`}
-          >
-            <Text css={tabTextStyle(theme, isActive(index))} size={isActive(index) ? 'bodyBold' : 'body'}>
-              {tabItem.props.label}
-            </Text>
-          </li>
-        ))}
-        <div css={indicatorStyle(theme, `${(activeTabIndex * 100) / tabItemCount}%`, tabItemCount)} />
+        <Flex justifyContent="spaceBetween" alignItems="center" padding="0.5rem">
+          {children.map((tabItem, index) => (
+            <li
+              key={tabItem.props.label}
+              role="tab"
+              id={`tab-${tabItem.props.label}`}
+              css={tabItemStyle}
+              aria-selected={isActive(index)}
+              onClick={() => setActiveTabIndex(index)}
+              aria-controls={`tabpanel-${tabItem.props.label}`}
+            >
+              <Text css={tabTextStyle(theme, isActive(index))} size={isActive(index) ? 'bodyBold' : 'body'}>
+                {tabItem.props.label}
+              </Text>
+            </li>
+          ))}
+          <div css={indicatorStyle(theme, `${(activeTabIndex * 100) / tabItemCount}%`, tabItemCount)} />
+        </Flex>
       </ul>
       <section
         role="tabpanel"
@@ -41,7 +44,7 @@ const Tabs: React.FC<TabsProps> = ({children}) => {
       >
         {children[activeTabIndex].props.content}
       </section>
-    </section>
+    </Flex>
   );
 };
 

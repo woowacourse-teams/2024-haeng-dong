@@ -13,9 +13,12 @@ const meta = {
   },
   args: {
     children: [
-      <Tab key={0} label="전체 지출 내역" content={<div>없지롱</div>} />,
-      <Tab key={1} label="참여자 별 정산" content={<div>있지롱</div>} />,
+      <Tab label="전체 지출 내역" content={<div>없지롱</div>} />,
+      <Tab label="참여자 별 정산" content={<div>있지롱</div>} />,
     ],
+    tabsContainerStyle: {
+      gap: '0.5rem',
+    },
   },
 } satisfies Meta<typeof Tabs>;
 

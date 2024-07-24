@@ -1,21 +1,9 @@
 import {Theme} from '@/theme/theme.type';
 import {css} from '@emotion/react';
 
-export const tabStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-
-  width: '100%',
-});
-
 export const tabListStyle = (theme: Theme) =>
   css({
-    display: 'flex',
     position: 'relative',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-
-    padding: '0.5rem',
 
     borderBottomWidth: 1,
     borderBottomStyle: 'solid',
