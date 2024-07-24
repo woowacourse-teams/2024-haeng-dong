@@ -24,7 +24,7 @@ export const InOutItem: React.FC<InOutItemProps> = ({
   // TODO: (@toari) : 사람 수 많을 때 UX writing 처리
   return (
     <DragHandleItem {...htmlProps} hasDragHandle={hasDragHandle}>
-      <Text css={textStyle(theme)} size="bodyBold">
+      <Text css={textStyle(theme, hasDragHandle)} size="bodyBold">
         {names.join(', ')} {IN_OUT_TEXT[inOutType]}
       </Text>
     </DragHandleItem>

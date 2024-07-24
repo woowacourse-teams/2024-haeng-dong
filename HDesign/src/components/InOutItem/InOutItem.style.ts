@@ -15,7 +15,9 @@ export const prefixStyle = css({
   gap: '0.25rem',
 });
 
-export const textStyle = (theme: Theme) =>
+export const textStyle = (theme: Theme, hasDragHandle: boolean) =>
   css({
+    paddingLeft: hasDragHandle ? '0' : '0.5rem',
+
     color: theme.colors.black,
   });
