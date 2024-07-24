@@ -1,5 +1,6 @@
-import {useState} from 'react';
 import {Text, Input, BottomSheet, FixedButton} from 'haengdong-design';
+
+import useDynamicInput from '@hooks/useDynamicAdditionalInput';
 
 import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './SetInitialParticipants.style';
 
@@ -10,33 +11,34 @@ interface SetInitialParticipantsProps {
 }
 
 const SetInitialParticipants = ({openBottomSheet, setEvent, setOpenBottomSheet}: SetInitialParticipantsProps) => {
-  const [value, setValue] = useState('');
-  const [participants, setParticipants] = useState<string[]>([]);
+  const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
 
-  const addParticipants = (event: React.FormEvent<HTMLFormElement>) => {
-    if (value === '') return;
-
-    event.preventDefault();
-    setParticipants(prev => [...prev, value]);
-    setValue('');
+  const handleSubmit = () => {
+    setEvent(getNonEmptyInputs());
+    setOpenBottomSheet(false);
   };
 
   return (
-    <BottomSheet
-      isOpened={openBottomSheet}
-      onChangeClose={() => setOpenBottomSheet(false)}
-      onClick={() => setEvent(participants)}
-    >
+    <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)} onClick={handleSubmit}>
       <div css={setInitialParticipantsStyle}>
         <Text size="bodyBold">초기 인원 설정하기</Text>
-        <form onSubmit={addParticipants} css={setInitialParticipantsInputGroupStyle}>
-          {/* TODO: (@soha) 값 입력후 blur시 다음 Input 컴포넌트 생성 */}
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-        </form>
+        <div css={setInitialParticipantsInputGroupStyle}>
+          {inputs.map((participant, index) => (
+            <Input
+              key={index}
+              placeholder="이름"
+              type="text"
+              value={participant}
+              ref={el => (inputRefs.current[index] = el)}
+              onChange={e => handleInputChange(index, e.target.value)}
+              onBlur={() => handleInputBlur(index)}
+            />
+          ))}
+        </div>
       </div>
       <FixedButton
-        variants={participants.length ? 'primary' : 'tertiary'}
-        onClick={() => setEvent(participants)}
+        variants={inputs.length - 1 ? 'primary' : 'tertiary'}
+        onClick={handleSubmit}
         children={'인원 설정 완료'}
       />
     </BottomSheet>
