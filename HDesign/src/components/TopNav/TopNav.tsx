@@ -43,7 +43,7 @@ const TopNav = ({navType}: TopNavProps) => {
       case 'home':
         return (
           <div css={topNavStyle}>
-            <Switch value={nav} values={['홈', '관리']} onChange={handleRoute}></Switch>
+            <Switch value={nav} values={['홈', '관리']} onChange={handleRoute} />
           </div>
         );
 
