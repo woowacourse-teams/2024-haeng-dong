@@ -1,6 +1,5 @@
 package server.haengdong.presentation;
 
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.EventService;
-import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
+import server.haengdong.presentation.response.EventResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,12 +19,10 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping("/api/events")
-    public ResponseEntity<Void> saveEvent(@RequestBody EventSaveRequest request) {
-        EventAppResponse eventAppResponse = eventService.saveEvent(request.toAppRequest());
+    public ResponseEntity<EventResponse> saveEvent(@RequestBody EventSaveRequest request) {
+        EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
 
-        return ResponseEntity.ok()
-                .location(URI.create("events/" + eventAppResponse.token()))
-                .build();
+        return ResponseEntity.ok(eventResponse);
     }
 
     @GetMapping("/api/events/{eventId}")
