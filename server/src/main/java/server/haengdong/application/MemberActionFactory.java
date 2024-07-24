@@ -11,6 +11,8 @@ import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.action.MemberGroupIdProvider;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
 @Component
@@ -45,7 +47,7 @@ public class MemberActionFactory {
 
         long uniqueCount = memberNames.stream().distinct().count();
         if (uniqueCount != memberNames.size()) {
-            throw new IllegalArgumentException();
+            throw new HaengdongException(HaengdongErrorCode.DUPLICATED_MEMBER_ACTION);
         }
     }
 
@@ -62,7 +64,7 @@ public class MemberActionFactory {
     private void validateAction(MemberActionSaveAppRequest request, List<MemberAction> memberActions) {
         MemberActionStatus memberActionStatus = MemberActionStatus.of(request.status());
         if (isInvalidStatus(memberActions, request.name(), memberActionStatus)) {
-            throw new IllegalArgumentException();
+            throw new HaengdongException(HaengdongErrorCode.INVALID_MEMBER_ACTION);
         }
     }
 

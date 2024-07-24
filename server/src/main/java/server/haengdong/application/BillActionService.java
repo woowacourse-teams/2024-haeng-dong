@@ -11,6 +11,8 @@ import server.haengdong.domain.event.Event;
 import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -24,7 +26,7 @@ public class BillActionService {
     @Transactional
     public void saveAllBillAction(String eventToken, List<BillActionAppRequest> requests) {
         Event event = eventRepository.findByToken(eventToken)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이벤트 토큰입니다."));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
         Action action = createStartAction(event);
 
         for (BillActionAppRequest request : requests) {
