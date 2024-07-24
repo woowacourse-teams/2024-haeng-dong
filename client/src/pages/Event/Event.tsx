@@ -61,13 +61,6 @@ const Event = () => {
   const [participants, setParticipants] = useState<string[]>([]);
   const [order, setOrder] = useState<number>(0);
 
-  const [purchaseInformation, setPurchaseInformation] = useState<(PurchaseInformation | ParticipantType)[]>([
-    {
-      name: '',
-      price: 0,
-    } as PurchaseInformation,
-  ]);
-
   return (
     <MainLayout backgroundColor="gray">
       <TopNav navType={'home'} />
