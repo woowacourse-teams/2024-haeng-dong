@@ -34,11 +34,7 @@ const SetActionModalContent = ({
   };
 
   return (
-    <BottomSheet
-      isOpened={openBottomSheet}
-      onChangeClose={() => setOpenBottomSheet(false)}
-      onClick={() => setEvent(participants)}
-    >
+    <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)}>
       <div css={setActionModalContentStyle}>
         <div css={setActionModalContentSwitchContainerStyle}>
           <Switch value={action} onChange={handleActionTypeChange} values={['지출', '인원']} />

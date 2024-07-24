@@ -20,7 +20,7 @@ const SetInitialParticipants = ({openBottomSheet, setEvent, setOpenBottomSheet}:
   };
 
   return (
-    <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)} onClick={handleSubmit}>
+    <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)}>
       <div css={setInitialParticipantsStyle}>
         <Text size="bodyBold">초기 인원 설정하기</Text>
         <div css={setInitialParticipantsInputGroupStyle}>
