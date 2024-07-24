@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import TextButton from '../TextButton/TextButton';
 import {topNavNonStyle, topNavStyle} from './TopNav.style';
 import {TopNavProps} from './TopNav.type';
 import Switch from '../Switch/Switch';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 // TODO: (@todari) navigation으로 인해 storybook 동작하지 않는 오류 해결해야함
 // + 페이지 정하는 것에 따라, navigate 경로 수정해 줘야 함
@@ -12,13 +12,14 @@ const TopNav = ({navType}: TopNavProps) => {
   const [nav, setNav] = useState('홈');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate(PATH_TABLE[nav]);
-  }, [nav]);
-
   const PATH_TABLE: Record<string, string> = {
-    홈: './',
+    홈: '.',
     관리: './admin',
+  };
+
+  const handleRoute = (nav: string) => {
+    setNav(nav);
+    navigate(PATH_TABLE[nav]);
   };
 
   const TopNavByType = () => {
@@ -35,7 +36,7 @@ const TopNav = ({navType}: TopNavProps) => {
       case 'home':
         return (
           <div css={topNavStyle}>
-            <Switch value={nav} values={['홈', '관리']} onChange={value => setNav(value)}></Switch>{' '}
+            <Switch value={nav} values={['홈', '관리']} onChange={handleRoute}></Switch>
           </div>
         );
 
