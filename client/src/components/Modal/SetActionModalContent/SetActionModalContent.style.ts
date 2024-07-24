@@ -6,6 +6,7 @@ export const setActionModalContentStyle = css({
   width: '100%',
   height: '100%',
   padding: '0 1.5rem',
+  gap: '1.5rem',
 });
 
 export const setActionModalContentSwitchContainerStyle = css({
