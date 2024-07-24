@@ -16,7 +16,7 @@ spring:
 
 cors:
   max-age: 3600
-  allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro
+  allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
 
 ---
 
