@@ -12,7 +12,7 @@ export interface SearchProps extends InputProps {
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Search: React.FC<SearchProps> = ({searchTerms, onChange, setKeyword, ...inputProps}: SearchProps) => {
+const Search: React.FC<SearchProps> = ({searchTerms, setKeyword, ...inputProps}: SearchProps) => {
   const {theme} = useTheme();
   const {value, showSearchTerms, handleOnChange, handleOnClick, filterSearchTerms} = useSearch({
     searchTerms,
