@@ -12,15 +12,17 @@ export type ActionType = '지출' | '인원';
 interface SetActionModalContentProps {
   participants: string[];
   openBottomSheet: boolean;
+
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setEvent: (participants: string[]) => void;
+  setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SetActionModalContent = ({
   participants,
   openBottomSheet,
+
   setOpenBottomSheet,
-  setEvent,
+  setOrder,
 }: SetActionModalContentProps) => {
   const [action, setAction] = useState<ActionType>('지출');
   const [participantAction, setParticipantAction] = useState<InOutType>('탈주');
@@ -43,7 +45,7 @@ const SetActionModalContent = ({
           )}
         </div>
 
-        {action === '지출' && <SetPurchase setOpenBottomSheet={setOpenBottomSheet} />}
+        {action === '지출' && <SetPurchase setOpenBottomSheet={setOpenBottomSheet} setOrder={setOrder} />}
         {action === '인원' && (
           <UpdateParticipants
             participantAction={participantAction}

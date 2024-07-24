@@ -6,12 +6,14 @@ import {setPurchaseInputStyle, setPurchaseStyle, setPurchaseInputContainerStyle}
 
 interface SetPurchaseProps {
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SetPurchase = ({setOpenBottomSheet}: SetPurchaseProps) => {
+const SetPurchase = ({setOpenBottomSheet, setOrder}: SetPurchaseProps) => {
   const {inputPairs, inputRefs, handleInputChange, handleInputBlur} = useDynamicInputPairs();
 
   const handleSetPurchaseSubmit = () => {
+    setOrder(prev => prev + 1);
     // TODO: (@soha) api 요청시 inputPairs를 보내면 됨
     setOpenBottomSheet(false);
   };
