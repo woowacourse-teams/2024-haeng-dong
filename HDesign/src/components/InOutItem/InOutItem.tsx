@@ -3,15 +3,19 @@ import React from 'react';
 
 import {useTheme} from '@theme/HDesignProvider';
 
-import {InOutItemProps} from './InOutItem.type';
-import {prefixStyle, textStyle} from './InOutItem.style';
+import {InOutItemProps, InOutType} from './InOutItem.type';
+import {textStyle} from './InOutItem.style';
 import Text from '@components/Text/Text';
-import IconButton from '../IconButton/IconButton';
 import DragHandleItem from '../DragHandleItem/DragHandleItem';
+
+const IN_OUT_TEXT: Record<InOutType, string> = {
+  IN: '나감',
+  OUT: '들어옴',
+};
 
 export const InOutItem: React.FC<InOutItemProps> = ({
   names = [],
-  inOutType = 'out',
+  inOutType = 'OUT',
   hasDragHandle = false,
   ...htmlProps
 }: InOutItemProps) => {
@@ -21,7 +25,7 @@ export const InOutItem: React.FC<InOutItemProps> = ({
   return (
     <DragHandleItem {...htmlProps} hasDragHandle={hasDragHandle}>
       <Text css={textStyle(theme)} size="captionBold">
-        {names.join(', ')} {inOutType === 'out' ? '나감' : '들어옴'}
+        {names.join(', ')} {IN_OUT_TEXT[inOutType]}
       </Text>
     </DragHandleItem>
   );

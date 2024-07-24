@@ -1,4 +1,4 @@
-export type InOutType = 'in' | 'out';
+export type InOutType = 'IN' | 'OUT';
 
 export interface InOutItemStyleProps {}
 
