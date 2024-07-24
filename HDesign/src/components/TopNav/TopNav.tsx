@@ -8,21 +8,25 @@ import {useState} from 'react';
 
 // TODO: (@todari) navigation으로 인해 storybook 동작하지 않는 오류 해결해야함
 // + 페이지 정하는 것에 따라, navigate 경로 수정해 줘야 함
+
+const PATH_TABLE: Record<string, {display: string; path: string}> = {
+  home: {display: '홈', path: 'home'},
+  admin: {display: '관리', path: 'admin'},
+};
+
 const TopNav = ({navType}: TopNavProps) => {
-  const [nav, setNav] = useState('홈');
   const navigate = useNavigate();
   const location = useLocation();
 
-  const basePath = location.pathname.split('/').slice(0, -1).join('/');
+  const pathArray = location.pathname.split('/');
+  const basePath = pathArray.slice(0, -1).join('/');
+  const lastPath = pathArray[pathArray.length - 1];
 
-  const PATH_TABLE: Record<string, string> = {
-    홈: `${basePath}/home`,
-    관리: `${basePath}/admin`,
-  };
+  const [nav, setNav] = useState(PATH_TABLE[lastPath].display);
 
   const handleRoute = (nav: string) => {
     setNav(nav);
-    navigate(PATH_TABLE[nav]);
+    navigate(`${basePath}/${PATH_TABLE[nav].path}`);
   };
 
   const TopNavByType = () => {
