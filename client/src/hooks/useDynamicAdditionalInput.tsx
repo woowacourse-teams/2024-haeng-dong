@@ -1,7 +1,8 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 const useDynamicInput = () => {
   const [inputs, setInputs] = useState<string[]>(['']);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = (index: number, value: string) => {
     const newInputs = [...inputs];
@@ -29,8 +30,19 @@ const useDynamicInput = () => {
     return inputs.filter(input => input.trim() !== '');
   };
 
+  useEffect(() => {
+    if (inputRefs.current.length > 0) {
+      const lastInput = inputRefs.current[inputRefs.current.length - 1];
+      if (lastInput) {
+        lastInput.focus();
+        lastInput.scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+    }
+  }, [inputs]);
+
   return {
     inputs,
+    inputRefs,
     handleInputChange,
     handleInputBlur,
     getNonEmptyInputs,
