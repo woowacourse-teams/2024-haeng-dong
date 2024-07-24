@@ -14,6 +14,10 @@ spring:
       format_sql: true
     show-sql: true
 
+cors:
+  max-age: 3600
+  allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro
+
 ---
 
 spring:
