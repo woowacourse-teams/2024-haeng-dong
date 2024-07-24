@@ -15,5 +15,6 @@ export const setInitialParticipantsInputGroupStyle = () =>
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
-    overflow: 'scroll',
+    overflow: 'auto',
+    paddingBottom: '11rem',
   });

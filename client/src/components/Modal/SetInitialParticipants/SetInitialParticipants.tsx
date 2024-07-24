@@ -32,17 +32,6 @@ const SetInitialParticipants = ({openBottomSheet, setEvent, setOpenBottomSheet}:
         <form onSubmit={addParticipants} css={setInitialParticipantsInputGroupStyle}>
           {/* TODO: (@soha) 값 입력후 blur시 다음 Input 컴포넌트 생성 */}
           <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Input placeholder="이름" type="text" value={value} onChange={event => setValue(event.target.value)} />
-          <Text>ddfsdfsa</Text>
         </form>
       </div>
       <FixedButton
