@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/haengdong
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+      format_sql: true
+    show-sql: true
+
+cors:
+  max-age: 3600
+  allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
+
+---
+
+spring:
+  config:
+    import: classpath:config/application-dev.yml
+    activate:
+      on-profile: dev

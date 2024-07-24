@@ -28,7 +28,20 @@ const PRIMITIVE_COLORS = {
 
 type Color = string;
 
-export type ColorTokens = Record<string, Color>;
+export type ColorKeys =
+  | 'white'
+  | 'gray'
+  | 'darkGray'
+  | 'black'
+  | 'primary'
+  | 'onPrimary'
+  | 'secondary'
+  | 'onSecondary'
+  | 'tertiary'
+  | 'onTertiary'
+  | 'grayContainer'
+  | 'lightGrayContainer';
+export type ColorTokens = Record<ColorKeys, Color>;
 
 // TODO: (@soha) 대괄호 사용에 대해 논의
 export const COLORS: ColorTokens = {

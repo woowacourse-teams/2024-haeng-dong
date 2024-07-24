@@ -1,6 +1,6 @@
 package server.haengdong.application.response;
 
-import server.haengdong.domain.Event;
+import server.haengdong.domain.event.Event;
 
 public record EventAppResponse(String token) {
 

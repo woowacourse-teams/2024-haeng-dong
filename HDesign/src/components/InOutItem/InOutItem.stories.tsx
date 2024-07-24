@@ -12,7 +12,7 @@ const meta = {
   argTypes: {
     names: {
       description: '',
-      control: {type: 'text'},
+      control: {type: 'object'},
     },
     inOutType: {
       description: '',

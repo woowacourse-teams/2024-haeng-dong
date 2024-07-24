@@ -1,15 +1,29 @@
 import {css} from '@emotion/react';
 
 import {Theme} from '@theme/theme.type';
+import {InputType} from './Input.type';
 
-export const inputBoxStyle = (theme: Theme) =>
+const inputBoxBackgroundColorByInputType = (theme: Theme, inputType: InputType = 'input') => {
+  switch (inputType) {
+    case 'input':
+      return theme.colors.lightGrayContainer;
+
+    case 'search':
+      return theme.colors.white;
+
+    default:
+      return theme.colors.lightGrayContainer;
+  }
+};
+
+export const inputBoxStyle = (theme: Theme, inputType: InputType = 'input') =>
   css({
     display: 'flex',
-    width: '100%',
     justifyContent: 'space-between',
+    marginInline: '1rem',
     padding: '0.75rem 1rem',
     borderRadius: '1rem',
-    backgroundColor: theme.colors.grayContainer,
+    backgroundColor: inputBoxBackgroundColorByInputType(theme, inputType),
   });
 
 export const inputStyle = (theme: Theme) =>

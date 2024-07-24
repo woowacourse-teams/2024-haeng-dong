@@ -8,7 +8,7 @@ const CreateEvent = () => {
 
   const submitEventTitle = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate(`${ROUTER_URLS.completeCreateEvent}?${new URLSearchParams({title: eventTitle})}`);
+    navigate(`${ROUTER_URLS.eventCreateName}?${new URLSearchParams({title: eventTitle})}`);
   };
 
   return (
