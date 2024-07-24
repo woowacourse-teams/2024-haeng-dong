@@ -16,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
@@ -49,7 +48,7 @@ class EventControllerTest {
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("events/" + token));
+                .andExpect(jsonPath("$.url").value("TOKEN"));
     }
 
     @DisplayName("토큰으로 행사를 조회한다.")
