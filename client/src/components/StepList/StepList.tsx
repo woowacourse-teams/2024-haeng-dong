@@ -1,5 +1,6 @@
-import {useStepList} from '@hooks/useStepList/useStepList';
 import {Flex, InOutItem, StepItem} from 'haengdong-design';
+
+import {useStepList} from '@hooks/useStepList/useStepList';
 import {MemberType} from 'types/stepList';
 
 const StepList = () => {
