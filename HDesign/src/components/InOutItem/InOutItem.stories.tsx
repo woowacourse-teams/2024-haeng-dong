@@ -16,12 +16,12 @@ const meta = {
     },
     inOutType: {
       description: '',
-      control: {type: 'select', options: ['in', 'out']},
+      control: {type: 'select', options: ['IN', 'OUT']},
     },
   },
   args: {
     names: ['감자', '토다리'],
-    inOutType: 'out',
+    inOutType: 'OUT',
   },
 } satisfies Meta<typeof InOutItem>;
 
