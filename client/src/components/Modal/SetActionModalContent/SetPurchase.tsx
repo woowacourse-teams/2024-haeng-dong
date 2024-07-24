@@ -1,4 +1,5 @@
 import {useState} from 'react';
+
 import {PurchaseInformation} from '@pages/Event/Event';
 
 interface SetPurchaseProps {
