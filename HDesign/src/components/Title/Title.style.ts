@@ -6,6 +6,7 @@ export const titleContainerStyle = (theme: Theme) =>
   css({
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
     gap: '0.5rem',
     backgroundColor: theme.colors.white,
     padding: '1rem',
