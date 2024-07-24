@@ -23,6 +23,7 @@ const useSearch = ({searchTerms, setState}: UseSearchProps) => {
 
   const filterSearchTerms = (keyword: string) => {
     if (keyword.trim() === '') return [];
+
     return searchTerms.filter(terms => terms.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1);
   };
 
