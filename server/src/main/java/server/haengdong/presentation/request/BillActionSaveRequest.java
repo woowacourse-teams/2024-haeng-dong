@@ -1,12 +1,12 @@
 package server.haengdong.presentation.request;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import server.haengdong.application.request.BillActionAppRequest;
 
 public record BillActionSaveRequest(
 
-        @NotEmpty
+        @NotBlank
         String title,
 
         @NotNull

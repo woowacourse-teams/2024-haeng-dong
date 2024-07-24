@@ -19,6 +19,7 @@ import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.exception.HaengdongException;
 
 @SpringBootTest
 class MemberActionServiceTest {
@@ -79,13 +80,13 @@ class MemberActionServiceTest {
                 List.of(new MemberActionSaveAppRequest("TOKEN", "OUT")));
 
         assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", appRequest))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(HaengdongException.class);
     }
 
     @DisplayName("이벤트가 없으면 현재 참여 인원을 조회할 수 없다.")
     @Test
     void getCurrentMembers() {
         assertThatThrownBy(() -> memberActionService.getCurrentMembers("token"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(HaengdongException.class);
     }
 }
