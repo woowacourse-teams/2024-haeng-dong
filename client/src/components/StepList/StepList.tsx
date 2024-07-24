@@ -12,7 +12,7 @@ const StepList = () => {
         if (step.type === 'BILL') {
           return <StepItem name={step.stepName} bills={step.actions} personCount={0} />;
         } else if (step.type === 'IN' || step.type === 'OUT') {
-          return <InOutItem inOutType={step.type === 'IN' ? 'in' : 'out'} names={step.actions.map(({name}) => name)} />;
+          return <InOutItem inOutType={step.type} names={step.actions.map(({name}) => name)} />;
         } else {
           return <></>;
         }
