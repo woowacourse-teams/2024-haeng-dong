@@ -3,6 +3,7 @@ import {createBrowserRouter} from 'react-router-dom';
 import {MainPage} from '@pages/Main';
 import {CreateNamePage, CreateCompletePage} from '@pages/Create';
 import {EventPage} from '@pages/Event';
+import {HomePage} from '@pages/Home';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.eventManage,
         element: <EventPage />,
+      },
+      {
+        path: ROUTER_URLS.home,
+        element: <HomePage />,
       },
     ],
   },
