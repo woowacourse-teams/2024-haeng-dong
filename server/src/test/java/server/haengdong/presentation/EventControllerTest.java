@@ -48,7 +48,7 @@ class EventControllerTest {
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.url").value("TOKEN"));
+                .andExpect(jsonPath("$.eventId").value("TOKEN"));
     }
 
     @DisplayName("토큰으로 행사를 조회한다.")
