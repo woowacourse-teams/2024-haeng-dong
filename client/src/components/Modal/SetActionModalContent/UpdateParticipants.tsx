@@ -1,11 +1,7 @@
 import {useState} from 'react';
-import {Input, Switch} from 'haengdong-design';
+import {Input, FixedButton} from 'haengdong-design';
 
-import {
-  updateParticipantsInputStyle,
-  updateParticipantsStyle,
-  updateParticipantsSwitchStyle,
-} from './UpdateParticipants.style';
+import {updateParticipantsInputStyle, updateParticipantsStyle} from './UpdateParticipants.style';
 
 interface UpdateParticipantsProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -51,13 +47,11 @@ const UpdateParticipants = ({
 
   return (
     <div css={updateParticipantsStyle}>
-      <div css={updateParticipantsSwitchStyle}>
-        {/* <Switch />
-        <Switch /> */}
-      </div>
       <div css={updateParticipantsInputStyle}>
-        <Input onChange={event => setName(event.target.value)} value={name} />
+        {/* TODO: (@soha) Search로 변경하기 */}
+        <Input onChange={event => setName(event.target.value)} value={name} placeholder="이름" />
       </div>
+      <FixedButton variants={'primary'} children={'N명 탈주'} />
     </div>
   );
 };

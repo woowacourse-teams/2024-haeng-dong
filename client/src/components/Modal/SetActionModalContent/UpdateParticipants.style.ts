@@ -5,12 +5,7 @@ export const updateParticipantsStyle = () =>
     display: 'flex',
     flexDirection: 'column',
     gap: '1.5rem',
-  });
-
-export const updateParticipantsSwitchStyle = () =>
-  css({
-    display: 'flex',
-    alignContent: 'space-between',
+    height: '100%',
   });
 
 export const updateParticipantsInputStyle = () =>
@@ -18,4 +13,6 @@ export const updateParticipantsInputStyle = () =>
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
+    overflow: 'auto',
+    paddingBottom: '14rem',
   });
