@@ -12,7 +12,7 @@ const MemberReportList = () => {
   };
 
   return (
-    <Flex flexDirection="column" gap="0.5rem" paddingInline="0.5rem" padding="1rem 0 0 0">
+    <Flex flexDirection="column" gap="0.5rem" paddingInline="0.5rem">
       <Input inputType="search" value={name} onChange={changeName} />
       <ExpenseList expenseList={memberReportSearchList} />
     </Flex>
