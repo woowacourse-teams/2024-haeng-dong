@@ -24,6 +24,10 @@ const useDynamicInputPairs = () => {
     }
   };
 
+  const getNonEmptyInputPairs = () => {
+    return inputPairs.filter(currentPair => currentPair.title.trim() !== '' && currentPair.price !== 0);
+  };
+
   useEffect(() => {
     if (inputRefs.current.length > 0) {
       const lastInputPair = inputRefs.current.slice(-2);
@@ -33,6 +37,7 @@ const useDynamicInputPairs = () => {
 
   return {
     inputPairs,
+    getNonEmptyInputPairs,
     inputRefs,
     handleInputChange,
     handleInputBlur,
