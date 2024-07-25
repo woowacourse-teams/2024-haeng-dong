@@ -1,3 +1,4 @@
+import Back from './components/TopNav/Back';
 import BillItem from '@components/BillItem/BillItem';
 import BottomSheet from '@components/BottomSheet/BottomSheet';
 import Button from '@components/Button/Button';
@@ -8,6 +9,7 @@ import Flex from '@components/Flex/Flex';
 import IconButton from '@components/IconButton/IconButton';
 import InOutItem from '@components/InOutItem/InOutItem';
 import Input from '@components/Input/Input';
+import NavSwitch from './components/TopNav/NavSwitch';
 import Search from '@components/Search/Search';
 import StepItem from '@components/StepItem/StepItem';
 import Switch from '@components/Switch/Switch';
@@ -24,6 +26,7 @@ import {ContentLayout} from '@layouts/ContentLayout';
 import {HDesignProvider} from '@theme/HDesignProvider';
 
 export {
+  Back,
   BillItem,
   BottomSheet,
   Button,
@@ -34,6 +37,7 @@ export {
   IconButton,
   InOutItem,
   Input,
+  NavSwitch,
   Search,
   StepItem,
   Switch,

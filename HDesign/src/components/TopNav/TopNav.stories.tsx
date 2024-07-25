@@ -1,8 +1,11 @@
+/** @jsxImportSource @emotion/react */
+import React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
 import {reactRouterParameters, withRouter} from 'storybook-addon-react-router-v6';
 
 import TopNav from '@components/TopNav/TopNav';
-import Switch from '../Switch/Switch';
+import Back from './Back';
+import NavSwitch from './NavSwitch';
 
 const meta = {
   title: 'Components/TopNav',
@@ -18,16 +21,22 @@ const meta = {
       },
       routing: {path: '/event/:eventId/home'},
     }),
-    layout: 'centered',
+    // layout: 'centered',
   },
   argTypes: {
-    navType: {
+    children: {
       description: '',
-      control: {type: 'select', options: ['back', 'home']},
+      control: {type: 'select'},
+      options: ['Back', 'NavSwitch', 'Any'],
+      mapping: {
+        Back: <Back />,
+        NavSwitch: <NavSwitch paths={['홈', '관리']} onChange={value => console.log(value)} />,
+        Any: <div></div>,
+      },
     },
   },
   args: {
-    navType: 'home',
+    children: 'Back',
   },
 } satisfies Meta<typeof TopNav>;
 
