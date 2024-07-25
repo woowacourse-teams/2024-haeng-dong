@@ -4,9 +4,9 @@ import {Bill, BillAction, MemberType, StepList} from 'types/stepList';
 import useEventId from '@hooks/useEventId/useEventId';
 import {requestAddBillList} from '@apis/request/bill';
 import {requestUpdateMemberList} from '@apis/request/member';
+import {requestStepList} from '@apis/request/stepList';
 
 import stepListJsonData from '@mocks/stepList.json';
-import {requestStepList} from '@apis/request/stepList';
 
 interface StepListContextProps {
   stepList: StepList;

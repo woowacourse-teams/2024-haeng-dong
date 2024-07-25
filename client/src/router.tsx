@@ -1,10 +1,11 @@
 import {createBrowserRouter} from 'react-router-dom';
 
+import {AdminPage} from '@pages/Event/Admin';
+import {HomePage} from '@pages/Event/Home';
+
 import {MainPage} from '@pages/Main';
 import {CreateNamePage, CreateCompletePage} from '@pages/Create';
 import {EventPage} from '@pages/Event';
-import {AdminPage} from '@pages/Event/Admin';
-import {HomePage} from '@pages/Event/Home';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 

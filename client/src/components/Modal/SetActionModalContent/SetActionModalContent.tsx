@@ -1,10 +1,11 @@
 import {useState} from 'react';
 import {BottomSheet, Switch} from 'haengdong-design';
 
+import {InOutType} from '@pages/Event/Admin/Admin';
+
 import SetPurchase from './SetPurchase';
 import UpdateParticipants from './UpdateParticipants';
 import {setActionModalContentStyle, setActionModalContentSwitchContainerStyle} from './SetActionModalContent.style';
-import {InOutType} from '@pages/Event/Admin/Admin';
 
 export type ActionType = '지출' | '인원';
 

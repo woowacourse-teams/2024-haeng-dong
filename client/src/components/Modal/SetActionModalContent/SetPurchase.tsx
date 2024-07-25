@@ -1,9 +1,10 @@
 import {Input, FixedButton} from 'haengdong-design';
 
+import {useStepList} from '@hooks/useStepList/useStepList';
+
 import useDynamicInputPairs from '@hooks/useDynamicInputPairs';
 
 import {setPurchaseInputStyle, setPurchaseStyle, setPurchaseInputContainerStyle} from './SetPurchase.style';
-import {useStepList} from '@hooks/useStepList/useStepList';
 
 interface SetPurchaseProps {
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
