@@ -1,10 +1,9 @@
 import {Input, FixedButton} from 'haengdong-design';
 
-import {useStepList} from '@hooks/useStepList/useStepList';
-
 import useDynamicInputPairs from '@hooks/useDynamicInputPairs';
 
 import {setPurchaseInputStyle, setPurchaseStyle, setPurchaseInputContainerStyle} from './SetPurchase.style';
+import {useStepList} from '@hooks/useStepList/useStepList';
 
 interface SetPurchaseProps {
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,14 +11,14 @@ interface SetPurchaseProps {
 }
 
 const SetPurchase = ({setOpenBottomSheet, setOrder}: SetPurchaseProps) => {
-  const {inputPairs, inputRefs, handleInputChange, handleInputBlur} = useDynamicInputPairs();
+  const {inputPairs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputPairs} = useDynamicInputPairs();
   const {addBill} = useStepList();
 
   const handleSetPurchaseSubmit = () => {
     setOrder(prev => prev + 1);
 
     // TODO: (@weadie) 요청 실패시 오류 핸들 필요
-    addBill(inputPairs);
+    addBill(getNonEmptyInputPairs());
     setOpenBottomSheet(false);
   };
 

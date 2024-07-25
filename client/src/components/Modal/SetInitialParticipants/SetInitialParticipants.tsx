@@ -9,14 +9,9 @@ import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from
 interface SetInitialParticipantsProps {
   openBottomSheet: boolean;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const SetInitialParticipants = ({
-  openBottomSheet,
-  setOpenBottomSheet,
-  setParticipants,
-}: SetInitialParticipantsProps) => {
+const SetInitialParticipants = ({openBottomSheet, setOpenBottomSheet}: SetInitialParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
   const {updateMemberList} = useStepList();
 
