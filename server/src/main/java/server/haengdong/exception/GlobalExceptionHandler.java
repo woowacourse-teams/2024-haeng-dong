@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorResponse> haengdongException() {
         return ResponseEntity.badRequest()
-                .body(ErrorResponse.of(HaengdongErrorCode.BAD_REQUEST));
+                .body(ErrorResponse.of(HaengdongErrorCode.BAD_REQUEST.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -25,19 +25,19 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining(", "));
 
         return ResponseEntity.badRequest()
-                .body(new ErrorResponse(errorMessage));
+                .body(ErrorResponse.of(errorMessage));
     }
 
     @ExceptionHandler(HaengdongException.class)
     public ResponseEntity<ErrorResponse> haengdongException(HaengdongException e) {
         return ResponseEntity.status(e.getStatusCode())
-                .body(ErrorResponse.of(e.getErrorCode()));
+                .body(ErrorResponse.of(e.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error(e.getMessage(), e);
         return ResponseEntity.internalServerError()
-                .body(ErrorResponse.of(HaengdongErrorCode.INTERNAL_SERVER_ERROR));
+                .body(ErrorResponse.of(HaengdongErrorCode.INTERNAL_SERVER_ERROR.getMessage()));
     }
 }

@@ -19,9 +19,9 @@ public class MemberActionController {
 
     private final MemberActionService memberActionService;
 
-    @PostMapping("/api/events/{token}/actions/members")
+    @PostMapping("/api/events/{eventId}/actions/members")
     public ResponseEntity<Void> saveMemberAction(
-            @PathVariable("token") String token,
+            @PathVariable("eventId") String token,
             @RequestBody MemberActionsSaveRequest request
     ) {
         memberActionService.saveMemberAction(token, request.toAppRequest());
@@ -29,8 +29,8 @@ public class MemberActionController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/api/events/{token}/members/current")
-    public ResponseEntity<CurrentMembersResponse> getCurrentMembers(@PathVariable("token") String token) {
+    @GetMapping("/api/events/{eventId}/members/current")
+    public ResponseEntity<CurrentMembersResponse> getCurrentMembers(@PathVariable("eventId") String token) {
         List<CurrentMemberAppResponse> currentMembers = memberActionService.getCurrentMembers(token);
 
         return ResponseEntity.ok()

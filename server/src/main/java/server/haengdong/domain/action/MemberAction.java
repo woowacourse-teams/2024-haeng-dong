@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class MemberAction {
+public class MemberAction implements Comparable<MemberAction> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,5 +49,10 @@ public class MemberAction {
 
     public Long getSequence() {
         return action.getSequence();
+    }
+
+    @Override
+    public int compareTo(MemberAction o) {
+        return Long.compare(this.getSequence(), o.getSequence());
     }
 }

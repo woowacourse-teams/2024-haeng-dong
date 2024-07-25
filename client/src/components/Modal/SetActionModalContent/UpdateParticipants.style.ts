@@ -1,20 +1,18 @@
 import {css} from '@emotion/react';
 
-export const setInitialParticipantsStyle = () =>
+export const updateParticipantsStyle = () =>
   css({
     display: 'flex',
     flexDirection: 'column',
     gap: '1.5rem',
-    width: '100%',
     height: '100%',
-    padding: '0 1.5rem',
   });
 
-export const setInitialParticipantsInputGroupStyle = () =>
+export const updateParticipantsInputStyle = () =>
   css({
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
     overflow: 'auto',
-    paddingBottom: '11rem',
+    paddingBottom: '14rem',
   });
