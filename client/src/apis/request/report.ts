@@ -1,8 +1,9 @@
+import {MemberReport} from 'types/stepList';
+
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestGet} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
-import {MemberReport} from 'types/stepList';
 
 type ResponseMemberReportList = {
   reports: MemberReport[];

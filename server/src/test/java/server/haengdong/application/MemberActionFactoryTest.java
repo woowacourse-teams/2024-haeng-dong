@@ -20,6 +20,7 @@ import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.exception.HaengdongException;
 
 @SpringBootTest
 class MemberActionFactoryTest {
@@ -59,7 +60,7 @@ class MemberActionFactoryTest {
         Action startAction = new Action(event, 3L);
 
         assertThatThrownBy(() -> memberActionFactory.createMemberActions(request, unorderedMemberActions, startAction))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(HaengdongException.class);
     }
 
     @DisplayName("인원 변동 액션을 생성한다.")
@@ -147,7 +148,7 @@ class MemberActionFactoryTest {
         Action startAction = new Action(event, 2L);
 
         assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(), startAction))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(HaengdongException.class);
     }
 
     @DisplayName("행사에 이미 참여 중인 경우 다시 입장할 수 없다.")
@@ -163,7 +164,7 @@ class MemberActionFactoryTest {
         Action startAction = new Action(event, 2L);
 
         assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(HaengdongException.class);
     }
 
     @DisplayName("한 명의 사용자는 동시에 여러 번 입장할 수 없다.")
@@ -177,7 +178,7 @@ class MemberActionFactoryTest {
         Action startAction = new Action(event, 1L);
 
         assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(), startAction))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(HaengdongException.class);
     }
 
     @DisplayName("한 명의 사용자는 동시에 여러 번 퇴장할 수 없다.")
@@ -194,7 +195,7 @@ class MemberActionFactoryTest {
         Action startAction = new Action(event, 2L);
 
         assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(HaengdongException.class);
     }
 
     @DisplayName("한 명의 사용자는 입장과 퇴장을 동시에 할 수 없다.")
@@ -211,6 +212,6 @@ class MemberActionFactoryTest {
         Action startAction = new Action(event, 2L);
 
         assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(HaengdongException.class);
     }
 }

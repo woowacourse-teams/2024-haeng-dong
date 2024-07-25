@@ -8,6 +8,8 @@ import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +27,8 @@ public class EventService {
     }
 
     public EventDetailAppResponse findEvent(String token) {
-        Event event = eventRepository.findByToken(token).orElseThrow(() -> new IllegalArgumentException(""));
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
 
         return EventDetailAppResponse.of(event);
     }

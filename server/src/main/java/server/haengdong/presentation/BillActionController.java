@@ -16,9 +16,9 @@ public class BillActionController {
 
     private final BillActionService billActionService;
 
-    @PostMapping("/api/events/{token}/actions/bills")
+    @PostMapping("/api/events/{eventId}/actions/bills")
     public ResponseEntity<Void> saveAllBillAction(
-            @PathVariable String token,
+            @PathVariable("eventId") String token,
             @RequestBody @Valid BillActionsSaveRequest request
     ) {
         billActionService.saveAllBillAction(token, request.toAppRequests());

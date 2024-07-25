@@ -13,6 +13,8 @@ import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -53,6 +55,6 @@ public class MemberActionService {
 
     private Event findEvent(String token) {
         return eventRepository.findByToken(token)
-                .orElseThrow(() -> new IllegalArgumentException("event not found"));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
     }
 }

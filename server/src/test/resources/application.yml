@@ -13,3 +13,6 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: create-drop
+cors:
+  max-age: 3600
+  allowed-origins: http://localhost:8080

@@ -1,51 +1,55 @@
+import {Input, FixedButton} from 'haengdong-design';
 import {useState} from 'react';
 
+import {InOutType} from '@pages/Event/Event';
+
+import useDynamicInput from '@hooks/useDynamicAdditionalInput';
+
+import {updateParticipantsInputStyle, updateParticipantsStyle} from './UpdateParticipants.style';
+
 interface UpdateParticipantsProps {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  participantType: string;
   participants: string[];
-  setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
-  setPurchaseInformation: any;
-  purchaseInformation: any;
+  participantAction: InOutType;
+  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UpdateParticipants = ({
-  setPurchaseInformation,
-  purchaseInformation,
-  setOpen,
-  participantType,
-  participants,
-  setParticipants,
-}: UpdateParticipantsProps) => {
-  const [name, setName] = useState('');
+const UpdateParticipants = ({participantAction, participants, setOpenBottomSheet}: UpdateParticipantsProps) => {
+  const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
 
-  const updateParticipant = () => {
-    if (participantType === '늦참') {
-      if (participants.includes(name)) {
-        alert('이미 있는 사용자입니다.');
-        return;
+  const handleUpdateParticipantsSubmit = () => {
+    const newParticipants = () => {
+      if (participantAction === '탈주') {
+        return participants.filter(participant => !getNonEmptyInputs().includes(participant));
+      } else {
+        return [...participants, ...getNonEmptyInputs()];
       }
+    };
 
-      setParticipants([...participants, name]);
-      setPurchaseInformation([...purchaseInformation, {name, type: '늦참'}]);
-    } else if (participantType === '탈주') {
-      if (!participants.includes(name)) {
-        alert('그런 사용자는 없습니다. 올바른 이름을 입력해주세요.');
-        return;
-      }
-
-      setParticipants(prev => prev.filter(participant => participant !== name));
-      setPurchaseInformation([...purchaseInformation, {name, type: '탈주'}]);
-    }
-
-    setName('');
-    setOpen(false);
+    // TODO: (@soha) api 요청시 newParticipants()를 보내면 됨
+    setOpenBottomSheet(false);
   };
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
-      <input onChange={event => setName(event.target.value)} value={name} />
-      <button onClick={updateParticipant}>{participantType} 인원 확정</button>
+    <div css={updateParticipantsStyle}>
+      <div css={updateParticipantsInputStyle}>
+        {/* TODO: (@soha) Search로 변경하기 */}
+        {inputs.map((name, index) => (
+          <Input
+            key={index}
+            placeholder="이름"
+            value={name}
+            type="text"
+            ref={el => (inputRefs.current[index] = el)}
+            onChange={e => handleInputChange(index, e.target.value)}
+            onBlur={() => handleInputBlur(index)}
+          />
+        ))}
+      </div>
+      <FixedButton
+        variants={inputs.length - 1 ? 'primary' : 'tertiary'}
+        children={`${inputs.length - 1}명 ${participantAction}`}
+        onClick={handleUpdateParticipantsSubmit}
+      />
     </div>
   );
 };
