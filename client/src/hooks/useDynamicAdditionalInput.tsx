@@ -34,7 +34,6 @@ const useDynamicInput = () => {
     if (inputRefs.current.length > 0) {
       const lastInput = inputRefs.current[inputRefs.current.length - 1];
       if (lastInput) {
-        lastInput.focus();
         lastInput.scrollIntoView({behavior: 'smooth', block: 'center'});
       }
     }
