@@ -11,6 +11,9 @@ public record StepResponse(
 ) {
 
     public static StepResponse of(List<ActionAppResponse> actions) {
+        if (actions.isEmpty()) {
+            return new StepResponse(List.of());
+        }
         List<ActionsResponse> actionsResponse = new ArrayList<>();
         Set<String> members = new HashSet<>();
         ActionAppResponse firstAction = getFirstAction(actions);
