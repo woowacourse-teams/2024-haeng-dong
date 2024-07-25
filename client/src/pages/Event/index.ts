@@ -1,1 +1,1 @@
-export {default as EventPage} from './Event';
+export {default as EventPage} from './EventLayout';
