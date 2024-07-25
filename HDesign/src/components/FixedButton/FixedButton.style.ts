@@ -21,6 +21,7 @@ export const fixedButtonStyle = (props: Required<FixedButtonStyleProps>) => {
 
 const getFixedButtonDefaultStyle = (theme: Theme) =>
   css({
+    position: 'fixed',
     display: 'flex',
     justifyContent: 'center',
     padding: '1rem 1.5rem',
