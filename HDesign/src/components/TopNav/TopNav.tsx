@@ -2,7 +2,8 @@
 import React from 'react';
 import {topNavNonStyle, topNavStyle} from './TopNav.style';
 import {StrictPropsWithChildren} from '@/types/strictPropsWithChildren';
-import {NavSwitch, Back} from './index';
+import Back from './Back';
+import NavSwitch from './NavSwitch';
 
 const TopNav: React.FC<StrictPropsWithChildren> = ({children}) => {
   const hasBack = React.Children.toArray(children).some(child => React.isValidElement(child) && child.type === Back);
