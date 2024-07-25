@@ -1,6 +1,7 @@
 package server.haengdong.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 import static server.haengdong.domain.action.MemberActionStatus.IN;
 import static server.haengdong.domain.action.MemberActionStatus.OUT;
@@ -18,6 +19,8 @@ import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @SpringBootTest
 class ActionServiceTest {
@@ -64,5 +67,13 @@ class ActionServiceTest {
                         tuple("쿠키", 50_000L),
                         tuple("소하", 50_000L)
                 );
+    }
+
+    @DisplayName("존재하지 않는 이벤트의 참여자별 정산 현황을 조회하는 경우 예외가 발생한다.")
+    @Test
+    void getMemberBillReports1() {
+        assertThatThrownBy(() -> actionService.getMemberBillReports("invalid token"))
+                .isInstanceOf(HaengdongException.class)
+                .hasMessage(HaengdongErrorCode.NOT_FOUND_EVENT.getMessage());
     }
 }

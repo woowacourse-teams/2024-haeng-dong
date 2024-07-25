@@ -12,6 +12,8 @@ import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.action.MemberBillReports;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
 @Service
@@ -23,7 +25,7 @@ public class ActionService {
 
     public List<MemberBillReportAppResponse> getMemberBillReports(String token) {
         Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new IllegalArgumentException("event not found"));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
         List<BillAction> billActions = billActionRepository.findByAction_Event(event);
         List<MemberAction> memberActions = memberActionRepository.findAllByEvent(event);
 
