@@ -2,6 +2,8 @@ import {Input, FixedButton} from 'haengdong-design';
 import {useState} from 'react';
 
 import {InOutType} from '@pages/Event/Event';
+import {useStepList} from '@hooks/useStepList/useStepList';
+import {MemberType} from 'types/stepList';
 
 import useDynamicInput from '@hooks/useDynamicAdditionalInput';
 
@@ -15,17 +17,22 @@ interface UpdateParticipantsProps {
 
 const UpdateParticipants = ({participantAction, participants, setOpenBottomSheet}: UpdateParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
+  const {updateMemberList} = useStepList();
+
+  const [inOutAction, setInOutAction] = useState<MemberType>('OUT');
 
   const handleUpdateParticipantsSubmit = () => {
     const newParticipants = () => {
       if (participantAction === '탈주') {
+        setInOutAction('OUT');
         return participants.filter(participant => !getNonEmptyInputs().includes(participant));
       } else {
+        setInOutAction('IN');
         return [...participants, ...getNonEmptyInputs()];
       }
     };
 
-    // TODO: (@soha) api 요청시 newParticipants()를 보내면 됨
+    updateMemberList({memberNameList: newParticipants(), type: inOutAction});
     setOpenBottomSheet(false);
   };
 
