@@ -1,27 +1,23 @@
 import {PropsWithChildren, createContext, useContext, useEffect, useState} from 'react';
 
-import {Bill, BillAction, MemberType, StepList} from 'types/stepList';
+import {Bill, BillAction, BillStep, MemberStep, MemberType, StepList} from 'types/stepList';
 import useEventId from '@hooks/useEventId/useEventId';
 import {requestAddBillList} from '@apis/request/bill';
 import {requestUpdateMemberList} from '@apis/request/member';
 import {requestStepList} from '@apis/request/stepList';
 
-import stepListJsonData from '@mocks/stepList.json';
-
 interface StepListContextProps {
-  stepList: StepList;
+  stepList: (BillStep | MemberStep)[];
   getTotalPrice: () => number;
   addBill: (billList: Bill[]) => Promise<void>;
   updateMemberList: ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => Promise<void>;
   memberNameList: string[];
 }
 
-const stepListMockData = stepListJsonData as StepList;
-
 export const StepListContext = createContext<StepListContextProps | null>(null); // TODO: (@weadie) 인자를 어떻게 줘야 하는지 고민하기.
 
 const StepListProvider = ({children}: PropsWithChildren) => {
-  const [stepList, setStepList] = useState<StepList>(stepListMockData);
+  const [stepList, setStepList] = useState<(BillStep | MemberStep)[]>([]);
   const [memberNameList, setNameMemberList] = useState<string[]>([]);
 
   const {eventId} = useEventId();
@@ -32,10 +28,14 @@ const StepListProvider = ({children}: PropsWithChildren) => {
     refreshStepList();
 
     // TODO: (@weadie) useEffect를 꼭 써야하는가?
-  }, [eventId]);
+  }, []);
 
   const refreshStepList = async () => {
     const stepList = await requestStepList({eventId});
+
+    if (stepList.length !== 0) {
+      setNameMemberList(stepList[stepList.length - 1].members);
+    }
 
     setStepList(stepList);
   };
@@ -43,11 +43,12 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
     try {
       await requestUpdateMemberList({eventId, type, memberNameList});
-      refreshStepList();
 
       // TODO: (@weadie) 클라이언트 단에서 멤버 목록을 관리하기 위한 로직. 개선이 필요하다.
       if (type === 'IN') setNameMemberList(prev => [...prev, ...memberNameList]);
       if (type === 'OUT') setNameMemberList(prev => prev.filter(name => !memberNameList.includes(name)));
+
+      refreshStepList();
     } catch (error) {
       alert(error);
     }
