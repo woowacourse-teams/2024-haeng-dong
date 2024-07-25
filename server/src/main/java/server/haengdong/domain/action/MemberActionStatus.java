@@ -1,6 +1,8 @@
 package server.haengdong.domain.action;
 
 import java.util.Arrays;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 public enum MemberActionStatus {
     IN,
@@ -11,6 +13,7 @@ public enum MemberActionStatus {
         return Arrays.stream(MemberActionStatus.values())
                 .filter(s -> s.name().equals(status))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid status: " + status));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
+                        "존재하지 않는 인원 변동 액션입니다."));
     }
 }

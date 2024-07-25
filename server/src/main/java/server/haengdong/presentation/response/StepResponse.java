@@ -37,8 +37,6 @@ public record StepResponse(
             }
             if (currentActionType.equals("BILL")) {
                 actionsResponse.add(ActionsResponse.of(group, members));
-            } else {
-                actionsResponse.add(ActionsResponse.of(group, Set.of()));
             }
             currentActionType = typeName;
             group.clear();
@@ -53,8 +51,6 @@ public record StepResponse(
 
         if (currentActionType.equals("BILL")) {
             actionsResponse.add(ActionsResponse.of(group, members));
-        } else {
-            actionsResponse.add(ActionsResponse.of(group, null));
         }
 
         return new StepResponse(actionsResponse);

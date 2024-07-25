@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
@@ -20,6 +21,7 @@ import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class EventService {
 
@@ -28,6 +30,7 @@ public class EventService {
     private final BillActionRepository billActionRepository;
     private final MemberActionRepository memberActionRepository;
 
+    @Transactional
     public EventAppResponse saveEvent(EventAppRequest request) {
         String token = eventTokenProvider.createToken();
         Event event = request.toEvent(token);
@@ -44,7 +47,8 @@ public class EventService {
     }
 
     public List<ActionAppResponse> findActions(String token) {
-        Event event = eventRepository.findByToken(token).orElseThrow(() -> new IllegalArgumentException(""));
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
 
         List<BillAction> billActions = billActionRepository.findByAction_Event(event).stream()
                 .sorted(Comparator.comparing(BillAction::getSequence)).toList();
