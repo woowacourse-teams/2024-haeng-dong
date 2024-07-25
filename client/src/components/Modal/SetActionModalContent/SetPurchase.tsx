@@ -1,5 +1,7 @@
 import {Input, FixedButton} from 'haengdong-design';
 
+import {useStepList} from '@hooks/useStepList/useStepList';
+
 import useDynamicInputPairs from '@hooks/useDynamicInputPairs';
 
 import {setPurchaseInputStyle, setPurchaseStyle, setPurchaseInputContainerStyle} from './SetPurchase.style';
@@ -11,10 +13,13 @@ interface SetPurchaseProps {
 
 const SetPurchase = ({setOpenBottomSheet, setOrder}: SetPurchaseProps) => {
   const {inputPairs, inputRefs, handleInputChange, handleInputBlur} = useDynamicInputPairs();
+  const {addBill} = useStepList();
 
   const handleSetPurchaseSubmit = () => {
     setOrder(prev => prev + 1);
-    // TODO: (@soha) api 요청시 inputPairs를 보내면 됨
+
+    // TODO: (@weadie) 요청 실패시 오류 핸들 필요
+    addBill(inputPairs);
     setOpenBottomSheet(false);
   };
 
@@ -25,8 +30,8 @@ const SetPurchase = ({setOpenBottomSheet, setOrder}: SetPurchaseProps) => {
           <div key={index} css={setPurchaseInputStyle}>
             <Input
               type="text"
-              value={pair.name}
-              onChange={e => handleInputChange(index, 'name', e.target.value)}
+              value={pair.title}
+              onChange={e => handleInputChange(index, 'title', e.target.value)}
               onBlur={() => handleInputBlur(index)}
               placeholder="지출 내역"
               ref={el => (inputRefs.current[index * 2] = el)}
