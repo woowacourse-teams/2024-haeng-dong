@@ -1,7 +1,6 @@
 import {Input, FixedButton} from 'haengdong-design';
 import {useState} from 'react';
 
-import {InOutType} from '@pages/Event/Event';
 import {useStepList} from '@hooks/useStepList/useStepList';
 import {MemberType} from 'types/stepList';
 
@@ -16,7 +15,7 @@ interface UpdateParticipantsProps {
 
 const UpdateParticipants = ({inOutAction, setOpenBottomSheet}: UpdateParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
-  const {updateMemberList, memberNameList} = useStepList();
+  const {updateMemberList} = useStepList();
 
   const handleUpdateParticipantsSubmit = () => {
     updateMemberList({memberNameList: getNonEmptyInputs(), type: inOutAction});
