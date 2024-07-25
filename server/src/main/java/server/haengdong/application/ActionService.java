@@ -1,6 +1,5 @@
 package server.haengdong.application;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,10 +30,8 @@ public class ActionService {
 
         MemberBillReport memberBillReport = MemberBillReport.createByActions(billActions, memberActions);
 
-        List<MemberBillReportAppResponse> memberBillReportResponses = new ArrayList<>();
-        memberBillReport.getReports().forEach(
-                (member, price) -> memberBillReportResponses.add(new MemberBillReportAppResponse(member, price))
-        );
-        return memberBillReportResponses;
+        return memberBillReport.getReports().entrySet().stream()
+                .map(entry -> new MemberBillReportAppResponse(entry.getKey(), entry.getValue()))
+                .toList();
     }
 }
