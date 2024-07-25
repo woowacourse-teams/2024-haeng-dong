@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.MemberActionService;
 import server.haengdong.application.response.CurrentMemberAppResponse;
-import server.haengdong.presentation.request.MemberActionSaveRequest;
 import server.haengdong.presentation.request.MemberActionsSaveRequest;
 
 @WebMvcTest(MemberActionController.class)
@@ -38,11 +37,8 @@ class MemberActionControllerTest {
     @DisplayName("참여자 행동을 추가한다.")
     @Test
     void saveMemberActionTest() throws Exception {
-        MemberActionsSaveRequest memberActionsSaveRequest = new MemberActionsSaveRequest(List.of(
-                new MemberActionSaveRequest("웨디", "IN"),
-                new MemberActionSaveRequest("소하", "IN"),
-                new MemberActionSaveRequest("토다리", "IN"),
-                new MemberActionSaveRequest("쿠키", "IN")));
+        MemberActionsSaveRequest memberActionsSaveRequest = new MemberActionsSaveRequest(
+                List.of("웨디", "소하", "토다리", "쿠키"), "IN");
 
         String requestBody = objectMapper.writeValueAsString(memberActionsSaveRequest);
 
@@ -56,7 +52,8 @@ class MemberActionControllerTest {
     @DisplayName("현재 참여 인원을 조회합니다.")
     @Test
     void getCurrentMembers() throws Exception {
-        List<CurrentMemberAppResponse> currentMemberAppResponses = List.of(new CurrentMemberAppResponse("소하"), new CurrentMemberAppResponse("토다리"));
+        List<CurrentMemberAppResponse> currentMemberAppResponses = List.of(
+                new CurrentMemberAppResponse("소하"), new CurrentMemberAppResponse("토다리"));
 
         given(memberActionService.getCurrentMembers(any())).willReturn(currentMemberAppResponses);
 
