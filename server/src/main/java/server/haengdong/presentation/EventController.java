@@ -12,6 +12,7 @@ import server.haengdong.application.EventService;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventResponse;
+import server.haengdong.presentation.response.StepResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,5 +32,12 @@ public class EventController {
         EventDetailResponse eventDetailResponse = EventDetailResponse.of(eventService.findEvent(token));
 
         return ResponseEntity.ok(eventDetailResponse);
+    }
+
+    @GetMapping("/api/events/{eventId}/actions")
+    public ResponseEntity<StepResponse> findActions(@PathVariable("eventId") String token) {
+        StepResponse stepResponse = StepResponse.of(eventService.findActions(token));
+
+        return ResponseEntity.ok(stepResponse);
     }
 }
