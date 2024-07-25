@@ -78,7 +78,7 @@ const Admin = () => {
         price={getTotalPrice()}
       />
       <section css={ReceiptStyle}>
-        {order > 1 ? <StepList /> : <StepItem name={`${order}차`} bills={[]} personCount={memberNameList.length} />}
+        <StepList />
         {/* TODO: (@soha) 추후 버튼 width 화면에 맞게 수정 */}
         <FixedButton
           children={memberNameList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
