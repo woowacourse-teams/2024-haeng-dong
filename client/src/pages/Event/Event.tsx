@@ -1,6 +1,10 @@
 import {useState} from 'react';
 import {TopNav, Title, FixedButton, StepItem, InOutItem, MainLayout} from 'haengdong-design';
 
+import StepList from '@components/StepList/StepList';
+import {useStepList} from '@hooks/useStepList/useStepList';
+import {StepListProvider} from '@hooks/useStepList/useStepList';
+
 import {SetActionModalContent, SetInitialParticipants} from '@components/Modal';
 
 import {ReceiptStyle} from './Event.style';
@@ -60,30 +64,22 @@ const Event = () => {
   const [participants, setParticipants] = useState<string[]>([]);
   const [order, setOrder] = useState<number>(0);
 
+  const {getTotalPrice} = useStepList();
+
   return (
     <MainLayout backgroundColor="gray">
       <TopNav navType={'home'} />
       <Title
         title="행동대장 야유회"
         description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요."
-        // TODO: (@soha) price 생성시 총 가격 생기기
-        price={20000}
+        price={getTotalPrice()}
       />
       <section css={ReceiptStyle}>
         {order > 0 && (
-          // TODO: (@soha) StepList로 변경하기
           //  TODO: (@soha) order가 0일때 기본 Step 뜨기
-          <>
-            <StepItem
-              name={`${order}차`}
-              personCount={participants.length}
-              bills={[
-                {name: 'QWER', price: 12000, hasDragHandle: true},
-                {name: '배고파요', price: 12000, hasDragHandle: true},
-              ]}
-            />
-            <InOutItem names={['감자', '고구마']} inOutType={'OUT'} hasDragHandle={true} />
-          </>
+          <StepListProvider>
+            <StepList />
+          </StepListProvider>
         )}
         {/* TODO: (@soha) 추후 버튼 width 화면에 맞게 수정 */}
         <FixedButton

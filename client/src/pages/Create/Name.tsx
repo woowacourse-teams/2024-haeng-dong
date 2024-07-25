@@ -27,7 +27,7 @@ const CreateEvent = () => {
           onChange={event => setEventTitle(event.target.value)}
           placeholder="ex) 행동대장 야유회"
         />
-        <FixedButton>행동 개시!</FixedButton>
+        <FixedButton onClick={() => navigate(ROUTER_URLS.eventCreateComplete)}>행동 개시!</FixedButton>
       </form>
     </MainLayout>
   );
