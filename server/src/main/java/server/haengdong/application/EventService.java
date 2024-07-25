@@ -44,7 +44,8 @@ public class EventService {
     }
 
     public List<ActionAppResponse> findActions(String token) {
-        Event event = eventRepository.findByToken(token).orElseThrow(() -> new IllegalArgumentException(""));
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
 
         List<BillAction> billActions = billActionRepository.findByAction_Event(event).stream()
                 .sorted(Comparator.comparing(BillAction::getSequence)).toList();
