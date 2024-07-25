@@ -13,7 +13,8 @@ public record ActionAppResponse(
 ) {
 
     public static ActionAppResponse of(BillAction billAction) {
-        return new ActionAppResponse(billAction.getAction().getId(),
+        return new ActionAppResponse(
+                billAction.getAction().getId(),
                 billAction.getTitle(),
                 billAction.getPrice(),
                 billAction.getSequence(),
@@ -24,7 +25,8 @@ public record ActionAppResponse(
     public static ActionAppResponse of(MemberAction memberAction) {
         MemberActionStatus status = memberAction.getStatus();
 
-        return new ActionAppResponse(memberAction.getAction().getId(),
+        return new ActionAppResponse(
+                memberAction.getAction().getId(),
                 memberAction.getMemberName(),
                 null,
                 memberAction.getSequence(),
@@ -36,14 +38,14 @@ public record ActionAppResponse(
         return actionType.name();
     }
 
-    private enum ActionType {
+    public enum ActionType {
         BILL,
         IN,
         OUT,
         ;
 
-        public static ActionType of(MemberActionStatus memberActionStatus) {
-            if (memberActionStatus.name().equals("IN")) {
+        private static ActionType of(MemberActionStatus memberActionStatus) {
+            if (MemberActionStatus.IN == memberActionStatus) {
                 return IN;
             }
             return OUT;

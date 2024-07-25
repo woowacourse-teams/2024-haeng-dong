@@ -54,32 +54,34 @@ public class EventService {
         return getActionAppResponses(billActions, memberActions);
     }
 
-    private static List<ActionAppResponse> getActionAppResponses(List<BillAction> billActions,
-                                                                 List<MemberAction> memberActions) {
+    private List<ActionAppResponse> getActionAppResponses(
+            List<BillAction> billActions,
+            List<MemberAction> memberActions
+    ) {
         int billActionIndex = 0;
         int memberActionIndex = 0;
+        List<ActionAppResponse> actionAppResponses = new ArrayList<>();
 
-        List<ActionAppResponse> result = new ArrayList<>();
         while (billActionIndex < billActions.size() && memberActionIndex < memberActions.size()) {
             BillAction billAction = billActions.get(billActionIndex);
             MemberAction memberAction = memberActions.get(memberActionIndex);
             if (billAction.getSequence() < memberAction.getSequence()) {
-                result.add(ActionAppResponse.of(billAction));
+                actionAppResponses.add(ActionAppResponse.of(billAction));
                 billActionIndex++;
             } else {
-                result.add(ActionAppResponse.of(memberAction));
+                actionAppResponses.add(ActionAppResponse.of(memberAction));
                 memberActionIndex++;
             }
         }
         while (billActionIndex < billActions.size()) {
             BillAction billAction = billActions.get(billActionIndex++);
-            result.add(ActionAppResponse.of(billAction));
+            actionAppResponses.add(ActionAppResponse.of(billAction));
         }
         while (memberActionIndex < memberActions.size()) {
             MemberAction memberAction = memberActions.get(memberActionIndex++);
-            result.add(ActionAppResponse.of(memberAction));
+            actionAppResponses.add(ActionAppResponse.of(memberAction));
         }
 
-        return result;
+        return actionAppResponses;
     }
 }

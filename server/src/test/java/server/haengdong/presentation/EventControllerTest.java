@@ -96,4 +96,6 @@ class EventControllerTest {
                 .andExpect(jsonPath("$.actions[1].sequence").value(2L))
                 .andExpect(jsonPath("$.actions[1].type").value("BILL"));
     }
+
+    
 }

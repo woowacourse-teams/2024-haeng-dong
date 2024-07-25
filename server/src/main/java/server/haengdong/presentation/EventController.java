@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.EventService;
 import server.haengdong.presentation.request.EventSaveRequest;
-import server.haengdong.presentation.response.ActionsResponse;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventResponse;
+import server.haengdong.presentation.response.StepResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,10 +34,10 @@ public class EventController {
         return ResponseEntity.ok(eventDetailResponse);
     }
 
-    @GetMapping("/api/events/{token}/actions")
-    public ResponseEntity<ActionsResponse> findActions(@PathVariable("token") String token) {
-        ActionsResponse actionsResponse = ActionsResponse.of(eventService.findActions(token));
+    @GetMapping("/api/events/{eventId}/actions")
+    public ResponseEntity<StepResponse> findActions(@PathVariable("eventId") String token) {
+        StepResponse stepResponse = StepResponse.of(eventService.findActions(token));
 
-        return ResponseEntity.ok(actionsResponse);
+        return ResponseEntity.ok(stepResponse);
     }
 }
