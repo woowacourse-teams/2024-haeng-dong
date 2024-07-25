@@ -1,5 +1,7 @@
 import {Text, Input, BottomSheet, FixedButton} from 'haengdong-design';
 
+import {useStepList} from '@hooks/useStepList/useStepList';
+
 import useDynamicInput from '@hooks/useDynamicAdditionalInput';
 
 import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './SetInitialParticipants.style';
@@ -16,10 +18,10 @@ const SetInitialParticipants = ({
   setParticipants,
 }: SetInitialParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
+  const {updateMemberList} = useStepList();
 
   const handleSubmit = () => {
-    setParticipants(getNonEmptyInputs());
-    // TODO:  (@soha) api 요청시 getNonEmptyInputs() 보낼 형태 생성
+    updateMemberList({memberNameList: getNonEmptyInputs(), type: 'IN'});
     setOpenBottomSheet(false);
   };
 
