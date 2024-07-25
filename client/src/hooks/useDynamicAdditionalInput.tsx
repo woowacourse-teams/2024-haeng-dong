@@ -4,6 +4,7 @@ const useDynamicInput = () => {
   const [inputs, setInputs] = useState<string[]>(['']);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
+  // TODO: (@soha) 입력이 완료되고 중간에 값을 모두 지웠을 경우 Input이 없애지도록 수정하기
   const handleInputChange = (index: number, value: string) => {
     const newInputs = [...inputs];
     newInputs[index] = value;

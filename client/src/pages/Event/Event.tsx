@@ -28,7 +28,6 @@ interface ModalRenderingProps {
 
 const ModalRendering = ({
   participants,
-
   setOrder,
   setOpenBottomSheet,
   setParticipants,
@@ -73,6 +72,7 @@ const Event = () => {
       <section css={ReceiptStyle}>
         {order > 0 && (
           // TODO: (@soha) StepList로 변경하기
+          //  TODO: (@soha) order가 0일때 기본 Step 뜨기
           <>
             <StepItem
               name={`${order}차`}
