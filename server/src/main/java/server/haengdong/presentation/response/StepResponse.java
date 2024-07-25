@@ -35,9 +35,7 @@ public record StepResponse(
                 group.add(action);
                 continue;
             }
-            if (currentActionType.equals("BILL")) {
-                actionsResponse.add(ActionsResponse.of(group, members));
-            }
+            actionsResponse.add(ActionsResponse.of(group, members));
             currentActionType = typeName;
             group.clear();
             if (typeName.equals("IN")) {
@@ -48,10 +46,7 @@ public record StepResponse(
             }
             group.add(action);
         }
-
-        if (currentActionType.equals("BILL")) {
-            actionsResponse.add(ActionsResponse.of(group, members));
-        }
+        actionsResponse.add(ActionsResponse.of(group, members));
 
         return new StepResponse(actionsResponse);
     }
