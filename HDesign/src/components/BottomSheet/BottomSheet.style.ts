@@ -16,7 +16,7 @@ export const dimmedLayerStyle = (theme: Theme) =>
 
 export const bottomSheetContainerStyle = (theme: Theme) =>
   css({
-    position: 'absolute',
+    position: 'fixed',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
