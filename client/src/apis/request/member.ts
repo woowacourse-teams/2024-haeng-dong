@@ -19,7 +19,7 @@ export const requestUpdateMemberList = async ({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/actions/members`,
     body: {
-      memberNameList,
+      members: memberNameList,
       status: type,
     },
   });
