@@ -11,7 +11,12 @@ const meta = {
   decorators: [withRouter],
   parameters: {
     reactRouter: reactRouterParameters({
-      routing: './',
+      location: {
+        pathParams: {
+          eventId: '123123',
+        },
+      },
+      routing: {path: '/event/:eventId/home'},
     }),
     layout: 'centered',
   },
@@ -22,7 +27,7 @@ const meta = {
     },
   },
   args: {
-    navType: 'back',
+    navType: 'home',
   },
 } satisfies Meta<typeof TopNav>;
 

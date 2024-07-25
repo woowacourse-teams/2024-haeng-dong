@@ -6,9 +6,24 @@ import {TopNavProps} from './TopNav.type';
 import Switch from '../Switch/Switch';
 import {useState} from 'react';
 
-const PATH_TABLE: Record<string, {display: string; path: string}> = {
+export interface Path {
+  display: string;
+  path: string;
+}
+
+const PATH_TABLE: Record<string, Path> = {
   home: {display: '홈', path: 'home'},
   admin: {display: '관리', path: 'admin'},
+};
+
+const getPathByDisplay = (displayName: string): string | undefined => {
+  for (const key in PATH_TABLE) {
+    if (PATH_TABLE[key].display === displayName) {
+      return PATH_TABLE[key].path;
+    }
+  }
+
+  return undefined;
 };
 
 const TopNav = ({navType}: TopNavProps) => {
@@ -18,12 +33,13 @@ const TopNav = ({navType}: TopNavProps) => {
   const pathArray = location.pathname.split('/');
   const basePath = pathArray.slice(0, -1).join('/');
   const lastPath = pathArray[pathArray.length - 1];
+  const displayName = PATH_TABLE[lastPath].display;
 
-  const [nav, setNav] = useState(PATH_TABLE[lastPath].display);
+  const [nav, setNav] = useState(displayName);
 
   const handleRoute = (nav: string) => {
     setNav(nav);
-    navigate(`${basePath}/${PATH_TABLE[nav].path}`);
+    navigate(`${basePath}/${getPathByDisplay(nav)}`);
   };
 
   const TopNavByType = () => {
