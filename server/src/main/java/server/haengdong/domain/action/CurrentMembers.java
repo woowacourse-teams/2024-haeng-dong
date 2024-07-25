@@ -1,18 +1,22 @@
 package server.haengdong.domain.action;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class CurrentMembers {
 
     private final Set<String> members;
+
+    public CurrentMembers() {
+        this(new HashSet<>());
+    }
+
+    private CurrentMembers(Set<String> members) {
+        this.members = members;
+    }
 
     public static CurrentMembers of(List<MemberAction> memberActions) {
         List<MemberAction> sortedMemberActions = getSortedMemberActions(memberActions);
@@ -33,5 +37,30 @@ public class CurrentMembers {
         return memberActions.stream()
                 .sorted(Comparator.comparing(MemberAction::getSequence))
                 .toList();
+    }
+
+    public CurrentMembers addMemberAction(MemberAction memberAction) {
+        String memberName = memberAction.getMemberName();
+
+        Set<String> currentMembers = new HashSet<>(members);
+
+        if (memberAction.isIn()) {
+            currentMembers.add(memberName);
+        } else {
+            currentMembers.remove(memberName);
+        }
+        return new CurrentMembers(currentMembers);
+    }
+
+    public boolean isEmpty() {
+        return members.isEmpty();
+    }
+
+    public int size() {
+        return members.size();
+    }
+
+    public Set<String> getMembers() {
+        return Collections.unmodifiableSet(members);
     }
 }
