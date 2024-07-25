@@ -1,5 +1,6 @@
 package server.haengdong.presentation;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping("/api/events")
-    public ResponseEntity<EventResponse> saveEvent(@RequestBody EventSaveRequest request) {
+    public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
         EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
 
         return ResponseEntity.ok(eventResponse);
