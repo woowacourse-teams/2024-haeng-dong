@@ -6,6 +6,7 @@ import {requestAddBillList} from '@apis/request/bill';
 import {requestUpdateMemberList} from '@apis/request/member';
 
 import stepListJsonData from '@mocks/stepList.json';
+import {requestStepList} from '@apis/request/stepList';
 
 interface StepListContextProps {
   stepList: StepList;
@@ -28,17 +29,15 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   useEffect(() => {
     if (eventId === '') return;
 
-    setStepList(stepListMockData);
-
-    // refreshStepList();
+    refreshStepList();
 
     // TODO: (@weadie) useEffect를 꼭 써야하는가?
   }, [eventId]);
 
   const refreshStepList = async () => {
-    // const stepList = await requestStepList({eventId});
+    const stepList = await requestStepList({eventId});
 
-    setStepList(stepListMockData);
+    setStepList(stepList);
   };
 
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
