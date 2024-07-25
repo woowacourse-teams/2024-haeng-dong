@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const CreateEvent = () => {

@@ -1,7 +1,8 @@
+import {Tab, Tabs, Title} from 'haengdong-design';
+
 import MemberReportList from '@components/MemberReportList/MemberReportList';
 import StepList from '@components/StepList/StepList';
 import {useStepList} from '@hooks/useStepList/useStepList';
-import {Tab, Tabs, Title} from 'haengdong-design';
 
 const HomeContent = () => {
   const {getTotalPrice} = useStepList();

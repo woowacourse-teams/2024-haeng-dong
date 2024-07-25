@@ -1,5 +1,7 @@
 import {PropsWithChildren, createContext, useEffect, useState} from 'react';
+
 import {BillAction, MemberType, StepList} from 'types/stepList';
+
 import stepListJsonData from '@mocks/stepList.json';
 
 const stepListMockData = stepListJsonData as StepList;
