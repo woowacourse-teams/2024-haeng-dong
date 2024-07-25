@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.stream.IntStream;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,7 @@ public class Event {
 
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 20;
-    private static final char BLANK_CHARACTER = ' ';
+    private static final String SPACES = "  ";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +37,10 @@ public class Event {
         int nameLength = name.length();
         if (nameLength < MIN_NAME_LENGTH || MAX_NAME_LENGTH < nameLength) {
             throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
-                    String.format("행사 이름은 2자 이상 20자 이하만 입력 가능합니다. 입력한 이름 길이 : %d", name.length()));
+                    String.format("행사 이름은 %d자 이상 %d자 이하만 입력 가능합니다. 입력한 이름 길이 : %d",
+                            MIN_NAME_LENGTH,
+                            MAX_NAME_LENGTH,
+                            name.length()));
         }
         if (isBlankContinuous(name)) {
             throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
@@ -47,7 +49,6 @@ public class Event {
     }
 
     private boolean isBlankContinuous(String name) {
-        return IntStream.range(0, name.length() - 1)
-                .anyMatch(index -> name.charAt(index) == BLANK_CHARACTER && name.charAt(index + 1) == BLANK_CHARACTER);
+        return name.contains(SPACES);
     }
 }
