@@ -24,7 +24,7 @@ export const Title: React.FC<TitleProps> = ({title, description, price}: TitlePr
           {description}
         </Text>
       )}
-      {price && (
+      {price !== undefined && (
         <div css={priceContainerStyle}>
           <Text css={priceTitleStyle(theme)} size="caption">
             전체 지출 금액
