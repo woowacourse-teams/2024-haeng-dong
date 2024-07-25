@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import server.haengdong.domain.event.Event;
+import server.haengdong.exception.HaengdongException;
 
 class BillActionTest {
 
@@ -21,7 +22,7 @@ class BillActionTest {
         Long price = 100L;
 
         assertThatThrownBy(() -> new BillAction(action, title, price))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(HaengdongException.class)
                 .hasMessage("앞뒤 공백을 제거한 지출 내역 제목은 2 ~ 30자여야 합니다.");
     }
 
@@ -34,7 +35,7 @@ class BillActionTest {
         String title = "title";
 
         assertThatThrownBy(() -> new BillAction(action, title, price))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(HaengdongException.class)
                 .hasMessage("지출 금액은 10,000,000 이하의 자연수여야 합니다.");
     }
 
