@@ -10,29 +10,16 @@ import useDynamicInput from '@hooks/useDynamicAdditionalInput';
 import {updateParticipantsInputStyle, updateParticipantsStyle} from './UpdateParticipants.style';
 
 interface UpdateParticipantsProps {
-  participants: string[];
-  participantAction: InOutType;
+  inOutAction: MemberType;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UpdateParticipants = ({participantAction, participants, setOpenBottomSheet}: UpdateParticipantsProps) => {
+const UpdateParticipants = ({inOutAction, setOpenBottomSheet}: UpdateParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
-  const {updateMemberList} = useStepList();
-
-  const [inOutAction, setInOutAction] = useState<MemberType>('OUT');
+  const {updateMemberList, memberNameList} = useStepList();
 
   const handleUpdateParticipantsSubmit = () => {
-    const newParticipants = () => {
-      if (participantAction === '탈주') {
-        setInOutAction('OUT');
-        return participants.filter(participant => !getNonEmptyInputs().includes(participant));
-      } else {
-        setInOutAction('IN');
-        return [...participants, ...getNonEmptyInputs()];
-      }
-    };
-
-    updateMemberList({memberNameList: newParticipants(), type: inOutAction});
+    updateMemberList({memberNameList: getNonEmptyInputs(), type: inOutAction});
     setOpenBottomSheet(false);
   };
 
@@ -54,7 +41,7 @@ const UpdateParticipants = ({participantAction, participants, setOpenBottomSheet
       </div>
       <FixedButton
         variants={inputs.length - 1 ? 'primary' : 'tertiary'}
-        children={`${inputs.length - 1}명 ${participantAction}`}
+        children={`${inputs.length - 1}명 ${inOutAction === 'OUT' ? '탈주' : '늦참'}`}
         onClick={handleUpdateParticipantsSubmit}
       />
     </div>
