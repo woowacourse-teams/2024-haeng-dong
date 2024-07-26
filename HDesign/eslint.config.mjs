@@ -68,6 +68,7 @@ export default [
       'react/prop-types': 'off',
       'import/prefer-default-export': 0,
       'import/no-named-as-default': 0,
+      'import/namespace': 0,
       'import/extensions': 0,
       'import/no-cycle': 0,
       'react/no-unknown-property': 0,
