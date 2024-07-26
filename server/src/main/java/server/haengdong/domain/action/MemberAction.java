@@ -43,6 +43,10 @@ public class MemberAction implements Comparable<MemberAction> {
         return memberName.equals(name);
     }
 
+    public boolean isIn() {
+        return status == MemberActionStatus.IN;
+    }
+
     public boolean isSameStatus(MemberActionStatus memberActionStatus) {
         return status == memberActionStatus;
     }

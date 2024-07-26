@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import server.haengdong.domain.event.Event;
 
-class MemberBillReportsTest {
+class MemberBillReportTest {
 
     @DisplayName("액션 목록으로 참가자 정산 리포트를 생성한다.")
     @Test
@@ -29,9 +29,9 @@ class MemberBillReportsTest {
                 new MemberAction(new Action(event, 5L), "감자", OUT, 2L)
         );
 
-        MemberBillReports memberBillReports = MemberBillReports.createByActions(billActions, memberActions);
+        MemberBillReport memberBillReport = MemberBillReport.createByActions(billActions, memberActions);
 
-        assertThat(memberBillReports.getReports())
+        assertThat(memberBillReport.getReports())
                 .containsAllEntriesOf(
                         Map.of(
                                 "감자", 20_000L,
