@@ -1,4 +1,4 @@
-import {Member, MemberType} from 'types/stepList';
+import {MemberType} from 'types/stepList';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
