@@ -2,13 +2,7 @@ import {useEffect, useState} from 'react';
 
 import {MemberReport} from 'types/stepList';
 import {requestMemberReportList} from '@apis/request/report';
-
-import {WithEventId} from '@apis/withEventId.type';
-
-import memberReportSearchJsonList from '@mocks/memberReportSearchList.json';
 import useEventId from '@hooks/useEventId/useEventId';
-
-const memberReportSearchMockList = memberReportSearchJsonList as MemberReport[];
 
 type UseSearchMemberReportListParams = {
   name: string;

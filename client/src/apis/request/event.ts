@@ -1,5 +1,3 @@
-import {StepList} from 'types/stepList';
-
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestGet, requestPost} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';

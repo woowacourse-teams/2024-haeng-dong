@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Title, FixedButton, StepItem} from 'haengdong-design';
-import {useNavigate} from 'react-router-dom';
+import {Title, FixedButton} from 'haengdong-design';
 
 import StepList from '@components/StepList/StepList';
 import {useStepList} from '@hooks/useStepList/useStepList';

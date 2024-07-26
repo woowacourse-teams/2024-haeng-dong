@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 
 const PATH_TABLE: Record<string, string> = {

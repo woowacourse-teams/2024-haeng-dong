@@ -15,8 +15,6 @@ const CompleteCreateEvent = () => {
       const params = new URLSearchParams(location.search);
       const eventId = params.get('eventId');
 
-      // const url = await fetch();
-
       // TODO: (@weadie) eventId가 없는 경우에 대한 처리 필요
       setUrl(eventId ?? '');
     };

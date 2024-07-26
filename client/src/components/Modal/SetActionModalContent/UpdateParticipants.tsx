@@ -1,5 +1,4 @@
 import {Input, FixedButton} from 'haengdong-design';
-import {useState} from 'react';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
 import {MemberType} from 'types/stepList';

@@ -1,4 +1,4 @@
-import {Bill, Member, StepList} from 'types/stepList';
+import {StepList} from 'types/stepList';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
