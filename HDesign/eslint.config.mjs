@@ -21,8 +21,6 @@ const compat = new FlatCompat({
 export default [
   ...fixupConfigRules(
     compat.extends(
-      'airbnb',
-      'airbnb/hooks',
       'eslint:recommended',
       'plugin:react/recommended',
       'plugin:@typescript-eslint/recommended',
