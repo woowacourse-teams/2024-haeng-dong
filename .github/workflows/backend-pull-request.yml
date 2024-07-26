@@ -2,7 +2,7 @@ name: backend-pull-request
 
 on:
   pull_request:
-    branches: [ "main", "develop", "feature/#121" ]
+    branches: [ "main", "develop" ]
     paths:
       - 'server/**'
 
@@ -18,16 +18,6 @@ jobs:
       - name: CheckOut
         uses: actions/checkout@v4
 
-      - name: Gradle Caching
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -35,7 +25,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
 
       - name: Test with Gradle Wrapper
         run: ./gradlew clean build
