@@ -45,6 +45,7 @@ jobs:
         run: npm run lint
 
       - name: publish to chromatic
+        working-directory: ./HDesign 
         id: chromatic
         uses: chromaui/action@v1
         with:
