@@ -1,5 +1,6 @@
-import React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
+
+import React from 'react';
 
 import Search from '@components/Search/Search';
 
@@ -23,7 +24,7 @@ const meta = {
     disabled: false,
     placeholder: 'placeholder',
     searchTerms: ['todari', 'cookie'],
-    setKeyword: keyword => console.log(keyword),
+    setKeyword: (keyword: string) => console.log(keyword),
   },
 } satisfies Meta<typeof Search>;
 

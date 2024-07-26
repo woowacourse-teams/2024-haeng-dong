@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react';
+
 import {StrictPropsWithChildren} from '@/types/strictPropsWithChildren';
 import {changeCamelCaseToKebabCase} from '@/utils/ return str.replace(/([a-z])([A-Z])/changeCamelCaseToKebabCase';
-import {css} from '@emotion/react';
+
 import {FlexDirectionStrictType, FlexProps} from './Flex.type';
 
 const flexStyle = ({
@@ -32,8 +34,8 @@ const flexStyle = ({
   });
 
 // TODO: (@weadie) 지정된 프롭 말고 다른 프롭도 가져올 수 있게 하자.
-const Flex = ({children, ...props}: StrictPropsWithChildren<FlexProps>) => {
+function Flex({children, ...props}: StrictPropsWithChildren<FlexProps>) {
   return <div css={flexStyle(props)}>{children}</div>;
-};
+}
 
 export default Flex;

@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
+import Flex from '@components/Flex/Flex';
+
+import {useTheme} from '@theme/HDesignProvider';
+
 import Input from '../Input/Input';
 import {InputProps} from '../Input/Input.type';
-import {searchStyle, searchTermsStyle} from './Search.style';
+
+import {searchStyle, searchTermsStyle, searchTermStyle} from './Search.style';
 import useSearch from './useSearch';
-import {searchTermStyle} from './Search.style';
-import {useTheme} from '@theme/HDesignProvider';
-import Flex from '@components/Flex/Flex';
 
 export interface SearchProps extends InputProps {
   searchTerms: string[];

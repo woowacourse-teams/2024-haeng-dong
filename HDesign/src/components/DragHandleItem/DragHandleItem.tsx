@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 
+import {StrictPropsWithChildren} from '@/types/strictPropsWithChildren';
+import {COLORS, ColorKeys} from '@/token/colors';
+
 import {useTheme} from '@theme/HDesignProvider';
 
 import IconButton from '../IconButton/IconButton';
-import {StrictPropsWithChildren} from '@/types/strictPropsWithChildren';
+
 import {dragHandleItemStyle, prefixStyle} from './DragHandleItem.style';
-import {COLORS, ColorKeys} from '@/token/colors';
 
 interface DragHandleItemCustomProps {
   hasDragHandle?: boolean;
@@ -15,12 +17,12 @@ interface DragHandleItemCustomProps {
 
 export type DragHandleItemProps = React.ComponentProps<'div'> & DragHandleItemCustomProps;
 
-export const DragHandleItem = ({
+export function DragHandleItem({
   hasDragHandle = false,
   backgroundColor = 'white',
   children,
   ...htmlProps
-}: StrictPropsWithChildren<DragHandleItemProps>) => {
+}: StrictPropsWithChildren<DragHandleItemProps>) {
   const {theme} = useTheme();
 
   // TODO: (@toari) : 사람 수 많을 때 UX writing 처리
@@ -32,5 +34,5 @@ export const DragHandleItem = ({
       </div>
     </div>
   );
-};
+}
 export default DragHandleItem;

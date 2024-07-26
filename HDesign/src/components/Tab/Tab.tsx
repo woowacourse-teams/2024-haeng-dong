@@ -2,11 +2,12 @@
 import {css} from '@emotion/react';
 import React, {useState} from 'react';
 
+import Text from '@components/Text/Text';
+
 import {useTheme} from '@theme/HDesignProvider';
 
 import {tabListStyle, tabTextStyle, tabStyle, tabItemStyle, indicatorStyle} from './Tab.style';
 import {TabsProps} from './Tab.type';
-import Text from '@components/Text/Text';
 
 const Tab: React.FC<TabsProps> = ({tabs}) => {
   const {theme} = useTheme();

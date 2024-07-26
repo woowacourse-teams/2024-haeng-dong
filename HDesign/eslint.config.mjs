@@ -64,12 +64,37 @@ export default [
     },
 
     rules: {
+      'no-use-before-define': 0,
       'prettier/prettier': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
-      'react/jsx-uses-vars': 'error',
-      '@typescript-eslint/no-use-before-define': ['error'],
-      '@typescript-eslint/explicit-module-boundary-types': 'error',
+      'import/prefer-default-export': 0,
+      'import/no-named-as-default': 0,
+      'import/extensions': 0,
+      'import/no-cycle': 0,
+      'react/no-unknown-property': 0,
+      'react/jsx-filename-extension': [1, {extensions: ['.ts', '.tsx']}],
+      'react/function-component-definition': 0,
+      'react/jsx-props-no-spreading': 0,
+      'react/jsx-key': 0,
+      'react/button-has-type': 'off',
+      'no-shadow': 0,
+      'no-console': 0,
+      'no-alert': 0,
+      'react/no-children-prop': 'off',
+      'react/no-array-index-key': 'off',
+      'react-hooks/exhaustive-deps': 'off',
+      'react-hooks/rules-of-hooks': 'off',
+      'react/jsx-no-useless-fragment': 'off',
+      'react/jsx-no-constructed-context-values': 'off',
+      'jsx-a11y/click-events-have-key-events': 'off',
+      'jsx-a11y/no-static-element-interactions': 'off',
+
+      '@typescript-eslint/no-unused-vars': 0,
+
+      // 'react/jsx-uses-vars': 'error',
+      // '@typescript-eslint/no-use-before-define': ['error'],
+      // '@typescript-eslint/explicit-module-boundary-types': 'error',
 
       'import/order': [
         'error',
@@ -90,6 +115,11 @@ export default [
               position: 'after',
             },
             {
+              pattern: '@layouts/*',
+              group: 'internal',
+              position: 'after',
+            },
+            {
               pattern: '@assets/*',
               group: 'internal',
               position: 'after',
@@ -101,6 +131,16 @@ export default [
             },
             {
               pattern: '@token/*',
+              group: 'internal',
+              position: 'after',
+            },
+            {
+              pattern: '@types/*',
+              group: 'internal',
+              position: 'after',
+            },
+            {
+              pattern: '@utils/*',
               group: 'internal',
               position: 'after',
             },

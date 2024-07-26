@@ -2,7 +2,6 @@
 import {forwardRef} from 'react';
 
 import {IconButtonProps} from '@components/IconButton/IconButton.type';
-
 import {InputDelete, Plus, Buljusa} from '@/assets';
 
 const ICON = {
