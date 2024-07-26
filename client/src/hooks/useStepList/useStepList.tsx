@@ -28,7 +28,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
     refreshStepList();
 
     // TODO: (@weadie) useEffect를 꼭 써야하는가?
-  }, []);
+  }, [eventId]);
 
   const refreshStepList = async () => {
     const stepList = await requestStepList({eventId});
