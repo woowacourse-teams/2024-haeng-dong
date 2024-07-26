@@ -30,7 +30,7 @@ const CreateEvent = () => {
         <Back />
       </TopNav>
       <Title title="행사 이름 입력" description="시작할 행사 이름을 입력해 주세요." />
-      <form onSubmit={submitEventName}>
+      <form onSubmit={submitEventName} style={{padding: '0 1rem'}}>
         <Input
           value={eventName}
           onChange={event => setEventName(event.target.value)}
