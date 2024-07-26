@@ -15,8 +15,6 @@ export type PurchaseInformation = {
   price: number;
 };
 
-export type InOutType = '늦참' | '탈주';
-
 export type ParticipantType = {
   name: string;
   type: InOutType;

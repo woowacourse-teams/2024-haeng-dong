@@ -1,8 +1,6 @@
 import {useState} from 'react';
 import {BottomSheet, Switch} from 'haengdong-design';
 
-import {InOutType} from '@pages/Event/Admin/Admin';
-
 import SetPurchase from './SetPurchase';
 import UpdateParticipants from './UpdateParticipants';
 import {setActionModalContentStyle, setActionModalContentSwitchContainerStyle} from './SetActionModalContent.style';
@@ -11,17 +9,11 @@ export type ActionType = '지출' | '인원';
 
 interface SetActionModalContentProps {
   openBottomSheet: boolean;
-
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SetActionModalContent = ({
-  openBottomSheet,
-
-  setOpenBottomSheet,
-  setOrder,
-}: SetActionModalContentProps) => {
+const SetActionModalContent = ({openBottomSheet, setOpenBottomSheet, setOrder}: SetActionModalContentProps) => {
   const [action, setAction] = useState<ActionType>('지출');
   const [inOutAction, setInOutAction] = useState<InOutType>('탈주');
 

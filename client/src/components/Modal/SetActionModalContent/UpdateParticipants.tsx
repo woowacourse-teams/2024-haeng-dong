@@ -1,7 +1,6 @@
 import {Input, FixedButton} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
-import {MemberType} from 'types/stepList';
 
 import useDynamicInput from '@hooks/useDynamicAdditionalInput';
 

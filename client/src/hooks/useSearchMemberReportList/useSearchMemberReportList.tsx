@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 
-import {MemberReport} from 'types/stepList';
 import {requestMemberReportList} from '@apis/request/report';
 import useEventId from '@hooks/useEventId/useEventId';
 

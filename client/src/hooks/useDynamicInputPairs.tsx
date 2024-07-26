@@ -1,7 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
 
-import {Bill} from 'types/stepList';
-
 const useDynamicInputPairs = () => {
   const [inputPairs, setInputPairs] = useState<Bill[]>([{title: '', price: 0}]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
