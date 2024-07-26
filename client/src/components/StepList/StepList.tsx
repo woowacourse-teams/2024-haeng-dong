@@ -10,7 +10,13 @@ const StepList = () => {
     <Flex flexDirection="column" gap="0.5rem" paddingInline="0.5rem">
       {stepList.map(step => {
         if (step.type === 'BILL') {
-          return <StepItem name={step.stepName} bills={step.actions} personCount={step.members.length} />;
+          return (
+            <StepItem
+              name={step.stepName === null ? '행사' : step.stepName}
+              bills={step.actions}
+              personCount={step.members.length}
+            />
+          );
         } else if (step.type === 'IN' || step.type === 'OUT') {
           return <InOutItem inOutType={step.type} names={step.actions.map(({name}) => name)} />;
         } else {
