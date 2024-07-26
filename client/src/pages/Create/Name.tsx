@@ -34,9 +34,10 @@ const CreateEvent = () => {
         <Input
           value={eventName}
           onChange={event => setEventName(event.target.value)}
+          onBlur={() => setEventName(eventName.trim())}
           placeholder="ex) 행동대장 야유회"
         />
-        <FixedButton disabled={!eventName.trim.length}>행동 개시!</FixedButton>
+        <FixedButton disabled={!eventName.length}>행동 개시!</FixedButton>
       </form>
     </MainLayout>
   );
