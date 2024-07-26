@@ -9,7 +9,7 @@ export const fixedButtonContainerStyle = (theme: Theme) =>
   css({
     display: 'flex',
     position: 'fixed',
-
+    maxWidth: '768px',
     inset: 'auto 0 0',
     margin: '0 auto',
     backgroundColor: theme.colors.white,
