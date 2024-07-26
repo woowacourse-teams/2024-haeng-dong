@@ -27,13 +27,13 @@ const HomeContent = () => {
   }, [eventId]);
 
   return (
-    <>
+    <div>
       <Title title={eventName} price={getTotalPrice()} />
       <Tabs tabsContainerStyle={{gap: '1rem'}}>
         <Tab label="전체 지출 내역" content={<StepList />} />
         <Tab label="참여자 별 내역" content={<MemberReportList />} />
       </Tabs>
-    </>
+    </div>
   );
 };
 
