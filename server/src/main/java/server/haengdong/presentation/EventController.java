@@ -12,7 +12,7 @@ import server.haengdong.application.EventService;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventResponse;
-import server.haengdong.presentation.response.StepResponse;
+import server.haengdong.presentation.response.StepsResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,9 +35,9 @@ public class EventController {
     }
 
     @GetMapping("/api/events/{eventId}/actions")
-    public ResponseEntity<StepResponse> findActions(@PathVariable("eventId") String token) {
-        StepResponse stepResponse = StepResponse.of(eventService.findActions(token));
+    public ResponseEntity<StepsResponse> findActions(@PathVariable("eventId") String token) {
+        StepsResponse stepsResponse = StepsResponse.of(eventService.findActions(token));
 
-        return ResponseEntity.ok(stepResponse);
+        return ResponseEntity.ok(stepsResponse);
     }
 }
