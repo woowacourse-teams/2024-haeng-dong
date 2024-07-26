@@ -2,6 +2,11 @@ body {
   max-width: 768px;
   height: 100lvh;
   margin: 0 auto;
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 section {
