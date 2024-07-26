@@ -14,6 +14,7 @@ import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.exception.HaengdongException;
 
 @SpringBootTest
 class BillActionServiceTest {
@@ -59,7 +60,6 @@ class BillActionServiceTest {
         );
 
         assertThatThrownBy(() -> billActionService.saveAllBillAction("token", requests))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 이벤트 토큰입니다.");
+                .isInstanceOf(HaengdongException.class);
     }
 }

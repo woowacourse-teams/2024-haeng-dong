@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const CreateEvent = () => {
@@ -8,7 +9,7 @@ const CreateEvent = () => {
 
   const submitEventTitle = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate(`${ROUTER_URLS.completeCreateEvent}?${new URLSearchParams({title: eventTitle})}`);
+    navigate(`${ROUTER_URLS.eventCreateName}?${new URLSearchParams({title: eventTitle})}`);
   };
 
   return (

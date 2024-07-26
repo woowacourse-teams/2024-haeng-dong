@@ -5,12 +5,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
+import server.haengdong.application.response.CurrentMemberAppResponse;
 import server.haengdong.domain.action.Action;
-import server.haengdong.domain.event.Event;
-import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.ActionRepository;
-import server.haengdong.domain.event.EventRepository;
+import server.haengdong.domain.action.CurrentMembers;
+import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.event.Event;
+import server.haengdong.domain.event.EventRepository;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -24,8 +28,7 @@ public class MemberActionService {
 
     @Transactional
     public void saveMemberAction(String token, MemberActionsSaveAppRequest request) {
-        Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new IllegalArgumentException("event not found"));
+        Event event = findEvent(token);
 
         List<MemberAction> findMemberActions = memberActionRepository.findAllByEvent(event);
         Action action = createStartAction(event);
@@ -37,5 +40,21 @@ public class MemberActionService {
         return actionRepository.findLastByEvent(event)
                 .map(Action::next)
                 .orElse(Action.createFirst(event));
+    }
+
+    public List<CurrentMemberAppResponse> getCurrentMembers(String token) {
+        Event event = findEvent(token);
+        List<MemberAction> findMemberActions = memberActionRepository.findAllByEvent(event);
+        CurrentMembers currentMembers = CurrentMembers.of(findMemberActions);
+
+        return currentMembers.getMembers()
+                .stream()
+                .map(CurrentMemberAppResponse::new)
+                .toList();
+    }
+
+    private Event findEvent(String token) {
+        return eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
     }
 }

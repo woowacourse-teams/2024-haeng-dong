@@ -1,7 +1,8 @@
 export const ROUTER_URLS = {
   main: '',
-  createEvent: '/create-event',
-  completeCreateEvent: '/create-event/complete',
+  eventCreateName: '/event/create/name',
+  eventCreateComplete: '/event/create/complete',
   event: '/event',
-  eventManage: '/event/:eventId',
+  eventManage: '/event/:eventId/admin',
+  home: '/event/:eventId/home',
 };

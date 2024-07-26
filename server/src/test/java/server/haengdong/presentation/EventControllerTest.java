@@ -2,8 +2,10 @@ package server.haengdong.presentation;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,10 +16,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
+import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.presentation.request.EventSaveRequest;
 
 @WebMvcTest(EventController.class)
@@ -46,6 +48,19 @@ class EventControllerTest {
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("events/" + token));
+                .andExpect(jsonPath("$.eventId").value("TOKEN"));
+    }
+
+    @DisplayName("토큰으로 행사를 조회한다.")
+    @Test
+    void findEventTest() throws Exception {
+        String token = "TOKEN";
+        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식");
+        given(eventService.findEvent(token)).willReturn(eventDetailAppResponse);
+
+        mockMvc.perform(get("/api/events/" + token))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.eventName").value("행동대장 회식"));
     }
 }
