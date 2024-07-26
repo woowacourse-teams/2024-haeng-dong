@@ -1,5 +1,7 @@
 import {Text, Input, BottomSheet, FixedButton} from 'haengdong-design';
 
+import {useStepList} from '@hooks/useStepList/useStepList';
+
 import useDynamicInput from '@hooks/useDynamicAdditionalInput';
 
 import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './SetInitialParticipants.style';
@@ -7,19 +9,14 @@ import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from
 interface SetInitialParticipantsProps {
   openBottomSheet: boolean;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setParticipants: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const SetInitialParticipants = ({
-  openBottomSheet,
-  setOpenBottomSheet,
-  setParticipants,
-}: SetInitialParticipantsProps) => {
+const SetInitialParticipants = ({openBottomSheet, setOpenBottomSheet}: SetInitialParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
+  const {updateMemberList} = useStepList();
 
   const handleSubmit = () => {
-    setParticipants(getNonEmptyInputs());
-    // TODO:  (@soha) api 요청시 getNonEmptyInputs() 보낼 형태 생성
+    updateMemberList({memberNameList: getNonEmptyInputs(), type: 'IN'});
     setOpenBottomSheet(false);
   };
 

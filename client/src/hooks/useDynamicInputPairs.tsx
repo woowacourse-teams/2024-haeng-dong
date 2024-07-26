@@ -1,12 +1,12 @@
 import {useEffect, useRef, useState} from 'react';
 
-import {PurchaseInformation} from '@pages/Event/Event';
+import {Bill} from 'types/stepList';
 
 const useDynamicInputPairs = () => {
-  const [inputPairs, setInputPairs] = useState<PurchaseInformation[]>([{name: '', price: 0}]);
+  const [inputPairs, setInputPairs] = useState<Bill[]>([{title: '', price: 0}]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleInputChange = (index: number, field: 'name' | 'price', value: string) => {
+  const handleInputChange = (index: number, field: 'title' | 'price', value: string) => {
     const newInputPairs = [...inputPairs];
     newInputPairs[index] = {
       ...newInputPairs[index],
@@ -17,11 +17,15 @@ const useDynamicInputPairs = () => {
 
   const handleInputBlur = (index: number) => {
     const currentPair = inputPairs[index];
-    if (currentPair.name.trim() === '' && currentPair.price === 0) {
+    if (currentPair.title.trim() === '' && currentPair.price === 0) {
       setInputPairs(prev => prev.filter((_, i) => i !== index));
-    } else if (currentPair.name.trim() !== '' && currentPair.price !== 0 && index === inputPairs.length - 1) {
-      setInputPairs(prev => [...prev, {name: '', price: 0}]);
+    } else if (currentPair.title.trim() !== '' && currentPair.price !== 0 && index === inputPairs.length - 1) {
+      setInputPairs(prev => [...prev, {title: '', price: 0}]);
     }
+  };
+
+  const getNonEmptyInputPairs = () => {
+    return inputPairs.filter(currentPair => currentPair.title.trim() !== '' && currentPair.price !== 0);
   };
 
   useEffect(() => {
@@ -33,6 +37,7 @@ const useDynamicInputPairs = () => {
 
   return {
     inputPairs,
+    getNonEmptyInputPairs,
     inputRefs,
     handleInputChange,
     handleInputBlur,

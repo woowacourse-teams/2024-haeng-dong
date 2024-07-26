@@ -1,31 +1,24 @@
 import {Input, FixedButton} from 'haengdong-design';
 import {useState} from 'react';
 
-import {InOutType} from '@pages/Event/Event';
+import {useStepList} from '@hooks/useStepList/useStepList';
+import {MemberType} from 'types/stepList';
 
 import useDynamicInput from '@hooks/useDynamicAdditionalInput';
 
 import {updateParticipantsInputStyle, updateParticipantsStyle} from './UpdateParticipants.style';
 
 interface UpdateParticipantsProps {
-  participants: string[];
-  participantAction: InOutType;
+  inOutAction: MemberType;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UpdateParticipants = ({participantAction, participants, setOpenBottomSheet}: UpdateParticipantsProps) => {
+const UpdateParticipants = ({inOutAction, setOpenBottomSheet}: UpdateParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
+  const {updateMemberList} = useStepList();
 
   const handleUpdateParticipantsSubmit = () => {
-    const newParticipants = () => {
-      if (participantAction === '탈주') {
-        return participants.filter(participant => !getNonEmptyInputs().includes(participant));
-      } else {
-        return [...participants, ...getNonEmptyInputs()];
-      }
-    };
-
-    // TODO: (@soha) api 요청시 newParticipants()를 보내면 됨
+    updateMemberList({memberNameList: getNonEmptyInputs(), type: inOutAction});
     setOpenBottomSheet(false);
   };
 
@@ -47,7 +40,7 @@ const UpdateParticipants = ({participantAction, participants, setOpenBottomSheet
       </div>
       <FixedButton
         variants={inputs.length - 1 ? 'primary' : 'tertiary'}
-        children={`${inputs.length - 1}명 ${participantAction}`}
+        children={`${inputs.length - 1}명 ${inOutAction === 'OUT' ? '탈주' : '늦참'}`}
         onClick={handleUpdateParticipantsSubmit}
       />
     </div>

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {BottomSheet, Switch} from 'haengdong-design';
 
-import {InOutType, ParticipantType, PurchaseInformation} from '@pages/Event/Event';
+import {InOutType} from '@pages/Event/Admin/Admin';
 
 import SetPurchase from './SetPurchase';
 import UpdateParticipants from './UpdateParticipants';
@@ -10,7 +10,6 @@ import {setActionModalContentStyle, setActionModalContentSwitchContainerStyle} f
 export type ActionType = '지출' | '인원';
 
 interface SetActionModalContentProps {
-  participants: string[];
   openBottomSheet: boolean;
 
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,21 +17,20 @@ interface SetActionModalContentProps {
 }
 
 const SetActionModalContent = ({
-  participants,
   openBottomSheet,
 
   setOpenBottomSheet,
   setOrder,
 }: SetActionModalContentProps) => {
   const [action, setAction] = useState<ActionType>('지출');
-  const [participantAction, setParticipantAction] = useState<InOutType>('탈주');
+  const [inOutAction, setInOutAction] = useState<InOutType>('탈주');
 
   const handleActionTypeChange = (value: string) => {
     setAction(value as ActionType);
   };
 
   const handleParticipantTypeChange = (value: string) => {
-    setParticipantAction(value as InOutType);
+    setInOutAction(value as InOutType);
   };
 
   return (
@@ -41,15 +39,14 @@ const SetActionModalContent = ({
         <div css={setActionModalContentSwitchContainerStyle}>
           <Switch value={action} onChange={handleActionTypeChange} values={['지출', '인원']} />
           {action === '인원' && (
-            <Switch values={['늦참', '탈주']} value={participantAction} onChange={handleParticipantTypeChange} />
+            <Switch values={['늦참', '탈주']} value={inOutAction} onChange={handleParticipantTypeChange} />
           )}
         </div>
 
         {action === '지출' && <SetPurchase setOpenBottomSheet={setOpenBottomSheet} setOrder={setOrder} />}
         {action === '인원' && (
           <UpdateParticipants
-            participantAction={participantAction}
-            participants={participants}
+            inOutAction={inOutAction === '탈주' ? 'OUT' : 'IN'}
             setOpenBottomSheet={setOpenBottomSheet}
           />
         )}

@@ -5,7 +5,7 @@ interface RequestPostEventProps {
 }
 
 export const requestPostEvent = async ({name}: RequestPostEventProps) => {
-  requestPost({
+  await requestPost({
     headers: {'Content-Type': 'application/json'},
     body: {name},
     endpoint: '/api/events',

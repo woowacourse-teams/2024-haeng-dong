@@ -6,15 +6,15 @@ import {requestPost} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
 type RequestAddBillList = {
-  BillList: Bill[];
+  billList: Bill[];
 };
 
-export const requestAddBillList = async ({eventId, BillList}: WithEventId<RequestAddBillList>) => {
+export const requestAddBillList = async ({eventId, billList}: WithEventId<RequestAddBillList>) => {
   await requestPost({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/actions/bills`,
     body: {
-      actions: BillList,
+      actions: billList,
     },
   });
 };

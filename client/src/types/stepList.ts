@@ -1,11 +1,14 @@
 export type MemberType = 'IN' | 'OUT';
 
 // TODO: (@weadie) 준 데이터 형식에서 steps를 빼내 flat하게 사용중. 일관성있게 하는게 좋긴 하나 사용시 번거로움이 있을 거라고 판단.
-export type StepList = (MemberStep | BillStep)[];
+export type StepList = {
+  steps: (MemberStep | BillStep)[];
+};
 
 export type Step = {
   type: MemberType | 'BILL';
   stepName: string | null;
+  members: string[];
   actions: (BillAction | MemberAction)[];
 };
 
