@@ -42,7 +42,7 @@ jobs:
 
       - name: run lint
         working-directory: ./HDesign
-        run: npm lint
+        run: npm run lint
 
       - name: publish to chromatic
         id: chromatic
