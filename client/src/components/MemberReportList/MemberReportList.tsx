@@ -5,7 +5,7 @@ import useSearchMemberReportList from '@hooks/useSearchMemberReportList/useSearc
 
 const MemberReportList = () => {
   const [name, setName] = useState('');
-  const {memberReportSearchList} = useSearchMemberReportList({name, eventId: '므와아아아'});
+  const {memberReportSearchList} = useSearchMemberReportList({name});
 
   const changeName = ({target}: React.ChangeEvent<HTMLInputElement>) => {
     setName(target.value);
