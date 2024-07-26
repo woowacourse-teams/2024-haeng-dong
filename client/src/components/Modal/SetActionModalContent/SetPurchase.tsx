@@ -48,7 +48,8 @@ const SetPurchase = ({setOpenBottomSheet, setOrder}: SetPurchaseProps) => {
         ))}
       </div>
       <FixedButton
-        variants={inputPairs.length - 1 ? 'primary' : 'tertiary'}
+        disabled={!(inputPairs.length - 1)}
+        variants={'primary'}
         children={'추가하기'}
         onClick={handleSetPurchaseSubmit}
       />
