@@ -8,9 +8,10 @@ import {Theme} from '@theme/theme.type';
 export const fixedButtonContainerStyle = (theme: Theme) =>
   css({
     display: 'flex',
-    position: 'absolute',
+    position: 'fixed',
 
     inset: 'auto 0 0',
+    margin: '0 auto',
     backgroundColor: theme.colors.white,
     boxSizing: 'border-box',
   });
