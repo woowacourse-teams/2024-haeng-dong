@@ -39,7 +39,8 @@ const SetInitialParticipants = ({openBottomSheet, setOpenBottomSheet}: SetInitia
         </div>
       </div>
       <FixedButton
-        variants={inputs.length - 1 ? 'primary' : 'tertiary'}
+        disabled={!(inputs.length - 1)}
+        variants={'primary'}
         onClick={handleSubmit}
         children={'인원 설정 완료'}
       />

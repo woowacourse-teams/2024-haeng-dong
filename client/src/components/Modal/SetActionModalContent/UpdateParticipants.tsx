@@ -39,7 +39,8 @@ const UpdateParticipants = ({inOutAction, setOpenBottomSheet}: UpdateParticipant
         ))}
       </div>
       <FixedButton
-        variants={inputs.length - 1 ? 'primary' : 'tertiary'}
+        disabled={!(inputs.length - 1)}
+        variants={'primary'}
         children={`${inputs.length - 1}명 ${inOutAction === 'OUT' ? '탈주' : '늦참'}`}
         onClick={handleUpdateParticipantsSubmit}
       />
