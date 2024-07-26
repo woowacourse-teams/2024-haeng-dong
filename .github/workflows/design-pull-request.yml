@@ -31,6 +31,11 @@ jobs:
           path: "**/node_modules"
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-storybook
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2 
+        with: 
+          node-version: '20.15.1'
+
       - name: depedency install
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
