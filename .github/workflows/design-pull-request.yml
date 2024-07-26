@@ -41,6 +41,7 @@ jobs:
         run: npm ci
 
       - name: run lint
+        working-directory: ./HDesign
         run: npm lint
 
       - name: publish to chromatic
