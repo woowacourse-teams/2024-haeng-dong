@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import TextButton from '../TextButton/TextButton';
+
 import {switchContainerStyle} from './Switch.style';
 import {SwitchProps} from './Switch.type';
 import {useSwitch} from './useSwitch';
 
-const Switch = ({value = '', initialValue, values, onChange}: SwitchProps) => {
+function Switch({value = '', initialValue, values, onChange}: SwitchProps) {
   const {selectedValue, handleClick} = useSwitch({value, initialValue, values, onChange});
 
   return (
@@ -21,6 +22,6 @@ const Switch = ({value = '', initialValue, values, onChange}: SwitchProps) => {
       ))}
     </div>
   );
-};
+}
 
 export default Switch;

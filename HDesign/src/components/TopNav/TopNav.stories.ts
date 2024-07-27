@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import TopNav from '@components/TopNav/TopNav';
+
 import Switch from '../Switch/Switch';
 
 const meta = {

@@ -1,5 +1,6 @@
-import {Theme} from '@/theme/theme.type';
 import {css} from '@emotion/react';
+
+import {Theme} from '@/theme/theme.type';
 
 export const searchStyle = css({
   position: 'relative',
