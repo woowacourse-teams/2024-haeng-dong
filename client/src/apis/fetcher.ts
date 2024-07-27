@@ -39,7 +39,7 @@ export const requestGet = async <T>({headers = {}, ...args}: RequestProps): Prom
     headers,
   });
 
-  const data: T = await response.json();
+  const data: T = await response!.json();
   return data;
 };
 
@@ -51,8 +51,16 @@ export const requestPut = ({headers = {}, ...args}: RequestProps) => {
   return fetcher({method: 'PUT', headers, ...args});
 };
 
-export const requestPost = ({headers = {}, ...args}: RequestProps) => {
-  return fetcher({method: 'POST', headers, ...args});
+export const requestPost = async <T>({headers = {}, ...args}: RequestProps): Promise<T | undefined> => {
+  const response = await fetcher({method: 'POST', headers, ...args});
+
+  const contentType = response!.headers.get('Content-Type');
+  if (contentType && contentType.includes('application/json')) {
+    const data: T = await response!.json();
+    return data;
+  }
+
+  return;
 };
 
 export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
@@ -98,8 +106,8 @@ const errorHandler = async (url: string, options: Options) => {
     return response;
   } catch (error) {
     console.error(error);
-    throw new Error('아 에러났다;; 인생이 행복해질거에요 에러덕분에요ㅎㅎ');
     // throw new ErrorWithHeader(errorMessageHeader, getErrorMessage(error));
+    return;
   }
 };
 
