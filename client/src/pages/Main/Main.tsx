@@ -9,7 +9,7 @@ const Main = () => {
   return (
     <MainLayout>
       {/* <TopNav navType="back" /> */}
-      <Title title="행동대장" description="랜딩페이지입니다." />
+      <Title title="행동대장" description="랜딩페이지입니다. 뿌뿌 잠깐만 테스트해볼게요" />
       <FixedButton onClick={() => navigate(ROUTER_URLS.eventCreateName)}>행사 생성하기</FixedButton>
     </MainLayout>
   );
