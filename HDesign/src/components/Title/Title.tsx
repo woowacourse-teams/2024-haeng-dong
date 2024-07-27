@@ -29,7 +29,7 @@ export const Title: React.FC<TitleProps> = ({title, description, price}: TitlePr
           <Text css={priceTitleStyle(theme)} size="caption">
             전체 지출 금액
           </Text>
-          <Text css={priceStyle(theme)}>{price.toLocaleString('ko-kr')} 원</Text>
+          <Text css={priceStyle(theme)}>{price.toLocaleString('ko-kr')}원</Text>
         </div>
       )}
     </div>

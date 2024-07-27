@@ -21,7 +21,7 @@ export const BillItem: React.FC<BillItemProps> = ({
           {name}
         </Text>
         <Text css={textStyle(theme)} size="body">
-          {price.toLocaleString('ko-kr')} 원
+          {price.toLocaleString('ko-kr')}원
         </Text>
       </Flex>
     </DragHandleItem>

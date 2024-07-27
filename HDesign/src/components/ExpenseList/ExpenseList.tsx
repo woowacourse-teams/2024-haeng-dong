@@ -16,7 +16,7 @@ const ExpenseItem = ({name, price, ...buttonProps}: ExpenseItemProps) => {
         {name}
       </Text>
       <div css={expenseItemLeftStyle}>
-        <Text css={TextStyle(theme)}>{price.toLocaleString('ko-kr')} 원</Text>
+        <Text css={TextStyle(theme)}>{price.toLocaleString('ko-kr')}원</Text>
         <Arrow />
       </div>
     </button>
