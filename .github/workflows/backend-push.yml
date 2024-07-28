@@ -68,4 +68,4 @@ jobs:
         run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev
 
       - name: Docker run
-        run: sudo docker run -d -p 8080:8080 --name haengdong-backend-dev haengdong/haengdong-backend-dev
+        run: sudo docker run -d -p 8080:8080 --name haengdong-backend-dev ${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev
