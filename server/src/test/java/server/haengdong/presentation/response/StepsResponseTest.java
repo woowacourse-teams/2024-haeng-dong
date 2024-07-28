@@ -11,7 +11,7 @@ import server.haengdong.application.response.ActionAppResponse.ActionType;
 
 class StepsResponseTest {
 
-    @DisplayName("액션들로 액션을 그룹화 한다.")
+    @DisplayName("이웃한 같은 타입의 액션들을 그룹화 하여 응답객체를 생성한다.")
     @Test
     void of() {
         List<ActionAppResponse> actions = List.of(
