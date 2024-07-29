@@ -33,6 +33,7 @@ public record StepsResponse(List<StepResponse> steps) {
             }
             groups.get(groups.size() - 1).add(action);
         }
+
         return groups;
     }
 
