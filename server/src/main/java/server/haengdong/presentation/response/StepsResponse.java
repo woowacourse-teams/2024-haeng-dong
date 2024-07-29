@@ -21,7 +21,6 @@ public record StepsResponse(List<StepResponse> steps) {
             StepResponse stepResponse = StepResponse.of(group, currentMembers, billGroupCount + "차");
             steps.add(stepResponse);
         }
-
         return new StepsResponse(steps);
     }
 
