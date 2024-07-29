@@ -1,6 +1,5 @@
 export interface SwitchProps {
-  value?: string;
-  initialValue?: string;
+  value: string;
   values: string[];
   onChange: (value: string) => void;
 }

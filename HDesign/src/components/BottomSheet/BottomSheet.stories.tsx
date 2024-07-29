@@ -14,19 +14,15 @@ const meta = {
     // layout: 'centered',
   },
   argTypes: {
-    fixedButtonVariants: {
+    fixedButtonProps: {
       description: '',
-      control: {type: 'select'},
-      options: ['', 'primary', 'secondary', 'tertiary'],
-    },
-    fixedButtonText: {
-      description: '',
-      control: {type: 'text'},
+      control: {type: 'object'},
     },
   },
   args: {
-    fixedButtonVariants: 'primary',
-    fixedButtonText: '하단 고정 버튼이에요',
+    fixedButtonProps: {
+      variants: 'primary',
+    },
   },
 } satisfies Meta<typeof BottomSheet>;
 
@@ -36,8 +32,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
   args: {
-    fixedButtonVariants: 'primary',
-    fixedButtonText: '하단 고정 버튼이에요',
+    fixedButtonProps: {
+      variants: 'primary',
+      children: '하단 고정 버튼',
+    },
   },
   render: ({...args}) => {
     const [isOpened, setIsOpened] = useState(false);

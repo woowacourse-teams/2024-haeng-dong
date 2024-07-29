@@ -3,21 +3,18 @@ import TextButton from '../TextButton/TextButton';
 
 import {switchContainerStyle} from './Switch.style';
 import {SwitchProps} from './Switch.type';
-import {useSwitch} from './useSwitch';
 
-function Switch({value = '', initialValue, values, onChange}: SwitchProps) {
-  const {selectedValue, handleClick} = useSwitch({value, initialValue, values, onChange});
-
+function Switch({value, values, onChange}: SwitchProps) {
   return (
     <div css={switchContainerStyle}>
-      {values.map((value, index) => (
+      {values.map((item, index) => (
         <TextButton
-          key={`${index}_${value}`}
-          textColor={selectedValue === value ? 'black' : 'gray'}
+          key={`${index}_${item}`}
+          textColor={value === item ? 'black' : 'gray'}
           textSize="bodyBold"
-          onClick={() => handleClick(index)}
+          onClick={() => onChange(values[index])}
         >
-          {value}
+          {item}
         </TextButton>
       ))}
     </div>

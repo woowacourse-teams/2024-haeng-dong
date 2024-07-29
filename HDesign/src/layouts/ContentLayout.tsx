@@ -2,19 +2,19 @@ import {PropsWithChildren} from 'react';
 
 import {Flex} from '..';
 
-type MainLayoutBackground = 'white' | 'gray';
+type ContentLayoutBackground = 'white' | 'gray';
 
-interface MainLayoutProps extends PropsWithChildren {
-  backgroundColor?: MainLayoutBackground;
+interface ContentLayoutProps extends PropsWithChildren {
+  backgroundColor?: ContentLayoutBackground;
 }
 
-export function MainLayout({backgroundColor, children}: MainLayoutProps) {
+export function ContentLayout({backgroundColor, children}: ContentLayoutProps) {
   return (
     <Flex
       backgroundColor={backgroundColor}
       justifyContent="flexStart"
       flexDirection="column"
-      padding="1rem 0 0 0"
+      padding="0 1rem"
       gap="1rem"
       width="100%"
       height="100%"

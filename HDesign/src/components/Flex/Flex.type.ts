@@ -1,5 +1,8 @@
+import {Theme} from '@/theme/theme.type';
+
 export type FlexDirectionType = 'row' | 'column' | 'rowReverse' | 'columnReverse';
 export type FlexDirectionStrictType = 'row' | 'column' | 'row-reverse' | 'column-reverse';
+export type FlexBackgroundColor = 'gray' | 'white';
 
 export interface FlexProps {
   justifyContent?: 'flexStart' | 'center' | 'flexEnd' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly';
@@ -11,8 +14,6 @@ export interface FlexProps {
   margin?: string;
   width?: string;
   height?: string;
-}
-
-export interface ExtendedFlexProps extends FlexProps {
-  [key: string]: string | undefined;
+  backgroundColor?: FlexBackgroundColor;
+  theme?: Theme;
 }

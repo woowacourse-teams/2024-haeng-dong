@@ -34,7 +34,7 @@ export const StepItem: React.FC<StepItemCustomProps> = ({
           총액
         </Text>
         <Text css={totalAmountStyle(theme)} size="caption">
-          {bills.reduce((acc, prev) => acc + (prev.price ?? 0), 0).toLocaleString('ko-kr')} 원
+          {bills.reduce((acc, prev) => acc + (prev.price ?? 0), 0).toLocaleString('ko-kr')}원
         </Text>
       </Flex>
     </div>

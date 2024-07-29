@@ -11,17 +11,21 @@ import Input from '@components/Input/Input';
 import Search from '@components/Search/Search';
 import StepItem from '@components/StepItem/StepItem';
 import Switch from '@components/Switch/Switch';
-import Tab from '@components/Tab/Tab';
+import Tabs from '@/components/Tabs/Tabs';
 import Text from '@components/Text/Text';
 import TextButton from '@components/TextButton/TextButton';
 import Title from '@components/Title/Title';
 import TopNav from '@components/TopNav/TopNav';
-
 import {MainLayout} from '@layouts/MainLayout';
+import {ContentLayout} from '@layouts/ContentLayout';
 
 import {HDesignProvider} from '@theme/HDesignProvider';
 
+import Tab from './components/Tabs/Tab';
+import Back from './components/TopNav/Back';
+
 export {
+  Back,
   BillItem,
   BottomSheet,
   Button,
@@ -36,10 +40,12 @@ export {
   StepItem,
   Switch,
   Tab,
+  Tabs,
   Text,
   TextButton,
   Title,
   TopNav,
   MainLayout,
+  ContentLayout,
   HDesignProvider,
 };

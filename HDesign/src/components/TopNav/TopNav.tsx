@@ -1,26 +1,20 @@
-import {useNavigate} from 'react-router-dom';
+/** @jsxImportSource @emotion/react */
+import React from 'react';
 
-import TextButton from '../TextButton/TextButton';
-import Switch from '../Switch/Switch';
+import Switch from '@components/Switch/Switch';
 
-import {topNavStyle} from './TopNav.style';
-import {TopNavProps} from './TopNav.type';
+import {topNavNonStyle, topNavStyle} from './TopNav.style';
+import Back from './Back';
 
-// TODO: (@todari) navigation으로 인해 storybook 동작하지 않는 오류 해결해야함
-// + 페이지 정하는 것에 따라, navigate 경로 수정해 줘야 함
-function TopNav({navType}: TopNavProps) {
-  const navigate = useNavigate();
-  return (
-    <div css={topNavStyle}>
-      {navType === 'back' ? (
-        <TextButton onClick={() => navigate(-1)} textSize="bodyBold" textColor="gray">
-          뒤로가기
-        </TextButton>
-      ) : (
-        <Switch values={['홈', '관리']} onChange={() => navigate('./')} />
-      )}
-    </div>
+const TopNav: React.FC<React.PropsWithChildren> = ({children}) => {
+  const hasBack = React.Children.toArray(children).some(child => React.isValidElement(child) && child.type === Back);
+  const hasSwitch = React.Children.toArray(children).some(
+    child => React.isValidElement(child) && child.type === Switch,
   );
-}
+
+  const isExistNav = hasBack || hasSwitch;
+
+  return <div css={isExistNav ? topNavStyle : topNavNonStyle}>{children}</div>;
+};
 
 export default TopNav;
