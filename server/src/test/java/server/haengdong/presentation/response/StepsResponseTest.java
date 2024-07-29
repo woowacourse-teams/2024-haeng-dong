@@ -51,7 +51,6 @@ class StepsResponseTest {
                         ))
                 )
         );
-
         assertThat(stepsResponse).isEqualTo(expected);
     }
 
@@ -59,7 +58,6 @@ class StepsResponseTest {
     @Test
     void ofEmpty() {
         StepsResponse stepsResponse = StepsResponse.of(List.of());
-
         assertThat(stepsResponse.steps()).isEmpty();
     }
 }
