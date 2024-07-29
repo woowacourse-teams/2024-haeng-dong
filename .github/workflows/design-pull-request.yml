@@ -1,0 +1,61 @@
+name: Storybook Deployment
+run-name: ${{ github.actor }}의 스토리북 배포
+on:
+  pull_request:
+    branches:
+      - develop
+    paths:
+    - 'HDesign/**'
+
+jobs:
+  storybook:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ job.status }}
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./HDesign
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-storybook
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2 
+        with: 
+          node-version: '20.15.1'
+
+      - name: depedency install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: run lint
+        working-directory: ./HDesign
+        run: npm run lint
+
+      - name: publish to chromatic
+        working-directory: ./HDesign 
+        id: chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: "🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}"
+ 

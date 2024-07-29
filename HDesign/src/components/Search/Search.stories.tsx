@@ -2,6 +2,8 @@ import type {Meta, StoryObj} from '@storybook/react';
 
 import React from 'react';
 
+import React from 'react';
+
 import Search from '@components/Search/Search';
 
 const meta = {

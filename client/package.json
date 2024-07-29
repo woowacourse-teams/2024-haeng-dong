@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve ",
     "build": "webpack --mode production",
-    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
   "keywords": [],
@@ -47,7 +47,7 @@
     "@emotion/react": "^11.11.4",
     "@types/dotenv-webpack": "^7.0.7",
     "dotenv-webpack": "^8.1.0",
-    "haengdong-design": "^0.1.29",
+    "haengdong-design": "^0.1.35",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1"
