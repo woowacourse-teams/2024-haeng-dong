@@ -3,6 +3,7 @@ import {ComponentPropsWithoutRef} from 'react';
 import {ButtonVariants} from '@components/Button/Button.type';
 
 import {Theme} from '@theme/theme.type';
+
 import {FixedButtonProps} from '../FixedButton/FixedButton.type';
 
 export interface BottomSheetStyleProps {

@@ -1,6 +1,7 @@
+import {css} from '@emotion/react';
+
 import {Theme} from '@/theme/theme.type';
 import {ColorKeys} from '@/token/colors';
-import {css} from '@emotion/react';
 
 export const dragHandleItemStyle = (theme: Theme, hasDragHandle: boolean, backgroundColor: ColorKeys) =>
   css({

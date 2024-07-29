@@ -1,12 +1,14 @@
 import {PropsWithChildren} from 'react';
+
 import {Flex} from '..';
+
 type MainLayoutBackground = 'white' | 'gray';
 
 interface MainLayoutProps extends PropsWithChildren {
   backgroundColor?: MainLayoutBackground;
 }
 
-export const MainLayout = ({backgroundColor, children}: MainLayoutProps) => {
+export function MainLayout({backgroundColor, children}: MainLayoutProps) {
   return (
     <Flex
       backgroundColor={backgroundColor}
@@ -20,4 +22,4 @@ export const MainLayout = ({backgroundColor, children}: MainLayoutProps) => {
       {children}
     </Flex>
   );
-};
+}

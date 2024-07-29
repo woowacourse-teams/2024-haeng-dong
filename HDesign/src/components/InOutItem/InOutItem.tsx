@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 
+import Text from '@components/Text/Text';
+
 import {useTheme} from '@theme/HDesignProvider';
+
+import DragHandleItem from '../DragHandleItem/DragHandleItem';
 
 import {InOutItemProps, InOutType} from './InOutItem.type';
 import {textStyle} from './InOutItem.style';
-import Text from '@components/Text/Text';
-import DragHandleItem from '../DragHandleItem/DragHandleItem';
 
 const IN_OUT_TEXT: Record<InOutType, string> = {
   IN: '들어옴',

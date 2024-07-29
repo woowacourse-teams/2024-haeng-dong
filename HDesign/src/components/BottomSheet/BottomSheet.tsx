@@ -2,11 +2,11 @@
 import {createPortal} from 'react-dom';
 
 import {BottomSheetProps} from '@components/BottomSheet/BottomSheet.type';
-import {useBottomSheet} from './useBottomSheet';
 import FixedButton from '@components/FixedButton/FixedButton';
 
 import {useTheme} from '@theme/HDesignProvider';
 
+import {useBottomSheet} from './useBottomSheet';
 import {bottomSheetContainerStyle, dimmedLayerStyle, indicatorStyle} from './BottomSheet.style';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({

@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
+
+import React from 'react';
 import {reactRouterParameters, withRouter} from 'storybook-addon-react-router-v6';
 
 import TopNav from '@components/TopNav/TopNav';
-import Back from './Back';
+
 import Switch from '../Switch/Switch';
+
+import Back from './Back';
 
 const meta = {
   title: 'Components/TopNav',
@@ -31,7 +34,7 @@ const meta = {
       mapping: {
         Back: <Back />,
         Switch: <Switch values={['홈', '관리']} value="홈" onChange={value => console.log(value)} />,
-        Any: <div></div>,
+        Any: <div />,
       },
     },
   },

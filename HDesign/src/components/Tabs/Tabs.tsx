@@ -3,10 +3,12 @@ import React, {useState} from 'react';
 import {css} from '@emotion/react';
 
 import {useTheme} from '@theme/HDesignProvider';
-import {tabListStyle, indicatorStyle, tabItemStyle, tabTextStyle} from './Tabs.style';
-import {TabsProps} from './Tab.type';
+
 import Text from '../Text/Text';
 import Flex from '../Flex/Flex';
+
+import {tabListStyle, indicatorStyle, tabItemStyle, tabTextStyle} from './Tabs.style';
+import {TabsProps} from './Tab.type';
 
 const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
   const {theme} = useTheme();

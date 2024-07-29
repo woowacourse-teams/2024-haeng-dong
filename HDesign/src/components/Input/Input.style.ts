@@ -1,6 +1,7 @@
 import {css} from '@emotion/react';
 
 import {Theme} from '@theme/theme.type';
+
 import {InputType} from './Input.type';
 
 const inputBoxBackgroundColorByInputType = (theme: Theme, inputType: InputType = 'input') => {

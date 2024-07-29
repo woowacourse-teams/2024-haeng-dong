@@ -1,11 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import {useTheme} from '@theme/HDesignProvider';
-import {BillItemProps} from './BillItem.type';
-import {textStyle} from './BillItem.style';
+
 import Text from '@components/Text/Text';
+
+import {useTheme} from '@theme/HDesignProvider';
+
 import DragHandleItem from '../DragHandleItem/DragHandleItem';
 import Flex from '../Flex/Flex';
+
+import {BillItemProps} from './BillItem.type';
+import {textStyle} from './BillItem.style';
 
 export const BillItem: React.FC<BillItemProps> = ({
   name = '',

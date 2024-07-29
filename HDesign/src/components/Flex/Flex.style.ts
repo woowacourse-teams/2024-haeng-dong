@@ -1,6 +1,8 @@
-import {changeCamelCaseToKebabCase} from '@/utils/ return str.replace(/([a-z])([A-Z])/changeCamelCaseToKebabCase';
-import {FlexDirectionStrictType, FlexProps} from './Flex.type';
 import {css} from '@emotion/react';
+
+import {changeCamelCaseToKebabCase} from '@/utils/ return str.replace(/([a-z])([A-Z])/changeCamelCaseToKebabCase';
+
+import {FlexDirectionStrictType, FlexProps} from './Flex.type';
 
 export const flexStyle = ({
   justifyContent = 'flexStart',

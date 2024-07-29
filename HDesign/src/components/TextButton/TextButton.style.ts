@@ -1,6 +1,8 @@
-import {Theme} from '@/theme/theme.type';
-import {TextColor} from './TextButton.type';
 import {css} from '@emotion/react';
+
+import {Theme} from '@/theme/theme.type';
+
+import {TextColor} from './TextButton.type';
 
 interface TextButtonStyleProps {
   textColor: TextColor;

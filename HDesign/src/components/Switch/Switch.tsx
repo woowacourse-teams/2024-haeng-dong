@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import TextButton from '../TextButton/TextButton';
+
 import {switchContainerStyle} from './Switch.style';
 import {SwitchProps} from './Switch.type';
 
-const Switch = ({value, values, onChange}: SwitchProps) => {
+function Switch({value, values, onChange}: SwitchProps) {
   return (
     <div css={switchContainerStyle}>
       {values.map((item, index) => (
@@ -18,6 +19,6 @@ const Switch = ({value, values, onChange}: SwitchProps) => {
       ))}
     </div>
   );
-};
+}
 
 export default Switch;

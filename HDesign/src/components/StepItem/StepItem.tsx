@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import {useTheme} from '@/theme/HDesignProvider';
-import {StepItemCustomProps} from './StepItem.type';
-import {nameStyle, personCountStyle, stepItemStyle, totalAmountStyle, totalTitleStyle} from './StepItem.style';
+
 import Text from '../Text/Text';
 import BillItem from '../BillItem/BillItem';
 import {BillItemCustomProps} from '../BillItem/BillItem.type';
 import Flex from '../Flex/Flex';
+
+import {nameStyle, personCountStyle, stepItemStyle, totalAmountStyle, totalTitleStyle} from './StepItem.style';
+import {StepItemCustomProps} from './StepItem.type';
 
 export const StepItem: React.FC<StepItemCustomProps> = ({
   name = '',
