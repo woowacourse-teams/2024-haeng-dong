@@ -13,7 +13,7 @@ const meta = {
     variants: {
       description: '',
       control: {type: 'select'},
-      options: ['', 'primary', 'secondary', 'tertiary'],
+      options: ['', 'primary', 'secondary', 'tertiary', 'destructive'],
     },
     size: {
       description: '',

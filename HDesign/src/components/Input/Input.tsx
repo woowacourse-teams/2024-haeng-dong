@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {forwardRef, useImperativeHandle, useRef} from 'react';
+import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 
 import IconButton from '@components/IconButton/IconButton';
 import {InputProps} from '@components/Input/Input.type';
@@ -9,7 +9,7 @@ import {useInput} from '@components/Input/useInput';
 import {useTheme} from '@theme/HDesignProvider';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
-  {value: propsValue, onChange, inputType, ...htmlProps}: InputProps,
+  {value: propsValue, onChange, inputType, isError, ...htmlProps}: InputProps,
   ref,
 ) {
   const {theme} = useTheme();
@@ -17,12 +17,20 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
 
   useImperativeHandle(ref, () => inputRef.current!);
 
-  const {value, handleChange, handleClickDelete} = useInput({propsValue, onChange, inputRef});
+  const {value, hasFocus, handleChange, handleClickDelete, toggleFocus} = useInput({propsValue, onChange, inputRef});
 
   return (
-    <div css={inputBoxStyle(theme, inputType)}>
-      <input css={inputStyle(theme)} ref={inputRef} value={value} onChange={handleChange} {...htmlProps} />
-      {value && <IconButton iconType="inputDelete" onClick={handleClickDelete} />}
+    <div css={inputBoxStyle(theme, inputType, hasFocus, isError)}>
+      <input
+        css={inputStyle(theme)}
+        ref={inputRef}
+        value={value}
+        onChange={handleChange}
+        onFocus={toggleFocus}
+        onBlur={toggleFocus}
+        {...htmlProps}
+      />
+      {value && hasFocus && <IconButton iconType="inputDelete" onClick={handleClickDelete} />}
     </div>
   );
 });

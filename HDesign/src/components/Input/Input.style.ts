@@ -17,7 +17,12 @@ const inputBoxBackgroundColorByInputType = (theme: Theme, inputType: InputType =
   }
 };
 
-export const inputBoxStyle = (theme: Theme, inputType: InputType = 'input') =>
+export const inputBoxStyle = (
+  theme: Theme,
+  inputType: InputType = 'input',
+  isFocus: boolean,
+  isError: boolean | undefined,
+) =>
   css({
     display: 'flex',
     justifyContent: 'space-between',
@@ -25,6 +30,9 @@ export const inputBoxStyle = (theme: Theme, inputType: InputType = 'input') =>
     padding: '0.75rem 1rem',
     borderRadius: '1rem',
     backgroundColor: inputBoxBackgroundColorByInputType(theme, inputType),
+
+    boxSizing: 'border-box',
+    outline: isFocus ? `1px solid ${theme.colors.primary}` : isError ? `1px solid ${theme.colors.error}` : 'none',
   });
 
 export const inputStyle = (theme: Theme) =>

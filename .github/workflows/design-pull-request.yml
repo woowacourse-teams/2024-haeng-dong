@@ -3,9 +3,9 @@ run-name: ${{ github.actor }}의 스토리북 배포
 on:
   pull_request:
     branches:
-      - develop
+      - fe-dev
     paths:
-    - 'HDesign/**'
+      - 'HDesign/**'
 
 jobs:
   storybook:
@@ -28,12 +28,12 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: "**/node_modules"
+          path: '**/node_modules'
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-storybook
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2 
-        with: 
+        uses: actions/setup-node@v2
+        with:
           node-version: '20.15.1'
 
       - name: depedency install
@@ -44,8 +44,12 @@ jobs:
         working-directory: ./HDesign
         run: npm run lint
 
+      - name: run storybook build
+        working-directory: ./HDesign
+        run: npm run build-storybook
+
       - name: publish to chromatic
-        working-directory: ./HDesign 
+        working-directory: ./HDesign
         id: chromatic
         uses: chromaui/action@v1
         with:
@@ -57,5 +61,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: "🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}"
- 
+          message: '🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}'
