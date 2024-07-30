@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum HaengdongErrorCode {
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
-    DUPLICATED_MEMBER_ACTION(HttpStatus.BAD_REQUEST, "올바르지 않은 인원 요청입니다."),
+    NO_RESOURCE_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 엔드포인트입니다."),
+    MESSAGE_NOT_READABLE(HttpStatus.BAD_REQUEST, "읽을 수 없는 요청 형식입니다."),
+    DUPLICATED_MEMBER_ACTION(HttpStatus.BAD_REQUEST, "중복된 인원이 존재합니다."),
     INVALID_MEMBER_ACTION(HttpStatus.BAD_REQUEST, "잘못된 맴버 액션입니다."),
 
     NOT_FOUND_EVENT(HttpStatus.NOT_FOUND, "존재하지 않는 행사입니다."),
