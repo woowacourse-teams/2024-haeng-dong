@@ -2,7 +2,7 @@ name: backend-push
 
 on:
   push:
-    branches: [ "main", "feature/#147" ]
+    branches: [ "main" ]
     paths:
       - 'server/**'
 
