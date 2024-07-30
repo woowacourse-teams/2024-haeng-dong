@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import Text from '@components/Text/Text';
-import {LabelInputProps} from './LabelInput.type';
 import {useTheme} from '@/theme/HDesignProvider';
+
+import {LabelInputProps} from './LabelInput.type';
 import {errorTextStyle, labelGroupStyle, labelTextStyle} from './LabelInput.style';
 
 const LabelInput = ({labelText, errorText, children}: LabelInputProps) => {

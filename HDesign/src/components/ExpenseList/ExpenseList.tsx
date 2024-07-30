@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import Text from '@components/Text/Text';
+
 import {Arrow} from '@assets/index';
+
 import {useTheme} from '@theme/HDesignProvider';
 
 import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';

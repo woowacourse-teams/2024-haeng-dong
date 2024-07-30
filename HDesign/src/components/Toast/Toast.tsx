@@ -1,9 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import {createPortal} from 'react-dom';
-import {toastStyle, textStyle} from './Toast.style';
-import {useTheme} from '@theme/HDesignProvider';
-import ErrorIcon from '@assets/error.svg';
+
 import Text from '@components/Text/Text';
+
+import ErrorIcon from '@assets/error.svg';
+
+import {useTheme} from '@theme/HDesignProvider';
+
+import {toastStyle, textStyle} from './Toast.style';
 import {ToastProps} from './Toast.type';
 import useToast from './useToast';
 
