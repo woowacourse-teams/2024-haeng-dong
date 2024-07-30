@@ -17,13 +17,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class, NoResourceFoundException.class})
     public ResponseEntity<ErrorResponse> noResourceException() {
         return ResponseEntity.badRequest()
-                .body(ErrorResponse.of(HaengdongErrorCode.NO_RESOURCE_REQUEST.getMessage()));
+                .body(ErrorResponse.of(HaengdongErrorCode.NO_RESOURCE_REQUEST));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> httpMessageNotReadableException() {
         return ResponseEntity.badRequest()
-                .body(ErrorResponse.of(HaengdongErrorCode.MESSAGE_NOT_READABLE.getMessage()));
+                .body(ErrorResponse.of(HaengdongErrorCode.MESSAGE_NOT_READABLE));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -33,19 +33,19 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining(", "));
 
         return ResponseEntity.badRequest()
-                .body(ErrorResponse.of(errorMessage));
+                .body(ErrorResponse.of(HaengdongErrorCode.BAD_REQUEST, errorMessage));
     }
 
     @ExceptionHandler(HaengdongException.class)
     public ResponseEntity<ErrorResponse> haengdongException(HaengdongException e) {
-        return ResponseEntity.status(e.getStatusCode())
-                .body(ErrorResponse.of(e.getMessage()));
+        return ResponseEntity.badRequest()
+                .body(ErrorResponse.of(e.getErrorCode()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error(e.getMessage(), e);
         return ResponseEntity.internalServerError()
-                .body(ErrorResponse.of(HaengdongErrorCode.INTERNAL_SERVER_ERROR.getMessage()));
+                .body(ErrorResponse.of(HaengdongErrorCode.INTERNAL_SERVER_ERROR));
     }
 }
