@@ -1,0 +1,26 @@
+/** @jsxImportSource @emotion/react */
+import {createPortal} from 'react-dom';
+import {toastStyle, textStyle} from './Toast.style';
+import {useTheme} from '@theme/HDesignProvider';
+import ErrorIcon from '@assets/error.svg';
+import Text from '@components/Text/Text';
+import {ToastProps} from './Toast.type';
+import useToast from './useToast';
+
+const Toast: React.FC<ToastProps> = ({top = 80, message, showingTime, alwaysShow}) => {
+  const {theme} = useTheme();
+  const {show} = useToast({message, showingTime, alwaysShow});
+
+  return createPortal(
+    // TODO: (@cookie) toast를 위한 시멘틱 태그 알아보기
+    <div css={toastStyle(top, show, theme)}>
+      <ErrorIcon />
+      <Text size="smallBodyBold" css={textStyle(theme)}>
+        {message}
+      </Text>
+    </div>,
+    document.body,
+  );
+};
+
+export default Toast;
