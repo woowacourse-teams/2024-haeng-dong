@@ -8,6 +8,7 @@ export type InputType = 'input' | 'search';
 
 export interface InputCustomProps {
   inputType?: InputType;
+  isError?: boolean;
 }
 
 export type InputOptionProps = InputStyleProps & InputCustomProps;
