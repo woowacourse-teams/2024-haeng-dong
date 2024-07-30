@@ -18,11 +18,17 @@ const meta = {
       description: '',
       control: {type: 'boolean'},
     },
+    onDeleteClick: {
+      description: '',
+      control: {type: 'select'},
+      options: [undefined, () => alert('delete')],
+    },
   },
   args: {
     variants: 'primary',
     disabled: false,
     children: 'button',
+    onDeleteClick: () => alert('delete'),
   },
   decorators: [
     Story => (

@@ -16,6 +16,28 @@ export const fixedButtonContainerStyle = (theme: Theme) =>
     boxSizing: 'border-box',
   });
 
+export const buttonContainerStyle = css({
+  display: 'flex',
+  gap: '1rem',
+  margin: '1rem 1rem 2rem 1rem',
+  width: '100%',
+});
+
+export const deleteButtonStyle = (theme: Theme) =>
+  css({
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '0.875rem 1rem',
+    borderRadius: '1.25rem',
+    backgroundColor: theme.colors.error,
+    color: theme.colors.white,
+
+    fontFamily: 'Pretendard',
+    fontSize: '1.25rem',
+    fontWeight: '700',
+    lineHeight: '1',
+  });
+
 export const fixedButtonStyle = (props: Required<FixedButtonStyleProps>) => {
   return [getFixedButtonDefaultStyle(props.theme), getFixedButtonVariantsStyle(props.variants, props.theme)];
 };
@@ -26,7 +48,6 @@ const getFixedButtonDefaultStyle = (theme: Theme) =>
     justifyContent: 'center',
     padding: '1rem 1.5rem',
     borderRadius: '1.25rem',
-    margin: '1.5rem 1rem 3rem 1rem',
     width: '100%',
 
     fontFamily: 'Pretendard',
@@ -53,6 +74,10 @@ const getFixedButtonVariantsStyle = (variants: ButtonVariants, theme: Theme) => 
     tertiary: css({
       backgroundColor: theme.colors.tertiary,
       color: theme.colors.onTertiary,
+    }),
+    destructive: css({
+      backgroundColor: theme.colors.error,
+      color: theme.colors.onPrimary,
     }),
   };
 

@@ -7,8 +7,10 @@ export interface FixedButtonStyleProps {
   theme?: Theme;
 }
 
-export interface ButtonCustomProps {}
+export interface ButtonCustomProps {
+  onDeleteClick?: () => void;
+}
 
-export type FixedButtonOptionProps = FixedButtonStyleProps;
+export type FixedButtonOptionProps = FixedButtonStyleProps & ButtonCustomProps;
 
 export type FixedButtonProps = React.ComponentProps<'button'> & FixedButtonOptionProps;
