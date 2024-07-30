@@ -2,7 +2,7 @@ name: backend-push
 
 on:
   push:
-    branches: [ "be-dev", "feature/#147" ]
+    branches: [ "be-dev" ]
     paths:
       - 'server/**'
 
@@ -56,7 +56,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: [ self-hosted, backend-dev ]
     steps:
       - name: Docker remove
         run: |
