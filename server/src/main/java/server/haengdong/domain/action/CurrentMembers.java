@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 public class CurrentMembers {
 
@@ -14,7 +16,7 @@ public class CurrentMembers {
         this(new HashSet<>());
     }
 
-    private CurrentMembers(Set<String> members) {
+    protected CurrentMembers(Set<String> members) {
         this.members = members;
     }
 
@@ -50,6 +52,21 @@ public class CurrentMembers {
             currentMembers.remove(memberName);
         }
         return new CurrentMembers(currentMembers);
+    }
+
+    public void validate(String memberName, MemberActionStatus memberActionStatus) {
+        if (memberActionStatus == MemberActionStatus.IN && members.contains(memberName)) {
+            throw new HaengdongException(
+                    HaengdongErrorCode.INVALID_MEMBER_ACTION,
+                    String.format("%s은 이미 참여하고 있습니다.", memberName)
+            );
+        }
+        if (memberActionStatus == MemberActionStatus.OUT && !members.contains(memberName)) {
+            throw new HaengdongException(
+                    HaengdongErrorCode.INVALID_MEMBER_ACTION,
+                    String.format("%s은 현재 참여하고 있지 않습니다.", memberName)
+            );
+        }
     }
 
     public boolean isEmpty() {

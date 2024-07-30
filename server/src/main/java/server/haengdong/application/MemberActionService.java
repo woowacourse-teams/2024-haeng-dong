@@ -31,8 +31,9 @@ public class MemberActionService {
         Event event = findEvent(token);
 
         List<MemberAction> findMemberActions = memberActionRepository.findAllByEvent(event);
+        CurrentMembers currentMembers = CurrentMembers.of(findMemberActions);
         Action action = createStartAction(event);
-        List<MemberAction> memberActions = memberActionFactory.createMemberActions(request, findMemberActions, action);
+        List<MemberAction> memberActions = memberActionFactory.createMemberActions(request, currentMembers, action);
         memberActionRepository.saveAll(memberActions);
     }
 
