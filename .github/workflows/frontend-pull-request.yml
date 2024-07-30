@@ -3,13 +3,13 @@ name: frontend-pull-request
 on:
   pull_request:
     types: [opened, synchronize]
-    branches: [main, develop]
+    branches: [main, fe-dev]
     paths:
       - 'client/**'
 
 jobs:
   test:
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest  log
     
     defaults:
       run:

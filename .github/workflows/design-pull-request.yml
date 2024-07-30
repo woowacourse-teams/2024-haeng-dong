@@ -5,7 +5,7 @@ on:
     branches:
       - fe-dev
     paths:
-      - 'HDesign/**'
+    - 'HDesign/**'
 
 jobs:
   storybook:
@@ -28,12 +28,12 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: '**/node_modules'
+          path: "**/node_modules"
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-storybook
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
+        uses: actions/setup-node@v2 
+        with: 
           node-version: '20.15.1'
 
       - name: depedency install
@@ -44,15 +44,11 @@ jobs:
         working-directory: ./HDesign
         run: npm run lint
 
-      - name: run storybook build
-        working-directory: ./HDesign
-        run: npm run build-storybook
-
       - name: publish to chromatic
-        working-directory: ./HDesign
         id: chromatic
         uses: chromaui/action@v1
         with:
+          workingDirectory: ./HDesign       
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -61,4 +57,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: '🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}'
+          message: "🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}"
