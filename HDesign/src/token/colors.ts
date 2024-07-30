@@ -12,6 +12,30 @@ const PRIMITIVE_COLORS = {
     800: '#6712db',
     900: '#5100cd',
   },
+  pink: {
+    50: '#ffe1ff',
+    100: '#feafd9',
+    200: '#ff75bf',
+    300: '#fc28a1',
+    400: '#f60087',
+    500: '#f2006d',
+    600: '#e1006a',
+    700: '#ca0065',
+    800: '#b30062',
+    900: '#8b005b',
+  },
+  yellow: {
+    50: '#fdffe9',
+    100: '#f7fdc5',
+    200: '#f0fb9d',
+    300: '#e8f972',
+    400: '#ecff59',
+    500: '#e5fb31',
+    600: '#daeb2e',
+    700: '#c9d323',
+    800: '#b9bb17',
+    900: '#9e9305',
+  },
   gray: {
     50: '#F9F8FD',
     100: '#F1F0F5',
@@ -30,8 +54,6 @@ type Color = string;
 
 export type ColorKeys =
   | 'white'
-  | 'gray'
-  | 'darkGray'
   | 'black'
   | 'primary'
   | 'onPrimary'
@@ -39,22 +61,35 @@ export type ColorKeys =
   | 'onSecondary'
   | 'tertiary'
   | 'onTertiary'
+  | 'gray'
+  | 'darkGray'
   | 'grayContainer'
-  | 'lightGrayContainer';
+  | 'lightGrayContainer'
+  | 'error'
+  | 'errorContainer'
+  | 'onErrorContainer'
+  | 'warn';
 export type ColorTokens = Record<ColorKeys, Color>;
 
 // TODO: (@soha) 대괄호 사용에 대해 논의
 export const COLORS: ColorTokens = {
   white: PRIMITIVE_COLORS.white,
-  gray: PRIMITIVE_COLORS.gray[400],
-  darkGray: PRIMITIVE_COLORS.gray[500],
   black: PRIMITIVE_COLORS.gray[700],
+
   primary: PRIMITIVE_COLORS.purple[300],
   onPrimary: PRIMITIVE_COLORS.white,
   secondary: PRIMITIVE_COLORS.purple[50],
   onSecondary: PRIMITIVE_COLORS.purple[600],
   tertiary: PRIMITIVE_COLORS.gray[200],
   onTertiary: PRIMITIVE_COLORS.gray[700],
+
+  gray: PRIMITIVE_COLORS.gray[400],
+  darkGray: PRIMITIVE_COLORS.gray[500],
   grayContainer: PRIMITIVE_COLORS.gray[100],
   lightGrayContainer: PRIMITIVE_COLORS.gray[50],
+
+  error: PRIMITIVE_COLORS.pink[200],
+  errorContainer: PRIMITIVE_COLORS.pink[50],
+  onErrorContainer: PRIMITIVE_COLORS.pink[300],
+  warn: PRIMITIVE_COLORS.yellow[400],
 };
