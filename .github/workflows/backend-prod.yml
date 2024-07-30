@@ -2,7 +2,7 @@ name: backend-push
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main" ]
     paths:
       - 'server/**'
 
@@ -52,7 +52,7 @@ jobs:
       - name: Build and push
         run: |
           docker buildx build --platform linux/arm64 -t \
-          	${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev --push .
+          	${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }} --push .
 
   deploy:
     needs: build
@@ -68,7 +68,7 @@ jobs:
           fi
 
       - name: Docker Image pull
-        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev
+        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
       - name: Docker run
-        run: sudo docker run -d -p 8080:8080 --name haengdong-backend-dev ${{ secrets.DOCKER_USERNAME }}/haengdong-backend-dev
+        run: sudo docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
