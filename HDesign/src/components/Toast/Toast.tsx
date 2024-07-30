@@ -9,11 +9,11 @@ import useToast from './useToast';
 
 const Toast: React.FC<ToastProps> = ({top = 80, message, showingTime, alwaysShow}) => {
   const {theme} = useTheme();
-  const {show} = useToast({message, showingTime, alwaysShow});
+  const {isShow} = useToast({message, showingTime, alwaysShow});
 
   return createPortal(
     // TODO: (@cookie) toast를 위한 시멘틱 태그 알아보기
-    <div css={toastStyle(top, show, theme)}>
+    <div css={toastStyle(top, isShow, theme)}>
       <ErrorIcon />
       <Text size="smallBodyBold" css={textStyle(theme)}>
         {message}

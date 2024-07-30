@@ -7,15 +7,15 @@ interface UseToastProps {
 }
 
 const useToast = ({message, showingTime = 3000, alwaysShow = false}: UseToastProps) => {
-  const [show, setShow] = useState(false);
+  const [isShow, setIsShow] = useState(false);
 
   const showToast = () => {
-    setShow(true);
+    setIsShow(true);
   };
 
   const untilShowingTimeAndDisappear = () => {
     setTimeout(() => {
-      setShow(false);
+      setIsShow(false);
     }, showingTime);
   };
 
@@ -27,7 +27,7 @@ const useToast = ({message, showingTime = 3000, alwaysShow = false}: UseToastPro
   }, [message]);
 
   return {
-    show,
+    isShow,
   };
 };
 
