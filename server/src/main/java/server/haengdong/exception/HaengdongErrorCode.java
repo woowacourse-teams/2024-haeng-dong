@@ -9,9 +9,7 @@ public enum HaengdongErrorCode {
     MESSAGE_NOT_READABLE("R_003", "읽을 수 없는 요청 형식입니다."),
     DUPLICATED_MEMBER_ACTION("MA_001", "중복된 인원이 존재합니다."),
     INVALID_MEMBER_ACTION("MA_002", "잘못된 맴버 액션입니다."),
-
     NOT_FOUND_EVENT("EV_400", "존재하지 않는 행사입니다."),
-
     INTERNAL_SERVER_ERROR("S_001", "서버 내부에서 에러가 발생했습니다."),
     ;
 
