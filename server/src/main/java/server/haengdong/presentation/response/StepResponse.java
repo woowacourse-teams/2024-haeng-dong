@@ -6,14 +6,12 @@ import server.haengdong.application.response.ActionAppResponse;
 
 public record StepResponse(
         String type,
-        String stepName,
         List<String> members,
         List<ActionResponse> actions
 ) {
-    public static StepResponse of(List<ActionAppResponse> actions, List<String> members, String stepName) {
+    public static StepResponse of(List<String> members, List<ActionAppResponse> actions) {
         return new StepResponse(
                 actions.get(0).actionTypeName(),
-                stepName,
                 new ArrayList<>(members),
                 toActionsResponse(actions)
         );

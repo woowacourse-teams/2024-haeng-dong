@@ -12,13 +12,9 @@ public record StepsResponse(List<StepResponse> steps) {
         List<String> currentMembers = new ArrayList<>();
         List<List<ActionAppResponse>> groups = createGroups(actions);
 
-        int billGroupCount = 0;
         for (List<ActionAppResponse> group : groups) {
             changeCurrentMembers(group, currentMembers);
-            if (group.get(0).actionType() == ActionType.BILL) {
-                billGroupCount++;
-            }
-            StepResponse stepResponse = StepResponse.of(group, currentMembers, billGroupCount + "차");
+            StepResponse stepResponse = StepResponse.of(currentMembers, group);
             steps.add(stepResponse);
         }
         return new StepsResponse(steps);
