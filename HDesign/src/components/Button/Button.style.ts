@@ -66,6 +66,10 @@ const getButtonVariantsStyle = (variants: ButtonVariants, theme: Theme) => {
       backgroundColor: theme.colors.tertiary,
       color: theme.colors.onTertiary,
     }),
+    destructive: css({
+      backgroundColor: theme.colors.error,
+      color: theme.colors.onPrimary,
+    }),
   };
 
   return style[variants];
