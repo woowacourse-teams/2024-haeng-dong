@@ -1,20 +1,31 @@
 import {css} from '@emotion/react';
-
+import {ToastPosition} from './Toast.type';
 import {Theme} from '@/theme/theme.type';
 
-export const toastStyle = (top: number, isShow: boolean, theme: Theme) =>
+type ToastMarginStyle = {
+  position?: ToastPosition;
+  isShow: boolean;
+  bottom?: string;
+  top?: string;
+};
+
+export const toastMarginStyle = ({position, isShow, bottom, top}: ToastMarginStyle) =>
   css({
-    display: isShow ? 'flex' : 'none',
-    alignItems: 'center',
-
+    display: isShow ? 'block' : 'none',
     position: 'absolute',
-    top: `${top}%`,
-    left: 0,
-    gap: '0.5rem',
+    bottom: position === 'bottom' ? `${bottom}` : 'auto',
+    top: position === 'top' ? `${top}` : 'auto',
+    left: '50%',
+    transform: 'translate(-50%)',
 
-    maxWidth: '48rem',
     width: '100%',
-    margin: '1.25rem',
+    maxWidth: '48rem',
+    paddingInline: '0.5rem',
+  });
+
+export const toastStyle = (theme: Theme) =>
+  css({
+    width: '100%',
     padding: '0.625rem',
 
     backgroundColor: theme.colors.gray,

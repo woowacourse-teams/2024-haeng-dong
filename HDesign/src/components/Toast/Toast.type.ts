@@ -1,16 +1,18 @@
+export type ToastPosition = 'bottom' | 'top';
+
 export interface ToastStyleProps {
-  top?: number;
+  bottom?: string;
+  top?: string;
 }
 
-export interface ToastCustomProps {
+export interface ToastOptionProps {
   showingTime?: number;
   alwaysShow?: boolean;
+  position?: ToastPosition;
 }
 
 export interface ToastRequiredProps {
   message: string;
 }
 
-export type ToastOptionProps = ToastStyleProps & ToastCustomProps;
-
-export type ToastProps = React.ComponentProps<'aside'> & ToastOptionProps & ToastRequiredProps;
+export type ToastProps = React.ComponentProps<'div'> & ToastStyleProps & ToastOptionProps & ToastRequiredProps;
