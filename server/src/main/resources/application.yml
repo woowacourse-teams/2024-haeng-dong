@@ -26,6 +26,15 @@ cors:
 
 spring:
   config:
+    import: classpath:config/application-prod.yml
+    activate:
+      on-profile: prod
+
+---
+
+spring:
+  config:
     import: classpath:config/application-dev.yml
     activate:
       on-profile: dev
+
