@@ -3,8 +3,6 @@ import React from 'react';
 
 import Text from '@components/Text/Text';
 
-import Text from '@components/Text/Text';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import DragHandleItem from '../DragHandleItem/DragHandleItem';

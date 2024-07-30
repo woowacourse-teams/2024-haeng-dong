@@ -1,12 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import Text from '@components/Text/Text';
-
-
 import {Arrow} from '@assets/index';
-
-import {useTheme} from '@theme/HDesignProvider';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';
@@ -27,9 +22,7 @@ function ExpenseItem({name, price, ...buttonProps}: ExpenseItemProps) {
     </button>
   );
 }
-}
 
-function ExpenseList({expenseList = []}: ExpenseListProps) {
 function ExpenseList({expenseList = []}: ExpenseListProps) {
   const {theme} = useTheme();
   return (
@@ -39,7 +32,6 @@ function ExpenseList({expenseList = []}: ExpenseListProps) {
       ))}
     </div>
   );
-}
 }
 
 export default ExpenseList;
