@@ -8,6 +8,7 @@ interface UseInputProps<T> {
 
 export const useInput = <T>({propsValue, onChange, inputRef}: UseInputProps<T>) => {
   const [value, setValue] = useState(propsValue || '');
+  const [hasFocus, setHasFocus] = useState(false);
 
   useEffect(() => {
     setValue(propsValue || '');
@@ -32,5 +33,9 @@ export const useInput = <T>({propsValue, onChange, inputRef}: UseInputProps<T>) 
     }
   };
 
-  return {value, handleChange, handleClickDelete};
+  const toggleFocus = () => {
+    setHasFocus(!hasFocus);
+  };
+
+  return {value, hasFocus, handleChange, handleClickDelete, toggleFocus};
 };
