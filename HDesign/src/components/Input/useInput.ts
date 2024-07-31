@@ -43,16 +43,15 @@ export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef}: U
   };
 
   const handleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
-    setHasFocus(false);
     if (onBlur) {
       onBlur(event!);
     }
+    setHasFocus(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.nativeEvent.isComposing) {
-      event.stopPropagation();
-    }
+    if (event.nativeEvent.isComposing) return;
+
     if (event.key === 'Enter' || event.key === 'Escape') {
       handleBlur();
       if (inputRef.current) {

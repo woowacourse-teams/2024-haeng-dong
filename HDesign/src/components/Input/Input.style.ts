@@ -32,7 +32,11 @@ export const inputBoxStyle = (
     backgroundColor: inputBoxBackgroundColorByInputType(theme, inputType),
 
     boxSizing: 'border-box',
-    outline: isFocus ? `1px solid ${theme.colors.primary}` : isError ? `1px solid ${theme.colors.error}` : 'none',
+    boxShadow: isError
+      ? `0 0 0 1px ${theme.colors.error} inset`
+      : isFocus
+        ? `0 0 0 1px ${theme.colors.primary} inset`
+        : 'none',
   });
 
 export const inputStyle = (theme: Theme) =>
