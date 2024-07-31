@@ -28,8 +28,7 @@ export const ConfirmToast: Story = {
     ...meta.args,
     type: 'confirm',
     top: '80px',
-    message: `님 이거 다 작성했는데, 혹시 되돌림?
-    되돌릴 수도 있음 ㅇㅇ 굿`,
+    message: `이 첫번째 토스트 그림자 짙은거 두 개 떠서 그런거임 css 잘못한거 아닙니다. 잘못 없습니다. 스토리북이 잘못한거에요. 저희는 최선을 다했어요.. `,
   },
 };
 
