@@ -1,60 +1,54 @@
-name: Storybook Deployment
-run-name: ${{ github.actor }}의 스토리북 배포
+name: 'Chromatic'
+
 on:
   pull_request:
     branches:
-      - fe-dev
+      - develop
     paths:
-    - 'HDesign/**'
+      - 'HDesign/**'
 
 jobs:
-  storybook:
+  chromatic:
+    name: Run Chromatic
     runs-on: ubuntu-latest
-    outputs:
-      status: ${{ job.status }}
-
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./HDesign
-
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: cache dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
+
+      - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-storybook
+          path: '**/node_modules'
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2 
-        with: 
-          node-version: '20.15.1'
-
-      - name: depedency install
+      - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: |
+          cd HDesign
+          npm install
 
-      - name: run lint
-        working-directory: ./HDesign
+      - name: Run lint
         run: npm run lint
+        working-directory: ./HDesign
 
-      - name: publish to chromatic
-        id: chromatic
-        uses: chromaui/action@v1
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        id: publish_chromatic
         with:
-          workingDirectory: ./HDesign       
+          workingDir: HDesign
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: comment PR
-        uses: thollander/actions-comment-pull-request@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v2
         with:
-          message: "🚀storybook: ${{ steps.chromatic.outputs.storybookUrl }}"
+          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
