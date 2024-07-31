@@ -3,10 +3,12 @@ import {RefObject, useEffect, useState} from 'react';
 interface UseInputProps<T> {
   propsValue: T;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
 }
 
-export const useInput = <T>({propsValue, onChange, inputRef}: UseInputProps<T>) => {
+export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef}: UseInputProps<T>) => {
   const [value, setValue] = useState(propsValue || '');
   const [hasFocus, setHasFocus] = useState(false);
 
@@ -27,15 +29,37 @@ export const useInput = <T>({propsValue, onChange, inputRef}: UseInputProps<T>) 
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
     if (onChange) {
       onChange(e);
     }
+    setValue(e.target.value);
   };
 
-  const toggleFocus = () => {
-    setHasFocus(!hasFocus);
+  const handleFocus = (event?: React.FocusEvent<HTMLInputElement>) => {
+    if (onFocus) {
+      onFocus(event!);
+    }
+    setHasFocus(true);
   };
 
-  return {value, hasFocus, handleChange, handleClickDelete, toggleFocus};
+  const handleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
+    setHasFocus(false);
+    if (onBlur) {
+      onBlur(event!);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.nativeEvent.isComposing) {
+      event.stopPropagation();
+    }
+    if (event.key === 'Enter' || event.key === 'Escape') {
+      handleBlur();
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
+    }
+  };
+
+  return {value, hasFocus, handleChange, handleClickDelete, handleFocus, handleBlur, handleKeyDown};
 };
