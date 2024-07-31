@@ -3,7 +3,7 @@ name: 'Chromatic'
 on:
   pull_request:
     branches:
-      - develop
+      - fe-dev
     paths:
       - 'HDesign/**'
 
