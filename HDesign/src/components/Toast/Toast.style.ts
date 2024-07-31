@@ -4,14 +4,12 @@ import {Theme} from '@/theme/theme.type';
 
 type ToastMarginStyle = {
   position?: ToastPosition;
-  isShow: boolean;
   bottom?: string;
   top?: string;
 };
 
-export const toastMarginStyle = ({position, isShow, bottom, top}: ToastMarginStyle) =>
+export const toastMarginStyle = ({position, bottom, top}: ToastMarginStyle) =>
   css({
-    display: isShow ? 'block' : 'none',
     position: 'absolute',
     bottom: position === 'bottom' ? `${bottom}` : 'auto',
     top: position === 'top' ? `${top}` : 'auto',
@@ -26,7 +24,7 @@ export const toastMarginStyle = ({position, isShow, bottom, top}: ToastMarginSty
 export const toastStyle = (theme: Theme) =>
   css({
     width: '100%',
-    padding: '0.625rem',
+    padding: '0.625rem 1rem',
 
     backgroundColor: theme.colors.gray,
     boxShadow: '0 8px 12px rgba(0, 0, 0, 0.16);',
