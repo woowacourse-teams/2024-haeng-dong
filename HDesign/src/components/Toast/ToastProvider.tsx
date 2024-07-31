@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {createContext, useCallback, useContext, useEffect, useState} from 'react';
+
 import {ToastProps} from './Toast.type';
 import Toast from './Toast';
 

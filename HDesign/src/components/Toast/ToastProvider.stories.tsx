@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
-import {ToastProvider, useToast} from './ToastProvider';
+
 import Button from '../Button/Button';
+
+import {ToastProvider, useToast} from './ToastProvider';
 
 const meta = {
   title: 'Components/ToastProvider',

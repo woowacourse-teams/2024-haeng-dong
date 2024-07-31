@@ -2,14 +2,17 @@
 import {createPortal} from 'react-dom';
 
 import Text from '@components/Text/Text';
+import Flex from '@components/Flex/Flex';
+
 import ErrorIcon from '@assets/error.svg';
 import ConfirmIcon from '@assets/confirm.svg';
 
 import {useTheme} from '@theme/HDesignProvider';
+
+import Button from '../Button/Button';
+
 import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';
 import {ToastProps, ToastType} from './Toast.type';
-import Flex from '@components/Flex/Flex';
-import Button from '../Button/Button';
 
 const renderIcon = (type: ToastType) => {
   switch (type) {
