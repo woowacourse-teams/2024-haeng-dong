@@ -32,7 +32,7 @@ const Toast = ({
   top = '0px',
   bottom = '0px',
   isClickToClose = true,
-  position,
+  position = 'bottom',
   message,
   onUndo,
   onClose,
