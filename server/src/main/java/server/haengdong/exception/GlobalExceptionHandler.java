@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.info(e.getMessage(), e);
         String errorMessage = e.getFieldErrors().stream()
                 .map(error -> error.getField() + " " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
@@ -38,6 +39,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HaengdongException.class)
     public ResponseEntity<ErrorResponse> haengdongException(HaengdongException e) {
+        log.info(e.getMessage(), e);
         return ResponseEntity.badRequest()
                 .body(ErrorResponse.of(e.getErrorCode()));
     }
