@@ -1,4 +1,4 @@
-import {ValidateResult} from './validateResultType';
+import {ValidateResult} from './type';
 import ERROR_MESSAGE from '@constants/errorMessage';
 
 const validateEventName = (name: string): ValidateResult => {

@@ -1,8 +1,10 @@
-import {Text, Input, BottomSheet, FixedButton} from 'haengdong-design';
+import {Text, Input, BottomSheet, FixedButton, LabelInput} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
 
 import useDynamicInput from '@hooks/useDynamicInput';
+
+import validateMemberName from '@utils/validate/validateMemberName';
 
 import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './SetInitialParticipants.style';
 
@@ -12,7 +14,8 @@ interface SetInitialParticipantsProps {
 }
 
 const SetInitialParticipants = ({openBottomSheet, setOpenBottomSheet}: SetInitialParticipantsProps) => {
-  const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
+  const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs, errorMessage} =
+    useDynamicInput(validateMemberName);
   const {updateMemberList} = useStepList();
 
   const handleSubmit = () => {
@@ -25,17 +28,19 @@ const SetInitialParticipants = ({openBottomSheet, setOpenBottomSheet}: SetInitia
       <div css={setInitialParticipantsStyle}>
         <Text size="bodyBold">초기 인원 설정하기</Text>
         <div css={setInitialParticipantsInputGroupStyle}>
-          {inputs.map((participant, index) => (
-            <Input
-              key={index}
-              placeholder="이름"
-              type="text"
-              value={participant}
-              ref={el => (inputRefs.current[index] = el)}
-              onChange={e => handleInputChange(index, e.target.value)}
-              onBlur={() => handleInputBlur(index)}
-            />
-          ))}
+          <LabelInput labelText="이름" errorText={errorMessage}>
+            {inputs.map((input, index) => (
+              <Input
+                key={index}
+                type="text"
+                value={input}
+                ref={el => (inputRefs.current[index] = el)}
+                onChange={e => handleInputChange(index, e)}
+                onBlur={() => handleInputBlur(index)}
+                autoFocus
+              />
+            ))}
+          </LabelInput>
         </div>
       </div>
       <FixedButton

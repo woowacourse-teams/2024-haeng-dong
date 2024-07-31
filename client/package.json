@@ -47,7 +47,7 @@
     "@emotion/react": "^11.11.4",
     "@types/dotenv-webpack": "^7.0.7",
     "dotenv-webpack": "^8.1.0",
-    "haengdong-design": "^0.1.44",
+    "haengdong-design": "^0.1.45",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1"

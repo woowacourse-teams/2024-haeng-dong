@@ -1,14 +1,27 @@
 import {useEffect, useRef, useState} from 'react';
+import {ValidateResult} from '@utils/validate/type';
 
-const useDynamicInput = () => {
+const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
   const [inputs, setInputs] = useState<string[]>(['']);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // TODO: (@soha) 입력이 완료되고 중간에 값을 모두 지웠을 경우 Input이 없애지도록 수정하기
-  const handleInputChange = (index: number, value: string) => {
-    const newInputs = [...inputs];
-    newInputs[index] = value;
-    setInputs(newInputs);
+  const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const validation = validateFunc(value);
+
+    if (validation.isValid || value.length === 0) {
+      setInputs(prevInputs => {
+        const newInputs = [...prevInputs];
+        newInputs[index] = event.target.value;
+        return newInputs;
+      });
+      setErrorMessage('');
+    } else {
+      event.target.value = inputs[index];
+      setErrorMessage(validation.errorMessage ?? '');
+    }
   };
 
   const handleInputBlur = (index: number) => {
@@ -21,7 +34,7 @@ const useDynamicInput = () => {
     } else if (inputs[index].trim() !== '' && index === inputs.length - 1) {
       setInputs(prev => {
         const newInputs = [...prev, ''];
-        newInputs[index] = inputs[index].trim();
+        newInputs[index] = inputs[index];
         return newInputs;
       });
     }
@@ -45,6 +58,7 @@ const useDynamicInput = () => {
     inputRefs,
     handleInputChange,
     handleInputBlur,
+    errorMessage,
     getNonEmptyInputs,
   };
 };
