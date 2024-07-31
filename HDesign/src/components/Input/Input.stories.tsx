@@ -20,7 +20,8 @@ const meta = {
     },
   },
   args: {
-    disabled: false,
+    value: '',
+    isError: false,
     placeholder: 'placeholder',
   },
 } satisfies Meta<typeof Input>;

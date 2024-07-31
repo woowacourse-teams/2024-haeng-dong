@@ -15,6 +15,7 @@ export const labelGroupStyle = css({
   width: '100%',
 
   paddingInline: '0.5rem',
+  marginBottom: '0.375rem',
 });
 
 export const inputGroupStyle = css({

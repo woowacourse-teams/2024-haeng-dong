@@ -8,57 +8,54 @@ interface UseInputProps<T> {
   inputRef: RefObject<HTMLInputElement>;
 }
 
-export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef}: UseInputProps<T>) => {
+export const useInput = <T>({propsValue, onChange, inputRef}: UseInputProps<T>) => {
   const [value, setValue] = useState(propsValue || '');
-  const [hasFocus, setHasFocus] = useState(false);
+  const [hasFocus, setHasFocus] = useState(inputRef.current === document.activeElement);
 
   useEffect(() => {
     setValue(propsValue || '');
   }, [propsValue]);
 
-  const handleClickDelete = () => {
+  useEffect(() => {
+    inputRef.current?.addEventListener('focus', () => setHasFocus(true));
+    inputRef.current?.addEventListener('blur', () => setHasFocus(false));
+    inputRef.current?.addEventListener('keydown', () => handleKeyDown);
+
+    return () => {
+      inputRef.current?.removeEventListener('focus', () => setHasFocus(true));
+      inputRef.current?.removeEventListener('blur', () => setHasFocus(false));
+      inputRef.current?.addEventListener('keydown', () => handleKeyDown);
+    };
+  }, []);
+
+  const handleClickDelete = (event: React.MouseEvent) => {
+    event.preventDefault();
     setValue('');
-
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-
     if (onChange) {
       onChange({target: {value: ''}} as React.ChangeEvent<HTMLInputElement>);
+    }
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
     if (onChange) {
       onChange(e);
     }
-    setValue(e.target.value);
-  };
-
-  const handleFocus = (event?: React.FocusEvent<HTMLInputElement>) => {
-    if (onFocus) {
-      onFocus(event!);
-    }
-    setHasFocus(true);
-  };
-
-  const handleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
-    if (onBlur) {
-      onBlur(event!);
-    }
-    setHasFocus(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.nativeEvent.isComposing) return;
 
     if (event.key === 'Enter' || event.key === 'Escape') {
-      handleBlur();
+      setHasFocus(false);
       if (inputRef.current) {
         inputRef.current.blur();
       }
     }
   };
 
-  return {value, hasFocus, handleChange, handleClickDelete, handleFocus, handleBlur, handleKeyDown};
+  return {value, handleChange, hasFocus, handleClickDelete};
 };
