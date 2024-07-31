@@ -1,13 +1,17 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {FixedButton, Input, MainLayout, Title, TopNav, Back} from 'haengdong-design';
+import {FixedButton, MainLayout, LabelInput, Input, Title, TopNav, Back} from 'haengdong-design';
 
 import {requestCreateNewEvent} from '@apis/request/event';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
+import validateEventName from '@utils/validate/validateEventName';
+
 const CreateEvent = () => {
   const [eventName, setEventName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
 
   const submitEventName = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,6 +28,24 @@ const CreateEvent = () => {
     }
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    const validation = validateEventName(newValue);
+
+    if (newValue.length === 0) {
+      setCanSubmit(false);
+    } else {
+      setCanSubmit(true);
+    }
+
+    if (validation.isValid) {
+      setEventName(newValue);
+      setErrorMessage('');
+    } else {
+      event.target.value = eventName;
+      setErrorMessage(validation.errorMessage ?? '');
+    }
+  };
   return (
     <MainLayout>
       <TopNav>
@@ -31,13 +53,17 @@ const CreateEvent = () => {
       </TopNav>
       <Title title="행사 이름 입력" description="시작할 행사 이름을 입력해 주세요." />
       <form onSubmit={submitEventName} style={{padding: '0 1rem'}}>
-        <Input
-          value={eventName}
-          onChange={event => setEventName(event.target.value)}
-          onBlur={() => setEventName(eventName.trim())}
-          placeholder="ex) 행동대장 야유회"
-        />
-        <FixedButton disabled={!eventName.length}>행동 개시!</FixedButton>
+        <LabelInput labelText="행사 이름" errorText={errorMessage}>
+          <Input
+            value={eventName}
+            type="text"
+            placeholder="행사 이름"
+            onChange={e => handleChange(e)}
+            isError={!!errorMessage}
+            autoFocus
+          />
+        </LabelInput>
+        <FixedButton disabled={!canSubmit}>행동 개시!</FixedButton>
       </form>
     </MainLayout>
   );

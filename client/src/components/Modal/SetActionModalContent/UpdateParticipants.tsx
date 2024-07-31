@@ -2,7 +2,7 @@ import {Input, FixedButton} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
 
-import useDynamicInput from '@hooks/useDynamicAdditionalInput';
+import useDynamicInput from '@hooks/useDynamicInput';
 
 import {updateParticipantsInputStyle, updateParticipantsStyle} from './UpdateParticipants.style';
 
