@@ -1,4 +1,5 @@
 export type ToastPosition = 'bottom' | 'top';
+export type ToastType = 'error' | 'confirm' | 'none';
 
 export interface ToastStyleProps {
   bottom?: string;
@@ -6,9 +7,11 @@ export interface ToastStyleProps {
 }
 
 export interface ToastOptionProps {
-  showingTime?: number;
-  alwaysShow?: boolean;
   position?: ToastPosition;
+  type?: ToastType;
+  onUndo?: () => void;
+  isClickToClose?: boolean;
+  onClose?: () => void;
 }
 
 export interface ToastRequiredProps {
