@@ -16,11 +16,13 @@ import Text from '@components/Text/Text';
 import TextButton from '@components/TextButton/TextButton';
 import Title from '@components/Title/Title';
 import TopNav from '@components/TopNav/TopNav';
+import Toast from '@components/Toast/Toast';
 
 import {MainLayout} from '@layouts/MainLayout';
 import {ContentLayout} from '@layouts/ContentLayout';
 
 import {HDesignProvider} from '@theme/HDesignProvider';
+import {ToastProvider, useToast} from '@components/Toast/ToastProvider';
 
 import Tab from './components/Tabs/Tab';
 import Back from './components/TopNav/Back';
@@ -49,4 +51,7 @@ export {
   MainLayout,
   ContentLayout,
   HDesignProvider,
+  ToastProvider,
+  useToast,
+  Toast,
 };
