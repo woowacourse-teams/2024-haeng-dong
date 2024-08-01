@@ -2,6 +2,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import LabelGroupInput from '@components/LabelGroupInput/LabelGroupInput';
+import {useState} from 'react';
 
 const meta = {
   title: 'Components/LabelGroupInput',
@@ -31,10 +32,36 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  render: ({...args}) => (
-    <LabelGroupInput {...args}>
-      <LabelGroupInput.Element key="name" placeholder="지출내역" isError={false} />
-      <LabelGroupInput.Element key="price" placeholder="금액" isError={false} />
-    </LabelGroupInput>
-  ),
+  render: ({...args}) => {
+    const [name, setName] = useState('');
+    const [isError, setIsError] = useState(false);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.value.length < 4) {
+        setName(event.target.value);
+        setIsError(false);
+      } else {
+        event.target.value = name;
+        setIsError(true);
+      }
+    };
+    const [price, setPrice] = useState('');
+    return (
+      <LabelGroupInput {...args}>
+        <LabelGroupInput.Element
+          key="name"
+          placeholder="지출내역"
+          value={name}
+          onChange={handleChange}
+          isError={isError}
+        />
+        <LabelGroupInput.Element
+          value={price}
+          onChange={e => setPrice(e.target.value)}
+          key="price"
+          placeholder="금액"
+          isError={false}
+        />
+      </LabelGroupInput>
+    );
+  },
 };

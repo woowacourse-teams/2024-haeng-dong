@@ -1,7 +1,6 @@
 export interface LabelInputStyleProps {}
 
 export interface LabelInputCustomProps {
-  value: string;
   labelText: string;
   errorText?: string;
   isError?: boolean;

@@ -2,12 +2,9 @@ import {RefObject, useEffect, useState} from 'react';
 
 interface UseLabelInput<T> {
   inputRef: RefObject<HTMLInputElement>;
-  propsValue: T;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const useLabelInput = <T>({inputRef, propsValue, onChange}: UseLabelInput<T>) => {
-  const [value, setValue] = useState(propsValue || '');
+export const useLabelInput = <T>({inputRef}: UseLabelInput<T>) => {
   const [hasFocus, setHasFocus] = useState(inputRef.current === document.activeElement);
 
   useEffect(() => {
@@ -20,12 +17,5 @@ export const useLabelInput = <T>({inputRef, propsValue, onChange}: UseLabelInput
     };
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-    if (onChange) {
-      onChange(e);
-    }
-  };
-
-  return {value, hasFocus, handleChange};
+  return {hasFocus};
 };

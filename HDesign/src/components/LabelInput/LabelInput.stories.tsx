@@ -2,6 +2,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import LabelInput from '@components/LabelInput/LabelInput';
+import {useEffect, useState} from 'react';
 
 const meta = {
   title: 'Components/LabelInput',
@@ -25,7 +26,7 @@ const meta = {
     },
   },
   args: {
-    value: '',
+    // value: '',
     labelText: '이름',
     errorText: 'error가 발생했을 때 나타납니다!',
   },
@@ -35,4 +36,19 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  render: ({...args}) => {
+    const [value, setValue] = useState('');
+    const [isError, setIsError] = useState(false);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.value.length < 4) {
+        setValue(event.target.value);
+        setIsError(false);
+      } else {
+        event.target.value = value;
+        setIsError(true);
+      }
+    };
+    return <LabelInput value={value} onChange={e => handleChange(e)} isError={isError} {...args} />;
+  },
+};

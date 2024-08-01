@@ -8,7 +8,7 @@ import {ElementProps} from './Element.type';
 import {useGroupInputContext} from './GroupInputContext';
 
 const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProps>(function Element(
-  {key, value, onChange, isError, ...htmlProps}: ElementProps,
+  {key, value, isError, ...htmlProps}: ElementProps,
   ref,
 ) {
   useImperativeHandle(ref, () => inputRef.current!);
@@ -17,7 +17,13 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
 
   useEffect(() => {
     setHasErrors({...hasErrors, [key]: isError ?? false});
+  }, [isError]);
 
+  useEffect(() => {
+    setValues({...values, [key]: `${value}` ?? ''});
+  }, [value]);
+
+  useEffect(() => {
     inputRef.current?.addEventListener('change', () => setValues({...values, [key]: `${value}`}));
     inputRef.current?.addEventListener('focus', () => setHasAnyFocus(true));
     inputRef.current?.addEventListener('blur', () => setHasAnyFocus(false));
@@ -29,7 +35,7 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
     };
   }, []);
 
-  return <Input ref={inputRef} isError={isError} {...htmlProps} />;
+  return <Input ref={inputRef} value={value} isError={isError} {...htmlProps} />;
 });
 
 export default Element;

@@ -9,12 +9,12 @@ interface UseInputProps<T> {
 }
 
 export const useInput = <T>({propsValue, onChange, inputRef}: UseInputProps<T>) => {
-  const [value, setValue] = useState(propsValue || '');
+  const [value, setValue] = useState(propsValue as string);
   const [hasFocus, setHasFocus] = useState(inputRef.current === document.activeElement);
 
   useEffect(() => {
-    setValue(propsValue || '');
-  }, [propsValue]);
+    setValue(propsValue as string);
+  }, [value]);
 
   useEffect(() => {
     inputRef.current?.addEventListener('focus', () => setHasFocus(true));

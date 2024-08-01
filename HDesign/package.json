@@ -1,6 +1,6 @@
 {
   "name": "haengdong-design",
-  "version": "0.1.47",
+  "version": "0.1.49",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

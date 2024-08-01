@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
+import React, {forwardRef, useImperativeHandle, useRef} from 'react';
 
 import IconButton from '@components/IconButton/IconButton';
 import {InputProps} from '@components/Input/Input.type';
