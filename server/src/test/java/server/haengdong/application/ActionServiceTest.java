@@ -12,11 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.response.MemberBillReportAppResponse;
-import server.haengdong.domain.action.Action;
-import server.haengdong.domain.action.BillAction;
-import server.haengdong.domain.action.BillActionRepository;
-import server.haengdong.domain.action.MemberAction;
-import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.*;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -75,5 +71,21 @@ class ActionServiceTest {
         assertThatThrownBy(() -> actionService.getMemberBillReports("invalid token"))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage(HaengdongErrorCode.NOT_FOUND_EVENT.getMessage());
+    }
+
+    @DisplayName("액션을 삭제합니다.")
+    @Test
+    void deleteAction() {
+        Event event = new Event("potato", "potatoHi");
+        eventRepository.save(event);
+
+        Action action = new Action(event, 1L);
+        MemberAction memberAction = new MemberAction(action, "웨디", MemberActionStatus.IN, 1L);
+        MemberAction savedMemberAction = memberActionRepository.save(memberAction);
+        Long memberActionId = savedMemberAction.getId();
+
+        actionService.deleteAction("potatoHi", memberActionId);
+
+        assertThat(memberActionRepository.findById(memberActionId)).isEmpty();
     }
 }
