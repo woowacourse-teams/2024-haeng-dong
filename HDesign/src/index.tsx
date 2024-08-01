@@ -10,7 +10,7 @@ import InOutItem from '@components/InOutItem/InOutItem';
 import Input from '@components/Input/Input';
 import LabelInput from '@components/LabelInput/LabelInput';
 // import LabelGroupInput from '@components/LabelGroupInput/LabelGroupInput';
-import {LabelGroupInputContainer as LabelGroupInput} from '@components/LabelGroupInput/LabelGroupInput';
+import LabelGroupInputContainer from '@components/LabelGroupInput/LabelGroupInput';
 import Search from '@components/Search/Search';
 import StepItem from '@components/StepItem/StepItem';
 import Switch from '@components/Switch/Switch';
@@ -42,7 +42,7 @@ export {
   InOutItem,
   Input,
   LabelInput,
-  LabelGroupInput,
+  LabelGroupInputContainer as LabelGroupInput,
   Search,
   StepItem,
   Switch,
