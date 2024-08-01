@@ -3,10 +3,9 @@ import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Input, Title, TopNav, Back} from 'haengdong-design';
 
 import {requestCreateNewEvent} from '@apis/request/event';
+import validateEventName from '@utils/validate/validateEventName';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
-
-import validateEventName from '@utils/validate/validateEventName';
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState('');

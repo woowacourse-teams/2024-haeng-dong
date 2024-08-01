@@ -1,5 +1,6 @@
-import {ValidateResult} from './type';
 import ERROR_MESSAGE from '@constants/errorMessage';
+
+import {ValidateResult} from './type';
 
 const validateEventName = (name: string): ValidateResult => {
   if (name.length > 30) {

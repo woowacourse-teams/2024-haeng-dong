@@ -1,6 +1,7 @@
 import REGEXP from '@constants/regExp';
-import {ValidateResult} from './type';
 import ERROR_MESSAGE from '@constants/errorMessage';
+
+import {ValidateResult} from './type';
 
 const validateMemberName = (name: string): ValidateResult => {
   if (!REGEXP.memberName.test(name)) {

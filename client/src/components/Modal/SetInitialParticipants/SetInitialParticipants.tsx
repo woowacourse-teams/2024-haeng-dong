@@ -1,10 +1,9 @@
 import {Text, Input, BottomSheet, FixedButton, LabelInput} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
+import validateMemberName from '@utils/validate/validateMemberName';
 
 import useDynamicInput from '@hooks/useDynamicInput';
-
-import validateMemberName from '@utils/validate/validateMemberName';
 
 import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './SetInitialParticipants.style';
 
