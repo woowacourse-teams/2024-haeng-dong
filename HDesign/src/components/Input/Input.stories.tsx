@@ -37,7 +37,10 @@ export const Playground: Story = {
         setIsError(true);
       }
     };
+    const handleBlur = () => {
+      console.log('blur');
+    };
 
-    return <Input value={value} onChange={e => handleChange(e)} isError={isError} {...args} />;
+    return <Input value={value} onChange={e => handleChange(e)} isError={isError} onBlur={handleBlur} {...args} />;
   },
 };

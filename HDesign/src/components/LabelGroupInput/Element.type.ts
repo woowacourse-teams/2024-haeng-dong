@@ -1,7 +1,7 @@
 export interface ElementStyleProps {}
 
 export interface ElementCustomProps {
-  key: string;
+  elementKey: string;
   isError?: boolean;
 }
 

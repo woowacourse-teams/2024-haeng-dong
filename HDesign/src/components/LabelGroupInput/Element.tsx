@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
+import {forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
 
 import Input from '../Input/Input';
 
@@ -8,7 +8,8 @@ import {ElementProps} from './Element.type';
 import {useGroupInputContext} from './GroupInputContext';
 
 const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProps>(function Element(
-  {key, value, isError, ...htmlProps}: ElementProps,
+  {elementKey, value: propsValue, onChange, onBlur, onFocus, isError, ...htmlProps}: ElementProps,
+
   ref,
 ) {
   useImperativeHandle(ref, () => inputRef.current!);
@@ -16,26 +17,46 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
   const {setHasAnyFocus, values, setValues, hasErrors, setHasErrors} = useGroupInputContext();
 
   useEffect(() => {
-    setHasErrors({...hasErrors, [key]: isError ?? false});
+    setValues({...values, [elementKey]: `${propsValue}` ?? ''});
+  }, [propsValue]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setValues({...values, [elementKey]: newValue});
+    if (onChange) {
+      onChange(e);
+    }
+  };
+
+  useEffect(() => {
+    setHasErrors({...hasErrors, [elementKey]: isError ?? false});
   }, [isError]);
 
-  useEffect(() => {
-    setValues({...values, [key]: `${value}` ?? ''});
-  }, [value]);
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setHasAnyFocus(false);
+    if (onBlur) {
+      onBlur(e);
+    }
+  };
 
-  useEffect(() => {
-    inputRef.current?.addEventListener('change', () => setValues({...values, [key]: `${value}`}));
-    inputRef.current?.addEventListener('focus', () => setHasAnyFocus(true));
-    inputRef.current?.addEventListener('blur', () => setHasAnyFocus(false));
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setHasAnyFocus(true);
+    if (onFocus) {
+      onFocus(e);
+    }
+  };
 
-    return () => {
-      inputRef.current?.removeEventListener('change', () => setValues({...values, [key]: `${value}`}));
-      inputRef.current?.removeEventListener('focus', () => setHasAnyFocus(true));
-      inputRef.current?.removeEventListener('blur', () => setHasAnyFocus(false));
-    };
-  }, []);
-
-  return <Input ref={inputRef} value={value} isError={isError} {...htmlProps} />;
+  return (
+    <Input
+      ref={inputRef}
+      isError={isError}
+      value={propsValue}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      {...htmlProps}
+    />
+  );
 });
 
 export default Element;

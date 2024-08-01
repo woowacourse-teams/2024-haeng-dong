@@ -15,7 +15,13 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
   useImperativeHandle(ref, () => inputRef.current!);
   const {theme} = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
-  const {value, handleChange, hasFocus, handleClickDelete} = useInput({propsValue, onChange, inputRef});
+  const {value, handleChange, hasFocus, handleClickDelete, handleBlur, handleFocus, handleKeyDown} = useInput({
+    propsValue,
+    onChange,
+    onBlur,
+    onFocus,
+    inputRef,
+  });
 
   return (
     <div css={inputBoxStyle(theme, inputType, hasFocus, isError)}>
@@ -24,7 +30,10 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
         ref={inputRef}
         value={value}
         onChange={handleChange}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
         placeholder={inputRef.current === document.activeElement ? '' : placeholder}
+        onKeyDown={handleKeyDown}
         {...htmlProps}
       />
       {value && hasFocus && <IconButton iconType="inputDelete" onMouseDown={handleClickDelete} />}

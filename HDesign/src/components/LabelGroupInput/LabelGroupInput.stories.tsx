@@ -34,8 +34,9 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {
   render: ({...args}) => {
     const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
     const [isError, setIsError] = useState(false);
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value.length < 4) {
         setName(event.target.value);
         setIsError(false);
@@ -44,20 +45,22 @@ export const Playground: Story = {
         setIsError(true);
       }
     };
-    const [price, setPrice] = useState('');
+    const handleChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPrice(event.target.value);
+    };
     return (
       <LabelGroupInput {...args}>
         <LabelGroupInput.Element
-          key="name"
+          elementKey="name"
           placeholder="지출내역"
           value={name}
-          onChange={handleChange}
+          onChange={e => handleChangeName(e)}
           isError={isError}
         />
         <LabelGroupInput.Element
           value={price}
-          onChange={e => setPrice(e.target.value)}
-          key="price"
+          onChange={handleChangePrice}
+          elementKey="price"
           placeholder="금액"
           isError={false}
         />
