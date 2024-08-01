@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+
 import {ValidateResult} from '@utils/validate/type';
 
 const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
@@ -25,13 +26,15 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
   };
 
   const handleInputBlur = (index: number) => {
-    if (inputs[index].trim() === '') {
+    const filterEmpty = inputs.filter(input => input.trim() !== '');
+
+    if (filterEmpty.length !== inputs.length) {
       setInputs(prev => {
-        const newInputs = [...prev];
-        newInputs[index] = '';
-        return newInputs;
+        const removeEmpty = prev.filter(value => value.trim() !== '');
+        return [...removeEmpty, ''];
       });
-    } else if (inputs[index].trim() !== '' && index === inputs.length - 1) {
+    }
+    if (inputs[index].trim() !== '' && index === inputs.length - 1) {
       setInputs(prev => {
         const newInputs = [...prev, ''];
         newInputs[index] = inputs[index];
