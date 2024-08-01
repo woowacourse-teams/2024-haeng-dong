@@ -37,12 +37,10 @@ const LabelGroupInput: React.FC<LabelGroupInputProps> = ({labelText, errorText, 
   );
 };
 
-const LabelGroupInputContainer = (props: LabelGroupInputProps) => (
+export const LabelGroupInputContainer = (props: LabelGroupInputProps) => (
   <GroupInputProvider>
     <LabelGroupInput {...props} />
   </GroupInputProvider>
 );
 
 LabelGroupInputContainer.Element = Element;
-
-export default LabelGroupInputContainer;

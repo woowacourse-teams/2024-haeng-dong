@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
-import {ElementProps} from './Element.type';
+
 import Input from '../Input/Input';
+
+import {ElementProps} from './Element.type';
 import {useGroupInputContext} from './GroupInputContext';
 
 const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProps>(function Element(
