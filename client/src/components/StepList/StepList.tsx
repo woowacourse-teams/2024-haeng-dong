@@ -1,9 +1,11 @@
-import {Flex, InOutItem, StepItem} from 'haengdong-design';
-
+import {Flex, StepItem, InOutItem} from 'haengdong-design';
 import {useStepList} from '@hooks/useStepList/useStepList';
+import {useState} from 'react';
+import ComeInMember from '@components/Modal/MangchoModal/ComeInMember';
 
 const StepList = () => {
   const {stepList} = useStepList();
+  const [isModalOn, setIsModalOn] = useState<boolean>(false);
 
   // TODO: (@weadie) if else 구문이 지저분하므로 리펙터링이 필요합니다.
   return (
@@ -18,11 +20,18 @@ const StepList = () => {
             />
           );
         } else if (step.type === 'IN' || step.type === 'OUT') {
-          return <InOutItem inOutType={step.type} names={step.actions.map(({name}) => name)} />;
+          return (
+            <InOutItem
+              inOutType={step.type}
+              names={step.actions.map(({name}) => name)}
+              onClick={() => setIsModalOn(prev => !prev)}
+            />
+          );
         } else {
           return <></>;
         }
       })}
+      {isModalOn && <ComeInMember isOpened={isModalOn} setOpenBottomSheet={() => setIsModalOn(prev => !prev)} />}
     </Flex>
   );
 };
