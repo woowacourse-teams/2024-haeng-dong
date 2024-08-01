@@ -11,11 +11,11 @@ interface SetInitialParticipantsProps {
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const GetOutMember = ({isOpened, setOpenBottomSheet}: {isOpened: boolean; setOpenBottomSheet: any}) => {
+const GetOutMember = ({openBottomSheet, setOpenBottomSheet}: SetInitialParticipantsProps) => {
   const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
 
   return (
-    <BottomSheet isOpened={isOpened} onChangeClose={() => setOpenBottomSheet(false)}>
+    <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)}>
       망쵸모달 나감 모달
       <FixedButton onDeleteClick={() => alert('아아아앙')}>안녕</FixedButton>
     </BottomSheet>

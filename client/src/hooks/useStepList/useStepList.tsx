@@ -13,6 +13,7 @@ interface StepListContextProps {
   addBill: (billList: Bill[]) => Promise<void>;
   updateMemberList: ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => Promise<void>;
   memberNameList: string[];
+  refreshStepList: () => Promise<void>;
 }
 
 export const StepListContext = createContext<StepListContextProps | null>(null); // TODO: (@weadie) 인자를 어떻게 줘야 하는지 고민하기.
@@ -83,6 +84,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
         updateMemberList,
         stepList,
         memberNameList,
+        refreshStepList,
       }}
     >
       {children}

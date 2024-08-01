@@ -21,7 +21,7 @@ export type Action = {
   actionId: number;
   name: string;
   price: number | null;
-  sequence?: number;
+  sequence: number;
 };
 
 export type BillAction = Omit<Action, 'price'> & {

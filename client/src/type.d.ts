@@ -16,3 +16,42 @@ type Bill = {
 type StepList = {
   steps: (MemberStep | BillStep)[];
 };
+
+type Step = {
+  type: MemberType | 'BILL';
+  stepName: string | null;
+  members: string[];
+  actions: (BillAction | MemberAction)[];
+};
+
+type MemberStep = Omit<Step, 'type' | 'stepName' | 'actions'> & {
+  type: MemberType;
+  stepName: null;
+  actions: MemberAction[];
+};
+
+type BillStep = Omit<Step, 'type' | 'stepName' | 'actions'> & {
+  type: 'BILL';
+  stepName: string;
+  actions: BillAction[];
+};
+
+type Action = {
+  actionId: number;
+  name: string;
+  price: number | null;
+  sequence: number;
+};
+
+type BillAction = Omit<Action, 'price'> & {
+  price: number;
+};
+
+type MemberAction = Omit<Action, 'price'> & {
+  price: null;
+};
+
+type Member = {
+  name: string;
+  status: MemberType;
+};
