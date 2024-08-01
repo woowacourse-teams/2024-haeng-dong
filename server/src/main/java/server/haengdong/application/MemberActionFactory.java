@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.action.MemberGroupIdProvider;
@@ -22,11 +23,11 @@ public class MemberActionFactory {
 
     public List<MemberAction> createMemberActions(
             MemberActionsSaveAppRequest request,
-            List<MemberAction> memberActions,
+            CurrentMembers currentMembers,
             Action action
     ) {
         validateMemberNames(request);
-        validateActions(request, memberActions);
+        validateActions(request, currentMembers);
 
         Long memberGroupId = memberGroupIdProvider.createGroupId();
         List<MemberAction> createdMemberActions = new ArrayList<>();
@@ -51,32 +52,12 @@ public class MemberActionFactory {
         }
     }
 
-    private void validateActions(MemberActionsSaveAppRequest request, List<MemberAction> memberActions) {
-        List<MemberAction> reverseSortedMemberActions = memberActions.stream()
-                .sorted(Comparator.comparing(MemberAction::getSequence).reversed())
-                .toList();
+    private void validateActions(MemberActionsSaveAppRequest request, CurrentMembers currentMembers) {
+        List<MemberActionSaveAppRequest> actions = request.actions();
 
-        for (MemberActionSaveAppRequest action : request.actions()) {
-            validateAction(action, reverseSortedMemberActions);
+        for (MemberActionSaveAppRequest action : actions) {
+            MemberActionStatus memberActionStatus = MemberActionStatus.of(action.status());
+            currentMembers.validate(action.name(), memberActionStatus);
         }
-    }
-
-    private void validateAction(MemberActionSaveAppRequest request, List<MemberAction> memberActions) {
-        MemberActionStatus memberActionStatus = MemberActionStatus.of(request.status());
-        if (isInvalidStatus(memberActions, request.name(), memberActionStatus)) {
-            throw new HaengdongException(HaengdongErrorCode.INVALID_MEMBER_ACTION);
-        }
-    }
-
-    private boolean isInvalidStatus(
-            List<MemberAction> memberActions,
-            String memberName,
-            MemberActionStatus memberActionStatus
-    ) {
-        return memberActions.stream()
-                .filter(action -> action.isSameName(memberName))
-                .findFirst()
-                .map(action -> action.isSameStatus(memberActionStatus))
-                .orElse(MemberActionStatus.IN != memberActionStatus);
     }
 }

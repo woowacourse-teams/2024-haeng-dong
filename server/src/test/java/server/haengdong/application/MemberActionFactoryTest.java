@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionStatus;
@@ -56,10 +57,12 @@ class MemberActionFactoryTest {
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
+
         List<MemberAction> unorderedMemberActions = List.of(memberAction2, memberAction1);
+        CurrentMembers currentMembers = CurrentMembers.of(unorderedMemberActions);
         Action startAction = new Action(event, 3L);
 
-        assertThatThrownBy(() -> memberActionFactory.createMemberActions(request, unorderedMemberActions, startAction))
+        assertThatThrownBy(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -75,8 +78,10 @@ class MemberActionFactoryTest {
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
         Action startAction = new Action(event, 2L);
 
+        CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
         List<MemberAction> memberActions = memberActionFactory.createMemberActions(memberActionsSaveAppRequest,
-                                                                                   List.of(memberAction), startAction);
+                currentMembers, startAction
+        );
 
         assertThat(memberActions).hasSize(1)
                 .extracting(MemberAction::getAction, MemberAction::getMemberName, MemberAction::getStatus)
@@ -96,8 +101,9 @@ class MemberActionFactoryTest {
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
         Action startAction = new Action(event, 2L);
+        CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .doesNotThrowAnyException();
     }
 
@@ -115,10 +121,9 @@ class MemberActionFactoryTest {
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "IN")));
         Action startAction = new Action(event, 3L);
+        CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction1, memberAction2));
 
-        assertThatCode(
-                () -> memberActionFactory.createMemberActions(request, List.of(memberAction1, memberAction2),
-                                                              startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .doesNotThrowAnyException();
     }
 
@@ -133,8 +138,9 @@ class MemberActionFactoryTest {
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "IN")));
         Action startAction = new Action(event, 2L);
+        CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .doesNotThrowAnyException();
     }
 
@@ -146,8 +152,10 @@ class MemberActionFactoryTest {
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "OUT")));
         Action startAction = new Action(event, 2L);
+        CurrentMembers currentMembers = CurrentMembers.of(List.of());
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(), startAction))
+        assertThatCode(
+                () -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -162,8 +170,9 @@ class MemberActionFactoryTest {
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "IN")));
         Action startAction = new Action(event, 2L);
+        CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -173,11 +182,15 @@ class MemberActionFactoryTest {
         Event event = eventRepository.save(new Event("test", "TOKEN"));
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
-                List.of(new MemberActionSaveAppRequest("쿠키", "IN"),
-                        new MemberActionSaveAppRequest("쿠키", "IN")));
+                List.of(
+                        new MemberActionSaveAppRequest("쿠키", "IN"),
+                        new MemberActionSaveAppRequest("쿠키", "IN")
+                ));
         Action startAction = new Action(event, 1L);
+        CurrentMembers currentMembers = CurrentMembers.of(List.of());
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(), startAction))
+        assertThatCode(
+                () -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -190,11 +203,14 @@ class MemberActionFactoryTest {
         memberActionRepository.save(memberAction);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
-                List.of(new MemberActionSaveAppRequest("쿠키", "OUT"),
-                        new MemberActionSaveAppRequest("쿠키", "OUT")));
+                List.of(
+                        new MemberActionSaveAppRequest("쿠키", "OUT"),
+                        new MemberActionSaveAppRequest("쿠키", "OUT")
+                ));
         Action startAction = new Action(event, 2L);
+        CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -207,11 +223,14 @@ class MemberActionFactoryTest {
         memberActionRepository.save(memberAction);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
-                List.of(new MemberActionSaveAppRequest("쿠키", "IN"),
-                        new MemberActionSaveAppRequest("쿠키", "OUT")));
+                List.of(
+                        new MemberActionSaveAppRequest("쿠키", "IN"),
+                        new MemberActionSaveAppRequest("쿠키", "OUT")
+                ));
         Action startAction = new Action(event, 2L);
+        CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, List.of(memberAction), startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
                 .isInstanceOf(HaengdongException.class);
     }
 }
