@@ -3,7 +3,6 @@ package server.haengdong.presentation;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,14 +45,5 @@ class ActionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].name").value(equalTo("토다리")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].price").value(equalTo(200_000)));
 
-    }
-
-    @DisplayName("액션을 삭제한다.")
-    @Test
-    void deleteAction() throws Exception {
-        mockMvc.perform(delete("/api/events/{eventId}/actions/{actionId}", "token", "1")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isNoContent());
     }
 }

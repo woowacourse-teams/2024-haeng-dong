@@ -10,9 +10,10 @@ public enum HaengdongErrorCode {
     DUPLICATED_MEMBER_ACTION("MA_001", "중복된 인원이 존재합니다."),
     INVALID_MEMBER_IN_ACTION("MA_002", "현재 참여하고 있는 인원이 존재합니다."),
     INVALID_MEMBER_OUT_ACTION("MA_003", "현재 참여하고 있지 않는 인원이 존재합니다."),
+    NOT_FOUND_MEMBER_ACTION("MA_400", "존재하지 않는 멤버 액션입니다."),
     NOT_FOUND_EVENT("EV_400", "존재하지 않는 행사입니다."),
-    INTERNAL_SERVER_ERROR("S_001", "서버 내부에서 에러가 발생했습니다."),
-    NOT_FOUND_ACTION("AC_400", "존재하지 않는 액션입니다.");
+    NOT_FOUND_ACTION("AC_400", "존재하지 않는 액션입니다."),
+    INTERNAL_SERVER_ERROR("S_001", "서버 내부에서 에러가 발생했습니다.");
 
     private final String code;
     private final String message;
