@@ -7,7 +7,7 @@ import {useStepList} from '@hooks/useStepList/useStepList';
 import useEventId from '@hooks/useEventId/useEventId';
 import {requestGetEventName} from '@apis/request/event';
 
-const HomeContent = () => {
+const HomePage = () => {
   const {getTotalPrice} = useStepList();
   const {eventId} = useEventId();
 
@@ -37,4 +37,4 @@ const HomeContent = () => {
   );
 };
 
-export default HomeContent;
+export default HomePage;

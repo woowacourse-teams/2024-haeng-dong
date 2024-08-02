@@ -7,7 +7,7 @@ import validateEventName from '@utils/validate/validateEventName';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-const CreateEvent = () => {
+const SetEventNamePage = () => {
   const [eventName, setEventName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
@@ -69,4 +69,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default SetEventNamePage;

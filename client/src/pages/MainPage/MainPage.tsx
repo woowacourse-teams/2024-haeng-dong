@@ -3,7 +3,7 @@ import {FixedButton, MainLayout, Title, TopNav} from 'haengdong-design';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-const Main = () => {
+const MainPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -15,4 +15,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainPage;

@@ -4,7 +4,7 @@ import {FixedButton, MainLayout, Title, TopNav} from 'haengdong-design';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-const CompleteCreateEvent = () => {
+const CompleteCreateEventPage = () => {
   const [url, setUrl] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,4 +35,4 @@ const CompleteCreateEvent = () => {
   );
 };
 
-export default CompleteCreateEvent;
+export default CompleteCreateEventPage;

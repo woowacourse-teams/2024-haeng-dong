@@ -6,35 +6,29 @@ import {useStepList} from '@hooks/useStepList/useStepList';
 import {requestGetEventName} from '@apis/request/event';
 import useEventId from '@hooks/useEventId/useEventId';
 
-import {SetActionModalContent, SetInitialParticipants} from '@components/Modal';
+import {ReceiptStyle} from './AdminPage.style';
+import {SetActionListModal, SetInitialMemberListModal} from '@components/Modal';
 
-import {ReceiptStyle} from './Admin.style';
-
-export type PurchaseInformation = {
-  title: string;
-  price: number;
-};
-
-export type ParticipantType = {
-  name: string;
-  type: InOutType;
-};
-
-interface ModalRenderingProps {
+interface ModalBasedOnMemberCountProps {
   memberNameList: string[];
   openBottomSheet: boolean;
   setOrder: React.Dispatch<React.SetStateAction<number>>;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalRendering = ({memberNameList, openBottomSheet, setOrder, setOpenBottomSheet}: ModalRenderingProps) => {
+const ModalBasedOnMemberCount = ({
+  memberNameList,
+  openBottomSheet,
+  setOrder,
+  setOpenBottomSheet,
+}: ModalBasedOnMemberCountProps) => {
   switch (memberNameList.length) {
     case 0:
-      return <SetInitialParticipants setOpenBottomSheet={setOpenBottomSheet} openBottomSheet={openBottomSheet} />;
+      return <SetInitialMemberListModal setOpenBottomSheet={setOpenBottomSheet} openBottomSheet={openBottomSheet} />;
 
     default:
       return (
-        <SetActionModalContent
+        <SetActionListModal
           setOrder={setOrder}
           setOpenBottomSheet={setOpenBottomSheet}
           openBottomSheet={openBottomSheet}
@@ -43,7 +37,7 @@ const ModalRendering = ({memberNameList, openBottomSheet, setOrder, setOpenBotto
   }
 };
 
-const Admin = () => {
+const AdminPage = () => {
   const [openBottomSheet, setOpenBottomSheet] = useState(false);
   const [order, setOrder] = useState<number>(1);
 
@@ -82,7 +76,7 @@ const Admin = () => {
           onClick={() => setOpenBottomSheet(prev => !prev)}
         />
         {openBottomSheet && (
-          <ModalRendering
+          <ModalBasedOnMemberCount
             memberNameList={memberNameList}
             setOrder={setOrder}
             setOpenBottomSheet={setOpenBottomSheet}
@@ -94,4 +88,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminPage;

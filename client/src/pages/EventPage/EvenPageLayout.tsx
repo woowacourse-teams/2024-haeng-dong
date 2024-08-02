@@ -5,7 +5,7 @@ import StepListProvider from '@hooks/useStepList/useStepList';
 
 import useNavSwitch from '@hooks/useNavSwitch';
 
-const EventLayout = () => {
+const EventPageLayout = () => {
   const {nav, paths, onChange} = useNavSwitch();
 
   return (
@@ -20,4 +20,4 @@ const EventLayout = () => {
   );
 };
 
-export default EventLayout;
+export default EventPageLayout;
