@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
+import {Bill} from 'types/serviceType';
 
 type InputPair = Omit<Bill, 'price'> & {
   price: string;
@@ -100,15 +101,14 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
     }
   };
 
-  const handleInputBlur = (index: number) => {
-    const currentPair = inputPairs[index];
-    const filterEmpty = inputPairs.filter(pair => pair.title.trim() !== '' && pair.price !== 0);
+  const focusNextInputOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, index: number, field: BillInputType) => {
+    if (e.nativeEvent.isComposing) return;
 
-    if (filterEmpty.length !== inputPairs.length) {
-      setInputPairs(prev => prev.filter((_, i) => i !== index));
-    }
-    if (currentPair.title.trim() !== '' && currentPair.price !== 0 && index === inputPairs.length - 1) {
-      setInputPairs(prev => [...prev, {title: '', price: 0}]);
+    if (e.key === 'Enter') {
+      // 2개(제목, 가격)를 쌍으로 index를 관리하고 있으므로 input element 정확히 특정하기 위한 개별 input element key 값을 계산합니다.
+      const exactInputIndex = index * 2 + (field === 'title' ? 0 : 1);
+
+      inputRefList.current[exactInputIndex + 1]?.focus();
     }
   };
 
@@ -142,4 +142,4 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
   };
 };
 
-export default useDynamicInputPairs;
+export default useDynamicBillActionInput;
