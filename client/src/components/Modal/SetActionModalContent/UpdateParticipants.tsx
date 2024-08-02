@@ -27,10 +27,10 @@ const UpdateParticipants = ({inOutAction, setOpenBottomSheet}: UpdateParticipant
       <div css={updateParticipantsInputStyle}>
         {/* TODO: (@soha) Search로 변경하기 */}
         <LabelGroupInput labelText="이름" errorText={errorMessage}>
-          {inputs.map((name, index) => (
+          {inputs.map(({}, index) => (
             <LabelGroupInput.Element
               elementKey={`${index}`}
-              value={name}
+              value={`${name}`}
               type="text"
               ref={el => (inputRefs.current[index] = el)}
               onChange={e => handleInputChange(index, e)}

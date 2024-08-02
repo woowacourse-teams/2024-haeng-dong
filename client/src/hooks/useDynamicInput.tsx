@@ -89,6 +89,9 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     handleInputBlur,
     errorMessage,
     getFilledInputList,
+    canSubmit, // TODO: (@weadie) 이거 리모트에서 보고 가져오기
+    // TODO: (@weadie) 네이밍 수정
+    getNonEmptyInputs: getFilledInputList,
   };
 };
 
