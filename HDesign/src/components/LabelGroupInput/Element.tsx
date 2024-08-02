@@ -14,7 +14,7 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
 ) {
   useImperativeHandle(ref, () => inputRef.current!);
   const inputRef = useRef<HTMLInputElement>(null);
-  const {setHasAnyFocus, values, setValues, hasErrors, setHasErrors} = useGroupInputContext();
+  const {setHasAnyFocus, values, setValues, hasAnyErrors, setHasAnyErrors} = useGroupInputContext();
 
   useEffect(() => {
     setValues({...values, [elementKey]: `${propsValue}` ?? ''});
@@ -29,7 +29,7 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
   };
 
   useEffect(() => {
-    setHasErrors({...hasErrors, [elementKey]: isError ?? false});
+    setHasAnyErrors({...hasAnyErrors, [elementKey]: isError ?? false});
   }, [isError]);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
