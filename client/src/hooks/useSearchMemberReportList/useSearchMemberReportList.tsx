@@ -1,3 +1,5 @@
+import type {MemberReport} from 'types/serviceType';
+
 import {useEffect, useState} from 'react';
 
 import {requestMemberReportList} from '@apis/request/report';

@@ -1,3 +1,5 @@
+import type {MemberType} from 'types/serviceType';
+
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestPost} from '@apis/fetcher';

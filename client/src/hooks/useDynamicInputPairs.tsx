@@ -1,3 +1,5 @@
+import type {Bill} from 'types/serviceType';
+
 import {useEffect, useRef, useState} from 'react';
 
 const useDynamicInputPairs = () => {

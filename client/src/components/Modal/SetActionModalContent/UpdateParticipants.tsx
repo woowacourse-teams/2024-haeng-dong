@@ -1,3 +1,5 @@
+import type {MemberType} from 'types/serviceType';
+
 import {Input, FixedButton} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
