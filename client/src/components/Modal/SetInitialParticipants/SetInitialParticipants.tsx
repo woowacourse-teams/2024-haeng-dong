@@ -1,11 +1,11 @@
-import {Text, Input, BottomSheet, FixedButton, LabelGroupInput} from 'haengdong-design';
-
+import {Text, BottomSheet, FixedButton} from 'haengdong-design';
 import {useStepList} from '@hooks/useStepList/useStepList';
 import validateMemberName from '@utils/validate/validateMemberName';
 
 import useDynamicInput from '@hooks/useDynamicInput';
 
 import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './SetInitialParticipants.style';
+import LabelGroupInputContainer from './GroupInput';
 
 interface SetInitialParticipantsProps {
   openBottomSheet: boolean;
@@ -13,12 +13,12 @@ interface SetInitialParticipantsProps {
 }
 
 const SetInitialParticipants = ({openBottomSheet, setOpenBottomSheet}: SetInitialParticipantsProps) => {
-  const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs, errorMessage, canSubmit} =
+  const {inputs, inputRefs, handleInputChange, handleInputBlur, getFilledInputList, errorMessage} =
     useDynamicInput(validateMemberName);
   const {updateMemberList} = useStepList();
 
   const handleSubmit = () => {
-    updateMemberList({memberNameList: getNonEmptyInputs(), type: 'IN'});
+    updateMemberList({memberNameList: getFilledInputList(), type: 'IN'});
     setOpenBottomSheet(false);
   };
 
@@ -27,34 +27,35 @@ const SetInitialParticipants = ({openBottomSheet, setOpenBottomSheet}: SetInitia
       <div css={setInitialParticipantsStyle}>
         <Text size="bodyBold">초기 인원 설정하기</Text>
         <div css={setInitialParticipantsInputGroupStyle}>
-          <LabelGroupInput labelText="이름" errorText={errorMessage}>
-            {inputs.map((input, index) => (
-              // <LabelGroupInput.Element
-              //   elementKey={`${index}`}
-              //   key={`${index}`}
-              //   type="text"
-              //   value={input}
-              //   ref={el => (inputRefs.current[index] = el)}
-              //   onChange={e => handleInputChange(index, e)}
-              //   onBlur={() => handleInputBlur(index)}
-              //   isError={!!errorMessage}
-              //   placeholder="이름"
-              //   autoFocus
-              // />
-              <input
-                // elementKey={`${index}`}
-                key={`${index}`}
-                type="text"
-                value={input}
-                ref={el => (inputRefs.current[index] = el)}
-                onChange={e => handleInputChange(index, e)}
-                onBlur={() => handleInputBlur(index)}
-                // isError={!!errorMessage}
-                placeholder="이름"
-                autoFocus
-              />
+          <LabelGroupInputContainer labelText="이름" errorText={'d'}>
+            {inputs.map(({value, index}) => (
+              <>
+                <LabelGroupInputContainer.Element
+                  // autoFocus
+                  id={String(index)} // 확인용도 임시임
+                  key={String(index)}
+                  elementKey={String(index)}
+                  type="text"
+                  value={value}
+                  ref={el => (inputRefs.current[index] = el)}
+                  onChange={e => handleInputChange(index, e)}
+                  onBlur={() => handleInputBlur(index)}
+                  onKeyDown={e => {
+                    if (e.nativeEvent.isComposing) return;
+
+                    if (e.key === 'Enter') {
+                      if (index < inputs.length - 1) {
+                        inputRefs.current[index + 1]?.focus();
+                      }
+                    }
+                  }}
+                />
+                <div>
+                  {value} | {index}
+                </div>
+              </>
             ))}
-          </LabelGroupInput>
+          </LabelGroupInputContainer>
         </div>
       </div>
       <FixedButton disabled={!canSubmit} variants={'primary'} onClick={handleSubmit} children={'인원 설정 완료'} />

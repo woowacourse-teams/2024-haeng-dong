@@ -53,9 +53,8 @@ const CreateEvent = () => {
       </TopNav>
       <Title title="행사 이름 입력" description="시작할 행사 이름을 입력해 주세요." />
       <form onSubmit={submitEventName} style={{padding: '0 1rem'}}>
-        <LabelInput
-          labelText="행사 이름"
-          errorText={errorMessage}
+        {/* <LabelInput labelText="행사 이름" errorText={errorMessage}> */}
+        <Input
           value={eventName}
           type="text"
           placeholder="행사 이름"
@@ -63,6 +62,7 @@ const CreateEvent = () => {
           isError={!!errorMessage}
           autoFocus
         />
+        {/* </LabelInput> */}
         <FixedButton disabled={!canSubmit}>행동 개시!</FixedButton>
       </form>
     </MainLayout>
