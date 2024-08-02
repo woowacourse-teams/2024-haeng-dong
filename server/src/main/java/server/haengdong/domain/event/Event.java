@@ -51,4 +51,8 @@ public class Event {
     private boolean isBlankContinuous(String name) {
         return name.contains(SPACES);
     }
+
+    public boolean isNotValidToken(String token) {
+        return !this.token.equals(token);
+    }
 }

@@ -37,8 +37,13 @@ public class BillAction implements Comparable<BillAction> {
     private Long price;
 
     public BillAction(Action action, String title, Long price) {
+        this(null, action, title, price);
+    }
+
+    private BillAction(Long id, Action action, String title, Long price) {
         validateTitle(title);
         validatePrice(price);
+        this.id = id;
         this.action = action;
         this.title = title.trim();
         this.price = price;
@@ -57,6 +62,10 @@ public class BillAction implements Comparable<BillAction> {
             throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
                     String.format("지출 금액은 %,d 이하의 자연수여야 합니다.", MAX_PRICE));
         }
+    }
+
+    public BillAction update(String title, Long price) {
+        return new BillAction(id, action, title, price);
     }
 
     public Long getSequence() {
