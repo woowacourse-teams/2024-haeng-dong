@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 
-export const setInitialParticipantsStyle = () =>
+export const setInitialMemberListModalStyle = () =>
   css({
     display: 'flex',
     flexDirection: 'column',
@@ -10,7 +10,7 @@ export const setInitialParticipantsStyle = () =>
     padding: '0 1.5rem',
   });
 
-export const setInitialParticipantsInputGroupStyle = () =>
+export const setInitialMemberListModalInputGroupStyle = () =>
   css({
     display: 'flex',
     flexDirection: 'column',
