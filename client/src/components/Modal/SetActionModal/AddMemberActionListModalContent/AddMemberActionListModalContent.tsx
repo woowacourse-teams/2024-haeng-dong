@@ -5,6 +5,7 @@ import validateMemberName from '@utils/validate/validateMemberName';
 
 import useDynamicInput from '@hooks/useDynamicInput';
 import style from './AddMemberActionListModalContent.style';
+import {MemberType} from 'types/serviceType';
 
 interface UpdateParticipantsProps {
   inOutAction: MemberType;

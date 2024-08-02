@@ -1,7 +1,7 @@
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
 import style from './AddBillActionListModalContent.style';
 import {useStepList} from '@hooks/useStepList/useStepList';
-import useDynamicBillActionInput from '@hooks/useDynamicInputPairs';
+import useDynamicBillActionInput from '@hooks/useDynamicBillActionInput';
 import validatePurchase from '@utils/validate/validatePurchase';
 
 interface SetPurchaseProps {
