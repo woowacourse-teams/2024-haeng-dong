@@ -72,6 +72,20 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     }
   };
 
+  const focusNextInputOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.nativeEvent.isComposing) return;
+
+    if (e.key === 'Enter') {
+      inputRefList.current[index + 1]?.focus();
+    }
+  };
+  // 아래부터는 이 훅에서 재사용되는 함수입니다.
+
+  // list 인자를 넘겨주면 그 인자로 찾고, 없다면 inputList state를 사용합니다.
+  const findInputByIndex = (index: number, list?: InputValue[]) => {
+    return (list ?? inputList).filter(input => input.index === index)[0];
+  };
+
   useEffect(() => {
     if (inputRefs.current.length <= 0) return;
 
