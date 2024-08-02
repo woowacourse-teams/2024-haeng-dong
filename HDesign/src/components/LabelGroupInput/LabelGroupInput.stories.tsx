@@ -55,6 +55,7 @@ export const Playground: Story = {
           placeholder="지출내역"
           value={name}
           onChange={e => handleChangeName(e)}
+          onBlur={() => console.log('!!!')}
           isError={isError}
         />
         <LabelGroupInput.Element
@@ -62,6 +63,7 @@ export const Playground: Story = {
           onChange={handleChangePrice}
           elementKey="price"
           placeholder="금액"
+          onBlur={() => console.log('!!!')}
           isError={false}
         />
       </LabelGroupInput>

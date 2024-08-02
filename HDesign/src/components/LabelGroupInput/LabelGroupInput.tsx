@@ -16,7 +16,7 @@ import {GroupInputProvider, useGroupInputContext} from './GroupInputContext';
 
 const LabelGroupInput: React.FC<LabelGroupInputProps> = ({labelText, errorText, children}: LabelGroupInputProps) => {
   const {theme} = useTheme();
-  const {hasAnyFocus, values, hasErrors} = useGroupInputContext();
+  const {hasAnyFocus, values, hasAnyErrors} = useGroupInputContext();
 
   return (
     <div css={labelInputStyle}>
@@ -28,7 +28,7 @@ const LabelGroupInput: React.FC<LabelGroupInputProps> = ({labelText, errorText, 
         </label>
         {errorText && (
           <Text size="caption" css={errorTextStyle(theme)}>
-            {!Object.values(hasErrors).every(error => !error) && errorText}
+            {!Object.values(hasAnyErrors).every(error => !error) && errorText}
           </Text>
         )}
       </div>
