@@ -1,13 +1,11 @@
-import {InputProps} from '../Input/Input.type';
-
 export interface LabelInputStyleProps {}
 
-export interface ButtonCustomProps {
+export interface LabelInputCustomProps {
   labelText: string;
   errorText?: string;
-  children?: React.ReactElement<InputProps>[] | React.ReactElement<InputProps>;
+  isError?: boolean;
 }
 
-export type LabelInputOptionProps = LabelInputStyleProps & ButtonCustomProps;
+export type LabelInputOptionProps = LabelInputCustomProps & LabelInputCustomProps;
 
-export type LabelInputProps = React.ComponentProps<'div'> & LabelInputOptionProps;
+export type LabelInputProps = React.ComponentProps<'input'> & LabelInputOptionProps;

@@ -1,6 +1,7 @@
 import {Input, FixedButton} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
+import validatePurchase from '@utils/validate/validatePurchase';
 
 import useDynamicInputPairs from '@hooks/useDynamicInputPairs';
 
@@ -12,21 +13,21 @@ interface SetPurchaseProps {
 }
 
 const SetPurchase = ({setOpenBottomSheet, setOrder}: SetPurchaseProps) => {
-  const {inputPairs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputPairs} = useDynamicInputPairs();
+  // const {inputPairs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputPairs} = useDynamicInputPairs(validatePurchase);
   const {addBill} = useStepList();
 
   const handleSetPurchaseSubmit = () => {
     setOrder(prev => prev + 1);
 
     // TODO: (@weadie) 요청 실패시 오류 핸들 필요
-    addBill(getNonEmptyInputPairs());
+    // addBill(getNonEmptyInputPairs());
     setOpenBottomSheet(false);
   };
 
   return (
     <div css={setPurchaseStyle}>
       <div css={setPurchaseInputContainerStyle}>
-        {inputPairs.map((pair, index) => (
+        {/* {inputPairs.map((pair, index) => (
           <div key={index} css={setPurchaseInputStyle}>
             <Input
               type="text"
@@ -45,10 +46,10 @@ const SetPurchase = ({setOpenBottomSheet, setOrder}: SetPurchaseProps) => {
               ref={el => (inputRefs.current[index * 2 + 1] = el)}
             />
           </div>
-        ))}
+        ))} */}
       </div>
       <FixedButton
-        disabled={!(inputPairs.length - 1)}
+        // disabled={!(inputPairs.length - 1)}
         variants={'primary'}
         children={'추가하기'}
         onClick={handleSetPurchaseSubmit}
