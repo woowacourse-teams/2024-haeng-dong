@@ -47,8 +47,13 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     return stringList.filter(string => string.trim() !== '');
   };
 
-  const getFilledInputList = () => {
-    return getFilledStringList(inputs.map(({value}) => value));
+  // 현재까지 입력된 값들로 submit을 할 수 있는지 여부를 핸들합니다.
+  const handleCanSubmit = () => {
+    if (inputList.length > 0 && getFilledInputList().length > 0) {
+      setCanSubmit(true);
+    } else {
+      setCanSubmit(false);
+    }
   };
 
   const deleteEmptyInputElementOnBlur = () => {
