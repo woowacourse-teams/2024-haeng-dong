@@ -1,9 +1,10 @@
+import type {BillStep, MemberStep} from 'types/serviceType';
+
 import {InOutItem, StepItem} from 'haengdong-design';
 import {useState} from 'react';
 
-import {BillStep, MemberStep} from '@hooks/useStepList/type';
-import ComeInMember from '@components/Modal/MangchoModal/ComeInMember';
-import GetOutMember from '@components/Modal/MangchoModal/GetOutMember';
+import ComeInMember from '@components/Modal/InOut/ComeInMember';
+import GetOutMember from '@components/Modal/InOut/GetOutMember';
 
 interface StepProps {
   step: BillStep | MemberStep;

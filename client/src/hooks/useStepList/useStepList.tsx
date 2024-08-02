@@ -1,11 +1,11 @@
+import type {MemberType, Bill, BillAction, BillStep, MemberStep} from 'types/serviceType.ts';
+
 import {PropsWithChildren, createContext, useContext, useEffect, useState} from 'react';
 
 import useEventId from '@hooks/useEventId/useEventId';
 import {requestAddBillList} from '@apis/request/bill';
 import {requestUpdateMemberList} from '@apis/request/member';
 import {requestStepList} from '@apis/request/stepList';
-
-import {BillAction, BillStep, MemberStep} from './type.ts';
 
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];

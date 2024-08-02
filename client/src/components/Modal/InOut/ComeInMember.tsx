@@ -1,11 +1,10 @@
-import {Text, Input, BottomSheet, FixedButton, Button, Flex} from 'haengdong-design';
+import type {MemberAction} from 'types/serviceType';
+
+import {Text, Input, BottomSheet, Button, Flex} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
-import {MemberAction} from '@hooks/useStepList/type';
 import {requestDeleteAction} from '@apis/request/action';
 import useEventId from '@hooks/useEventId/useEventId';
-
-import useDynamicInput from '@hooks/useDynamicAdditionalInput';
 
 import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './ComeInMember.style';
 
