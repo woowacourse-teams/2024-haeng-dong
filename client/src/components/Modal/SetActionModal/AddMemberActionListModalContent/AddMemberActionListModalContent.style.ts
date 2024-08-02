@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 
-export const updateParticipantsStyle = () =>
+const container = () =>
   css({
     display: 'flex',
     flexDirection: 'column',
@@ -8,7 +8,7 @@ export const updateParticipantsStyle = () =>
     height: '100%',
   });
 
-export const updateParticipantsInputStyle = () =>
+const inputGroup = () =>
   css({
     display: 'flex',
     flexDirection: 'column',
@@ -16,3 +16,10 @@ export const updateParticipantsInputStyle = () =>
     overflow: 'auto',
     paddingBottom: '14rem',
   });
+
+const addMemberActionListModalContentStyle = {
+  container,
+  inputGroup,
+};
+
+export default addMemberActionListModalContentStyle;
