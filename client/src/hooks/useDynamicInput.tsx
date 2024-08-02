@@ -8,43 +8,65 @@ type InputValue = {
 };
 
 const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
-  const [inputs, setInputs] = useState<InputValue[]>([{value: '', index: 0}]);
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [inputList, setInputList] = useState<InputValue[]>([{value: '', index: 0}]);
+  const inputRefList = useRef<(HTMLInputElement | null)[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
-  // const [errorIds, setErrorIds] = useState<string>('');
+
+  useEffect(() => {
+    if (inputRefList.current.length <= 0) return;
+
+    const lastInput = inputRefList.current[inputRefList.current.length - 1];
+
+    if (lastInput) {
+      lastInput.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }
+  }, [inputList]);
 
   const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
-    const {isValid, errorMessage} = validateFunc(value);
+    const {isValid: isValidInput, errorMessage: validationResultMessage} = validateFunc(value);
 
     if (isLastInputFilled(index, value)) {
-      setInputs(prevInputs => {
-        const updatedInputs = [...prevInputs];
-        const targetInput = updatedInputs.filter(input => input.index === index);
+      // 마지막 인풋이 한 자라도 채워진다면 새로운 인풋을 생성해 간편한 다음 입력을 유도합니다.
 
-        targetInput[0].value = value;
+      setErrorMessage('');
+      setInputList(prevInputs => {
+        const updatedInputList = [...prevInputs];
+        const targetInput = findInputByIndex(index, updatedInputList);
+
+        targetInput.value = value;
 
         // 새로운 인덱스를 inputs 배열 길이를 기준으로 설정
-        const newIndex = updatedInputs[updatedInputs.length - 1].index + 1;
-        const finalInputs = [...updatedInputs, {index: newIndex, value: ''}];
+        const newIndex = updatedInputList[updatedInputList.length - 1].index + 1;
 
-        return finalInputs;
+        return [...updatedInputList, {index: newIndex, value: ''}];
+      });
+    } else if (isValidInput || value.length === 0) {
+      // 인풋이 비어있다면 새로운 인풋을 생성하지 않습니다.
+
+      setErrorMessage('');
+      setInputList(prevInputs => {
+        const updatedInputList = [...prevInputs];
+        const targetInput = findInputByIndex(index, updatedInputList);
+
+        targetInput.value = value;
+
+        return updatedInputList;
       });
     } else {
-      setInputs(prevInputs => {
-        const updatedInputs = [...prevInputs];
-        const targetInput = updatedInputs.filter(input => input.index === index);
+      // 유효성 검사에 실패한 입력입니다. 이전 입력으로 복구하고 에러 메세지를 세팅합니다.
 
-        targetInput[0].value = value;
+      // index에 해당하는 아이템을 찾습니다.
+      const targetInput = findInputByIndex(index);
 
-        return updatedInputs;
-      });
+      // 오류가 난 값말고 기존의 값을 사용합니다.
+      event.target.value = targetInput.value;
+
+      setErrorMessage(validationResultMessage ?? '');
     }
-  };
 
-  const getFilledStringList = (stringList: string[]) => {
-    return stringList.filter(string => string.trim() !== '');
+    handleCanSubmit();
   };
 
   // 현재까지 입력된 값들로 submit을 할 수 있는지 여부를 핸들합니다.
@@ -63,20 +85,18 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
       return;
     }
 
-    return value !== '' && index === lastInputIndex;
-  };
+    // *표시 조건문은 처음에 input을 클릭했다가 블러시켰을 때 filledInputList가 아예 없어 .index에 접근할 때 오류가 납니다. 이를 위한 얼리리턴을 두었습니다.
+    if (getFilledInputList().length === 0) return;
 
-  const handleInputBlur = (index: number) => {
-    if (getFilledInputList().length !== inputs.length) {
-      setInputs(prevInputs => {
-        const filledInputList = prevInputs.filter(({value}) => value !== '');
+    // *
+    if (getFilledInputList().length !== inputList.length) {
+      setInputList(inputList => {
+        const filledInputList = getFilledInputList(inputList);
 
         // 새 입력의 인덱스를 inputs 길이를 기준으로 설정
         const newIndex = filledInputList[filledInputList.length - 1].index + 1;
 
-        const finalInputs = [...filledInputList, {index: newIndex, value: ''}];
-
-        return finalInputs;
+        return [...filledInputList, {index: newIndex, value: ''}];
       });
     }
   };
@@ -95,26 +115,27 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     return (list ?? inputList).filter(input => input.index === index)[0];
   };
 
-  useEffect(() => {
-    if (inputRefs.current.length <= 0) return;
+  // list 인자를 넘겨주면 그 인자로 찾고, 없다면 inputList state를 사용합니다.
+  const getFilledInputList = (list?: InputValue[]) => {
+    return (list ?? inputList).filter(({value}) => value !== '');
+  };
 
-    const lastInput = inputRefs.current[inputRefs.current.length - 1];
+  const isLastInputFilled = (index: number, value: string) => {
+    const lastInputIndex = inputList[inputList.length - 1].index;
 
-    if (lastInput) {
-      lastInput.scrollIntoView({behavior: 'smooth', block: 'center'});
-    }
-  }, [inputs]);
+    return value !== '' && index === lastInputIndex;
+  };
 
   return {
-    inputs,
-    inputRefs,
+    inputList,
+    inputRefList,
     handleInputChange,
-    handleInputBlur,
+    deleteEmptyInputElementOnBlur,
     errorMessage,
     getFilledInputList,
-    canSubmit, // TODO: (@weadie) 이거 리모트에서 보고 가져오기
+    focusNextInputOnEnter,
+    canSubmit,
     // TODO: (@weadie) 네이밍 수정
-    getNonEmptyInputs: getFilledInputList,
   };
 };
 
