@@ -3,8 +3,7 @@ import type {MemberAction} from 'types/serviceType';
 import {Text, Input, BottomSheet, Button, Flex} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
-import {requestDeleteAction} from '@apis/request/action';
-import useEventId from '@hooks/useEventId/useEventId';
+import useMemberAction from '@hooks/useStepList/useMemberAction';
 
 import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './ComeInMember.style';
 
@@ -16,22 +15,7 @@ interface SetInitialParticipantsProps {
 
 const ComeInMember = ({openBottomSheet, setOpenBottomSheet, actions}: SetInitialParticipantsProps) => {
   const {refreshStepList, stepList} = useStepList();
-  const {eventId} = useEventId();
-  const memberActions = stepList.filter(step => step.type !== 'BILL').flatMap(step => step.actions);
-
-  const hasNextMemberAction = (name: string, sequence: number) => {
-    return memberActions.find(action => action.name === name && action.sequence > sequence) !== undefined;
-  };
-
-  const deleteMember = async (action: MemberAction) => {
-    if (hasNextMemberAction(action.name, action.sequence)) {
-      if (!window.confirm('다음 인원 액션이 존재합니다. 같이 지우시겠습니까?')) {
-        return;
-      }
-    }
-    await requestDeleteAction({eventId, actionId: action.actionId});
-    refreshStepList();
-  };
+  const {deleteMember} = useMemberAction({stepList, refreshStepList});
 
   return (
     <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)}>
