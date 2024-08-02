@@ -51,8 +51,12 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     return getFilledStringList(inputs.map(({value}) => value));
   };
 
-  const isLastInputFilled = (index: number, value: string) => {
-    const lastInputIndex = inputs[inputs.length - 1].index;
+  const deleteEmptyInputElementOnBlur = () => {
+    // 0, 1번 input이 값이 있는 상태에서 두 input의 값을 모두 x버튼으로 제거해도 input이 2개 남아있는 문제를 위해 조건문을 추가했습니다.
+    if (getFilledInputList().length === 0 && inputList.length > 1) {
+      setInputList([{index: 0, value: ''}]);
+      return;
+    }
 
     return value !== '' && index === lastInputIndex;
   };
