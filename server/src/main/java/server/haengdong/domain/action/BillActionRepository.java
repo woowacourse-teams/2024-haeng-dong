@@ -11,4 +11,6 @@ public interface BillActionRepository extends JpaRepository<BillAction, Long> {
 
     @EntityGraph(attributePaths = {"action"})
     List<BillAction> findByAction_Event(Event event);
+
+    void deleteByActionId(Long actionId);
 }

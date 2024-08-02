@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.BillActionAppRequest;
 import server.haengdong.domain.action.Action;
-import server.haengdong.domain.action.BillAction;
-import server.haengdong.domain.event.Event;
 import server.haengdong.domain.action.ActionRepository;
+import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
+import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
@@ -40,5 +40,15 @@ public class BillActionService {
         return actionRepository.findLastByEvent(event)
                 .map(Action::next)
                 .orElse(Action.createFirst(event));
+    }
+
+    @Transactional
+    public void deleteBillAction(String token, Long actionId) {
+        boolean isEventExists = eventRepository.existsByToken(token);
+        if (!isEventExists) {
+            throw new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT);
+        }
+
+        billActionRepository.deleteByActionId(actionId);
     }
 }

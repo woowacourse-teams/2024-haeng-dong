@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.request.BillActionAppRequest;
+import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.BillAction;
-import server.haengdong.domain.event.Event;
 import server.haengdong.domain.action.BillActionRepository;
+import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
 
@@ -60,6 +61,28 @@ class BillActionServiceTest {
         );
 
         assertThatThrownBy(() -> billActionService.saveAllBillAction("token", requests))
+                .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("지출 내역을 삭제한다.")
+    @Test
+    void deleteBillAction() {
+        String token = "!!!!TODARI!!";
+        Event event = new Event("감자", token);
+        Event savedEvent = eventRepository.save(event);
+        BillAction billAction = new BillAction(new Action(savedEvent, 1L), "커피", 50_900L);
+        BillAction savedBillAction = billActionRepository.save(billAction);
+        Long actionId = savedBillAction.getAction().getId();
+
+        billActionService.deleteBillAction(token, actionId);
+
+        assertThat(billActionRepository.findById(savedBillAction.getId())).isEmpty();
+    }
+
+    @DisplayName("지출 내역 삭제 시 행사가 존재하지 않으면 예외가 발생한다.")
+    @Test
+    void deleteBillAction1() {
+        assertThatThrownBy(() -> billActionService.deleteBillAction("소하망쵸", 1L))
                 .isInstanceOf(HaengdongException.class);
     }
 }
