@@ -58,4 +58,10 @@ public class MemberActionService {
         return eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
     }
+
+    public void deleteMember(String token, String memberName) {
+        eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+        memberActionRepository.deleteAllByMemberName(memberName);
+    }
 }

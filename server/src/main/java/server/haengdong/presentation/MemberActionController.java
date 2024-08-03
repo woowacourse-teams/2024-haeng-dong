@@ -3,6 +3,7 @@ package server.haengdong.presentation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,5 +36,13 @@ public class MemberActionController {
 
         return ResponseEntity.ok()
                 .body(CurrentMembersResponse.of(currentMembers));
+    }
+
+    @DeleteMapping("/api/events/{eventId}/members/{memberName}")
+    public ResponseEntity<Void> deleteMember(@PathVariable("eventId") String token,
+                                             @PathVariable("memberName") String memberName) {
+        memberActionService.deleteMember(token, memberName);
+
+        return ResponseEntity.ok().build();
     }
 }

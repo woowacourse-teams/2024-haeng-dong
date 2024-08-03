@@ -3,6 +3,7 @@ package server.haengdong.presentation;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -63,5 +64,16 @@ class MemberActionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.members[0].name").value(equalTo("소하")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.members[1].name").value(equalTo("토다리")));
+    }
+
+    @DisplayName("행사의 전체 참여자 중에서 특정 참여자의 맴버 액션을 전부 삭제한다.")
+    @Test
+    void deleteMember() throws Exception {
+        Long eventId = 1L;
+        String memberName = "행동대장";
+
+        mockMvc.perform(delete("/api/events/{eventId}/members/{memberName}", eventId, memberName))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }
