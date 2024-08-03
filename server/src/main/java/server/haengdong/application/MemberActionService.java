@@ -68,6 +68,7 @@ public class MemberActionService {
         MemberAction memberAction = memberActionRepository.findByAction(action)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_MEMBER_ACTION));
 
-        memberActionRepository.deleteAllByMemberAction(memberAction.getMemberName(), memberAction.getSequence());
+        memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(),
+                memberAction.getSequence());
     }
 }

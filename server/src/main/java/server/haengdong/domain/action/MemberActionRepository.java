@@ -23,5 +23,5 @@ public interface MemberActionRepository extends JpaRepository<MemberAction, Long
             from MemberAction m
             where m.memberName = :memberName and m.action.sequence >= :sequence
             """)
-    void deleteAllByMemberAction(String memberName, Long sequence);
+    void deleteAllByMemberNameAndMinSequence(String memberName, Long sequence);
 }

@@ -99,15 +99,14 @@ class MemberActionServiceTest {
         String token = "TOKEN";
         Event event = new Event("행동대장 회식", token);
         eventRepository.save(event);
-        Action action = Action.createFirst(event);
-        MemberAction memberAction1 = createMemberAction(action, "토다리", IN, 1L);
-        Action targetAction = action.next();
+        MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        Action targetAction = new Action(event, 2L);
         MemberAction memberAction2 = createMemberAction(targetAction, "토다리", OUT, 2L);
-        MemberAction memberAction3 = createMemberAction(action.next(), "쿠키", IN, 3L);
-        MemberAction memberAction4 = createMemberAction(action.next(), "웨디", IN, 4L);
-        MemberAction memberAction5 = createMemberAction(action.next(), "토다리", IN, 5L);
-        MemberAction memberAction6 = createMemberAction(action.next(), "토다리", OUT, 6L);
-        MemberAction memberAction7 = createMemberAction(action.next(), "쿠키", OUT, 7L);
+        MemberAction memberAction3 = createMemberAction(new Action(event, 3L), "쿠키", IN, 3L);
+        MemberAction memberAction4 = createMemberAction(new Action(event, 4L), "웨디", IN, 4L);
+        MemberAction memberAction5 = createMemberAction(new Action(event, 5L), "토다리", IN, 5L);
+        MemberAction memberAction6 = createMemberAction(new Action(event, 6L), "토다리", OUT, 6L);
+        MemberAction memberAction7 = createMemberAction(new Action(event, 7L), "쿠키", OUT, 7L);
         memberActionRepository.saveAll(
                 List.of(memberAction1,
                         memberAction2,
@@ -131,10 +130,12 @@ class MemberActionServiceTest {
                 );
     }
 
-    private static MemberAction createMemberAction(Action action,
-                                                   String memberName,
-                                                   MemberActionStatus memberActionStatus,
-                                                   long memberGroupId) {
+    private MemberAction createMemberAction(
+            Action action,
+            String memberName,
+            MemberActionStatus memberActionStatus,
+            long memberGroupId
+    ) {
         return new MemberAction(action, memberName, memberActionStatus, memberGroupId);
     }
 }
