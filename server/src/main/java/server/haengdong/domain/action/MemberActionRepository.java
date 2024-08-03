@@ -18,7 +18,7 @@ public interface MemberActionRepository extends JpaRepository<MemberAction, Long
     @Query("""
             delete
             from MemberAction m
-            where m.memberName = :memberName
+            where m.memberName = :memberName and m.action.event = :event
             """)
-    void deleteAllByMemberName(String memberName);
+    void deleteAllByMemberName(Event event, String memberName);
 }

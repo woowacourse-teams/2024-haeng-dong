@@ -108,16 +108,24 @@ class MemberActionServiceTest {
         memberActionRepository.saveAll(
                 List.of(memberAction1, memberAction2, memberAction3, memberAction4, memberAction5, memberAction6));
 
+        String token2 = "TOKEN2";
+        Event event2 = new Event("옆동네 회식", token2);
+        eventRepository.save(event2);
+        Action action2 = Action.createFirst(event2);
+        MemberAction anotherMemberAction = new MemberAction(action2, "참여자", IN, 1L);
+        memberActionRepository.save(anotherMemberAction);
+
         memberActionService.deleteMember(token, "참여자");
 
         List<MemberAction> memberActions = memberActionRepository.findAll();
-        assertThat(memberActions).hasSize(4)
+        assertThat(memberActions).hasSize(5)
                 .extracting("memberName", "status")
                 .containsExactly(
                         tuple("토다리", IN),
                         tuple("쿠키", IN),
                         tuple("소하", IN),
-                        tuple("웨디", IN)
+                        tuple("웨디", IN),
+                        tuple("참여자", IN)
                 );
     }
 }

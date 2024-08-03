@@ -60,8 +60,9 @@ public class MemberActionService {
     }
 
     public void deleteMember(String token, String memberName) {
-        eventRepository.findByToken(token)
+        Event event = eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
-        memberActionRepository.deleteAllByMemberName(memberName);
+
+        memberActionRepository.deleteAllByMemberName(event, memberName);
     }
 }
