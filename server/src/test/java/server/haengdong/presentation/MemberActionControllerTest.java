@@ -70,9 +70,9 @@ class MemberActionControllerTest {
     @Test
     void deleteMemberAction() throws Exception {
         String token = "TOKEN";
-        Long memberActionId = 2L;
+        Long actionId = 2L;
 
-        mockMvc.perform(delete(String.format("/api/events/%s/actions/%d/members", token, memberActionId)))
+        mockMvc.perform(delete("/api/events/{token}/actions/{actionId}/members", token, actionId))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
