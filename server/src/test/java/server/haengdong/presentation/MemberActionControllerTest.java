@@ -69,7 +69,7 @@ class MemberActionControllerTest {
     @DisplayName("행사의 전체 참여자 중에서 특정 참여자의 맴버 액션을 전부 삭제한다.")
     @Test
     void deleteMember() throws Exception {
-        Long eventId = 1L;
+        String eventId = "TOKEN";
         String memberName = "행동대장";
 
         mockMvc.perform(delete("/api/events/{eventId}/members/{memberName}", eventId, memberName))
