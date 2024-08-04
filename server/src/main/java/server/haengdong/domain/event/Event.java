@@ -52,7 +52,7 @@ public class Event {
         return name.contains(SPACES);
     }
 
-    public boolean isNotValidToken(String token) {
+    public boolean isTokenMismatch(String token) {
         return !this.token.equals(token);
     }
 }
