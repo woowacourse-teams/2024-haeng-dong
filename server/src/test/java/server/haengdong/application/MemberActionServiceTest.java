@@ -99,11 +99,11 @@ class MemberActionServiceTest {
         Event event = new Event("행동대장 회식", token);
         eventRepository.save(event);
         MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "참여자", IN, 1L);
-        MemberAction memberAction2 = new MemberAction(new Action(event, 2L).next(), "토다리", IN, 1L);
-        MemberAction memberAction3 = new MemberAction(new Action(event, 3L).next(), "쿠키", IN, 1L);
-        MemberAction memberAction4 = new MemberAction(new Action(event, 4L).next(), "소하", IN, 1L);
-        MemberAction memberAction5 = new MemberAction(new Action(event, 5L).next(), "웨디", IN, 1L);
-        MemberAction memberAction6 = new MemberAction(new Action(event, 6L).next(), "참여자", OUT, 1L);
+        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "토다리", IN, 1L);
+        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "쿠키", IN, 1L);
+        MemberAction memberAction4 = new MemberAction(new Action(event, 4L), "소하", IN, 1L);
+        MemberAction memberAction5 = new MemberAction(new Action(event, 5L), "웨디", IN, 1L);
+        MemberAction memberAction6 = new MemberAction(new Action(event, 6L), "참여자", OUT, 1L);
         memberActionRepository.saveAll(
                 List.of(memberAction1, memberAction2, memberAction3, memberAction4, memberAction5, memberAction6));
 
