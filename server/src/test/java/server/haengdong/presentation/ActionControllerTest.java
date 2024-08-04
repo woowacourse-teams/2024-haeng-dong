@@ -36,7 +36,7 @@ class ActionControllerTest {
 
         given(actionService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);
 
-        mockMvc.perform(get("/api/events/{token}/actions/reports", "token")
+        mockMvc.perform(get("/api/events/{eventId}/actions/reports", "망쵸토큰")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())

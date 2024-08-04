@@ -46,9 +46,9 @@ class BillActionControllerTest {
                 )
         );
         String requestBody = objectMapper.writeValueAsString(request);
-        String token = "TOKEN";
+        String eventId = "쿠키토큰";
 
-        mockMvc.perform(post("/api/events/{token}/bill-actions", token)
+        mockMvc.perform(post("/api/events/{eventId}/bill-actions", eventId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
@@ -65,9 +65,9 @@ class BillActionControllerTest {
                 )
         );
         String requestBody = objectMapper.writeValueAsString(request);
-        String token = "TOKEN";
+        String eventId = "소하토큰";
 
-        mockMvc.perform(post("/api/events/{token}/bill-actions", token)
+        mockMvc.perform(post("/api/events/{eventId}/bill-actions", eventId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
@@ -80,9 +80,9 @@ class BillActionControllerTest {
         BillActionUpdateRequest request = new BillActionUpdateRequest("뽕족", 10_000L);
 
         String requestBody = objectMapper.writeValueAsString(request);
-        String token = "TOKEN";
+        String eventId = "웨디토큰";
 
-        mockMvc.perform(put("/api/events/{token}/bill-actions/{actionId}", token, 1L)
+        mockMvc.perform(put("/api/events/{eventId}/bill-actions/{actionId}", eventId, 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
@@ -92,9 +92,9 @@ class BillActionControllerTest {
     @DisplayName("지출 내역을 삭제한다.")
     @Test
     void deleteBillAction() throws Exception {
-        String token = "토다리토큰";
+        String eventId = "토다리토큰";
 
-        mockMvc.perform(delete("/api/events/{token}/bill-actions/{actionId}", token, 1))
+        mockMvc.perform(delete("/api/events/{eventId}/bill-actions/{actionId}", eventId, 1))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -102,11 +102,11 @@ class BillActionControllerTest {
     @DisplayName("존재하지 않는 행사에 대한 지출 내역을 삭제할 수 없다.")
     @Test
     void deleteBillAction1() throws Exception {
-        String token = "TOKEN19348";
+        String eventId = "이상해토큰";
         doThrow(new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT))
                 .when(billActionService).deleteBillAction(any(String.class), any(Long.class));
 
-        mockMvc.perform(delete("/api/events/{token}/bill-actions/{actionId}", token, 1))
+        mockMvc.perform(delete("/api/events/{eventId}/bill-actions/{actionId}", eventId, 1))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }

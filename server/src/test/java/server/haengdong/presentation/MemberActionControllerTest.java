@@ -43,7 +43,7 @@ class MemberActionControllerTest {
 
         String requestBody = objectMapper.writeValueAsString(memberActionsSaveRequest);
 
-        mockMvc.perform(post("/api/events/TOKEN/member-actions")
+        mockMvc.perform(post("/api/events/{eventId}/member-actions", "망쵸토큰")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
@@ -58,7 +58,7 @@ class MemberActionControllerTest {
 
         given(memberActionService.getCurrentMembers(any())).willReturn(currentMemberAppResponses);
 
-        mockMvc.perform(get("/api/events/{token}/members/current", "token")
+        mockMvc.perform(get("/api/events/{eventId}/members/current", "망쵸토큰")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -69,10 +69,10 @@ class MemberActionControllerTest {
     @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후에 기록된 해당 참여자의 모든 멤버 액션을 삭제한다.")
     @Test
     void deleteMemberAction() throws Exception {
-        String token = "TOKEN";
+        String eventId = "망쵸토큰";
         Long actionId = 2L;
 
-        mockMvc.perform(delete("/api/events/{token}/member-actions/{actionId}", token, actionId))
+        mockMvc.perform(delete("/api/events/{eventId}/member-actions/{actionId}", eventId, actionId))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -80,7 +80,7 @@ class MemberActionControllerTest {
     @DisplayName("행사의 전체 참여자 중에서 특정 참여자의 맴버 액션을 전부 삭제한다.")
     @Test
     void deleteMember() throws Exception {
-        String eventId = "TOKEN";
+        String eventId = "망쵸토큰";
         String memberName = "행동대장";
 
         mockMvc.perform(delete("/api/events/{eventId}/members/{memberName}", eventId, memberName))

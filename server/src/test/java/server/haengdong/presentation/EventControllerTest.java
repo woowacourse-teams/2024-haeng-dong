@@ -39,8 +39,8 @@ class EventControllerTest {
     void saveEvent() throws Exception {
         EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
         String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
-        String token = "TOKEN";
-        EventAppResponse eventAppResponse = new EventAppResponse(token);
+        String eventId = "망쵸토큰";
+        EventAppResponse eventAppResponse = new EventAppResponse(eventId);
         given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
 
         mockMvc.perform(post("/api/events")
@@ -48,17 +48,17 @@ class EventControllerTest {
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.eventId").value("TOKEN"));
+                .andExpect(jsonPath("$.eventId").value("망쵸토큰"));
     }
 
     @DisplayName("토큰으로 행사를 조회한다.")
     @Test
     void findEventTest() throws Exception {
-        String token = "TOKEN";
+        String eventId = "망쵸토큰";
         EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식");
-        given(eventService.findEvent(token)).willReturn(eventDetailAppResponse);
+        given(eventService.findEvent(eventId)).willReturn(eventDetailAppResponse);
 
-        mockMvc.perform(get("/api/events/" + token))
+        mockMvc.perform(get("/api/events/{eventId}", eventId))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.eventName").value("행동대장 회식"));
