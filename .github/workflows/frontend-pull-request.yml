@@ -9,8 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  log
-    
+    runs-on: ubuntu-latest    
     defaults:
       run:
         shell: bash
