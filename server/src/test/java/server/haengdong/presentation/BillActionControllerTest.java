@@ -48,7 +48,7 @@ class BillActionControllerTest {
         String requestBody = objectMapper.writeValueAsString(request);
         String token = "TOKEN";
 
-        mockMvc.perform(post("/api/events/{token}/actions/bills", token)
+        mockMvc.perform(post("/api/events/{token}/bill-actions", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
@@ -67,7 +67,7 @@ class BillActionControllerTest {
         String requestBody = objectMapper.writeValueAsString(request);
         String token = "TOKEN";
 
-        mockMvc.perform(post("/api/events/{token}/actions/bills", token)
+        mockMvc.perform(post("/api/events/{token}/bill-actions", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
@@ -82,7 +82,7 @@ class BillActionControllerTest {
         String requestBody = objectMapper.writeValueAsString(request);
         String token = "TOKEN";
 
-        mockMvc.perform(put("/api/events/{token}/actions/bills/{actionId}", token, 1L)
+        mockMvc.perform(put("/api/events/{token}/bill-actions/{actionId}", token, 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
@@ -94,7 +94,7 @@ class BillActionControllerTest {
     void deleteBillAction() throws Exception {
         String token = "토다리토큰";
 
-        mockMvc.perform(delete("/api/events/{token}/actions/{actionId}/bills", token, 1))
+        mockMvc.perform(delete("/api/events/{token}/bill-actions/{actionId}", token, 1))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -106,7 +106,7 @@ class BillActionControllerTest {
         doThrow(new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT))
                 .when(billActionService).deleteBillAction(any(String.class), any(Long.class));
 
-        mockMvc.perform(delete("/api/events/{token}/actions/{actionId}/bills", token, 1))
+        mockMvc.perform(delete("/api/events/{token}/bill-actions/{actionId}", token, 1))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }

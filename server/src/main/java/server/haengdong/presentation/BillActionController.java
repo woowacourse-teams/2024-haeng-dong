@@ -19,7 +19,7 @@ public class BillActionController {
 
     private final BillActionService billActionService;
 
-    @PostMapping("/api/events/{eventId}/actions/bills")
+    @PostMapping("/api/events/{eventId}/bill-actions")
     public ResponseEntity<Void> saveAllBillAction(
             @PathVariable("eventId") String token,
             @RequestBody @Valid BillActionsSaveRequest request
@@ -30,7 +30,7 @@ public class BillActionController {
                 .build();
     }
 
-    @PutMapping("/api/events/{eventId}/actions/bills/{actionId}")
+    @PutMapping("/api/events/{eventId}/bill-actions/{actionId}")
     public ResponseEntity<Void> updateBillAction(
             @PathVariable("eventId") String token,
             @PathVariable("actionId") Long actionId,
@@ -42,7 +42,7 @@ public class BillActionController {
                 .build();
     }
 
-    @DeleteMapping("/api/events/{eventId}/actions/{actionId}/bills")
+    @DeleteMapping("/api/events/{eventId}/bill-actions/{actionId}")
     public ResponseEntity<Void> deleteBillAction(
             @PathVariable("eventId") String token,
             @PathVariable("actionId") Long actionId

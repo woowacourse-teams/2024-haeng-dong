@@ -43,7 +43,7 @@ class MemberActionControllerTest {
 
         String requestBody = objectMapper.writeValueAsString(memberActionsSaveRequest);
 
-        mockMvc.perform(post("/api/events/TOKEN/actions/members")
+        mockMvc.perform(post("/api/events/TOKEN/member-actions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
@@ -72,7 +72,7 @@ class MemberActionControllerTest {
         String token = "TOKEN";
         Long actionId = 2L;
 
-        mockMvc.perform(delete("/api/events/{token}/actions/{actionId}/members", token, actionId))
+        mockMvc.perform(delete("/api/events/{token}/member-actions/{actionId}", token, actionId))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
