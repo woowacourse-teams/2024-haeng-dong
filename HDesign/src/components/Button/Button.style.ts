@@ -1,10 +1,10 @@
 import {css} from '@emotion/react';
 
+import {setDarker, setEmphasize, setLighter} from '@utils/colors';
+
 import {Theme} from '../../theme/theme.type';
 
 import {ButtonStyleProps, ButtonSize, ButtonVariants} from './Button.type';
-
-import {setDarker, setEmphasize, setLighter} from '@utils/colors';
 
 export const buttonStyle = (props: Required<ButtonStyleProps>) => {
   return [

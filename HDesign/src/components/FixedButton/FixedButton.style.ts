@@ -4,6 +4,7 @@ import {ButtonVariants} from '@components/Button/Button.type';
 import {FixedButtonStyleProps} from '@components/FixedButton/FixedButton.type';
 
 import {Theme} from '@theme/theme.type';
+
 import {setDarker, setLighter} from '@utils/colors';
 
 export const fixedButtonContainerStyle = (theme: Theme) =>
