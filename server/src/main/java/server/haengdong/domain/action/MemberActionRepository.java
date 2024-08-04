@@ -20,5 +20,5 @@ public interface MemberActionRepository extends JpaRepository<MemberAction, Long
             from MemberAction m
             where m.memberName = :memberName and m.action.event = :event
             """)
-    void deleteAllByMemberName(Event event, String memberName);
+    void deleteAllByEventAndMemberName(Event event, String memberName);
 }
