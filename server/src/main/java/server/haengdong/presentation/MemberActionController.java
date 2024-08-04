@@ -39,8 +39,10 @@ public class MemberActionController {
     }
 
     @DeleteMapping("/api/events/{eventId}/members/{memberName}")
-    public ResponseEntity<Void> deleteMember(@PathVariable("eventId") String token,
-                                             @PathVariable("memberName") String memberName) {
+    public ResponseEntity<Void> deleteMember(
+            @PathVariable("eventId") String token,
+            @PathVariable("memberName") String memberName
+    ) {
         memberActionService.deleteMember(token, memberName);
 
         return ResponseEntity.ok().build();
