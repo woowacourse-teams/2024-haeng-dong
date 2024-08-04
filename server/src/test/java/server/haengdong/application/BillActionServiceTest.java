@@ -123,4 +123,26 @@ class BillActionServiceTest {
         assertThatThrownBy(() -> billActionService.updateBillAction(token2, actionId, request))
                 .isInstanceOf(HaengdongException.class);
     }
+
+    @DisplayName("지출 내역을 삭제한다.")
+    @Test
+    void deleteBillAction() {
+        String token = "토다리 토큰";
+        Event event = new Event("감자", token);
+        eventRepository.save(event);
+        BillAction billAction = new BillAction(new Action(event, 1L), "커피", 50_900L);
+        billActionRepository.save(billAction);
+        Long actionId = billAction.getAction().getId();
+
+        billActionService.deleteBillAction(token, actionId);
+
+        assertThat(billActionRepository.findById(billAction.getId())).isEmpty();
+    }
+
+    @DisplayName("지출 내역 삭제 시 행사가 존재하지 않으면 예외가 발생한다.")
+    @Test
+    void deleteBillAction1() {
+        assertThatThrownBy(() -> billActionService.deleteBillAction("소하망쵸", 1L))
+                .isInstanceOf(HaengdongException.class);
+    }
 }

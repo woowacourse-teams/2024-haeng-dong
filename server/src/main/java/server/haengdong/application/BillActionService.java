@@ -64,4 +64,12 @@ public class BillActionService {
         return eventRepository.findByToken(eventToken)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
     }
+
+    @Transactional
+    public void deleteBillAction(String token, Long actionId) {
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+
+        billActionRepository.deleteByAction_EventAndActionId(event, actionId);
+    }
 }
