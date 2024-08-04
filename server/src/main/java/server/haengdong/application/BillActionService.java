@@ -54,7 +54,7 @@ public class BillActionService {
     }
 
     private void validateToken(String token, BillAction billAction) {
-        Event event = billAction.getAction().getEvent();
+        Event event = billAction.getEvent();
         if (event.isTokenMismatch(token)) {
             throw new HaengdongException(HaengdongErrorCode.NOT_FOUND_BILL_ACTION);
         }
