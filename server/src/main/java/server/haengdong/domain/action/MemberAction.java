@@ -39,8 +39,8 @@ public class MemberAction implements Comparable<MemberAction> {
         this.memberGroupId = memberGroupId;
     }
 
-    public boolean isSameName(String name) {
-        return memberName.equals(name);
+    public void updateMemberName(String memberName) {
+        this.memberName = memberName;
     }
 
     public boolean isIn() {

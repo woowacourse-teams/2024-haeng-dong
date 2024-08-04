@@ -2,8 +2,11 @@ package server.haengdong.application;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.BDDMockito.given;
+import static server.haengdong.domain.action.MemberActionStatus.IN;
+import static server.haengdong.domain.action.MemberActionStatus.OUT;
 
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.request.MemberUpdateAppRequest;
 import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
@@ -22,10 +26,10 @@ import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
-import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
+import server.haengdong.exception.HaengdongException;
 
 @SpringBootTest
 class EventServiceTest {
@@ -84,9 +88,9 @@ class EventServiceTest {
     void findActionsTest() {
         Event event = new Event("행동대장 회식", "웨디_토큰");
         Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
+        MemberAction memberAction = new MemberAction(action, "토다리", IN, 1L);
         Action action1 = new Action(event, 2L);
-        MemberAction memberAction1 = new MemberAction(action1, "쿠키", MemberActionStatus.IN, 1L);
+        MemberAction memberAction1 = new MemberAction(action1, "쿠키", IN, 1L);
         Action action2 = new Action(event, 3L);
         BillAction billAction = new BillAction(action2, "뽕나무쟁이족발", 30000L);
         eventRepository.save(event);
@@ -106,5 +110,53 @@ class EventServiceTest {
                         tuple(2L, "쿠키", null, 2L, "IN"),
                         tuple(3L, "뽕나무쟁이족발", 30000L, 3L, "BILL")
                 );
+    }
+
+    @DisplayName("행사 참여 인원의 이름을 변경한다.")
+    @Test
+    void updateMember() {
+        String token = "행동대장 회식";
+        Event event = new Event("행동대장 회식", token);
+        MemberAction memberAction0 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        MemberAction memberAction1 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
+        MemberAction memberAction2 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        MemberAction memberAction3 = new MemberAction(new Action(event, 4L), "쿠키", OUT, 3L);
+        MemberAction memberAction4 = new MemberAction(new Action(event, 5L), "쿠키", IN, 4L);
+        MemberAction memberAction5 = new MemberAction(new Action(event, 6L), "쿠키", OUT, 5L);
+        List<MemberAction> memberActions = List.of(
+                memberAction0, memberAction1, memberAction2, memberAction3, memberAction4, memberAction5
+        );
+        eventRepository.save(event);
+        memberActionRepository.saveAll(memberActions);
+
+        eventService.updateMember(token, "쿠키", new MemberUpdateAppRequest("쿡쿡"));
+
+        List<MemberAction> foundMemberActions = memberActionRepository.findAllByEvent(event);
+        assertThat(foundMemberActions)
+                .extracting(MemberAction::getId, MemberAction::getMemberName)
+                .contains(
+                        tuple(memberAction0.getId(), "토다리"),
+                        tuple(memberAction1.getId(), "쿡쿡"),
+                        tuple(memberAction2.getId(), "웨디"),
+                        tuple(memberAction3.getId(), "쿡쿡"),
+                        tuple(memberAction4.getId(), "쿡쿡"),
+                        tuple(memberAction5.getId(), "쿡쿡")
+                );
+    }
+
+    @DisplayName("참여 인원 이름을 이미 행사에 참여 중인 인원과 동일한 이름으로 변경할 수 없다.")
+    @Test
+    void updateMember1() {
+        String token = "행동대장 회식";
+        Event event = new Event("행동대장 회식", token);
+        MemberAction memberAction0 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        MemberAction memberAction1 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
+        MemberAction memberAction2 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        List<MemberAction> memberActions = List.of(memberAction0, memberAction1, memberAction2);
+        eventRepository.save(event);
+        memberActionRepository.saveAll(memberActions);
+
+        assertThatThrownBy(() -> eventService.updateMember(token, "쿠키", new MemberUpdateAppRequest("토다리")))
+                .isInstanceOf(HaengdongException.class);
     }
 }
