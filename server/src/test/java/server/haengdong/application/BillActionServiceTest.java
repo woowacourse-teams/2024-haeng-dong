@@ -5,12 +5,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.request.BillActionAppRequest;
 import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.event.Event;
@@ -24,10 +26,20 @@ class BillActionServiceTest {
     private BillActionService billActionService;
 
     @Autowired
+    private ActionRepository actionRepository;
+
+    @Autowired
     private EventRepository eventRepository;
 
     @Autowired
     private BillActionRepository billActionRepository;
+
+    @AfterEach
+    void tearDown() {
+        billActionRepository.deleteAllInBatch();
+        actionRepository.deleteAllInBatch();
+        eventRepository.deleteAllInBatch();
+    }
 
     @DisplayName("지출 내역을 생성한다.")
     @Test

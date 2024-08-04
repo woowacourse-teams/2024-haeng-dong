@@ -58,4 +58,17 @@ public class MemberActionService {
         return eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
     }
+
+    @Transactional
+    public void deleteMemberAction(String token, Long actionId) {
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+        Action action = actionRepository.findByIdAndEvent(actionId, event)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_ACTION));
+        MemberAction memberAction = memberActionRepository.findByAction(action)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_MEMBER_ACTION));
+
+        memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(),
+                memberAction.getSequence());
+    }
 }

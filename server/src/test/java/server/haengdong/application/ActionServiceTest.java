@@ -7,12 +7,14 @@ import static server.haengdong.domain.action.MemberActionStatus.IN;
 import static server.haengdong.domain.action.MemberActionStatus.OUT;
 
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
@@ -32,10 +34,21 @@ class ActionServiceTest {
     private EventRepository eventRepository;
 
     @Autowired
+    private ActionRepository actionRepository;
+
+    @Autowired
     private BillActionRepository billActionRepository;
 
     @Autowired
     private MemberActionRepository memberActionRepository;
+
+    @AfterEach
+    void tearDown() {
+        billActionRepository.deleteAllInBatch();
+        memberActionRepository.deleteAllInBatch();
+        actionRepository.deleteAllInBatch();
+        eventRepository.deleteAllInBatch();
+    }
 
     @DisplayName("참여자별 정산 현황을 조회한다.")
     @Test
