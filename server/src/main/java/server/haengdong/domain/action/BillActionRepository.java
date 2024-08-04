@@ -2,7 +2,6 @@ package server.haengdong.domain.action;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,5 +15,5 @@ public interface BillActionRepository extends JpaRepository<BillAction, Long> {
 
     void deleteByAction_EventAndActionId(Event event, Long actionId);
 
-    Optional<BillAction> findByAction(Action action);
+    Optional<BillAction> findByAction_Id(Long actionId);
 }
