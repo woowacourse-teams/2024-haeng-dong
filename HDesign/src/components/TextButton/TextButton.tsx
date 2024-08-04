@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {forwardRef} from 'react';
 
-import {useTheme} from '@/theme/HDesignProvider';
+import {useTheme} from '@theme/HDesignProvider';
 
 import Text from '../Text/Text';
 

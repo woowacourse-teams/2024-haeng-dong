@@ -8,7 +8,7 @@ import {ElementProps} from './Element.type';
 import {useGroupInputContext} from './GroupInputContext';
 
 const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProps>(function Element(
-  {elementKey, value: propsValue, onChange, onBlur, onFocus, isError, ...htmlProps}: ElementProps,
+  {elementKey, value: propsValue, onChange, onBlur, onFocus, isError, autoFocus, ...htmlProps}: ElementProps,
 
   ref,
 ) {
@@ -54,6 +54,7 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
       onChange={handleChange}
       onBlur={handleBlur}
       onFocus={handleFocus}
+      autoFocus={autoFocus}
       {...htmlProps}
     />
   );

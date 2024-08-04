@@ -3,7 +3,7 @@
 import {forwardRef, useImperativeHandle, useRef} from 'react';
 
 import Text from '@components/Text/Text';
-import {useTheme} from '@/theme/HDesignProvider';
+import {useTheme} from '@theme/HDesignProvider';
 
 import Input from '../Input/Input';
 import Flex from '../Flex/Flex';
@@ -17,6 +17,7 @@ const LabelInput: React.FC<LabelInputProps> = forwardRef<HTMLInputElement, Label
   ref,
 ) {
   useImperativeHandle(ref, () => inputRef.current!);
+
   const {theme} = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
   const {hasFocus} = useLabelInput({inputRef});

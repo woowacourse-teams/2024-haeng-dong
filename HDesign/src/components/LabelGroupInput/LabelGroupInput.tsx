@@ -1,9 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
 import Text from '@components/Text/Text';
-import {useTheme} from '@/theme/HDesignProvider';
+import {useTheme} from '@theme/HDesignProvider';
+<<<<<<< Updated upstream
 
 import Flex from '../Flex/Flex';
+=======
+>>>>>>> Stashed changes
 
 import {LabelGroupInputProps} from './LabelGroupInput.type';
 import {errorTextStyle, labelTextStyle} from './LabelGroupInput.style';

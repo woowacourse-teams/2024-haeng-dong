@@ -14,7 +14,6 @@ export interface BottomSheetCustomProps {
   isOpened?: boolean;
   onChangeOpen?: () => void;
   onChangeClose?: () => void;
-  fixedButtonProps?: FixedButtonProps;
 }
 
 export type BottomSheetOptionProps = BottomSheetStyleProps & BottomSheetCustomProps;

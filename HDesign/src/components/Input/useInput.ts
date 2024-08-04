@@ -9,8 +9,13 @@ interface UseInputProps<T> {
   autoFocus?: boolean;
 }
 
-export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef, autoFocus}: UseInputProps<T>) => {
+<<<<<<< Updated upstream
+export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef}: UseInputProps<T>) => {
   const [value, setValue] = useState<T>(propsValue);
+=======
+export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef, autoFocus}: UseInputProps<T>) => {
+  const [value, setValue] = useState(propsValue as string);
+>>>>>>> Stashed changes
   const [hasFocus, setHasFocus] = useState(inputRef.current === document.activeElement);
 
   useEffect(() => {
@@ -18,7 +23,11 @@ export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef, au
   }, []);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     setValue(propsValue);
+=======
+    setValue(propsValue as string);
+>>>>>>> Stashed changes
   }, [value]);
 
   const handleClickDelete = (event: React.MouseEvent) => {

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {useTheme} from '@/theme/HDesignProvider';
+import {useTheme} from '@theme/HDesignProvider';
 
 import Text from '../Text/Text';
 import BillItem from '../BillItem/BillItem';

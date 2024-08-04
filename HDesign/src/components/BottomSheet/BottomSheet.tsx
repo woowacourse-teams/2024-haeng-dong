@@ -9,12 +9,7 @@ import {useTheme} from '@theme/HDesignProvider';
 import {useBottomSheet} from './useBottomSheet';
 import {bottomSheetContainerStyle, dimmedLayerStyle, indicatorStyle} from './BottomSheet.style';
 
-const BottomSheet: React.FC<BottomSheetProps> = ({
-  isOpened = false,
-  children,
-  fixedButtonProps,
-  ...props
-}: BottomSheetProps) => {
+const BottomSheet: React.FC<BottomSheetProps> = ({isOpened = false, children, ...props}: BottomSheetProps) => {
   const {theme} = useTheme();
   const {opened, handleClose} = useBottomSheet({isOpened, ...props});
 
@@ -27,7 +22,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
           <div css={bottomSheetContainerStyle(theme)}>
             <div css={indicatorStyle(theme)} />
             {children}
-            {fixedButtonProps && <FixedButton {...fixedButtonProps} />}
           </div>
         </>
       )}
