@@ -9,7 +9,8 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
+    
     defaults:
       run:
         shell: bash
@@ -17,26 +18,17 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2  
 
     - name: Set up Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v2 
       with:
         node-version: '20.15.1'
 
-    - name: Cache dependencies
-      id: cache
-      uses: actions/cache@v3
-      with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-npm-
-
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        npm install
+      working-directory: ./client
+      run: npm install  
 
     - name: Run lint
-      run: npm run lint
+      working-directory: ./client
+      run: npm run lint  
