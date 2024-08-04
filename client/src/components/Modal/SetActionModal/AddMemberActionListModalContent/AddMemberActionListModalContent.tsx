@@ -7,12 +7,12 @@ import useDynamicInput from '@hooks/useDynamicInput';
 import style from './AddMemberActionListModalContent.style';
 import {MemberType} from 'types/serviceType';
 
-interface UpdateParticipantsProps {
+interface UpdateMembersProps {
   inOutAction: MemberType;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddMemberActionListModalContent = ({inOutAction, setOpenBottomSheet}: UpdateParticipantsProps) => {
+const AddMemberActionListModalContent = ({inOutAction, setOpenBottomSheet}: UpdateMembersProps) => {
   const {
     inputList,
     inputRefList,
@@ -23,9 +23,10 @@ const AddMemberActionListModalContent = ({inOutAction, setOpenBottomSheet}: Upda
     canSubmit,
     focusNextInputOnEnter,
   } = useDynamicInput(validateMemberName);
+
   const {updateMemberList} = useStepList();
 
-  const handleUpdateParticipantsSubmit = () => {
+  const handleUpdateMemberListSubmit = () => {
     updateMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: inOutAction});
     setOpenBottomSheet(false);
   };
@@ -54,7 +55,7 @@ const AddMemberActionListModalContent = ({inOutAction, setOpenBottomSheet}: Upda
         disabled={!canSubmit}
         variants={'primary'}
         children={`${inputList.length - 1}명 ${inOutAction === 'OUT' ? '탈주' : '늦참'}`}
-        onClick={handleUpdateParticipantsSubmit}
+        onClick={handleUpdateMemberListSubmit}
       />
     </div>
   );

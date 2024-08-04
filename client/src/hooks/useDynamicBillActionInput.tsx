@@ -35,6 +35,7 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
 
     const {title, price} = targetInputPair;
 
+    // TODO: (@weadie) 가독성이 안좋다는 리뷰. 함수로 분리
     if (isLastInputPairFilled({index, field, value})) {
       setErrorMessage('');
       setInputPairList(prevInputPairList => {
@@ -94,11 +95,7 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
   };
 
   const handleCanSubmit = () => {
-    if (inputPairList.length > 0 && getFilledInputPairList().length > 0) {
-      setCanSubmit(true);
-    } else {
-      setCanSubmit(false);
-    }
+    setCanSubmit(inputPairList.length > 0 && getFilledInputPairList().length > 0);
   };
 
   const focusNextInputOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, index: number, field: BillInputType) => {

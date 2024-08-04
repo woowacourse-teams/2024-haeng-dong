@@ -27,6 +27,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     const {value} = event.target;
     const {isValid: isValidInput, errorMessage: validationResultMessage} = validateFunc(value);
 
+    // TODO: (@weadie) 가독성이 안좋다는 리뷰. 함수 분리필요
     if (isLastInputFilled(index, value)) {
       // 마지막 인풋이 한 자라도 채워진다면 새로운 인풋을 생성해 간편한 다음 입력을 유도합니다.
 
@@ -71,11 +72,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
 
   // 현재까지 입력된 값들로 submit을 할 수 있는지 여부를 핸들합니다.
   const handleCanSubmit = () => {
-    if (inputList.length > 0 && getFilledInputList().length > 0) {
-      setCanSubmit(true);
-    } else {
-      setCanSubmit(false);
-    }
+    setCanSubmit(inputList.length > 0 && getFilledInputList().length > 0);
   };
 
   const deleteEmptyInputElementOnBlur = () => {
