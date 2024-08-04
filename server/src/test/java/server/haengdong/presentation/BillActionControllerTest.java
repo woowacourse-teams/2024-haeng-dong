@@ -1,6 +1,7 @@
 package server.haengdong.presentation;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import server.haengdong.application.BillActionService;
 import server.haengdong.presentation.request.BillActionSaveRequest;
 import server.haengdong.presentation.request.BillActionsSaveRequest;
+import server.haengdong.presentation.request.BillActionUpdateRequest;
 
 @WebMvcTest(BillActionController.class)
 class BillActionControllerTest {
@@ -65,5 +67,20 @@ class BillActionControllerTest {
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("지출 액션을 수정한다.")
+    @Test
+    void updateBillAction() throws Exception {
+        BillActionUpdateRequest request = new BillActionUpdateRequest("뽕족", 10_000L);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        String token = "TOKEN";
+
+        mockMvc.perform(put("/api/events/{token}/actions/bills/{actionId}", token, 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }
