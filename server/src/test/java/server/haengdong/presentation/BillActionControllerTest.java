@@ -75,7 +75,7 @@ class BillActionControllerTest {
     @DisplayName("지출 내역을 삭제한다.")
     @Test
     void deleteBillAction() throws Exception {
-        String token = "TOKE11";
+        String token = "토다리토큰";
 
         mockMvc.perform(delete("/api/events/{token}/actions/{actionId}/bills", token, 1))
                 .andDo(print())

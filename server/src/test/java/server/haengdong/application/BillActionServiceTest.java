@@ -67,16 +67,16 @@ class BillActionServiceTest {
     @DisplayName("지출 내역을 삭제한다.")
     @Test
     void deleteBillAction() {
-        String token = "!!!!TODARI!!";
+        String token = "토다리 토큰";
         Event event = new Event("감자", token);
-        Event savedEvent = eventRepository.save(event);
-        BillAction billAction = new BillAction(new Action(savedEvent, 1L), "커피", 50_900L);
-        BillAction savedBillAction = billActionRepository.save(billAction);
-        Long actionId = savedBillAction.getAction().getId();
+        eventRepository.save(event);
+        BillAction billAction = new BillAction(new Action(event, 1L), "커피", 50_900L);
+        billActionRepository.save(billAction);
+        Long actionId = billAction.getAction().getId();
 
         billActionService.deleteBillAction(token, actionId);
 
-        assertThat(billActionRepository.findById(savedBillAction.getId())).isEmpty();
+        assertThat(billActionRepository.findById(billAction.getId())).isEmpty();
     }
 
     @DisplayName("지출 내역 삭제 시 행사가 존재하지 않으면 예외가 발생한다.")
