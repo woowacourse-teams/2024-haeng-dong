@@ -26,11 +26,11 @@ const LabelInput: React.FC<LabelInputProps> = forwardRef<HTMLInputElement, Label
   return (
     <Flex flexDirection="column" gap="0.375rem">
       <Flex justifyContent="spaceBetween" paddingInline="0.5rem" margin="0 0 0.375rem 0">
-        <Text size="caption" css={labelTextStyle(theme)}>
-          {(hasFocus || htmlProps.value) && labelText}
+        <Text size="caption" css={labelTextStyle(theme, hasFocus, !!htmlProps.value)}>
+          {labelText}
         </Text>
-        <Text size="caption" css={errorTextStyle(theme)}>
-          {isError && errorText}
+        <Text size="caption" css={errorTextStyle(theme, isError ?? false)}>
+          {errorText}
         </Text>
       </Flex>
       <Flex flexDirection="column" gap="0.5rem">
