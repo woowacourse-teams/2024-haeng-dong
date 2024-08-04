@@ -37,9 +37,6 @@ export const inputBoxStyle = (
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
 
-    transition: '0.2s',
-    transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
-
     boxSizing: 'border-box',
     boxShadow: getBorderStyle(isFocus, theme, isError),
   });
