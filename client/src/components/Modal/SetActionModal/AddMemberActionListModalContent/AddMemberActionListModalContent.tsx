@@ -2,10 +2,11 @@ import {FixedButton, LabelGroupInput} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
 import validateMemberName from '@utils/validate/validateMemberName';
+import {MemberType} from 'types/serviceType';
 
 import useDynamicInput from '@hooks/useDynamicInput';
+
 import style from './AddMemberActionListModalContent.style';
-import {MemberType} from 'types/serviceType';
 
 interface UpdateMembersProps {
   inOutAction: MemberType;

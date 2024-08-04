@@ -1,9 +1,8 @@
-import React, {useEffect} from 'react';
-
 import type {Meta, StoryObj} from '@storybook/react';
 
+import React, {useEffect, useState} from 'react';
+
 import Input from '@components/Input/Input';
-import {useState} from 'react';
 
 const meta = {
   title: 'Components/Input',

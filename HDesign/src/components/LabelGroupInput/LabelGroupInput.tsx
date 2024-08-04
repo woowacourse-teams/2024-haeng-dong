@@ -3,11 +3,12 @@
 import Text from '@components/Text/Text';
 import {useTheme} from '@/theme/HDesignProvider';
 
+import Flex from '../Flex/Flex';
+
 import {LabelGroupInputProps} from './LabelGroupInput.type';
 import {errorTextStyle, labelTextStyle} from './LabelGroupInput.style';
 import Element from './Element';
 import {GroupInputProvider, useGroupInputContext} from './GroupInputContext';
-import Flex from '../Flex/Flex';
 
 const LabelGroupInput: React.FC<LabelGroupInputProps> = ({labelText, errorText, children}: LabelGroupInputProps) => {
   const {theme} = useTheme();

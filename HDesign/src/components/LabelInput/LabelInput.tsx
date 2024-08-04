@@ -6,11 +6,11 @@ import Text from '@components/Text/Text';
 import {useTheme} from '@/theme/HDesignProvider';
 
 import Input from '../Input/Input';
+import Flex from '../Flex/Flex';
 
 import {errorTextStyle, labelTextStyle} from './LabelInput.style';
 import {useLabelInput} from './useLabelInput';
 import {LabelInputProps} from './LabelInput.type';
-import Flex from '../Flex/Flex';
 
 const LabelInput: React.FC<LabelInputProps> = forwardRef<HTMLInputElement, LabelInputProps>(function LabelInput(
   {labelText, errorText, isError, ...htmlProps}: LabelInputProps,

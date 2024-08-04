@@ -6,8 +6,9 @@ import {useStepList} from '@hooks/useStepList/useStepList';
 import {requestGetEventName} from '@apis/request/event';
 import useEventId from '@hooks/useEventId/useEventId';
 
-import {ReceiptStyle} from './AdminPage.style';
 import {SetActionListModal, SetInitialMemberListModal} from '@components/Modal';
+
+import {ReceiptStyle} from './AdminPage.style';
 
 interface ModalBasedOnMemberCountProps {
   memberNameList: string[];

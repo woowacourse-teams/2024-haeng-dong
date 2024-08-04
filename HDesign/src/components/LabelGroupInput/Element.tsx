@@ -17,7 +17,7 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
   const {setHasAnyFocus, values, setValues, hasAnyErrors, setHasAnyErrors} = useGroupInputContext();
 
   useEffect(() => {
-    setValues({...values, [elementKey]: `${propsValue}` ?? ''});
+    setValues({...values, [elementKey]: `${propsValue}`});
   }, [propsValue]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

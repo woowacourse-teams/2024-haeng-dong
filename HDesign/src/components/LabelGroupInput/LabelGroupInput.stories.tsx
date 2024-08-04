@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
 
-import LabelGroupInput from '@components/LabelGroupInput/LabelGroupInput';
 import {useState} from 'react';
+
+import LabelGroupInput from '@components/LabelGroupInput/LabelGroupInput';
 
 const meta = {
   title: 'Components/LabelGroupInput',
