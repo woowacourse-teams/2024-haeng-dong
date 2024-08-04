@@ -19,7 +19,6 @@ import TextButton from '@components/TextButton/TextButton';
 import Title from '@components/Title/Title';
 import Toast from '@components/Toast/Toast';
 import TopNav from '@components/TopNav/TopNav';
-import Toast from '@components/Toast/Toast';
 import {ToastProvider, useToast} from '@components/Toast/ToastProvider';
 
 import {MainLayout} from '@layouts/MainLayout';
@@ -52,12 +51,11 @@ export {
   Text,
   TextButton,
   Title,
-  Toast,
   TopNav,
   MainLayout,
   ContentLayout,
-  HDesignProvider,
+  Toast,
   ToastProvider,
   useToast,
-  Toast,
+  HDesignProvider,
 };
