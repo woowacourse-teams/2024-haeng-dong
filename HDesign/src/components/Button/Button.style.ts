@@ -21,10 +21,7 @@ const getButtonDefaultStyle = (theme: Theme) =>
     lineHeight: '1',
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
-<<<<<<< Updated upstream
     whiteSpace: 'nowrap',
-=======
->>>>>>> Stashed changes
 
     '&:disabled': {
       backgroundColor: theme.colors.tertiary,
