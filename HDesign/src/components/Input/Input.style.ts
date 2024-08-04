@@ -4,7 +4,7 @@ import {Theme} from '@theme/theme.type';
 
 import {InputType} from './Input.type';
 
-const inputBoxBackgroundColorByInputType = (theme: Theme, inputType: InputType = 'input') => {
+const getBackgroundColorStyle = (theme: Theme, inputType: InputType = 'input') => {
   switch (inputType) {
     case 'input':
       return theme.colors.lightGrayContainer;
@@ -16,6 +16,9 @@ const inputBoxBackgroundColorByInputType = (theme: Theme, inputType: InputType =
       return theme.colors.lightGrayContainer;
   }
 };
+
+const getBorderStyle = (isFocus: boolean, theme: Theme, isError?: boolean) =>
+  isError ? `0 0 0 1px ${theme.colors.error} inset` : isFocus ? `0 0 0 1px ${theme.colors.primary} inset` : 'none';
 
 export const inputBoxStyle = (
   theme: Theme,
@@ -29,14 +32,10 @@ export const inputBoxStyle = (
     gap: '1rem',
     padding: '0.75rem 1rem',
     borderRadius: '1rem',
-    backgroundColor: inputBoxBackgroundColorByInputType(theme, inputType),
+    backgroundColor: getBackgroundColorStyle(theme, inputType),
 
     boxSizing: 'border-box',
-    boxShadow: isError
-      ? `0 0 0 1px ${theme.colors.error} inset`
-      : isFocus
-        ? `0 0 0 1px ${theme.colors.primary} inset`
-        : 'none',
+    boxShadow: getBorderStyle(isFocus, theme, isError),
   });
 
 export const inputStyle = (theme: Theme) =>

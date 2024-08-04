@@ -4,36 +4,31 @@ import Text from '@components/Text/Text';
 import {useTheme} from '@/theme/HDesignProvider';
 
 import {LabelGroupInputProps} from './LabelGroupInput.type';
-import {
-  errorTextStyle,
-  inputGroupStyle,
-  labelGroupStyle,
-  labelInputStyle,
-  labelTextStyle,
-} from './LabelGroupInput.style';
+import {errorTextStyle, labelTextStyle} from './LabelGroupInput.style';
 import Element from './Element';
 import {GroupInputProvider, useGroupInputContext} from './GroupInputContext';
+import Flex from '../Flex/Flex';
 
 const LabelGroupInput: React.FC<LabelGroupInputProps> = ({labelText, errorText, children}: LabelGroupInputProps) => {
   const {theme} = useTheme();
   const {hasAnyFocus, values, hasAnyErrors} = useGroupInputContext();
 
   return (
-    <div css={labelInputStyle}>
-      <div css={labelGroupStyle}>
-        <label>
-          <Text size="caption" css={labelTextStyle(theme)}>
-            {(hasAnyFocus || !Object.values(values).every(value => value === '')) && labelText}
-          </Text>
-        </label>
+    <Flex flexDirection="column" gap="0.375rem">
+      <Flex justifyContent="spaceBetween" paddingInline="0.5rem" margin="0 0 0.375rem 0">
+        <Text size="caption" css={labelTextStyle(theme)}>
+          {(hasAnyFocus || !Object.values(values).every(value => value === '')) && labelText}
+        </Text>
         {errorText && (
           <Text size="caption" css={errorTextStyle(theme)}>
             {!Object.values(hasAnyErrors).every(error => !error) && errorText}
           </Text>
         )}
-      </div>
-      <div css={inputGroupStyle}>{children}</div>
-    </div>
+      </Flex>
+      <Flex flexDirection="column" gap="0.5rem">
+        {children}
+      </Flex>
+    </Flex>
   );
 };
 

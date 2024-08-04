@@ -4,6 +4,7 @@ import {useInput} from './useInput';
 import {InputProps} from './Input.type';
 import {inputBoxStyle, inputStyle} from './Input.style';
 import {useTheme} from '@/theme/HDesignProvider';
+import IconButton from '../IconButton/IconButton';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
   {value: propsValue, onChange, onFocus, onBlur, inputType, isError, placeholder, ...htmlProps}: InputProps,
@@ -33,7 +34,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
         onKeyDown={handleKeyDown}
         {...htmlProps}
       />
-      {value && hasFocus && <button onMouseDown={handleClickDelete}>x버튼</button>}
+      {value && hasFocus && <IconButton iconType="inputDelete" onClick={handleClickDelete} />}
     </div>
   );
 });

@@ -6,19 +6,24 @@ interface UseInputProps<T> {
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   inputRef: RefObject<HTMLInputElement>;
+  autoFocus?: boolean;
 }
 
-export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef}: UseInputProps<T>) => {
-  const [value, setValue] = useState(propsValue as string);
+export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef, autoFocus}: UseInputProps<T>) => {
+  const [value, setValue] = useState<T>(propsValue);
   const [hasFocus, setHasFocus] = useState(inputRef.current === document.activeElement);
 
   useEffect(() => {
-    setValue(propsValue as string);
+    setHasFocus(inputRef.current === document.activeElement);
+  }, []);
+
+  useEffect(() => {
+    setValue(propsValue);
   }, [value]);
 
   const handleClickDelete = (event: React.MouseEvent) => {
     event.preventDefault();
-    setValue('');
+    setValue('' as T);
     if (onChange) {
       onChange({target: {value: ''}} as React.ChangeEvent<HTMLInputElement>);
     }
@@ -28,7 +33,7 @@ export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef}: U
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setValue(e.target.value as T);
     if (onChange) {
       onChange(e);
     }
