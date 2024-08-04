@@ -44,11 +44,9 @@ public class BillActionService {
 
     @Transactional
     public void deleteBillAction(String token, Long actionId) {
-        boolean isEventExists = eventRepository.existsByToken(token);
-        if (!isEventExists) {
-            throw new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT);
-        }
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
 
-        billActionRepository.deleteByActionId(actionId);
+        billActionRepository.deleteByAction_EventAndActionId(event, actionId);
     }
 }
