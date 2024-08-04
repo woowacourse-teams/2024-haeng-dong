@@ -116,16 +116,16 @@ class EventServiceTest {
         String token = "웨디_토큰";
         Event event = new Event("행동대장 회식", token);
         Action action1 = new Action(event, 1L);
-        MemberAction memberAction1 = new MemberAction(action1, "토다리", IN, 1L);
         Action action2 = new Action(event, 2L);
-        MemberAction memberAction2 = new MemberAction(action2, "쿠키", IN, 1L);
         Action action3 = new Action(event, 3L);
+        Action action4 = new Action(event, 4L);
         BillAction billAction = new BillAction(action3, "뽕나무쟁이족발", 30000L);
-        Action action4 = new Action(event, 3L);
+        MemberAction memberAction1 = new MemberAction(action1, "토다리", IN, 1L);
+        MemberAction memberAction2 = new MemberAction(action2, "쿠키", IN, 1L);
         MemberAction memberAction3 = new MemberAction(action4, "쿠키", OUT, 1L);
         eventRepository.save(event);
-        memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
         billActionRepository.save(billAction);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
         MembersAppResponse membersAppResponse = eventService.findAllMembers(token);
 
