@@ -37,7 +37,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
         onKeyDown={handleKeyDown}
         {...htmlProps}
       />
-      {value && hasFocus && <IconButton iconType="inputDelete" onClick={handleClickDelete} />}
+      {value && hasFocus && <IconButton iconType="inputDelete" onMouseDown={handleClickDelete} />}
     </div>
   );
 });
