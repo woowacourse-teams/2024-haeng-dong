@@ -118,6 +118,7 @@ class MemberActionServiceTest {
         memberActionService.deleteMember(token, "참여자");
 
         List<MemberAction> memberActions = memberActionRepository.findAll();
+        
         assertThat(memberActions).hasSize(5)
                 .extracting("memberName", "status")
                 .containsExactly(
