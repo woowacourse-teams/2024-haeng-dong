@@ -1,7 +1,9 @@
 package server.haengdong.application;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.groups.Tuple.tuple;
 import static server.haengdong.domain.action.MemberActionStatus.IN;
 import static server.haengdong.domain.action.MemberActionStatus.OUT;
 
@@ -17,6 +19,7 @@ import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
