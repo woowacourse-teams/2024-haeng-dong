@@ -20,7 +20,7 @@
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
       "@token/*": ["src/token/*"],
-      "@types/*": ["src/types/*"],
+      "@type/*": ["src/type/*"],
       "@theme/*": ["src/theme/*"],
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"]

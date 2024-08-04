@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react';
 
-import {StrictPropsWithChildren} from '@types/strictPropsWithChildren';
+import {StrictPropsWithChildren} from '@type/strictPropsWithChildren';
 import {useTheme} from '@theme/HDesignProvider';
 
 import {FlexProps} from './Flex.type';
