@@ -1,9 +1,7 @@
 package server.haengdong.application;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.tuple;
 import static server.haengdong.domain.action.MemberActionStatus.IN;
 import static server.haengdong.domain.action.MemberActionStatus.OUT;
 
@@ -126,5 +124,51 @@ class MemberActionServiceTest {
                         tuple("웨디", IN),
                         tuple("참여자", IN)
                 );
+    }
+
+    @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후에 기록된 해당 참여자의 모든 멤버 액션을 삭제한다.")
+    @Test
+    void deleteMemberAction() {
+        String token = "TOKEN";
+        Event event = new Event("행동대장 회식", token);
+        eventRepository.save(event);
+        MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        Action targetAction = new Action(event, 2L);
+        MemberAction memberAction2 = createMemberAction(targetAction, "토다리", OUT, 2L);
+        MemberAction memberAction3 = createMemberAction(new Action(event, 3L), "쿠키", IN, 3L);
+        MemberAction memberAction4 = createMemberAction(new Action(event, 4L), "웨디", IN, 4L);
+        MemberAction memberAction5 = createMemberAction(new Action(event, 5L), "토다리", IN, 5L);
+        MemberAction memberAction6 = createMemberAction(new Action(event, 6L), "토다리", OUT, 6L);
+        MemberAction memberAction7 = createMemberAction(new Action(event, 7L), "쿠키", OUT, 7L);
+        memberActionRepository.saveAll(
+                List.of(memberAction1,
+                        memberAction2,
+                        memberAction3,
+                        memberAction4,
+                        memberAction5,
+                        memberAction6,
+                        memberAction7)
+        );
+
+        memberActionService.deleteMemberAction(token, targetAction.getId());
+        List<MemberAction> memberActions = memberActionRepository.findAll();
+
+        assertThat(memberActions).hasSize(4)
+                .extracting("id", "memberName", "status")
+                .containsExactly(
+                        tuple(memberAction1.getId(), "토다리", IN),
+                        tuple(memberAction3.getId(), "쿠키", IN),
+                        tuple(memberAction4.getId(), "웨디", IN),
+                        tuple(memberAction7.getId(), "쿠키", OUT)
+                );
+    }
+
+    private MemberAction createMemberAction(
+            Action action,
+            String memberName,
+            MemberActionStatus memberActionStatus,
+            long memberGroupId
+    ) {
+        return new MemberAction(action, memberName, memberActionStatus, memberGroupId);
     }
 }

@@ -1,6 +1,10 @@
 package server.haengdong.presentation;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -14,8 +18,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import server.haengdong.application.BillActionService;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 import server.haengdong.presentation.request.BillActionSaveRequest;
 import server.haengdong.presentation.request.BillActionsSaveRequest;
+import server.haengdong.presentation.request.BillActionUpdateRequest;
 
 @WebMvcTest(BillActionController.class)
 class BillActionControllerTest {
@@ -63,6 +70,43 @@ class BillActionControllerTest {
         mockMvc.perform(post("/api/events/{token}/actions/bills", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("지출 액션을 수정한다.")
+    @Test
+    void updateBillAction() throws Exception {
+        BillActionUpdateRequest request = new BillActionUpdateRequest("뽕족", 10_000L);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        String token = "TOKEN";
+
+        mockMvc.perform(put("/api/events/{token}/actions/bills/{actionId}", token, 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("지출 내역을 삭제한다.")
+    @Test
+    void deleteBillAction() throws Exception {
+        String token = "토다리토큰";
+
+        mockMvc.perform(delete("/api/events/{token}/actions/{actionId}/bills", token, 1))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("존재하지 않는 행사에 대한 지출 내역을 삭제할 수 없다.")
+    @Test
+    void deleteBillAction1() throws Exception {
+        String token = "TOKEN19348";
+        doThrow(new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT))
+                .when(billActionService).deleteBillAction(any(String.class), any(Long.class));
+
+        mockMvc.perform(delete("/api/events/{token}/actions/{actionId}/bills", token, 1))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }

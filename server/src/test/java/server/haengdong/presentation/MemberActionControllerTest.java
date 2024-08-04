@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +19,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.MemberActionService;
 import server.haengdong.application.response.CurrentMemberAppResponse;
 import server.haengdong.presentation.request.MemberActionsSaveRequest;
@@ -62,8 +62,19 @@ class MemberActionControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.members[0].name").value(equalTo("소하")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.members[1].name").value(equalTo("토다리")));
+                .andExpect(jsonPath("$.members[0].name").value(equalTo("소하")))
+                .andExpect(jsonPath("$.members[1].name").value(equalTo("토다리")));
+    }
+
+    @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후에 기록된 해당 참여자의 모든 멤버 액션을 삭제한다.")
+    @Test
+    void deleteMemberAction() throws Exception {
+        String token = "TOKEN";
+        Long actionId = 2L;
+
+        mockMvc.perform(delete("/api/events/{token}/actions/{actionId}/members", token, actionId))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @DisplayName("행사의 전체 참여자 중에서 특정 참여자의 맴버 액션을 전부 삭제한다.")

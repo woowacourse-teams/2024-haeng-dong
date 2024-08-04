@@ -18,4 +18,6 @@ public interface ActionRepository extends JpaRepository<Action, Long> {
             LIMIT 1
             """)
     Optional<Action> findLastByEvent(@Param("event") Event event);
+
+    Optional<Action> findByIdAndEvent(Long id, Event event);
 }

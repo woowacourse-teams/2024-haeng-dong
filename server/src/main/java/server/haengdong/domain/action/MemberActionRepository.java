@@ -2,7 +2,6 @@ package server.haengdong.domain.action;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -21,4 +20,14 @@ public interface MemberActionRepository extends JpaRepository<MemberAction, Long
             where m.memberName = :memberName and m.action.event = :event
             """)
     void deleteAllByEventAndMemberName(Event event, String memberName);
+
+    Optional<MemberAction> findByAction(Action action);
+
+    @Modifying
+    @Query("""
+            delete
+            from MemberAction m
+            where m.memberName = :memberName and m.action.sequence >= :sequence
+            """)
+    void deleteAllByMemberNameAndMinSequence(String memberName, Long sequence);
 }
