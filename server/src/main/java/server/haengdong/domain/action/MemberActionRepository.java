@@ -15,6 +15,14 @@ public interface MemberActionRepository extends JpaRepository<MemberAction, Long
     @Query("select m from MemberAction m join fetch m.action where m.action.event = :event")
     List<MemberAction> findAllByEvent(@Param("event") Event event);
 
+    @Modifying
+    @Query("""
+            delete
+            from MemberAction m
+            where m.memberName = :memberName and m.action.event = :event
+            """)
+    void deleteAllByEventAndMemberName(Event event, String memberName);
+
     Optional<MemberAction> findByAction(Action action);
 
     @Modifying
