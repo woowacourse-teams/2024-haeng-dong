@@ -23,9 +23,14 @@ const useDeleteMemberAction = ({memberActionList, refreshStepList}: UseDeleteMem
       // TODO: (@cookie): 에러처리 백엔드에 맞게 나중에 메시지 설정
       // 원래는 백엔드가 만들어준 에러토큰을 이용해서 나눠서 보여주는 것이 맞지만 우리가 에러처리를 아무곳에서도 하지않아서 후추
       showToast({
+        isClickToClose: true,
         message: '멤버 삭제가 되지 않았어요 :(',
         showingTime: 3000,
         type: 'error',
+        style: {
+          zIndex: '900', // TODO: (@weadie) 토스트 zIndex고쳐지면 여기 수정해야됨
+        },
+        bottom: '160px',
       });
     }
   };
@@ -46,8 +51,14 @@ const useDeleteMemberAction = ({memberActionList, refreshStepList}: UseDeleteMem
   const addDeleteMemberAction = (memberAction: MemberAction) => {
     if (!memberActionList.includes(memberAction)) {
       showToast({
+        isClickToClose: true,
         showingTime: 3000,
         message: '이미 삭제된 인원입니다.',
+        type: 'error',
+        style: {
+          zIndex: '900', // TODO: (@weadie) 토스트 zIndex고쳐지면 여기 수정해야됨
+        },
+        bottom: '160px',
       });
       return;
     }
