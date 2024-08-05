@@ -3,6 +3,7 @@ import {createPortal} from 'react-dom';
 
 import Text from '@components/Text/Text';
 import Flex from '@components/Flex/Flex';
+import Icon from '@components/Icon/Icon';
 
 import {useTheme} from '@theme/HDesignProvider';
 
@@ -10,7 +11,6 @@ import Button from '../Button/Button';
 
 import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';
 import {ToastProps, ToastType} from './Toast.type';
-import Icon from '@components/Icon/Icon';
 
 const renderIcon = (type: ToastType) => {
   switch (type) {

@@ -2,12 +2,11 @@
 import React from 'react';
 
 import {StrictPropsWithChildren} from '@type/strictPropsWithChildren';
+import Icon from '@components/Icon/Icon';
 
 import {useTheme} from '@theme/HDesignProvider';
 
 import {COLORS, ColorKeys} from '@token/colors';
-
-import Icon from '@components/Icon/Icon';
 
 import IconButton from '../IconButton/IconButton';
 

@@ -5,9 +5,9 @@ import IconButton from '@components/IconButton/IconButton';
 import {InputProps} from '@components/Input/Input.type';
 import {inputBoxStyle, inputStyle} from '@components/Input/Input.style';
 import {useInput} from '@components/Input/useInput';
+import Icon from '@components/Icon/Icon';
 
 import {useTheme} from '@theme/HDesignProvider';
-import Icon from '@components/Icon/Icon';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
   {value: propsValue, onChange, onFocus, onBlur, inputType, isError, placeholder, autoFocus, ...htmlProps}: InputProps,
