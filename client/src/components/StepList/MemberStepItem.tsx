@@ -2,8 +2,7 @@ import type {MemberStep} from 'types/serviceType';
 
 import {InOutItem} from 'haengdong-design';
 
-import ComeInMember from '@components/Modal/InOut/ComeInMember';
-import GetOutMember from '@components/Modal/InOut/GetOutMember';
+import {DeleteMemberActionModal} from '@components/Modal/SetActionModal/DeleteMemberActionModal';
 
 interface MemberStepItemProps {
   step: MemberStep;
@@ -19,17 +18,12 @@ const MemberStepItem: React.FC<MemberStepItemProps> = ({step, isOpenBottomSheet,
         names={step.actions.map(({name}) => name)}
         onClick={() => setOpenBottomSheet(prev => !prev)}
       />
-      {isOpenBottomSheet && step.type === 'IN' && (
-        <ComeInMember
-          actions={step.actions}
-          openBottomSheet={isOpenBottomSheet}
-          setOpenBottomSheet={() => setOpenBottomSheet(prev => !prev)}
-        />
-      )}
-      {isOpenBottomSheet && step.type === 'OUT' && (
-        <GetOutMember
-          openBottomSheet={isOpenBottomSheet}
-          setOpenBottomSheet={() => setOpenBottomSheet(prev => !prev)}
+      {isOpenBottomSheet && (
+        <DeleteMemberActionModal
+          memberActionType={step.type}
+          memberActionList={step.actions}
+          isBottomSheetOpened={isOpenBottomSheet}
+          setIsBottomSheetOpened={setOpenBottomSheet}
         />
       )}
     </>
