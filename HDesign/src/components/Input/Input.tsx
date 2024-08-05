@@ -7,6 +7,7 @@ import {inputBoxStyle, inputStyle} from '@components/Input/Input.style';
 import {useInput} from '@components/Input/useInput';
 
 import {useTheme} from '@theme/HDesignProvider';
+import Icon from '@components/Icon/Icon';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
   {value: propsValue, onChange, onFocus, onBlur, inputType, isError, placeholder, autoFocus, ...htmlProps}: InputProps,
@@ -38,7 +39,11 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
         autoFocus={autoFocus}
         {...htmlProps}
       />
-      {value && hasFocus && <IconButton tabIndex={-1} iconType="inputDelete" onMouseDown={handleClickDelete} />}
+      {value && hasFocus && (
+        <IconButton tabIndex={-1} variants="none" onMouseDown={handleClickDelete}>
+          <Icon iconType="inputDelete" />
+        </IconButton>
+      )}
     </div>
   );
 });

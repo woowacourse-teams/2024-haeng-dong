@@ -7,6 +7,8 @@ import {useTheme} from '@theme/HDesignProvider';
 
 import {COLORS, ColorKeys} from '@token/colors';
 
+import Icon from '@components/Icon/Icon';
+
 import IconButton from '../IconButton/IconButton';
 
 import {dragHandleItemStyle, prefixStyle} from './DragHandleItem.style';
@@ -30,7 +32,11 @@ export function DragHandleItem({
   return (
     <div css={dragHandleItemStyle(theme, hasDragHandle, backgroundColor)} {...htmlProps}>
       <div css={prefixStyle}>
-        {hasDragHandle && <IconButton iconType="buljusa" />}
+        {hasDragHandle && (
+          <IconButton variants="none">
+            <Icon iconType="buljusa" />
+          </IconButton>
+        )}
         {children}
       </div>
     </div>

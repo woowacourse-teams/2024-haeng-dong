@@ -18,6 +18,7 @@ function ExpenseItem({name, price, ...buttonProps}: ExpenseItemProps) {
       </Text>
       <div css={expenseItemLeftStyle}>
         <Text css={TextStyle(theme)}>{price.toLocaleString('ko-kr')}원</Text>
+        // TODO: (@todari) : 추후 클릭 시 상호작용이 생기면 iconButton으로 변경할 수 있음
         <Icon iconType="rightChevron" />
       </div>
     </button>
