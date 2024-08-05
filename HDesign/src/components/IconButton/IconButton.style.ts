@@ -41,9 +41,6 @@ const getIconButtonBase = (theme: Theme) =>
     '&:disabled': {
       backgroundColor: theme.colors.tertiary,
       color: theme.colors.onPrimary,
-      svg: {
-        fill: theme.colors.onPrimary,
-      },
       cursor: 'default',
     },
   });
@@ -74,9 +71,6 @@ const getIconButtonVariants = (variants: IconButtonVariants, theme: Theme) => {
       css({
         backgroundColor: theme.colors.primary,
         color: theme.colors.onPrimary,
-        svg: {
-          fill: theme.colors.onPrimary,
-        },
       }),
       getHoverAndActiveBackground(theme.colors.primary),
     ],
@@ -84,9 +78,6 @@ const getIconButtonVariants = (variants: IconButtonVariants, theme: Theme) => {
       css({
         backgroundColor: theme.colors.secondary,
         color: theme.colors.onSecondary,
-        svg: {
-          fill: theme.colors.onSecondary,
-        },
       }),
       getHoverAndActiveBackground(theme.colors.secondary),
     ],
@@ -94,9 +85,6 @@ const getIconButtonVariants = (variants: IconButtonVariants, theme: Theme) => {
       css({
         backgroundColor: theme.colors.tertiary,
         color: theme.colors.onTertiary,
-        svg: {
-          fill: theme.colors.onTertiary,
-        },
       }),
       getHoverAndActiveBackground(theme.colors.tertiary),
     ],
@@ -104,9 +92,6 @@ const getIconButtonVariants = (variants: IconButtonVariants, theme: Theme) => {
       css({
         backgroundColor: theme.colors.error,
         color: theme.colors.onPrimary,
-        svg: {
-          fill: theme.colors.onPrimary,
-        },
       }),
       getHoverAndActiveBackground(theme.colors.error),
     ],
