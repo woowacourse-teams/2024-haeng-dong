@@ -1,19 +1,20 @@
+import type {MemberType} from 'types/serviceType';
+
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
 import validateMemberName from '@utils/validate/validateMemberName';
-import {MemberType} from 'types/serviceType';
 
 import useDynamicInput from '@hooks/useDynamicInput';
 
 import style from './AddMemberActionListModalContent.style';
 
-interface UpdateMembersProps {
+interface AddMemberActionListModalContentProps {
   inOutAction: MemberType;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddMemberActionListModalContent = ({inOutAction, setOpenBottomSheet}: UpdateMembersProps) => {
+const AddMemberActionListModalContent = ({inOutAction, setOpenBottomSheet}: AddMemberActionListModalContentProps) => {
   const {
     inputList,
     inputRefList,
