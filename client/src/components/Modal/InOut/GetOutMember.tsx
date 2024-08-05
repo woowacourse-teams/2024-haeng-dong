@@ -1,10 +1,4 @@
-import {Text, Input, BottomSheet, FixedButton} from 'haengdong-design';
-
-import {useStepList} from '@hooks/useStepList/useStepList';
-
-import useDynamicInput from '@hooks/useDynamicAdditionalInput';
-
-import {setInitialParticipantsInputGroupStyle, setInitialParticipantsStyle} from './ComeInMember.style';
+import {BottomSheet, FixedButton} from 'haengdong-design';
 
 interface SetInitialParticipantsProps {
   openBottomSheet: boolean;
@@ -12,8 +6,6 @@ interface SetInitialParticipantsProps {
 }
 
 const GetOutMember = ({openBottomSheet, setOpenBottomSheet}: SetInitialParticipantsProps) => {
-  const {inputs, inputRefs, handleInputChange, handleInputBlur, getNonEmptyInputs} = useDynamicInput();
-
   return (
     <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)}>
       망쵸모달 나감 모달
