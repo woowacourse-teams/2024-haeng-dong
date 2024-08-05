@@ -34,7 +34,7 @@ const SetInitialMemberListModal = ({openBottomSheet, setOpenBottomSheet}: SetIni
   };
 
   return (
-    <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)}>
+    <BottomSheet isOpened={openBottomSheet} onClose={() => setOpenBottomSheet(false)}>
       <div css={setInitialMemberListModalStyle}>
         <Text size="bodyBold">초기 인원 설정하기</Text>
         <div css={setInitialMemberListModalInputGroupStyle}>

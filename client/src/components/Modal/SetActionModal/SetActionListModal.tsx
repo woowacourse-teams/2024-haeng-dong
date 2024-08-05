@@ -28,7 +28,7 @@ const SetActionListModal = ({openBottomSheet, setOpenBottomSheet, setOrder}: Set
   };
 
   return (
-    <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)}>
+    <BottomSheet isOpened={openBottomSheet} onClose={() => setOpenBottomSheet(false)}>
       <div css={style.container}>
         <div css={style.switchContainer}>
           <Switch value={action} onChange={handleActionTypeChange} values={['지출', '인원']} />
