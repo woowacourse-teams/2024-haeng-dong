@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.request.MemberUpdateAppRequest;
 import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
+import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
@@ -87,5 +89,32 @@ public class EventService {
         }
 
         return actionAppResponses;
+    }
+
+    public MembersAppResponse findAllMembers(String token) {
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+
+        List<String> memberNames = memberActionRepository.findAllUniqueMemberByEvent(event);
+
+        return new MembersAppResponse(memberNames);
+    }
+
+    @Transactional
+    public void updateMember(String token, String memberName, MemberUpdateAppRequest request) {
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+        String updatedMemberName = request.name();
+        validateMemberNameUnique(event, updatedMemberName);
+
+        memberActionRepository.findAllByAction_EventAndMemberName(event, memberName)
+                .forEach(memberAction -> memberAction.updateMemberName(updatedMemberName));
+    }
+
+    private void validateMemberNameUnique(Event event, String updatedMemberName) {
+        boolean isMemberNameExist = memberActionRepository.existsByAction_EventAndMemberName(event, updatedMemberName);
+        if (isMemberNameExist) {
+            throw new HaengdongException(HaengdongErrorCode.DUPLICATED_MEMBER_NAME);
+        }
     }
 }

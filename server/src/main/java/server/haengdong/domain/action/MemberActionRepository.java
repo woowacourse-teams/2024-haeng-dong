@@ -15,6 +15,13 @@ public interface MemberActionRepository extends JpaRepository<MemberAction, Long
     @Query("select m from MemberAction m join fetch m.action where m.action.event = :event")
     List<MemberAction> findAllByEvent(@Param("event") Event event);
 
+    @Query("""
+            select distinct m.memberName
+            from MemberAction m
+            where m.action.event = :event
+            """)
+    List<String> findAllUniqueMemberByEvent(Event event);
+
     @Modifying
     @Query("""
             delete
@@ -32,4 +39,8 @@ public interface MemberActionRepository extends JpaRepository<MemberAction, Long
             where m.memberName = :memberName and m.action.sequence >= :sequence
             """)
     void deleteAllByMemberNameAndMinSequence(String memberName, Long sequence);
+
+    List<MemberAction> findAllByAction_EventAndMemberName(Event event, String memberName);
+
+    boolean existsByAction_EventAndMemberName(Event event, String updatedMemberName);
 }
