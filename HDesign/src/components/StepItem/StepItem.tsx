@@ -7,14 +7,9 @@ import {BillItemCustomProps} from '../BillItem/BillItem.type';
 import Flex from '../Flex/Flex';
 
 import {nameStyle, personCountStyle, stepItemStyle, totalAmountStyle, totalTitleStyle} from './StepItem.style';
-import {StepItemCustomProps} from './StepItem.type';
+import {StepItemProps} from './StepItem.type';
 
-export const StepItem: React.FC<StepItemCustomProps> = ({
-  name = '',
-  personCount = 0,
-  bills,
-  ...htmlProps
-}: StepItemCustomProps) => {
+export const StepItem: React.FC<StepItemProps> = ({name = '', personCount = 0, bills, ...htmlProps}: StepItemProps) => {
   const {theme} = useTheme();
   return (
     <div css={stepItemStyle(theme)} {...htmlProps}>
