@@ -1,7 +1,7 @@
 import type {BillStep, MemberAction, MemberStep} from 'types/serviceType';
 
 import useEventId from '@hooks/useEventId/useEventId';
-import {requestDeleteAction} from '@apis/request/action';
+import {requestDeleteMemberAction} from '@apis/request/member';
 
 interface UseMemberActionProps {
   stepList: Array<BillStep | MemberStep>;
@@ -22,7 +22,7 @@ const useMemberAction = ({stepList, refreshStepList}: UseMemberActionProps) => {
         return;
       }
     }
-    await requestDeleteAction({eventId, actionId: action.actionId});
+    await requestDeleteMemberAction({eventId, actionId: action.actionId});
     refreshStepList();
   };
 
