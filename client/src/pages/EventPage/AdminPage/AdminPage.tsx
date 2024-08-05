@@ -7,8 +7,8 @@ import StepList from '@components/StepList/StepList';
 import {useStepList} from '@hooks/useStepList/useStepList';
 import {requestGetEventName} from '@apis/request/event';
 import useEventId from '@hooks/useEventId/useEventId';
-
-import {SetActionListModal, SetInitialMemberListModal} from '@components/Modal';
+import {SetActionListModal} from '@components/Modal/SetActionModal';
+import {SetInitialMemberListModal} from '@components/Modal/SetInitialMemberListModal';
 
 import {ReceiptStyle} from './AdminPage.style';
 

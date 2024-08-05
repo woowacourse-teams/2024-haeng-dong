@@ -1,3 +1,5 @@
+import type {Bill} from 'types/serviceType';
+
 import ERROR_MESSAGE from '@constants/errorMessage';
 import RULE from '@constants/rule';
 import REGEXP from '@constants/regExp';
