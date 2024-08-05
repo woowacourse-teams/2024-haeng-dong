@@ -17,6 +17,17 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
 };
 
 export const iconStyle = (iconType: IconType, theme: Theme, iconColor?: IconColor) => {
+  return [
+    css({
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }),
+    getIconColor(iconType, theme, iconColor),
+  ];
+};
+
+const getIconColor = (iconType: IconType, theme: Theme, iconColor?: IconColor) => {
   if (iconColor) {
     return css({
       color: theme.colors[iconColor as ColorKeys],
