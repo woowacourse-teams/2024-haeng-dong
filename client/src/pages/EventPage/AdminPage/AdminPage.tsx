@@ -1,5 +1,3 @@
-import type {InOutType} from 'types/serviceType';
-
 import {useEffect, useState} from 'react';
 import {Title, FixedButton} from 'haengdong-design';
 
