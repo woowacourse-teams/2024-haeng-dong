@@ -1,44 +1,45 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 
-import {StrictPropsWithChildren} from '@type/strictPropsWithChildren';
-import Icon from '@components/Icon/Icon';
-
 import {useTheme} from '@theme/HDesignProvider';
 
-import {COLORS, ColorKeys} from '@token/colors';
+import Icon from '@components/Icon/Icon';
 
 import IconButton from '../IconButton/IconButton';
 
-import {dragHandleItemStyle, prefixStyle} from './DragHandleItem.style';
+import {dragHandleItemStyle, dragHandlerStyle, textStyle} from './DragHandleItem.style';
+import {DragHandleItemProps} from './DragHandleItem.type';
+import Flex from '@components/Flex/Flex';
+import Text from '@components/Text/Text';
 
-interface DragHandleItemCustomProps {
-  hasDragHandle?: boolean;
-  backgroundColor?: ColorKeys;
-}
-
-export type DragHandleItemProps = React.ComponentProps<'div'> & DragHandleItemCustomProps;
-
-export function DragHandleItem({
-  hasDragHandle = false,
+export const DragHandleItem = ({
+  hasDragHandler = false,
   backgroundColor = 'white',
-  children,
+  prefix,
+  suffix,
   ...htmlProps
-}: StrictPropsWithChildren<DragHandleItemProps>) {
+}: DragHandleItemProps) => {
   const {theme} = useTheme();
 
   // TODO: (@toari) : 사람 수 많을 때 UX writing 처리
   return (
-    <div css={dragHandleItemStyle(theme, hasDragHandle, backgroundColor)} {...htmlProps}>
-      <div css={prefixStyle}>
-        {hasDragHandle && (
+    <div css={dragHandleItemStyle(theme, hasDragHandler, backgroundColor)} {...htmlProps}>
+      <div css={dragHandlerStyle}>
+        {hasDragHandler && (
           <IconButton variants="none">
             <Icon iconType="buljusa" />
           </IconButton>
         )}
-        {children}
+        <Flex justifyContent="spaceBetween" width="100%">
+          <Text css={textStyle(theme)} size="bodyBold">
+            {prefix}
+          </Text>
+          <Text css={textStyle(theme)} size="body">
+            {suffix}
+          </Text>
+        </Flex>
       </div>
     </div>
   );
-}
+};
 export default DragHandleItem;
