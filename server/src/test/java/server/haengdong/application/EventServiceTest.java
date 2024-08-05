@@ -31,6 +31,7 @@ import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
 import server.haengdong.support.extension.DatabaseCleanerExtension;
 import server.haengdong.exception.HaengdongException;
+import server.haengdong.support.fixture.Fixture;
 
 @ExtendWith(DatabaseCleanerExtension.class)
 @SpringBootTest
@@ -54,7 +55,7 @@ class EventServiceTest {
     @DisplayName("행사를 생성한다")
     @Test
     void saveEventTest() {
-        EventAppRequest request = new EventAppRequest("test");
+        EventAppRequest request = new EventAppRequest("test", "1234");
         given(eventTokenProvider.createToken()).willReturn("TOKEN");
 
         EventAppResponse response = eventService.saveEvent(request);
@@ -65,19 +66,18 @@ class EventServiceTest {
     @DisplayName("토큰으로 행사를 조회한다.")
     @Test
     void findEventTest() {
-        String token = "TOKEN";
-        Event event = new Event("행동대장 회식", token);
+        Event event = Fixture.EVENT1;
         eventRepository.save(event);
 
-        EventDetailAppResponse eventDetailAppResponse = eventService.findEvent(token);
+        EventDetailAppResponse eventDetailAppResponse = eventService.findEvent(event.getToken());
 
-        assertThat(eventDetailAppResponse.eventName()).isEqualTo("행동대장 회식");
+        assertThat(eventDetailAppResponse.eventName()).isEqualTo(event.getName());
     }
 
     @DisplayName("행사에 속한 모든 액션을 조회한다.")
     @Test
     void findActionsTest() {
-        Event event = new Event("행동대장 회식", "웨디_토큰");
+        Event event = Fixture.EVENT1;
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "토다리", IN, 1L);
         Action action1 = new Action(event, 2L);
@@ -88,7 +88,7 @@ class EventServiceTest {
         memberActionRepository.saveAll(List.of(memberAction, memberAction1));
         billActionRepository.save(billAction);
 
-        List<ActionAppResponse> actionAppResponses = eventService.findActions("웨디_토큰");
+        List<ActionAppResponse> actionAppResponses = eventService.findActions(event.getToken());
 
         assertThat(actionAppResponses).hasSize(3)
                 .extracting(ActionAppResponse::actionId,
@@ -106,8 +106,7 @@ class EventServiceTest {
     @DisplayName("행사에 참여한 전체 인원을 중복 없이 조회한다.")
     @Test
     void findAllMembersTest() {
-        String token = "웨디_토큰";
-        Event event = new Event("행동대장 회식", token);
+        Event event = Fixture.EVENT1;
         Action action1 = new Action(event, 1L);
         Action action2 = new Action(event, 2L);
         Action action3 = new Action(event, 3L);
@@ -120,7 +119,7 @@ class EventServiceTest {
         billActionRepository.save(billAction);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
-        MembersAppResponse membersAppResponse = eventService.findAllMembers(token);
+        MembersAppResponse membersAppResponse = eventService.findAllMembers(event.getToken());
 
         assertThat(membersAppResponse.memberNames()).containsExactlyInAnyOrder("토다리", "쿠키");
     }
@@ -128,8 +127,7 @@ class EventServiceTest {
     @DisplayName("행사 참여 인원의 이름을 변경한다.")
     @Test
     void updateMember() {
-        String token = "행동대장 회식";
-        Event event = new Event("행동대장 회식", token);
+        Event event = Fixture.EVENT1;
         MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
         MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
         MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
@@ -141,7 +139,7 @@ class EventServiceTest {
                 memberAction1, memberAction2, memberAction3, memberAction4, memberAction5, memberAction6
         ));
 
-        eventService.updateMember(token, "쿠키", new MemberUpdateAppRequest("쿡쿡"));
+        eventService.updateMember(event.getToken(), "쿠키", new MemberUpdateAppRequest("쿡쿡"));
 
         List<MemberAction> foundMemberActions = memberActionRepository.findAllByEvent(event);
         assertThat(foundMemberActions)
@@ -159,15 +157,14 @@ class EventServiceTest {
     @DisplayName("참여 인원 이름을 이미 존재하는 행사 참여 인원과 동일한 이름으로 변경할 수 없다.")
     @Test
     void updateMember1() {
-        String token = "행동대장 회식";
-        Event event = new Event("행동대장 회식", token);
+        Event event = Fixture.EVENT1;
         MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
         MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
         MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
-        assertThatThrownBy(() -> eventService.updateMember(token, "쿠키", new MemberUpdateAppRequest("토다리")))
+        assertThatThrownBy(() -> eventService.updateMember(event.getToken(), "쿠키", new MemberUpdateAppRequest("토다리")))
                 .isInstanceOf(HaengdongException.class);
     }
 }

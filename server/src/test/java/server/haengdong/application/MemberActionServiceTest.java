@@ -23,6 +23,7 @@ import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.extension.DatabaseCleanerExtension;
+import server.haengdong.support.fixture.Fixture;
 
 @ExtendWith(DatabaseCleanerExtension.class)
 @SpringBootTest
@@ -40,12 +41,12 @@ class MemberActionServiceTest {
     @DisplayName("현재 행사에 참여하고 있는 경우에 나갈 수 있다.")
     @Test
     void saveMemberActionTest() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "망쵸", IN, 1L);
         memberActionRepository.save(memberAction);
 
-        assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", new MemberActionsSaveAppRequest(
+        assertThatCode(() -> memberActionService.saveMemberAction(event.getToken(), new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("망쵸", "OUT")))))
                 .doesNotThrowAnyException();
     }
@@ -53,7 +54,7 @@ class MemberActionServiceTest {
     @DisplayName("행사에서 퇴장한 경우에 입장할 수 있다.")
     @Test
     void saveMemberActionTest1() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action actionOne = new Action(event, 1L);
         MemberAction memberActionOne = new MemberAction(actionOne, "망쵸", IN, 1L);
         memberActionRepository.save(memberActionOne);
@@ -62,7 +63,7 @@ class MemberActionServiceTest {
         MemberAction memberActionTwo = new MemberAction(actionTwo, "망쵸", OUT, 1L);
         memberActionRepository.save(memberActionTwo);
 
-        assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", new MemberActionsSaveAppRequest(
+        assertThatCode(() -> memberActionService.saveMemberAction(event.getToken(), new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("망쵸", "IN")))))
                 .doesNotThrowAnyException();
     }
@@ -87,8 +88,7 @@ class MemberActionServiceTest {
     @DisplayName("행사의 전체 참여자 중에서 특정 참여자의 맴버 액션을 전부 삭제한다.")
     @Test
     void deleteMember() {
-        String token = "TOKEN";
-        Event event = new Event("행동대장 회식", token);
+        Event event = Fixture.EVENT1;
         eventRepository.save(event);
         MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "참여자", IN, 1L);
         MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "토다리", IN, 1L);
@@ -99,14 +99,13 @@ class MemberActionServiceTest {
         memberActionRepository.saveAll(
                 List.of(memberAction1, memberAction2, memberAction3, memberAction4, memberAction5, memberAction6));
 
-        String token2 = "TOKEN2";
-        Event event2 = new Event("옆동네 회식", token2);
+        Event event2 = Fixture.EVENT2;
         eventRepository.save(event2);
         Action action2 = Action.createFirst(event2);
         MemberAction anotherMemberAction = new MemberAction(action2, "참여자", IN, 1L);
         memberActionRepository.save(anotherMemberAction);
 
-        memberActionService.deleteMember(token, "참여자");
+        memberActionService.deleteMember(event.getToken(), "참여자");
 
         List<MemberAction> memberActions = memberActionRepository.findAll();
 
@@ -124,8 +123,7 @@ class MemberActionServiceTest {
     @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후에 기록된 해당 참여자의 모든 멤버 액션을 삭제한다.")
     @Test
     void deleteMemberAction() {
-        String token = "TOKEN";
-        Event event = new Event("행동대장 회식", token);
+        Event event = Fixture.EVENT1;
         eventRepository.save(event);
         MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
         Action targetAction = new Action(event, 2L);
@@ -145,7 +143,7 @@ class MemberActionServiceTest {
                         memberAction7)
         );
 
-        memberActionService.deleteMemberAction(token, targetAction.getId());
+        memberActionService.deleteMemberAction(event.getToken(), targetAction.getId());
         List<MemberAction> memberActions = memberActionRepository.findAll();
 
         assertThat(memberActions).hasSize(4)

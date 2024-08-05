@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ public class Event {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 20;
     private static final String SPACES = "  ";
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[0-9]{4}$");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +28,15 @@ public class Event {
 
     private String name;
 
+    private String password;
+
     private String token;
 
-    public Event(String name, String token) {
+    public Event(String name, String password, String token) {
         validateName(name);
+        validatePassword(password);
         this.name = name;
+        this.password = password;
         this.token = token;
     }
 
@@ -45,6 +52,13 @@ public class Event {
         if (isBlankContinuous(name)) {
             throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
                     String.format("행사 이름에는 공백 문자가 연속될 수 없습니다. 입력한 이름 : %s", name));
+        }
+    }
+
+    private void validatePassword(String password) {
+        Matcher matcher = PASSWORD_PATTERN.matcher(password);
+        if (!matcher.matches()) {
+            throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST, "비밀번호는 4자리 숫자만 가능합니다.");
         }
     }
 

@@ -9,14 +9,14 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import server.haengdong.domain.event.Event;
+import server.haengdong.support.fixture.Fixture;
 
 class MemberBillReportTest {
 
     @DisplayName("액션 목록으로 참가자 정산 리포트를 생성한다.")
     @Test
     void createByActions() {
-        String token = "TOK2N";
-        Event event = new Event("행동대장", token);
+        Event event = Fixture.EVENT1;
         List<BillAction> billActions = List.of(
                 new BillAction(new Action(event, 4L), "뽕족", 60_000L),
                 new BillAction(new Action(event, 6L), "인생맥주", 40_000L),

@@ -42,7 +42,7 @@ class EventControllerTest {
     @DisplayName("이벤트를 생성한다.")
     @Test
     void saveEvent() throws Exception {
-        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
+        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리", "0987");
         String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
         String eventId = "망쵸토큰";
         EventAppResponse eventAppResponse = new EventAppResponse(eventId);

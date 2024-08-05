@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongException;
+import server.haengdong.support.fixture.Fixture;
 
 class BillActionTest {
 
@@ -17,7 +18,7 @@ class BillActionTest {
     @ParameterizedTest
     @ValueSource(strings = {" 감 ", "", " ", "1234567890123456789012345678901"})
     void validateTitle(String title) {
-        Event event = new Event("name", "token");
+        Event event = Fixture.EVENT1;
         Action action = new Action(event, 1L);
         Long price = 100L;
 
@@ -30,7 +31,7 @@ class BillActionTest {
     @ParameterizedTest
     @ValueSource(longs = {0, 10_000_001, 20_000_000})
     void validatePrice(long price) {
-        Event event = new Event("name", "token");
+        Event event = Fixture.EVENT1;
         Action action = new Action(event, 1L);
         String title = "title";
 
@@ -42,7 +43,7 @@ class BillActionTest {
     @DisplayName("지출 내역을 올바르게 생성한다.")
     @Test
     void createBillAction() {
-        Event event = new Event("name", "token");
+        Event event = Fixture.EVENT1;
         Action action = new Action(event, 1L);
         String title = "title";
         Long price = 1_000L;

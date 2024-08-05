@@ -22,6 +22,7 @@ import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.extension.DatabaseCleanerExtension;
+import server.haengdong.support.fixture.Fixture;
 
 @ExtendWith(DatabaseCleanerExtension.class)
 @SpringBootTest
@@ -39,7 +40,7 @@ class MemberActionFactoryTest {
     @DisplayName("이전 멤버 액션이 시퀀스 기준으로 정렬되지 않은 상태에서 새로운 멤버 액션 요청을 검증한다.")
     @Test
     void createMemberActionsTest() {
-        Event event = eventRepository.save(new Event("우당탕탕 행동대장 백엔드 회식", "토다리_토큰"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action1 = new Action(event, 1L);
         Action action2 = new Action(event, 2L);
         MemberAction memberAction1 = new MemberAction(action1, "토다리", MemberActionStatus.IN, 1L);
@@ -60,7 +61,7 @@ class MemberActionFactoryTest {
     @DisplayName("인원 변동 액션을 생성한다.")
     @Test
     void createMemberActionsTest1() {
-        Event event = eventRepository.save(new Event("우당탕탕 행동대장 백엔드 회식", "토다리_토큰"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
         memberActionRepository.save(memberAction);
@@ -84,7 +85,7 @@ class MemberActionFactoryTest {
     @DisplayName("현재 행사에 참여 중인 경우에 퇴장할 수 있다.")
     @Test
     void createMemberActionsTest2() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
         memberActionRepository.save(memberAction);
@@ -101,7 +102,7 @@ class MemberActionFactoryTest {
     @DisplayName("행사에서 퇴장한 경우에 입장할 수 있다.")
     @Test
     void createMemberActionsTest3() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action1 = new Action(event, 1L);
         MemberAction memberAction1 = new MemberAction(action1, "토다리", MemberActionStatus.IN, 1L);
         memberActionRepository.save(memberAction1);
@@ -121,7 +122,7 @@ class MemberActionFactoryTest {
     @DisplayName("행사에 입장한 적 없는 경우에 입장할 수 있다.")
     @Test
     void createMemberActionsTest4() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
         memberActionRepository.save(memberAction);
@@ -138,7 +139,7 @@ class MemberActionFactoryTest {
     @DisplayName("행사에 입장하지 않았을 경우 퇴장할 수 없다.")
     @Test
     void createMemberActionTest5() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "OUT")));
@@ -153,7 +154,7 @@ class MemberActionFactoryTest {
     @DisplayName("행사에 이미 참여 중인 경우 다시 입장할 수 없다.")
     @Test
     void createMemberActionTest6() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
         memberActionRepository.save(memberAction);
@@ -170,7 +171,7 @@ class MemberActionFactoryTest {
     @DisplayName("한 명의 사용자는 동시에 여러 번 입장할 수 없다.")
     @Test
     void createMemberActionTest7() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(
@@ -188,7 +189,7 @@ class MemberActionFactoryTest {
     @DisplayName("한 명의 사용자는 동시에 여러 번 퇴장할 수 없다.")
     @Test
     void createMemberActionTest8() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
         memberActionRepository.save(memberAction);
@@ -208,7 +209,7 @@ class MemberActionFactoryTest {
     @DisplayName("한 명의 사용자는 입장과 퇴장을 동시에 할 수 없다.")
     @Test
     void createMemberActionTest9() {
-        Event event = eventRepository.save(new Event("test", "TOKEN"));
+        Event event = eventRepository.save(Fixture.EVENT1);
         Action action = new Action(event, 1L);
         MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
         memberActionRepository.save(memberAction);
