@@ -20,7 +20,7 @@ const meta = {
     variants: {
       description: '',
       control: {type: 'select'},
-      options: ['primary', 'secondary', 'tertiary', 'destructive'],
+      options: ['none', 'primary', 'secondary', 'tertiary', 'destructive'],
     },
     children: {
       description: '',
