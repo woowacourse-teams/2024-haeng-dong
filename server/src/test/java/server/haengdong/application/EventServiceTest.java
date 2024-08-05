@@ -9,9 +9,9 @@ import static server.haengdong.domain.action.MemberActionStatus.IN;
 import static server.haengdong.domain.action.MemberActionStatus.OUT;
 
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,7 +22,6 @@ import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.domain.action.Action;
-import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
@@ -30,22 +29,18 @@ import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
+import server.haengdong.support.extension.DatabaseCleanerExtension;
 import server.haengdong.exception.HaengdongException;
 
+@ExtendWith(DatabaseCleanerExtension.class)
 @SpringBootTest
 class EventServiceTest {
 
     @Autowired
     private EventService eventService;
 
-    @MockBean
-    private EventTokenProvider eventTokenProvider;
-
     @Autowired
     private EventRepository eventRepository;
-
-    @Autowired
-    private ActionRepository actionRepository;
 
     @Autowired
     private BillActionRepository billActionRepository;
@@ -53,13 +48,8 @@ class EventServiceTest {
     @Autowired
     private MemberActionRepository memberActionRepository;
 
-    @AfterEach
-    void tearDown() {
-        billActionRepository.deleteAllInBatch();
-        memberActionRepository.deleteAllInBatch();
-        actionRepository.deleteAllInBatch();
-        eventRepository.deleteAllInBatch();
-    }
+    @MockBean
+    private EventTokenProvider eventTokenProvider;
 
     @DisplayName("행사를 생성한다")
     @Test
@@ -102,10 +92,10 @@ class EventServiceTest {
 
         assertThat(actionAppResponses).hasSize(3)
                 .extracting(ActionAppResponse::actionId,
-                        ActionAppResponse::name,
-                        ActionAppResponse::price,
-                        ActionAppResponse::sequence,
-                        ActionAppResponse::actionTypeName)
+                            ActionAppResponse::name,
+                            ActionAppResponse::price,
+                            ActionAppResponse::sequence,
+                            ActionAppResponse::actionTypeName)
                 .containsExactly(
                         tuple(1L, "토다리", null, 1L, "IN"),
                         tuple(2L, "쿠키", null, 2L, "IN"),
