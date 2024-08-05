@@ -2,12 +2,16 @@
 import {forwardRef} from 'react';
 
 import {IconButtonProps} from '@components/IconButton/IconButton.type';
-import {InputDelete, Plus, Buljusa} from '@/assets';
+import {InputDelete, Plus, Buljusa, RightChevron, Arrow, Trash, Error} from '@assets';
 
 const ICON = {
   inputDelete: <InputDelete />,
   plus: <Plus />,
   buljusa: <Buljusa />,
+  rightChevron: <RightChevron />,
+  arrow: <Arrow />,
+  error: <Error />,
+  trash: <Trash />,
 };
 
 export const IconButton: React.FC<IconButtonProps> = forwardRef<HTMLButtonElement, IconButtonProps>(function Button(

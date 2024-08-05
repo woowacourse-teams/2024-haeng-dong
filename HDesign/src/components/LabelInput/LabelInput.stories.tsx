@@ -30,6 +30,7 @@ const meta = {
     // value: '',
     labelText: '이름',
     errorText: 'error가 발생했을 때 나타납니다!',
+    autoFocus: true,
   },
 } satisfies Meta<typeof LabelInput>;
 

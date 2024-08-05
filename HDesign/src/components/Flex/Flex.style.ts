@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 
-import {changeCamelCaseToKebabCase} from '@/utils/ return str.replace(/([a-z])([A-Z])/changeCamelCaseToKebabCase';
+import {changeCamelCaseToKebabCase} from '@utils/changeCamelCaseToKebabCase';
 
 import {FlexDirectionStrictType, FlexProps} from './Flex.type';
 

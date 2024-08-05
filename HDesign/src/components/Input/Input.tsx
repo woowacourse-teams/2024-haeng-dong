@@ -1,20 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import React, {forwardRef, useImperativeHandle, useRef} from 'react';
 
-import {useTheme} from '@/theme/HDesignProvider';
+import IconButton from '@components/IconButton/IconButton';
+import {InputProps} from '@components/Input/Input.type';
+import {inputBoxStyle, inputStyle} from '@components/Input/Input.style';
+import {useInput} from '@components/Input/useInput';
 
-import IconButton from '../IconButton/IconButton';
-
-import {useInput} from './useInput';
-import {InputProps} from './Input.type';
-import {inputBoxStyle, inputStyle} from './Input.style';
+import {useTheme} from '@theme/HDesignProvider';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
-  {value: propsValue, onChange, onFocus, onBlur, inputType, isError, placeholder, ...htmlProps}: InputProps,
+  {value: propsValue, onChange, onFocus, onBlur, inputType, isError, placeholder, autoFocus, ...htmlProps}: InputProps,
   ref,
 ) {
-  const {theme} = useTheme();
   useImperativeHandle(ref, () => inputRef.current!);
+  const {theme} = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
   const {value, handleChange, hasFocus, handleClickDelete, handleBlur, handleFocus, handleKeyDown} = useInput({
     propsValue,
@@ -22,6 +21,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
     onBlur,
     onFocus,
     inputRef,
+    autoFocus,
   });
 
   return (
@@ -33,11 +33,12 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
-        placeholder={inputRef.current === document.activeElement ? '' : placeholder}
+        placeholder={value ? '' : placeholder}
         onKeyDown={handleKeyDown}
+        autoFocus={autoFocus}
         {...htmlProps}
       />
-      {value && hasFocus && <IconButton iconType="inputDelete" onClick={handleClickDelete} />}
+      {value && hasFocus && <IconButton tabIndex={-1} iconType="inputDelete" onMouseDown={handleClickDelete} />}
     </div>
   );
 });

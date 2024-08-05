@@ -4,3 +4,4 @@ export {default as Buljusa} from '@assets/buljusa.svg';
 export {default as Arrow} from '@assets/arrow.svg';
 export {default as Error} from '@assets/error.svg';
 export {default as Trash} from '@assets/trash.svg';
+export {default as RightChevron} from '@assets/rightChevron.svg';

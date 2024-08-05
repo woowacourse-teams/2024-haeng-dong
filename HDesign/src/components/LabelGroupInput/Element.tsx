@@ -8,13 +8,13 @@ import {ElementProps} from './Element.type';
 import {useGroupInputContext} from './GroupInputContext';
 
 const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProps>(function Element(
-  {elementKey, value: propsValue, onChange, onBlur, onFocus, isError, ...htmlProps}: ElementProps,
+  {elementKey, value: propsValue, onChange, onBlur, onFocus, isError, autoFocus, ...htmlProps}: ElementProps,
 
   ref,
 ) {
   useImperativeHandle(ref, () => inputRef.current!);
   const inputRef = useRef<HTMLInputElement>(null);
-  const {setHasAnyFocus, values, setValues, hasAnyErrors, setHasAnyErrors} = useGroupInputContext();
+  const {setHasAnyFocus, values, setValues, errors, setErrors} = useGroupInputContext();
 
   useEffect(() => {
     setValues({...values, [elementKey]: `${propsValue}`});
@@ -29,7 +29,7 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
   };
 
   useEffect(() => {
-    setHasAnyErrors({...hasAnyErrors, [elementKey]: isError ?? false});
+    setErrors({...errors, [elementKey]: isError ?? false});
   }, [isError]);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -54,6 +54,7 @@ const Element: React.FC<ElementProps> = forwardRef<HTMLInputElement, ElementProp
       onChange={handleChange}
       onBlur={handleBlur}
       onFocus={handleFocus}
+      autoFocus={autoFocus}
       {...htmlProps}
     />
   );

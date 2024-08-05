@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 
-import {Theme} from '@/theme/theme.type';
+import {Theme} from '@theme/theme.type';
 
 export const expenseItemStyle = () =>
   css({

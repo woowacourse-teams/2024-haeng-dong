@@ -5,6 +5,8 @@ import {FixedButtonStyleProps} from '@components/FixedButton/FixedButton.type';
 
 import {Theme} from '@theme/theme.type';
 
+import {setDarker, setLighter} from '@utils/colors';
+
 export const fixedButtonContainerStyle = (theme: Theme) =>
   css({
     display: 'flex',
@@ -23,7 +25,19 @@ export const buttonContainerStyle = css({
   width: '100%',
 });
 
-export const deleteButtonStyle = (theme: Theme) =>
+const getHoverAndActiveBackground = (color: string) =>
+  css({
+    ':not(:disabled)': {
+      '&:hover': {
+        backgroundColor: setLighter(color, 0.15),
+      },
+      '&:active': {
+        backgroundColor: setDarker(color, 0.15),
+      },
+    },
+  });
+
+export const deleteButtonStyle = (theme: Theme) => [
   css({
     display: 'flex',
     justifyContent: 'center',
@@ -36,7 +50,12 @@ export const deleteButtonStyle = (theme: Theme) =>
     fontSize: '1.25rem',
     fontWeight: '700',
     lineHeight: '1',
-  });
+
+    transition: '0.2s',
+    transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
+  }),
+  getHoverAndActiveBackground(theme.colors.error),
+];
 
 export const fixedButtonStyle = (props: Required<FixedButtonStyleProps>) => {
   return [getFixedButtonDefaultStyle(props.theme), getFixedButtonVariantsStyle(props.variants, props.theme)];
@@ -55,30 +74,46 @@ const getFixedButtonDefaultStyle = (theme: Theme) =>
     fontWeight: '700',
     lineHeight: '1',
 
+    transition: '0.2s',
+    transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
+
     '&:disabled': {
       backgroundColor: theme.colors.tertiary,
       color: theme.colors.onPrimary,
+      cursor: 'default',
     },
   });
 
 const getFixedButtonVariantsStyle = (variants: ButtonVariants, theme: Theme) => {
   const style = {
-    primary: css({
-      backgroundColor: theme.colors.primary,
-      color: theme.colors.onPrimary,
-    }),
-    secondary: css({
-      backgroundColor: theme.colors.secondary,
-      color: theme.colors.onSecondary,
-    }),
-    tertiary: css({
-      backgroundColor: theme.colors.tertiary,
-      color: theme.colors.onTertiary,
-    }),
-    destructive: css({
-      backgroundColor: theme.colors.error,
-      color: theme.colors.onPrimary,
-    }),
+    primary: [
+      css({
+        backgroundColor: theme.colors.primary,
+        color: theme.colors.onPrimary,
+      }),
+      getHoverAndActiveBackground(theme.colors.primary),
+    ],
+    secondary: [
+      css({
+        backgroundColor: theme.colors.secondary,
+        color: theme.colors.onSecondary,
+      }),
+      getHoverAndActiveBackground(theme.colors.secondary),
+    ],
+    tertiary: [
+      css({
+        backgroundColor: theme.colors.tertiary,
+        color: theme.colors.onTertiary,
+      }),
+      getHoverAndActiveBackground(theme.colors.tertiary),
+    ],
+    destructive: [
+      css({
+        backgroundColor: theme.colors.error,
+        color: theme.colors.onPrimary,
+      }),
+      getHoverAndActiveBackground(theme.colors.error),
+    ],
   };
 
   return style[variants];

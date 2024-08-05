@@ -16,12 +16,14 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
       "@token/*": ["src/token/*"],
+      "@type/*": ["src/type/*"],
       "@theme/*": ["src/theme/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "jsxImportSource": "@emotion/react",
     "allowSyntheticDefaultImports": true

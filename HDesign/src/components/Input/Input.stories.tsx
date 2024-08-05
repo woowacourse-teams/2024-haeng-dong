@@ -16,6 +16,7 @@ const meta = {
   },
   args: {
     placeholder: 'placeholder',
+    autoFocus: true,
   },
 } satisfies Meta<typeof Input>;
 

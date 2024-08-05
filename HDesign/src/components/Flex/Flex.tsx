@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react';
 
-import {StrictPropsWithChildren} from '@/types/strictPropsWithChildren';
-import {useTheme} from '@/theme/HDesignProvider';
+import {StrictPropsWithChildren} from '@type/strictPropsWithChildren';
+
+import {useTheme} from '@theme/HDesignProvider';
 
 import {FlexProps} from './Flex.type';
 import {flexStyle} from './Flex.style';
