@@ -67,9 +67,11 @@ export const useBottomSheet = ({isOpened, onChangeClose, onChangeOpen}: UseBotto
     setTranslateY(Math.max(deltaY, 0));
   };
 
+  const threshold = window.screen.height / 10;
+
   const handleDragEnd = () => {
     setIsDragging(false);
-    if (translateY > window.screen.height / 10) {
+    if (translateY > threshold) {
       handleClose();
     }
     setTranslateY(0);
