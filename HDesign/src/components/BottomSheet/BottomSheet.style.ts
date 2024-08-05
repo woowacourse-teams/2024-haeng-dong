@@ -2,7 +2,12 @@ import {css} from '@emotion/react';
 
 import {Theme} from '@theme/theme.type';
 
-export const dimmedLayerStyle = (theme: Theme) =>
+export const display = (visible: boolean) =>
+  css({
+    visibility: visible ? 'visible' : 'hidden',
+  });
+
+export const dimmedLayerStyle = (theme: Theme, isOpened: boolean) =>
   css({
     // TODO: (@todari) zindex foundation
     position: 'fixed',
@@ -11,10 +16,13 @@ export const dimmedLayerStyle = (theme: Theme) =>
     width: '100vw',
     height: '100vh',
     backgroundColor: theme.colors.black,
-    opacity: '0.48',
+    opacity: isOpened ? '0.48' : '0',
+
+    transition: '0.2s',
+    transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
   });
 
-export const bottomSheetContainerStyle = (theme: Theme) =>
+export const bottomSheetContainerStyle = (theme: Theme, isOpened: boolean, isDragging: boolean, translateY: number) =>
   css({
     position: 'fixed',
     display: 'flex',
@@ -27,12 +35,21 @@ export const bottomSheetContainerStyle = (theme: Theme) =>
     height: '80%',
     borderRadius: '1.5rem 1.5rem 0 0',
     backgroundColor: theme.colors.white,
+
+    transform: isOpened ? `translateY(${translateY}px)` : 'translateY(100%)',
+    transition: isDragging ? 'none' : 'transform 0.2s ease-in-out',
   });
+
+export const indicatorContainerStyle = css({
+  display: 'flex',
+  justifyContent: 'center',
+  padding: '0.5rem 0',
+  width: '100%',
+});
 
 export const indicatorStyle = (theme: Theme) =>
   css({
     display: 'flex',
-    margin: '0.5rem 0',
     width: '5rem',
     height: '0.25rem',
     borderRadius: '0.125rem',

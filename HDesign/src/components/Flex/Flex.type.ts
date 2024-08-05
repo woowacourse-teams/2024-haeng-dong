@@ -1,4 +1,4 @@
-import {Theme} from '@/theme/theme.type';
+import {Theme} from '@theme/theme.type';
 
 export type FlexDirectionType = 'row' | 'column' | 'rowReverse' | 'columnReverse';
 export type FlexDirectionStrictType = 'row' | 'column' | 'row-reverse' | 'column-reverse';

@@ -58,6 +58,7 @@ export const Playground: Story = {
           onChange={e => handleChangeName(e)}
           onBlur={() => console.log('!!!')}
           isError={isError}
+          autoFocus
         />
         <LabelGroupInput.Element
           value={price}
@@ -66,6 +67,7 @@ export const Playground: Story = {
           placeholder="금액"
           onBlur={() => console.log('!!!')}
           isError={false}
+          autoFocus
         />
       </LabelGroupInput>
     );

@@ -1,5 +1,4 @@
 name: Storybook Deployment
-run-name: ${{ github.actor }}의 스토리북 배포
 
 on:
   pull_request:

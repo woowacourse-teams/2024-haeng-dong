@@ -4,6 +4,7 @@ export interface LabelInputCustomProps {
   labelText: string;
   errorText?: string;
   isError?: boolean;
+  autoFocus: boolean;
 }
 
 export type LabelInputOptionProps = LabelInputCustomProps & LabelInputCustomProps;

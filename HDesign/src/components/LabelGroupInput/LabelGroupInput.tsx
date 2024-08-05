@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import Text from '@components/Text/Text';
-import {useTheme} from '@/theme/HDesignProvider';
+
+import {useTheme} from '@theme/HDesignProvider';
 
 import Flex from '../Flex/Flex';
 
@@ -12,17 +13,20 @@ import {GroupInputProvider, useGroupInputContext} from './GroupInputContext';
 
 const LabelGroupInput: React.FC<LabelGroupInputProps> = ({labelText, errorText, children}: LabelGroupInputProps) => {
   const {theme} = useTheme();
-  const {hasAnyFocus, values, hasAnyErrors} = useGroupInputContext();
+  const {hasAnyFocus, values, errors} = useGroupInputContext();
+
+  const hasAnyValue = !Object.values(values).every(value => value === '');
+  const hasAnyError = !Object.values(errors).every(error => !error);
 
   return (
     <Flex flexDirection="column" gap="0.375rem">
       <Flex justifyContent="spaceBetween" paddingInline="0.5rem" margin="0 0 0.375rem 0">
-        <Text size="caption" css={labelTextStyle(theme)}>
-          {(hasAnyFocus || !Object.values(values).every(value => value === '')) && labelText}
+        <Text size="caption" css={labelTextStyle(theme, hasAnyFocus, hasAnyValue)}>
+          {labelText}
         </Text>
         {errorText && (
-          <Text size="caption" css={errorTextStyle(theme)}>
-            {!Object.values(hasAnyErrors).every(error => !error) && errorText}
+          <Text size="caption" css={errorTextStyle(theme, hasAnyError)}>
+            {errorText}
           </Text>
         )}
       </Flex>

@@ -13,7 +13,7 @@ import LabelGroupInput from '@components/LabelGroupInput/LabelGroupInput';
 import Search from '@components/Search/Search';
 import StepItem from '@components/StepItem/StepItem';
 import Switch from '@components/Switch/Switch';
-import Tabs from '@/components/Tabs/Tabs';
+import Tabs from '@components/Tabs/Tabs';
 import Text from '@components/Text/Text';
 import TextButton from '@components/TextButton/TextButton';
 import Title from '@components/Title/Title';

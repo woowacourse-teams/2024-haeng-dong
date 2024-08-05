@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 
-import {StrictPropsWithChildren} from '@/types/strictPropsWithChildren';
-import {COLORS, ColorKeys} from '@/token/colors';
+import {StrictPropsWithChildren} from '@type/strictPropsWithChildren';
 
 import {useTheme} from '@theme/HDesignProvider';
+
+import {COLORS, ColorKeys} from '@token/colors';
 
 import IconButton from '../IconButton/IconButton';
 
