@@ -2,7 +2,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import IconButton from '@components/IconButton/IconButton';
-import {Search, Buljusa, InputDelete, RightChevron, Error, Trash} from '@assets';
+import Icon from '@components/Icon/Icon';
 
 const meta = {
   title: 'Components/IconButton',
@@ -25,13 +25,20 @@ const meta = {
     children: {
       description: '',
       control: {type: 'select'},
-      options: [<InputDelete />, <Buljusa />, <RightChevron />, <Search />, <Error />, <Trash />],
+      options: [
+        <Icon iconType="inputDelete" />,
+        <Icon iconType="buljusa" />,
+        <Icon iconType="rightChevron" />,
+        <Icon iconType="search" />,
+        <Icon iconType="error" />,
+        <Icon iconType="trash" />,
+      ],
     },
   },
   args: {
     size: 'medium',
     variants: 'destructive',
-    children: <Trash />,
+    children: <Icon iconType="trash" />,
   },
 } satisfies Meta<typeof IconButton>;
 
