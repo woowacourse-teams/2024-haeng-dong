@@ -6,23 +6,24 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.CurrentMembers;
-import server.haengdong.domain.event.Event;
 import server.haengdong.domain.action.MemberAction;
-import server.haengdong.domain.action.MemberActionStatus;
-import server.haengdong.domain.action.ActionRepository;
-import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.MemberActionStatus;
+import server.haengdong.domain.event.Event;
+import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
+import server.haengdong.support.extension.DatabaseCleanerExtension;
 
+@ExtendWith(DatabaseCleanerExtension.class)
 @SpringBootTest
 class MemberActionFactoryTest {
 
@@ -33,17 +34,7 @@ class MemberActionFactoryTest {
     private MemberActionRepository memberActionRepository;
 
     @Autowired
-    private ActionRepository actionRepository;
-
-    @Autowired
     private EventRepository eventRepository;
-
-    @AfterEach
-    void tearDown() {
-        memberActionRepository.deleteAllInBatch();
-        actionRepository.deleteAllInBatch();
-        eventRepository.deleteAllInBatch();
-    }
 
     @DisplayName("이전 멤버 액션이 시퀀스 기준으로 정렬되지 않은 상태에서 새로운 멤버 액션 요청을 검증한다.")
     @Test
@@ -80,7 +71,7 @@ class MemberActionFactoryTest {
 
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
         List<MemberAction> memberActions = memberActionFactory.createMemberActions(memberActionsSaveAppRequest,
-                currentMembers, startAction
+                                                                                   currentMembers, startAction
         );
 
         assertThat(memberActions).hasSize(1)

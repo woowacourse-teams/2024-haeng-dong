@@ -8,22 +8,23 @@ import static server.haengdong.domain.action.MemberActionStatus.IN;
 import static server.haengdong.domain.action.MemberActionStatus.OUT;
 
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.action.Action;
-import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
+import server.haengdong.support.extension.DatabaseCleanerExtension;
 
+@ExtendWith(DatabaseCleanerExtension.class)
 @SpringBootTest
 class MemberActionServiceTest {
 
@@ -35,16 +36,6 @@ class MemberActionServiceTest {
 
     @Autowired
     private EventRepository eventRepository;
-
-    @Autowired
-    private ActionRepository actionRepository;
-
-    @AfterEach
-    void tearDown() {
-        memberActionRepository.deleteAllInBatch();
-        actionRepository.deleteAllInBatch();
-        eventRepository.deleteAllInBatch();
-    }
 
     @DisplayName("현재 행사에 참여하고 있는 경우에 나갈 수 있다.")
     @Test
@@ -118,7 +109,7 @@ class MemberActionServiceTest {
         memberActionService.deleteMember(token, "참여자");
 
         List<MemberAction> memberActions = memberActionRepository.findAll();
-        
+
         assertThat(memberActions).hasSize(5)
                 .extracting("memberName", "status")
                 .containsExactly(

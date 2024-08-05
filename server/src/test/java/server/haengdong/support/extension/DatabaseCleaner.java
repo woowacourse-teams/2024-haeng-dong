@@ -33,7 +33,7 @@ class DatabaseCleaner {
         String sql = """
                 select table_name
                 from information_schema.tables
-                where table_schema = 'public'
+                where table_schema = 'PUBLIC'
                 """;
         return em.createNativeQuery(sql).getResultList();
     }
