@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
 
+import {useEffect, useState} from 'react';
+
 import LabelInput from '@components/LabelInput/LabelInput';
-import Input from '@components/Input/Input';
 
 const meta = {
   title: 'Components/LabelInput',
@@ -16,15 +17,19 @@ const meta = {
       description: 'label에 들어갈 텍스트를 작성',
       control: {type: 'text'},
     },
+    isError: {
+      description: '',
+      control: {type: 'boolean'},
+    },
     errorText: {
       description: 'error에 들어갈 텍스트를 작성',
       control: {type: 'text'},
     },
   },
   args: {
-    labelText: 'label 내용',
+    // value: '',
+    labelText: '이름',
     errorText: 'error가 발생했을 때 나타납니다!',
-    children: <Input placeholder="labelInput 테스트를 위한 Input" />,
   },
 } satisfies Meta<typeof LabelInput>;
 
@@ -32,4 +37,19 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  render: ({...args}) => {
+    const [value, setValue] = useState('');
+    const [isError, setIsError] = useState(false);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.value.length < 4) {
+        setValue(event.target.value);
+        setIsError(false);
+      } else {
+        event.target.value = value;
+        setIsError(true);
+      }
+    };
+    return <LabelInput value={value} onChange={e => handleChange(e)} isError={isError} {...args} />;
+  },
+};

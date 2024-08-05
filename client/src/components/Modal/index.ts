@@ -1,2 +1,2 @@
-export {default as SetInitialParticipants} from './SetInitialParticipants/SetInitialParticipants';
-export {default as SetActionModalContent} from './SetActionModalContent/SetActionModalContent';
+export {default as SetInitialMemberListModal} from './SetInitialMemberListModal/SetInitialMemberListModal';
+export {default as SetActionListModal} from './SetActionModal/SetActionListModal';

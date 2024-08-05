@@ -17,6 +17,7 @@ const getButtonDefaultStyle = (theme: Theme) =>
     display: 'flex',
     justifyContent: 'center',
     lineHeight: '1',
+    whiteSpace: 'nowrap',
 
     '&:disabled': {
       backgroundColor: theme.colors.tertiary,

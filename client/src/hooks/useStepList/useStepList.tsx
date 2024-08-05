@@ -3,9 +3,9 @@ import type {MemberType, Bill, BillAction, BillStep, MemberStep} from 'types/ser
 import {PropsWithChildren, createContext, useContext, useEffect, useState} from 'react';
 
 import useEventId from '@hooks/useEventId/useEventId';
-import {requestAddBillList} from '@apis/request/bill';
-import {requestUpdateMemberList} from '@apis/request/member';
-import {requestStepList} from '@apis/request/stepList';
+import {requestPostBillList} from '@apis/request/bill';
+import {requestPostMemberList} from '@apis/request/member';
+import {requestGetStepList} from '@apis/request/stepList';
 
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
@@ -33,7 +33,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   }, [eventId]);
 
   const refreshStepList = async () => {
-    const stepList = await requestStepList({eventId});
+    const stepList = await requestGetStepList({eventId});
 
     if (stepList.length !== 0) {
       setNameMemberList(stepList[stepList.length - 1].members);
@@ -44,7 +44,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
 
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
     try {
-      await requestUpdateMemberList({eventId, type, memberNameList});
+      await requestPostMemberList({eventId, type, memberNameList});
 
       // TODO: (@weadie) 클라이언트 단에서 멤버 목록을 관리하기 위한 로직. 개선이 필요하다.
       if (type === 'IN') setNameMemberList(prev => [...prev, ...memberNameList]);
@@ -58,7 +58,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
 
   const addBill = async (billList: Bill[]) => {
     // TODO: (@weadie) 에러 처리
-    await requestAddBillList({eventId, billList});
+    await requestPostBillList({eventId, billList});
 
     refreshStepList();
   };

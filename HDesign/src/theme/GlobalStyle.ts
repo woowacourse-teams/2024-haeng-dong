@@ -27,6 +27,10 @@ export const GlobalStyle = css`
     line-height: 0;
   }
 
+  button:disabled {
+    cursor: default;
+  }
+
   /* Remove list styles (bullets/numbers) */
   ol,
   ul,

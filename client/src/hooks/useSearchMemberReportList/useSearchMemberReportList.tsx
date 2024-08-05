@@ -2,7 +2,7 @@ import type {MemberReport} from 'types/serviceType';
 
 import {useEffect, useState} from 'react';
 
-import {requestMemberReportList} from '@apis/request/report';
+import {requestGetMemberReportList} from '@apis/request/report';
 import useEventId from '@hooks/useEventId/useEventId';
 
 type UseSearchMemberReportListParams = {
@@ -20,7 +20,7 @@ const useSearchMemberReportList = ({name}: UseSearchMemberReportListParams) => {
       // TODO: (@weadie) eventId에 의존하는 두 개의 훅에 대한 리펙토링 필요
       if (eventId === '') return;
 
-      const memberReportListData = await requestMemberReportList({eventId});
+      const memberReportListData = await requestGetMemberReportList({eventId});
 
       setMemberReportList(memberReportListData);
     };
