@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 
-import {useTheme} from '@theme/HDesignProvider';
-
 import Icon from '@components/Icon/Icon';
+import Flex from '@components/Flex/Flex';
+import Text from '@components/Text/Text';
+
+import {useTheme} from '@theme/HDesignProvider';
 
 import IconButton from '../IconButton/IconButton';
 
 import {dragHandleItemStyle, dragHandlerStyle, textStyle} from './DragHandleItem.style';
 import {DragHandleItemProps} from './DragHandleItem.type';
-import Flex from '@components/Flex/Flex';
-import Text from '@components/Text/Text';
 
 export const DragHandleItem = ({
   hasDragHandler = false,

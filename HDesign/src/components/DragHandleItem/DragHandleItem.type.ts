@@ -1,6 +1,6 @@
-import {ColorKeys} from '@token/colors';
-
 import {Theme} from '@theme/theme.type';
+
+import {ColorKeys} from '@token/colors';
 
 export interface DragHandleItemStyleProps {
   theme?: Theme;
