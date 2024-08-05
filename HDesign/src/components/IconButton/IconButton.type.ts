@@ -4,7 +4,7 @@ export type IconButtonSize = 'large' | 'medium' | 'small';
 export type IconButtonVariants = 'none' | 'primary' | 'secondary' | 'tertiary' | 'destructive';
 
 export interface IconButtonStyleProps {
-  size: IconButtonSize;
+  size?: IconButtonSize;
   variants: IconButtonVariants;
   theme?: Theme;
 }

@@ -8,7 +8,7 @@ import {useTheme} from '@theme/HDesignProvider';
 import {iconButtonStyle} from './IconButton.style';
 
 export const IconButton: React.FC<IconButtonProps> = forwardRef<HTMLButtonElement, IconButtonProps>(function Button(
-  {size, variants, children, ...htmlProps}: IconButtonProps,
+  {size = 'large', variants, children, ...htmlProps}: IconButtonProps,
   ref,
 ) {
   const {theme} = useTheme();
