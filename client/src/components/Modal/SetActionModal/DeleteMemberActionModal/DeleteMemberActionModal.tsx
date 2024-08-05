@@ -5,7 +5,7 @@ import {BottomSheet, Flex, Input, Text, IconButton, FixedButton} from 'haengdong
 import useDeleteMemberAction from '@hooks/useDeleteMemberAction/useDeleteMemberAction';
 import {useStepList} from '@hooks/useStepList/useStepList';
 
-import {bottomSheetStyle, buttonStyle, inputGroupStyle} from './DeleteMemberActionModal.style';
+import {bottomSheetHeaderStyle, bottomSheetStyle, buttonStyle, inputGroupStyle} from './DeleteMemberActionModal.style';
 
 type DeleteMemberActionModalProps = {
   memberActionType: MemberType;
@@ -29,7 +29,11 @@ const DeleteMemberActionModal = ({
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
       <div css={bottomSheetStyle}>
-        <Text size="bodyBold">{memberActionType === 'IN' ? '들어온' : '나간'} 인원 수정하기</Text>
+        <header css={bottomSheetHeaderStyle}>
+          <Text size="bodyBold">{memberActionType === 'IN' ? '들어온' : '나간'} 인원 수정하기</Text>
+          {/* TODO: (@cookie): 텍스트 색 수정 필요 */}
+          <Text size="bodyBold">{`${aliveActionList.length}명`}</Text>
+        </header>
         <ul css={inputGroupStyle}>
           {aliveActionList.map(member => (
             <li key={member.actionId}>

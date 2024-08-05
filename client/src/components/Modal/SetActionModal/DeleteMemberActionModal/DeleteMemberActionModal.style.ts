@@ -1,5 +1,4 @@
 import {css} from '@emotion/react';
-import {Theme} from 'haengdong-design/dist/theme/theme.type';
 
 export const bottomSheetStyle = css({
   display: 'flex',
@@ -8,6 +7,14 @@ export const bottomSheetStyle = css({
   width: '100%',
   height: '100%',
   padding: '0 1.5rem',
+});
+
+export const bottomSheetHeaderStyle = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignContent: 'center',
+
+  width: '100%',
 });
 
 export const inputGroupStyle = css({
