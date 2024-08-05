@@ -2,7 +2,9 @@
 import {forwardRef} from 'react';
 
 import {IconButtonProps} from '@components/IconButton/IconButton.type';
+
 import {useTheme} from '@theme/HDesignProvider';
+
 import {iconButtonStyle} from './IconButton.style';
 
 export const IconButton: React.FC<IconButtonProps> = forwardRef<HTMLButtonElement, IconButtonProps>(function Button(

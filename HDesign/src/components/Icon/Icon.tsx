@@ -2,8 +2,10 @@
 
 import {IconProps} from '@components/Icon/Icon.type';
 import {InputDelete, Buljusa, RightChevron, Search, Trash, Confirm, Error} from '@assets';
-import {iconStyle} from './Icon.style';
+
 import {useTheme} from '@theme/HDesignProvider';
+
+import {iconStyle} from './Icon.style';
 
 const ICON = {
   inputDelete: <InputDelete />,

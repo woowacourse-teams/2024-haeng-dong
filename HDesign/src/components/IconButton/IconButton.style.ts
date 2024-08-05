@@ -1,8 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import {Theme} from '@theme/theme.type';
-import {IconButtonSize, IconButtonStyleProps, IconButtonVariants} from './IconButton.type';
 import {css} from '@emotion/react';
+
+import {Theme} from '@theme/theme.type';
+
 import {setDarker, setLighter} from '@utils/colors';
+
+import {IconButtonSize, IconButtonStyleProps, IconButtonVariants} from './IconButton.type';
 
 export const iconButtonStyle = (props: Required<IconButtonStyleProps>) => {
   if (props.variants === 'none') {

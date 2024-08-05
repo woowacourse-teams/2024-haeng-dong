@@ -2,12 +2,11 @@
 
 import Text from '@components/Text/Text';
 
-import {Arrow} from '@assets/index';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';
 import {expenseItemStyle, expenseListStyle, expenseItemLeftStyle, TextStyle} from './ExpenseList.style';
+import Icon from '@components/Icon/Icon';
 
 // TODO: (@soha) 따로 파일 분리할까 고민중.. 여기서만 사용할 것 같긴 한데.. 흠
 function ExpenseItem({name, price, ...buttonProps}: ExpenseItemProps) {
@@ -19,7 +18,7 @@ function ExpenseItem({name, price, ...buttonProps}: ExpenseItemProps) {
       </Text>
       <div css={expenseItemLeftStyle}>
         <Text css={TextStyle(theme)}>{price.toLocaleString('ko-kr')}원</Text>
-        <Arrow />
+        <Icon iconType="rightChevron" />
       </div>
     </button>
   );
