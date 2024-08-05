@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Input, Title, TopNav, Back} from 'haengdong-design';
 
-import {requestCreateNewEvent} from '@apis/request/event';
+import {requestPostNewEvent} from '@apis/request/event';
 import validateEventName from '@utils/validate/validateEventName';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
@@ -16,7 +16,7 @@ const SetEventNamePage = () => {
   const submitEventName = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await requestCreateNewEvent({eventName});
+    const response = await requestPostNewEvent({eventName});
 
     if (response) {
       const {eventId} = response;
