@@ -19,16 +19,16 @@ import {
 const BottomSheet: React.FC<BottomSheetProps> = ({
   isOpened = false,
   children,
-  onChangeClose,
-  onChangeOpen,
+  onClose,
+  onOpen,
   ...props
 }: BottomSheetProps) => {
   const {theme} = useTheme();
   const {opened, visible, handleClose, handleDragStart, handleDrag, handleDragEnd, isDragging, translateY} =
     useBottomSheet({
       isOpened,
-      onChangeClose,
-      onChangeOpen,
+      onClose,
+      onOpen,
     });
 
   // TODO: (@todari) : children 길이 길 때 overflow button에 안가리는 영역 처리
