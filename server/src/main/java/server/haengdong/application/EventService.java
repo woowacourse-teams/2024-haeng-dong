@@ -11,6 +11,7 @@ import server.haengdong.application.request.MemberUpdateAppRequest;
 import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
+import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
@@ -88,6 +89,15 @@ public class EventService {
         }
 
         return actionAppResponses;
+    }
+
+    public MembersAppResponse findAllMembers(String token) {
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+
+        List<String> memberNames = memberActionRepository.findAllUniqueMemberByEvent(event);
+
+        return new MembersAppResponse(memberNames);
     }
 
     @Transactional
