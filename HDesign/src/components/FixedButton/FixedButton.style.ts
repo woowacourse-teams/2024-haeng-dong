@@ -25,7 +25,19 @@ export const buttonContainerStyle = css({
   width: '100%',
 });
 
-export const deleteButtonStyle = (theme: Theme) =>
+const getHoverAndActiveBackground = (color: string) =>
+  css({
+    ':not(:disabled)': {
+      '&:hover': {
+        backgroundColor: setLighter(color, 0.15),
+      },
+      '&:active': {
+        backgroundColor: setDarker(color, 0.15),
+      },
+    },
+  });
+
+export const deleteButtonStyle = (theme: Theme) => [
   css({
     display: 'flex',
     justifyContent: 'center',
@@ -41,14 +53,9 @@ export const deleteButtonStyle = (theme: Theme) =>
 
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
-
-    '&:hover:not(:disabled)': {
-      backgroundColor: setLighter(theme.colors.error, 0.15),
-    },
-    '&:active:not(:disabled)': {
-      backgroundColor: setDarker(theme.colors.error, 0.15),
-    },
-  });
+  }),
+  getHoverAndActiveBackground(theme.colors.error),
+];
 
 export const fixedButtonStyle = (props: Required<FixedButtonStyleProps>) => {
   return [getFixedButtonDefaultStyle(props.theme), getFixedButtonVariantsStyle(props.variants, props.theme)];
@@ -79,50 +86,34 @@ const getFixedButtonDefaultStyle = (theme: Theme) =>
 
 const getFixedButtonVariantsStyle = (variants: ButtonVariants, theme: Theme) => {
   const style = {
-    primary: css({
-      backgroundColor: theme.colors.primary,
-      color: theme.colors.onPrimary,
-
-      '&:hover:not(:disabled)': {
-        backgroundColor: setLighter(theme.colors.primary, 0.15),
-      },
-      '&:active:not(:disabled)': {
-        backgroundColor: setDarker(theme.colors.primary, 0.15),
-      },
-    }),
-    secondary: css({
-      backgroundColor: theme.colors.secondary,
-      color: theme.colors.onSecondary,
-
-      '&:hover:not(:disabled)': {
-        backgroundColor: setLighter(theme.colors.secondary, 0.15),
-      },
-      '&:active:not(:disabled)': {
-        backgroundColor: setDarker(theme.colors.secondary, 0.15),
-      },
-    }),
-    tertiary: css({
-      backgroundColor: theme.colors.tertiary,
-      color: theme.colors.onTertiary,
-
-      '&:hover:not(:disabled)': {
-        backgroundColor: setLighter(theme.colors.tertiary, 0.15),
-      },
-      '&:active:not(:disabled)': {
-        backgroundColor: setDarker(theme.colors.tertiary, 0.15),
-      },
-    }),
-    destructive: css({
-      backgroundColor: theme.colors.error,
-      color: theme.colors.onPrimary,
-
-      '&:hover:not(:disabled)': {
-        backgroundColor: setLighter(theme.colors.error, 0.15),
-      },
-      '&:active:not(:disabled)': {
-        backgroundColor: setDarker(theme.colors.error, 0.15),
-      },
-    }),
+    primary: [
+      css({
+        backgroundColor: theme.colors.primary,
+        color: theme.colors.onPrimary,
+      }),
+      getHoverAndActiveBackground(theme.colors.primary),
+    ],
+    secondary: [
+      css({
+        backgroundColor: theme.colors.secondary,
+        color: theme.colors.onSecondary,
+      }),
+      getHoverAndActiveBackground(theme.colors.secondary),
+    ],
+    tertiary: [
+      css({
+        backgroundColor: theme.colors.tertiary,
+        color: theme.colors.onTertiary,
+      }),
+      getHoverAndActiveBackground(theme.colors.tertiary),
+    ],
+    destructive: [
+      css({
+        backgroundColor: theme.colors.error,
+        color: theme.colors.onPrimary,
+      }),
+      getHoverAndActiveBackground(theme.colors.error),
+    ],
   };
 
   return style[variants];

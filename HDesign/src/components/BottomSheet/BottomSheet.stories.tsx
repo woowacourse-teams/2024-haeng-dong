@@ -26,7 +26,7 @@ export const Playground: Story = {
     return (
       <>
         <Button variants="tertiary" children="show modal" onClick={() => setIsOpened(true)} />
-        <BottomSheet {...args} isOpened={isOpened} onChangeClose={() => setIsOpened(false)} />
+        <BottomSheet {...args} isOpened={isOpened} onClose={() => setIsOpened(false)} />
       </>
     );
   },

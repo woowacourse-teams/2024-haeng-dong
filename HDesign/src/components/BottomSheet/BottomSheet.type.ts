@@ -12,8 +12,8 @@ export interface BottomSheetStyleProps {
 
 export interface BottomSheetCustomProps {
   isOpened?: boolean;
-  onChangeOpen?: () => void;
-  onChangeClose?: () => void;
+  onOpen?: () => void;
+  onClose?: () => void;
 }
 
 export type BottomSheetOptionProps = BottomSheetStyleProps & BottomSheetCustomProps;
