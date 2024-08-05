@@ -3,12 +3,12 @@ import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestGet} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
-type ResponseMemberReportList = {
+type ResponseGetMemberReportList = {
   reports: MemberReport[];
 };
 
-export const requestMemberReportList = async ({eventId}: WithEventId) => {
-  const {reports} = await requestGet<ResponseMemberReportList>({
+export const requestGetMemberReportList = async ({eventId}: WithEventId) => {
+  const {reports} = await requestGet<ResponseGetMemberReportList>({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/actions/reports`,
   });
