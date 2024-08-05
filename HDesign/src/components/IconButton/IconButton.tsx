@@ -2,25 +2,17 @@
 import {forwardRef} from 'react';
 
 import {IconButtonProps} from '@components/IconButton/IconButton.type';
-import {InputDelete, Plus, Buljusa, RightChevron, Arrow, Trash, Error} from '@assets';
-
-const ICON = {
-  inputDelete: <InputDelete />,
-  plus: <Plus />,
-  buljusa: <Buljusa />,
-  rightChevron: <RightChevron />,
-  arrow: <Arrow />,
-  error: <Error />,
-  trash: <Trash />,
-};
+import {useTheme} from '@theme/HDesignProvider';
+import {iconButtonStyle} from './IconButton.style';
 
 export const IconButton: React.FC<IconButtonProps> = forwardRef<HTMLButtonElement, IconButtonProps>(function Button(
-  {iconType, ...htmlProps}: IconButtonProps,
+  {size, variants, children, ...htmlProps}: IconButtonProps,
   ref,
 ) {
+  const {theme} = useTheme();
   return (
-    <button ref={ref} {...htmlProps}>
-      {ICON[iconType]}
+    <button ref={ref} css={iconButtonStyle({theme, size, variants})} {...htmlProps}>
+      {children}
     </button>
   );
 });
