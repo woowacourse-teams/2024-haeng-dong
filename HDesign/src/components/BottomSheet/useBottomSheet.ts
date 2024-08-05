@@ -2,11 +2,11 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 
 interface UseBottomSheetProps {
   isOpened: boolean;
-  onChangeClose?: () => void;
-  onChangeOpen?: () => void;
+  onClose?: () => void;
+  onOpen?: () => void;
 }
 
-export const useBottomSheet = ({isOpened, onChangeClose, onChangeOpen}: UseBottomSheetProps) => {
+export const useBottomSheet = ({isOpened, onClose, onOpen}: UseBottomSheetProps) => {
   const [opened, setOpened] = useState(isOpened);
   const [visible, setVisible] = useState(isOpened);
 
@@ -43,17 +43,17 @@ export const useBottomSheet = ({isOpened, onChangeClose, onChangeOpen}: UseBotto
 
   const handleClose = useCallback(() => {
     setOpened(false);
-    if (onChangeClose) {
-      onChangeClose();
+    if (onClose) {
+      onClose();
     }
-  }, [onChangeClose]);
+  }, [onClose]);
 
   const handleOpen = useCallback(() => {
     setOpened(true);
-    if (onChangeOpen) {
-      onChangeOpen();
+    if (onOpen) {
+      onOpen();
     }
-  }, [onChangeOpen]);
+  }, [onOpen]);
 
   const handleDragStart = (e: React.TouchEvent | React.MouseEvent) => {
     setIsDragging(true);
