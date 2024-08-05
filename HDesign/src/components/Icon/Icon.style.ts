@@ -1,7 +1,10 @@
 import {css} from '@emotion/react';
+
 import {Theme} from '@theme/theme.type';
-import {IconColor, IconType} from './Icon.type';
+
 import {ColorKeys} from '@token/colors';
+
+import {IconColor, IconType} from './Icon.type';
 
 const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   inputDelete: 'gray',
@@ -19,6 +22,6 @@ export const iconStyle = (iconType: IconType, theme: Theme, iconColor?: IconColo
       color: theme.colors[iconColor as ColorKeys],
     });
   } else {
-    color: theme.colors[ICON_DEFAULT_COLOR[iconType]];
+    return css({color: theme.colors[ICON_DEFAULT_COLOR[iconType]]});
   }
 };
