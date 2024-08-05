@@ -1,4 +1,4 @@
-import React from 'react';
+/** @jsxImportSource @emotion/react */
 
 import type {Preview} from '@storybook/react';
 import {HDesignProvider} from '../src/theme/HDesignProvider';
