@@ -32,11 +32,13 @@ const getButtonDefaultStyle = (theme: Theme) =>
 
 const getHoverAndActiveBackground = (color: string) =>
   css({
-    '&:hover:not(:disabled)': {
-      backgroundColor: setLighter(color, 0.15),
-    },
-    '&:active:not(:disabled)': {
-      backgroundColor: setDarker(color, 0.15),
+    ':not(:disabled)': {
+      '&:hover': {
+        backgroundColor: setLighter(color, 0.15),
+      },
+      '&:active': {
+        backgroundColor: setDarker(color, 0.15),
+      },
     },
   });
 
