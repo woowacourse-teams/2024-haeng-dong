@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,6 +25,7 @@ import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.presentation.request.EventSaveRequest;
+import server.haengdong.presentation.request.MemberUpdateRequest;
 
 @WebMvcTest(EventController.class)
 class EventControllerTest {
@@ -79,5 +81,19 @@ class EventControllerTest {
                 .andExpect(jsonPath("$.memberNames").isArray())
                 .andExpect(jsonPath("$.memberNames[0]").value("토다리"))
                 .andExpect(jsonPath("$.memberNames[1]").value("쿠키"));
+    }
+
+    @DisplayName("행사 참여 인원의 이름을 수정한다.")
+    @Test
+    void updateMember() throws Exception {
+        String token = "TOKEN";
+        MemberUpdateRequest memberUpdateRequest = new MemberUpdateRequest("변경된 이름");
+        String requestBody = objectMapper.writeValueAsString(memberUpdateRequest);
+
+        mockMvc.perform(put("/api/events/{eventId}/members/{memberName}", token, "변경 전 이름")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }
