@@ -20,7 +20,7 @@ public class MemberActionController {
 
     private final MemberActionService memberActionService;
 
-    @PostMapping("/api/events/{eventId}/actions/members")
+    @PostMapping("/api/events/{eventId}/member-actions")
     public ResponseEntity<Void> saveMemberAction(
             @PathVariable("eventId") String token,
             @RequestBody MemberActionsSaveRequest request
@@ -48,7 +48,7 @@ public class MemberActionController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/api/events/{eventId}/actions/{actionId}/members")
+    @DeleteMapping("/api/events/{eventId}/member-actions/{actionId}")
     public ResponseEntity<Void> deleteMemberAction(
             @PathVariable("eventId") String token,
             @PathVariable("actionId") Long actionId
