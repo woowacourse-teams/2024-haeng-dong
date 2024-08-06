@@ -1,6 +1,6 @@
 import type {MemberStep} from 'types/serviceType';
 
-import {InOutItem} from 'haengdong-design';
+import {DragHandleItem} from 'haengdong-design';
 
 import {DeleteMemberActionModal} from '@components/Modal/SetActionModal/DeleteMemberActionModal';
 
@@ -13,9 +13,9 @@ interface MemberStepItemProps {
 const MemberStepItem: React.FC<MemberStepItemProps> = ({step, isOpenBottomSheet, setOpenBottomSheet}) => {
   return (
     <>
-      <InOutItem
-        inOutType={step.type}
-        names={step.actions.map(({name}) => name)}
+      <DragHandleItem
+        backgroundColor="white"
+        prefix={`${step.actions.map(({name}) => name).join(', ')} ${step.type === 'IN' ? '들어옴' : '나감'}`}
         onClick={() => setOpenBottomSheet(prev => !prev)}
       />
       {isOpenBottomSheet && (
