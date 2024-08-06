@@ -2,6 +2,7 @@ package server.haengdong.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
+import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.request.MemberUpdateRequest;
@@ -22,11 +24,17 @@ import server.haengdong.presentation.response.MembersResponse;
 import server.haengdong.presentation.response.StepsResponse;
 
 @RequiredArgsConstructor
+@EnableConfigurationProperties(CookieProperties.class)
 @RestController
 public class EventController {
 
     private final EventService eventService;
     private final AuthService authService;
+
+    private final CookieProperties cookieProperties;
+//            = new CookieProperties(true, true, "haengdong.pro", "/",Duration.ofDays(7));
+
+
 
     @PostMapping("/api/events")
     public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
@@ -88,11 +96,11 @@ public class EventController {
 
     private ResponseCookie createResponseCookie(String token) {
         return ResponseCookie.from(authService.getTokenName(), token)
-                .httpOnly(true)
-//                .secure(true)
-                .path("/")
-                .maxAge(60)
-//                .domain("haengdong.pro")
+                .httpOnly(cookieProperties.httpOnly())
+                .secure(cookieProperties.secure())
+                .domain(cookieProperties.domain())
+                .path(cookieProperties.path())
+                .maxAge(cookieProperties.maxAge())
                 .build();
     }
 }

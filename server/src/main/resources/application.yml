@@ -25,8 +25,13 @@ cors:
 security:
   jwt:
     token:
-      secret-key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.ih1aovtQShabQ7l0cINw4k1fagApg3qLWiB8Kt59Lno
-      expire-length: 999999999999
+      secret-key: skdmeejEKJdkDjklDlkj123DKLJ3kDkeDkDKQMEOD1D90D8dE
+      expire-length: 604800 # 1주일
+
+cookie:
+  http-only: true
+  path: /
+  max-age: 7D
 
 management:
   endpoints:
@@ -36,14 +41,9 @@ management:
 
 logging:
   level:
-    root: info
+    root: debug
     org.springframework.web: debug
     server.haengdong: debug
-
-  file:
-    name: logs/spring-boot-application.log
-    path: logs
-  config: classpath:logback-spring.xml
 
 ---
 
