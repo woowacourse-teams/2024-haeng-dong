@@ -8,9 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.request.BillActionAppRequest;
 import server.haengdong.application.request.BillActionUpdateAppRequest;
 import server.haengdong.domain.action.Action;
@@ -19,12 +17,9 @@ import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
-import server.haengdong.support.extension.DatabaseCleanerExtension;
 import server.haengdong.support.fixture.Fixture;
 
-@ExtendWith(DatabaseCleanerExtension.class)
-@SpringBootTest
-class BillActionServiceTest {
+class BillActionServiceTest extends ServiceTestSupport {
 
     @Autowired
     private BillActionService billActionService;

@@ -10,30 +10,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import server.haengdong.application.MemberActionService;
 import server.haengdong.application.response.CurrentMemberAppResponse;
 import server.haengdong.presentation.request.MemberActionsSaveRequest;
 
-@WebMvcTest(MemberActionController.class)
-class MemberActionControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
-    private MemberActionService memberActionService;
+class MemberActionControllerTest extends ControllerTestSupport {
 
     @DisplayName("참여자 행동을 추가한다.")
     @Test

@@ -11,9 +11,7 @@ import static server.haengdong.domain.action.MemberActionStatus.OUT;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.request.MemberUpdateAppRequest;
@@ -29,13 +27,10 @@ import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
-import server.haengdong.support.extension.DatabaseCleanerExtension;
 import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.fixture.Fixture;
 
-@ExtendWith(DatabaseCleanerExtension.class)
-@SpringBootTest
-class EventServiceTest {
+class EventServiceTest extends ServiceTestSupport {
 
     @Autowired
     private EventService eventService;

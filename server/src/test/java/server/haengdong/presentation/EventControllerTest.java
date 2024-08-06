@@ -7,19 +7,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
@@ -27,17 +22,8 @@ import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.request.MemberUpdateRequest;
 
-@WebMvcTest(EventController.class)
-class EventControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
-    private EventService eventService;
+class EventControllerTest extends ControllerTestSupport {
 
     @DisplayName("이벤트를 생성한다.")
     @Test
@@ -47,12 +33,15 @@ class EventControllerTest {
         String eventId = "망쵸토큰";
         EventAppResponse eventAppResponse = new EventAppResponse(eventId);
         given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
+        given(authService.createToken(eventId)).willReturn("jwtToken");
+        given(authService.getTokenName()).willReturn("eventToken");
 
         mockMvc.perform(post("/api/events")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(cookie().value("eventToken", "jwtToken"))
                 .andExpect(jsonPath("$.eventId").value("망쵸토큰"));
     }
 

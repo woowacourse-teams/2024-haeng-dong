@@ -9,9 +9,7 @@ import static server.haengdong.domain.action.MemberActionStatus.OUT;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.BillAction;
@@ -22,12 +20,9 @@ import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
-import server.haengdong.support.extension.DatabaseCleanerExtension;
 import server.haengdong.support.fixture.Fixture;
 
-@ExtendWith(DatabaseCleanerExtension.class)
-@SpringBootTest
-class ActionServiceTest {
+class ActionServiceTest extends ServiceTestSupport {
 
     @Autowired
     private ActionService actionService;
