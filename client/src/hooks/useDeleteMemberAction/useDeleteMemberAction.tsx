@@ -66,7 +66,7 @@ const useDeleteMemberAction = (memberActionList: MemberAction[]) => {
   const isExistSameMemberFromAfterStep = (memberAction: MemberAction) => {
     const memberActionList = stepList.filter(step => step.type !== 'BILL').flatMap(({actions}) => actions);
     const currentActionIndex = memberActionList.findIndex(action => action.actionId === memberAction.actionId);
-    const memberActionListAfterCurrentAction = memberActionList.slice(currentActionIndex - 1);
+    const memberActionListAfterCurrentAction = memberActionList.slice(Math.max(currentActionIndex - 1, 0));
     const memberNameList = memberActionListAfterCurrentAction.map(({name}) => name);
 
     return memberNameList.filter(member => member === memberAction.name).length >= 2;
