@@ -30,11 +30,7 @@ public class EventController {
 
     private final EventService eventService;
     private final AuthService authService;
-
     private final CookieProperties cookieProperties;
-//            = new CookieProperties(true, true, "haengdong.pro", "/",Duration.ofDays(7));
-
-
 
     @PostMapping("/api/events")
     public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
