@@ -30,6 +30,7 @@ security:
 
 cookie:
   http-only: true
+  secure: false
   path: /
   max-age: 7D
 
