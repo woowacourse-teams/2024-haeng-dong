@@ -4,8 +4,10 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "webpack serve ",
-    "build": "webpack --mode production",
+    "prod": "NODE_ENV=production webpack server --open --config webpack.prod.mjs",
+    "dev": "NODE_ENV=development webpack server --open --config webpack.dev.mjs",
+    "build": "NODE_ENV=production webpack --config webpack.prod.mjs",
+    "build-dev": "NODE_ENV=development webpack --config webpack.dev.mjs",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
