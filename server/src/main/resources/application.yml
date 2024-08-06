@@ -22,6 +22,12 @@ cors:
   max-age: 3600
   allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
 
+security:
+  jwt:
+    token:
+      secret-key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.ih1aovtQShabQ7l0cINw4k1fagApg3qLWiB8Kt59Lno
+      expire-length: 999999999999
+
 management:
   endpoints:
     web:

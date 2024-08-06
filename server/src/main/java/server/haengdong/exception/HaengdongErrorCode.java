@@ -7,6 +7,7 @@ public enum HaengdongErrorCode {
     BAD_REQUEST("R_001", "잘못된 요청입니다."),
     NO_RESOURCE_REQUEST("R_002", "잘못된 엔드포인트입니다."),
     MESSAGE_NOT_READABLE("R_003", "읽을 수 없는 요청 형식입니다."),
+    UNAUTHORIZED("A_001", "인증에 실패했습니다."),
     INTERNAL_SERVER_ERROR("S_001", "서버 내부에서 에러가 발생했습니다."),
     DUPLICATED_MEMBER_NAME("EV_001", "중복된 행사 참여 인원 이름이 존재합니다."),
     NOT_FOUND_EVENT("EV_400", "존재하지 않는 행사입니다."),

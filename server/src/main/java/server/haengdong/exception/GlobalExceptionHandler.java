@@ -2,6 +2,7 @@ package server.haengdong.exception;
 
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -13,6 +14,12 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> authenticationException() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorResponse.of(HaengdongErrorCode.UNAUTHORIZED));
+    }
 
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class, NoResourceFoundException.class})
     public ResponseEntity<ErrorResponse> noResourceException() {
