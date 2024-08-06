@@ -4,7 +4,7 @@ import {Theme} from '@theme/theme.type';
 
 import {ColorKeys} from '@token/colors';
 
-import {IconColor, IconType} from './Icon.type';
+import {IconColor, IconStylePropsWithTheme, IconType} from './Icon.type';
 
 const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   inputDelete: 'gray',
@@ -16,18 +16,18 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   trash: 'white',
 };
 
-export const iconStyle = (iconType: IconType, theme: Theme, iconColor?: IconColor) => {
+export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {
   return [
     css({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
     }),
-    getIconColor(iconType, theme, iconColor),
+    getIconColor({iconType, theme, iconColor}),
   ];
 };
 
-const getIconColor = (iconType: IconType, theme: Theme, iconColor?: IconColor) => {
+const getIconColor = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {
   if (iconColor) {
     return css({
       color: theme.colors[iconColor as ColorKeys],

@@ -6,7 +6,10 @@ export type IconButtonVariants = 'none' | 'primary' | 'secondary' | 'tertiary' |
 export interface IconButtonStyleProps {
   size?: IconButtonSize;
   variants: IconButtonVariants;
-  theme?: Theme;
+}
+
+export interface IconButtonStylePropsWithTheme extends IconButtonStyleProps {
+  theme: Theme;
 }
 
 export interface IconButtonCustomProps {}

@@ -5,17 +5,18 @@ import {Theme} from '@theme/theme.type';
 
 import {setDarker, setLighter} from '@utils/colors';
 
-import {IconButtonSize, IconButtonStyleProps, IconButtonVariants} from './IconButton.type';
+import {
+  IconButtonSize,
+  IconButtonStyleProps,
+  IconButtonStylePropsWithTheme,
+  IconButtonVariants,
+} from './IconButton.type';
 
-export const iconButtonStyle = (props: Required<IconButtonStyleProps>) => {
-  if (props.variants === 'none') {
+export const iconButtonStyle = ({theme, size = 'large', variants}: IconButtonStylePropsWithTheme) => {
+  if (variants === 'none') {
     return 'none';
   }
-  return [
-    getIconButtonBase(props.theme),
-    getIconButtonSize(props.size),
-    getIconButtonVariants(props.variants, props.theme),
-  ];
+  return [getIconButtonBase(theme), getIconButtonSize(size), getIconButtonVariants({variants, theme})];
 };
 
 const getHoverAndActiveBackground = (color: string) =>
@@ -64,7 +65,7 @@ const getIconButtonSize = (size: IconButtonSize) => {
   return style[size];
 };
 
-const getIconButtonVariants = (variants: IconButtonVariants, theme: Theme) => {
+const getIconButtonVariants = ({variants, theme}: IconButtonStylePropsWithTheme) => {
   const style = {
     none: [css({})],
     primary: [

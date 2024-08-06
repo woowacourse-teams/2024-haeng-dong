@@ -20,7 +20,7 @@ const ICON = {
 export const Icon: React.FC<IconProps> = ({iconColor, iconType, ...htmlProps}: IconProps) => {
   const {theme} = useTheme();
   return (
-    <div css={iconStyle(iconType, theme, iconColor)} {...htmlProps}>
+    <div css={iconStyle({iconType, theme, iconColor})} {...htmlProps}>
       {ICON[iconType]}
     </div>
   );
