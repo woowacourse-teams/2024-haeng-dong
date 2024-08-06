@@ -19,6 +19,7 @@ import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MembersAppResponse;
+import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.request.MemberUpdateRequest;
 
@@ -83,6 +84,23 @@ class EventControllerTest extends ControllerTestSupport {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("행사 어드민이 로그인한다.")
+    @Test
+    void loginEvent() throws Exception {
+        String token = "TOKEN";
+        EventLoginRequest eventLoginRequest = new EventLoginRequest("1234");
+        String requestBody = objectMapper.writeValueAsString(eventLoginRequest);
+        given(authService.createToken(token)).willReturn("jwtToken");
+        given(authService.getTokenName()).willReturn("eventToken");
+
+        mockMvc.perform(post("/api/events/{eventId}/login", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(print())
+                .andExpect(cookie().value("eventToken", "jwtToken"))
                 .andExpect(status().isOk());
     }
 }

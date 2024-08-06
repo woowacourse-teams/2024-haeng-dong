@@ -20,7 +20,7 @@ public class Event {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 20;
     private static final String SPACES = "  ";
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[0-9]{4}$");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^\\d{4}$");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,5 +68,9 @@ public class Event {
 
     public boolean isTokenMismatch(String token) {
         return !this.token.equals(token);
+    }
+
+    public boolean isSamePassword(String password) {
+        return this.password.equals(password);
     }
 }

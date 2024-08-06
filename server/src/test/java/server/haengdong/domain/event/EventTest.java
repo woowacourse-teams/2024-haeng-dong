@@ -37,7 +37,7 @@ class EventTest {
 
     @DisplayName("비밀번호는 4자리 숫자 입니다.")
     @ParameterizedTest
-    @ValueSource(strings = {"1", "12", "123", "12345"})
+    @ValueSource(strings = {"1", "12", "123", "12345", "adgd"})
     void validatePassword(String password) {
         assertThatCode(() -> new Event("이름", password, "TEST_TOKEN"))
                 .isInstanceOf(HaengdongException.class);

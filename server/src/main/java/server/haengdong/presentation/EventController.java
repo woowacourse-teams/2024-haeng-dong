@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
+import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.request.MemberUpdateRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
@@ -31,17 +32,9 @@ public class EventController {
     public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
         EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
 
-        String token = authService.createToken(eventResponse.eventId());
+        String jwtToken = authService.createToken(eventResponse.eventId());
 
-        // TODO : 배포 환경 별로 설정 값 다르게하기
-        ResponseCookie responseCookie = ResponseCookie.from(authService.getTokenName(), token)
-                .httpOnly(true)
-//                .secure(true)
-                .path("/")
-                .maxAge(60)
-//                .domain("haengdong.pro")
-                .build();
-
+        ResponseCookie responseCookie = createResponseCookie(jwtToken);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .body(eventResponse);
@@ -77,5 +70,29 @@ public class EventController {
         eventService.updateMember(token, memberName, request.toAppRequest());
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/api/events/{eventId}/login")
+    public ResponseEntity<Void> loginEvent(
+            @PathVariable("eventId") String token,
+            @Valid @RequestBody EventLoginRequest request
+    ) {
+        eventService.validatePassword(request.toAppRequest(token));
+        String jwtToken = authService.createToken(token);
+
+        ResponseCookie responseCookie = createResponseCookie(jwtToken);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .build();
+    }
+
+    private ResponseCookie createResponseCookie(String token) {
+        return ResponseCookie.from(authService.getTokenName(), token)
+                .httpOnly(true)
+//                .secure(true)
+                .path("/")
+                .maxAge(60)
+//                .domain("haengdong.pro")
+                .build();
     }
 }
