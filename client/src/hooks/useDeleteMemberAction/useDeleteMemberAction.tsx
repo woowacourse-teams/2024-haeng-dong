@@ -1,17 +1,14 @@
-import type {MemberAction} from 'types/serviceType';
+import type {Member, MemberAction} from 'types/serviceType';
 
 import {useState} from 'react';
 import {useToast} from 'haengdong-design';
 
 import useEventId from '@hooks/useEventId/useEventId';
 import {requestDeleteMemberAction} from '@apis/request/member';
+import {useStepList} from '@hooks/useStepList/useStepList';
 
-interface UseDeleteMemberActionProps {
-  memberActionList: MemberAction[];
-  refreshStepList: () => Promise<void>;
-}
-
-const useDeleteMemberAction = ({memberActionList, refreshStepList}: UseDeleteMemberActionProps) => {
+const useDeleteMemberAction = (memberActionList: MemberAction[]) => {
+  const {stepList, refreshStepList} = useStepList();
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
   const {eventId} = useEventId();
   const {showToast} = useToast();
@@ -27,9 +24,6 @@ const useDeleteMemberAction = ({memberActionList, refreshStepList}: UseDeleteMem
         message: '멤버 삭제가 되지 않았어요 :(',
         showingTime: 3000,
         type: 'error',
-        style: {
-          zIndex: '900', // TODO: (@weadie) 토스트 zIndex고쳐지면 여기 수정해야됨
-        },
         bottom: '160px',
       });
     }
@@ -55,21 +49,28 @@ const useDeleteMemberAction = ({memberActionList, refreshStepList}: UseDeleteMem
         showingTime: 3000,
         message: '이미 삭제된 인원입니다.',
         type: 'error',
-        style: {
-          zIndex: '900', // TODO: (@weadie) 토스트 zIndex고쳐지면 여기 수정해야됨
-        },
         bottom: '160px',
       });
       return;
     }
 
+    const confirmMessage =
+      '다른 차수에 동일 인원의 액션이 있어서 이 액션을 삭제할 경우 뒤 동일 인원 액션이 모두 삭제됩니다.';
+
+    if (isExistSameMemberFromAfterStep(memberAction) && !confirm(confirmMessage)) return;
+
     setAliveActionList(prev => prev.filter(aliveMember => aliveMember.actionId !== memberAction.actionId));
   };
 
-  // 같은 사람의 액션이 뒤에 존재하는지를 판단을 할 수 있어야한다.
-  // 서버에서 확인해서 뒤의 동일 인원의 액션을 지워주긴 하지만 그 상황을 삭제를 할 때 사용자에게 공지를 해줘야 할 필요가 있기 때문
-  // 하지만 지금 memberActionList의 경우 현재 step에 있는 member만을 가지고 있으므로 이를 파악할 수 없는 문제가 있다.
-  // 이를 파악하려면 useStepList에서 전체 step 정보를 들고와서 뒤의 동일 인원의 액션을 찾아야한다.
+  // 현재 선택된 액션의 인덱스를 구해서 뒤의 동일인물의 액션이 있는지를 파악하는 기능
+  const isExistSameMemberFromAfterStep = (memberAction: MemberAction) => {
+    const memberActionList = stepList.filter(step => step.type !== 'BILL').flatMap(({actions}) => actions);
+    const currentActionIndex = memberActionList.findIndex(action => action.actionId === memberAction.actionId);
+    const memberActionListAfterCurrentAction = memberActionList.slice(currentActionIndex - 1);
+    const memberNameList = memberActionListAfterCurrentAction.map(({name}) => name);
+
+    return memberNameList.filter(member => member === memberAction.name).length >= 2;
+  };
 
   return {aliveActionList, deleteMemberActionList, addDeleteMemberAction};
 };
