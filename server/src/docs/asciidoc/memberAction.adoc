@@ -2,7 +2,7 @@
 
 === 참여자 액션 생성
 
-operation::createMemberAction[snippets="path-parameters,http-request,request-body,http-response,request-cookies,request-fields,http-request"]
+operation::createMemberAction[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
 
 ==== [.red]#Exceptions#
 
@@ -50,8 +50,9 @@ operation::createMemberAction[snippets="path-parameters,http-request,request-bod
 
 === 현재 행사에 참여 중인 (탈주 가능한) 참여자 목록 조회
 
-operation::getCurrentMembers[snippets="path-parameters,http-request,response-body,http-response,http-request"]
+operation::getCurrentMembers[snippets="path-parameters,http-request,http-response,response-fields"]
 ==== [.red]#Exceptions#
+
 [source,json,options="nowrap"]
 ----
 [
@@ -64,7 +65,7 @@ operation::getCurrentMembers[snippets="path-parameters,http-request,response-bod
 
 === 참여자 액션 삭제
 
-operation::deleteMemberAction[snippets="path-parameters,http-request,http-response,request-cookies,http-request"]
+operation::deleteMemberAction[snippets="path-parameters,http-request,http-response,request-cookies"]
 
 ==== [.red]#Exceptions#
 
