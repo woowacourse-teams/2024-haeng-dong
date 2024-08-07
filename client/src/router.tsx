@@ -10,6 +10,7 @@ import {EventPage} from '@pages/EventPage';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
+import SetEventPasswordPage from '@pages/CreateEventPage/SetEventPasswordPage';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.eventCreateName,
         element: <SetEventNamePage />,
+      },
+      {
+        path: ROUTER_URLS.eventCreatePassword,
+        element: <SetEventPasswordPage />,
       },
       {
         path: ROUTER_URLS.eventCreateComplete,
