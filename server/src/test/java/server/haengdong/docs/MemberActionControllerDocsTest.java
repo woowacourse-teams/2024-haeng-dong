@@ -35,7 +35,7 @@ import server.haengdong.presentation.request.MemberActionsSaveRequest;
 
 public class MemberActionControllerDocsTest extends RestDocsSupport {
 
-    private MemberActionService memberActionService = mock(MemberActionService.class);
+    private final MemberActionService memberActionService = mock(MemberActionService.class);
 
     @Override
     protected Object initController() {
@@ -91,7 +91,7 @@ public class MemberActionControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.members[0].name").value(equalTo("소하")))
                 .andExpect(jsonPath("$.members[1].name").value(equalTo("토다리")))
                 .andDo(
-                        document("getMemberAction",
+                        document("getCurrentMembers",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(

@@ -4,10 +4,118 @@
 
 operation::createBillActions[snippets="path-parameters,http-request,request-body,http-response,request-cookies,request-fields,http-request"]
 
+==== [.red]#Exceptions#
+
+[source,json,options="nowrap"]
+----
+[
+   {
+      "code":"REQUEST_EMPTY",
+      "message":"지출 금액은 비어 있으면 안됩니다."
+   },
+   {
+      "code":"REQUEST_EMPTY",
+      "message":"지출 내역은 비어 있으면 안됩니다."
+   },
+   {
+      "code":"BILL_ACTION_TITLE_INVALID",
+      "message":"앞뒤 공백을 제거한 지출 내역 제목은 %d ~ %d자여야 합니다."
+   },
+   {
+      "code":"BILL_ACTION_PRICE_INVALID",
+      "message":"지출 금액은 10,000,000 이하의 자연수여야 합니다."
+   },
+   {
+      "code":"EVENT_NOT_FOUND",
+      "message":"존재하지 않는 행사입니다."
+   },
+   {
+      "code":"TOKEN_NOT_FOUND",
+      "message":"토큰이 존재하지 않습니다."
+   },
+   {
+      "code":"TOKEN_EXPIRED",
+      "message":"토큰이 존재하지 않습니다."
+   },
+   {
+      "code":"TOKEN_INVALID",
+      "message":"유효하지 않은 토큰입니다."
+   }
+]
+----
+
 === 지출 액션 수정
 
 operation::updateBillAction[snippets="path-parameters,http-request,request-body,http-response,request-cookies,request-fields,http-request"]
 
+==== [.red]#Exceptions#
+
+[source,json,options="nowrap"]
+----
+[
+   {
+      "code":"REQUEST_EMPTY",
+      "message":"지출 내역 제목은 공백일 수 없습니다."
+   },
+   {
+      "code":"REQUEST_EMPTY",
+      "message":"지출 금액은 공백일 수 없습니다."
+   },
+   {
+      "code":"BILL_ACTION_TITLE_INVALID",
+      "message":"앞뒤 공백을 제거한 지출 내역 제목은 %d ~ %d자여야 합니다."
+   },
+   {
+      "code":"BILL_ACTION_PRICE_INVALID",
+      "message":"지출 금액은 %,d 이하의 자연수여야 합니다."
+   },
+   {
+      "code":"EVENT_NOT_FOUND",
+      "message":"존재하지 않는 행사입니다."
+   },
+   {
+      "code":"BILL_ACTION_NOT_FOUND",
+      "message":"존재하지 않는 지출 액션입니다."
+   },
+   {
+      "code":"TOKEN_NOT_FOUND",
+      "message":"토큰이 존재하지 않습니다."
+   },
+   {
+      "code":"TOKEN_EXPIRED",
+      "message":"토큰이 존재하지 않습니다."
+   },
+   {
+      "code":"TOKEN_INVALID",
+      "message":"유효하지 않은 토큰입니다."
+   }
+]
+----
+
 === 지출 액션 삭제
 
 operation::deleteBillAction[snippets="path-parameters,http-request,http-response,request-cookies,http-request"]
+
+==== [.red]#Exceptions#
+
+[source,json,options="nowrap"]
+----
+[
+   {
+      "code":"EVENT_NOT_FOUND",
+      "message":"존재하지 않는 행사입니다."
+   },
+   {
+      "code":"TOKEN_NOT_FOUND",
+      "message":"토큰이 존재하지 않습니다."
+   },
+   {
+      "code":"TOKEN_EXPIRED",
+      "message":"토큰이 존재하지 않습니다."
+   },
+   {
+      "code":"TOKEN_INVALID",
+      "message":"유효하지 않은 토큰입니다."
+   }
+]
+----
