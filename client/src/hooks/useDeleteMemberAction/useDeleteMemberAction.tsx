@@ -1,4 +1,4 @@
-import type {Member, MemberAction} from 'types/serviceType';
+import type {MemberAction} from 'types/serviceType';
 
 import {useState} from 'react';
 import {useToast} from 'haengdong-design';
@@ -7,7 +7,10 @@ import useEventId from '@hooks/useEventId/useEventId';
 import {requestDeleteMemberAction} from '@apis/request/member';
 import {useStepList} from '@hooks/useStepList/useStepList';
 
-const useDeleteMemberAction = (memberActionList: MemberAction[]) => {
+const useDeleteMemberAction = (
+  memberActionList: MemberAction[],
+  setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const {stepList, refreshStepList} = useStepList();
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
   const {eventId} = useEventId();
@@ -40,6 +43,7 @@ const useDeleteMemberAction = (memberActionList: MemberAction[]) => {
     }
 
     refreshStepList();
+    setIsBottomSheetOpened(false);
   };
 
   const addDeleteMemberAction = (memberAction: MemberAction) => {
@@ -54,10 +58,19 @@ const useDeleteMemberAction = (memberActionList: MemberAction[]) => {
       return;
     }
 
-    const confirmMessage =
-      '다른 차수에 동일 인원의 액션이 있어서 이 액션을 삭제할 경우 뒤 동일 인원 액션이 모두 삭제됩니다.';
-
-    if (isExistSameMemberFromAfterStep(memberAction) && !confirm(confirmMessage)) return;
+    if (isExistSameMemberFromAfterStep(memberAction)) {
+      showToast({
+        isClickToClose: true,
+        showingTime: 3000,
+        message: `이후의 ${memberAction.name}가 사라져요`,
+        type: 'error',
+        position: 'top',
+        top: '30px',
+        style: {
+          zIndex: 9000,
+        },
+      });
+    }
 
     setAliveActionList(prev => prev.filter(aliveMember => aliveMember.actionId !== memberAction.actionId));
   };

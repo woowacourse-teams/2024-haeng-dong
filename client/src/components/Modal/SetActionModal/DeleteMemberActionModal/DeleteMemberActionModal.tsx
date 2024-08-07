@@ -3,7 +3,6 @@ import type {MemberAction, MemberType} from 'types/serviceType';
 import {BottomSheet, Flex, Input, Text, IconButton, FixedButton, Icon} from 'haengdong-design';
 
 import useDeleteMemberAction from '@hooks/useDeleteMemberAction/useDeleteMemberAction';
-import {useStepList} from '@hooks/useStepList/useStepList';
 
 import {bottomSheetHeaderStyle, bottomSheetStyle, inputGroupStyle} from './DeleteMemberActionModal.style';
 
@@ -20,7 +19,10 @@ const DeleteMemberActionModal = ({
   isBottomSheetOpened,
   setIsBottomSheetOpened,
 }: DeleteMemberActionModalProps) => {
-  const {aliveActionList, deleteMemberActionList, addDeleteMemberAction} = useDeleteMemberAction(memberActionList);
+  const {aliveActionList, deleteMemberActionList, addDeleteMemberAction} = useDeleteMemberAction(
+    memberActionList,
+    setIsBottomSheetOpened,
+  );
 
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
