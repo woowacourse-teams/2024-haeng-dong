@@ -3,8 +3,11 @@ import {createContext, useCallback, useContext, useEffect, useState} from 'react
 import {ToastProps} from './Toast.type';
 import Toast from './Toast';
 import {useError} from '../../ErrorProvider';
+import ERROR_MESSAGES from '@constants/errorMessage';
 
 export const ToastContext = createContext<ToastContextProps | null>(null);
+
+const DEFAULT_TIME = 3000;
 
 interface ToastContextProps {
   showToast: (args: ShowToast) => void;
@@ -19,7 +22,7 @@ const ToastProvider = ({children}: React.PropsWithChildren) => {
   const [currentToast, setCurrentToast] = useState<ShowToast | null>(null);
   const {hasError, errorMessage, clearError} = useError();
 
-  const showToast = useCallback(({showingTime = 3000, isAlwaysOn = false, ...toastProps}: ShowToast) => {
+  const showToast = useCallback(({showingTime = DEFAULT_TIME, isAlwaysOn = false, ...toastProps}: ShowToast) => {
     setCurrentToast({showingTime, isAlwaysOn, ...toastProps});
   }, []);
 
@@ -30,22 +33,16 @@ const ToastProvider = ({children}: React.PropsWithChildren) => {
   useEffect(() => {
     if (hasError) {
       showToast({
-        message: errorMessage || 'An error occurred',
-        showingTime: 5000, // 필요에 따라 시간 설정
+        message: errorMessage || ERROR_MESSAGES.UNHANDLED,
+        showingTime: DEFAULT_TIME, // TODO: (@weadie) 나중에 토스트 프로바이더를 제거한 토스트를 만들 것이기 때문에 많이 리펙터링 안함
         isAlwaysOn: false,
         position: 'bottom',
         bottom: '100px',
       });
 
-      const timer = setTimeout(() => {
-        clearError();
-      }, 5000); // 토스트가 표시되는 시간과 동일하게 설정
-
-      return () => clearTimeout(timer);
+      clearError(DEFAULT_TIME);
     }
-
-    return;
-  }, [hasError, errorMessage, showToast, clearError]);
+  }, [errorMessage, hasError]);
 
   useEffect(() => {
     if (!currentToast) return;
