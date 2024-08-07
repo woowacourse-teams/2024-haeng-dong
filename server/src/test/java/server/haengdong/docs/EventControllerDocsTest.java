@@ -1,5 +1,6 @@
 package server.haengdong.docs;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -34,6 +35,8 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.response.ActionAppResponse;
+import server.haengdong.application.response.ActionAppResponse.ActionType;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MembersAppResponse;
@@ -204,6 +207,72 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                 ),
                                 responseCookies(
                                         cookieWithName("eventToken").description("행사 관리자용 토큰")
+                                )
+                        )
+                );
+    }
+
+    @DisplayName("행사 전체 액션 이력 조회")
+    @Test
+    void findActions() throws Exception {
+        String token = "TOKEN";
+        List<ActionAppResponse> actionAppResponses = List.of(
+                new ActionAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
+                new ActionAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
+                new ActionAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
+                new ActionAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
+        );
+        given(eventService.findActions(token)).willReturn(actionAppResponses);
+
+        mockMvc.perform(get("/api/events/{eventId}/actions", token)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.steps[0].type").value(equalTo("IN")))
+                .andExpect(jsonPath("$.steps[0].members[0]").value(equalTo("망쵸")))
+                .andExpect(jsonPath("$.steps[0].actions[0].actionId").value(equalTo(1)))
+                .andExpect(jsonPath("$.steps[0].actions[0].name").value(equalTo("망쵸")))
+                .andExpect(jsonPath("$.steps[0].actions[0].price").value(equalTo(null)))
+                .andExpect(jsonPath("$.steps[0].actions[0].sequence").value(equalTo(1)))
+
+                .andExpect(jsonPath("$.steps[1].type").value(equalTo("BILL")))
+                .andExpect(jsonPath("$.steps[1].members[0]").value(equalTo("망쵸")))
+                .andExpect(jsonPath("$.steps[1].actions[0].actionId").value(equalTo(2)))
+                .andExpect(jsonPath("$.steps[1].actions[0].name").value(equalTo("족발")))
+                .andExpect(jsonPath("$.steps[1].actions[0].price").value(equalTo(100)))
+                .andExpect(jsonPath("$.steps[1].actions[0].sequence").value(equalTo(2)))
+
+                .andExpect(jsonPath("$.steps[1].actions[1].actionId").value(equalTo(3)))
+                .andExpect(jsonPath("$.steps[1].actions[1].name").value(equalTo("인생네컷")))
+                .andExpect(jsonPath("$.steps[1].actions[1].price").value(equalTo(1000)))
+                .andExpect(jsonPath("$.steps[1].actions[1].sequence").value(equalTo(3)))
+
+                .andExpect(jsonPath("$.steps[2].type").value(equalTo("OUT")))
+                .andExpect(jsonPath("$.steps[2].actions[0].actionId").value(equalTo(4)))
+                .andExpect(jsonPath("$.steps[2].actions[0].name").value(equalTo("망쵸")))
+                .andExpect(jsonPath("$.steps[2].actions[0].price").value(equalTo(null)))
+                .andExpect(jsonPath("$.steps[2].actions[0].sequence").value(equalTo(4)))
+
+                .andDo(
+                        document("findActions",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                responseFields(
+                                        fieldWithPath("steps[].type").type(JsonFieldType.STRING)
+                                                .description("액션 유형 [BILL, IN, OUT]"),
+                                        fieldWithPath("steps[].members").type(JsonFieldType.ARRAY)
+                                                .description("해당 step에 참여한 참여자 목록"),
+                                        fieldWithPath("steps[].actions[].actionId").type(JsonFieldType.NUMBER)
+                                                .description("액션 ID"),
+                                        fieldWithPath("steps[].actions[].name").type(JsonFieldType.STRING)
+                                                .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
+                                        fieldWithPath("steps[].actions[].price").type(JsonFieldType.NUMBER).optional()
+                                                .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
+                                        fieldWithPath("steps[].actions[].sequence").type(JsonFieldType.NUMBER)
+                                                .description("액션 순서")
                                 )
                         )
                 );
