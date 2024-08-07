@@ -3,21 +3,23 @@ import {HDesignProvider} from 'haengdong-design';
 import {Global} from '@emotion/react';
 
 import {GlobalStyle} from './GlobalStyle';
-import {toastConfig} from 'react-simple-toasts';
+// import toast from 'react-simple-toasts';
 import {ErrorProvider} from './ErrorProvider';
 import {ToastProvider} from '@components/Toast/ToastProvider';
-
-toastConfig({theme: 'dark'});
+import UnhandledErrorBoundary from './UnhandledErrorBoundary';
 
 const App: React.FC = () => {
   return (
     <HDesignProvider>
-      <Global styles={GlobalStyle} />
-      <ErrorProvider>
-        <ToastProvider>
-          <Outlet />
-        </ToastProvider>
-      </ErrorProvider>
+      <UnhandledErrorBoundary>
+        <Global styles={GlobalStyle} />
+        <ErrorProvider>
+          {/* <ErrorProvider callback={toast}> */}
+          <ToastProvider>
+            <Outlet />
+          </ToastProvider>
+        </ErrorProvider>
+      </UnhandledErrorBoundary>
     </HDesignProvider>
   );
 };
