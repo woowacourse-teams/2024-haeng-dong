@@ -24,6 +24,20 @@ type ServerError = {
 export const ErrorProvider: React.FC<ErrorProviderProps> = ({children}) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [error, setErrorState] = useState<ServerError | null>(null);
+
+  useEffect(() => {
+    if (error) {
+      if (isUnhandledError(error.errorCode)) {
+        throw new Error(UNHANDLED_ERROR);
+      }
+
+      setHasError(true);
+      const message = ERROR_MESSAGES[error.errorCode];
+      setErrorMessage(message);
+      // callback(message);
+    }
+  }, [error, callback]);
 
   const setError = (error: ServerError) => {
     setHasError(false);
