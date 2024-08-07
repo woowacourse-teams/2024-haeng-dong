@@ -6,12 +6,12 @@ export const useFetch = () => {
   const {setError, clearError} = useError();
   const [loading, setLoading] = useState(false);
 
-  const fetch = async <T>(queryFn: () => Promise<T>): Promise<T> => {
+  const fetch = async <T>(queryFunction: () => Promise<T>): Promise<T> => {
     setLoading(true);
     clearError();
 
     try {
-      const result = await queryFn();
+      const result = await queryFunction();
       return result;
     } catch (error) {
       if (error instanceof Error) {
