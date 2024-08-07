@@ -40,7 +40,7 @@ const ToastProvider = ({children}: React.PropsWithChildren) => {
         showingTime: DEFAULT_TIME, // TODO: (@weadie) 나중에 토스트 프로바이더를 제거한 토스트를 만들 것이기 때문에 많이 리펙터링 안함
         isAlwaysOn: false,
         position: 'bottom',
-        bottom: '100px',
+        bottom: '6.25rem',
       });
 
       clearError(DEFAULT_TIME);
