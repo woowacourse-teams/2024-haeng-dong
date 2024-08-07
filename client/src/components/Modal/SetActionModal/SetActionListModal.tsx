@@ -1,8 +1,10 @@
+import type {InOutType} from 'types/serviceType';
+
 import {useState} from 'react';
 import {BottomSheet, Switch} from 'haengdong-design';
 
-import SetPurchase from './AddBillActionListModalContent/AddBillActionListModalContent';
-import AddMemberActionListModalContent from './AddMemberActionListModalContent/AddMemberActionListModalContent';
+import {AddBillActionListModalContent} from './AddBillActionListModalContent';
+import {AddMemberActionListModalContent} from './AddMemberActionListModalContent';
 import style from './SetActionListModal.style';
 
 export type ActionType = '지출' | '인원';
@@ -26,7 +28,7 @@ const SetActionListModal = ({openBottomSheet, setOpenBottomSheet, setOrder}: Set
   };
 
   return (
-    <BottomSheet isOpened={openBottomSheet} onChangeClose={() => setOpenBottomSheet(false)}>
+    <BottomSheet isOpened={openBottomSheet} onClose={() => setOpenBottomSheet(false)}>
       <div css={style.container}>
         <div css={style.switchContainer}>
           <Switch value={action} onChange={handleActionTypeChange} values={['지출', '인원']} />
@@ -35,7 +37,9 @@ const SetActionListModal = ({openBottomSheet, setOpenBottomSheet, setOrder}: Set
           )}
         </div>
 
-        {action === '지출' && <SetPurchase setOpenBottomSheet={setOpenBottomSheet} setOrder={setOrder} />}
+        {action === '지출' && (
+          <AddBillActionListModalContent setOpenBottomSheet={setOpenBottomSheet} setOrder={setOrder} />
+        )}
         {action === '인원' && (
           <AddMemberActionListModalContent
             inOutAction={inOutAction === '탈주' ? 'OUT' : 'IN'}

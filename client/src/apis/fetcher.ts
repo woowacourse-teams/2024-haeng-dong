@@ -105,8 +105,9 @@ const errorHandler = async (url: string, options: Options) => {
     }
     return response;
   } catch (error) {
-    console.error(error);
-    // throw new ErrorWithHeader(errorMessageHeader, getErrorMessage(error));
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
     return;
   }
 };

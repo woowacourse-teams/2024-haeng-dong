@@ -7,12 +7,12 @@ import useDynamicBillActionInput from '@hooks/useDynamicBillActionInput';
 
 import style from './AddBillActionListModalContent.style';
 
-interface SetPurchaseProps {
+interface AddBillActionListModalContentProps {
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AddBillActionListModalContent = ({setOpenBottomSheet, setOrder}: SetPurchaseProps) => {
+const AddBillActionListModalContent = ({setOpenBottomSheet, setOrder}: AddBillActionListModalContentProps) => {
   const {
     inputPairList,
     inputRefList,
