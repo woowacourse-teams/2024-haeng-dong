@@ -5,16 +5,9 @@ import {ToastProps, ToastType} from './Toast.type';
 import {Button, Flex, Icon, Text} from 'haengdong-design';
 
 const renderIcon = (type: ToastType) => {
-  switch (type) {
-    case 'error':
-      return <Icon iconType="error" />;
-    case 'confirm':
-      return <Icon iconType="confirm" />;
-    case 'none':
-      return null;
-    default:
-      return null;
-  }
+  if (type==='none') return null;
+  
+  return <Icon iconType={type} />;
 };
 
 const ANIMATION_TIME = 500;

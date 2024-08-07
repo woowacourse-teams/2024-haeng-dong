@@ -49,7 +49,7 @@ export const toastStyle = (isVisible: boolean) =>
     padding: '0.625rem 1rem',
 
     backgroundColor: 'gray',
-    boxShadow: '0 8px 12px rgba(0, 0, 0, 0.16);',
+    boxShadow: '0 0.5rem 0.75rem rgba(0, 0, 0, 0.16);',
 
     borderRadius: '1.25rem',
 
@@ -57,11 +57,8 @@ export const toastStyle = (isVisible: boolean) =>
     animation: `${isVisible ? fadeIn : fadeOut} 0.5s forwards`,
   });
 
-export const textStyle = () =>
-  css({
-    width: '100%',
-
-    color: 'white',
-
-    whiteSpace: 'pre-line',
-  });
+export const textStyle = css({
+  width: '100%',
+  color: 'white',
+  whiteSpace: 'pre-line',
+});
