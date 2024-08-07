@@ -13,8 +13,13 @@ export const dragHandleItemStyle = (theme: Theme, hasDragHandle: boolean, backgr
     backgroundColor: theme.colors[backgroundColor],
   });
 
-export const prefixStyle = css({
+export const dragHandlerStyle = css({
   display: 'flex',
   gap: '0.25rem',
   width: '100%',
 });
+
+export const textStyle = (theme: Theme) =>
+  css({
+    color: theme.colors.black,
+  });

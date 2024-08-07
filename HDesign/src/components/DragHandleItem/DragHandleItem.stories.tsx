@@ -13,14 +13,24 @@ const meta = {
       control: {type: 'select'},
       options: ['white', 'gray', 'darkGray', 'black', 'primary', 'onPrimary', 'secondary', 'onSecondary'],
     },
-    hasDragHandle: {
+    hasDragHandler: {
       description: '드래그할 수 있는 핸들러(불주사 자국)를 켜고 끌 수 있습니다.',
       control: {type: 'boolean'},
+    },
+    prefix: {
+      description: '',
+      control: {type: 'text'},
+    },
+    suffix: {
+      description: '',
+      control: {type: 'text'},
     },
   },
   args: {
     backgroundColor: 'white',
-    children: '이건 끌 수 있는 아이템을 위한 것',
+    hasDragHandler: true,
+    prefix: '뽕쟁이족발',
+    suffix: '398,000 원',
   },
 } satisfies Meta<typeof DragHandleItem>;
 
