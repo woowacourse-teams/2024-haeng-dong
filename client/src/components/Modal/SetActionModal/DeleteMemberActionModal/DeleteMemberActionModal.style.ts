@@ -24,16 +24,3 @@ export const inputGroupStyle = css({
   overflow: 'auto',
   paddingBottom: '11rem',
 });
-
-// 이거 행동 디자인에서 만들어져야하는데
-export const buttonStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignContent: 'center',
-
-  width: '3rem',
-
-  borderRadius: '1rem',
-
-  backgroundColor: 'gray',
-});

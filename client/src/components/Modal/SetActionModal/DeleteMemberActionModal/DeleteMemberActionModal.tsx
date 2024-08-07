@@ -5,7 +5,7 @@ import {BottomSheet, Flex, Input, Text, IconButton, FixedButton, Icon} from 'hae
 import useDeleteMemberAction from '@hooks/useDeleteMemberAction/useDeleteMemberAction';
 import {useStepList} from '@hooks/useStepList/useStepList';
 
-import {bottomSheetHeaderStyle, bottomSheetStyle, buttonStyle, inputGroupStyle} from './DeleteMemberActionModal.style';
+import {bottomSheetHeaderStyle, bottomSheetStyle, inputGroupStyle} from './DeleteMemberActionModal.style';
 
 type DeleteMemberActionModalProps = {
   memberActionType: MemberType;
