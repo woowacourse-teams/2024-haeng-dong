@@ -1,5 +1,4 @@
 import {Flex} from 'haengdong-design';
-import {useState} from 'react';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
 
