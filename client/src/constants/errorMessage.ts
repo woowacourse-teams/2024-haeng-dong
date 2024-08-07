@@ -31,6 +31,10 @@ const ERROR_MESSAGES: ErrorMessage = {
   TOKEN_EXPIRED: '만료된 토큰입니다.',
   TOKEN_INVALID: '유효하지 않은 토큰입니다.',
   FORBIDDEN: '접근할 수 없는 행사입니다.',
+
+  UNHANDLED: '알 수 없는 에러입니다.',
 };
+
+export const UNHANDLED_ERROR = 'UNHANDLED';
 
 export default ERROR_MESSAGES;
