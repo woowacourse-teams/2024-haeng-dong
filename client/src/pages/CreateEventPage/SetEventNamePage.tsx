@@ -2,10 +2,11 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Input, Title, TopNav, Back} from 'haengdong-design';
 
-import {requestPostNewEvent} from '@apis/request/event';
+import {ResponsePostNewEvent, requestPostNewEvent} from '@apis/request/event';
 import validateEventName from '@utils/validate/validateEventName';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
+import {useFetch} from '@apis/useFetch';
 
 const SetEventNamePage = () => {
   const [eventName, setEventName] = useState('');
@@ -13,17 +14,16 @@ const SetEventNamePage = () => {
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
 
+  const {request} = useFetch();
+
   const submitEventName = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await requestPostNewEvent({eventName});
+    const response = await request<ResponsePostNewEvent | undefined>({queryFn: () => requestPostNewEvent({eventName})});
 
     if (response) {
       const {eventId} = response;
       navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
-    } else {
-      // TODO: (@weadie)
-      alert('오류님');
     }
   };
 
