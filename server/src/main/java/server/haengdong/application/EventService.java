@@ -112,19 +112,19 @@ public class EventService {
     private void validateMemberNameUnique(Event event, String updatedMemberName) {
         boolean isMemberNameExist = memberActionRepository.existsByAction_EventAndMemberName(event, updatedMemberName);
         if (isMemberNameExist) {
-            throw new HaengdongException(HaengdongErrorCode.DUPLICATED_MEMBER_NAME);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE);
         }
     }
 
     public void validatePassword(EventLoginAppRequest request) throws HaengdongException {
         Event event = getEvent(request.token());
         if (event.isSamePassword(request.password())) {
-            throw new AuthenticationException();
+            throw new AuthenticationException(HaengdongErrorCode.PASSWORD_INVALID);
         }
     }
 
     private Event getEvent(String token) {
         return eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
     }
 }

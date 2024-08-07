@@ -45,7 +45,7 @@ public class BillActionService {
     @Transactional
     public void updateBillAction(String token, Long actionId, BillActionUpdateAppRequest request) {
         BillAction billAction = billActionRepository.findByAction_Id(actionId)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_BILL_ACTION));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND));
 
         validateToken(token, billAction);
 
@@ -56,19 +56,19 @@ public class BillActionService {
     private void validateToken(String token, BillAction billAction) {
         Event event = billAction.getEvent();
         if (event.isTokenMismatch(token)) {
-            throw new HaengdongException(HaengdongErrorCode.NOT_FOUND_BILL_ACTION);
+            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND);
         }
     }
 
     private Event getEvent(String eventToken) {
         return eventRepository.findByToken(eventToken)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
     }
 
     @Transactional
     public void deleteBillAction(String token, Long actionId) {
         Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
 
         billActionRepository.deleteByAction_EventAndActionId(event, actionId);
     }

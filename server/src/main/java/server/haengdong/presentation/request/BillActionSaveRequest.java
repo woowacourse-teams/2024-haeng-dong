@@ -6,10 +6,10 @@ import server.haengdong.application.request.BillActionAppRequest;
 
 public record BillActionSaveRequest(
 
-        @NotBlank
+        @NotBlank(message = "지출 내역 제목은 공백일 수 없습니다.")
         String title,
 
-        @NotNull
+        @NotNull(message = "지출 금액은 공백일 수 없습니다.")
         Long price
 ) {
 

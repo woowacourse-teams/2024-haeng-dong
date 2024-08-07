@@ -5,10 +5,10 @@ import server.haengdong.application.request.EventAppRequest;
 
 public record EventSaveRequest(
 
-        @NotBlank
+        @NotBlank(message = "행사 이름은 공백일 수 없습니다.")
         String eventName,
 
-        @NotBlank
+        @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
         String password
 ) {
 

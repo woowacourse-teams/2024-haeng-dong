@@ -20,10 +20,10 @@ import server.haengdong.exception.HaengdongException;
 @Entity
 public class BillAction implements Comparable<BillAction> {
 
-    private static final int MIN_TITLE_LENGTH = 2;
-    private static final int MAX_TITLE_LENGTH = 30;
-    private static final long MIN_PRICE = 1L;
-    private static final long MAX_PRICE = 10_000_000L;
+    public static final int MIN_TITLE_LENGTH = 1;
+    public static final int MAX_TITLE_LENGTH = 30;
+    public static final long MIN_PRICE = 1L;
+    public static final long MAX_PRICE = 10_000_000L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,15 +53,17 @@ public class BillAction implements Comparable<BillAction> {
     private void validateTitle(String title) {
         int titleLength = title.trim().length();
         if (titleLength < MIN_TITLE_LENGTH || titleLength > MAX_TITLE_LENGTH) {
-            throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
-                    String.format("앞뒤 공백을 제거한 지출 내역 제목은 %d ~ %d자여야 합니다.", MIN_TITLE_LENGTH, MAX_TITLE_LENGTH));
+            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_TITLE_INVALID,
+                    String.format(HaengdongErrorCode.BILL_ACTION_TITLE_INVALID.getMessage(),
+                            MIN_TITLE_LENGTH,
+                            MAX_TITLE_LENGTH));
         }
     }
 
     private void validatePrice(Long price) {
         if (price < MIN_PRICE || price > MAX_PRICE) {
-            throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
-                    String.format("지출 금액은 %,d 이하의 자연수여야 합니다.", MAX_PRICE));
+            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_PRICE_INVALID,
+                    String.format(HaengdongErrorCode.BILL_ACTION_PRICE_INVALID.getMessage(), MAX_PRICE));
         }
     }
 

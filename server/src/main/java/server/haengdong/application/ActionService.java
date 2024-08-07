@@ -24,7 +24,7 @@ public class ActionService {
 
     public List<MemberBillReportAppResponse> getMemberBillReports(String token) {
         Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
         List<BillAction> billActions = billActionRepository.findByAction_Event(event);
         List<MemberAction> memberActions = memberActionRepository.findAllByEvent(event);
 

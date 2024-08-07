@@ -26,13 +26,13 @@ class EventTest {
                 .hasMessage(String.format("행사 이름에는 공백 문자가 연속될 수 없습니다. 입력한 이름 : %s", eventName));
     }
 
-    @DisplayName("이름이 2자 미만이거나 20자 초과인 경우 예외가 발생한다.")
+    @DisplayName("이름이 1자 미만이거나 20자 초과인 경우 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "123456789012345678901"})
     void createFilTest2(String eventName) {
         assertThatCode(() -> new Event(eventName, "1234", "TEST_TOKEN"))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage(String.format("행사 이름은 2자 이상 20자 이하만 입력 가능합니다. 입력한 이름 길이 : %d", eventName.length()));
+                .hasMessage(String.format("행사 이름은 1자 이상 20자 이하만 입력 가능합니다. 입력한 이름 길이 : %d", eventName.length()));
     }
 
     @DisplayName("비밀번호는 4자리 숫자 입니다.")
