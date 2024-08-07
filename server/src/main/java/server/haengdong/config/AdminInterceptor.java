@@ -36,7 +36,7 @@ public class AdminInterceptor implements HandlerInterceptor {
     private void validateToken(HttpServletRequest request) {
         String token = authenticationExtractor.extract(request, authService.getTokenName());
         String tokenEventId = authService.findEventIdByToken(token);
-        String eventId = request.getRequestURI().split("/")[2];
+        String eventId = request.getRequestURI().split("/")[3];
         if (!tokenEventId.equals(eventId)) {
             throw new AuthenticationException();
         }
