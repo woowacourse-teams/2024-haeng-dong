@@ -2,27 +2,27 @@
 
 === 행사 생성
 
-operation::createEvent[]
+operation::createEvent[snippets="http-request,request-body,response-body,http-response,request-fields,http-request,response-cookies"]
 
 === 행사 관리자 로그인
 
-operation::eventLogin[]
+operation::eventLogin[snippets="path-parameters,http-request,request-body,http-response,request-fields,http-request,response-cookies"]
 
 === 행사 정보 조회
 
-operation::getEvent[]
+operation::getEvent[snippets="path-parameters,http-request,response-body,http-response,http-request"]
 
 === 행사 전체 참여자 목록 조회
 
-operation::findAllEventMember[]
+operation::findAllEventMember[snippets="path-parameters,http-request,response-body,http-response,http-request"]
 
 === 행사 참여자 이름 변경
 
-operation::updateEventMemberName[]
+operation::updateEventMemberName[snippets="path-parameters,http-request,request-body,http-response,request-cookies,request-fields,http-request"]
 
 === 행사 참여자 삭제 (특정 참여자의 모든 참여자 액션 삭제)
 
-operation::deleteAllMemberActionByName[]
+operation::deleteAllMemberActionByName[snippets="path-parameters,http-request,http-response,request-cookies,http-request"]
 
 ==== [.red]#Exceptions#
 

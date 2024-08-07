@@ -10,6 +10,9 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -55,6 +58,8 @@ public class MemberActionControllerDocsTest extends RestDocsSupport {
                 .andExpect(status().isOk())
                 .andDo(
                         document("createMemberAction",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
@@ -87,6 +92,8 @@ public class MemberActionControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.members[1].name").value(equalTo("토다리")))
                 .andDo(
                         document("getMemberAction",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
@@ -112,6 +119,8 @@ public class MemberActionControllerDocsTest extends RestDocsSupport {
                 .andExpect(status().isOk())
                 .andDo(
                         document("deleteMemberAction",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID"),
                                         parameterWithName("actionId").description("액션 ID")
@@ -135,6 +144,8 @@ public class MemberActionControllerDocsTest extends RestDocsSupport {
                 .andExpect(status().isOk())
                 .andDo(
                         document("deleteAllMemberActionByName",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID"),
                                         parameterWithName("memberName").description("행사 참여자 이름")

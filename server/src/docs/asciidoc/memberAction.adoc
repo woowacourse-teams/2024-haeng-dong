@@ -2,12 +2,12 @@
 
 === 참여자 액션 생성
 
-operation::createMemberAction[]
+operation::createMemberAction[snippets="path-parameters,http-request,request-body,http-response,request-cookies,request-fields,http-request"]
 
 === 참여자 액션 조회
 
-operation::getMemberAction[]
+operation::getMemberAction[snippets="path-parameters,http-request,response-body,http-response,http-request"]
 
 === 참여자 액션 삭제
 
-operation::deleteMemberAction[]
+operation::deleteMemberAction[snippets="path-parameters,http-request,http-response,request-cookies,http-request"]

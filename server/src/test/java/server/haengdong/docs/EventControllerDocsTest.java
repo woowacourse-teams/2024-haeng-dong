@@ -11,6 +11,9 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -73,6 +76,8 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.eventId").value("쿠키 토큰"))
                 .andDo(
                         document("createEvent",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 requestFields(
                                         fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름"),
                                         fieldWithPath("password").type(JsonFieldType.STRING).description("행사 비밀 번호")
@@ -101,6 +106,8 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.eventName").value("행동대장 회식"))
                 .andDo(
                         document("getEvent",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
@@ -125,6 +132,8 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.memberNames[1]").value("쿠키"))
                 .andDo(
                         document("findAllEventMember",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
@@ -151,6 +160,8 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(status().isOk())
                 .andDo(
                         document("updateEventMemberName",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID"),
                                         parameterWithName("memberName").description("참여자 이름")
@@ -182,6 +193,8 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(status().isOk())
                 .andDo(
                         document("eventLogin",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
