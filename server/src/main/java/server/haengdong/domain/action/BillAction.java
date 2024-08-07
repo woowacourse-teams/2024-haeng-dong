@@ -53,17 +53,13 @@ public class BillAction implements Comparable<BillAction> {
     private void validateTitle(String title) {
         int titleLength = title.trim().length();
         if (titleLength < MIN_TITLE_LENGTH || titleLength > MAX_TITLE_LENGTH) {
-            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_TITLE_INVALID,
-                    String.format(HaengdongErrorCode.BILL_ACTION_TITLE_INVALID.getMessage(),
-                            MIN_TITLE_LENGTH,
-                            MAX_TITLE_LENGTH));
+            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_TITLE_INVALID);
         }
     }
 
     private void validatePrice(Long price) {
         if (price < MIN_PRICE || price > MAX_PRICE) {
-            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_PRICE_INVALID,
-                    String.format(HaengdongErrorCode.BILL_ACTION_PRICE_INVALID.getMessage(), MAX_PRICE));
+            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_PRICE_INVALID);
         }
     }
 

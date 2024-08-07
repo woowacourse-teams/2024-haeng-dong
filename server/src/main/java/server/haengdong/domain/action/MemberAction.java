@@ -48,10 +48,7 @@ public class MemberAction implements Comparable<MemberAction> {
     private void validateMemberName(String memberName) {
         int memberLength = memberName.length();
         if (memberLength < MIN_NAME_LENGTH || memberLength > MAX_NAME_LENGTH) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID,
-                    String.format(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID.getMessage(),
-                            MIN_NAME_LENGTH,
-                            MAX_NAME_LENGTH));
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID);
         }
     }
 
