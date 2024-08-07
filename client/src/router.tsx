@@ -2,6 +2,7 @@ import {createBrowserRouter} from 'react-router-dom';
 
 import {AdminPage} from '@pages/EventPage/AdminPage';
 import {HomePage} from '@pages/EventPage/HomePage';
+import SetEventPasswordPage from '@pages/CreateEventPage/SetEventPasswordPage';
 
 import {CompleteCreateEventPage, SetEventNamePage} from '@pages/CreateEventPage';
 import {MainPage} from '@pages/MainPage';
@@ -10,7 +11,6 @@ import {EventPage} from '@pages/EventPage';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
-import SetEventPasswordPage from '@pages/CreateEventPage/SetEventPasswordPage';
 
 const router = createBrowserRouter([
   {

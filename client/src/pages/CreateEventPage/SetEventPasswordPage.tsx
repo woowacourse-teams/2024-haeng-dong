@@ -2,10 +2,11 @@ import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 
-import RULE from '@constants/rule';
 import validateEventPassword from '@utils/validate/validateEventPassword';
-import {ROUTER_URLS} from '@constants/routerUrls';
 import {requestPostNewEvent} from '@apis/request/event';
+
+import RULE from '@constants/rule';
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 const SetEventPasswordPage = () => {
   const [eventName, setEventName] = useState('');

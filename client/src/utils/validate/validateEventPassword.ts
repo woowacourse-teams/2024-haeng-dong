@@ -1,7 +1,7 @@
 import ERROR_MESSAGE from '@constants/errorMessage';
+import REGEXP from '@constants/regExp';
 
 import {ValidateResult} from './type';
-import REGEXP from '@constants/regExp';
 
 const validateEventPassword = (password: string): ValidateResult => {
   if (!REGEXP.eventPassword.test(password)) {
