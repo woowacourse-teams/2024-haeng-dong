@@ -1,0 +1,18 @@
+:source-highlighter: highlightjs
+:hardbreaks:
+:toc: left
+:doctype: book
+:icons: font
+:toc-title: 전체 API 목록
+:toclevels: 2
+:sectlinks:
+:sectnums:
+:sectnumlevels: 2
+
+= 행동대장
+
+include::event.adoc[]
+include::memberBillReport.adoc[]
+include::memberAction.adoc[]
+include::billAction.adoc[]
+

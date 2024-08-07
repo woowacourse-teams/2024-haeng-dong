@@ -1,0 +1,52 @@
+== 행사
+
+=== 행사 생성
+
+operation::createEvent[]
+
+=== 행사 관리자 로그인
+
+operation::eventLogin[]
+
+=== 행사 정보 조회
+
+operation::getEvent[]
+
+=== 행사 전체 참여자 목록 조회
+
+operation::findAllEventMember[]
+
+=== 행사 참여자 이름 변경
+
+operation::updateEventMemberName[]
+
+=== 행사 참여자 삭제 (특정 참여자의 모든 참여자 액션 삭제)
+
+operation::deleteAllMemberActionByName[]
+
+==== [.red]#Exceptions#
+
+|===
+|Cell in column 1, header row |Cell in column 2, header row
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+
+|Cell in column 1, row 3
+|Cell in column 2, row 3
+
+|Cell in column 1, row 4
+|Cell in column 2, row 4
+|===
+
+.+/api/events/{eventId}/bill-actions/{actionId}+
+|===
+|Parameter|Description
+
+|`+eventId+`
+|행사 ID
+
+|`+actionId+`
+|지출 액션 ID
+
+|===

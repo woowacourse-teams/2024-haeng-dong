@@ -1,0 +1,13 @@
+== 지출 액션
+
+=== 지출 액션 생성
+
+operation::createBillActions[]
+
+=== 지출 액션 수정
+
+operation::updateBillAction[]
+
+=== 지출 액션 삭제
+
+operation::deleteBillAction[]

@@ -1,0 +1,13 @@
+== 참여자 액션
+
+=== 참여자 액션 생성
+
+operation::createMemberAction[]
+
+=== 참여자 액션 조회
+
+operation::getMemberAction[]
+
+=== 참여자 액션 삭제
+
+operation::deleteMemberAction[]
