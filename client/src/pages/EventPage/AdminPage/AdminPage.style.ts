@@ -8,3 +8,9 @@ export const ReceiptStyle = () =>
     padding: '0 8px',
     paddingBottom: '8.75rem',
   });
+
+export const TitleAndListButtonContainerStyle = () =>
+  css({
+    display: 'flex',
+    flexDirection: 'column',
+  });
