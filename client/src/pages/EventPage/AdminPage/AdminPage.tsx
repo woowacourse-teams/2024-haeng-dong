@@ -87,11 +87,13 @@ const AdminPage = () => {
           description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요."
           price={getTotalPrice()}
         />
-        <ListButton
-          prefix="전체 참여자"
-          suffix={`${memberNameList.length}명`}
-          onClick={handleOpenAllMemberListButton}
-        />
+        {memberNameList.length !== 0 && (
+          <ListButton
+            prefix="전체 참여자"
+            suffix={`${memberNameList.length}명`}
+            onClick={handleOpenAllMemberListButton}
+          />
+        )}
       </div>
       <section css={receiptStyle}>
         <StepList />
