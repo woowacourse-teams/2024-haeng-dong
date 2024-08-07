@@ -47,15 +47,12 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
 ext {
     snippetsDir = file('build/generated-snippets')
 }
 
-test {
+tasks.named('test') {
+    useJUnitPlatform()
     outputs.dir snippetsDir
 }
 
@@ -63,11 +60,22 @@ asciidoctor {
     inputs.dir snippetsDir
     configurations 'asciidoctorExt'
     dependsOn test
+    baseDirFollowsSourceFile()
+}
+
+tasks.register('copyApiDocuments', Copy) {
+    doFirst {
+        delete file('src/main/resources/static/docs')
+    }
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
 }
 
 bootJar {
-    dependsOn asciidoctor
-    from("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
+    dependsOn copyApiDocuments
+}
+
+build {
+    dependsOn copyApiDocuments
 }

@@ -11,8 +11,8 @@
 
 = 행동대장
 
-include::event.adoc[]
-include::memberBillReport.adoc[]
-include::memberAction.adoc[]
-include::billAction.adoc[]
+include::{docdir}/event.adoc[]
+include::{docdir}/memberBillReport.adoc[]
+include::{docdir}/memberAction.adoc[]
+include::{docdir}/billAction.adoc[]
 
