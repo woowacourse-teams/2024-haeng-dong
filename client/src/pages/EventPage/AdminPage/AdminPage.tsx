@@ -8,7 +8,7 @@ import useEventId from '@hooks/useEventId/useEventId';
 
 import {SetActionListModal, SetInitialMemberListModal, SetAllMemberListModal} from '@components/Modal';
 
-import {ReceiptStyle, TitleAndListButtonContainerStyle} from './AdminPage.style';
+import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
 
 interface ModalBasedOnMemberCountProps {
   memberNameList: string[];
@@ -81,7 +81,7 @@ const AdminPage = () => {
 
   return (
     <>
-      <div css={TitleAndListButtonContainerStyle}>
+      <div css={titleAndListButtonContainerStyle}>
         <Title
           title={eventName}
           description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요."
@@ -93,7 +93,7 @@ const AdminPage = () => {
           onClick={handleOpenAllMemberListButton}
         />
       </div>
-      <section css={ReceiptStyle}>
+      <section css={receiptStyle}>
         <StepList />
         <FixedButton
           children={memberNameList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}

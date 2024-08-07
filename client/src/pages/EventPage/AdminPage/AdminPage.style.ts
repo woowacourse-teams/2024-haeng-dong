@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 
-export const ReceiptStyle = () =>
+export const receiptStyle = () =>
   css({
     display: 'flex',
     flexDirection: 'column',
@@ -9,7 +9,7 @@ export const ReceiptStyle = () =>
     paddingBottom: '8.75rem',
   });
 
-export const TitleAndListButtonContainerStyle = () =>
+export const titleAndListButtonContainerStyle = () =>
   css({
     display: 'flex',
     flexDirection: 'column',
