@@ -1,12 +1,30 @@
-import {BottomSheet, Text} from 'haengdong-design';
+import {BottomSheet, Text, LabelGroupInput, IconButton, Icon} from 'haengdong-design';
 
-import {allMemberListModalStyle, allMemberListModalTitleStyle} from './SetAllMemberListModal.style';
+import {
+  allMemberListModalInputAndDeleteButtonContainer,
+  allMemberListModalLabelGroupInputStyle,
+  allMemberListModalStyle,
+  allMemberListModalTitleStyle,
+} from './SetAllMemberListModal.style';
 
 interface SetAllMemberListModalProps {
   openBottomSheet: boolean;
   setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setIsClickAllMemberListButton: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+const InputAndDeleteButton = () => {
+  return (
+    <div css={allMemberListModalInputAndDeleteButtonContainer}>
+      <div css={{flexGrow: 1}}>
+        <LabelGroupInput.Element elementKey="e" />
+      </div>
+      <IconButton variants="tertiary" css={{height: '3rem', width: '3rem', borderRadius: '1rem'}}>
+        <Icon iconType="trash" iconColor="onTertiary" />
+      </IconButton>
+    </div>
+  );
+};
 
 const SetAllMemberListModal = ({
   openBottomSheet,
@@ -27,6 +45,11 @@ const SetAllMemberListModal = ({
           <Text size="bodyBold" color="sematic">
             총 N명
           </Text>
+        </div>
+        <div css={allMemberListModalLabelGroupInputStyle}>
+          <LabelGroupInput labelText="이름">
+            <InputAndDeleteButton />
+          </LabelGroupInput>
         </div>
       </div>
     </BottomSheet>

@@ -16,3 +16,20 @@ export const allMemberListModalTitleStyle = () =>
     width: '100%',
     padding: '0 1.5rem',
   });
+
+export const allMemberListModalLabelGroupInputStyle = () =>
+  css({
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '0 1rem',
+
+    overflow: 'auto',
+  });
+
+export const allMemberListModalInputAndDeleteButtonContainer = () =>
+  css({
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    gap: '1rem',
+  });
