@@ -5,7 +5,7 @@ import React, {createContext, useState, useContext, ReactNode} from 'react';
 interface ErrorContextType {
   hasError: boolean;
   errorMessage: string;
-  setError: (error: Error) => void;
+  setError: (error: ServerError) => void;
   clearError: () => void;
 }
 
@@ -27,12 +27,12 @@ export const ErrorProvider: React.FC<ErrorProviderProps> = ({children}) => {
 
   const setError = (error: ServerError) => {
     setHasError(false);
-    setErrorMessage(ERROR_MESSAGES[error.code]);
-    console.log(ERROR_MESSAGES[error.code]);
+    setErrorMessage('');
+
     setTimeout(() => {
       setHasError(true);
-      setErrorMessage(error.message);
-    }, 0); // 상태를 빠르게 변경하기 위해 타이머 사용
+      setErrorMessage(ERROR_MESSAGES[error.code] ?? '지금은 에러 코드가 안바뀌어서 에러 메세지가 없어요.');
+    }, 0);
   };
 
   const clearError = () => {
