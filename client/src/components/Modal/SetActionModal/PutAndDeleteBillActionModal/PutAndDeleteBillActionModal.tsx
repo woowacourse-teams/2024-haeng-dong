@@ -1,0 +1,65 @@
+import type {BillAction} from 'types/serviceType';
+
+import {BottomSheet, FixedButton, LabelGroupInput, Text} from 'haengdong-design';
+
+import usePutBillAction from '@hooks/usePutBillAction/usePutBillAction';
+import validatePurchase from '@utils/validate/validatePurchase';
+
+import {bottomSheetHeaderStyle, bottomSheetStyle, inputContainerStyle} from './PutAndDeltetBillActionModal.style';
+
+type PutAndDeleteBillActionModalProps = {
+  billAction: BillAction;
+  isBottomSheetOpened: boolean;
+  setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const PutAndDeleteBillActionModal = ({
+  billAction,
+  isBottomSheetOpened,
+  setIsBottomSheetOpened,
+}: PutAndDeleteBillActionModalProps) => {
+  const {inputPair, handleInputChange, handleOnBlur, errorMessage, errorInfo, canSubmit, onSubmit} = usePutBillAction(
+    {title: billAction.name, price: billAction.price + '', index: 0},
+    validatePurchase,
+    () => setIsBottomSheetOpened(false),
+  );
+
+  return (
+    <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
+      <form css={bottomSheetStyle} onSubmit={event => onSubmit(event, inputPair, billAction.actionId)}>
+        <header css={bottomSheetHeaderStyle}>
+          <Text size="bodyBold">지출 내역 수정하기</Text>
+        </header>
+        <fieldset css={inputContainerStyle}>
+          <LabelGroupInput labelText="지출내역 / 금액" errorText={errorMessage}>
+            <LabelGroupInput.Element
+              aria-label="지출 내역"
+              elementKey={'0'}
+              type="text"
+              value={inputPair.title}
+              onChange={event => handleInputChange('title', event)}
+              onBlur={handleOnBlur}
+              isError={errorInfo.title}
+              placeholder="지출 내역"
+            />
+            <LabelGroupInput.Element
+              aria-label="금액"
+              elementKey={'0'}
+              type="number"
+              value={inputPair.price}
+              onChange={event => handleInputChange('price', event)}
+              onBlur={handleOnBlur}
+              isError={errorInfo.price}
+              placeholder="금액"
+            />
+          </LabelGroupInput>
+        </fieldset>
+        <FixedButton variants="primary" disabled={!canSubmit}>
+          수정 완료
+        </FixedButton>
+      </form>
+    </BottomSheet>
+  );
+};
+
+export default PutAndDeleteBillActionModal;
