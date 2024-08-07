@@ -56,7 +56,7 @@ const Toast = ({
         <Flex justifyContent="spaceBetween" alignItems="center">
           <Flex alignItems="center" gap="0.5rem">
             {renderIcon(type)}
-            <Text size="smallBodyBold" css={textStyle()}>
+            <Text size="smallBodyBold" css={textStyle}>
               {message}
             </Text>
           </Flex>
