@@ -1,12 +1,12 @@
-import ERROR_MESSAGES from '@constants/errorMessage';
-import React, {createContext, useState, useContext, ReactNode} from 'react';
+import ERROR_MESSAGES, {UNHANDLED_ERROR} from '@constants/errorMessage';
+import React, {createContext, useState, useContext, useEffect, ReactNode} from 'react';
 
 // 에러 컨텍스트 생성
 interface ErrorContextType {
   hasError: boolean;
   errorMessage: string;
   setError: (error: ServerError) => void;
-  clearError: () => void;
+  clearError: (ms?: number) => void;
 }
 
 const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
@@ -14,14 +14,15 @@ const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
 // 에러 컨텍스트를 제공하는 프로바이더 컴포넌트
 interface ErrorProviderProps {
   children: ReactNode;
+  callback?: (message: string) => void;
 }
 
-type ServerError = {
-  code: string;
+export type ServerError = {
+  errorCode: string;
   message: string;
 };
 
-export const ErrorProvider: React.FC<ErrorProviderProps> = ({children}) => {
+export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setErrorState] = useState<ServerError | null>(null);
@@ -40,18 +41,17 @@ export const ErrorProvider: React.FC<ErrorProviderProps> = ({children}) => {
   }, [error, callback]);
 
   const setError = (error: ServerError) => {
-    setHasError(false);
+    setHasError(true);
     setErrorMessage('');
-
-    setTimeout(() => {
-      setHasError(true);
-      setErrorMessage(ERROR_MESSAGES[error.code] ?? '지금은 에러 코드가 안바뀌어서 에러 메세지가 없어요.');
-    }, 0);
+    setErrorState(error);
   };
 
-  const clearError = () => {
-    setHasError(false);
-    setErrorMessage('');
+  const clearError = (ms: number = 0) => {
+    setTimeout(() => {
+      setHasError(false);
+      setErrorMessage('');
+      setErrorState(null);
+    }, ms);
   };
 
   return (
