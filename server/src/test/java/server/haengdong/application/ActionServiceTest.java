@@ -9,9 +9,7 @@ import static server.haengdong.domain.action.MemberActionStatus.OUT;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.BillAction;
@@ -22,11 +20,9 @@ import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
-import server.haengdong.support.extension.DatabaseCleanerExtension;
+import server.haengdong.support.fixture.Fixture;
 
-@ExtendWith(DatabaseCleanerExtension.class)
-@SpringBootTest
-class ActionServiceTest {
+class ActionServiceTest extends ServiceTestSupport {
 
     @Autowired
     private ActionService actionService;
@@ -43,8 +39,7 @@ class ActionServiceTest {
     @DisplayName("참여자별 정산 현황을 조회한다.")
     @Test
     void getMemberBillReports() {
-        String token = "tOkEn1";
-        Event event = new Event("행동대장", token);
+        Event event = Fixture.EVENT1;
         Event savedEvent = eventRepository.save(event);
         List<MemberAction> memberActions = List.of(
                 new MemberAction(new Action(savedEvent, 1L), "소하", IN, 1L),
@@ -60,7 +55,7 @@ class ActionServiceTest {
         memberActionRepository.saveAll(memberActions);
         billActionRepository.saveAll(billActions);
 
-        List<MemberBillReportAppResponse> responses = actionService.getMemberBillReports(token);
+        List<MemberBillReportAppResponse> responses = actionService.getMemberBillReports(event.getToken());
 
         assertThat(responses)
                 .hasSize(3)

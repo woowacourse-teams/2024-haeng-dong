@@ -22,6 +22,18 @@ cors:
   max-age: 3600
   allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
 
+security:
+  jwt:
+    token:
+      secret-key: skdmeejEKJdkDjklDlkj123DKLJ3kDkeDkDKQMEOD1D90D8dE
+      expire-length: 604800 # 1주일
+
+cookie:
+  http-only: true
+  secure: false
+  path: /
+  max-age: 7D
+
 management:
   endpoints:
     web:
@@ -30,14 +42,9 @@ management:
 
 logging:
   level:
-    root: info
+    root: debug
     org.springframework.web: debug
     server.haengdong: debug
-
-  file:
-    name: logs/spring-boot-application.log
-    path: logs
-  config: classpath:logback-spring.xml
 
 ---
 

@@ -6,10 +6,13 @@ import server.haengdong.application.request.EventAppRequest;
 public record EventSaveRequest(
 
         @NotBlank
-        String eventName
+        String eventName,
+
+        @NotBlank
+        String password
 ) {
 
     public EventAppRequest toAppRequest() {
-        return new EventAppRequest(eventName);
+        return new EventAppRequest(eventName, password);
     }
 }

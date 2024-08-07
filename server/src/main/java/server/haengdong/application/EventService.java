@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.request.EventLoginAppRequest;
 import server.haengdong.application.request.MemberUpdateAppRequest;
 import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
@@ -19,6 +20,7 @@ import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
+import server.haengdong.exception.AuthenticationException;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
@@ -42,15 +44,13 @@ public class EventService {
     }
 
     public EventDetailAppResponse findEvent(String token) {
-        Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+        Event event = getEvent(token);
 
         return EventDetailAppResponse.of(event);
     }
 
     public List<ActionAppResponse> findActions(String token) {
-        Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+        Event event = getEvent(token);
 
         List<BillAction> billActions = billActionRepository.findByAction_Event(event).stream()
                 .sorted(Comparator.comparing(BillAction::getSequence)).toList();
@@ -92,8 +92,7 @@ public class EventService {
     }
 
     public MembersAppResponse findAllMembers(String token) {
-        Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+        Event event = getEvent(token);
 
         List<String> memberNames = memberActionRepository.findAllUniqueMemberByEvent(event);
 
@@ -102,8 +101,7 @@ public class EventService {
 
     @Transactional
     public void updateMember(String token, String memberName, MemberUpdateAppRequest request) {
-        Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+        Event event = getEvent(token);
         String updatedMemberName = request.name();
         validateMemberNameUnique(event, updatedMemberName);
 
@@ -116,5 +114,17 @@ public class EventService {
         if (isMemberNameExist) {
             throw new HaengdongException(HaengdongErrorCode.DUPLICATED_MEMBER_NAME);
         }
+    }
+
+    public void validatePassword(EventLoginAppRequest request) throws HaengdongException {
+        Event event = getEvent(request.token());
+        if (event.isSamePassword(request.password())) {
+            throw new AuthenticationException();
+        }
+    }
+
+    private Event getEvent(String token) {
+        return eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
     }
 }

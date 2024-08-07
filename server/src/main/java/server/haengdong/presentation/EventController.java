@@ -2,6 +2,9 @@ package server.haengdong.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
+import server.haengdong.infrastructure.auth.CookieProperties;
+import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.request.MemberUpdateRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
@@ -18,16 +24,24 @@ import server.haengdong.presentation.response.MembersResponse;
 import server.haengdong.presentation.response.StepsResponse;
 
 @RequiredArgsConstructor
+@EnableConfigurationProperties(CookieProperties.class)
 @RestController
 public class EventController {
 
     private final EventService eventService;
+    private final AuthService authService;
+    private final CookieProperties cookieProperties;
 
     @PostMapping("/api/events")
     public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
         EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
 
-        return ResponseEntity.ok(eventResponse);
+        String jwtToken = authService.createToken(eventResponse.eventId());
+
+        ResponseCookie responseCookie = createResponseCookie(jwtToken);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(eventResponse);
     }
 
     @GetMapping("/api/events/{eventId}")
@@ -60,5 +74,29 @@ public class EventController {
         eventService.updateMember(token, memberName, request.toAppRequest());
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/api/events/{eventId}/login")
+    public ResponseEntity<Void> loginEvent(
+            @PathVariable("eventId") String token,
+            @Valid @RequestBody EventLoginRequest request
+    ) {
+        eventService.validatePassword(request.toAppRequest(token));
+        String jwtToken = authService.createToken(token);
+
+        ResponseCookie responseCookie = createResponseCookie(jwtToken);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .build();
+    }
+
+    private ResponseCookie createResponseCookie(String token) {
+        return ResponseCookie.from(authService.getTokenName(), token)
+                .httpOnly(cookieProperties.httpOnly())
+                .secure(cookieProperties.secure())
+                .domain(cookieProperties.domain())
+                .path(cookieProperties.path())
+                .maxAge(cookieProperties.maxAge())
+                .build();
     }
 }

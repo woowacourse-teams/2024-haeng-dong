@@ -9,17 +9,16 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import server.haengdong.application.request.MemberActionSaveAppRequest;
-import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongException;
+import server.haengdong.support.fixture.Fixture;
 
 class CurrentMembersTest {
 
     @DisplayName("인원 변동 이력으로 현재 참여 인원을 계산한다.")
     @Test
     void of() {
-        Event event = new Event("test", "TOKEN");
+        Event event = Fixture.EVENT1;
         List<MemberAction> memberActions = List.of(
                 new MemberAction(new Action(event, 1L), "망쵸", IN, 1L),
                 new MemberAction(new Action(event, 2L), "백호", IN, 1L),
@@ -37,7 +36,7 @@ class CurrentMembersTest {
     @Test
     void addMemberAction1() {
         CurrentMembers currentMembers = new CurrentMembers();
-        Event event = new Event("이벤트", "token");
+        Event event = Fixture.EVENT1;
         MemberAction memberAction = new MemberAction(new Action(event, 1L), "웨디", IN, 1L);
 
         CurrentMembers addedCurrentMembers = currentMembers.addMemberAction(memberAction);
@@ -50,7 +49,7 @@ class CurrentMembersTest {
     @DisplayName("인원 변동 액션의 상태가 OUT이면 현재 인원에서 제외한다.")
     @Test
     void addMemberAction2() {
-        Event event = new Event("이벤트", "token");
+        Event event = Fixture.EVENT1;
         MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "웨디", IN, 1L);
         CurrentMembers currentMembers = new CurrentMembers().addMemberAction(memberAction1);
         MemberAction memberAction2 = new MemberAction(new Action(event, 1L), "웨디", OUT, 1L);
