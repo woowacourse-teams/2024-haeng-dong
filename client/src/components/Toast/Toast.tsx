@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import {createPortal} from 'react-dom';
 import {useState, useEffect} from 'react';
 import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';
@@ -18,12 +17,15 @@ const renderIcon = (type: ToastType) => {
   }
 };
 
+const ANIMATION_TIME = 500;
+
 const Toast = ({
   type = 'confirm',
   top = '0px',
   bottom = '0px',
   isClickToClose = true,
   position = 'bottom',
+  showingTime,
   message,
   onUndo,
   onClose,
@@ -37,8 +39,8 @@ const Toast = ({
       setIsVisible(false);
       setTimeout(() => {
         if (onClose) onClose();
-      }, 500); // fadeOut 애니메이션 시간과 동일하게 설정
-    }, 3000); // 토스트가 화면에 보이는 시간 설정
+      }, ANIMATION_TIME); // fadeOut 애니메이션 시간과 동일하게 설정
+    }, showingTime - ANIMATION_TIME); // 토스트가 내려가는 시간 확보
 
     return () => {
       clearTimeout(timer);
@@ -51,7 +53,7 @@ const Toast = ({
     setIsVisible(false);
     setTimeout(() => {
       onClose();
-    }, 500); // fadeOut 애니메이션 시간과 동일하게 설정
+    }, ANIMATION_TIME); // fadeOut 애니메이션 시간과 동일하게 설정
   };
 
   return createPortal(
