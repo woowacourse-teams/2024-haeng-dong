@@ -1,4 +1,4 @@
-import {BottomSheet, Text, LabelGroupInput, IconButton, Icon} from 'haengdong-design';
+import {BottomSheet, Text, LabelGroupInput, IconButton, Icon, FixedButton} from 'haengdong-design';
 
 import {
   allMemberListModalInputAndDeleteButtonContainer,
@@ -51,6 +51,7 @@ const SetAllMemberListModal = ({
             <InputAndDeleteButton />
           </LabelGroupInput>
         </div>
+        <FixedButton children="수정 완료" />
       </div>
     </BottomSheet>
   );

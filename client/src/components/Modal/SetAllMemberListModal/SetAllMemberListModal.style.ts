@@ -22,6 +22,7 @@ export const allMemberListModalLabelGroupInputStyle = () =>
     display: 'flex',
     flexDirection: 'column',
     padding: '0 1rem',
+    paddingBottom: '10rem',
 
     overflow: 'auto',
   });
