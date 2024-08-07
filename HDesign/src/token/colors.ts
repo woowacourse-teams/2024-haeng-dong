@@ -36,6 +36,18 @@ const PRIMITIVE_COLORS = {
     800: '#b9bb17',
     900: '#9e9305',
   },
+  green: {
+    50: '#f4ffe8',
+    100: '#e4ffc6',
+    200: '#d1ff9f',
+    300: '#bfff75',
+    400: '#b0fd51',
+    500: '#a4f932',
+    600: '#9de728',
+    700: '#90cf18',
+    800: '#85b704',
+    900: '#748f00',
+  },
   gray: {
     50: '#F9F8FD',
     100: '#F1F0F5',
@@ -68,7 +80,8 @@ export type ColorKeys =
   | 'error'
   | 'errorContainer'
   | 'onErrorContainer'
-  | 'warn';
+  | 'warn'
+  | 'complete';
 export type ColorTokens = Record<ColorKeys, Color>;
 
 // TODO: (@soha) 대괄호 사용에 대해 논의
@@ -92,4 +105,5 @@ export const COLORS: ColorTokens = {
   errorContainer: PRIMITIVE_COLORS.pink[50],
   onErrorContainer: PRIMITIVE_COLORS.pink[300],
   warn: PRIMITIVE_COLORS.yellow[400],
+  complete: PRIMITIVE_COLORS.green[300],
 };

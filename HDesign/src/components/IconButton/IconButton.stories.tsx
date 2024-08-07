@@ -1,6 +1,8 @@
+/** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
 
 import IconButton from '@components/IconButton/IconButton';
+import Icon from '@components/Icon/Icon';
 
 const meta = {
   title: 'Components/IconButton',
@@ -10,14 +12,33 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    iconType: {
+    size: {
       description: '',
       control: {type: 'select'},
-      options: ['plus', 'inputDelete', 'buljusa'],
+      options: ['large', 'medium', 'small'],
+    },
+    variants: {
+      description: '',
+      control: {type: 'select'},
+      options: ['none', 'primary', 'secondary', 'tertiary', 'destructive'],
+    },
+    children: {
+      description: '',
+      control: {type: 'select'},
+      options: [
+        <Icon iconType="inputDelete" />,
+        <Icon iconType="buljusa" />,
+        <Icon iconType="rightChevron" />,
+        <Icon iconType="search" />,
+        <Icon iconType="error" />,
+        <Icon iconType="trash" />,
+      ],
     },
   },
   args: {
-    iconType: 'plus',
+    size: 'medium',
+    variants: 'destructive',
+    children: <Icon iconType="trash" />,
   },
 } satisfies Meta<typeof IconButton>;
 

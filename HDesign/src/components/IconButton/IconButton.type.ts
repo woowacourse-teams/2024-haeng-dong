@@ -1,10 +1,15 @@
-type IconButtonType = 'inputDelete' | 'plus' | 'buljusa' | 'rightChevron' | 'arrow' | 'error' | 'trash';
+import {Theme} from '@theme/theme.type';
 
-export interface IconButtonStyleProps {}
+export type IconButtonSize = 'large' | 'medium' | 'small';
+export type IconButtonVariants = 'none' | 'primary' | 'secondary' | 'tertiary' | 'destructive';
 
-export interface IconButtonCustomProps {
-  iconType: IconButtonType;
+export interface IconButtonStyleProps {
+  size?: IconButtonSize;
+  variants: IconButtonVariants;
+  theme?: Theme;
 }
+
+export interface IconButtonCustomProps {}
 
 export type IconButtonOptionProps = IconButtonStyleProps & IconButtonCustomProps;
 

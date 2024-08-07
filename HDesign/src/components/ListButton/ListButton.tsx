@@ -4,6 +4,7 @@ import React, {forwardRef} from 'react';
 import Text from '@components/Text/Text';
 import IconButton from '@components/IconButton/IconButton';
 import Flex from '@components/Flex/Flex';
+import Icon from '@components/Icon/Icon';
 
 import {useTheme} from '@theme/HDesignProvider';
 
@@ -24,7 +25,9 @@ export const ListButton: React.FC<ListButtonProps> = forwardRef<HTMLButtonElemen
         <Text size="caption" css={textStyle(theme)}>
           {suffix}
         </Text>
-        <IconButton iconType="rightChevron" />
+        <IconButton variants="none">
+          <Icon iconType="rightChevron" />
+        </IconButton>
       </Flex>
     </button>
   );
