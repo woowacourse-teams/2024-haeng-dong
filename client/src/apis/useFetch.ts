@@ -1,6 +1,8 @@
-import {UNHANDLED_ERROR} from '@constants/errorMessage';
-import {ServerError, useError} from '../ErrorProvider';
 import {useState} from 'react';
+
+import {UNHANDLED_ERROR} from '@constants/errorMessage';
+
+import {ServerError, useError} from '../ErrorProvider';
 
 export const useFetch = () => {
   const {setError, clearError} = useError();

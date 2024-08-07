@@ -1,12 +1,13 @@
 import {createPortal} from 'react-dom';
 import {useState, useEffect} from 'react';
-import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';
-import {ToastProps, ToastType} from './Toast.type';
 import {Button, Flex, Icon, Text} from 'haengdong-design';
 
+import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';
+import {ToastProps, ToastType} from './Toast.type';
+
 const renderIcon = (type: ToastType) => {
-  if (type==='none') return null;
-  
+  if (type === 'none') return null;
+
   return <Icon iconType={type} />;
 };
 

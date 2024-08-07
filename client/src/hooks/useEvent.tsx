@@ -1,4 +1,5 @@
 import {ResponsePostNewEvent, requestPostNewEvent} from '@apis/request/event';
+
 import {useFetch} from '@apis/useFetch';
 
 const useEvent = () => {

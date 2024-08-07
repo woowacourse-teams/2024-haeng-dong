@@ -1,4 +1,5 @@
 import {css, keyframes} from '@emotion/react';
+
 import {ToastPosition} from './Toast.type';
 
 type ToastMarginStyle = {

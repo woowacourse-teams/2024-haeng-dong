@@ -4,8 +4,9 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdon
 
 import validateEventName from '@utils/validate/validateEventName';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
 import useEvent from '@hooks/useEvent';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 const SetEventNamePage = () => {
   const [eventName, setEventName] = useState('');
