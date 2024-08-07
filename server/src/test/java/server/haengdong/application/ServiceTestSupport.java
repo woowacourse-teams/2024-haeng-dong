@@ -7,5 +7,5 @@ import server.haengdong.support.extension.DatabaseCleanerExtension;
 
 @ExtendWith(DatabaseCleanerExtension.class)
 @SpringBootTest(webEnvironment= WebEnvironment.NONE)
-public abstract class ServiceTestSupport {
+abstract class ServiceTestSupport {
 }
