@@ -32,12 +32,16 @@ abstract class ControllerTestSupport {
 
     @MockBean
     protected EventService eventService;
+
     @MockBean
     protected AuthService authService;
+
     @MockBean
     protected ActionService actionService;
+
     @MockBean
     protected MemberActionService memberActionService;
+
     @MockBean
     protected BillActionService billActionService;
 }
