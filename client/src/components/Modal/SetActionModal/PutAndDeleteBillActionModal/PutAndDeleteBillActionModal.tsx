@@ -2,8 +2,9 @@ import type {BillAction} from 'types/serviceType';
 
 import {BottomSheet, FixedButton, LabelGroupInput, Text} from 'haengdong-design';
 
-import usePutBillAction from '@hooks/usePutBillAction/usePutBillAction';
 import validatePurchase from '@utils/validate/validatePurchase';
+
+import {usePutAndDeleteBillAction} from '@hooks/usePutAndDeleteBillAction';
 
 import {bottomSheetHeaderStyle, bottomSheetStyle, inputContainerStyle} from './PutAndDeltetBillActionModal.style';
 
@@ -18,11 +19,10 @@ const PutAndDeleteBillActionModal = ({
   isBottomSheetOpened,
   setIsBottomSheetOpened,
 }: PutAndDeleteBillActionModalProps) => {
-  const {inputPair, handleInputChange, handleOnBlur, errorMessage, errorInfo, canSubmit, onSubmit} = usePutBillAction(
-    {title: billAction.name, price: billAction.price + '', index: 0},
-    validatePurchase,
-    () => setIsBottomSheetOpened(false),
-  );
+  const {inputPair, handleInputChange, handleOnBlur, errorMessage, errorInfo, canSubmit, onSubmit, onDelete} =
+    usePutAndDeleteBillAction({title: billAction.name, price: billAction.price + '', index: 0}, validatePurchase, () =>
+      setIsBottomSheetOpened(false),
+    );
 
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
@@ -54,7 +54,12 @@ const PutAndDeleteBillActionModal = ({
             />
           </LabelGroupInput>
         </fieldset>
-        <FixedButton variants="primary" disabled={!canSubmit}>
+        <FixedButton
+          type="submit"
+          variants="primary"
+          disabled={!canSubmit}
+          onDeleteClick={() => onDelete(billAction.actionId)}
+        >
           수정 완료
         </FixedButton>
       </form>

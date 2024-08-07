@@ -3,13 +3,13 @@ import type {Bill} from 'types/serviceType';
 import {useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
-import {requestPutBillAction} from '@apis/request/bill';
+import {requestDeleteBillAction, requestPutBillAction} from '@apis/request/bill';
 import useEventId from '@hooks/useEventId/useEventId';
 import {useStepList} from '@hooks/useStepList/useStepList';
 
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
-const usePutBillAction = (
+const usePutAndDeleteBillAction = (
   initialValue: InputPair,
   validateFunc: (inputPair: Bill) => ValidateResult,
   onClose: () => void,
@@ -87,15 +87,21 @@ const usePutBillAction = (
     onClose();
   };
 
+  const onDelete = async (actionId: number) => {
+    await requestDeleteBillAction({eventId, actionId});
+    refreshStepList();
+  };
+
   return {
     inputPair,
     handleInputChange,
     handleOnBlur,
     onSubmit,
+    onDelete,
     canSubmit,
     errorMessage,
     errorInfo,
   };
 };
 
-export default usePutBillAction;
+export default usePutAndDeleteBillAction;
