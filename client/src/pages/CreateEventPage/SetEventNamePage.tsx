@@ -1,30 +1,24 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {FixedButton, MainLayout, LabelInput, Input, Title, TopNav, Back} from 'haengdong-design';
+import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 
-import {ResponsePostNewEvent, requestPostNewEvent} from '@apis/request/event';
 import validateEventName from '@utils/validate/validateEventName';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
-import {useFetch} from '@apis/useFetch';
+import useEvent from '@hooks/useEvent';
 
 const SetEventNamePage = () => {
   const [eventName, setEventName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
-
-  const {request} = useFetch();
+  const {createNewEvent} = useEvent();
 
   const submitEventName = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const {eventId} = await createNewEvent({eventName});
 
-    const response = await request<ResponsePostNewEvent | undefined>({queryFn: () => requestPostNewEvent({eventName})});
-
-    if (response) {
-      const {eventId} = response;
-      navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
-    }
+    navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +35,7 @@ const SetEventNamePage = () => {
       setErrorMessage(validation.errorMessage ?? '');
     }
   };
+
   return (
     <MainLayout>
       <TopNav>
