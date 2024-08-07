@@ -6,7 +6,7 @@ type RequestPostNewEvent = {
   eventName: string;
 };
 
-type ResponsePostNewEvent = {
+export type ResponsePostNewEvent = {
   eventId: string;
 };
 
