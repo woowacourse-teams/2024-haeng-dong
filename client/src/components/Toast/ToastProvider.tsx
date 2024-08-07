@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {createContext, useCallback, useContext, useEffect, useState} from 'react';
+import {createContext, useContext, useEffect, useState} from 'react';
 
 import ERROR_MESSAGES from '@constants/errorMessage';
 
@@ -25,9 +25,9 @@ const ToastProvider = ({children}: React.PropsWithChildren) => {
   const [currentToast, setCurrentToast] = useState<ShowToast | null>(null);
   const {hasError, errorMessage, clearError} = useError();
 
-  const showToast = useCallback(({showingTime = DEFAULT_TIME, isAlwaysOn = false, ...toastProps}: ShowToast) => {
+  const showToast = ({showingTime = DEFAULT_TIME, isAlwaysOn = false, ...toastProps}: ShowToast) => {
     setCurrentToast({showingTime, isAlwaysOn, ...toastProps});
-  }, []);
+  };
 
   const closeToast = () => {
     setCurrentToast(null);
