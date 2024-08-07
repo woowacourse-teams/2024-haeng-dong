@@ -3,12 +3,12 @@ import {useEffect, useRef, useState} from 'react';
 import {ValidateResult} from '@utils/validate/type';
 import {Bill} from 'types/serviceType';
 
-type InputPair = Omit<Bill, 'price'> & {
+export type InputPair = Omit<Bill, 'price'> & {
   price: string;
   index: number;
 };
 
-type BillInputType = 'title' | 'price';
+export type BillInputType = 'title' | 'price';
 
 // TODO: (@weadie) 지나치게 도메인에 묶여있는 인풋. 절대 다른 페어인풋으로 재사용할 수 없다.
 const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateResult) => {
@@ -32,8 +32,6 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
       price: 0, // price가 input에서 0을 초기값으로 갖지않도록 타입을 수정했기 때문에 0을 명시적으로 넘겨줍니다.
       [field]: value,
     });
-
-    const {title, price} = targetInputPair;
 
     // TODO: (@weadie) 가독성이 안좋다는 리뷰. 함수로 분리
     if (isLastInputPairFilled({index, field, value})) {
