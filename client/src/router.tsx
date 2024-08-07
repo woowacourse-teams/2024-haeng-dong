@@ -10,6 +10,8 @@ import {EventPage} from '@pages/EventPage';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
+import ErrorPage from '@pages/ErrorPage/ErrorPage';
+import UnknownErrorBoundary from './UnknownErrorBoundary';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
           {path: ROUTER_URLS.eventManage, element: <AdminPage />},
           {path: ROUTER_URLS.home, element: <HomePage />},
         ],
+      },
+      {
+        path: '*',
+        element: <ErrorPage />,
       },
     ],
   },
