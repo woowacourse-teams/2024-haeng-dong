@@ -1,6 +1,6 @@
 import type {BillStep} from 'types/serviceType';
 
-import {StepItem} from 'haengdong-design';
+import {DragHandleItem, DragHandleItemContainer} from 'haengdong-design';
 
 interface BillStepItemProps {
   step: BillStep;
@@ -9,12 +9,25 @@ interface BillStepItemProps {
 }
 
 const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, setOpenBottomSheet}) => {
+  const totalPrice = step.actions.reduce((acc, cur) => acc + cur.price, 0);
+
   return (
-    <StepItem
-      name={step.stepName === null ? '행사' : step.stepName}
-      bills={step.actions}
-      personCount={step.members.length}
-    />
+    <DragHandleItemContainer
+      topLeftText={step.stepName}
+      topRightText={`${step.members.length}명`}
+      bottomLeftText="총액"
+      bottomRightText={`${totalPrice.toLocaleString('ko-kr')} 원`}
+      backgroundColor="white"
+    >
+      {step.actions.map(action => (
+        <DragHandleItem
+          hasDragHandler={true}
+          prefix={action.name}
+          suffix={`${action.price.toLocaleString('ko-kr')} 원`}
+          backgroundColor="lightGrayContainer"
+        />
+      ))}
+    </DragHandleItemContainer>
   );
 };
 
