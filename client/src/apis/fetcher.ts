@@ -65,12 +65,12 @@ export const requestPut = ({headers = {}, ...args}: RequestProps) => {
 export const requestPost = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
   const response = await fetcher({method: 'POST', headers, ...args});
 
-  // const contentType = response!.headers.get('Content-Type');
+  const contentType = response!.headers.get('Content-Type');
 
-  // if (contentType && contentType.includes('application/json')) {
-  const data: T = await response!.json();
-  return data;
-  // }
+  if (contentType && contentType.includes('application/json')) {
+    const data: T = await response!.json();
+    return data;
+  }
 };
 
 export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
