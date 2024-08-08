@@ -3,10 +3,15 @@ import {useState} from 'react';
 import {UNHANDLED_ERROR} from '@constants/errorMessage';
 
 import {ServerError, useError} from '../ErrorProvider';
+import sendLogToSentry from '@utils/sendLogToSentry';
+
+import {NavigateFunction, useNavigate} from 'react-router-dom';
+import FetchError from '../errors/FetchError';
 
 export const useFetch = () => {
   const {setError, clearError} = useError();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const fetch = async <T>(queryFunction: () => Promise<T>): Promise<T> => {
     setLoading(true);
@@ -16,14 +21,16 @@ export const useFetch = () => {
       const result = await queryFunction();
       return result;
     } catch (error) {
-      if (error instanceof Error) {
-        const errorBody: ServerError = await JSON.parse(error.message);
-
+      if (error instanceof FetchError) {
+        const errorBody: ServerError = error.errorBody;
         setError(errorBody);
-        throw new Error(errorBody.message);
-      } else {
-        throw new Error(UNHANDLED_ERROR);
+        captureError(error, navigate);
+
+        throw new Error(errorBody.message); // TODO: (@weadie) 이것때문에 alert가 뜹니다. 빠른 시일 내에 수정 예정
       }
+
+      setError({errorCode: UNHANDLED_ERROR, message: JSON.stringify(error)});
+      throw new Error(UNHANDLED_ERROR);
     } finally {
       setLoading(false);
     }
