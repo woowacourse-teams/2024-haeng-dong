@@ -51,16 +51,11 @@ export const requestPut = ({headers = {}, ...args}: RequestProps) => {
   return fetcher({method: 'PUT', headers, ...args});
 };
 
-export const requestPost = async <T>({headers = {}, ...args}: RequestProps): Promise<T | undefined> => {
+export const requestPost = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
   const response = await fetcher({method: 'POST', headers, ...args});
 
-  const contentType = response!.headers.get('Content-Type');
-  if (contentType && contentType.includes('application/json')) {
-    const data: T = await response!.json();
-    return data;
-  }
-
-  return;
+  const data: T = await response!.json();
+  return data;
 };
 
 export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
@@ -87,52 +82,11 @@ const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, query
   return errorHandler(url, options);
 };
 
-// class ErrorWithHeader extends Error {
-//   header: string;
-
-//   constructor(header: string, message: string) {
-//     super(message);
-//     this.name = this.constructor.name;
-//     this.header = header;
-//   }
-// }
-
 const errorHandler = async (url: string, options: Options) => {
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      const serverErrorMessage = await response.text();
-      throw new Error(serverErrorMessage || ''); // 받은 에러 메세지가 없는 경우는 서버에게..
-    }
-    return response;
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-    return;
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    const serverErrorMessage = await response.text();
+    throw new Error(serverErrorMessage || ''); // 받은 에러 메세지가 없는 경우는 서버에게..
   }
+  return response;
 };
-
-// export const ERROR_MESSAGE = {
-//   SYSTEM_FAULT: 'system error. 관리자에게 문의하십시오',
-//   OFFLINE: '네트워크 연결이 끊어졌습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.',
-//   UNKNOWN: '알 수 없는 에러입니다. 관리자에게 문의해주세요. (연락처...)',
-// };
-
-// const getErrorMessage = (error: unknown) => {
-//   return ERROR_MESSAGE.UNKNOWN;
-
-// if (error instanceof TypeError) return ERROR_MESSAGE.OFFLINE;
-
-// if (error instanceof Error) {
-//   const mappedErrorMessage = Object.entries(SERVER_ERROR_MESSAGE).find(([key]) => {
-//     const upperCaseErrorMessage = convertToUpperCase(error.message.split(SERVER_ERROR_MESSAGE_DIVIDER)[0]);
-
-//     return upperCaseErrorMessage.includes(key);
-//   })?.[1];
-
-//   return mappedErrorMessage ?? ERROR_MESSAGE.UNKNOWN;
-// }
-
-// return ERROR_MESSAGE.UNKNOWN;
-// };

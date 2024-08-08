@@ -7,7 +7,7 @@ type RequestPostNewEvent = {
   password: number;
 };
 
-type ResponsePostNewEvent = {
+export type ResponsePostNewEvent = {
   eventId: string;
 };
 

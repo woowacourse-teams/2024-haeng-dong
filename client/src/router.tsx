@@ -2,6 +2,7 @@ import {createBrowserRouter} from 'react-router-dom';
 
 import {AdminPage} from '@pages/EventPage/AdminPage';
 import {HomePage} from '@pages/EventPage/HomePage';
+import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import SetEventPasswordPage from '@pages/CreateEventPage/SetEventPasswordPage';
 
 import {CompleteCreateEventPage, SetEventNamePage} from '@pages/CreateEventPage';
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
           {path: ROUTER_URLS.eventManage, element: <AdminPage />},
           {path: ROUTER_URLS.home, element: <HomePage />},
         ],
+      },
+      {
+        path: '*',
+        element: <ErrorPage />,
       },
     ],
   },
