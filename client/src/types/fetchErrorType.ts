@@ -1,3 +1,4 @@
+import {Method} from '@apis/fetcher';
 import {ServerError} from 'ErrorProvider';
 
 export type FetchErrorType = Error & {
@@ -5,4 +6,5 @@ export type FetchErrorType = Error & {
   status: number;
   endpoint: string;
   errorBody: ServerError;
+  method: Method;
 };
