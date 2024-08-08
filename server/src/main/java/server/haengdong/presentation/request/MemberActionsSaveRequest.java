@@ -8,7 +8,7 @@ import server.haengdong.application.request.MemberActionsSaveAppRequest;
 public record MemberActionsSaveRequest(
         List<String> members,
 
-        @NotBlank
+        @NotBlank(message = "멤버 액션은 공백일 수 없습니다.")
         String status
 ) {
 

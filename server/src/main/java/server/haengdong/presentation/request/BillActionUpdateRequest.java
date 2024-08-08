@@ -6,13 +6,13 @@ import server.haengdong.application.request.BillActionUpdateAppRequest;
 
 public record BillActionUpdateRequest(
 
-        @NotBlank
+        @NotBlank(message = "지출 내역 제목은 공백일 수 없습니다.")
         String title,
 
-        @NotNull
+        @NotNull(message = "지출 금액은 공백일 수 없습니다.")
         Long price
 ) {
-        public BillActionUpdateAppRequest toAppResponse() {
-                return new BillActionUpdateAppRequest(title, price);
-        }
+    public BillActionUpdateAppRequest toAppResponse() {
+        return new BillActionUpdateAppRequest(title, price);
+    }
 }

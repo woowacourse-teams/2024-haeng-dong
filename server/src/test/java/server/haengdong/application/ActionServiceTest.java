@@ -72,6 +72,6 @@ class ActionServiceTest extends ServiceTestSupport {
     void getMemberBillReports1() {
         assertThatThrownBy(() -> actionService.getMemberBillReports("invalid token"))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage(HaengdongErrorCode.NOT_FOUND_EVENT.getMessage());
+                .hasMessage(HaengdongErrorCode.EVENT_NOT_FOUND.getMessage());
     }
 }

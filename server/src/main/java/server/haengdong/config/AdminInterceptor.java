@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import server.haengdong.application.AuthService;
 import server.haengdong.exception.AuthenticationException;
+import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.infrastructure.auth.AuthenticationExtractor;
 
 @Slf4j
@@ -39,7 +40,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         String tokenEventId = authService.findEventIdByToken(token);
         String eventId = request.getRequestURI().split("/")[3];
         if (!tokenEventId.equals(eventId)) {
-            throw new AuthenticationException();
+            throw new AuthenticationException(HaengdongErrorCode.FORBIDDEN);
         }
     }
 }
