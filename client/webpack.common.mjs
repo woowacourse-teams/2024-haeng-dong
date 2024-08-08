@@ -20,6 +20,7 @@ export default {
       '@mocks': path.resolve(__dirname, 'src/mocks/'),
       '@pages': path.resolve(__dirname, 'src/pages/'),
       '@utils': path.resolve(__dirname, 'src/utils/'),
+      '@errors': path.resolve(__dirname, 'src/errors/'),
     },
   },
   module: {
