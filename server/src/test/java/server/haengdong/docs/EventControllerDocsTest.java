@@ -136,15 +136,15 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.memberNames[1]").value("쿠키"))
                 .andDo(
                         document("findAllEventMember",
-                                 preprocessRequest(prettyPrint()),
-                                 preprocessResponse(prettyPrint()),
-                                 pathParameters(
-                                         parameterWithName("eventId").description("행사 ID")
-                                 ),
-                                 responseFields(
-                                         fieldWithPath("memberNames").type(JsonFieldType.ARRAY)
-                                                 .description("행사 참여자 목록")
-                                 )
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                responseFields(
+                                        fieldWithPath("memberNames").type(JsonFieldType.ARRAY)
+                                                .description("행사 참여자 목록")
+                                )
                         )
                 );
     }
@@ -195,25 +195,25 @@ public class EventControllerDocsTest extends RestDocsSupport {
         given(authService.getTokenName()).willReturn("eventToken");
 
         mockMvc.perform(post("/api/events/{eventId}/login", token)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
                 .andDo(print())
                 .andExpect(cookie().value("eventToken", "jwtToken"))
                 .andExpect(status().isOk())
                 .andDo(
                         document("eventLogin",
-                                 preprocessRequest(prettyPrint()),
-                                 preprocessResponse(prettyPrint()),
-                                 pathParameters(
-                                         parameterWithName("eventId").description("행사 ID")
-                                 ),
-                                 requestFields(
-                                         fieldWithPath("password").type(JsonFieldType.STRING)
-                                                 .description("행사 비밀 번호")
-                                 ),
-                                 responseCookies(
-                                         cookieWithName("eventToken").description("행사 관리자용 토큰")
-                                 )
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                requestFields(
+                                        fieldWithPath("password").type(JsonFieldType.STRING)
+                                                .description("행사 비밀 번호")
+                                ),
+                                responseCookies(
+                                        cookieWithName("eventToken").description("행사 관리자용 토큰")
+                                )
                         )
                 );
     }
@@ -231,7 +231,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
         given(eventService.findActions(token)).willReturn(actionAppResponses);
 
         mockMvc.perform(get("/api/events/{eventId}/actions", token)
-                                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.steps[0].type").value(equalTo("IN")))
@@ -261,25 +261,25 @@ public class EventControllerDocsTest extends RestDocsSupport {
 
                 .andDo(
                         document("findActions",
-                                 preprocessRequest(prettyPrint()),
-                                 preprocessResponse(prettyPrint()),
-                                 pathParameters(
-                                         parameterWithName("eventId").description("행사 ID")
-                                 ),
-                                 responseFields(
-                                         fieldWithPath("steps[].type").type(JsonFieldType.STRING)
-                                                 .description("액션 유형 [BILL, IN, OUT]"),
-                                         fieldWithPath("steps[].members").type(JsonFieldType.ARRAY)
-                                                 .description("해당 step에 참여한 참여자 목록"),
-                                         fieldWithPath("steps[].actions[].actionId").type(JsonFieldType.NUMBER)
-                                                 .description("액션 ID"),
-                                         fieldWithPath("steps[].actions[].name").type(JsonFieldType.STRING)
-                                                 .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
-                                         fieldWithPath("steps[].actions[].price").type(JsonFieldType.NUMBER).optional()
-                                                 .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
-                                         fieldWithPath("steps[].actions[].sequence").type(JsonFieldType.NUMBER)
-                                                 .description("액션 순서")
-                                 )
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                responseFields(
+                                        fieldWithPath("steps[].type").type(JsonFieldType.STRING)
+                                                .description("액션 유형 [BILL, IN, OUT]"),
+                                        fieldWithPath("steps[].members").type(JsonFieldType.ARRAY)
+                                                .description("해당 step에 참여한 참여자 목록"),
+                                        fieldWithPath("steps[].actions[].actionId").type(JsonFieldType.NUMBER)
+                                                .description("액션 ID"),
+                                        fieldWithPath("steps[].actions[].name").type(JsonFieldType.STRING)
+                                                .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
+                                        fieldWithPath("steps[].actions[].price").type(JsonFieldType.NUMBER).optional()
+                                                .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
+                                        fieldWithPath("steps[].actions[].sequence").type(JsonFieldType.NUMBER)
+                                                .description("액션 순서")
+                                )
                         )
                 );
     }
