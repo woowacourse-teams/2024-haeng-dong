@@ -5,7 +5,7 @@ import StepList from '@components/StepList/StepList';
 import {useStepList} from '@hooks/useStepList/useStepList';
 import {requestGetEventName} from '@apis/request/event';
 import useEventId from '@hooks/useEventId/useEventId';
-import ModalBasedOnMemberCount from '@components/Modal/ModalBasedOnMemberCount/ModalBasedOnMemberCount';
+import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
 
