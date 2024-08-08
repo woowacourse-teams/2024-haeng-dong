@@ -36,7 +36,7 @@ const PutAndDeleteBillActionModal = ({
           <LabelGroupInput labelText="지출내역 / 금액" errorText={errorMessage}>
             <LabelGroupInput.Element
               aria-label="지출 내역"
-              elementKey={'0'}
+              elementKey={'title'}
               type="text"
               value={inputPair.title}
               onChange={event => handleInputChange('title', event)}
@@ -46,7 +46,7 @@ const PutAndDeleteBillActionModal = ({
             />
             <LabelGroupInput.Element
               aria-label="금액"
-              elementKey={'0'}
+              elementKey={'price'}
               type="number"
               value={inputPair.price}
               onChange={event => handleInputChange('price', event)}
