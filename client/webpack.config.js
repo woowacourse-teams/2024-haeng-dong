@@ -28,7 +28,7 @@ export default {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.min.js',
+    filename: '[name].[hash].js',
     publicPath: '/',
   },
   module: {

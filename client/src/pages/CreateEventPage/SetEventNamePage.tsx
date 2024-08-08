@@ -16,15 +16,7 @@ const SetEventNamePage = () => {
   const submitEventName = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await requestPostNewEvent({eventName});
-
-    if (response) {
-      const {eventId} = response;
-      navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
-    } else {
-      // TODO: (@weadie)
-      alert('오류님');
-    }
+    navigate(ROUTER_URLS.eventCreatePassword, {state: {eventName}});
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +50,7 @@ const SetEventNamePage = () => {
           isError={!!errorMessage}
           autoFocus
         ></LabelInput>
-        <FixedButton disabled={!canSubmit}>행동 개시!</FixedButton>
+        <FixedButton disabled={!canSubmit}>다음</FixedButton>
       </form>
     </MainLayout>
   );

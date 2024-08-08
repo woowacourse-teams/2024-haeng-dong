@@ -57,8 +57,8 @@ const getIconButtonSize = (size: IconButtonSize) => {
       borderRadius: '1rem',
     }),
     large: css({
-      padding: '1rem',
-      borderRadius: '1.25rem',
+      padding: '0.875rem',
+      borderRadius: '1.125rem',
     }),
   };
 
