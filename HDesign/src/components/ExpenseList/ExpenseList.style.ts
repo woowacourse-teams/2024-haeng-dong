@@ -19,11 +19,6 @@ export const expenseItemLeftStyle = () =>
     gap: '1rem',
   });
 
-export const TextStyle = (theme: Theme) =>
-  css({
-    color: theme.colors.onTertiary,
-  });
-
 export const expenseListStyle = (theme: Theme) =>
   css({
     width: '100%',

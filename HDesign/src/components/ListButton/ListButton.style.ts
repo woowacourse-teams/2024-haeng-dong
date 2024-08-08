@@ -14,8 +14,3 @@ export const listButtonStyle = (theme: Theme) =>
 
     boxShadow: `0 1px 0 0 ${theme.colors.grayContainer} inset `,
   });
-
-export const textStyle = (theme: Theme) =>
-  css({
-    color: theme.colors.gray,
-  });
