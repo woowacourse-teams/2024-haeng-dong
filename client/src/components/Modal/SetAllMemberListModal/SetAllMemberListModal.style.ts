@@ -26,3 +26,11 @@ export const allMemberListModalLabelGroupInputStyle = () =>
 
     overflow: 'auto',
   });
+
+export const InputAndDeleteButtonContainer = () =>
+  css({
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    gap: '1rem',
+  });

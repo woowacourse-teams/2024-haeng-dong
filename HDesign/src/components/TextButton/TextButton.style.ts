@@ -2,14 +2,9 @@ import {css} from '@emotion/react';
 
 import {Theme} from '@theme/theme.type';
 
-import {TextColor} from './TextButton.type';
+import {ColorKeys} from '@token/colors';
 
 interface TextButtonStyleProps {
-  textColor: TextColor;
+  textColor: ColorKeys;
   theme: Theme;
 }
-
-export const textButtonStyle = ({textColor, theme}: TextButtonStyleProps) =>
-  css({
-    color: theme.colors[textColor],
-  });

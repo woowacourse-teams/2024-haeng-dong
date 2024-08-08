@@ -12,21 +12,23 @@ export const searchTermsStyle = (theme: Theme) =>
   css({
     position: 'absolute',
     top: '3.5rem',
+    zIndex: 1,
 
-    width: 'calc(100% - 2rem)',
-    margin: '0 1rem',
-    padding: '0.5rem 0',
+    width: '100%',
+    padding: '0.5rem 1rem',
 
     borderRadius: '1rem',
 
     backgroundColor: theme.colors.white,
+
+    boxShadow: '0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.12)',
   });
 
 export const searchTermStyle = (theme: Theme) =>
   css(
     {
       width: '100%',
-      padding: '0.5rem 1rem',
+      padding: '0.5rem',
 
       color: theme.colors.onTertiary,
 

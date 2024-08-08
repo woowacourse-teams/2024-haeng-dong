@@ -44,6 +44,6 @@ export const ERROR_MESSAGE = {
   preventEmpty: '값은 비어있을 수 없어요',
 };
 
-export const UNHANDLED_ERROR = 'UNHANDLED';
+export const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 
 export default SERVER_ERROR_MESSAGES;

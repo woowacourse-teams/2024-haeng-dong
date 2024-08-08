@@ -17,9 +17,11 @@
   "devDependencies": {
     "@eslint/compat": "^1.1.0",
     "@eslint/js": "^9.6.0",
+    "@sentry/webpack-plugin": "^2.22.0",
     "@svgr/webpack": "^8.1.0",
     "@types/dotenv-webpack": "^7.0.7",
     "@types/react": "^18.3.3",
+    "@types/react-copy-to-clipboard": "^5.0.7",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
@@ -44,12 +46,15 @@
     "typescript-eslint": "^7.16.0",
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "webpack-dev-server": "^5.0.4",
+    "webpack-merge": "^6.0.1"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
-    "haengdong-design": "^0.1.60",
+    "@sentry/react": "^8.24.0",
+    "haengdong-design": "^0.1.66",
     "react": "^18.3.1",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^4.0.13",
     "react-router-dom": "^6.24.1"

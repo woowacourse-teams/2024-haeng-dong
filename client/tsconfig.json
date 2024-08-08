@@ -42,7 +42,8 @@
       "@hooks/*": ["hooks/*"],
       "@mocks/*": ["mocks/*"],
       "@pages/*": ["pages/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@errors/*": ["errors/*"]
     },
     "outDir": "./dist"
   },

@@ -1,6 +1,6 @@
-import React, {createContext, useState, useContext, useEffect, ReactNode} from 'react';
+import {createContext, useState, useContext, useEffect, ReactNode} from 'react';
 
-import SERVER_ERROR_MESSAGES, {UNHANDLED_ERROR} from '@constants/errorMessage';
+import SERVER_ERROR_MESSAGES from '@constants/errorMessage';
 
 // 에러 컨텍스트 생성
 interface ErrorContextType {
@@ -31,7 +31,8 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   useEffect(() => {
     if (error) {
       if (isUnhandledError(error.errorCode)) {
-        throw new Error(UNHANDLED_ERROR);
+        // 에러바운더리로 보내기
+        throw error;
       }
 
       setHasError(true);

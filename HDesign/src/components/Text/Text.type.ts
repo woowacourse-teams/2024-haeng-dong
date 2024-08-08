@@ -1,3 +1,7 @@
+import {Theme} from '@theme/theme.type';
+
+import {ColorKeys} from '@token/colors';
+
 export type TextSize =
   | 'head'
   | 'title'
@@ -12,6 +16,11 @@ export type TextSize =
 
 export interface TextStyleProps {
   size?: TextSize;
+  textColor?: ColorKeys;
+}
+
+export interface TextStylePropsWithTheme extends TextStyleProps {
+  theme: Theme;
 }
 
 export interface TextCustomProps {}

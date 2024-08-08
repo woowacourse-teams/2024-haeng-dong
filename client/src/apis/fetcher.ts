@@ -1,4 +1,10 @@
-type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+import {ServerError} from 'ErrorProvider';
+
+import {UNKNOWN_ERROR} from '@constants/errorMessage';
+
+import FetchError from '../errors/FetchError';
+
+export type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 type Body = ReadableStream | XMLHttpRequestBodyInit;
 type HeadersType = [string, string][] | Record<string, string> | Headers;
@@ -11,7 +17,6 @@ type RequestProps = {
   headers?: HeadersType;
   body?: Body | object | null;
   queryParams?: ObjectQueryParams;
-  // errorMessage: string;
 };
 
 type FetcherProps = RequestProps & {
@@ -22,6 +27,12 @@ type Options = {
   method: Method;
   headers: HeadersType;
   body?: Body | null;
+};
+
+type ErrorHandlerProps = {
+  url: string;
+  options: Options;
+  body: string;
 };
 
 const API_BASE_URL = process.env.API_BASE_URL;
@@ -51,16 +62,15 @@ export const requestPut = ({headers = {}, ...args}: RequestProps) => {
   return fetcher({method: 'PUT', headers, ...args});
 };
 
-export const requestPost = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
+export const requestPostWithoutResponse = async ({headers = {}, ...args}: RequestProps) => {
+  await fetcher({method: 'POST', headers, ...args});
+};
+
+export const requestPostWithResponse = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
   const response = await fetcher({method: 'POST', headers, ...args});
 
-  const contentType = response!.headers.get('Content-Type');
-  if (contentType && contentType.includes('application/json')) {
-    const data: T = await response!.json();
-    return data;
-  }
-
-  return;
+  const data: T = await response!.json();
+  return data;
 };
 
 export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
@@ -68,15 +78,11 @@ export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
 };
 
 const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: FetcherProps) => {
-  console.log('fetcher');
-  console.log(JSON.stringify(body));
-  // const token = generateBasicToken(USER_ID, USER_PASSWORD);
   const options = {
     method,
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: token,
       ...headers,
     },
     body: body ? JSON.stringify(body) : null,
@@ -86,14 +92,33 @@ const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, query
 
   if (queryParams) url += `?${objectToQueryString(queryParams)}`;
 
-  return errorHandler(url, options);
+  return errorHandler({url, options, body: JSON.stringify(body)});
 };
 
-const errorHandler = async (url: string, options: Options) => {
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    const serverErrorMessage = await response.text();
-    throw new Error(serverErrorMessage || ''); // 받은 에러 메세지가 없는 경우는 서버에게..
+const errorHandler = async ({url, options, body}: ErrorHandlerProps) => {
+  try {
+    const response: Response = await fetch(url, options);
+
+    if (!response.ok) {
+      const serverErrorBody: ServerError = await response.json();
+
+      throw new FetchError({
+        status: response.status,
+        requestBody: body,
+        endpoint: response.url,
+        errorBody: serverErrorBody,
+        name: serverErrorBody.errorCode,
+        message: serverErrorBody.message || '',
+        method: options.method,
+      });
+    }
+
+    return response;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+
+    throw new Error(UNKNOWN_ERROR);
   }
-  return response;
 };

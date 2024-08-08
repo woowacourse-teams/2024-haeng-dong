@@ -9,3 +9,6 @@ dist
 
 *storybook.log
 .DS_Store
+
+# Sentry Config File
+.env.sentry-build-plugin
