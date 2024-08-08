@@ -72,27 +72,27 @@ public class EventControllerDocsTest extends RestDocsSupport {
         given(authService.getTokenName()).willReturn("eventToken");
 
         mockMvc.perform(post("/api/events")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(cookie().value("eventToken", "jwtToken"))
                 .andExpect(jsonPath("$.eventId").value("쿠키 토큰"))
                 .andDo(
                         document("createEvent",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                requestFields(
-                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름"),
-                                        fieldWithPath("password").type(JsonFieldType.STRING).description("행사 비밀 번호")
-                                ),
-                                responseFields(
-                                        fieldWithPath("eventId").type(JsonFieldType.STRING)
-                                                .description("행사 ID")
-                                ),
-                                responseCookies(
-                                        cookieWithName("eventToken").description("행사 관리자용 토큰")
-                                )
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 requestFields(
+                                         fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름"),
+                                         fieldWithPath("password").type(JsonFieldType.STRING).description("행사 비밀 번호")
+                                 ),
+                                 responseFields(
+                                         fieldWithPath("eventId").type(JsonFieldType.STRING)
+                                                 .description("행사 ID")
+                                 ),
+                                 responseCookies(
+                                         cookieWithName("eventToken").description("행사 관리자용 토큰")
+                                 )
                         )
                 );
     }
@@ -110,14 +110,14 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.eventName").value("행동대장 회식"))
                 .andDo(
                         document("getEvent",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
-                                ),
-                                responseFields(
-                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
-                                )
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 responseFields(
+                                         fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
+                                 )
                         )
                 );
     }
@@ -153,14 +153,10 @@ public class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void updateMember() throws Exception {
         String token = "TOKEN";
-        MemberNamesUpdateRequest memberNameUpdateRequest = new MemberNamesUpdateRequest(List.of(
-                new MemberNameUpdateRequest("토다링", "토쟁이"),
-                new MemberNameUpdateRequest("감자", "고구마")
-        ));
+        MemberUpdateRequest memberUpdateRequest = new MemberUpdateRequest("변경된 이름");
+        String requestBody = objectMapper.writeValueAsString(memberUpdateRequest);
 
-        String requestBody = objectMapper.writeValueAsString(memberNameUpdateRequest);
-
-        mockMvc.perform(put("/api/events/{eventId}/members/nameChange", token)
+        mockMvc.perform(put("/api/events/{eventId}/members/{memberName}", token, "변경 전 이름")
                         .cookie(EVENT_COOKIE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
@@ -171,15 +167,14 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
+                                        parameterWithName("eventId").description("행사 ID"),
+                                        parameterWithName("memberName").description("참여자 이름")
                                 ),
                                 requestCookies(
                                         cookieWithName("eventToken").description("행사 관리자 토큰")
                                 ),
                                 requestFields(
-                                        fieldWithPath("members").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
-                                        fieldWithPath("members[].before").type(JsonFieldType.STRING).description("수정 전 참여자 이름"),
-                                        fieldWithPath("members[].after").type(JsonFieldType.STRING).description("수정 후 참여자 이름")
+                                        fieldWithPath("name").type(JsonFieldType.STRING).description("수정할 참여자 이름")
                                 )
                         )
                 );
