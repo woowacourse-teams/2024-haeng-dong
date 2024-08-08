@@ -20,8 +20,8 @@ const meta = {
   ],
   args: {
     isShowTargetInput: true,
-    searchTerms: ['todari', 'cookie'],
-    onTermClick: keyword => alert(keyword),
+    matchItems: ['todari', 'cookie'],
+    onMatchItemClick: keyword => alert(keyword),
   },
 } satisfies Meta<typeof Search>;
 

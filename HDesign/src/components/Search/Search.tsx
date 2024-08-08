@@ -7,23 +7,23 @@ import {searchStyle, searchTermsStyle, searchTermStyle} from './Search.style';
 
 export interface SearchProps {
   isShowTargetInput: boolean;
-  searchTerms: string[];
-  onTermClick: (term: string) => void;
+  matchItems: string[];
+  onMatchItemClick: (term: string) => void;
 }
 
-const Search = ({isShowTargetInput, searchTerms, onTermClick, children}: React.PropsWithChildren<SearchProps>) => {
+const Search = ({isShowTargetInput, matchItems, onMatchItemClick, children}: React.PropsWithChildren<SearchProps>) => {
   const {theme} = useTheme();
 
   return (
     <fieldset css={searchStyle}>
       {children}
-      {searchTerms.length > 0 && isShowTargetInput && (
+      {matchItems.length > 0 && isShowTargetInput && (
         <ul css={searchTermsStyle(theme)}>
           <Flex flexDirection="column" gap="0.5rem">
-            {searchTerms.map((searchTerm, index) => (
-              <li key={`${searchTerm}-${index}`}>
-                <button type="button" css={searchTermStyle(theme)} onClick={() => onTermClick(searchTerm)}>
-                  {searchTerm}
+            {matchItems.map((matchItem, index) => (
+              <li key={`${matchItems}-${index}`}>
+                <button type="button" css={searchTermStyle(theme)} onClick={() => onMatchItemClick(matchItem)}>
+                  {matchItems}
                 </button>
               </li>
             ))}
