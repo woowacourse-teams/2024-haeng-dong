@@ -20,6 +20,7 @@ export const useFetch = () => {
         const errorBody: ServerError = await JSON.parse(error.message);
 
         setError(errorBody);
+
         throw new Error(errorBody.message);
       } else {
         throw new Error(UNHANDLED_ERROR);

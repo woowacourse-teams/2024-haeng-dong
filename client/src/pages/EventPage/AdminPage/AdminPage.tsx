@@ -8,6 +8,9 @@ import useEventId from '@hooks/useEventId/useEventId';
 import ModalBasedOnMemberCount from '@components/Modal/ModalBasedOnMemberCount/ModalBasedOnMemberCount';
 
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
+import {useNavigate} from 'react-router-dom';
+import useAuth from '@hooks/useAuth';
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 const AdminPage = () => {
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
@@ -18,17 +21,29 @@ const AdminPage = () => {
   const [eventName, setEventName] = useState(' ');
   const {getTotalPrice, memberNameList} = useStepList();
   const {eventId} = useEventId();
+  const {postAuthentication} = useAuth();
+  const navigate = useNavigate();
 
   // TODO: (@weadie) 아래 로직을 훅으로 분리합니다.
   useEffect(() => {
     if (eventId === '') return;
 
+    const postAuth = async () => {
+      try {
+        await postAuthentication({eventId: eventId});
+      } catch (error) {
+        console.log(error);
+        navigate(`${ROUTER_URLS.event}/${eventId}/login`);
+      }
+    };
+
     const getEventName = async () => {
-      const {eventName} = await requestGetEventName({eventId: eventId ?? ''});
+      const {eventName} = await requestGetEventName({eventId: eventId});
 
       setEventName(eventName);
     };
 
+    postAuth();
     getEventName();
   }, [eventId]);
 

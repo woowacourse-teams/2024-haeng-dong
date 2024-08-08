@@ -4,26 +4,31 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdon
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 import {requestPostNewEvent} from '@apis/request/event';
+import useEventId from '@hooks/useEventId/useEventId';
 
 import useEvent from '@hooks/useEvent';
+import useAuth from '@hooks/useAuth';
 
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
-import useEventId from '@hooks/useEventId/useEventId';
 
-const ConfirmPasswordPage = () => {
-  const [eventName, setEventName] = useState('');
+const EventLoginPage = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
-
   const navigate = useNavigate();
+  const {eventId} = useEventId();
+  const {postLogin} = useAuth();
 
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const {eventId} = useEventId();
 
-    navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
+    try {
+      await postLogin({eventId, password});
+      navigate(`${ROUTER_URLS.event}/${eventId}/admin`);
+    } catch (error) {
+      setErrorMessage('잘못된 비밀번호에요');
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +50,10 @@ const ConfirmPasswordPage = () => {
       <TopNav>
         <Back />
       </TopNav>
-      <Title title="행사 비밀번호 입력" description="행사 생성 시 설정한 4 자리의 숫자 비밀번호를 입력해 주세요." />
+      <Title
+        title="행사 비밀번호 입력"
+        description="관리를 위해선 비밀번호가 필요해요. \n행사 생성 시 설정한 4 자리의 숫자 비밀번호를 입력해 주세요."
+      />
       <form onSubmit={submitPassword} style={{padding: '0 1rem'}}>
         <LabelInput
           labelText="비밀번호"
@@ -64,4 +72,4 @@ const ConfirmPasswordPage = () => {
   );
 };
 
-export default ConfirmPasswordPage;
+export default EventLoginPage;
