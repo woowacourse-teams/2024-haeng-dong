@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
-import {requestPutAllMemberList} from '@apis/request/member';
+import {requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
 
 import useEventId from './useEventId/useEventId';
 
@@ -43,13 +43,13 @@ const useSetAllMemberList = ({validateFunc, allMemberList}: UseSetAllMemberListP
     }
   };
 
-  const handleClickDeleteButton = (index: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClickDeleteButton = async (index: number) => {
+    const memberToDelete = editedAllMemberList[index];
+
+    await requestDeleteAllMemberList({eventId, memberName: memberToDelete});
+
     setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
   };
-
-  // const deleteAllMemberList = () => {
-
-  // }
 
   // const putAllMemberList = () =>{
   //   requestPutAllMemberList({eventId, memberName: allMemberList[index], editedMemberName: value});

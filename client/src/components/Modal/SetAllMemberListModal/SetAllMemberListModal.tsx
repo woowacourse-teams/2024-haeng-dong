@@ -51,7 +51,7 @@ const SetAllMemberListModal = ({
                 <div css={{flexGrow: 1}}>
                   <LabelGroupInput.Element elementKey="e" value={member} onChange={e => handleNameChange(index, e)} />
                 </div>
-                <IconButton variants="tertiary" size="medium" onClick={e => handleClickDeleteButton(index, e)}>
+                <IconButton variants="tertiary" size="medium" onClick={() => handleClickDeleteButton(index)}>
                   <Icon iconType="trash" iconColor="onTertiary" />
                 </IconButton>
               </div>
