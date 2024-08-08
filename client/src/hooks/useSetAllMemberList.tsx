@@ -2,6 +2,9 @@ import {useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
 import {requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
+import {useToast} from '@components/Toast/ToastProvider';
+
+import {useFetch} from '@apis/useFetch';
 
 import useEventId from './useEventId/useEventId';
 import {useStepList} from './useStepList/useStepList';
@@ -23,6 +26,7 @@ const useSetAllMemberList = ({
 
   const {refreshStepList} = useStepList();
   const {eventId} = useEventId();
+  const {fetch} = useFetch();
 
   const handleNameChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
@@ -53,7 +57,7 @@ const useSetAllMemberList = ({
   const handleClickDeleteButton = async (index: number) => {
     const memberToDelete = editedAllMemberList[index];
 
-    await requestDeleteAllMemberList({eventId, memberName: memberToDelete});
+    await fetch(() => requestDeleteAllMemberList({eventId, memberName: memberToDelete}));
 
     setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
 
