@@ -39,7 +39,7 @@ const SetAllMemberListModal = ({
         <div css={allMemberListModalLabelGroupInputStyle}>
           <LabelGroupInput labelText="이름">
             {allMemberList.map((member, index) => (
-              <InputAndDeleteButton key={index} propsValue={member} />
+              <InputAndDeleteButton key={index} value={member} />
             ))}
           </LabelGroupInput>
         </div>
