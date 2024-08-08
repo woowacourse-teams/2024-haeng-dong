@@ -11,9 +11,12 @@ const useSearchInMemberList = (setInputValueTargetIndex: (index: number, value: 
 
   const {fetch} = useFetch();
   const [currentInputIndex, setCurrentInputIndex] = useState(-1);
+
+  // 서버에서 가져온 전체 리스트
   const [currentInMemberList, setCurrentInMemberList] = useState<Array<{name: string}>>([]);
+
+  // 검색된 리스트 (따로 둔 이유는 검색 후 클릭했을 때 리스트를 비워주어야하기 때문)
   const [filteredInMemberList, setFilteredInMemberList] = useState<Array<string>>([]);
-  const [selectedMember, setSelectedMember] = useState('');
 
   useEffect(() => {
     if (eventId === '') return;
@@ -30,11 +33,10 @@ const useSearchInMemberList = (setInputValueTargetIndex: (index: number, value: 
     if (keyword.trim() === '') return [];
 
     const searchTerms = currentInMemberList.map(({name}) => name);
-    return searchTerms.filter(terms => terms.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1);
+    return searchTerms.filter(terms => terms.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1).slice(0, 3);
   };
 
   const chooseMember = (inputIndex: number, name: string) => {
-    setSelectedMember(name);
     setFilteredInMemberList([]);
     setInputValueTargetIndex(inputIndex, name);
   };

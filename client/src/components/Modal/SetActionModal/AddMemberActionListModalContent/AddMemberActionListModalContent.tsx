@@ -9,6 +9,7 @@ import useSearchInMemberList from '@hooks/useSearchInMemberList';
 import useDynamicInput from '@hooks/useDynamicInput';
 
 import style from './AddMemberActionListModalContent.style';
+import Search from './Search/Search';
 
 interface AddMemberActionListModalContentProps {
   inOutAction: MemberType;
@@ -50,27 +51,24 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
         {/* TODO: (@soha) Search로 변경하기 */}
         <LabelGroupInput labelText="이름" errorText={errorMessage}>
           {inputList.map(({value, index}) => (
-            <LabelGroupInput.Element
-              key={index}
-              elementKey={`${index}`}
-              type="text"
-              value={value}
-              ref={el => (inputRefList.current[index] = el)}
-              onChange={e => validationAndSearchOnChange(index, e)}
-              onBlur={() => deleteEmptyInputElementOnBlur()}
-              onKeyDown={e => focusNextInputOnEnter(e, index)}
-              placeholder="이름"
-            />
+            <Search
+              isShow={currentInputIndex === index}
+              searchTerms={filteredInMemberList}
+              onTermClick={(term: string) => chooseMember(currentInputIndex, term)}
+            >
+              <LabelGroupInput.Element
+                key={index}
+                elementKey={`${index}`}
+                type="text"
+                value={value}
+                ref={el => (inputRefList.current[index] = el)}
+                onChange={e => validationAndSearchOnChange(index, e)}
+                onBlur={() => deleteEmptyInputElementOnBlur()}
+                onKeyDown={e => focusNextInputOnEnter(e, index)}
+                placeholder="이름"
+              />
+            </Search>
           ))}
-          {filteredInMemberList.length > 0 && (
-            <ul>
-              {filteredInMemberList.map(member => (
-                <li key={member} onClick={() => chooseMember(currentInputIndex, member)}>
-                  {member}
-                </li>
-              ))}
-            </ul>
-          )}
         </LabelGroupInput>
       </div>
       <FixedButton
