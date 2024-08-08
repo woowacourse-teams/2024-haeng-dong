@@ -47,6 +47,13 @@ logging:
     org.springframework.web: debug
     server.haengdong: debug
 
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
 ---
 
 spring:

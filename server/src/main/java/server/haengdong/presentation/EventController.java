@@ -89,6 +89,11 @@ public class EventController {
                 .build();
     }
 
+    @GetMapping("/api/events/{eventId}/auth")
+    public ResponseEntity<Void> authenticate(@PathVariable("eventId") String token) {
+        return ResponseEntity.ok().build();
+    }
+
     private ResponseCookie createResponseCookie(String token) {
         return ResponseCookie.from(authService.getTokenName(), token)
                 .httpOnly(cookieProperties.httpOnly())

@@ -172,3 +172,34 @@ operation::deleteAllMemberActionByName[snippets="path-parameters,http-request,ht
    }
 ]
 ----
+
+=== 행사 어드민 권한 확인
+
+operation::authenticateEvent[snippets="http-request,http-response,request-cookies"]
+==== [.red]#Exceptions#
+
+[source,json,options="nowrap"]
+----
+[
+   {
+      "code": "EVENT_NOT_FOUND",
+      "message": "존재하지 않는 행사입니다."
+   },
+   {
+      "code": "TOKEN_NOT_FOUND",
+      "message": "토큰이 존재하지 않습니다."
+   },
+   {
+      "code": "TOKEN_EXPIRED",
+      "message": "만료된 토큰입니다."
+   },
+   {
+      "code": "TOKEN_INVALID",
+      "message": "유효하지 않은 토큰입니다."
+   },
+   {
+      "code": "FORBIDDEN",
+      "message": "접근할 수 없는 행사입니다."
+   }
+]
+----
