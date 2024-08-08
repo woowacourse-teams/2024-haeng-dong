@@ -2,7 +2,7 @@ import type {MemberType} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
-import {requestPost, requestDelete, requestGet, requestPut} from '@apis/fetcher';
+import {requestDelete, requestGet, requestPut, requestPostWithoutResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
 type RequestPostMemberList = {
@@ -11,7 +11,7 @@ type RequestPostMemberList = {
 };
 
 export const requestPostMemberList = async ({eventId, type, memberNameList}: WithEventId<RequestPostMemberList>) => {
-  await requestPost({
+  await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/member-actions`,
     body: {

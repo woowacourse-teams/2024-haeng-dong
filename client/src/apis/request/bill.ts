@@ -2,7 +2,7 @@ import type {Bill} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
-import {requestPost, requestDelete, requestPut} from '@apis/fetcher';
+import {requestDelete, requestPostWithoutResponse, requestPut} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
 type RequestPostBillList = {
@@ -10,7 +10,7 @@ type RequestPostBillList = {
 };
 
 export const requestPostBillList = async ({eventId, billList}: WithEventId<RequestPostBillList>) => {
-  await requestPost({
+  await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions`,
     body: {
