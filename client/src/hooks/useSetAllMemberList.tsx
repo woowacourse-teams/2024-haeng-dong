@@ -47,6 +47,14 @@ const useSetAllMemberList = ({validateFunc, allMemberList}: UseSetAllMemberListP
     }
   };
 
+  const handleClickDeleteButton = (index: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+  };
+
+  // const deleteAllMemberList = () => {
+
+  // }
+
   // const putAllMemberList = () =>{
   //   requestPutAllMemberList({eventId, memberName: allMemberList[index], editedMemberName: value});
   // }
@@ -57,6 +65,7 @@ const useSetAllMemberList = ({validateFunc, allMemberList}: UseSetAllMemberListP
     editedAllMemberList,
     canSubmit,
     handleNameChange,
+    handleClickDeleteButton,
   };
 };
 
