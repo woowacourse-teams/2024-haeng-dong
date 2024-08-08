@@ -1,7 +1,7 @@
 const RULE = {
   maxEventNameLength: 30,
   maxEventPasswordLength: 4,
-  maxMemberNameLength: 8,
+  maxMemberNameLength: 4,
   maxPrice: 10000000,
 };
 

@@ -68,8 +68,6 @@ export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
 };
 
 const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: FetcherProps) => {
-  console.log('fetcher');
-  console.log(JSON.stringify(body));
   // const token = generateBasicToken(USER_ID, USER_PASSWORD);
   const options = {
     method,
