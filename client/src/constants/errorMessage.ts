@@ -1,6 +1,6 @@
 type ErrorMessage = Record<string, string>;
 
-const ERROR_MESSAGES: ErrorMessage = {
+const SERVER_ERROR_MESSAGES: ErrorMessage = {
   EVENT_NOT_FOUND: '존재하지 않는 행사입니다.',
   EVENT_NAME_LENGTH_INVALID: '행사 이름은 2자 이상 30자 이하만 입력 가능합니다.',
   EVENT_NAME_CONSECUTIVE_SPACES: '행사 이름에는 공백 문자가 연속될 수 없습니다.',
@@ -35,6 +35,14 @@ const ERROR_MESSAGES: ErrorMessage = {
   UNHANDLED: '알 수 없는 에러입니다.',
 };
 
+export const ERROR_MESSAGE = {
+  eventName: '행사 이름은 30자 이하만 가능해요',
+  eventPasswordType: '비밀번호는 숫자만 입력이 가능해요',
+  memberName: '참여자 이름은 8자 이하의 한글, 영어만 가능해요',
+  purchasePrice: '10,000,000원 이하의 숫자만 입력이 가능해요',
+  purchaseTitle: '지출 이름은 30자 이하의 한글, 영어, 숫자만 가능해요',
+};
+
 export const UNHANDLED_ERROR = 'UNHANDLED';
 
-export default ERROR_MESSAGES;
+export default SERVER_ERROR_MESSAGES;

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {createContext, useContext, useEffect, useState} from 'react';
 
-import ERROR_MESSAGES from '@constants/errorMessage';
+import SERVER_ERROR_MESSAGES from '@constants/errorMessage';
 
 import {useError} from '../../ErrorProvider';
 
@@ -36,7 +36,7 @@ const ToastProvider = ({children}: React.PropsWithChildren) => {
   useEffect(() => {
     if (hasError) {
       showToast({
-        message: errorMessage || ERROR_MESSAGES.UNHANDLED,
+        message: errorMessage || SERVER_ERROR_MESSAGES.UNHANDLED,
         showingTime: DEFAULT_TIME, // TODO: (@weadie) 나중에 토스트 프로바이더를 제거한 토스트를 만들 것이기 때문에 많이 리펙터링 안함
         isAlwaysOn: false,
         position: 'bottom',

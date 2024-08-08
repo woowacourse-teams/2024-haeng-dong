@@ -19,7 +19,7 @@ const SetEventNamePage = () => {
     event.preventDefault();
     const {eventId} = await createNewEvent({eventName});
 
-    navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
+    navigate(ROUTER_URLS.eventCreatePassword, {state: {eventName}});
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +54,7 @@ const SetEventNamePage = () => {
           isError={!!errorMessage}
           autoFocus
         ></LabelInput>
-        <FixedButton disabled={!canSubmit}>행동 개시!</FixedButton>
+        <FixedButton disabled={!canSubmit}>다음</FixedButton>
       </form>
     </MainLayout>
   );

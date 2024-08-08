@@ -66,6 +66,7 @@ const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, query
   // const token = generateBasicToken(USER_ID, USER_PASSWORD);
   const options = {
     method,
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       // Authorization: token,

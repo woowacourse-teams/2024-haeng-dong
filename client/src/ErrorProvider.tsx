@@ -1,6 +1,6 @@
 import React, {createContext, useState, useContext, useEffect, ReactNode} from 'react';
 
-import ERROR_MESSAGES, {UNHANDLED_ERROR} from '@constants/errorMessage';
+import SERVER_ERROR_MESSAGES, {UNHANDLED_ERROR} from '@constants/errorMessage';
 
 // 에러 컨텍스트 생성
 interface ErrorContextType {
@@ -35,7 +35,7 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
       }
 
       setHasError(true);
-      const message = ERROR_MESSAGES[error.errorCode];
+      const message = SERVER_ERROR_MESSAGES[error.errorCode];
       setErrorMessage(message);
       // callback(message);
     }
@@ -72,5 +72,5 @@ export const useError = (): ErrorContextType => {
 const isUnhandledError = (errorCode: string) => {
   if (errorCode === 'INTERNAL_SERVER_ERROR') return true;
 
-  return ERROR_MESSAGES[errorCode] === undefined;
+  return SERVER_ERROR_MESSAGES[errorCode] === undefined;
 };
