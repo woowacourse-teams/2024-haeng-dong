@@ -14,11 +14,9 @@ function ExpenseItem({name, price, ...buttonProps}: ExpenseItemProps) {
   const {theme} = useTheme();
   return (
     <button css={expenseItemStyle} {...buttonProps}>
-      <Text size="bodyBold" color="black">
-        {name}
-      </Text>
+      <Text size="bodyBold">{name}</Text>
       <div css={expenseItemLeftStyle}>
-        <Text color="black">{price.toLocaleString('ko-kr')}원</Text>
+        <Text>{price.toLocaleString('ko-kr')}원</Text>
         <Icon iconType="rightChevron" />
       </div>
     </button>

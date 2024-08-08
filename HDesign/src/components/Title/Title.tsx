@@ -9,20 +9,18 @@ export const Title: React.FC<TitleProps> = ({title, description, price}: TitlePr
   const {theme} = useTheme();
   return (
     <div css={titleContainerStyle(theme)}>
-      <Text color="black" size="subTitle">
-        {title}
-      </Text>
+      <Text size="subTitle">{title}</Text>
       {description && (
-        <Text color="darkGray" size="caption">
+        <Text textColor="darkGray" size="caption">
           {description}
         </Text>
       )}
       {price !== undefined && (
         <div css={priceContainerStyle}>
-          <Text color="gray" size="caption">
+          <Text textColor="gray" size="caption">
             전체 지출 금액
           </Text>
-          <Text color="black">{price.toLocaleString('ko-kr')}원</Text>
+          <Text>{price.toLocaleString('ko-kr')}원</Text>
         </div>
       )}
     </div>

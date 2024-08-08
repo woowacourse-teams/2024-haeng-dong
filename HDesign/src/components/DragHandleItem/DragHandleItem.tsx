@@ -31,12 +31,8 @@ export const DragHandleItem = ({
           </IconButton>
         )}
         <Flex justifyContent="spaceBetween" width="100%">
-          <Text color="black" size="bodyBold">
-            {prefix}
-          </Text>
-          <Text color="black" size="body">
-            {suffix}
-          </Text>
+          <Text size="bodyBold">{prefix}</Text>
+          <Text>{suffix}</Text>
         </Flex>
       </div>
     </div>

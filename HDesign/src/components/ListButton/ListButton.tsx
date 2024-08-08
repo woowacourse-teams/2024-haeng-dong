@@ -18,11 +18,11 @@ export const ListButton: React.FC<ListButtonProps> = forwardRef<HTMLButtonElemen
   const {theme} = useTheme();
   return (
     <button css={listButtonStyle(theme)} ref={ref} {...htmlProps}>
-      <Text size="caption" color="gray">
+      <Text size="caption" textColor="gray">
         {prefix}
       </Text>
       <Flex gap="0.5rem" alignItems="center">
-        <Text size="caption" color="gray">
+        <Text size="caption" textColor="gray">
           {suffix}
         </Text>
         <IconButton variants="none">

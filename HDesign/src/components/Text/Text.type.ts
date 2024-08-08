@@ -15,7 +15,7 @@ export type TextSize =
 
 export interface TextStyleProps {
   size?: TextSize;
-  color?: ColorKeys;
+  textColor?: ColorKeys;
 }
 
 export interface TextStylePropsWithTheme extends TextStyleProps {

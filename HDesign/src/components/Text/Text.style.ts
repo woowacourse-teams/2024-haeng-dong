@@ -5,7 +5,7 @@ import {css} from '@emotion/react';
 // TODO: (@todari) themeProvider 이용하도록 변경
 import TYPOGRAPHY from '@token/typography';
 
-export const getSizeStyling = ({size, color, theme}: Required<TextStylePropsWithTheme>) => {
+export const getSizeStyling = ({size, textColor, theme}: Required<TextStylePropsWithTheme>) => {
   const style = {
     head: css(TYPOGRAPHY.head),
     title: css(TYPOGRAPHY.title),
@@ -19,7 +19,7 @@ export const getSizeStyling = ({size, color, theme}: Required<TextStylePropsWith
     tiny: css(TYPOGRAPHY.tiny),
   };
 
-  const colorStyle = css({color: theme.colors[color]});
+  const colorStyle = css({color: theme.colors[textColor]});
 
   return [style[size], colorStyle];
 };

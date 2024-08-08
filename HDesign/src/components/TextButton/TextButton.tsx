@@ -15,7 +15,7 @@ export const TextButton: React.FC<TextButtonProps> = forwardRef<HTMLButtonElemen
 
   return (
     <button ref={ref} {...htmlProps}>
-      <Text size={textSize} color={textColor}>
+      <Text size={textSize} textColor={textColor}>
         {children}
       </Text>
     </button>
