@@ -71,6 +71,7 @@ export const useError = (): ErrorContextType => {
 
 const isUnhandledError = (errorCode: string) => {
   if (errorCode === 'INTERNAL_SERVER_ERROR') return true;
+  if (errorCode === UNHANDLED_ERROR) return true;
 
   return SERVER_ERROR_MESSAGES[errorCode] === undefined;
 };
