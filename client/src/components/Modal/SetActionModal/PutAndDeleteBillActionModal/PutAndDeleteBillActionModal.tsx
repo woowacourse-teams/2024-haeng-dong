@@ -20,8 +20,10 @@ const PutAndDeleteBillActionModal = ({
   setIsBottomSheetOpened,
 }: PutAndDeleteBillActionModalProps) => {
   const {inputPair, handleInputChange, handleOnBlur, errorMessage, errorInfo, canSubmit, onSubmit, onDelete} =
-    usePutAndDeleteBillAction({title: billAction.name, price: billAction.price + '', index: 0}, validatePurchase, () =>
-      setIsBottomSheetOpened(false),
+    usePutAndDeleteBillAction(
+      {title: billAction.name, price: String(billAction.price), index: 0},
+      validatePurchase,
+      () => setIsBottomSheetOpened(false),
     );
 
   return (
