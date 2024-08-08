@@ -19,7 +19,7 @@ const InputAndDeleteButton = () => {
       <div css={{flexGrow: 1}}>
         <LabelGroupInput.Element elementKey="e" />
       </div>
-      <IconButton variants="tertiary" css={{height: '3rem', width: '3rem', borderRadius: '1rem'}}>
+      <IconButton variants="tertiary" size="medium">
         <Icon iconType="trash" iconColor="onTertiary" />
       </IconButton>
     </div>
