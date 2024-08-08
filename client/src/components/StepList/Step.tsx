@@ -10,12 +10,16 @@ interface StepProps {
 }
 
 const Step = ({step}: StepProps) => {
-  const [isOpenBottomSheet, setOpenBottomSheet] = useState<boolean>(false);
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState<boolean>(false);
 
   if (step.type === 'BILL') {
-    return <BillStepItem step={step} isOpenBottomSheet={isOpenBottomSheet} setOpenBottomSheet={setOpenBottomSheet} />;
+    return (
+      <BillStepItem step={step} isOpenBottomSheet={isOpenBottomSheet} setIsOpenBottomSheet={setIsOpenBottomSheet} />
+    );
   } else if (step.type === 'IN' || step.type === 'OUT') {
-    return <MemberStepItem step={step} isOpenBottomSheet={isOpenBottomSheet} setOpenBottomSheet={setOpenBottomSheet} />;
+    return (
+      <MemberStepItem step={step} isOpenBottomSheet={isOpenBottomSheet} setIsOpenBottomSheet={setIsOpenBottomSheet} />
+    );
   } else {
     return <></>;
   }

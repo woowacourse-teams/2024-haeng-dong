@@ -7,23 +7,23 @@ import {DeleteMemberActionModal} from '@components/Modal/SetActionModal/DeleteMe
 interface MemberStepItemProps {
   step: MemberStep;
   isOpenBottomSheet: boolean;
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MemberStepItem: React.FC<MemberStepItemProps> = ({step, isOpenBottomSheet, setOpenBottomSheet}) => {
+const MemberStepItem: React.FC<MemberStepItemProps> = ({step, isOpenBottomSheet, setIsOpenBottomSheet}) => {
   return (
     <>
       <DragHandleItem
         backgroundColor="white"
         prefix={`${step.actions.map(({name}) => name).join(', ')} ${step.type === 'IN' ? '들어옴' : '나감'}`}
-        onClick={() => setOpenBottomSheet(prev => !prev)}
+        onClick={() => setIsOpenBottomSheet(prev => !prev)}
       />
       {isOpenBottomSheet && (
         <DeleteMemberActionModal
           memberActionType={step.type}
           memberActionList={step.actions}
           isBottomSheetOpened={isOpenBottomSheet}
-          setIsBottomSheetOpened={setOpenBottomSheet}
+          setIsBottomSheetOpened={setIsOpenBottomSheet}
         />
       )}
     </>

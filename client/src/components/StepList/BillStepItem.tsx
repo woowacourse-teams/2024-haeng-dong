@@ -8,11 +8,12 @@ import {PutAndDeleteBillActionModal} from '@components/Modal/SetActionModal/PutA
 interface BillStepItemProps {
   step: BillStep;
   isOpenBottomSheet: boolean;
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, setOpenBottomSheet}) => {
   const [clickedIndex, setClickedIndex] = useState(-1);
+
   const totalPrice = step.actions.reduce((acc, cur) => acc + cur.price, 0);
 
   const handleDragHandleItemClick = (index: number) => {
