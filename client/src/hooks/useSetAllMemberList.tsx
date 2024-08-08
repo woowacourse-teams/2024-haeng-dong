@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
 import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
@@ -28,6 +28,22 @@ const useSetAllMemberList = ({
   const {eventId} = useEventId();
   const {fetch} = useFetch();
 
+  useEffect(() => {
+    if (arraysEqual(editedAllMemberList, allMemberList)) {
+      setCanSubmit(false);
+    } else {
+      setCanSubmit(true);
+    }
+  }, [editedAllMemberList]);
+
+  const arraysEqual = (arr1: string[], arr2: string[]) => {
+    if (arr1.length !== arr2.length) return false;
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+  };
+
   const handleNameChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
     const {isValid, errorMessage: validationResultMessage} = validateFunc(value);
@@ -54,14 +70,10 @@ const useSetAllMemberList = ({
       });
 
       changeErrorIndex(index);
-
-      setCanSubmit(false);
     } else {
       setErrorMessage(validationResultMessage ?? '');
 
       changeErrorIndex(index);
-
-      setCanSubmit(false);
     }
   };
 
@@ -84,6 +96,8 @@ const useSetAllMemberList = ({
         return null; // 조건에 맞지 않으면 null을 반환
       })
       .filter(item => item !== null); // null인 항목을 필터링하여 제거
+
+    console.log(editedMemberName);
 
     await fetch(() => requestPutAllMemberList({eventId, members: editedMemberName}));
 
