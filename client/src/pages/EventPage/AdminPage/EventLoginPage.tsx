@@ -4,13 +4,13 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdon
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 import {requestPostNewEvent} from '@apis/request/event';
+import useEventId from '@hooks/useEventId/useEventId';
 
 import useEvent from '@hooks/useEvent';
+import useAuth from '@hooks/useAuth';
 
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
-import useEventId from '@hooks/useEventId/useEventId';
-import useAuth from '@hooks/useAuth';
 
 const EventLoginPage = () => {
   const [password, setPassword] = useState('');

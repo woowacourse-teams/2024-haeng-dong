@@ -1,8 +1,6 @@
-import type {MemberReport} from 'types/serviceType';
-
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
-import {requestPost} from '@apis/fetcher';
+import {requestPostWithResponse, requestPostWithoutResponse} from '@apis/fetcher';
 
 export type RequestAuthentication = {
   eventId: string;
@@ -14,14 +12,14 @@ export type RequestToken = {
 };
 
 export const requestAuthentication = async ({eventId}: RequestAuthentication) => {
-  await requestPost({
+  await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/auth`,
   });
 };
 
 export const requestToken = async ({eventId, password}: RequestToken) => {
-  return await requestPost({
+  return await requestPostWithResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/login`,
     body: {

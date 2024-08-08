@@ -1,5 +1,5 @@
 import {TEMP_PREFIX} from '@apis/tempPrefix';
-import {requestGet, requestPost} from '@apis/fetcher';
+import {requestGet, requestPostWithResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
 export type RequestPostNewEvent = {
@@ -12,8 +12,7 @@ export type ResponsePostNewEvent = {
 };
 
 export const requestPostNewEvent = async ({eventName, password}: RequestPostNewEvent) => {
-  // TODO: (@weadie) 뼈대만 둔 것. header값을 꺼내오는 로직이 필요하다. 또는 바디에 달라고 부탁할 수 있다.
-  return requestPost<ResponsePostNewEvent>({
+  return await requestPostWithResponse<ResponsePostNewEvent>({
     endpoint: TEMP_PREFIX,
     body: {
       eventName: eventName,
