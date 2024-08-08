@@ -1,4 +1,4 @@
-import {LabelGroupInput} from 'haengdong-design';
+import {LabelGroupInput, Search} from 'haengdong-design';
 
 import {ReturnUseDynamicInput} from '@hooks/useDynamicInput';
 import useSearchInMemberList from '@hooks/useSearchInMemberList';
@@ -27,7 +27,7 @@ const OutMember = ({dynamicProps}: OutMemberProps) => {
 
   return inputList.map(({value, index}) => (
     <Search
-      isShow={currentInputIndex === index}
+      isShowTargetInput={currentInputIndex === index}
       searchTerms={filteredInMemberList}
       onTermClick={(term: string) => chooseMember(currentInputIndex, term)}
     >
