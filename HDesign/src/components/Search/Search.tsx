@@ -3,34 +3,27 @@ import Flex from '@components/Flex/Flex';
 
 import {useTheme} from '@theme/HDesignProvider';
 
-import Input from '../Input/Input';
-import {InputProps} from '../Input/Input.type';
-
 import {searchStyle, searchTermsStyle, searchTermStyle} from './Search.style';
-import useSearch from './useSearch';
 
-export interface SearchProps extends InputProps {
-  searchTerms: string[];
-  setState: React.Dispatch<React.SetStateAction<string>>;
+export interface SearchProps {
+  isShowTargetInput: boolean;
+  matchItems: string[];
+  onMatchItemClick: (term: string) => void;
 }
 
-const Search: React.FC<SearchProps> = ({searchTerms, setState, ...inputProps}: SearchProps) => {
+const Search = ({isShowTargetInput, matchItems, onMatchItemClick, children}: React.PropsWithChildren<SearchProps>) => {
   const {theme} = useTheme();
-  const {value, showSearchTerms, handleOnChange, handleOnClick, filterSearchTerms} = useSearch({
-    searchTerms,
-    setState,
-  });
 
   return (
     <fieldset css={searchStyle}>
-      <Input inputType="search" value={value} onChange={handleOnChange} {...inputProps} />
-      {showSearchTerms && (
+      {children}
+      {matchItems.length > 0 && isShowTargetInput && (
         <ul css={searchTermsStyle(theme)}>
           <Flex flexDirection="column" gap="0.5rem">
-            {filterSearchTerms(value).map((searchTerm, index) => (
-              <li key={`${searchTerm}-${index}`}>
-                <button type="button" css={searchTermStyle(theme)} onClick={() => handleOnClick(searchTerm)}>
-                  {searchTerm}
+            {matchItems.map((matchItem, index) => (
+              <li key={`${matchItems}-${index}`}>
+                <button type="button" css={searchTermStyle(theme)} onClick={() => onMatchItemClick(matchItem)}>
+                  {matchItems}
                 </button>
               </li>
             ))}

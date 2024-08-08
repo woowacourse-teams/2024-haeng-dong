@@ -18,8 +18,3 @@ export const dragHandlerStyle = css({
   gap: '0.25rem',
   width: '100%',
 });
-
-export const textStyle = (theme: Theme) =>
-  css({
-    color: theme.colors.black,
-  });

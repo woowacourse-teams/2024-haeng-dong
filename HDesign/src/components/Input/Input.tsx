@@ -13,7 +13,6 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
   {value: propsValue, onChange, onFocus, onBlur, inputType, isError, placeholder, autoFocus, ...htmlProps}: InputProps,
   ref,
 ) {
-  useImperativeHandle(ref, () => inputRef.current!);
   const {theme} = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
   const {value, handleChange, hasFocus, handleClickDelete, handleBlur, handleFocus, handleKeyDown} = useInput({
@@ -24,6 +23,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
     inputRef,
     autoFocus,
   });
+  useImperativeHandle(ref, () => inputRef.current!);
 
   return (
     <div css={inputBoxStyle(theme, inputType, hasFocus, isError)}>
