@@ -3,6 +3,7 @@ package server.haengdong.config;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import server.haengdong.application.AuthService;
 import server.haengdong.exception.AuthenticationException;
@@ -23,8 +24,8 @@ public class AdminInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         log.trace("login request = {}", request.getRequestURI());
 
-        String method = request.getMethod();
-        if (method.equals("GET")) {
+        HttpMethod method = HttpMethod.valueOf(request.getMethod());
+        if (HttpMethod.GET.equals(method) || HttpMethod.OPTIONS.equals(method)) {
             return true;
         }
 
@@ -36,7 +37,7 @@ public class AdminInterceptor implements HandlerInterceptor {
     private void validateToken(HttpServletRequest request) {
         String token = authenticationExtractor.extract(request, authService.getTokenName());
         String tokenEventId = authService.findEventIdByToken(token);
-        String eventId = request.getRequestURI().split("/")[2];
+        String eventId = request.getRequestURI().split("/")[3];
         if (!tokenEventId.equals(eventId)) {
             throw new AuthenticationException();
         }
