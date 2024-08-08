@@ -51,7 +51,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
     private final EventService eventService = mock(EventService.class);
     private final AuthService authService = mock(AuthService.class);
     private final CookieProperties cookieProperties = new CookieProperties(
-            true, true, "domain", "path", Duration.ofDays(7)
+            true, true, "domain", "path", "none", Duration.ofDays(7)
     );
 
     @Override
