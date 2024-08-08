@@ -90,7 +90,7 @@ public class EventController {
                 .build();
     }
 
-    @PostMapping("/api/events/{eventId}/auth")
+    @GetMapping("/api/events/{eventId}/auth")
     public ResponseEntity<Void> authenticate(@PathVariable("eventId") String token) {
         return ResponseEntity.ok().build();
     }
