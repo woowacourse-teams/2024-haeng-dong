@@ -29,11 +29,12 @@ const SetAllMemberListModal = ({
     setIsOpenBottomSheet(false);
   };
 
-  const {editedAllMemberList, canSubmit, handleNameChange, handleClickDeleteButton} = useSetAllMemberList({
-    validateFunc: validateMemberName,
-    allMemberList,
-    handleCloseAllMemberListModal,
-  });
+  const {editedAllMemberList, canSubmit, errorMessage, errorIndexList, handleNameChange, handleClickDeleteButton} =
+    useSetAllMemberList({
+      validateFunc: validateMemberName,
+      allMemberList,
+      handleCloseAllMemberListModal,
+    });
 
   return (
     <BottomSheet isOpened={isOpenBottomSheet} onClose={handleCloseAllMemberListModal}>
@@ -46,11 +47,16 @@ const SetAllMemberListModal = ({
           </Text>
         </div>
         <div css={allMemberListModalLabelGroupInputStyle}>
-          <LabelGroupInput labelText="이름">
+          <LabelGroupInput labelText="이름" errorText={errorMessage}>
             {editedAllMemberList.map((member, index) => (
               <div css={InputAndDeleteButtonContainer} key={index}>
                 <div css={{flexGrow: 1}}>
-                  <LabelGroupInput.Element elementKey="e" value={member} onChange={e => handleNameChange(index, e)} />
+                  <LabelGroupInput.Element
+                    elementKey="e"
+                    value={member}
+                    isError={errorIndexList.includes(index)}
+                    onChange={e => handleNameChange(index, e)}
+                  />
                 </div>
                 <IconButton variants="tertiary" size="medium" onClick={() => handleClickDeleteButton(index)}>
                   <Icon iconType="trash" iconColor="onTertiary" />

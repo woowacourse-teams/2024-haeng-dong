@@ -1,5 +1,5 @@
 import REGEXP from '@constants/regExp';
-import ERROR_MESSAGE from '@constants/errorMessage';
+import {ERROR_MESSAGE} from '@constants/errorMessage';
 import RULE from '@constants/rule';
 
 import {ValidateResult} from './type';
