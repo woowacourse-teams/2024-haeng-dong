@@ -29,12 +29,19 @@ const SetAllMemberListModal = ({
     setIsOpenBottomSheet(false);
   };
 
-  const {editedAllMemberList, canSubmit, errorMessage, errorIndexList, handleNameChange, handleClickDeleteButton} =
-    useSetAllMemberList({
-      validateFunc: validateMemberName,
-      allMemberList,
-      handleCloseAllMemberListModal,
-    });
+  const {
+    editedAllMemberList,
+    canSubmit,
+    errorMessage,
+    errorIndexList,
+    handleNameChange,
+    handleClickDeleteButton,
+    handlePutAllMemberList,
+  } = useSetAllMemberList({
+    validateFunc: validateMemberName,
+    allMemberList,
+    handleCloseAllMemberListModal,
+  });
 
   return (
     <BottomSheet isOpened={isOpenBottomSheet} onClose={handleCloseAllMemberListModal}>
@@ -65,7 +72,7 @@ const SetAllMemberListModal = ({
             ))}
           </LabelGroupInput>
         </div>
-        <FixedButton children="수정 완료" disabled={!canSubmit} />
+        <FixedButton children="수정 완료" disabled={!canSubmit} onClick={handlePutAllMemberList} />
       </div>
     </BottomSheet>
   );

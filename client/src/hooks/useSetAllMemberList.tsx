@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
-import {requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
+import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
 
 import {useFetch} from '@apis/useFetch';
 
@@ -75,9 +75,22 @@ const useSetAllMemberList = ({
     refreshStepList();
   };
 
-  // const putAllMemberList = () =>{
-  //   requestPutAllMemberList({eventId, memberName: allMemberList[index], editedMemberName: value});
-  // }
+  const handlePutAllMemberList = async () => {
+    const editedMemberName: MemberChange[] = allMemberList
+      .map((originalName, index) => {
+        if (editedAllMemberList[index] !== originalName) {
+          return {before: originalName, after: editedAllMemberList[index]};
+        }
+        return null; // 조건에 맞지 않으면 null을 반환
+      })
+      .filter(item => item !== null); // null인 항목을 필터링하여 제거
+
+    await fetch(() => requestPutAllMemberList({eventId, members: editedMemberName}));
+
+    refreshStepList();
+
+    handleCloseAllMemberListModal();
+  };
 
   const changeErrorIndex = (index: number) => {
     setErrorIndexList(prev => {
@@ -95,6 +108,7 @@ const useSetAllMemberList = ({
     errorIndexList,
     handleNameChange,
     handleClickDeleteButton,
+    handlePutAllMemberList,
   };
 };
 

@@ -42,21 +42,21 @@ export const requestGetAllMemberList = async ({eventId}: WithEventId) => {
   });
 };
 
-type RequestPutAllMemberList = {
-  memberName: string;
-  editedMemberName: string;
+export type MemberChange = {
+  before: string;
+  after: string;
 };
 
-export const requestPutAllMemberList = async ({
-  eventId,
-  memberName,
-  editedMemberName,
-}: WithEventId<RequestPutAllMemberList>) => {
+type RequestPutAllMemberList = {
+  members: MemberChange[];
+};
+
+export const requestPutAllMemberList = async ({eventId, members}: WithEventId<RequestPutAllMemberList>) => {
   await requestPut({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/members/${memberName}`,
+    endpoint: `${TEMP_PREFIX}/${eventId}/members/nameChange`,
     body: {
-      name: editedMemberName,
+      members,
     },
   });
 };
