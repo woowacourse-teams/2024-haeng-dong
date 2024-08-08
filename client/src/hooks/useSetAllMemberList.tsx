@@ -97,8 +97,6 @@ const useSetAllMemberList = ({
       })
       .filter(item => item !== null); // null인 항목을 필터링하여 제거
 
-    console.log(editedMemberName);
-
     await fetch(() => requestPutAllMemberList({eventId, members: editedMemberName}));
 
     refreshStepList();
