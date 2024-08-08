@@ -7,7 +7,19 @@ type InputValue = {
   index: number;
 };
 
-const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
+export type ReturnUseDynamicInput = {
+  inputList: InputValue[];
+  inputRefList: React.MutableRefObject<(HTMLInputElement | null)[]>;
+  handleInputChange: (index: number, event: React.ChangeEvent<HTMLInputElement>) => void;
+  deleteEmptyInputElementOnBlur: () => void;
+  errorMessage: string;
+  getFilledInputList: (list?: InputValue[]) => InputValue[];
+  focusNextInputOnEnter: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
+  canSubmit: boolean;
+  setInputValueTargetIndex: (index: number, value: string) => void;
+};
+
+const useDynamicInput = (validateFunc: (name: string) => ValidateResult): ReturnUseDynamicInput => {
   const [inputList, setInputList] = useState<InputValue[]>([{value: '', index: 0}]);
   const inputRefList = useRef<(HTMLInputElement | null)[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
@@ -98,6 +110,17 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     }
   };
 
+  const setInputValueTargetIndex = (index: number, value: string) => {
+    setInputList(prevInputs => {
+      const updatedInputList = [...prevInputs];
+      const targetInput = findInputByIndex(index, updatedInputList);
+
+      targetInput.value = value;
+
+      return updatedInputList;
+    });
+  };
+
   const focusNextInputOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.nativeEvent.isComposing) return;
 
@@ -132,6 +155,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     getFilledInputList,
     focusNextInputOnEnter,
     canSubmit,
+    setInputValueTargetIndex,
     // TODO: (@weadie) 네이밍 수정
   };
 };

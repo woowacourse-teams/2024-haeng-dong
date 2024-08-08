@@ -49,11 +49,16 @@ const SetAllMemberListModal = ({
         <div css={allMemberListModalTitleStyle}>
           <Text size="bodyBold">전체 참여자 수정하기</Text>
           {/* TODO: (@soha): 인원 텍스트 색 수정 필요 */}
+<<<<<<< HEAD
           <Text size="bodyBold" textColor="gray">
+=======
+          <Text size="bodyBold" color="sematic">
+>>>>>>> fe-dev
             총 {allMemberList.length}명
           </Text>
         </div>
         <div css={allMemberListModalLabelGroupInputStyle}>
+<<<<<<< HEAD
           <LabelGroupInput labelText="이름" errorText={errorMessage}>
             {editedAllMemberList.map((member, index) => (
               <div css={InputAndDeleteButtonContainer} key={index}>
@@ -69,6 +74,11 @@ const SetAllMemberListModal = ({
                   <Icon iconType="trash" iconColor="onTertiary" />
                 </IconButton>
               </div>
+=======
+          <LabelGroupInput labelText="이름">
+            {allMemberList.map((member, index) => (
+              <InputAndDeleteButton key={index} propsValue={member} />
+>>>>>>> fe-dev
             ))}
           </LabelGroupInput>
         </div>

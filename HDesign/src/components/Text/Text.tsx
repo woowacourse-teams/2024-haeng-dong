@@ -3,11 +3,14 @@ import type {TextProps} from '@components/Text/Text.type';
 
 import React from 'react';
 
+import {useTheme} from '@theme/HDesignProvider';
+
 import {getSizeStyling} from './Text.style';
 
-const Text: React.FC<TextProps> = ({size = 'body', children, ...attributes}: TextProps) => {
+const Text: React.FC<TextProps> = ({size = 'body', textColor = 'black', children, ...attributes}: TextProps) => {
+  const {theme} = useTheme();
   return (
-    <p css={getSizeStyling(size)} {...attributes}>
+    <p css={getSizeStyling({size, textColor, theme})} {...attributes}>
       {children}
     </p>
   );
