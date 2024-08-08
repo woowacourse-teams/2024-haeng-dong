@@ -8,6 +8,8 @@ import validateMemberName from '@utils/validate/validateMemberName';
 import useDynamicInput from '@hooks/useDynamicInput';
 
 import style from './AddMemberActionListModalContent.style';
+import InMember from './InMember';
+import OutMember from './OutMember';
 
 interface AddMemberActionListModalContentProps {
   inOutAction: MemberType;
@@ -15,16 +17,8 @@ interface AddMemberActionListModalContentProps {
 }
 
 const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: AddMemberActionListModalContentProps) => {
-  const {
-    inputList,
-    inputRefList,
-    handleInputChange,
-    deleteEmptyInputElementOnBlur,
-    getFilledInputList,
-    errorMessage,
-    canSubmit,
-    focusNextInputOnEnter,
-  } = useDynamicInput(validateMemberName);
+  const dynamicProps = useDynamicInput(validateMemberName);
+  const {inputList, getFilledInputList, errorMessage, canSubmit} = dynamicProps;
 
   const {updateMemberList} = useStepList();
 
@@ -36,21 +30,8 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
   return (
     <div css={style.container}>
       <div css={style.inputGroup}>
-        {/* TODO: (@soha) Search로 변경하기 */}
         <LabelGroupInput labelText="이름" errorText={errorMessage}>
-          {inputList.map(({value, index}) => (
-            <LabelGroupInput.Element
-              key={`${index}`}
-              elementKey={`${index}`}
-              type="text"
-              value={`${value}`}
-              ref={el => (inputRefList.current[index] = el)}
-              onChange={e => handleInputChange(index, e)}
-              onBlur={() => deleteEmptyInputElementOnBlur()}
-              onKeyDown={e => focusNextInputOnEnter(e, index)}
-              placeholder="이름"
-            />
-          ))}
+          {inOutAction === 'IN' ? <InMember dynamicProps={dynamicProps} /> : <OutMember dynamicProps={dynamicProps} />}
         </LabelGroupInput>
       </div>
       <FixedButton
