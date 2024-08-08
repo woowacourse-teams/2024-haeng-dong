@@ -32,6 +32,14 @@ export const requestDeleteMemberAction = async ({eventId, actionId}: WithEventId
   });
 };
 
+type ResponseGetAllMemberList = {
+  memberNames: string[];
+};
+
+export const requestGetAllMemberList = async ({eventId}: WithEventId) => {
+  return requestGet<ResponseGetAllMemberList>({
+    endpoint: `${TEMP_PREFIX}/${eventId}/members`,
+
 export type ResponseGetCurrentInMemberList = {
   members: Array<{name: string}>;
 };
