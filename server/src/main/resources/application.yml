@@ -29,7 +29,7 @@ security:
       expire-length: 604800 # 1주일
 
 cookie:
-  http-only: true
+  http-only: false
   secure: false
   path: /
   max-age: 7D
