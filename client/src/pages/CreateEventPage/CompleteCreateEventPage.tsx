@@ -44,7 +44,7 @@ const CompleteCreateEventPage = () => {
               message: '링크가 복사되었어요 :) \n링크를 절대 분실하지 마세요!',
               type: 'confirm',
               position: 'top',
-              top: '20px',
+              top: '2rem',
             })
           }
         >
