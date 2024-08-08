@@ -10,12 +10,12 @@ import style from './SetActionListModal.style';
 export type ActionType = '지출' | '인원';
 
 interface SetActionModalContentProps {
-  openBottomSheet: boolean;
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenBottomSheet: boolean;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SetActionListModal = ({openBottomSheet, setOpenBottomSheet, setOrder}: SetActionModalContentProps) => {
+const SetActionListModal = ({isOpenBottomSheet, setIsOpenBottomSheet, setOrder}: SetActionModalContentProps) => {
   const [action, setAction] = useState<ActionType>('지출');
   const [inOutAction, setInOutAction] = useState<InOutType>('탈주');
 
@@ -28,7 +28,7 @@ const SetActionListModal = ({openBottomSheet, setOpenBottomSheet, setOrder}: Set
   };
 
   return (
-    <BottomSheet isOpened={openBottomSheet} onClose={() => setOpenBottomSheet(false)}>
+    <BottomSheet isOpened={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
       <div css={style.container}>
         <div css={style.switchContainer}>
           <Switch value={action} onChange={handleActionTypeChange} values={['지출', '인원']} />
@@ -38,12 +38,12 @@ const SetActionListModal = ({openBottomSheet, setOpenBottomSheet, setOrder}: Set
         </div>
 
         {action === '지출' && (
-          <AddBillActionListModalContent setOpenBottomSheet={setOpenBottomSheet} setOrder={setOrder} />
+          <AddBillActionListModalContent setIsOpenBottomSheet={setIsOpenBottomSheet} setOrder={setOrder} />
         )}
         {action === '인원' && (
           <AddMemberActionListModalContent
             inOutAction={inOutAction === '탈주' ? 'OUT' : 'IN'}
-            setOpenBottomSheet={setOpenBottomSheet}
+            setIsOpenBottomSheet={setIsOpenBottomSheet}
           />
         )}
       </div>

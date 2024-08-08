@@ -5,10 +5,10 @@ import {DragHandleItem, DragHandleItemContainer} from 'haengdong-design';
 interface BillStepItemProps {
   step: BillStep;
   isOpenBottomSheet: boolean;
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, setOpenBottomSheet}) => {
+const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, setIsOpenBottomSheet}) => {
   const totalPrice = step.actions.reduce((acc, cur) => acc + cur.price, 0);
 
   return (

@@ -11,10 +11,10 @@ import style from './AddMemberActionListModalContent.style';
 
 interface AddMemberActionListModalContentProps {
   inOutAction: MemberType;
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddMemberActionListModalContent = ({inOutAction, setOpenBottomSheet}: AddMemberActionListModalContentProps) => {
+const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: AddMemberActionListModalContentProps) => {
   const {
     inputList,
     inputRefList,
@@ -30,7 +30,7 @@ const AddMemberActionListModalContent = ({inOutAction, setOpenBottomSheet}: AddM
 
   const handleUpdateMemberListSubmit = () => {
     updateMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: inOutAction});
-    setOpenBottomSheet(false);
+    setIsOpenBottomSheet(false);
   };
 
   return (

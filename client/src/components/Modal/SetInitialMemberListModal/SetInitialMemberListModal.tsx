@@ -11,11 +11,11 @@ import {
 } from './SetInitialMemberListModal.style';
 
 interface SetInitialMemberListProps {
-  openBottomSheet: boolean;
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenBottomSheet: boolean;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SetInitialMemberListModal = ({openBottomSheet, setOpenBottomSheet}: SetInitialMemberListProps) => {
+const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: SetInitialMemberListProps) => {
   const {
     inputList,
     inputRefList,
@@ -30,11 +30,11 @@ const SetInitialMemberListModal = ({openBottomSheet, setOpenBottomSheet}: SetIni
 
   const handleSubmit = () => {
     updateMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: 'IN'});
-    setOpenBottomSheet(false);
+    setIsOpenBottomSheet(false);
   };
 
   return (
-    <BottomSheet isOpened={openBottomSheet} onClose={() => setOpenBottomSheet(false)}>
+    <BottomSheet isOpened={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
       <div css={setInitialMemberListModalStyle}>
         <Text size="bodyBold">초기 인원 설정하기</Text>
         <div css={setInitialMemberListModalInputGroupStyle}>

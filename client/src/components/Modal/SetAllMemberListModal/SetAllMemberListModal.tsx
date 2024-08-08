@@ -8,9 +8,9 @@ import {
 } from './SetAllMemberListModal.style';
 
 interface SetAllMemberListModalProps {
-  openBottomSheet: boolean;
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsClickAllMemberListButton: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenBottomSheet: boolean;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenAllMemberListButton: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const InputAndDeleteButton = () => {
@@ -27,17 +27,17 @@ const InputAndDeleteButton = () => {
 };
 
 const SetAllMemberListModal = ({
-  openBottomSheet,
-  setOpenBottomSheet,
-  setIsClickAllMemberListButton,
+  isOpenBottomSheet,
+  setIsOpenBottomSheet,
+  setIsOpenAllMemberListButton,
 }: SetAllMemberListModalProps) => {
   const handleCloseAllMemberListModal = () => {
-    setIsClickAllMemberListButton(prev => !prev);
-    setOpenBottomSheet(false);
+    setIsOpenAllMemberListButton(prev => !prev);
+    setIsOpenBottomSheet(false);
   };
 
   return (
-    <BottomSheet isOpened={openBottomSheet} onClose={handleCloseAllMemberListModal}>
+    <BottomSheet isOpened={isOpenBottomSheet} onClose={handleCloseAllMemberListModal}>
       <div css={allMemberListModalStyle}>
         <div css={allMemberListModalTitleStyle}>
           <Text size="bodyBold">전체 참여자 수정하기</Text>

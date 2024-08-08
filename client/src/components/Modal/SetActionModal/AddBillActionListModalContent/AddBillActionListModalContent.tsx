@@ -8,11 +8,11 @@ import useDynamicBillActionInput from '@hooks/useDynamicBillActionInput';
 import style from './AddBillActionListModalContent.style';
 
 interface AddBillActionListModalContentProps {
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AddBillActionListModalContent = ({setOpenBottomSheet, setOrder}: AddBillActionListModalContentProps) => {
+const AddBillActionListModalContent = ({setIsOpenBottomSheet, setOrder}: AddBillActionListModalContentProps) => {
   const {
     inputPairList,
     inputRefList,
@@ -28,7 +28,7 @@ const AddBillActionListModalContent = ({setOpenBottomSheet, setOrder}: AddBillAc
 
     // TODO: (@weadie) 요청 실패시 오류 핸들 필요
     addBill(getFilledInputPairList().map(({title, price}) => ({title, price: Number(price)}))); // TODO: (@weadie) DTO같은게 다이내믹에 필요할까?
-    setOpenBottomSheet(false);
+    setIsOpenBottomSheet(false);
   };
 
   return (

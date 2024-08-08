@@ -12,49 +12,51 @@ import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style'
 
 interface ModalBasedOnMemberCountProps {
   memberNameList: string[];
-  openBottomSheet: boolean;
-  isClickAllMemberListButton: boolean;
+  isOpenBottomSheet: boolean;
+  isOpenAllMemberListButton: boolean;
   setOrder: React.Dispatch<React.SetStateAction<number>>;
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsClickAllMemberListButton: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenAllMemberListButton: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalBasedOnMemberCount = ({
   memberNameList,
-  openBottomSheet,
-  isClickAllMemberListButton,
+  isOpenBottomSheet,
+  isOpenAllMemberListButton,
   setOrder,
-  setOpenBottomSheet,
-  setIsClickAllMemberListButton,
+  setIsOpenBottomSheet,
+  setIsOpenAllMemberListButton,
 }: ModalBasedOnMemberCountProps) => {
-  if (isClickAllMemberListButton) {
+  if (isOpenAllMemberListButton) {
     return (
       <SetAllMemberListModal
-        setOpenBottomSheet={setOpenBottomSheet}
-        openBottomSheet={openBottomSheet}
-        setIsClickAllMemberListButton={setIsClickAllMemberListButton}
+        setIsOpenBottomSheet={setIsOpenBottomSheet}
+        isOpenBottomSheet={isOpenBottomSheet}
+        setIsOpenAllMemberListButton={setIsOpenAllMemberListButton}
       />
     );
   }
   switch (memberNameList.length) {
     case 0:
-      return <SetInitialMemberListModal setOpenBottomSheet={setOpenBottomSheet} openBottomSheet={openBottomSheet} />;
+      return (
+        <SetInitialMemberListModal setIsOpenBottomSheet={setIsOpenBottomSheet} isOpenBottomSheet={isOpenBottomSheet} />
+      );
 
     default:
       return (
         <SetActionListModal
           setOrder={setOrder}
-          setOpenBottomSheet={setOpenBottomSheet}
-          openBottomSheet={openBottomSheet}
+          setIsOpenBottomSheet={setIsOpenBottomSheet}
+          isOpenBottomSheet={isOpenBottomSheet}
         />
       );
   }
 };
 
 const AdminPage = () => {
-  const [openBottomSheet, setOpenBottomSheet] = useState(false);
+  const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
   const [order, setOrder] = useState<number>(1);
-  const [isClickAllMemberListButton, setIsClickAllMemberListButton] = useState(false);
+  const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
 
   // TODO: (@weadie) eventName이 새로고침시 공간이 없다가 생겨나 레이아웃이 움직이는 문제
   const [eventName, setEventName] = useState(' ');
@@ -75,8 +77,8 @@ const AdminPage = () => {
   }, [eventId]);
 
   const handleOpenAllMemberListButton = () => {
-    setOpenBottomSheet(prev => !prev);
-    setIsClickAllMemberListButton(prev => !prev);
+    setIsOpenFixedBottomBottomSheet(prev => !prev);
+    setIsOpenAllMemberListButton(prev => !prev);
   };
 
   return (
@@ -99,16 +101,16 @@ const AdminPage = () => {
         <StepList />
         <FixedButton
           children={memberNameList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
-          onClick={() => setOpenBottomSheet(prev => !prev)}
+          onClick={() => setIsOpenFixedBottomBottomSheet(prev => !prev)}
         />
-        {openBottomSheet && (
+        {isOpenFixedButtonBottomSheet && (
           <ModalBasedOnMemberCount
             memberNameList={memberNameList}
             setOrder={setOrder}
-            setOpenBottomSheet={setOpenBottomSheet}
-            openBottomSheet={openBottomSheet}
-            isClickAllMemberListButton={isClickAllMemberListButton}
-            setIsClickAllMemberListButton={setIsClickAllMemberListButton}
+            setIsOpenBottomSheet={setIsOpenFixedBottomBottomSheet}
+            isOpenBottomSheet={isOpenFixedButtonBottomSheet}
+            isOpenAllMemberListButton={isOpenAllMemberListButton}
+            setIsOpenAllMemberListButton={setIsOpenAllMemberListButton}
           />
         )}
       </section>
