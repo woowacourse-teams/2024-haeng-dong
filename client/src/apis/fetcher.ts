@@ -1,10 +1,10 @@
 import {ServerError} from 'ErrorProvider';
 
-import {UNHANDLED_ERROR} from '@constants/errorMessage';
+import {UNKNOWN_ERROR} from '@constants/errorMessage';
 
 import FetchError from '../errors/FetchError';
 
-type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+export type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 type Body = ReadableStream | XMLHttpRequestBodyInit;
 type HeadersType = [string, string][] | Record<string, string> | Headers;
@@ -17,7 +17,6 @@ type RequestProps = {
   headers?: HeadersType;
   body?: Body | object | null;
   queryParams?: ObjectQueryParams;
-  // errorMessage: string;
 };
 
 type FetcherProps = RequestProps & {
@@ -66,13 +65,12 @@ export const requestPut = ({headers = {}, ...args}: RequestProps) => {
 export const requestPost = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
   const response = await fetcher({method: 'POST', headers, ...args});
 
-  const contentType = response!.headers.get('Content-Type');
-  if (contentType && contentType.includes('application/json')) {
-    const data: T = await response!.json();
-    return data;
-  }
+  // const contentType = response!.headers.get('Content-Type');
 
-  return;
+  // if (contentType && contentType.includes('application/json')) {
+  const data: T = await response!.json();
+  return data;
+  // }
 };
 
 export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
@@ -80,13 +78,11 @@ export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
 };
 
 const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: FetcherProps) => {
-  // const token = generateBasicToken(USER_ID, USER_PASSWORD);
   const options = {
     method,
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: token,
       ...headers,
     },
     body: body ? JSON.stringify(body) : null,
@@ -113,15 +109,16 @@ const errorHandler = async ({url, options, body}: ErrorHandlerProps) => {
         errorBody: serverErrorBody,
         name: serverErrorBody.errorCode,
         message: serverErrorBody.message || '',
+        method: options.method,
       });
     }
 
     return response;
   } catch (error) {
-    if (error instanceof FetchError) {
+    if (error instanceof Error) {
       throw error;
     }
 
-    throw new Error(UNHANDLED_ERROR);
+    throw new Error(UNKNOWN_ERROR);
   }
 };
