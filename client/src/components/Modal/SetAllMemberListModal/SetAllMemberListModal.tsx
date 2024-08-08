@@ -24,15 +24,16 @@ const SetAllMemberListModal = ({
   setIsOpenBottomSheet,
   setIsOpenAllMemberListButton,
 }: SetAllMemberListModalProps) => {
-  const {editedAllMemberList, canSubmit, handleNameChange, handleClickDeleteButton} = useSetAllMemberList({
-    validateFunc: validateMemberName,
-    allMemberList,
-  });
-
   const handleCloseAllMemberListModal = () => {
     setIsOpenAllMemberListButton(prev => !prev);
     setIsOpenBottomSheet(false);
   };
+
+  const {editedAllMemberList, canSubmit, handleNameChange, handleClickDeleteButton} = useSetAllMemberList({
+    validateFunc: validateMemberName,
+    allMemberList,
+    handleCloseAllMemberListModal,
+  });
 
   return (
     <BottomSheet isOpened={isOpenBottomSheet} onClose={handleCloseAllMemberListModal}>

@@ -9,9 +9,14 @@ import {useStepList} from './useStepList/useStepList';
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;
   allMemberList: string[];
+  handleCloseAllMemberListModal: () => void;
 }
 
-const useSetAllMemberList = ({validateFunc, allMemberList}: UseSetAllMemberListProps) => {
+const useSetAllMemberList = ({
+  validateFunc,
+  allMemberList,
+  handleCloseAllMemberListModal,
+}: UseSetAllMemberListProps) => {
   const [editedAllMemberList, setEditedAllMemberList] = useState<string[]>(allMemberList);
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
