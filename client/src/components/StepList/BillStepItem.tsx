@@ -11,14 +11,14 @@ interface BillStepItemProps {
   setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, setOpenBottomSheet}) => {
+const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, setIsOpenBottomSheet}) => {
   const [clickedIndex, setClickedIndex] = useState(-1);
 
   const totalPrice = step.actions.reduce((acc, cur) => acc + cur.price, 0);
 
   const handleDragHandleItemClick = (index: number) => {
     setClickedIndex(index);
-    setOpenBottomSheet(true);
+    setIsOpenBottomSheet(true);
   };
 
   return (
@@ -42,7 +42,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, set
             <PutAndDeleteBillActionModal
               billAction={action}
               isBottomSheetOpened={isOpenBottomSheet}
-              setIsBottomSheetOpened={setOpenBottomSheet}
+              setIsBottomSheetOpened={setIsOpenBottomSheet}
             />
           )}
         </Fragment>
