@@ -1,5 +1,6 @@
 import {BottomSheet, Text, LabelGroupInput, FixedButton, IconButton, Icon} from 'haengdong-design';
-import InputAndDeleteButton from '@components/InputAndDeleteButton/InputAndDeleteButton';
+
+import validateMemberName from '@utils/validate/validateMemberName';
 
 import useSetAllMemberList from '@hooks/useSetAllMemberList';
 
@@ -23,7 +24,10 @@ const SetAllMemberListModal = ({
   setIsOpenBottomSheet,
   setIsOpenAllMemberListButton,
 }: SetAllMemberListModalProps) => {
-  const {editedAllMemberList, handleNameChange} = useSetAllMemberList({allMemberList});
+  const {editedAllMemberList, canSubmit, handleNameChange, handleClickDeleteButton} = useSetAllMemberList({
+    validateFunc: validateMemberName,
+    allMemberList,
+  });
 
   const handleCloseAllMemberListModal = () => {
     setIsOpenAllMemberListButton(prev => !prev);
@@ -43,18 +47,18 @@ const SetAllMemberListModal = ({
         <div css={allMemberListModalLabelGroupInputStyle}>
           <LabelGroupInput labelText="이름">
             {editedAllMemberList.map((member, index) => (
-              <div css={InputAndDeleteButtonContainer}>
+              <div css={InputAndDeleteButtonContainer} key={index}>
                 <div css={{flexGrow: 1}}>
                   <LabelGroupInput.Element elementKey="e" value={member} onChange={e => handleNameChange(index, e)} />
                 </div>
-                <IconButton variants="tertiary" size="medium">
+                <IconButton variants="tertiary" size="medium" onClick={e => handleClickDeleteButton(index, e)}>
                   <Icon iconType="trash" iconColor="onTertiary" />
                 </IconButton>
               </div>
             ))}
           </LabelGroupInput>
         </div>
-        <FixedButton children="수정 완료" />
+        <FixedButton children="수정 완료" disabled={!canSubmit} />
       </div>
     </BottomSheet>
   );
