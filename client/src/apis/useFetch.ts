@@ -1,11 +1,11 @@
 import {useState} from 'react';
+import {NavigateFunction, useNavigate} from 'react-router-dom';
+
+import sendLogToSentry from '@utils/sendLogToSentry';
 
 import {UNHANDLED_ERROR} from '@constants/errorMessage';
 
 import {ServerError, useError} from '../ErrorProvider';
-import sendLogToSentry from '@utils/sendLogToSentry';
-
-import {NavigateFunction, useNavigate} from 'react-router-dom';
 import FetchError from '../errors/FetchError';
 
 export const useFetch = () => {

@@ -6,6 +6,7 @@ import useEventId from '@hooks/useEventId/useEventId';
 import {requestPostBillList} from '@apis/request/bill';
 import {requestPostMemberList} from '@apis/request/member';
 import {requestGetStepList} from '@apis/request/stepList';
+
 import {useFetch} from '@apis/useFetch';
 
 interface StepListContextProps {
@@ -61,6 +62,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   const addBill = async (billList: Bill[]) => {
     // TODO: (@weadie) 에러 처리
     await fetch(() => requestPostBillList({eventId, billList}));
+    ('');
 
     refreshStepList();
   };

@@ -1,4 +1,3 @@
-import {ServerError} from '../ErrorProvider';
 import {FetchErrorType} from '../types/fetchErrorType';
 
 class FetchError extends Error {

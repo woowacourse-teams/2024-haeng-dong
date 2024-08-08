@@ -1,3 +1,5 @@
+import {ServerError} from 'ErrorProvider';
+
 import {UNHANDLED_ERROR} from '@constants/errorMessage';
 
 import FetchError from '../errors/FetchError';
@@ -96,7 +98,7 @@ const errorHandler = async (url: string, options: Options, body: any) => {
     const response: Response = await fetch(url, options);
 
     if (!response.ok) {
-      const serverErrorBody = await response.json();
+      const serverErrorBody: ServerError = await response.json();
 
       throw new FetchError({
         status: response.status,
