@@ -1,3 +1,5 @@
+import type {MemberType, Bill, BillAction, BillStep, MemberStep} from 'types/serviceType.ts';
+
 import {PropsWithChildren, createContext, useContext, useEffect, useState} from 'react';
 
 import useEventId from '@hooks/useEventId/useEventId';
@@ -5,14 +7,13 @@ import {requestPostBillList} from '@apis/request/bill';
 import {requestPostMemberList} from '@apis/request/member';
 import {requestGetStepList} from '@apis/request/stepList';
 
-import {BillAction, BillStep, MemberStep} from './type.ts';
-
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
   getTotalPrice: () => number;
   addBill: (billList: Bill[]) => Promise<void>;
   updateMemberList: ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => Promise<void>;
   memberNameList: string[];
+  refreshStepList: () => Promise<void>;
 }
 
 export const StepListContext = createContext<StepListContextProps | null>(null); // TODO: (@weadie) 인자를 어떻게 줘야 하는지 고민하기.
@@ -83,6 +84,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
         updateMemberList,
         stepList,
         memberNameList,
+        refreshStepList,
       }}
     >
       {children}

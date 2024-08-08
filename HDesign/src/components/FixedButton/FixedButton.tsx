@@ -4,12 +4,11 @@ import {forwardRef} from 'react';
 import {
   fixedButtonContainerStyle,
   fixedButtonStyle,
-  deleteButtonStyle,
   buttonContainerStyle,
 } from '@components/FixedButton/FixedButton.style';
 import {FixedButtonProps} from '@components/FixedButton/FixedButton.type';
-
-import Trash from '@assets/trash.svg';
+import IconButton from '@components/IconButton/IconButton';
+import Icon from '@components/Icon/Icon';
 
 import {useTheme} from '@theme/HDesignProvider';
 
@@ -22,9 +21,9 @@ export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElem
     <div css={fixedButtonContainerStyle(theme)}>
       <div css={buttonContainerStyle}>
         {onDeleteClick && (
-          <button css={deleteButtonStyle(theme)} onClick={onDeleteClick}>
-            <Trash />
-          </button>
+          <IconButton type="button" size="large" variants="destructive" onClick={onDeleteClick}>
+            <Icon iconType="trash" />
+          </IconButton>
         )}
         <button css={fixedButtonStyle({variants, theme})} ref={ref} {...htmlProps} />
       </div>

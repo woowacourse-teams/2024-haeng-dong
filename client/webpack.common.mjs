@@ -22,6 +22,14 @@ export default {
       '@utils': path.resolve(__dirname, 'src/utils/'),
     },
   },
+<<<<<<< HEAD:client/webpack.common.mjs
+=======
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].[hash].js',
+    publicPath: '/',
+  },
+>>>>>>> fe-dev:client/webpack.config.js
   module: {
     rules: [
       {
@@ -53,4 +61,15 @@ export default {
       ],
     }),
   ],
+<<<<<<< HEAD:client/webpack.common.mjs
+=======
+  devServer: {
+    port: 3000,
+    hot: true,
+    historyApiFallback: true,
+    client: {
+      overlay: false,
+    },
+  },
+>>>>>>> fe-dev:client/webpack.config.js
 };

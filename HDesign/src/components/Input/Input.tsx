@@ -5,6 +5,7 @@ import IconButton from '@components/IconButton/IconButton';
 import {InputProps} from '@components/Input/Input.type';
 import {inputBoxStyle, inputStyle} from '@components/Input/Input.style';
 import {useInput} from '@components/Input/useInput';
+import Icon from '@components/Icon/Icon';
 
 import {useTheme} from '@theme/HDesignProvider';
 
@@ -38,7 +39,11 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
         autoFocus={autoFocus}
         {...htmlProps}
       />
-      {value && hasFocus && <IconButton tabIndex={-1} iconType="inputDelete" onMouseDown={handleClickDelete} />}
+      {value && hasFocus && (
+        <IconButton tabIndex={-1} variants="none" onMouseDown={handleClickDelete}>
+          <Icon iconType="inputDelete" />
+        </IconButton>
+      )}
     </div>
   );
 });
