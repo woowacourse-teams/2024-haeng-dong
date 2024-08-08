@@ -5,14 +5,18 @@ class FetchError extends Error {
   status;
   endpoint;
   errorBody;
+  method;
 
-  constructor({requestBody, status, endpoint, errorBody}: FetchErrorType) {
-    // TODO: (@weadie) 타입과 수퍼 수정
-    super(`Error ${status} at ${endpoint}`);
+  constructor({requestBody, status, endpoint, errorBody, method, name, message}: FetchErrorType) {
+    super(errorBody.errorCode);
+
     this.requestBody = requestBody;
     this.status = status;
     this.endpoint = endpoint;
     this.errorBody = errorBody;
+    this.method = method;
+    this.name = name;
+    this.message = message;
   }
 }
 
