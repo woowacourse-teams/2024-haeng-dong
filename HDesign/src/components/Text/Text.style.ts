@@ -1,11 +1,11 @@
-import type {TextProps} from './Text.type';
+import type {TextStylePropsWithTheme} from './Text.type';
 
 import {css} from '@emotion/react';
 
 // TODO: (@todari) themeProvider 이용하도록 변경
 import TYPOGRAPHY from '@token/typography';
 
-export const getSizeStyling = (size: Required<TextProps>['size']) => {
+export const getSizeStyling = ({size, color, theme}: Required<TextStylePropsWithTheme>) => {
   const style = {
     head: css(TYPOGRAPHY.head),
     title: css(TYPOGRAPHY.title),
@@ -19,5 +19,7 @@ export const getSizeStyling = (size: Required<TextProps>['size']) => {
     tiny: css(TYPOGRAPHY.tiny),
   };
 
-  return style[size];
+  const colorStyle = css({color: theme.colors[color]});
+
+  return [style[size], colorStyle];
 };
