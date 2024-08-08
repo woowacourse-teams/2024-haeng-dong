@@ -29,9 +29,9 @@ const PutAndDeleteBillActionModal = ({
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
       <form css={bottomSheetStyle} onSubmit={event => onSubmit(event, inputPair, billAction.actionId)}>
-        <header css={bottomSheetHeaderStyle}>
+        <h2 css={bottomSheetHeaderStyle}>
           <Text size="bodyBold">지출 내역 수정하기</Text>
-        </header>
+        </h2>
         <fieldset css={inputContainerStyle}>
           <LabelGroupInput labelText="지출내역 / 금액" errorText={errorMessage}>
             <LabelGroupInput.Element
