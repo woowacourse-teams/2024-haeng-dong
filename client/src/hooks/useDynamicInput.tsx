@@ -7,7 +7,19 @@ type InputValue = {
   index: number;
 };
 
-const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
+export type ReturnUseDynamicInput = {
+  inputList: InputValue[];
+  inputRefList: React.MutableRefObject<(HTMLInputElement | null)[]>;
+  handleInputChange: (index: number, event: React.ChangeEvent<HTMLInputElement>) => void;
+  deleteEmptyInputElementOnBlur: () => void;
+  errorMessage: string;
+  getFilledInputList: (list?: InputValue[]) => InputValue[];
+  focusNextInputOnEnter: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
+  canSubmit: boolean;
+  setInputValueTargetIndex: (index: number, value: string) => void;
+};
+
+const useDynamicInput = (validateFunc: (name: string) => ValidateResult): ReturnUseDynamicInput => {
   const [inputList, setInputList] = useState<InputValue[]>([{value: '', index: 0}]);
   const inputRefList = useRef<(HTMLInputElement | null)[]>([]);
   const [errorMessage, setErrorMessage] = useState('');

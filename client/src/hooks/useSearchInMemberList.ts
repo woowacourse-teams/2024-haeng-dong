@@ -6,7 +6,17 @@ import {useFetch} from '@apis/useFetch';
 
 import useEventId from './useEventId/useEventId';
 
-const useSearchInMemberList = (setInputValueTargetIndex: (index: number, value: string) => void) => {
+export type ReturnUseSearchInMemberList = {
+  currentInputIndex: number;
+  handleCurrentInputIndex: (inputIndex: number) => void;
+  filteredInMemberList: string[];
+  searchCurrentInMember: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  chooseMember: (inputIndex: number, name: string) => void;
+};
+
+const useSearchInMemberList = (
+  setInputValueTargetIndex: (index: number, value: string) => void,
+): ReturnUseSearchInMemberList => {
   const {eventId} = useEventId();
 
   const {fetch} = useFetch();
