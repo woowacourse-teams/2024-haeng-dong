@@ -18,10 +18,11 @@ export const bottomSheetHeaderStyle = css({
   padding: '0 0.5rem',
 });
 
-export const inputGroupStyle = css({
+export const inputContainerStyle = css({
   display: 'flex',
+  height: '100%',
   flexDirection: 'column',
-  gap: '1rem',
+  gap: '1.5rem',
   overflow: 'auto',
-  paddingBottom: '11rem',
+  paddingBottom: '14rem',
 });
