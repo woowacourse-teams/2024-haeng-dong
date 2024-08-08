@@ -9,6 +9,8 @@ import {useStepList} from '@hooks/useStepList/useStepList';
 
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
+import ERROR_MESSAGE from '@constants/errorMessage';
+
 const usePutAndDeleteBillAction = (
   initialValue: InputPair,
   validateFunc: (inputPair: Bill) => ValidateResult,
@@ -66,7 +68,7 @@ const usePutAndDeleteBillAction = (
 
     // blur시 값이 비었을 때 error state 반영
     if (inputPair.price.length === 0 || inputPair.title.length === 0) {
-      setErrorMessage('값은 비어있을 수 없어요');
+      setErrorMessage(ERROR_MESSAGE.preventEmpty);
       setErrorInfo({title: inputPair.title.length === 0, price: inputPair.price.length === 0});
       setCanSubmit(false);
       return;
