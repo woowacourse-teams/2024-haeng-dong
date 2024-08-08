@@ -49,7 +49,7 @@ const SetAllMemberListModal = ({
         <div css={allMemberListModalTitleStyle}>
           <Text size="bodyBold">전체 참여자 수정하기</Text>
           {/* TODO: (@soha): 인원 텍스트 색 수정 필요 */}
-          <Text size="bodyBold" color="sematic">
+          <Text size="bodyBold" color="sematic" textColor="gray">
             총 {allMemberList.length}명
           </Text>
         </div>
