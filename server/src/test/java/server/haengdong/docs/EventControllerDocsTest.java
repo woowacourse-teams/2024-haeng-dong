@@ -277,4 +277,27 @@ public class EventControllerDocsTest extends RestDocsSupport {
                         )
                 );
     }
+
+    @DisplayName("행사 어드민 권한을 확인한다.")
+    @Test
+    void authenticateTest() throws Exception {
+        String token = "TOKEN";
+        mockMvc.perform(post("/api/events/{eventId}/auth", token)
+                                .cookie(EVENT_COOKIE))
+                .andDo(print())
+                .andExpect(status().isOk())
+
+                .andDo(
+                        document("authenticateEvent",
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 requestCookies(
+                                         cookieWithName("eventToken").description("행사 관리자 토큰").optional()
+                                 )
+                        )
+                );
+    }
 }
