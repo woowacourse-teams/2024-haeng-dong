@@ -1,11 +1,13 @@
-import {BottomSheet, Text, LabelGroupInput, FixedButton} from 'haengdong-design';
-
+import {BottomSheet, Text, LabelGroupInput, FixedButton, IconButton, Icon} from 'haengdong-design';
 import InputAndDeleteButton from '@components/InputAndDeleteButton/InputAndDeleteButton';
+
+import useSetAllMemberList from '@hooks/useSetAllMemberList';
 
 import {
   allMemberListModalLabelGroupInputStyle,
   allMemberListModalStyle,
   allMemberListModalTitleStyle,
+  InputAndDeleteButtonContainer,
 } from './SetAllMemberListModal.style';
 
 interface SetAllMemberListModalProps {
@@ -21,6 +23,8 @@ const SetAllMemberListModal = ({
   setIsOpenBottomSheet,
   setIsOpenAllMemberListButton,
 }: SetAllMemberListModalProps) => {
+  const {editedAllMemberList, handleNameChange} = useSetAllMemberList({allMemberList});
+
   const handleCloseAllMemberListModal = () => {
     setIsOpenAllMemberListButton(prev => !prev);
     setIsOpenBottomSheet(false);
@@ -38,8 +42,15 @@ const SetAllMemberListModal = ({
         </div>
         <div css={allMemberListModalLabelGroupInputStyle}>
           <LabelGroupInput labelText="이름">
-            {allMemberList.map((member, index) => (
-              <InputAndDeleteButton key={index} value={member} />
+            {editedAllMemberList.map((member, index) => (
+              <div css={InputAndDeleteButtonContainer}>
+                <div css={{flexGrow: 1}}>
+                  <LabelGroupInput.Element elementKey="e" value={member} onChange={e => handleNameChange(index, e)} />
+                </div>
+                <IconButton variants="tertiary" size="medium">
+                  <Icon iconType="trash" iconColor="onTertiary" />
+                </IconButton>
+              </div>
             ))}
           </LabelGroupInput>
         </div>
