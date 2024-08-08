@@ -62,7 +62,6 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   const addBill = async (billList: Bill[]) => {
     // TODO: (@weadie) 에러 처리
     await fetch(() => requestPostBillList({eventId, billList}));
-    ('');
 
     refreshStepList();
   };
