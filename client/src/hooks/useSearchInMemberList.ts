@@ -39,11 +39,13 @@ const useSearchInMemberList = (
     getCurrentInMembers();
   }, [eventId]);
 
-  const filterSearchTerms = (keyword: string) => {
+  const filterMatchItems = (keyword: string) => {
     if (keyword.trim() === '') return [];
 
-    const searchTerms = currentInMemberList.map(({name}) => name);
-    return searchTerms.filter(terms => terms.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1).slice(0, 3);
+    const MatchItems = currentInMemberList.map(({name}) => name);
+    return MatchItems.filter(
+      matchItem => matchItem.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1,
+    ).slice(0, 3);
   };
 
   const chooseMember = (inputIndex: number, name: string) => {
@@ -53,7 +55,7 @@ const useSearchInMemberList = (
 
   const searchCurrentInMember = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
-    setFilteredInMemberList(filterSearchTerms(value));
+    setFilteredInMemberList(filterMatchItems(value));
   };
 
   const handleCurrentInputIndex = (inputIndex: number) => {

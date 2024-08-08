@@ -28,8 +28,8 @@ const OutMember = ({dynamicProps}: OutMemberProps) => {
   return inputList.map(({value, index}) => (
     <Search
       isShowTargetInput={currentInputIndex === index}
-      searchTerms={filteredInMemberList}
-      onTermClick={(term: string) => chooseMember(currentInputIndex, term)}
+      matchItems={filteredInMemberList}
+      onMatchItemClick={(term: string) => chooseMember(currentInputIndex, term)}
     >
       <LabelGroupInput.Element
         key={index}
