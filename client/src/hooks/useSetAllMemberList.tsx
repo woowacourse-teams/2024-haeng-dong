@@ -4,6 +4,7 @@ import {ValidateResult} from '@utils/validate/type';
 import {requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
 
 import useEventId from './useEventId/useEventId';
+import {useStepList} from './useStepList/useStepList';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;
@@ -15,6 +16,7 @@ const useSetAllMemberList = ({validateFunc, allMemberList}: UseSetAllMemberListP
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
 
+  const {refreshStepList} = useStepList();
   const {eventId} = useEventId();
 
   const handleNameChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +51,8 @@ const useSetAllMemberList = ({validateFunc, allMemberList}: UseSetAllMemberListP
     await requestDeleteAllMemberList({eventId, memberName: memberToDelete});
 
     setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+
+    refreshStepList();
   };
 
   // const putAllMemberList = () =>{
