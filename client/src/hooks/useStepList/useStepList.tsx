@@ -6,6 +6,7 @@ import useEventId from '@hooks/useEventId/useEventId';
 import {requestPostBillList} from '@apis/request/bill';
 import {requestPostMemberList} from '@apis/request/member';
 import {requestGetStepList} from '@apis/request/stepList';
+import {useFetch} from '@apis/useFetch';
 
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
@@ -19,6 +20,7 @@ interface StepListContextProps {
 export const StepListContext = createContext<StepListContextProps | null>(null); // TODO: (@weadie) 인자를 어떻게 줘야 하는지 고민하기.
 
 const StepListProvider = ({children}: PropsWithChildren) => {
+  const {fetch} = useFetch();
   const [stepList, setStepList] = useState<(BillStep | MemberStep)[]>([]);
   const [memberNameList, setNameMemberList] = useState<string[]>([]);
 
@@ -33,7 +35,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   }, [eventId]);
 
   const refreshStepList = async () => {
-    const stepList = await requestGetStepList({eventId});
+    const stepList = await fetch(() => requestGetStepList({eventId}));
 
     if (stepList.length !== 0) {
       setNameMemberList(stepList[stepList.length - 1].members);
@@ -44,7 +46,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
 
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
     try {
-      await requestPostMemberList({eventId, type, memberNameList});
+      await fetch(() => requestPostMemberList({eventId, type, memberNameList}));
 
       // TODO: (@weadie) 클라이언트 단에서 멤버 목록을 관리하기 위한 로직. 개선이 필요하다.
       if (type === 'IN') setNameMemberList(prev => [...prev, ...memberNameList]);
@@ -58,7 +60,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
 
   const addBill = async (billList: Bill[]) => {
     // TODO: (@weadie) 에러 처리
-    await requestPostBillList({eventId, billList});
+    await fetch(() => requestPostBillList({eventId, billList}));
 
     refreshStepList();
   };
