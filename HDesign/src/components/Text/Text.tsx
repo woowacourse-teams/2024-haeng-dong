@@ -3,8 +3,9 @@ import type {TextProps} from '@components/Text/Text.type';
 
 import React from 'react';
 
-import {getSizeStyling} from './Text.style';
 import {useTheme} from '@theme/HDesignProvider';
+
+import {getSizeStyling} from './Text.style';
 
 const Text: React.FC<TextProps> = ({size = 'body', textColor = 'black', children, ...attributes}: TextProps) => {
   const {theme} = useTheme();
