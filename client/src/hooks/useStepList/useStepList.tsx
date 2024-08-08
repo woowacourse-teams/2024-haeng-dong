@@ -9,7 +9,6 @@ import {requestGetStepList} from '@apis/request/stepList';
 
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
-  memberNameList: string[];
   allMemberList: string[];
   getTotalPrice: () => number;
   addBill: (billList: Bill[]) => Promise<void>;
@@ -21,7 +20,6 @@ export const StepListContext = createContext<StepListContextProps | null>(null);
 
 const StepListProvider = ({children}: PropsWithChildren) => {
   const [stepList, setStepList] = useState<(BillStep | MemberStep)[]>([]);
-  const [memberNameList, setNameMemberList] = useState<string[]>([]);
   const [allMemberList, setAllMemberList] = useState<string[]>([]);
 
   const {eventId} = useEventId();
@@ -37,10 +35,6 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   const refreshStepList = async () => {
     const stepList = await requestGetStepList({eventId});
 
-    if (stepList.length !== 0) {
-      setNameMemberList(stepList[stepList.length - 1].members);
-    }
-
     getAllMemberList();
     setStepList(stepList);
   };
@@ -48,10 +42,6 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
     try {
       await requestPostMemberList({eventId, type, memberNameList});
-
-      // TODO: (@weadie) 클라이언트 단에서 멤버 목록을 관리하기 위한 로직. 개선이 필요하다.
-      if (type === 'IN') setNameMemberList(prev => [...prev, ...memberNameList]);
-      if (type === 'OUT') setNameMemberList(prev => prev.filter(name => !memberNameList.includes(name)));
 
       refreshStepList();
     } catch (error) {
@@ -92,7 +82,6 @@ const StepListProvider = ({children}: PropsWithChildren) => {
         getTotalPrice,
         updateMemberList,
         stepList,
-        memberNameList,
         allMemberList,
         refreshStepList,
       }}
