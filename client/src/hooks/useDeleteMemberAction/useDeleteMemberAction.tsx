@@ -1,8 +1,8 @@
 import type {MemberAction} from 'types/serviceType';
 
 import {useState} from 'react';
-import {useToast} from 'haengdong-design';
 
+import {useToast} from '@components/Toast/ToastProvider';
 import useEventId from '@hooks/useEventId/useEventId';
 import {requestDeleteMemberAction} from '@apis/request/member';
 import {useStepList} from '@hooks/useStepList/useStepList';

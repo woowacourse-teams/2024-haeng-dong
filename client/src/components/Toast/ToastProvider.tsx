@@ -41,6 +41,8 @@ const ToastProvider = ({children}: React.PropsWithChildren) => {
         isAlwaysOn: false,
         position: 'bottom',
         bottom: '6.25rem',
+        // TODO: (@soha&weadie) zIndex의 값 추후에 꼭!!! 수정
+        style: {zIndex: '1000'},
       });
 
       clearError(DEFAULT_TIME);
