@@ -7,6 +7,8 @@ import {requestPostBillList} from '@apis/request/bill';
 import {requestGetAllMemberList, requestPostMemberList} from '@apis/request/member';
 import {requestGetStepList} from '@apis/request/stepList';
 
+import {useFetch} from '@apis/useFetch';
+
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
   allMemberList: string[];
@@ -19,6 +21,7 @@ interface StepListContextProps {
 export const StepListContext = createContext<StepListContextProps | null>(null); // TODO: (@weadie) 인자를 어떻게 줘야 하는지 고민하기.
 
 const StepListProvider = ({children}: PropsWithChildren) => {
+  const {fetch} = useFetch();
   const [stepList, setStepList] = useState<(BillStep | MemberStep)[]>([]);
   const [allMemberList, setAllMemberList] = useState<string[]>([]);
 
@@ -33,7 +36,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   }, [eventId]);
 
   const refreshStepList = async () => {
-    const stepList = await requestGetStepList({eventId});
+    const stepList = await fetch(() => requestGetStepList({eventId}));
 
     getAllMemberList();
     setStepList(stepList);
@@ -41,7 +44,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
 
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
     try {
-      await requestPostMemberList({eventId, type, memberNameList});
+      await fetch(() => requestPostMemberList({eventId, type, memberNameList}));
 
       refreshStepList();
     } catch (error) {
@@ -57,7 +60,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
 
   const addBill = async (billList: Bill[]) => {
     // TODO: (@weadie) 에러 처리
-    await requestPostBillList({eventId, billList});
+    await fetch(() => requestPostBillList({eventId, billList}));
 
     refreshStepList();
   };
