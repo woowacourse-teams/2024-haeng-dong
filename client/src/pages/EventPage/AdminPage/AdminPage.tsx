@@ -16,7 +16,7 @@ const AdminPage = () => {
 
   // TODO: (@weadie) eventName이 새로고침시 공간이 없다가 생겨나 레이아웃이 움직이는 문제
   const [eventName, setEventName] = useState(' ');
-  const {getTotalPrice, memberNameList} = useStepList();
+  const {getTotalPrice, memberNameList, allMemberList} = useStepList();
   const {eventId} = useEventId();
 
   // TODO: (@weadie) 아래 로직을 훅으로 분리합니다.
@@ -45,10 +45,10 @@ const AdminPage = () => {
           description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요."
           price={getTotalPrice()}
         />
-        {memberNameList.length !== 0 && (
+        {allMemberList.length !== 0 && (
           <ListButton
             prefix="전체 참여자"
-            suffix={`${memberNameList.length}명`}
+            suffix={`${allMemberList.length}명`}
             onClick={handleOpenAllMemberListButton}
           />
         )}
