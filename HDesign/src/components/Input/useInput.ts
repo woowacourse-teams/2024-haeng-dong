@@ -19,7 +19,7 @@ export const useInput = <T>({propsValue, onChange, onBlur, onFocus, inputRef}: U
 
   useEffect(() => {
     setValue(propsValue);
-  }, [value]);
+  }, [propsValue]);
 
   const handleClickDelete = (event: React.MouseEvent) => {
     event.preventDefault();
