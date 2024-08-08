@@ -106,6 +106,15 @@ operation::updateEventMemberName[snippets="path-parameters,http-request,request-
 [source,json,options="nowrap"]
 ----
 [
+
+   {
+      "code":"MEMBER_NAME_CHANGE_DUPLICATE",
+      "message":"중복된 참여 인원 이름 변경 요청이 존재합니다."
+   },
+   {
+      "code":"MEMBER_NOT_EXIST",
+      "message":"현재 참여하고 있지 않는 인원이 존재합니다."
+   },
    {
       "code":"REQUEST_EMPTY",
       "message":"멤버 이름은 공백일 수 없습니다."
@@ -128,7 +137,7 @@ operation::updateEventMemberName[snippets="path-parameters,http-request,request-
    },
    {
       "code":"TOKEN_EXPIRED",
-      "message":"토큰이 존재하지 않습니다."
+      "message":"만료된 토큰입니다."
    },
    {
       "code":"TOKEN_INVALID",

@@ -44,7 +44,8 @@ import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.EventController;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
-import server.haengdong.presentation.request.MemberUpdateRequest;
+import server.haengdong.presentation.request.MemberNameUpdateRequest;
+import server.haengdong.presentation.request.MemberNamesUpdateRequest;
 
 public class EventControllerDocsTest extends RestDocsSupport {
 
@@ -152,10 +153,14 @@ public class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void updateMember() throws Exception {
         String token = "TOKEN";
-        MemberUpdateRequest memberUpdateRequest = new MemberUpdateRequest("변경된 이름");
-        String requestBody = objectMapper.writeValueAsString(memberUpdateRequest);
+        MemberNamesUpdateRequest memberNameUpdateRequest = new MemberNamesUpdateRequest(List.of(
+                new MemberNameUpdateRequest("토다링", "토쟁이"),
+                new MemberNameUpdateRequest("감자", "고구마")
+        ));
 
-        mockMvc.perform(put("/api/events/{eventId}/members/{memberName}", token, "변경 전 이름")
+        String requestBody = objectMapper.writeValueAsString(memberNameUpdateRequest);
+
+        mockMvc.perform(put("/api/events/{eventId}/members/nameChange", token)
                         .cookie(EVENT_COOKIE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
@@ -166,14 +171,15 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(
-                                        parameterWithName("eventId").description("행사 ID"),
-                                        parameterWithName("memberName").description("참여자 이름")
+                                        parameterWithName("eventId").description("행사 ID")
                                 ),
                                 requestCookies(
                                         cookieWithName("eventToken").description("행사 관리자 토큰")
                                 ),
                                 requestFields(
-                                        fieldWithPath("name").type(JsonFieldType.STRING).description("수정할 참여자 이름")
+                                        fieldWithPath("members").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
+                                        fieldWithPath("members[].before").type(JsonFieldType.STRING).description("수정 전 참여자 이름"),
+                                        fieldWithPath("members[].after").type(JsonFieldType.STRING).description("수정 후 참여자 이름")
                                 )
                         )
                 );

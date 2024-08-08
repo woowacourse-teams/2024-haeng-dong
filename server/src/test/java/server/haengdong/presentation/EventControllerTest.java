@@ -21,7 +21,8 @@ import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
-import server.haengdong.presentation.request.MemberUpdateRequest;
+import server.haengdong.presentation.request.MemberNameUpdateRequest;
+import server.haengdong.presentation.request.MemberNamesUpdateRequest;
 
 
 class EventControllerTest extends ControllerTestSupport {
@@ -77,10 +78,14 @@ class EventControllerTest extends ControllerTestSupport {
     @Test
     void updateMember() throws Exception {
         String token = "TOKEN";
-        MemberUpdateRequest memberUpdateRequest = new MemberUpdateRequest("변경된 이름");
-        String requestBody = objectMapper.writeValueAsString(memberUpdateRequest);
+        MemberNamesUpdateRequest memberNameUpdateRequest = new MemberNamesUpdateRequest(List.of(
+                new MemberNameUpdateRequest("토다링", "토쟁이"),
+                new MemberNameUpdateRequest("감자", "고구마")
+        ));
 
-        mockMvc.perform(put("/api/events/{eventId}/members/{memberName}", token, "변경 전 이름")
+        String requestBody = objectMapper.writeValueAsString(memberNameUpdateRequest);
+
+        mockMvc.perform(put("/api/events/{eventId}/members/nameChange", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
