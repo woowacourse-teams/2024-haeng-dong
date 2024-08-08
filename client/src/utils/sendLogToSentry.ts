@@ -33,9 +33,10 @@ const sendLogToSentry = ({level = 'error', error, errorBody}: SendLogToSentry) =
         endpoint: error.endpoint,
         url: window.location.href,
         errorCode,
-        errorMessage: error.errorBody.message,
+        errorMessage: message,
         status: error.status,
         requestBody: JSON.stringify(error.requestBody),
+        method: error.status,
       });
 
       Sentry.captureMessage(`${errorCode}`);
