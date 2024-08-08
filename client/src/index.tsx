@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {RouterProvider} from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 
 import router from './router';
-
-import * as Sentry from '@sentry/react';
 
 // async function enableMocking() {
 //   const {worker} = await import('./mocks/browser');
