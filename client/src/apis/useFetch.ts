@@ -3,7 +3,7 @@ import {NavigateFunction, useNavigate} from 'react-router-dom';
 
 import sendLogToSentry from '@utils/sendLogToSentry';
 
-import {UNHANDLED_ERROR} from '@constants/errorMessage';
+import {UNKNOWN_ERROR} from '@constants/errorMessage';
 
 import {ServerError, useError} from '../ErrorProvider';
 import FetchError from '../errors/FetchError';
@@ -19,23 +19,29 @@ export const useFetch = () => {
 
     try {
       const result = await queryFunction();
+
       return result;
     } catch (error) {
-      if (error instanceof FetchError) {
-        const errorBody: ServerError = error.errorBody;
+      if (error instanceof Error) {
+        const errorBody =
+          error instanceof FetchError ? error.errorBody : {errorCode: error.name, message: error.message};
+
         setError(errorBody);
+
         captureError(error, navigate);
-
-        // throw new Error(errorBody.message); // TODO: (@weadie) 이것때문에 alert가 뜹니다. 빠른 시일 내에 수정 예정
       } else {
-        setError({errorCode: UNHANDLED_ERROR, message: JSON.stringify(error)});
-        throw new Error(UNHANDLED_ERROR);
-      }
+        setError({errorCode: UNKNOWN_ERROR, message: JSON.stringify(error)});
 
-      return;
+        captureError(new Error(UNKNOWN_ERROR), navigate);
+
+        // 에러를 throw 해 에러 바운더리로 보냅니다. 따라서 에러 이름은 중요하지 않음
+        throw new Error(UNKNOWN_ERROR);
+      }
     } finally {
       setLoading(false);
     }
+
+    return {} as T;
   };
 
   return {loading, fetch};
@@ -43,9 +49,7 @@ export const useFetch = () => {
 
 const captureError = async (error: Error, navigate: NavigateFunction) => {
   const errorBody: ServerError =
-    error instanceof FetchError
-      ? error.errorBody
-      : {message: await JSON.parse(error.message), errorCode: UNHANDLED_ERROR};
+    error instanceof FetchError ? error.errorBody : {message: error.message, errorCode: error.name};
 
   switch (errorBody?.errorCode) {
     case 'INTERNAL_SERVER_ERROR':
