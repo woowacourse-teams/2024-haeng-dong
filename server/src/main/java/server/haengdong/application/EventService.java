@@ -116,12 +116,17 @@ public class EventService {
         List<String> beforeNames = members.stream()
                 .map(MemberNameUpdateAppRequest::before)
                 .toList();
-
         if (beforeNames.size() != Set.copyOf(beforeNames).size()) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
         }
-
         beforeNames.forEach(beforeName -> validateBeforeMemberNameExist(event, beforeName));
+    }
+
+    private void validateBeforeMemberNameExist(Event event, String beforeName) {
+        boolean isMemberNameExist = memberActionRepository.existsByAction_EventAndMemberName(event, beforeName);
+        if (!isMemberNameExist) {
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_EXIST);
+        }
     }
 
     private void validateAfterNames(List<MemberNameUpdateAppRequest> members, Event event) {
@@ -132,13 +137,6 @@ public class EventService {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
         }
         afterNames.forEach(afterName -> validateAfterMemberNameNotExist(event, afterName));
-    }
-
-    private void validateBeforeMemberNameExist(Event event, String beforeName) {
-        boolean isMemberNameExist = memberActionRepository.existsByAction_EventAndMemberName(event, beforeName);
-        if (!isMemberNameExist) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_EXIST);
-        }
     }
 
     private void validateAfterMemberNameNotExist(Event event, String afterName) {
