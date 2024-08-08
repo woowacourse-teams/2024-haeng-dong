@@ -1,3 +1,7 @@
+import {UNHANDLED_ERROR} from '@constants/errorMessage';
+
+import FetchError from '../errors/FetchError';
+
 type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 type Body = ReadableStream | XMLHttpRequestBodyInit;
@@ -68,8 +72,6 @@ export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
 };
 
 const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: FetcherProps) => {
-  console.log('fetcher');
-  console.log(JSON.stringify(body));
   // const token = generateBasicToken(USER_ID, USER_PASSWORD);
   const options = {
     method,
@@ -86,14 +88,32 @@ const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, query
 
   if (queryParams) url += `?${objectToQueryString(queryParams)}`;
 
-  return errorHandler(url, options);
+  return errorHandler(url, options, body);
 };
 
-const errorHandler = async (url: string, options: Options) => {
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    const serverErrorMessage = await response.text();
-    throw new Error(serverErrorMessage || ''); // 받은 에러 메세지가 없는 경우는 서버에게..
+const errorHandler = async (url: string, options: Options, body: any) => {
+  try {
+    const response: Response = await fetch(url, options);
+
+    if (!response.ok) {
+      const serverErrorBody = await response.json();
+
+      throw new FetchError({
+        status: response.status,
+        requestBody: body,
+        endpoint: response.url,
+        errorBody: serverErrorBody,
+        name: serverErrorBody.errorCode,
+        message: serverErrorBody.message || '',
+      });
+    }
+
+    return response;
+  } catch (error) {
+    if (error instanceof FetchError) {
+      throw error;
+    }
+
+    throw new Error(UNHANDLED_ERROR);
   }
-  return response;
 };
