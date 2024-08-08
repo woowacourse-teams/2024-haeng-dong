@@ -1,7 +1,8 @@
-import {BottomSheet, Text, LabelGroupInput, IconButton, Icon, FixedButton} from 'haengdong-design';
+import {BottomSheet, Text, LabelGroupInput, FixedButton} from 'haengdong-design';
+
+import InputAndDeleteButton from '@components/InputAndDeleteButton/InputAndDeleteButton';
 
 import {
-  allMemberListModalInputAndDeleteButtonContainer,
   allMemberListModalLabelGroupInputStyle,
   allMemberListModalStyle,
   allMemberListModalTitleStyle,
@@ -12,19 +13,6 @@ interface SetAllMemberListModalProps {
   setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpenAllMemberListButton: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-const InputAndDeleteButton = () => {
-  return (
-    <div css={allMemberListModalInputAndDeleteButtonContainer}>
-      <div css={{flexGrow: 1}}>
-        <LabelGroupInput.Element elementKey="e" />
-      </div>
-      <IconButton variants="tertiary" size="medium">
-        <Icon iconType="trash" iconColor="onTertiary" />
-      </IconButton>
-    </div>
-  );
-};
 
 const SetAllMemberListModal = ({
   isOpenBottomSheet,
