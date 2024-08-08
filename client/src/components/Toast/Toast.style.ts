@@ -9,7 +9,7 @@ type ToastMarginStyle = {
 };
 
 // 애니메이션 키프레임 정의
-const fadeIn = keyframes`
+const fadeInWithTransformY = keyframes`
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -20,7 +20,7 @@ const fadeIn = keyframes`
   }
 `;
 
-const fadeOut = keyframes`
+const fadeOutWithTransformY = keyframes`
   from {
     opacity: 1;
     transform: translateY(0);
@@ -55,7 +55,7 @@ export const toastStyle = (isVisible: boolean) =>
     borderRadius: '1.25rem',
 
     // 애니메이션 추가
-    animation: `${isVisible ? fadeIn : fadeOut} 0.5s forwards`,
+    animation: `${isVisible ? fadeInWithTransformY : fadeOutWithTransformY} 0.5s forwards`,
   });
 
 export const textStyle = css({
