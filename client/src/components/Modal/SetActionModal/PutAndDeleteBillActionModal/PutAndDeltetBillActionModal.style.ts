@@ -6,7 +6,7 @@ export const bottomSheetStyle = css({
   gap: '1.5rem',
   width: '100%',
   height: '100%',
-  padding: '0 1.5rem',
+  padding: '0 1rem',
 });
 
 export const bottomSheetHeaderStyle = css({
@@ -15,6 +15,7 @@ export const bottomSheetHeaderStyle = css({
   alignContent: 'center',
 
   width: '100%',
+  padding: '0 0.5rem',
 });
 
 export const inputContainerStyle = css({
