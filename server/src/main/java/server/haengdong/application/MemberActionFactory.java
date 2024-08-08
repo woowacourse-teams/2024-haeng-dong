@@ -1,7 +1,6 @@
 package server.haengdong.application;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -48,7 +47,7 @@ public class MemberActionFactory {
 
         long uniqueCount = memberNames.stream().distinct().count();
         if (uniqueCount != memberNames.size()) {
-            throw new HaengdongException(HaengdongErrorCode.DUPLICATED_MEMBER_ACTION);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE);
         }
     }
 

@@ -4,6 +4,7 @@ package server.haengdong.application;
 import java.util.Map;
 import server.haengdong.domain.TokenProvider;
 import server.haengdong.exception.AuthenticationException;
+import server.haengdong.exception.HaengdongErrorCode;
 
 public class AuthService {
 
@@ -30,7 +31,7 @@ public class AuthService {
 
     private void validateToken(String token) {
         if (!tokenProvider.validateToken(token)) {
-            throw new AuthenticationException();
+            throw new AuthenticationException(HaengdongErrorCode.TOKEN_INVALID);
         }
     }
 

@@ -12,11 +12,16 @@ import jakarta.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class MemberAction implements Comparable<MemberAction> {
+
+    public static final int MIN_NAME_LENGTH = 1;
+    public static final int MAX_NAME_LENGTH = 4;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,13 +38,22 @@ public class MemberAction implements Comparable<MemberAction> {
     private Long memberGroupId;
 
     public MemberAction(Action action, String memberName, MemberActionStatus status, Long memberGroupId) {
+        validateMemberName(memberName);
         this.action = action;
         this.memberName = memberName;
         this.status = status;
         this.memberGroupId = memberGroupId;
     }
 
+    private void validateMemberName(String memberName) {
+        int memberLength = memberName.length();
+        if (memberLength < MIN_NAME_LENGTH || memberLength > MAX_NAME_LENGTH) {
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID);
+        }
+    }
+
     public void updateMemberName(String memberName) {
+        validateMemberName(memberName);
         this.memberName = memberName;
     }
 

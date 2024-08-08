@@ -56,10 +56,10 @@ public class CurrentMembers {
 
     public void validate(String memberName, MemberActionStatus memberActionStatus) {
         if (memberActionStatus == MemberActionStatus.IN && members.contains(memberName)) {
-            throw new HaengdongException(HaengdongErrorCode.INVALID_MEMBER_IN_ACTION);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_ALREADY_EXIST);
         }
         if (memberActionStatus == MemberActionStatus.OUT && !members.contains(memberName)) {
-            throw new HaengdongException(HaengdongErrorCode.INVALID_MEMBER_OUT_ACTION);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_EXIST);
         }
     }
 

@@ -56,12 +56,12 @@ public class MemberActionService {
 
     private Event findEvent(String token) {
         return eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
     }
 
     public void deleteMember(String token, String memberName) {
         Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
 
         memberActionRepository.deleteAllByEventAndMemberName(event, memberName);
     }
@@ -69,11 +69,11 @@ public class MemberActionService {
     @Transactional
     public void deleteMemberAction(String token, Long actionId) {
         Event event = eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
         Action action = actionRepository.findByIdAndEvent(actionId, event)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_ACTION));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.ACTION_NOT_FOUND));
         MemberAction memberAction = memberActionRepository.findByAction(action)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.NOT_FOUND_MEMBER_ACTION));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_ACTION_NOT_FOUND));
 
         memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(),
                 memberAction.getSequence());
