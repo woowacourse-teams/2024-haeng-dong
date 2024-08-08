@@ -60,3 +60,14 @@ export const requestPutAllMemberList = async ({
     },
   });
 };
+
+type RequestDeleteAllMemberList = {
+  memberName: string;
+};
+
+export const requestDeleteAllMemberList = async ({eventId, memberName}: WithEventId<RequestDeleteAllMemberList>) => {
+  await requestDelete({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${TEMP_PREFIX}/${eventId}/members/${memberName}`,
+  });
+};
