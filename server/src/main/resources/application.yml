@@ -26,7 +26,7 @@ security:
   jwt:
     token:
       secret-key: skdmeejEKJdkDjklDlkj123DKLJ3kDkeDkDKQMEOD1D90D8dE
-      expire-length: 604800 # 1주일
+      expire-length: 604800000 # 1주일
 
 cookie:
   http-only: false
