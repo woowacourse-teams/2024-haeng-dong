@@ -39,5 +39,14 @@ type ResponseGetAllMemberList = {
 export const requestGetAllMemberList = async ({eventId}: WithEventId) => {
   return requestGet<ResponseGetAllMemberList>({
     endpoint: `${TEMP_PREFIX}/${eventId}/members`,
+
+export type ResponseGetCurrentInMemberList = {
+  members: Array<{name: string}>;
+};
+
+export const requestGetCurrentInMemberList = async (eventId: string) => {
+  return await requestGet<ResponseGetCurrentInMemberList>({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${TEMP_PREFIX}/${eventId}/members/current`,
   });
 };

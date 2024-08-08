@@ -9,7 +9,7 @@ import {useTheme} from '@theme/HDesignProvider';
 
 import IconButton from '../IconButton/IconButton';
 
-import {dragHandleItemStyle, dragHandlerStyle, textStyle} from './DragHandleItem.style';
+import {dragHandleItemStyle, dragHandlerStyle} from './DragHandleItem.style';
 import {DragHandleItemProps} from './DragHandleItem.type';
 
 export const DragHandleItem = ({
@@ -31,12 +31,8 @@ export const DragHandleItem = ({
           </IconButton>
         )}
         <Flex justifyContent="spaceBetween" width="100%">
-          <Text css={textStyle(theme)} size="bodyBold">
-            {prefix}
-          </Text>
-          <Text css={textStyle(theme)} size="body">
-            {suffix}
-          </Text>
+          <Text size="bodyBold">{prefix}</Text>
+          <Text>{suffix}</Text>
         </Flex>
       </div>
     </div>

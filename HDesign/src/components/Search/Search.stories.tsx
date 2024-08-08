@@ -11,20 +11,17 @@ const meta = {
   parameters: {
     // layout: 'centered',
   },
-  argTypes: {
-    value: {
-      description: '',
-      control: {type: 'text'},
-    },
-    inputType: {
-      control: {type: 'radio'},
-    },
-  },
+  decorators: [
+    Story => (
+      <div style={{minHeight: '10rem'}}>
+        <Story />
+      </div>
+    ),
+  ],
   args: {
-    disabled: false,
-    placeholder: 'placeholder',
-    searchTerms: ['todari', 'cookie'],
-    setState: keyword => console.log(keyword),
+    isShowTargetInput: true,
+    matchItems: ['todari', 'cookie'],
+    onMatchItemClick: keyword => alert(keyword),
   },
 } satisfies Meta<typeof Search>;
 
