@@ -4,13 +4,7 @@ import {useTheme} from '@theme/HDesignProvider';
 import Text from '../Text/Text';
 import Flex from '../Flex/Flex';
 
-import {
-  bottomLeftTextStyle,
-  bottomRightTextStyle,
-  containerStyle,
-  topLeftStyle,
-  topRightStyle,
-} from './DragHandleItemContainer.style';
+import {containerStyle} from './DragHandleItemContainer.style';
 import {DragHandleItemContainerProps} from './DragHandleItemContainer.type';
 
 export const DragHandleItemContainer: React.FC<DragHandleItemContainerProps> = ({
@@ -27,19 +21,19 @@ export const DragHandleItemContainer: React.FC<DragHandleItemContainerProps> = (
   return (
     <div css={containerStyle(theme, backgroundColor)} {...htmlProps}>
       <Flex justifyContent="spaceBetween" paddingInline="0.5rem">
-        <Text css={topLeftStyle(theme)} size="captionBold">
+        <Text color="gray" size="captionBold">
           {topLeftText}
         </Text>
-        <Text css={topRightStyle(theme)} size="caption">
+        <Text color="gray" size="caption">
           {topRightText}
         </Text>
       </Flex>
       {children}
       <Flex justifyContent="spaceBetween" paddingInline="0.5rem">
-        <Text css={bottomLeftTextStyle(theme)} size="captionBold">
+        <Text color="gray" size="captionBold">
           {bottomLeftText}
         </Text>
-        <Text css={bottomRightTextStyle(theme)} size="caption">
+        <Text color="gray" size="caption">
           {bottomRightText}
         </Text>
       </Flex>

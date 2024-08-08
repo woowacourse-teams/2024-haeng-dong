@@ -1,13 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import Text from '@components/Text/Text';
-import {
-  descriptionStyle,
-  priceContainerStyle,
-  priceStyle,
-  priceTitleStyle,
-  titleContainerStyle,
-  titleStyle,
-} from '@components/Title/Title.style';
+import {priceContainerStyle, titleContainerStyle} from '@components/Title/Title.style';
 import {TitleProps} from '@components/Title/Title.type';
 
 import {useTheme} from '@theme/HDesignProvider';
@@ -16,20 +9,20 @@ export const Title: React.FC<TitleProps> = ({title, description, price}: TitlePr
   const {theme} = useTheme();
   return (
     <div css={titleContainerStyle(theme)}>
-      <Text css={titleStyle(theme)} size="subTitle">
+      <Text color="black" size="subTitle">
         {title}
       </Text>
       {description && (
-        <Text css={descriptionStyle(theme)} size="caption">
+        <Text color="darkGray" size="caption">
           {description}
         </Text>
       )}
       {price !== undefined && (
         <div css={priceContainerStyle}>
-          <Text css={priceTitleStyle(theme)} size="caption">
+          <Text color="gray" size="caption">
             전체 지출 금액
           </Text>
-          <Text css={priceStyle(theme)}>{price.toLocaleString('ko-kr')}원</Text>
+          <Text color="black">{price.toLocaleString('ko-kr')}원</Text>
         </div>
       )}
     </div>
