@@ -30,7 +30,6 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
   return (
     <div css={style.container}>
       <div css={style.inputGroup}>
-        {/* TODO: (@soha) Search로 변경하기 */}
         <LabelGroupInput labelText="이름" errorText={errorMessage}>
           {inOutAction === 'IN' ? <InMember dynamicProps={dynamicProps} /> : <OutMember dynamicProps={dynamicProps} />}
         </LabelGroupInput>
