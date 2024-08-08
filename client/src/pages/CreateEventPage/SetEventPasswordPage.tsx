@@ -5,6 +5,8 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdon
 import validateEventPassword from '@utils/validate/validateEventPassword';
 import {requestPostNewEvent} from '@apis/request/event';
 
+import useEvent from '@hooks/useEvent';
+
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -13,7 +15,7 @@ const SetEventPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
-
+  const {createNewEvent} = useEvent();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,15 +30,9 @@ const SetEventPasswordPage = () => {
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await requestPostNewEvent({eventName, password: parseInt(password)});
+    const {eventId} = await createNewEvent({eventName, password: parseInt(password)});
 
-    if (response) {
-      const {eventId} = response;
-      navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
-    } else {
-      // TODO: (@weadie)
-      alert('오류님');
-    }
+    navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

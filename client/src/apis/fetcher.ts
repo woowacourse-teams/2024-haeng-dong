@@ -54,8 +54,13 @@ export const requestPut = ({headers = {}, ...args}: RequestProps) => {
 export const requestPost = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
   const response = await fetcher({method: 'POST', headers, ...args});
 
-  const data: T = await response!.json();
-  return data;
+  const contentType = response!.headers.get('Content-Type');
+  if (contentType && contentType.includes('application/json')) {
+    const data: T = await response!.json();
+    return data;
+  }
+
+  return;
 };
 
 export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
@@ -63,6 +68,8 @@ export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
 };
 
 const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: FetcherProps) => {
+  console.log('fetcher');
+  console.log(JSON.stringify(body));
   // const token = generateBasicToken(USER_ID, USER_PASSWORD);
   const options = {
     method,

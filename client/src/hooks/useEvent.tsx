@@ -1,12 +1,12 @@
-import {ResponsePostNewEvent, requestPostNewEvent} from '@apis/request/event';
+import {RequestPostNewEvent, ResponsePostNewEvent, requestPostNewEvent} from '@apis/request/event';
 
 import {useFetch} from '@apis/useFetch';
 
 const useEvent = () => {
   const {fetch} = useFetch();
 
-  const createNewEvent = async ({eventName}: {eventName: string}) => {
-    return await fetch<ResponsePostNewEvent>(() => requestPostNewEvent({eventName}));
+  const createNewEvent = async ({eventName, password}: RequestPostNewEvent) => {
+    return await fetch<ResponsePostNewEvent>(() => requestPostNewEvent({eventName, password}));
   };
 
   return {createNewEvent};

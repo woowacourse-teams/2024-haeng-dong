@@ -17,7 +17,6 @@ const SetEventNamePage = () => {
 
   const submitEventName = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const {eventId} = await createNewEvent({eventName});
 
     navigate(ROUTER_URLS.eventCreatePassword, {state: {eventName}});
   };

@@ -9,10 +9,11 @@ async function enableMocking() {
   return worker.start();
 }
 
-enableMocking().then(() => {
-  ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>,
-  );
-});
+// MSW 모킹을 사용하려면 아래 주석을 해제하고 save해주세요.
+// enableMocking().then(() => {
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
+);
+// });
