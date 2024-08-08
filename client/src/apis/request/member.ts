@@ -2,7 +2,7 @@ import type {MemberType} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
-import {requestPost, requestDelete} from '@apis/fetcher';
+import {requestPost, requestDelete, requestGet} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
 type RequestPostMemberList = {
@@ -29,5 +29,16 @@ export const requestDeleteMemberAction = async ({eventId, actionId}: WithEventId
   await requestDelete({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/member-actions/${actionId}`,
+  });
+};
+
+export type ResponseGetCurrentInMemberList = {
+  members: Array<{name: string}>;
+};
+
+export const requestGetCurrentInMemberList = async (eventId: string) => {
+  return await requestGet<ResponseGetCurrentInMemberList>({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${TEMP_PREFIX}/${eventId}/members/current`,
   });
 };

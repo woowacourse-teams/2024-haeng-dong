@@ -5,6 +5,7 @@ import {FixedButton, LabelGroupInput} from 'haengdong-design';
 import {useStepList} from '@hooks/useStepList/useStepList';
 import validateMemberName from '@utils/validate/validateMemberName';
 
+import useSearchInMemberList from '@hooks/useSearchInMemberList';
 import useDynamicInput from '@hooks/useDynamicInput';
 
 import style from './AddMemberActionListModalContent.style';
@@ -24,6 +25,7 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
     errorMessage,
     canSubmit,
     focusNextInputOnEnter,
+    setInputValueTargetIndex,
   } = useDynamicInput(validateMemberName);
 
   const {updateMemberList} = useStepList();
@@ -33,6 +35,15 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
     setIsOpenBottomSheet(false);
   };
 
+  const {filteredInMemberList, currentInputIndex, handleCurrentInputIndex, searchCurrentInMember, chooseMember} =
+    useSearchInMemberList(setInputValueTargetIndex);
+
+  const validationAndSearchOnChange = (inputIndex: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    handleCurrentInputIndex(inputIndex);
+    handleInputChange(inputIndex, event);
+    searchCurrentInMember(event);
+  };
+
   return (
     <div css={style.container}>
       <div css={style.inputGroup}>
@@ -40,17 +51,26 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
         <LabelGroupInput labelText="이름" errorText={errorMessage}>
           {inputList.map(({value, index}) => (
             <LabelGroupInput.Element
-              key={`${index}`}
+              key={index}
               elementKey={`${index}`}
               type="text"
-              value={`${value}`}
+              value={value}
               ref={el => (inputRefList.current[index] = el)}
-              onChange={e => handleInputChange(index, e)}
+              onChange={e => validationAndSearchOnChange(index, e)}
               onBlur={() => deleteEmptyInputElementOnBlur()}
               onKeyDown={e => focusNextInputOnEnter(e, index)}
               placeholder="이름"
             />
           ))}
+          {filteredInMemberList.length > 0 && (
+            <ul>
+              {filteredInMemberList.map(member => (
+                <li key={member} onClick={() => chooseMember(currentInputIndex, member)}>
+                  {member}
+                </li>
+              ))}
+            </ul>
+          )}
         </LabelGroupInput>
       </div>
       <FixedButton

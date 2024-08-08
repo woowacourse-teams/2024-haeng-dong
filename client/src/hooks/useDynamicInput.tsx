@@ -98,6 +98,17 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     }
   };
 
+  const setInputValueTargetIndex = (index: number, value: string) => {
+    setInputList(prevInputs => {
+      const updatedInputList = [...prevInputs];
+      const targetInput = findInputByIndex(index, updatedInputList);
+
+      targetInput.value = value;
+
+      return updatedInputList;
+    });
+  };
+
   const focusNextInputOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.nativeEvent.isComposing) return;
 
@@ -132,6 +143,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult) => {
     getFilledInputList,
     focusNextInputOnEnter,
     canSubmit,
+    setInputValueTargetIndex,
     // TODO: (@weadie) 네이밍 수정
   };
 };
