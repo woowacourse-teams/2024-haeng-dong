@@ -2,7 +2,7 @@ import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestGet, requestPost} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
-type RequestPostNewEvent = {
+export type RequestPostNewEvent = {
   eventName: string;
   password: number;
 };
