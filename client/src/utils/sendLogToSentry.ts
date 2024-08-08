@@ -3,6 +3,9 @@ import * as Sentry from '@sentry/react';
 import {ServerError} from 'ErrorProvider';
 
 import FetchError from '../errors/FetchError';
+
+import {UNKNOWN_ERROR} from '@constants/errorMessage';
+
 /**
  * level은 아래와 같은 용도에 맞게 지정해줍니다.
  *
@@ -29,14 +32,23 @@ const sendLogToSentry = ({level = 'error', error, errorBody}: SendLogToSentry) =
     scope.setTag('environment', process.env.NODE_ENV);
 
     if (error instanceof FetchError) {
+      console.log('fetchError');
       scope.setTags({
         endpoint: error.endpoint,
         url: window.location.href,
         errorCode,
         errorMessage: message,
         status: error.status,
-        requestBody: JSON.stringify(error.requestBody),
-        method: error.status,
+        // requestBody: JSON.stringify(error.requestBody),
+        method: error.method,
+      });
+
+      Sentry.captureMessage(`${errorCode}`);
+    } else if (error instanceof Error) {
+      scope.setTags({
+        url: window.location.href,
+        errorCode,
+        errorMessage: message,
       });
 
       Sentry.captureMessage(`${errorCode}`);
@@ -44,10 +56,9 @@ const sendLogToSentry = ({level = 'error', error, errorBody}: SendLogToSentry) =
       scope.setTags({
         url: window.location.href,
         errorCode,
-        message: error.message,
-        name: error.name,
+        message: UNKNOWN_ERROR,
+        name: UNKNOWN_ERROR,
       });
-
       Sentry.captureMessage(`${errorCode}`);
     }
   });

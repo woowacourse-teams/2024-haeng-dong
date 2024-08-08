@@ -71,3 +71,14 @@ export const requestDeleteAllMemberList = async ({eventId, memberName}: WithEven
     endpoint: `${TEMP_PREFIX}/${eventId}/members/${memberName}`,
   });
 };
+
+export type ResponseGetCurrentInMemberList = {
+  members: Array<{name: string}>;
+};
+
+export const requestGetCurrentInMemberList = async (eventId: string) => {
+  return await requestGet<ResponseGetCurrentInMemberList>({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${TEMP_PREFIX}/${eventId}/members/current`,
+  });
+};
