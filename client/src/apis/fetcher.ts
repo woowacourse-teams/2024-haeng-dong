@@ -30,6 +30,12 @@ type Options = {
   body?: Body | null;
 };
 
+type ErrorHandlerProps = {
+  url: string;
+  options: Options;
+  body: string;
+};
+
 const API_BASE_URL = process.env.API_BASE_URL;
 
 const objectToQueryString = (params: ObjectQueryParams): string => {
@@ -90,10 +96,10 @@ const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, query
 
   if (queryParams) url += `?${objectToQueryString(queryParams)}`;
 
-  return errorHandler(url, options, body);
+  return errorHandler({url, options, body: JSON.stringify(body)});
 };
 
-const errorHandler = async (url: string, options: Options, body: any) => {
+const errorHandler = async ({url, options, body}: ErrorHandlerProps) => {
   try {
     const response: Response = await fetch(url, options);
 

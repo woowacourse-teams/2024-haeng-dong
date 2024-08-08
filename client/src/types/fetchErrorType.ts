@@ -1,7 +1,7 @@
 import {ServerError} from 'ErrorProvider';
 
 export type FetchErrorType = Error & {
-  requestBody: Body | object | null;
+  requestBody: string;
   status: number;
   endpoint: string;
   errorBody: ServerError;
