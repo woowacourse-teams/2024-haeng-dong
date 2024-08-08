@@ -16,7 +16,7 @@ const AdminPage = () => {
 
   // TODO: (@weadie) eventName이 새로고침시 공간이 없다가 생겨나 레이아웃이 움직이는 문제
   const [eventName, setEventName] = useState(' ');
-  const {getTotalPrice, memberNameList, allMemberList} = useStepList();
+  const {getTotalPrice, allMemberList} = useStepList();
   const {eventId} = useEventId();
 
   // TODO: (@weadie) 아래 로직을 훅으로 분리합니다.
@@ -56,12 +56,12 @@ const AdminPage = () => {
       <section css={receiptStyle}>
         <StepList />
         <FixedButton
-          children={memberNameList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
+          children={allMemberList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
           onClick={() => setIsOpenFixedBottomBottomSheet(prev => !prev)}
         />
         {isOpenFixedButtonBottomSheet && (
           <ModalBasedOnMemberCount
-            memberNameList={memberNameList}
+            allMemberList={allMemberList}
             setOrder={setOrder}
             setIsOpenBottomSheet={setIsOpenFixedBottomBottomSheet}
             isOpenBottomSheet={isOpenFixedButtonBottomSheet}

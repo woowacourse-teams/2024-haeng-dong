@@ -1,7 +1,7 @@
 import {SetAllMemberListModal, SetInitialMemberListModal, SetActionListModal} from '@components/Modal/index';
 
 interface ModalBasedOnMemberCountProps {
-  memberNameList: string[];
+  allMemberList: string[];
   isOpenBottomSheet: boolean;
   isOpenAllMemberListButton: boolean;
   setOrder: React.Dispatch<React.SetStateAction<number>>;
@@ -10,7 +10,7 @@ interface ModalBasedOnMemberCountProps {
 }
 
 const ModalBasedOnMemberCount = ({
-  memberNameList,
+  allMemberList,
   isOpenBottomSheet,
   isOpenAllMemberListButton,
   setOrder,
@@ -26,7 +26,7 @@ const ModalBasedOnMemberCount = ({
       />
     );
   }
-  switch (memberNameList.length) {
+  switch (allMemberList.length) {
     case 0:
       return (
         <SetInitialMemberListModal setIsOpenBottomSheet={setIsOpenBottomSheet} isOpenBottomSheet={isOpenBottomSheet} />
