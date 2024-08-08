@@ -38,12 +38,8 @@ const useSetAllMemberList = ({validateFunc, allMemberList}: UseSetAllMemberListP
         return newList;
       });
     } else {
-      // event.target.value = editedAllMemberList[index];
-      console.log(event.target);
-      console.log(editedAllMemberList[index]);
       setErrorMessage(errorMessage!);
       setCanSubmit(false);
-      // console.log(canSubmit);
     }
   };
 
