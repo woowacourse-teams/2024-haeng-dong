@@ -96,6 +96,7 @@ public class EventController {
                 .secure(cookieProperties.secure())
                 .domain(cookieProperties.domain())
                 .path(cookieProperties.path())
+                .sameSite(cookieProperties.sameSite())
                 .maxAge(cookieProperties.maxAge())
                 .build();
     }

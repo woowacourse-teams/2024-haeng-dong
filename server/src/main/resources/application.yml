@@ -32,6 +32,7 @@ cookie:
   http-only: false
   secure: false
   path: /
+  same-site: none
   max-age: 7D
 
 management:

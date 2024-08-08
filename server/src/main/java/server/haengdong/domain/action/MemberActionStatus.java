@@ -13,7 +13,7 @@ public enum MemberActionStatus {
         return Arrays.stream(MemberActionStatus.values())
                 .filter(s -> s.name().equals(status))
                 .findFirst()
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
-                        "존재하지 않는 인원 변동 액션입니다."));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_ACTION_STATUS_INVALID,
+                        String.format(HaengdongErrorCode.MEMBER_ACTION_STATUS_INVALID.getMessage(), status)));
     }
 }

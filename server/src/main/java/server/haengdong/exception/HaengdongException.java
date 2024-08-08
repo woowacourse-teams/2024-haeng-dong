@@ -9,19 +9,11 @@ public class HaengdongException extends RuntimeException {
     private final String message;
 
     public HaengdongException(HaengdongErrorCode errorCode) {
-        this(errorCode, null);
+        this(errorCode, errorCode.getMessage());
     }
 
     public HaengdongException(HaengdongErrorCode errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;
-    }
-
-    @Override
-    public String getMessage() {
-        if (message == null) {
-            return errorCode.getMessage();
-        }
-        return message;
     }
 }

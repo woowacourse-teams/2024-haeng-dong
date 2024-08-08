@@ -87,7 +87,7 @@ class BillActionControllerTest extends ControllerTestSupport {
     @Test
     void deleteBillAction1() throws Exception {
         String eventId = "이상해토큰";
-        doThrow(new HaengdongException(HaengdongErrorCode.NOT_FOUND_EVENT))
+        doThrow(new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND))
                 .when(billActionService).deleteBillAction(any(String.class), any(Long.class));
 
         mockMvc.perform(delete("/api/events/{eventId}/bill-actions/{actionId}", eventId, 1))

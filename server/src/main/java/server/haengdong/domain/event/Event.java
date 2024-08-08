@@ -17,10 +17,11 @@ import server.haengdong.exception.HaengdongException;
 @Entity
 public class Event {
 
-    private static final int MIN_NAME_LENGTH = 2;
-    private static final int MAX_NAME_LENGTH = 20;
+    public static final int MIN_NAME_LENGTH = 1;
+    public static final int MAX_NAME_LENGTH = 20;
+    public static final int PASSWORD_LENGTH = 4;
     private static final String SPACES = "  ";
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^\\d{4}$");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile(String.format("^\\d{%d}$", PASSWORD_LENGTH));
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,16 +42,16 @@ public class Event {
     }
 
     private void validateName(String name) {
-        int nameLength = name.length();
+        int nameLength = name.trim().length();
         if (nameLength < MIN_NAME_LENGTH || MAX_NAME_LENGTH < nameLength) {
-            throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
+            throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_LENGTH_INVALID,
                     String.format("행사 이름은 %d자 이상 %d자 이하만 입력 가능합니다. 입력한 이름 길이 : %d",
                             MIN_NAME_LENGTH,
                             MAX_NAME_LENGTH,
                             name.length()));
         }
         if (isBlankContinuous(name)) {
-            throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST,
+            throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_CONSECUTIVE_SPACES,
                     String.format("행사 이름에는 공백 문자가 연속될 수 없습니다. 입력한 이름 : %s", name));
         }
     }
@@ -58,7 +59,7 @@ public class Event {
     private void validatePassword(String password) {
         Matcher matcher = PASSWORD_PATTERN.matcher(password);
         if (!matcher.matches()) {
-            throw new HaengdongException(HaengdongErrorCode.BAD_REQUEST, "비밀번호는 4자리 숫자만 가능합니다.");
+            throw new HaengdongException(HaengdongErrorCode.EVENT_PASSWORD_FORMAT_INVALID, "비밀번호는 4자리 숫자만 가능합니다.");
         }
     }
 

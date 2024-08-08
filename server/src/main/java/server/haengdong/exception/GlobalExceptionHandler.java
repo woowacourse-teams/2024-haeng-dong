@@ -16,9 +16,9 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorResponse> authenticationException() {
+    public ResponseEntity<ErrorResponse> authenticationException(AuthenticationException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(ErrorResponse.of(HaengdongErrorCode.UNAUTHORIZED));
+                .body(ErrorResponse.of(e.getErrorCode()));
     }
 
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class, NoResourceFoundException.class})
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining(", "));
 
         return ResponseEntity.badRequest()
-                .body(ErrorResponse.of(HaengdongErrorCode.BAD_REQUEST, errorMessage));
+                .body(ErrorResponse.of(HaengdongErrorCode.REQUEST_EMPTY, errorMessage));
     }
 
     @ExceptionHandler(HaengdongException.class)
