@@ -26,11 +26,13 @@ export const useFetch = () => {
         setError(errorBody);
         captureError(error, navigate);
 
-        throw new Error(errorBody.message); // TODO: (@weadie) 이것때문에 alert가 뜹니다. 빠른 시일 내에 수정 예정
+        // throw new Error(errorBody.message); // TODO: (@weadie) 이것때문에 alert가 뜹니다. 빠른 시일 내에 수정 예정
+      } else {
+        setError({errorCode: UNHANDLED_ERROR, message: JSON.stringify(error)});
+        throw new Error(UNHANDLED_ERROR);
       }
 
-      setError({errorCode: UNHANDLED_ERROR, message: JSON.stringify(error)});
-      throw new Error(UNHANDLED_ERROR);
+      return;
     } finally {
       setLoading(false);
     }
