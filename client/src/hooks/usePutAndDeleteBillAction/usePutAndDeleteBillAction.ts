@@ -90,6 +90,7 @@ const usePutAndDeleteBillAction = (
   const onDelete = async (actionId: number) => {
     await requestDeleteBillAction({eventId, actionId});
     refreshStepList();
+    onClose();
   };
 
   return {
