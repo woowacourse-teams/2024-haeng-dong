@@ -20,6 +20,7 @@ const ModalBasedOnMemberCount = ({
   if (isOpenAllMemberListButton) {
     return (
       <SetAllMemberListModal
+        allMemberList={allMemberList}
         setIsOpenBottomSheet={setIsOpenBottomSheet}
         isOpenBottomSheet={isOpenBottomSheet}
         setIsOpenAllMemberListButton={setIsOpenAllMemberListButton}
