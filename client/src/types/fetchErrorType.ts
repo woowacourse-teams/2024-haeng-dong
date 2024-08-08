@@ -1,5 +1,6 @@
-import {Method} from '@apis/fetcher';
 import {ServerError} from 'ErrorProvider';
+
+import {Method} from '@apis/fetcher';
 
 export type FetchErrorType = Error & {
   requestBody: string;
