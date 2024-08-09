@@ -9,7 +9,7 @@ const MainPage = () => {
   return (
     <MainLayout>
       <TopNav children={<></>} />
-      <Title title="행동대장" description="랜딩페이지입니다." />
+      <Title title="행동대장" description="데모데이 ~~ 시연 ~~~~~! 페이지입니다." />
       <FixedButton onClick={() => navigate(ROUTER_URLS.eventCreateName)}>행사 생성하기</FixedButton>
     </MainLayout>
   );
