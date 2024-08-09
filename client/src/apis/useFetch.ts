@@ -1,14 +1,15 @@
 import {useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 
+import useEventId from '@hooks/useEventId/useEventId';
+
 import sendLogToSentry from '@utils/sendLogToSentry';
 
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {ServerError, useError} from '../ErrorProvider';
 import FetchError from '../errors/FetchError';
-import useEventId from '@hooks/useEventId/useEventId';
-import {ROUTER_URLS} from '@constants/routerUrls';
 
 export const useFetch = () => {
   const {setError, clearError} = useError();

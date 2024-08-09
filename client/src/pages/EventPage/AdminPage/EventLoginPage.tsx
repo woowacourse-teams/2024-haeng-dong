@@ -6,10 +6,10 @@ import validateEventPassword from '@utils/validate/validateEventPassword';
 import useEventId from '@hooks/useEventId/useEventId';
 
 import useAuth from '@hooks/useAuth';
+import useNavSwitch from '@hooks/useNavSwitch';
 
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
-import useNavSwitch from '@hooks/useNavSwitch';
 
 const EventLoginPage = () => {
   const [password, setPassword] = useState('');
