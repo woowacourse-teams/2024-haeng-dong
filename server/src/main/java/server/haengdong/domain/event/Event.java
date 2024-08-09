@@ -71,7 +71,7 @@ public class Event {
         return !this.token.equals(token);
     }
 
-    public boolean isSamePassword(String password) {
-        return this.password.equals(password);
+    public boolean isNotSamePassword(String password) {
+        return !this.password.equals(password);
     }
 }

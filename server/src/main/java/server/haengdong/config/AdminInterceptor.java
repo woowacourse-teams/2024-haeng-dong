@@ -25,6 +25,12 @@ public class AdminInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         log.trace("login request = {}", request.getRequestURI());
 
+        String requestURI = request.getRequestURI();
+
+        if (requestURI.endsWith("/login")) {
+            return true; // 요청을 계속 진행하도록 허용
+        }
+
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
         if (HttpMethod.GET.equals(method) || HttpMethod.OPTIONS.equals(method)) {
             return true;
