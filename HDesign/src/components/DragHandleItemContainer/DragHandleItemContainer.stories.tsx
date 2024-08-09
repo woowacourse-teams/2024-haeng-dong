@@ -59,6 +59,10 @@ const meta = {
     topRightText: '8명',
     bottomLeftText: '총액',
     bottomRightText: '214,000 원',
+    onTopLeftTextClick: () => alert('왼쪽 위'),
+    onTopRightTextClick: () => alert('오른쪽 위'),
+    onBottomLeftTextClick: () => alert('왼쪽 아래'),
+    onBottomRightTextClick: () => alert('오른쪽 아래'),
     backgroundColor: 'white',
     children: (
       <>

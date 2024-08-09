@@ -13,3 +13,22 @@ export const containerStyle = (theme: Theme, backgroundColor: ColorKeys) =>
     borderRadius: '0.75rem',
     backgroundColor: theme.colors[backgroundColor],
   });
+
+export const topRightTextStyle = (theme: Theme) =>
+  css({
+    position: 'relative',
+    cursor: 'pointer',
+
+    '&::after': {
+      position: 'absolute',
+      bottom: '0.125rem',
+      left: 0,
+
+      width: '100%',
+      height: '0.03125rem',
+
+      backgroundColor: theme.colors.gray,
+
+      content: "''",
+    },
+  });
