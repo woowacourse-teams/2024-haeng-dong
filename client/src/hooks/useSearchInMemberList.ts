@@ -43,6 +43,10 @@ const useSearchInMemberList = (
     if (keyword.trim() === '') return [];
 
     const MatchItems = currentInMemberList.map(({name}) => name);
+    console.log(
+      MatchItems.filter(matchItem => matchItem.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1),
+    );
+
     return MatchItems.filter(
       matchItem => matchItem.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1,
     ).slice(0, 3);
