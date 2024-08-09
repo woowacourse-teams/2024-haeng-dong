@@ -19,7 +19,7 @@ export const requestAuthentication = async ({eventId}: RequestAuthentication) =>
 };
 
 export const requestToken = async ({eventId, password}: RequestToken) => {
-  return await requestPostWithResponse({
+  await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/login`,
     body: {

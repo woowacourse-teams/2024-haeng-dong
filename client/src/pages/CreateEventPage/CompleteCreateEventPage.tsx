@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {Button, FixedButton, Input, MainLayout, Text, Title, TopNav} from 'haengdong-design';
+import {Button, FixedButton, Flex, Input, MainLayout, Text, Title, TopNav} from 'haengdong-design';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {css} from '@emotion/react';
 
@@ -30,10 +30,15 @@ const CompleteCreateEventPage = () => {
   return (
     <MainLayout>
       <TopNav children={<></>} />
-      <Title title="행사 개시" description="행사가 성공적으로 개시됐어요 :)" />
+      <Title
+        title="행사 개시"
+        description="행사가 성공적으로 개시됐어요 :) 행사 링크를 통해서 지출 내역 공유와 참여자 관리가 가능해요."
+      />
       <div css={css({display: 'flex', flexDirection: 'column', gap: '1rem', margin: '0 1rem'})}>
-        <Text textColor="gray">행사 링크를 통해서 지출 내역 공유와 참여자 관리가 가능해요.</Text>
-        <Text textColor="primary">관리를 위해서 행사 링크를 복사 후 보관해 주세요.</Text>
+        <Flex flexDirection="column">
+          <Text textColor="gray">링크가 없으면 페이지에 접근할 수 없어요.</Text>
+          <Text textColor="primary">관리를 위해서 행사 링크를 복사 후 보관해 주세요.</Text>
+        </Flex>
         <Input value={`haengdong.pro${ROUTER_URLS.event}/${url}/home`} disabled />
 
         <CopyToClipboard
@@ -43,8 +48,8 @@ const CompleteCreateEventPage = () => {
               showingTime: 3000,
               message: '링크가 복사되었어요 :) \n링크를 절대 분실하지 마세요!',
               type: 'confirm',
-              position: 'top',
-              top: '2rem',
+              position: 'bottom',
+              bottom: '14rem',
             })
           }
         >

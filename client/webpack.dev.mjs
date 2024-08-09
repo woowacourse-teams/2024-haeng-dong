@@ -3,7 +3,6 @@ import {merge} from 'webpack-merge';
 import Dotenv from 'dotenv-webpack';
 import common from './webpack.common.mjs';
 import {fileURLToPath} from 'url';
-import {sentryWebpackPlugin} from '@sentry/webpack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

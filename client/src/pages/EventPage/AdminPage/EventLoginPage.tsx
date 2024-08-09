@@ -1,19 +1,19 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
+import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back, Switch} from 'haengdong-design';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
-import {requestPostNewEvent} from '@apis/request/event';
 import useEventId from '@hooks/useEventId/useEventId';
 
-import useEvent from '@hooks/useEvent';
 import useAuth from '@hooks/useAuth';
+import useNavSwitch from '@hooks/useNavSwitch';
 
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const EventLoginPage = () => {
   const [password, setPassword] = useState('');
+  const {nav, paths, onChange} = useNavSwitch();
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
@@ -45,14 +45,16 @@ const EventLoginPage = () => {
       setErrorMessage(validation.errorMessage ?? '');
     }
   };
+
   return (
     <MainLayout>
       <TopNav>
-        <Back />
+        <Switch value={nav} values={paths} onChange={onChange} />
+        {/* <Back /> */}
       </TopNav>
       <Title
         title="행사 비밀번호 입력"
-        description="관리를 위해선 비밀번호가 필요해요. \n행사 생성 시 설정한 4 자리의 숫자 비밀번호를 입력해 주세요."
+        description="관리를 위해선 비밀번호가 필요해요. 행사 생성 시 설정한 4 자리의 숫자 비밀번호를 입력해 주세요."
       />
       <form onSubmit={submitPassword} style={{padding: '0 1rem'}}>
         <LabelInput
