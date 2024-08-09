@@ -18,7 +18,7 @@ import server.haengdong.application.EventService;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
-import server.haengdong.presentation.request.MemberUpdateRequest;
+import server.haengdong.presentation.request.MemberNamesUpdateRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventResponse;
 import server.haengdong.presentation.response.MembersResponse;
@@ -69,13 +69,12 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/api/events/{eventId}/members/{memberName}")
+    @PutMapping("/api/events/{eventId}/members/nameChange")
     public ResponseEntity<Void> updateMember(
             @PathVariable("eventId") String token,
-            @PathVariable("memberName") String memberName,
-            @Valid @RequestBody MemberUpdateRequest request
+            @Valid @RequestBody MemberNamesUpdateRequest request
     ) {
-        eventService.updateMember(token, memberName, request.toAppRequest());
+        eventService.updateMember(token, request.toAppRequest());
 
         return ResponseEntity.ok().build();
     }
