@@ -288,7 +288,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void authenticateTest() throws Exception {
         String token = "TOKEN";
-        mockMvc.perform(get("/api/events/{eventId}/auth", token)
+        mockMvc.perform(post("/api/events/{eventId}/auth", token)
                                 .cookie(EVENT_COOKIE))
                 .andDo(print())
                 .andExpect(status().isOk())
