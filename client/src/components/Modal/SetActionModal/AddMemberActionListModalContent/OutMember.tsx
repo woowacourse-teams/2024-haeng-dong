@@ -27,12 +27,12 @@ const OutMember = ({dynamicProps}: OutMemberProps) => {
 
   return inputList.map(({value, index}) => (
     <Search
+      key={`${value}-${index}`}
       isShowTargetInput={currentInputIndex === index}
       matchItems={filteredInMemberList}
       onMatchItemClick={(term: string) => chooseMember(currentInputIndex, term)}
     >
       <LabelGroupInput.Element
-        key={index}
         elementKey={`${index}`}
         type="text"
         value={value}
