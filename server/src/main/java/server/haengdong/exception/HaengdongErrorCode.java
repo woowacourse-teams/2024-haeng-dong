@@ -53,6 +53,7 @@ public enum HaengdongErrorCode {
     /* System */,
 
     MESSAGE_NOT_READABLE("읽을 수 없는 요청입니다."),
+    REQUEST_METHOD_NOT_SUPPORTED("지원하지 않는 요청 메서드입니다."),
     NO_RESOURCE_REQUEST("존재하지 않는 자원입니다."),
     INTERNAL_SERVER_ERROR("서버 내부에서 에러가 발생했습니다.");
 
