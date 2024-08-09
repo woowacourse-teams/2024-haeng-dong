@@ -36,8 +36,6 @@ public class EventController {
 
     @PostMapping("/api/events")
     public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
-        log.error("################### 안녕하세요. CI/CD 테스트입니다. ###################");
-
         EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
 
         String jwtToken = authService.createToken(eventResponse.eventId());
