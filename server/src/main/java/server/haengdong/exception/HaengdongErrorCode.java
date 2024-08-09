@@ -25,6 +25,7 @@ public enum HaengdongErrorCode {
     MEMBER_NAME_DUPLICATE("중복된 행사 참여 인원 이름이 존재합니다."),
     MEMBER_NOT_EXIST("현재 참여하고 있지 않는 인원이 존재합니다."),
     MEMBER_ALREADY_EXIST("현재 참여하고 있는 인원이 존재합니다."),
+    MEMBER_NAME_CHANGE_DUPLICATE("중복된 참여 인원 이름 변경 요청이 존재합니다."),
 
     MEMBER_ACTION_NOT_FOUND("존재하지 않는 멤버 액션입니다."),
     MEMBER_ACTION_STATUS_INVALID("멤버 액션은 IN, OUT만 가능합니다. 입력한 멤버 액션: %s"),
