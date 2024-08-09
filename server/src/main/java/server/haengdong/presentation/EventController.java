@@ -2,6 +2,7 @@ package server.haengdong.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -17,12 +18,13 @@ import server.haengdong.application.EventService;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
-import server.haengdong.presentation.request.MemberUpdateRequest;
+import server.haengdong.presentation.request.MemberNamesUpdateRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventResponse;
 import server.haengdong.presentation.response.MembersResponse;
 import server.haengdong.presentation.response.StepsResponse;
 
+@Slf4j
 @RequiredArgsConstructor
 @EnableConfigurationProperties(CookieProperties.class)
 @RestController
@@ -34,6 +36,8 @@ public class EventController {
 
     @PostMapping("/api/events")
     public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
+        log.error("################### 안녕하세요. CI/CD 테스트입니다. ###################");
+
         EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
 
         String jwtToken = authService.createToken(eventResponse.eventId());
@@ -65,13 +69,12 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/api/events/{eventId}/members/{memberName}")
+    @PutMapping("/api/events/{eventId}/members/nameChange")
     public ResponseEntity<Void> updateMember(
             @PathVariable("eventId") String token,
-            @PathVariable("memberName") String memberName,
-            @Valid @RequestBody MemberUpdateRequest request
+            @Valid @RequestBody MemberNamesUpdateRequest request
     ) {
-        eventService.updateMember(token, memberName, request.toAppRequest());
+        eventService.updateMember(token, request.toAppRequest());
 
         return ResponseEntity.ok().build();
     }

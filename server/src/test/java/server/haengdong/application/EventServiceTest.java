@@ -14,7 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import server.haengdong.application.request.EventAppRequest;
-import server.haengdong.application.request.MemberUpdateAppRequest;
+import server.haengdong.application.request.MemberNameUpdateAppRequest;
+import server.haengdong.application.request.MemberNamesUpdateAppRequest;
 import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
@@ -119,7 +120,7 @@ class EventServiceTest extends ServiceTestSupport {
         assertThat(membersAppResponse.memberNames()).containsExactlyInAnyOrder("토다리", "쿠키");
     }
 
-    @DisplayName("행사 참여 인원의 이름을 변경한다.")
+    @DisplayName("행사 참여 인원들의 이름을 변경한다.")
     @Test
     void updateMember() {
         Event event = Fixture.EVENT1;
@@ -134,13 +135,16 @@ class EventServiceTest extends ServiceTestSupport {
                 memberAction1, memberAction2, memberAction3, memberAction4, memberAction5, memberAction6
         ));
 
-        eventService.updateMember(event.getToken(), "쿠키", new MemberUpdateAppRequest("쿡쿡"));
+        eventService.updateMember(event.getToken(), new MemberNamesUpdateAppRequest(List.of(
+                new MemberNameUpdateAppRequest("쿠키", "쿡쿡"),
+                new MemberNameUpdateAppRequest("토다리", "토쟁이")
+        )));
 
         List<MemberAction> foundMemberActions = memberActionRepository.findAllByEvent(event);
         assertThat(foundMemberActions)
                 .extracting(MemberAction::getId, MemberAction::getMemberName)
                 .contains(
-                        tuple(memberAction1.getId(), "토다리"),
+                        tuple(memberAction1.getId(), "토쟁이"),
                         tuple(memberAction2.getId(), "쿡쿡"),
                         tuple(memberAction3.getId(), "웨디"),
                         tuple(memberAction4.getId(), "쿡쿡"),
@@ -149,7 +153,7 @@ class EventServiceTest extends ServiceTestSupport {
                 );
     }
 
-    @DisplayName("참여 인원 이름을 이미 존재하는 행사 참여 인원과 동일한 이름으로 변경할 수 없다.")
+    @DisplayName("이미 존재하는 인원의 이름으로 변경할 수 없다.")
     @Test
     void updateMember1() {
         Event event = Fixture.EVENT1;
@@ -159,7 +163,69 @@ class EventServiceTest extends ServiceTestSupport {
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
-        assertThatThrownBy(() -> eventService.updateMember(event.getToken(), "쿠키", new MemberUpdateAppRequest("토다리")))
+        MemberNamesUpdateAppRequest appRequest = new MemberNamesUpdateAppRequest(List.of(
+                new MemberNameUpdateAppRequest("쿠키", "쿡쿡"),
+                new MemberNameUpdateAppRequest("웨디", "토다리")
+        ));
+
+        assertThatThrownBy(() -> eventService.updateMember(event.getToken(), appRequest))
+                .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("존재하지 않는 인원은 변경할 수 없다.")
+    @Test
+    void updateMember2() {
+        Event event = Fixture.EVENT1;
+        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
+        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        eventRepository.save(event);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
+
+        MemberNamesUpdateAppRequest appRequest = new MemberNamesUpdateAppRequest(List.of(
+                new MemberNameUpdateAppRequest("쿡쿡", "토쟁이"),
+                new MemberNameUpdateAppRequest("웨디", "말복")
+        ));
+
+        assertThatThrownBy(() -> eventService.updateMember(event.getToken(), appRequest))
+                .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("변경 전 참여 인원 이름이 중복될 수 없다.")
+    @Test
+    void updateMember3() {
+        Event event = Fixture.EVENT1;
+        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
+        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        eventRepository.save(event);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
+
+        MemberNamesUpdateAppRequest appRequest = new MemberNamesUpdateAppRequest(List.of(
+                new MemberNameUpdateAppRequest("쿠키", "쿡쿡"),
+                new MemberNameUpdateAppRequest("쿠키", "토쟁이")
+        ));
+
+        assertThatThrownBy(() -> eventService.updateMember(event.getToken(), appRequest))
+                .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("변경 후 참여 인원 이름이 중복될 수 없다.")
+    @Test
+    void updateMember4() {
+        Event event = Fixture.EVENT1;
+        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
+        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        eventRepository.save(event);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
+
+        MemberNamesUpdateAppRequest appRequest = new MemberNamesUpdateAppRequest(List.of(
+                new MemberNameUpdateAppRequest("쿠키", "쿡쿡"),
+                new MemberNameUpdateAppRequest("토다리", "쿡쿡")
+        ));
+
+        assertThatThrownBy(() -> eventService.updateMember(event.getToken(), appRequest))
                 .isInstanceOf(HaengdongException.class);
     }
 }
