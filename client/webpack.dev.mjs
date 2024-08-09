@@ -29,5 +29,10 @@ export default merge(common, {
     new Dotenv({
       path: '.env.dev',
     }),
+    sentryWebpackPlugin({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: 'wtc-o6',
+      project: 'javascript-react',
+    }),
   ],
 });
