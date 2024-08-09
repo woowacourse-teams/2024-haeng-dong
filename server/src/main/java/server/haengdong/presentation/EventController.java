@@ -2,6 +2,7 @@ package server.haengdong.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -23,6 +24,7 @@ import server.haengdong.presentation.response.EventResponse;
 import server.haengdong.presentation.response.MembersResponse;
 import server.haengdong.presentation.response.StepsResponse;
 
+@Slf4j
 @RequiredArgsConstructor
 @EnableConfigurationProperties(CookieProperties.class)
 @RestController
@@ -34,6 +36,8 @@ public class EventController {
 
     @PostMapping("/api/events")
     public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
+        log.error("################### 안녕하세요. CI/CD 테스트입니다. ###################");
+
         EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
 
         String jwtToken = authService.createToken(eventResponse.eventId());
