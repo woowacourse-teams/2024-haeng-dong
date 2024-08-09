@@ -21,9 +21,9 @@ const Search = ({isShowTargetInput, matchItems, onMatchItemClick, children}: Rea
         <ul css={searchTermsStyle(theme)}>
           <Flex flexDirection="column" gap="0.5rem">
             {matchItems.map((matchItem, index) => (
-              <li key={`${matchItems}-${index}`}>
+              <li key={`${matchItem}-${index}`}>
                 <button type="button" css={searchTermStyle(theme)} onClick={() => onMatchItemClick(matchItem)}>
-                  {matchItems}
+                  {matchItem}
                 </button>
               </li>
             ))}
