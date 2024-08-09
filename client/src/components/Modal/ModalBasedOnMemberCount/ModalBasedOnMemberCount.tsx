@@ -4,7 +4,6 @@ interface ModalBasedOnMemberCountProps {
   allMemberList: string[];
   isOpenBottomSheet: boolean;
   isOpenAllMemberListButton: boolean;
-  setOrder: React.Dispatch<React.SetStateAction<number>>;
   setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpenAllMemberListButton: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -13,7 +12,6 @@ const ModalBasedOnMemberCount = ({
   allMemberList,
   isOpenBottomSheet,
   isOpenAllMemberListButton,
-  setOrder,
   setIsOpenBottomSheet,
   setIsOpenAllMemberListButton,
 }: ModalBasedOnMemberCountProps) => {
@@ -34,13 +32,7 @@ const ModalBasedOnMemberCount = ({
       );
 
     default:
-      return (
-        <SetActionListModal
-          setOrder={setOrder}
-          setIsOpenBottomSheet={setIsOpenBottomSheet}
-          isOpenBottomSheet={isOpenBottomSheet}
-        />
-      );
+      return <SetActionListModal setIsOpenBottomSheet={setIsOpenBottomSheet} isOpenBottomSheet={isOpenBottomSheet} />;
   }
 };
 

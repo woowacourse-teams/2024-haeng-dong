@@ -1,7 +1,9 @@
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
+import {useOutletContext} from 'react-router-dom';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
 import validatePurchase from '@utils/validate/validatePurchase';
+import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
 import useDynamicBillActionInput from '@hooks/useDynamicBillActionInput';
 
@@ -9,10 +11,9 @@ import style from './AddBillActionListModalContent.style';
 
 interface AddBillActionListModalContentProps {
   setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AddBillActionListModalContent = ({setIsOpenBottomSheet, setOrder}: AddBillActionListModalContentProps) => {
+const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionListModalContentProps) => {
   const {
     inputPairList,
     inputRefList,
@@ -22,6 +23,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet, setOrder}: AddBill
     focusNextInputOnEnter,
   } = useDynamicBillActionInput(validatePurchase);
   const {addBill} = useStepList();
+  const {setOrder} = useOutletContext<EventPageContextProps>();
 
   const handleSetPurchaseSubmit = () => {
     setOrder(prev => prev + 1);
