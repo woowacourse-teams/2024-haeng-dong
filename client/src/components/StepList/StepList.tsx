@@ -11,7 +11,7 @@ const StepList = () => {
   return (
     <Flex flexDirection="column" gap="0.5rem" paddingInline="0.5rem">
       {stepList.map((step, index) => (
-        <Step step={step} key={`${step.stepName}${index}`}></Step>
+        <Step step={step} key={`${step.stepName}${index}`} />
       ))}
     </Flex>
   );
