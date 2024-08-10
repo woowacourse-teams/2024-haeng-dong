@@ -7,6 +7,8 @@ import useEventId from '@hooks/useEventId/useEventId';
 import {requestDeleteMemberAction} from '@apis/request/member';
 import {useStepList} from '@hooks/useStepList/useStepList';
 
+import {useFetch} from '@apis/useFetch';
+
 const useDeleteMemberAction = (
   memberActionList: MemberAction[],
   setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>,
@@ -15,23 +17,22 @@ const useDeleteMemberAction = (
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
   const {eventId} = useEventId();
   const {showToast} = useToast();
+  const {fetch} = useFetch();
 
   const deleteMemberAction = async (actionId: number) => {
-    try {
-      await requestDeleteMemberAction({actionId, eventId});
-    } catch (error) {
-      // TODO: (@cookie): 에러처리 백엔드에 맞게 나중에 메시지 설정
-      // 원래는 백엔드가 만들어준 에러토큰을 이용해서 나눠서 보여주는 것이 맞지만 우리가 에러처리를 아무곳에서도 하지않아서 후추
-      showToast({
-        isClickToClose: true,
-        message: '멤버 삭제가 되지 않았어요 :(',
-        showingTime: 3000,
-        type: 'error',
-        bottom: '160px',
-      });
-    }
+    await fetch({
+      queryFunction: () => requestDeleteMemberAction({actionId, eventId}),
+      onSuccess: () => {
+        refreshStepList();
+        setIsBottomSheetOpened(false);
+      },
+      onError: () => {
+        setAliveActionList(memberActionList);
+      },
+    });
   };
 
+  // TODO: (@cookie: 추후에 반복문으로 delete하는 것이 아니라 한 번에 모아서 delete 처리하기 (backend에 문의))
   const deleteMemberActionList = async () => {
     const aliveActionIdList = aliveActionList.map(({actionId}) => actionId);
     const deleteMemberActionIdList = memberActionList
@@ -41,9 +42,6 @@ const useDeleteMemberAction = (
     for (const deleteMemberActionId of deleteMemberActionIdList) {
       await deleteMemberAction(deleteMemberActionId);
     }
-
-    refreshStepList();
-    setIsBottomSheetOpened(false);
   };
 
   const addDeleteMemberAction = (memberAction: MemberAction) => {
