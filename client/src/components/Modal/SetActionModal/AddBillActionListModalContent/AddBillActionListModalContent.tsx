@@ -1,9 +1,7 @@
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
-import {useOutletContext} from 'react-router-dom';
 
 import {useStepList} from '@hooks/useStepList/useStepList';
 import validatePurchase from '@utils/validate/validatePurchase';
-import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
 import useDynamicBillActionInput from '@hooks/useDynamicBillActionInput';
 
@@ -23,11 +21,8 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
     focusNextInputOnEnter,
   } = useDynamicBillActionInput(validatePurchase);
   const {addBill} = useStepList();
-  const {setOrder} = useOutletContext<EventPageContextProps>();
 
   const handleSetPurchaseSubmit = () => {
-    setOrder(prev => prev + 1);
-
     // TODO: (@weadie) 요청 실패시 오류 핸들 필요
     addBill(getFilledInputPairList().map(({title, price}) => ({title, price: Number(price)}))); // TODO: (@weadie) DTO같은게 다이내믹에 필요할까?
     setIsOpenBottomSheet(false);

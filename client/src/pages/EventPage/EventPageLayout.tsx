@@ -10,8 +10,6 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 export type EventPageContextProps = {
   isAdmin: boolean;
-  order: number;
-  setOrder: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const EventPageLayout = () => {
@@ -22,8 +20,6 @@ const EventPageLayout = () => {
 
   const outletContext: EventPageContextProps = {
     isAdmin,
-    order,
-    setOrder,
   };
 
   return (

@@ -15,11 +15,11 @@ interface BillStepItemProps {
 }
 
 const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, setIsOpenBottomSheet}) => {
-  const {isAdmin, order} = useOutletContext<EventPageContextProps>();
+  const {isAdmin} = useOutletContext<EventPageContextProps>();
   const [clickedIndex, setClickedIndex] = useState(-1);
   const [isOpenMemberListInBillStep, setIsOpenMemberListInBillStep] = useState(false);
 
-  const stepName = `${order}차`;
+  const stepName = `차`;
   const totalPrice = step.actions.reduce((acc, cur) => acc + cur.price, 0);
 
   const handleDragHandleItemClick = (index: number) => {
