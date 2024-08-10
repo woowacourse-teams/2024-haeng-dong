@@ -24,8 +24,10 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
 
   const handleSetPurchaseSubmit = () => {
     // TODO: (@weadie) 요청 실패시 오류 핸들 필요
-    addBill(getFilledInputPairList().map(({title, price}) => ({title, price: Number(price)}))); // TODO: (@weadie) DTO같은게 다이내믹에 필요할까?
-    setIsOpenBottomSheet(false);
+    addBill(
+      getFilledInputPairList().map(({title, price}) => ({title, price: Number(price)})),
+      () => setIsOpenBottomSheet(false),
+    ); // TODO: (@weadie) DTO같은게 다이내믹에 필요할까?
   };
 
   return (

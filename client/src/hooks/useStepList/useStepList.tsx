@@ -13,7 +13,7 @@ interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
   allMemberList: string[];
   getTotalPrice: () => number;
-  addBill: (billList: Bill[]) => Promise<void>;
+  addBill: (billList: Bill[], onSuccess: () => void) => Promise<void>;
   updateMemberList: ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => Promise<void>;
   refreshStepList: () => Promise<void>;
 }
@@ -58,11 +58,15 @@ const StepListProvider = ({children}: PropsWithChildren) => {
     setAllMemberList(allMembers.memberNames);
   };
 
-  const addBill = async (billList: Bill[]) => {
+  const addBill = async (billList: Bill[], onSuccess: () => void) => {
     // TODO: (@weadie) 에러 처리
-    await fetch({queryFunction: () => requestPostBillList({eventId, billList})});
-
-    refreshStepList();
+    await fetch({
+      queryFunction: () => requestPostBillList({eventId, billList}),
+      onSuccess: () => {
+        refreshStepList();
+        onSuccess();
+      },
+    });
   };
 
   const calculateBillSum = (actions: BillAction[]) => {
