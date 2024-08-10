@@ -6,7 +6,7 @@ const useEvent = () => {
   const {fetch} = useFetch();
 
   const createNewEvent = async ({eventName, password}: RequestPostNewEvent) => {
-    return await fetch<ResponsePostNewEvent>(() => requestPostNewEvent({eventName, password}));
+    return await fetch<ResponsePostNewEvent>({queryFunction: () => requestPostNewEvent({eventName, password})});
   };
 
   return {createNewEvent};

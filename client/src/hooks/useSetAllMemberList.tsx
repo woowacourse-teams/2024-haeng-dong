@@ -80,11 +80,13 @@ const useSetAllMemberList = ({
   const handleClickDeleteButton = async (index: number) => {
     const memberToDelete = editedAllMemberList[index];
 
-    await fetch(() => requestDeleteAllMemberList({eventId, memberName: memberToDelete}));
-
-    setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-
-    refreshStepList();
+    await fetch({
+      queryFunction: () => requestDeleteAllMemberList({eventId, memberName: memberToDelete}),
+      onSuccess: () => {
+        setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+        refreshStepList();
+      },
+    });
   };
 
   const handlePutAllMemberList = async () => {
@@ -97,11 +99,13 @@ const useSetAllMemberList = ({
       })
       .filter(item => item !== null); // null인 항목을 필터링하여 제거
 
-    await fetch(() => requestPutAllMemberList({eventId, members: editedMemberName}));
-
-    refreshStepList();
-
-    handleCloseAllMemberListModal();
+    await fetch({
+      queryFunction: () => requestPutAllMemberList({eventId, members: editedMemberName}),
+      onSuccess: () => {
+        refreshStepList();
+        handleCloseAllMemberListModal();
+      },
+    });
   };
 
   const changeErrorIndex = (index: number) => {
