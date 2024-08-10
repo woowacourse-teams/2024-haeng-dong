@@ -59,7 +59,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
         </LabelGroupInput>
       </div>
       <FixedButton
-        // disabled={!(inputPairs.length - 1)}
+        disabled={!(inputPairList.length - 1)}
         variants={'primary'}
         children={'추가하기'}
         onClick={handleSetPurchaseSubmit}
