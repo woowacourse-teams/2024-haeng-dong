@@ -3,8 +3,8 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back, Switch} from 'haengdong-design';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
-import useEventId from '@hooks/useEventId/useEventId';
 
+import useEventId from '@hooks/useEventId';
 import useAuth from '@hooks/useAuth';
 import useNavSwitch from '@hooks/useNavSwitch';
 
