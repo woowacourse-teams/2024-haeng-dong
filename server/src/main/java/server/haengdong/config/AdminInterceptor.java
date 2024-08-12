@@ -23,7 +23,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.trace("login request = {}", request.getRequestURI());
+        log.debug("login request = {}", request.getRequestURI());
 
         String requestURI = request.getRequestURI();
 
