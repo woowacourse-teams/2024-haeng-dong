@@ -5,8 +5,8 @@ import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from 
 
 import {useFetch} from '@apis/useFetch';
 
-import useEventId from './useEventId/useEventId';
-import {useStepList} from './useStepList/useStepList';
+import useEventId from './useEventId';
+import {useStepList} from './useStepList';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;

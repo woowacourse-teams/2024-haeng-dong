@@ -4,7 +4,7 @@ import {requestGetCurrentInMemberList} from '@apis/request/member';
 
 import {useFetch} from '@apis/useFetch';
 
-import useEventId from './useEventId/useEventId';
+import useEventId from './useEventId';
 
 export type ReturnUseSearchInMemberList = {
   currentInputIndex: number;
