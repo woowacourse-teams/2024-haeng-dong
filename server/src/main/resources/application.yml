@@ -40,7 +40,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: logfile, metrics
+        include: health, metrics, logfile
 
 logging:
   level:
