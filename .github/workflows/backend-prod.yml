@@ -71,4 +71,4 @@ jobs:
         run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
       - name: Docker run
-        run: sudo docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod -v /home/ubuntu/log:/app/logs --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
+        run: sudo docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod -v log-volume:/app/logs --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
