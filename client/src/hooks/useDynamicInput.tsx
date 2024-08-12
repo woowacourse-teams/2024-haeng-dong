@@ -42,7 +42,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     const {isValid: isValidInput, errorMessage: validationResultMessage} = validateFunc(value);
 
     // TODO: (@weadie) 가독성이 안좋다는 리뷰. 함수 분리필요
-    if (isLastInputFilled(index, value)) {
+    if (isLastInputFilled(index, value) && value.trim().length !== 0) {
       // 마지막 인풋이 한 자라도 채워진다면 새로운 인풋을 생성해 간편한 다음 입력을 유도합니다.
       setInputList(prevInputs => {
         const updatedInputList = [...prevInputs];
