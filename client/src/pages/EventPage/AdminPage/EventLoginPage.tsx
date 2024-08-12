@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
-import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back, Switch} from 'haengdong-design';
+import {useNavigate} from 'react-router-dom';
+import {FixedButton, MainLayout, LabelInput, Title, TopNav, Switch} from 'haengdong-design';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
@@ -18,13 +18,13 @@ const EventLoginPage = () => {
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
   const {eventId} = useEventId();
-  const {postLogin} = useAuth();
+  const {loginUser} = useAuth();
 
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      await postLogin({eventId, password});
+      await loginUser({eventId, password});
       navigate(`${ROUTER_URLS.event}/${eventId}/admin`);
     } catch (error) {
       setErrorMessage('잘못된 비밀번호에요');

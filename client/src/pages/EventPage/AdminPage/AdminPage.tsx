@@ -22,7 +22,7 @@ const AdminPage = () => {
   const [eventName, setEventName] = useState(' ');
   const {getTotalPrice, allMemberList} = useStepList();
   const {eventId} = useEventId();
-  const {postAuthentication} = useAuth();
+  const {checkAuthentication} = useAuth();
   const navigate = useNavigate();
 
   // TODO: (@weadie) 아래 로직을 훅으로 분리합니다.
@@ -31,7 +31,7 @@ const AdminPage = () => {
 
     const postAuth = async () => {
       try {
-        await postAuthentication({eventId: eventId});
+        await checkAuthentication({eventId: eventId});
       } catch (error) {
         console.log(error);
         navigate(`${ROUTER_URLS.event}/${eventId}/login`);

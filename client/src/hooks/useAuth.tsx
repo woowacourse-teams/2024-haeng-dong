@@ -1,19 +1,19 @@
-import {RequestAuthentication, requestAuthentication, RequestToken, requestToken} from '@apis/request/auth';
+import {RequestAuthentication, RequestToken, requestPostAuthentication, requestPostToken} from '@apis/request/auth';
 
 import {useFetch} from '@apis/useFetch';
 
 const useAuth = () => {
   const {fetch} = useFetch();
 
-  const postAuthentication = async ({eventId}: RequestAuthentication) => {
-    return await fetch({queryFunction: () => requestAuthentication({eventId})});
+  const checkAuthentication = async ({eventId}: RequestAuthentication) => {
+    return await fetch({queryFunction: () => requestPostAuthentication({eventId})});
   };
 
-  const postLogin = async ({eventId, password}: RequestToken) => {
-    return await fetch({queryFunction: () => requestToken({eventId, password})});
+  const loginUser = async ({eventId, password}: RequestToken) => {
+    return await fetch({queryFunction: () => requestPostToken({eventId, password})});
   };
 
-  return {postAuthentication, postLogin};
+  return {checkAuthentication, loginUser};
 };
 
 export default useAuth;
