@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 
-import useEventId from '@hooks/useEventId/useEventId';
+import useEventId from '@hooks/useEventId';
 
 import sendLogToSentry from '@utils/sendLogToSentry';
 
@@ -68,7 +68,6 @@ const captureError = async (error: Error, navigate: NavigateFunction, eventId: s
   const errorBody: ServerError =
     error instanceof FetchError ? error.errorBody : {message: error.message, errorCode: error.name};
 
-  console.log(errorBody);
   switch (errorBody?.errorCode) {
     case 'INTERNAL_SERVER_ERROR':
       sendLogToSentry({error, errorBody, level: 'fatal'});

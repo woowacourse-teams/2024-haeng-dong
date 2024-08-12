@@ -3,11 +3,11 @@ import {Title, FixedButton, ListButton} from 'haengdong-design';
 import {useNavigate} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
-import {useStepList} from '@hooks/useStepList/useStepList';
 import {requestGetEventName} from '@apis/request/event';
-import useEventId from '@hooks/useEventId/useEventId';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
+import {useStepList} from '@hooks/useStepList';
+import useEventId from '@hooks/useEventId';
 import useAuth from '@hooks/useAuth';
 
 import {ROUTER_URLS} from '@constants/routerUrls';

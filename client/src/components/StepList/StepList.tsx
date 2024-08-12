@@ -1,6 +1,6 @@
 import {Flex} from 'haengdong-design';
 
-import {useStepList} from '@hooks/useStepList/useStepList';
+import {useStepList} from '@hooks/useStepList';
 
 import Step from './Step';
 

@@ -5,8 +5,10 @@ import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from 
 
 import {useFetch} from '@apis/useFetch';
 
-import useEventId from './useEventId/useEventId';
-import {useStepList} from './useStepList/useStepList';
+import isArraysEqual from '@utils/isArraysEqual';
+
+import useEventId from './useEventId';
+import {useStepList} from './useStepList';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;
@@ -23,26 +25,16 @@ const useSetAllMemberList = ({
   const [errorMessage, setErrorMessage] = useState('');
   const [errorIndexList, setErrorIndexList] = useState<number[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
+  const [deleteInOriginal, setDeleteInOriginal] = useState<string[]>(allMemberList);
+  const [deleteMemberList, setDeleteMemberList] = useState<string[]>([]);
 
   const {refreshStepList} = useStepList();
   const {eventId} = useEventId();
   const {fetch} = useFetch();
 
   useEffect(() => {
-    if (arraysEqual(editedAllMemberList, allMemberList)) {
-      setCanSubmit(false);
-    } else {
-      setCanSubmit(true);
-    }
+    setCanSubmit(!isArraysEqual(editedAllMemberList, allMemberList));
   }, [editedAllMemberList]);
-
-  const arraysEqual = (arr1: string[], arr2: string[]) => {
-    if (arr1.length !== arr2.length) return false;
-    for (let i = 0; i < arr1.length; i++) {
-      if (arr1[i] !== arr2[i]) return false;
-    }
-    return true;
-  };
 
   const handleNameChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
@@ -83,6 +75,9 @@ const useSetAllMemberList = ({
     await fetch({
       queryFunction: () => requestDeleteAllMemberList({eventId, memberName: memberToDelete}),
       onSuccess: () => {
+        setDeleteMemberList(prev => [...prev, memberToDelete]);
+        setDeleteInOriginal(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+
         setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
         refreshStepList();
       },
@@ -90,7 +85,14 @@ const useSetAllMemberList = ({
   };
 
   const handlePutAllMemberList = async () => {
-    const editedMemberName: MemberChange[] = allMemberList
+    // deleteMemberList가 비어있지 않은 경우에만 반복문 실행 (삭제 api 요청)
+    if (deleteMemberList.length > 0) {
+      for (const deleteMember of deleteMemberList) {
+        await fetch({queryFunction: () => requestDeleteAllMemberList({eventId, memberName: deleteMember})});
+      }
+    }
+
+    const editedMemberName: MemberChange[] = deleteInOriginal
       .map((originalName, index) => {
         if (editedAllMemberList[index] !== originalName) {
           return {before: originalName, after: editedAllMemberList[index]};

@@ -28,7 +28,7 @@ export type BillStep = StepBase & {
   actions: BillAction[];
 };
 
-// TODO: (@weadie) 준 데이터 형식에서 steps를 빼내 flat하게 사용중. 일관성있게 하는게 좋긴 하나 사용시 번거로움이 있을 거라고 판단.
+// (@weadie) 준 데이터 형식에서 steps를 빼내 flat하게 사용중. 일관성있게 하는게 좋긴 하나 사용시 번거로움이 있을 거라고 판단.
 export type StepList = {
   steps: (MemberStep | BillStep)[];
 };

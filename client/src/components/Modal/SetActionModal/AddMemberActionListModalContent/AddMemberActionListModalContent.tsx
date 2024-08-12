@@ -2,9 +2,9 @@ import type {MemberType} from 'types/serviceType';
 
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
 
-import {useStepList} from '@hooks/useStepList/useStepList';
 import validateMemberName from '@utils/validate/validateMemberName';
 
+import {useStepList} from '@hooks/useStepList';
 import useDynamicInput from '@hooks/useDynamicInput';
 
 import style from './AddMemberActionListModalContent.style';

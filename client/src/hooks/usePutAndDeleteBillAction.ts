@@ -4,9 +4,9 @@ import {useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
 import {requestDeleteBillAction, requestPutBillAction} from '@apis/request/bill';
-import useEventId from '@hooks/useEventId/useEventId';
-import {useStepList} from '@hooks/useStepList/useStepList';
 
+import useEventId from '@hooks/useEventId';
+import {useStepList} from '@hooks/useStepList';
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
 import {useFetch} from '@apis/useFetch';

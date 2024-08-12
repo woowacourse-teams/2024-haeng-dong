@@ -3,9 +3,10 @@ import type {MemberAction} from 'types/serviceType';
 import {useState} from 'react';
 
 import {useToast} from '@components/Toast/ToastProvider';
-import useEventId from '@hooks/useEventId/useEventId';
 import {requestDeleteMemberAction} from '@apis/request/member';
-import {useStepList} from '@hooks/useStepList/useStepList';
+
+import useEventId from '@hooks/useEventId';
+import {useStepList} from '@hooks/useStepList';
 
 import {useFetch} from '@apis/useFetch';
 
@@ -75,7 +76,10 @@ const useDeleteMemberAction = (
 
   // 현재 선택된 액션의 인덱스를 구해서 뒤의 동일인물의 액션이 있는지를 파악하는 기능
   const isExistSameMemberFromAfterStep = (memberAction: MemberAction) => {
-    const memberActionList = stepList.filter(step => step.type !== 'BILL').flatMap(({actions}) => actions);
+    const memberActionList = stepList
+      .filter(step => step.type !== 'BILL')
+      .map(({actions}) => actions)
+      .flat();
     const currentActionIndex = memberActionList.findIndex(action => action.actionId === memberAction.actionId);
     const memberActionListAfterCurrentAction = memberActionList.slice(Math.max(currentActionIndex - 1, 0));
     const memberNameList = memberActionListAfterCurrentAction.map(({name}) => name);
