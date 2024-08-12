@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 
-import useEventId from '@hooks/useEventId/useEventId';
+import useEventId from '@hooks/useEventId';
 
 import sendLogToSentry from '@utils/sendLogToSentry';
 
@@ -31,11 +31,9 @@ export const useFetch = () => {
           error instanceof FetchError ? error.errorBody : {errorCode: error.name, message: error.message};
 
         setError(errorBody);
-        console.log('???');
         captureError(error, navigate, eventId);
       } else {
         setError({errorCode: UNKNOWN_ERROR, message: JSON.stringify(error)});
-        console.log('!!!');
         captureError(new Error(UNKNOWN_ERROR), navigate, eventId);
 
         // 에러를 throw 해 에러 바운더리로 보냅니다. 따라서 에러 이름은 중요하지 않음
@@ -55,7 +53,6 @@ const captureError = async (error: Error, navigate: NavigateFunction, eventId: s
   const errorBody: ServerError =
     error instanceof FetchError ? error.errorBody : {message: error.message, errorCode: error.name};
 
-  console.log(errorBody);
   switch (errorBody?.errorCode) {
     case 'INTERNAL_SERVER_ERROR':
       sendLogToSentry({error, errorBody, level: 'fatal'});

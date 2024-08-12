@@ -1,8 +1,7 @@
 import {MainLayout, TopNav, Switch} from 'haengdong-design';
 import {Outlet, useMatch} from 'react-router-dom';
 
-import StepListProvider from '@hooks/useStepList/useStepList';
-
+import StepListProvider from '@hooks/useStepList';
 import useNavSwitch from '@hooks/useNavSwitch';
 
 import {ROUTER_URLS} from '@constants/routerUrls';

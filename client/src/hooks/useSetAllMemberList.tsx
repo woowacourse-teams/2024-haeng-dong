@@ -7,8 +7,8 @@ import {useFetch} from '@apis/useFetch';
 
 import isArraysEqual from '@utils/isArraysEqual';
 
-import useEventId from './useEventId/useEventId';
-import {useStepList} from './useStepList/useStepList';
+import useEventId from './useEventId';
+import {useStepList} from './useStepList';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;

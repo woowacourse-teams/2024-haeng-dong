@@ -27,7 +27,7 @@ const OutMember = ({dynamicProps}: OutMemberProps) => {
 
   return inputList.map(({value, index}) => (
     <Search
-      key={`${value}-${index}`}
+      key={index}
       isShowTargetInput={currentInputIndex === index}
       matchItems={filteredInMemberList}
       onMatchItemClick={(term: string) => chooseMember(currentInputIndex, term)}
