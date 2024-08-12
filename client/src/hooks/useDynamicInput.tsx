@@ -155,7 +155,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
 
   // list 인자를 넘겨주면 그 인자로 찾고, 없다면 inputList state를 사용합니다.
   const getFilledInputList = (list?: InputValue[]) => {
-    return (list ?? inputList).filter(({value}) => value !== '');
+    return (list ?? inputList).filter(({value}) => value.trim().length !== 0);
   };
 
   const isLastInputFilled = (index: number, value: string) => {
