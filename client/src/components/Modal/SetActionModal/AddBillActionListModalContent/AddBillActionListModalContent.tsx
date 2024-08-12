@@ -15,6 +15,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
   const {
     inputPairList,
     inputRefList,
+    errorIndexList,
     handleInputChange,
     getFilledInputPairList,
     deleteEmptyInputPairElementOnBlur,
@@ -40,6 +41,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
                 elementKey={`${index}`}
                 type="text"
                 value={title}
+                isError={errorIndexList.includes(index)}
                 onChange={e => handleInputChange(index, 'title', e)}
                 onKeyDown={e => focusNextInputOnEnter(e, index, 'title')}
                 onBlur={() => deleteEmptyInputPairElementOnBlur()} // TODO: (@weadie) 이 블러프롭이 내부적으로 index를 넘기고 있기 때문에 화살표 함수로 써야만하내요..
@@ -50,6 +52,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
                 elementKey={`${index}`}
                 type="number"
                 value={price}
+                isError={errorIndexList.includes(index)}
                 onChange={e => handleInputChange(index, 'price', e)}
                 onKeyDown={e => focusNextInputOnEnter(e, index, 'price')}
                 onBlur={() => deleteEmptyInputPairElementOnBlur()}
