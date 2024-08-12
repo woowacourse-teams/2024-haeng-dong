@@ -5,6 +5,8 @@ import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from 
 
 import {useFetch} from '@apis/useFetch';
 
+import isArraysEqual from '@utils/isArraysEqual';
+
 import useEventId from './useEventId/useEventId';
 import {useStepList} from './useStepList/useStepList';
 
@@ -29,20 +31,8 @@ const useSetAllMemberList = ({
   const {fetch} = useFetch();
 
   useEffect(() => {
-    if (arraysEqual(editedAllMemberList, allMemberList)) {
-      setCanSubmit(false);
-    } else {
-      setCanSubmit(true);
-    }
+    setCanSubmit(!isArraysEqual(editedAllMemberList, allMemberList));
   }, [editedAllMemberList]);
-
-  const arraysEqual = (arr1: string[], arr2: string[]) => {
-    if (arr1.length !== arr2.length) return false;
-    for (let i = 0; i < arr1.length; i++) {
-      if (arr1[i] !== arr2[i]) return false;
-    }
-    return true;
-  };
 
   const handleNameChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
