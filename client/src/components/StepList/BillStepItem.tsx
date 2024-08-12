@@ -38,15 +38,13 @@ const BillStepItem: React.FC<BillStepItemProps> = ({step, isOpenBottomSheet, set
 
   return (
     <>
-      <button style={{fontSize: '0.75rem'}} onClick={handleTopRightTextClick}>
-        참여인원 확인 임시용
-      </button>
       <DragHandleItemContainer
         topLeftText={stepName}
         topRightText={`${step.members.length}명`}
         bottomLeftText="총액"
         bottomRightText={`${totalPrice.toLocaleString('ko-kr')} 원`}
         backgroundColor="white"
+        onTopRightTextClick={handleTopRightTextClick}
       >
         {step.actions.map((action, index) => (
           <Fragment key={action.actionId}>
