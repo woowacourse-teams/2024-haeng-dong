@@ -48,5 +48,5 @@
     "outDir": "./dist"
   },
   "node": true,
-  "include": ["src"]
+  "include": ["src", "jest.config.ts", "jest.setup.ts"]
 }
