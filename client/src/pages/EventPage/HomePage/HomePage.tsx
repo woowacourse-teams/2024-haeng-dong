@@ -6,26 +6,12 @@ import StepList from '@components/StepList/StepList';
 import {requestGetEventName} from '@apis/request/event';
 
 import {useStepList} from '@hooks/useStepList';
-import useEventId from '@hooks/useEventId';
+import {useOutletContext} from 'react-router-dom';
+import {EventPageContextProps} from '../EventPageLayout';
 
 const HomePage = () => {
+  const {eventName} = useOutletContext<EventPageContextProps>();
   const {getTotalPrice} = useStepList();
-  const {eventId} = useEventId();
-
-  // TODO: (@soha) 행사 이름 나중에 따로 분리해야 함
-  const [eventName, setEventName] = useState(' ');
-
-  useEffect(() => {
-    if (eventId === '') return;
-
-    const getEventName = async () => {
-      const {eventName} = await requestGetEventName({eventId: eventId ?? ''});
-
-      setEventName(eventName);
-    };
-
-    getEventName();
-  }, [eventId]);
 
   return (
     <div>
