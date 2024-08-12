@@ -1,13 +1,14 @@
+import type {EventIdAndName} from 'types/serviceType';
+
 import {useEffect, useState} from 'react';
 import {Title, FixedButton, ListButton} from 'haengdong-design';
-import {useNavigate} from 'react-router-dom';
+import {useLoaderData, useNavigate} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
 import {requestGetEventName} from '@apis/request/event';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
 import {useStepList} from '@hooks/useStepList';
-import useEventId from '@hooks/useEventId';
 import useAuth from '@hooks/useAuth';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
@@ -18,17 +19,14 @@ const AdminPage = () => {
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
 
-  // TODO: (@weadie) eventName이 새로고침시 공간이 없다가 생겨나 레이아웃이 움직이는 문제
-  const [eventName, setEventName] = useState(' ');
+  const {eventId, eventName} = useLoaderData() as EventIdAndName;
+
   const {getTotalPrice, allMemberList} = useStepList();
-  const {eventId} = useEventId();
   const {postAuthentication} = useAuth();
   const navigate = useNavigate();
 
   // TODO: (@weadie) 아래 로직을 훅으로 분리합니다.
   useEffect(() => {
-    if (eventId === '') return;
-
     const postAuth = async () => {
       try {
         await postAuthentication({eventId: eventId});
@@ -38,14 +36,7 @@ const AdminPage = () => {
       }
     };
 
-    const getEventName = async () => {
-      const {eventName} = await requestGetEventName({eventId: eventId});
-
-      setEventName(eventName);
-    };
-
     postAuth();
-    getEventName();
   }, [eventId]);
 
   const handleOpenAllMemberListButton = () => {
