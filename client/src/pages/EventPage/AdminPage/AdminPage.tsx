@@ -53,14 +53,16 @@ const AdminPage = () => {
     setIsOpenAllMemberListButton(prev => !prev);
   };
 
+  const getTitleDescriptionByInitialMemberSetting = () => {
+    return allMemberList.length > 0
+      ? '“행동 추가하기” 버튼을 눌러서 지출 내역 및 인원 변동사항을 추가해 주세요.'
+      : '“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요.';
+  };
+
   return (
     <>
       <div css={titleAndListButtonContainerStyle}>
-        <Title
-          title={eventName}
-          description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요."
-          price={getTotalPrice()}
-        />
+        <Title title={eventName} description={getTitleDescriptionByInitialMemberSetting()} price={getTotalPrice()} />
         {allMemberList.length !== 0 && (
           <ListButton
             prefix="전체 참여자"
