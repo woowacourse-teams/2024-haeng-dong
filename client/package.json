@@ -9,7 +9,8 @@
     "build": "NODE_ENV=production webpack --config webpack.prod.mjs",
     "build-dev": "NODE_ENV=development webpack --config webpack.dev.mjs",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "cypress": "cypress open"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
+    "cypress": "^13.13.2",
     "dotenv": "^16.4.5",
     "dotenv-webpack": "^8.1.0",
     "eslint": "^9.6.0",
