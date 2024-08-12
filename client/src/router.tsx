@@ -6,6 +6,8 @@ import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import SetEventPasswordPage from '@pages/CreateEventPage/SetEventPasswordPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
 
+import {getEventIdAndName} from '@hooks/loader';
+
 import {CompleteCreateEventPage, SetEventNamePage} from '@pages/CreateEventPage';
 import {MainPage} from '@pages/MainPage';
 import {EventPage} from '@pages/EventPage';
@@ -43,9 +45,14 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.event,
         element: <EventPage />,
+
         children: [
-          {path: ROUTER_URLS.eventManage, element: <AdminPage />},
-          {path: ROUTER_URLS.home, element: <HomePage />},
+          {path: ROUTER_URLS.eventManage, element: <AdminPage />, loader: getEventIdAndName},
+          {
+            path: ROUTER_URLS.home,
+            element: <HomePage />,
+            loader: getEventIdAndName,
+          },
         ],
       },
       {
