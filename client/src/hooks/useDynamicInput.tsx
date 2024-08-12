@@ -52,8 +52,8 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
 
         return [...updatedInputList, {index: newIndex, value: ''}];
       });
-    } else if (isValidInput && value.length !== 0) {
-      // 입력된 값이 유효하고 값의 길이가 0이 아니라면 데이터(inputLis)를 변경합니다.
+    } else if (isValidInput) {
+      // 입력된 값이 유효하면 데이터(inputLis)를 변경합니다.
       setErrorMessage('');
 
       if (errorIndexList.includes(index)) {
