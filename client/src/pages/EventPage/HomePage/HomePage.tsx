@@ -1,12 +1,13 @@
 import {Tab, Tabs, Title} from 'haengdong-design';
 import {useEffect, useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
 
 import MemberReportList from '@components/MemberReportList/MemberReportList';
 import StepList from '@components/StepList/StepList';
 import {requestGetEventName} from '@apis/request/event';
 
 import {useStepList} from '@hooks/useStepList';
-import {useOutletContext} from 'react-router-dom';
+
 import {EventPageContextProps} from '../EventPageLayout';
 
 const HomePage = () => {

@@ -12,8 +12,9 @@ import useAuth from '@hooks/useAuth';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
 import {EventPageContextProps} from '../EventPageLayout';
+
+import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
 
 const AdminPage = () => {
   const {eventId, eventName} = useOutletContext<EventPageContextProps>();
