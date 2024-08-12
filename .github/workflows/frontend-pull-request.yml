@@ -32,3 +32,9 @@ jobs:
     - name: Run lint
       working-directory: ./client
       run: npm run lint  
+
+    - name: Run cypress
+      working-directory: ./client
+      run: |
+        npm run dev
+        npm run cypress
