@@ -4,7 +4,7 @@ import {BottomSheet, FixedButton, LabelGroupInput, Text} from 'haengdong-design'
 
 import validatePurchase from '@utils/validate/validatePurchase';
 
-import {usePutAndDeleteBillAction} from '@hooks/usePutAndDeleteBillAction';
+import usePutAndDeleteBillAction from '@hooks/usePutAndDeleteBillAction';
 
 import {bottomSheetHeaderStyle, bottomSheetStyle, inputContainerStyle} from './PutAndDeltetBillActionModal.style';
 
