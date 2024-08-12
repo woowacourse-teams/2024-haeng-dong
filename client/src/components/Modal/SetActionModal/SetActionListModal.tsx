@@ -12,10 +12,9 @@ export type ActionType = '지출' | '인원';
 interface SetActionModalContentProps {
   isOpenBottomSheet: boolean;
   setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SetActionListModal = ({isOpenBottomSheet, setIsOpenBottomSheet, setOrder}: SetActionModalContentProps) => {
+const SetActionListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: SetActionModalContentProps) => {
   const [action, setAction] = useState<ActionType>('지출');
   const [inOutAction, setInOutAction] = useState<InOutType>('탈주');
 
@@ -37,9 +36,7 @@ const SetActionListModal = ({isOpenBottomSheet, setIsOpenBottomSheet, setOrder}:
           )}
         </div>
 
-        {action === '지출' && (
-          <AddBillActionListModalContent setIsOpenBottomSheet={setIsOpenBottomSheet} setOrder={setOrder} />
-        )}
+        {action === '지출' && <AddBillActionListModalContent setIsOpenBottomSheet={setIsOpenBottomSheet} />}
         {action === '인원' && (
           <AddMemberActionListModalContent
             inOutAction={inOutAction === '탈주' ? 'OUT' : 'IN'}

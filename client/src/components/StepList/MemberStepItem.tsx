@@ -4,6 +4,7 @@ import {DragHandleItem} from 'haengdong-design';
 import {useOutletContext} from 'react-router-dom';
 
 import {DeleteMemberActionModal} from '@components/Modal/SetActionModal/DeleteMemberActionModal';
+import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
 interface MemberStepItemProps {
   step: MemberStep;
@@ -12,7 +13,7 @@ interface MemberStepItemProps {
 }
 
 const MemberStepItem: React.FC<MemberStepItemProps> = ({step, isOpenBottomSheet, setIsOpenBottomSheet}) => {
-  const isAdmin = useOutletContext<boolean>();
+  const {isAdmin} = useOutletContext<EventPageContextProps>();
 
   return (
     <>

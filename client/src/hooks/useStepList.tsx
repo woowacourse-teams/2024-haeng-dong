@@ -14,7 +14,7 @@ interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
   allMemberList: string[];
   getTotalPrice: () => number;
-  addBill: (billList: Bill[]) => Promise<void>;
+  addBill: (billList: Bill[], onSuccess: () => void) => Promise<void>;
   updateMemberList: ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => Promise<void>;
   refreshStepList: () => Promise<void>;
 }
@@ -37,7 +37,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   }, [eventId]);
 
   const refreshStepList = async () => {
-    const stepList = await fetch(() => requestGetStepList({eventId}));
+    const stepList = await fetch({queryFunction: () => requestGetStepList({eventId})});
 
     getAllMemberList();
     setStepList(stepList);
@@ -45,7 +45,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
 
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
     try {
-      await fetch(() => requestPostMemberList({eventId, type, memberNameList}));
+      await fetch({queryFunction: () => requestPostMemberList({eventId, type, memberNameList})});
 
       refreshStepList();
     } catch (error) {
@@ -59,11 +59,15 @@ const StepListProvider = ({children}: PropsWithChildren) => {
     setAllMemberList(allMembers.memberNames);
   };
 
-  const addBill = async (billList: Bill[]) => {
+  const addBill = async (billList: Bill[], onSuccess: () => void) => {
     // TODO: (@weadie) 에러 처리
-    await fetch(() => requestPostBillList({eventId, billList}));
-
-    refreshStepList();
+    await fetch({
+      queryFunction: () => requestPostBillList({eventId, billList}),
+      onSuccess: () => {
+        refreshStepList();
+        onSuccess();
+      },
+    });
   };
 
   const calculateBillSum = (actions: BillAction[]) => {

@@ -32,7 +32,7 @@ const useSearchInMemberList = (
     if (eventId === '') return;
 
     const getCurrentInMembers = async () => {
-      const currentInMemberListFromServer = await fetch(() => requestGetCurrentInMemberList(eventId));
+      const currentInMemberListFromServer = await fetch({queryFunction: () => requestGetCurrentInMemberList(eventId)});
       setCurrentInMemberList(currentInMemberListFromServer.members);
     };
 

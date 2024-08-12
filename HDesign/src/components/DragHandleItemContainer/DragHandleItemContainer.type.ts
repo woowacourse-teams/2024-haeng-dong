@@ -6,9 +6,13 @@ export interface DragHandleItemContainerStyleProps {
 
 export interface DragHandleItemContainerCustomProps {
   topLeftText?: string;
+  onTopLeftTextClick?: () => void;
   bottomLeftText?: string;
+  onBottomLeftTextClick?: () => void;
   topRightText?: string;
+  onTopRightTextClick?: () => void;
   bottomRightText?: string;
+  onBottomRightTextClick?: () => void;
 }
 
 export type DragHandleItemContainerOptionProps = DragHandleItemContainerStyleProps & DragHandleItemContainerCustomProps;

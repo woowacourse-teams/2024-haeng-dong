@@ -9,6 +9,8 @@ import useEventId from '@hooks/useEventId';
 import {useStepList} from '@hooks/useStepList';
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
+import {useFetch} from '@apis/useFetch';
+
 import ERROR_MESSAGE from '@constants/errorMessage';
 
 const usePutAndDeleteBillAction = (
@@ -18,6 +20,7 @@ const usePutAndDeleteBillAction = (
 ) => {
   const {eventId} = useEventId();
   const {refreshStepList} = useStepList();
+  const {fetch} = useFetch();
 
   const [inputPair, setInputPair] = useState<InputPair>(initialValue);
   const [canSubmit, setCanSubmit] = useState(false);
@@ -84,15 +87,24 @@ const usePutAndDeleteBillAction = (
     event.preventDefault();
 
     const {title, price} = inputPair;
-    await requestPutBillAction({eventId, actionId, title, price: Number(price)});
-    refreshStepList();
-    onClose();
+
+    await fetch({
+      queryFunction: () => requestPutBillAction({eventId, actionId, title, price: Number(price)}),
+      onSuccess: () => {
+        refreshStepList();
+        onClose();
+      },
+    });
   };
 
   const onDelete = async (actionId: number) => {
-    await requestDeleteBillAction({eventId, actionId});
-    refreshStepList();
-    onClose();
+    await fetch({
+      queryFunction: () => requestDeleteBillAction({eventId, actionId}),
+      onSuccess: () => {
+        refreshStepList();
+        onClose();
+      },
+    });
   };
 
   return {

@@ -9,10 +9,9 @@ import style from './AddBillActionListModalContent.style';
 
 interface AddBillActionListModalContentProps {
   setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-  setOrder: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AddBillActionListModalContent = ({setIsOpenBottomSheet, setOrder}: AddBillActionListModalContentProps) => {
+const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionListModalContentProps) => {
   const {
     inputPairList,
     inputRefList,
@@ -24,11 +23,11 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet, setOrder}: AddBill
   const {addBill} = useStepList();
 
   const handleSetPurchaseSubmit = () => {
-    setOrder(prev => prev + 1);
-
     // TODO: (@weadie) 요청 실패시 오류 핸들 필요
-    addBill(getFilledInputPairList().map(({title, price}) => ({title, price: Number(price)}))); // TODO: (@weadie) DTO같은게 다이내믹에 필요할까?
-    setIsOpenBottomSheet(false);
+    addBill(
+      getFilledInputPairList().map(({title, price}) => ({title, price: Number(price)})),
+      () => setIsOpenBottomSheet(false),
+    ); // TODO: (@weadie) DTO같은게 다이내믹에 필요할까?
   };
 
   return (
@@ -62,7 +61,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet, setOrder}: AddBill
         </LabelGroupInput>
       </div>
       <FixedButton
-        // disabled={!(inputPairs.length - 1)}
+        disabled={!(inputPairList.length - 1)}
         variants={'primary'}
         children={'추가하기'}
         onClick={handleSetPurchaseSubmit}

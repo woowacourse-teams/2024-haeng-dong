@@ -29,8 +29,7 @@ const DeleteMemberActionModal = ({
       <div css={bottomSheetStyle}>
         <header css={bottomSheetHeaderStyle}>
           <Text size="bodyBold">{memberActionType === 'IN' ? '들어온' : '나간'} 인원 수정하기</Text>
-          {/* TODO: (@cookie): 텍스트 색 수정 필요 */}
-          <Text size="bodyBold">{`${aliveActionList.length}명`}</Text>
+          <Text size="bodyBold" textColor="gray">{`${aliveActionList.length}명`}</Text>
         </header>
         <ul css={inputGroupStyle}>
           {aliveActionList.map(member => (

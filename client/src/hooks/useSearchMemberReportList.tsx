@@ -6,6 +6,8 @@ import {requestGetMemberReportList} from '@apis/request/report';
 
 import useEventId from '@hooks/useEventId';
 
+import {useFetch} from '@apis/useFetch';
+
 type UseSearchMemberReportListParams = {
   name: string;
 };
@@ -14,6 +16,7 @@ const useSearchMemberReportList = ({name}: UseSearchMemberReportListParams) => {
   const [memberReportList, setMemberReportList] = useState<MemberReport[]>([]);
   const [memberReportSearchList, setMemberReportSearchList] = useState<MemberReport[]>([]);
   const {eventId} = useEventId();
+  const {fetch} = useFetch();
 
   useEffect(() => {
     const fetchMemberReportList = async () => {
@@ -21,8 +24,7 @@ const useSearchMemberReportList = ({name}: UseSearchMemberReportListParams) => {
       // TODO: (@weadie) eventId에 의존하는 두 개의 훅에 대한 리펙토링 필요
       if (eventId === '') return;
 
-      const memberReportListData = await requestGetMemberReportList({eventId});
-
+      const memberReportListData = await fetch({queryFunction: () => requestGetMemberReportList({eventId})});
       setMemberReportList(memberReportListData);
     };
 

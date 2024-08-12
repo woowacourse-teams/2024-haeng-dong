@@ -16,7 +16,6 @@ import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style'
 
 const AdminPage = () => {
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
-  const [order, setOrder] = useState<number>(1);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
 
   // TODO: (@weadie) eventName이 새로고침시 공간이 없다가 생겨나 레이아웃이 움직이는 문제
@@ -79,7 +78,6 @@ const AdminPage = () => {
         {isOpenFixedButtonBottomSheet && (
           <ModalBasedOnMemberCount
             allMemberList={allMemberList}
-            setOrder={setOrder}
             setIsOpenBottomSheet={setIsOpenFixedBottomBottomSheet}
             isOpenBottomSheet={isOpenFixedButtonBottomSheet}
             isOpenAllMemberListButton={isOpenAllMemberListButton}

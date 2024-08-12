@@ -6,11 +6,11 @@ const useAuth = () => {
   const {fetch} = useFetch();
 
   const postAuthentication = async ({eventId}: RequestAuthentication) => {
-    return await fetch(() => requestAuthentication({eventId}));
+    return await fetch({queryFunction: () => requestAuthentication({eventId})});
   };
 
   const postLogin = async ({eventId, password}: RequestToken) => {
-    return await fetch(() => requestToken({eventId, password}));
+    return await fetch({queryFunction: () => requestToken({eventId, password})});
   };
 
   return {postAuthentication, postLogin};

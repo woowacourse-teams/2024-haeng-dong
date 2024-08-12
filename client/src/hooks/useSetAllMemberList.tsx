@@ -72,19 +72,23 @@ const useSetAllMemberList = ({
   const handleClickDeleteButton = async (index: number) => {
     const memberToDelete = editedAllMemberList[index];
 
-    setDeleteMemberList(prev => [...prev, memberToDelete]);
-    setDeleteInOriginal(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+    await fetch({
+      queryFunction: () => requestDeleteAllMemberList({eventId, memberName: memberToDelete}),
+      onSuccess: () => {
+        setDeleteMemberList(prev => [...prev, memberToDelete]);
+        setDeleteInOriginal(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
 
-    setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-
-    refreshStepList();
+        setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+        refreshStepList();
+      },
+    });
   };
 
   const handlePutAllMemberList = async () => {
     // deleteMemberList가 비어있지 않은 경우에만 반복문 실행 (삭제 api 요청)
     if (deleteMemberList.length > 0) {
       for (const deleteMember of deleteMemberList) {
-        await fetch(() => requestDeleteAllMemberList({eventId, memberName: deleteMember}));
+        await fetch({queryFunction: () => requestDeleteAllMemberList({eventId, memberName: deleteMember})});
       }
     }
 
@@ -97,11 +101,13 @@ const useSetAllMemberList = ({
       })
       .filter(item => item !== null); // null인 항목을 필터링하여 제거
 
-    await fetch(() => requestPutAllMemberList({eventId, members: editedMemberName}));
-
-    refreshStepList();
-
-    handleCloseAllMemberListModal();
+    await fetch({
+      queryFunction: () => requestPutAllMemberList({eventId, members: editedMemberName}),
+      onSuccess: () => {
+        refreshStepList();
+        handleCloseAllMemberListModal();
+      },
+    });
   };
 
   const changeErrorIndex = (index: number) => {
