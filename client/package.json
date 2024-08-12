@@ -10,7 +10,8 @@
     "build-dev": "NODE_ENV=development webpack --config webpack.dev.mjs",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
-    "cypress": "cypress open"
+    "cypress-open": "cypress open",
+    "cypress-run": "cypress run"
   },
   "keywords": [],
   "author": "",
