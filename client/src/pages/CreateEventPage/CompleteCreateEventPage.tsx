@@ -27,6 +27,7 @@ const CompleteCreateEventPage = () => {
   const {showToast} = useToast();
 
   const env = process.env.NODE_ENV || '';
+  const homeUrlByEnvironment = `https://${env.includes('development') ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${url}/home`;
 
   return (
     <MainLayout>
@@ -40,13 +41,10 @@ const CompleteCreateEventPage = () => {
           <Text textColor="gray">링크가 없으면 페이지에 접근할 수 없어요.</Text>
           <Text textColor="primary">관리를 위해서 행사 링크를 복사 후 보관해 주세요.</Text>
         </Flex>
-        <Input
-          value={`https://${env.includes('development') ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${url}/home`}
-          disabled
-        />
+        <Input value={homeUrlByEnvironment} disabled />
 
         <CopyToClipboard
-          text={`https://${env.includes('development') ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${url}/home`}
+          text={homeUrlByEnvironment}
           onCopy={() =>
             showToast({
               showingTime: 3000,
