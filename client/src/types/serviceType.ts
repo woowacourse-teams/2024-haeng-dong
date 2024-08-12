@@ -2,6 +2,11 @@ export type MemberType = 'IN' | 'OUT';
 
 export type InOutType = '늦참' | '탈주';
 
+export type EventIdAndName = {
+  eventName: string;
+  eventId: string;
+};
+
 export type MemberReport = {
   name: string;
   price: number;
