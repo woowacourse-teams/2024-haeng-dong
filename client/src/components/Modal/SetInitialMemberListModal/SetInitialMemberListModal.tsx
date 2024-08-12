@@ -34,7 +34,6 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
     setIsOpenBottomSheet(false);
   };
 
-  console.log(errorIndexList);
   return (
     <BottomSheet isOpened={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
       <div css={setInitialMemberListModalStyle}>
