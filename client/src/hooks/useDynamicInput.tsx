@@ -16,13 +16,15 @@ export type ReturnUseDynamicInput = {
   getFilledInputList: (list?: InputValue[]) => InputValue[];
   focusNextInputOnEnter: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
   canSubmit: boolean;
+  errorIndexList: number[];
   setInputValueTargetIndex: (index: number, value: string) => void;
 };
 
 const useDynamicInput = (validateFunc: (name: string) => ValidateResult): ReturnUseDynamicInput => {
-  const [inputList, setInputList] = useState<InputValue[]>([{value: '', index: 0}]);
+  const [inputList, setInputList] = useState<InputValue[]>([{index: 0, value: ''}]);
   const inputRefList = useRef<(HTMLInputElement | null)[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorIndexList, setErrorIndexList] = useState<number[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
 
   useEffect(() => {
@@ -42,41 +44,37 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     // TODO: (@weadie) 가독성이 안좋다는 리뷰. 함수 분리필요
     if (isLastInputFilled(index, value)) {
       // 마지막 인풋이 한 자라도 채워진다면 새로운 인풋을 생성해 간편한 다음 입력을 유도합니다.
-
-      setErrorMessage('');
       setInputList(prevInputs => {
         const updatedInputList = [...prevInputs];
-        const targetInput = findInputByIndex(index, updatedInputList);
-
-        targetInput.value = value;
 
         // 새로운 인덱스를 inputs 배열 길이를 기준으로 설정
         const newIndex = updatedInputList[updatedInputList.length - 1].index + 1;
 
         return [...updatedInputList, {index: newIndex, value: ''}];
       });
-    } else if (isValidInput || value.length === 0) {
-      // 인풋이 비어있다면 새로운 인풋을 생성하지 않습니다.
+    } else if (isValidInput && value.length !== 0) {
+      // 입력된 값이 유효하고 값의 길이가 0이 아니라면 데이터(inputLis)를 변경합니다.
+      setErrorMessage('');
+
+      if (errorIndexList.includes(index)) {
+        setErrorIndexList(prev => prev.filter(i => i !== index));
+      }
+
+      changeInputListValue(index, value);
+    } else if (value.length === 0) {
+      // value의 값이 0이라면 errorMessage는 띄워지지 않지만 값은 변경됩니다. 또한 invalid한 값이기에 errorIndex에 추가합니다.
 
       setErrorMessage('');
-      setInputList(prevInputs => {
-        const updatedInputList = [...prevInputs];
-        const targetInput = findInputByIndex(index, updatedInputList);
+      changeErrorIndex(index);
 
-        targetInput.value = value;
-
-        return updatedInputList;
-      });
+      changeInputListValue(index, value);
     } else {
-      // 유효성 검사에 실패한 입력입니다. 이전 입력으로 복구하고 에러 메세지를 세팅합니다.
+      // 유효성 검사에 실패한 입력입니다. 에러 메세지를 세팅합니다.
 
-      // index에 해당하는 아이템을 찾습니다.
       const targetInput = findInputByIndex(index);
 
-      // 오류가 난 값말고 기존의 값을 사용합니다.
-      event.target.value = targetInput.value;
-
       setErrorMessage(validationResultMessage ?? '');
+      changeErrorIndex(targetInput.index);
     }
 
     handleCanSubmit();
@@ -108,6 +106,26 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
         return [...filledInputList, {index: newIndex, value: ''}];
       });
     }
+  };
+
+  const changeInputListValue = (index: number, value: string) => {
+    setInputList(prevInputs => {
+      const updatedInputList = [...prevInputs];
+      const targetInput = findInputByIndex(index, updatedInputList);
+
+      targetInput.value = value;
+
+      return updatedInputList;
+    });
+  };
+
+  const changeErrorIndex = (index: number) => {
+    setErrorIndexList(prev => {
+      if (!prev.includes(index)) {
+        return [...prev, index];
+      }
+      return prev;
+    });
   };
 
   const setInputValueTargetIndex = (index: number, value: string) => {
@@ -155,6 +173,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     getFilledInputList,
     focusNextInputOnEnter,
     canSubmit,
+    errorIndexList,
     setInputValueTargetIndex,
     // TODO: (@weadie) 네이밍 수정
   };
