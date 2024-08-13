@@ -32,7 +32,6 @@ const sendLogToSentry = ({level = 'error', error, errorBody}: SendLogToSentry) =
     scope.setTag('environment', process.env.NODE_ENV);
 
     if (error instanceof FetchError) {
-      console.log('fetchError');
       scope.setTags({
         endpoint: error.endpoint,
         url: window.location.href,
