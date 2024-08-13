@@ -33,7 +33,6 @@ const AdminPage = () => {
       try {
         await postAuthentication({eventId: eventId});
       } catch (error) {
-        console.log(error);
         navigate(`${ROUTER_URLS.event}/${eventId}/login`);
       }
     };
