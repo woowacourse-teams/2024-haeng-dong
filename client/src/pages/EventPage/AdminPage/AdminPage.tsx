@@ -7,7 +7,7 @@ import {requestGetEventName} from '@apis/request/event';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
 import {useStepList} from '@hooks/useStepList';
-import useEventId from '@hooks/useEventId';
+import useEventId from '@hooks/useEventId/useEventId';
 import useAuth from '@hooks/useAuth';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
@@ -31,9 +31,8 @@ const AdminPage = () => {
 
     const postAuth = async () => {
       try {
-        await checkAuthentication({eventId: eventId});
+        await checkAuthentication();
       } catch (error) {
-        console.log(error);
         navigate(`${ROUTER_URLS.event}/${eventId}/login`);
       }
     };

@@ -5,11 +5,11 @@ import {useState} from 'react';
 import {ValidateResult} from '@utils/validate/type';
 import {requestDeleteBillAction, requestPutBillAction} from '@apis/request/bill';
 
-import useEventId from '@hooks/useEventId';
+import useEventId from '@hooks/useEventId/useEventId';
 import {useStepList} from '@hooks/useStepList';
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
-import {useFetch} from '@apis/useFetch';
+import {useFetch} from '@hooks/useFetch';
 
 import ERROR_MESSAGE from '@constants/errorMessage';
 

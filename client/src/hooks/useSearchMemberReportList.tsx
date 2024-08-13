@@ -4,9 +4,9 @@ import {useEffect, useState} from 'react';
 
 import {requestGetMemberReportList} from '@apis/request/report';
 
-import useEventId from '@hooks/useEventId';
+import useEventId from '@hooks/useEventId/useEventId';
 
-import {useFetch} from '@apis/useFetch';
+import {useFetch} from '@hooks/useFetch';
 
 type UseSearchMemberReportListParams = {
   name: string;

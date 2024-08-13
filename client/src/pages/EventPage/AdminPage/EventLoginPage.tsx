@@ -4,7 +4,7 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Switch} from 'haengd
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
-import useEventId from '@hooks/useEventId';
+import useEventId from '@hooks/useEventId/useEventId';
 import useAuth from '@hooks/useAuth';
 import useNavSwitch from '@hooks/useNavSwitch';
 
@@ -24,7 +24,7 @@ const EventLoginPage = () => {
     event.preventDefault();
 
     try {
-      await loginUser({eventId, password});
+      await loginUser({password});
       navigate(`${ROUTER_URLS.event}/${eventId}/admin`);
     } catch (error) {
       setErrorMessage('잘못된 비밀번호에요');

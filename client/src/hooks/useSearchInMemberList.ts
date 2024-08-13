@@ -2,9 +2,9 @@ import {useEffect, useState} from 'react';
 
 import {requestGetCurrentInMemberList} from '@apis/request/member';
 
-import {useFetch} from '@apis/useFetch';
+import {useFetch} from '@hooks/useFetch';
 
-import useEventId from './useEventId';
+import useEventId from './useEventId/useEventId';
 
 export type ReturnUseSearchInMemberList = {
   currentInputIndex: number;

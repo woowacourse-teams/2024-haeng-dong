@@ -6,7 +6,7 @@ import StepList from '@components/StepList/StepList';
 import {requestGetEventName} from '@apis/request/event';
 
 import {useStepList} from '@hooks/useStepList';
-import useEventId from '@hooks/useEventId';
+import useEventId from '@hooks/useEventId/useEventId';
 
 const HomePage = () => {
   const {getTotalPrice} = useStepList();

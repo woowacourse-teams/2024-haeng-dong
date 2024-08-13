@@ -3,11 +3,11 @@ import {useEffect, useState} from 'react';
 import {ValidateResult} from '@utils/validate/type';
 import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
 
-import {useFetch} from '@apis/useFetch';
+import {useFetch} from '@hooks/useFetch';
 
 import isArraysEqual from '@utils/isArraysEqual';
 
-import useEventId from './useEventId';
+import useEventId from './useEventId/useEventId';
 import {useStepList} from './useStepList';
 
 interface UseSetAllMemberListProps {
