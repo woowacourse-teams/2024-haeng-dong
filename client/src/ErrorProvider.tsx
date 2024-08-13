@@ -8,6 +8,7 @@ interface ErrorContextType {
   errorMessage: string;
   setError: (error: ServerError) => void;
   clearError: (ms?: number) => void;
+  error: ServerError | null;
 }
 
 const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
@@ -29,12 +30,17 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   const [error, setErrorState] = useState<ServerError | null>(null);
 
   useEffect(() => {
+    console.log('ErrorProvider안에 있습니다.', error);
+    console.log(error, error?.errorCode);
     if (error) {
       if (isUnhandledError(error.errorCode)) {
         // 에러바운더리로 보내기
+        console.log('isUnhandledError입니다.');
+
         throw error;
       }
 
+      console.log('다뤄지는 에러입니다.');
       setHasError(true);
       const message = SERVER_ERROR_MESSAGES[error.errorCode];
       setErrorMessage(message);
@@ -49,6 +55,9 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   };
 
   const clearError = (ms: number = 0) => {
+    if (error === null) return;
+
+    console.log('clearError');
     setTimeout(() => {
       setHasError(false);
       setErrorMessage('');
@@ -57,7 +66,9 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   };
 
   return (
-    <ErrorContext.Provider value={{hasError, errorMessage, setError, clearError}}>{children}</ErrorContext.Provider>
+    <ErrorContext.Provider value={{error, hasError, errorMessage, setError, clearError}}>
+      {children}
+    </ErrorContext.Provider>
   );
 };
 
