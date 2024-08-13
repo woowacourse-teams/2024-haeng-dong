@@ -17,7 +17,6 @@ describe('useEventId', () => {
 
     const {result} = renderHook(() => useEventId());
 
-    console.log(result.current.eventId);
     expect(result.current.eventId).toBe('abc-123');
   });
 
@@ -29,7 +28,6 @@ describe('useEventId', () => {
 
     const {result} = renderHook(() => useEventId());
 
-    console.log(result.current.eventId);
     expect(result.current.eventId).toBe('');
   });
 });
