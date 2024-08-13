@@ -9,6 +9,8 @@ const config: Config = {
   },
   collectCoverage: true,
   coverageReporters: ['text'],
+  coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/utils/', '<rootDir>/src/mocks/'],
+
   verbose: true,
   setupFiles: ['./jest.polyfills.ts'],
   setupFilesAfterEnv: ['./jest.setup.ts'],
@@ -22,6 +24,7 @@ const config: Config = {
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@types/(.*)$': '<rootDir>/src/types/$1',
     '^@errors/(.*)$': '<rootDir>/src/errors/$1',
+    '^@mocks/(.*)$': '<rootDir>/src/mocks/$1',
   },
   testEnvironmentOptions: {
     customExportConditions: [''],
