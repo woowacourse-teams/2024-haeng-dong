@@ -8,7 +8,7 @@ import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
 import {useStepList} from '@hooks/useStepList';
 import useEventId from '@hooks/useEventId/useEventId';
-import useAuth from '@hooks/useAuth';
+import useAuth from '@hooks/useAuth/useAuth';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 

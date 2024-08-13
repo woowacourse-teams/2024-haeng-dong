@@ -8,7 +8,7 @@ import {requestDeleteMemberAction} from '@apis/request/member';
 import useEventId from '@hooks/useEventId/useEventId';
 import {useStepList} from '@hooks/useStepList';
 
-import {useFetch} from '@hooks/useFetch';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
 const useDeleteMemberAction = (
   memberActionList: MemberAction[],

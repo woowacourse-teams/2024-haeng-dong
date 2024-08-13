@@ -9,7 +9,7 @@ import useEventId from '@hooks/useEventId/useEventId';
 import {useStepList} from '@hooks/useStepList';
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
-import {useFetch} from '@hooks/useFetch';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
 import ERROR_MESSAGE from '@constants/errorMessage';
 

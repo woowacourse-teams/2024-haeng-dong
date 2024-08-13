@@ -5,7 +5,7 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Switch} from 'haengd
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
 import useEventId from '@hooks/useEventId/useEventId';
-import useAuth from '@hooks/useAuth';
+import useAuth from '@hooks/useAuth/useAuth';
 import useNavSwitch from '@hooks/useNavSwitch';
 
 import RULE from '@constants/rule';

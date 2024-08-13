@@ -8,7 +8,7 @@ import {requestGetStepList} from '@apis/request/stepList';
 
 import useEventId from '@hooks/useEventId/useEventId';
 
-import {useFetch} from '@hooks/useFetch';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];

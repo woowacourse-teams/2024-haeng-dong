@@ -6,7 +6,7 @@ import {requestGetMemberReportList} from '@apis/request/report';
 
 import useEventId from '@hooks/useEventId/useEventId';
 
-import {useFetch} from '@hooks/useFetch';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
 type UseSearchMemberReportListParams = {
   name: string;

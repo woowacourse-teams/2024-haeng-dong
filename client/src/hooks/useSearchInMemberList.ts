@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 
 import {requestGetCurrentInMemberList} from '@apis/request/member';
 
-import {useFetch} from '@hooks/useFetch';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
 import useEventId from './useEventId/useEventId';
 
