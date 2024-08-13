@@ -1,9 +1,10 @@
 import {renderHook, waitFor} from '@testing-library/react';
 import useAuth from './useAuth';
 import {act} from 'react';
-import {ErrorProvider, useError} from '../ErrorProvider';
-import * as router from 'react-router';
+import {ErrorProvider, useError} from '../../ErrorProvider';
 import {MemoryRouter} from 'react-router-dom';
+import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
+import {VALID_PASSWORD_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 
 // 현재의 location path를 모킹합니다.
 jest.mock('react-router-dom', () => ({
@@ -42,7 +43,7 @@ describe('useAuth', () => {
     });
 
     it('쿠키에 담겨있는 토큰이 올바르다면 인증에 성공한다', async () => {
-      document.cookie = 'eventToken=valid-token';
+      document.cookie = `eventToken=${VALID_TOKEN_FOR_TEST}`;
 
       const {result} = initializeProvider();
 
@@ -75,7 +76,7 @@ describe('useAuth', () => {
       const {result} = initializeProvider();
 
       await act(async () => {
-        expect(await result.current.authResult.loginUser({password: '1111'}));
+        expect(await result.current.authResult.loginUser({password: String(VALID_PASSWORD_FOR_TEST)}));
       });
 
       await waitFor(() => {
@@ -83,7 +84,7 @@ describe('useAuth', () => {
       });
     });
 
-    it('비밀 번호가 4자리가 아니라면 로그인에 실패한다.', async () => {
+    it(`비밀 번호가 ${VALID_PASSWORD_LENGTH_IN_SERVER}자리가 아니라면 로그인에 실패한다.`, async () => {
       const {result} = initializeProvider();
 
       await act(async () => {

@@ -1,6 +1,6 @@
 import {RequestPostNewEvent, ResponsePostNewEvent, requestPostNewEvent} from '@apis/request/event';
 
-import {useFetch} from '@hooks/useFetch';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
 const useEvent = () => {
   const {fetch} = useFetch();

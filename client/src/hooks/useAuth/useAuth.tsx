@@ -1,9 +1,8 @@
 import {RequestToken, requestPostAuthentication, requestPostToken} from '@apis/request/auth';
 
-import {useFetch} from '@hooks/useFetch';
+import {useFetch} from '@hooks/useFetch/useFetch';
 import useEventId from '@hooks/useEventId/useEventId';
 
-// 이 훅의 핵심 기능: 권한을 확인한다.
 const useAuth = () => {
   const {fetch} = useFetch();
   const {eventId} = useEventId();
