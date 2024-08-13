@@ -7,8 +7,14 @@ interface InMemberProps {
 }
 
 const InMember = ({dynamicProps}: InMemberProps) => {
-  const {inputList, inputRefList, handleInputChange, deleteEmptyInputElementOnBlur, focusNextInputOnEnter} =
-    dynamicProps;
+  const {
+    inputList,
+    inputRefList,
+    handleInputChange,
+    deleteEmptyInputElementOnBlur,
+    focusNextInputOnEnter,
+    errorIndexList,
+  } = dynamicProps;
   return inputList.map(({value, index}) => (
     <LabelGroupInput.Element
       key={index}
@@ -16,6 +22,7 @@ const InMember = ({dynamicProps}: InMemberProps) => {
       type="text"
       value={value}
       ref={el => (inputRefList.current[index] = el)}
+      isError={errorIndexList.includes(index)}
       onChange={e => handleInputChange(index, e)}
       onBlur={() => deleteEmptyInputElementOnBlur()}
       onKeyDown={e => focusNextInputOnEnter(e, index)}

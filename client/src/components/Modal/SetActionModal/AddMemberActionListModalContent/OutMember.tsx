@@ -11,6 +11,7 @@ const OutMember = ({dynamicProps}: OutMemberProps) => {
   const {
     inputList,
     inputRefList,
+    errorIndexList,
     deleteEmptyInputElementOnBlur,
     focusNextInputOnEnter,
     handleInputChange,
@@ -37,6 +38,7 @@ const OutMember = ({dynamicProps}: OutMemberProps) => {
         type="text"
         value={value}
         ref={el => (inputRefList.current[index] = el)}
+        isError={errorIndexList.includes(index)}
         onChange={e => validationAndSearchOnChange(index, e)}
         onBlur={() => deleteEmptyInputElementOnBlur()}
         onKeyDown={e => focusNextInputOnEnter(e, index)}
