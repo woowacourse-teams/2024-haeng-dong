@@ -6,9 +6,9 @@ import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from 
 import {useFetch} from '@apis/useFetch';
 
 import isArraysEqual from '@utils/isArraysEqual';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import {useStepList} from './useStepList';
-import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;

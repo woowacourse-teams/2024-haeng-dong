@@ -2,13 +2,13 @@ import {useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 
 import sendLogToSentry from '@utils/sendLogToSentry';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {ServerError, useError} from '../ErrorProvider';
 import FetchError from '../errors/FetchError';
-import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 type FetchProps<T> = {
   queryFunction: () => Promise<T>;

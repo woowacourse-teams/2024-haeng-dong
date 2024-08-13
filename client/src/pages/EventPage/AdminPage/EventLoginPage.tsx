@@ -3,12 +3,14 @@ import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Switch} from 'haengdong-design';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
+
 import useAuth from '@hooks/useAuth';
 import useNavSwitch from '@hooks/useNavSwitch';
 
+import getEventIdByUrl from '@utils/getEventIdByUrl';
+
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
-import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 const EventLoginPage = () => {
   const [password, setPassword] = useState('');

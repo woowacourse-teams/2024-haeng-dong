@@ -10,8 +10,9 @@ import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
 import {useFetch} from '@apis/useFetch';
 
-import ERROR_MESSAGE from '@constants/errorMessage';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+
+import ERROR_MESSAGE from '@constants/errorMessage';
 
 const usePutAndDeleteBillAction = (
   initialValue: InputPair,

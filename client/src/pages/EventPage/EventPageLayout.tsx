@@ -9,8 +9,9 @@ import {requestGetEventName} from '@apis/request/event';
 import useNavSwitch from '@hooks/useNavSwitch';
 import StepListProvider from '@hooks/useStepList';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 export type EventPageContextProps = {
   isAdmin: boolean;
