@@ -15,7 +15,7 @@ export type ReturnUseSearchInMemberList = {
 };
 
 const useSearchInMemberList = (
-  setInputValueTargetIndex: (index: number, value: string) => void,
+  validateAndSetTargetInput: (index: number, value: string) => void,
 ): ReturnUseSearchInMemberList => {
   const {eventId} = useEventId();
 
@@ -51,7 +51,7 @@ const useSearchInMemberList = (
 
   const chooseMember = (inputIndex: number, name: string) => {
     setFilteredInMemberList([]);
-    setInputValueTargetIndex(inputIndex, name);
+    validateAndSetTargetInput(inputIndex, name);
   };
 
   const searchCurrentInMember = (event: React.ChangeEvent<HTMLInputElement>) => {
