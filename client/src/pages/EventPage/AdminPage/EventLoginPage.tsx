@@ -1,15 +1,14 @@
 import {useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
-import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back, Switch} from 'haengdong-design';
+import {useNavigate} from 'react-router-dom';
+import {FixedButton, MainLayout, LabelInput, Title, TopNav, Switch} from 'haengdong-design';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
-
-import useEventId from '@hooks/useEventId';
 import useAuth from '@hooks/useAuth';
 import useNavSwitch from '@hooks/useNavSwitch';
 
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 const EventLoginPage = () => {
   const [password, setPassword] = useState('');
@@ -17,7 +16,7 @@ const EventLoginPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
-  const {eventId} = useEventId();
+  const eventId = getEventIdByUrl();
   const {postLogin} = useAuth();
 
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {

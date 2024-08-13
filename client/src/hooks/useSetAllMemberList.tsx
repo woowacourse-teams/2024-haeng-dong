@@ -7,8 +7,8 @@ import {useFetch} from '@apis/useFetch';
 
 import isArraysEqual from '@utils/isArraysEqual';
 
-import useEventId from './useEventId';
 import {useStepList} from './useStepList';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;
@@ -29,7 +29,7 @@ const useSetAllMemberList = ({
   const [deleteMemberList, setDeleteMemberList] = useState<string[]>([]);
 
   const {refreshStepList} = useStepList();
-  const {eventId} = useEventId();
+  const eventId = getEventIdByUrl();
   const {fetch} = useFetch();
 
   useEffect(() => {
