@@ -10,10 +10,21 @@ const config: Config = {
   collectCoverage: true,
   coverageReporters: ['text'],
   verbose: true,
+  setupFiles: ['./jest.polyfills.ts'],
   setupFilesAfterEnv: ['./jest.setup.ts'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   moduleNameMapper: {
     '@/(.*)$': '<rootDir>/src/$1', // path alias를 적용하기 위함
+    '^@apis/(.*)$': '<rootDir>/src/apis/$1',
+    '^@constants/(.*)$': '<rootDir>/src/constants/$1',
+    '^@hooks/(.*)$': '<rootDir>/src/hooks/$1',
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^@types/(.*)$': '<rootDir>/src/types/$1',
+    '^@errors/(.*)$': '<rootDir>/src/errors/$1',
+  },
+  testEnvironmentOptions: {
+    customExportConditions: [''],
   },
 };
 
