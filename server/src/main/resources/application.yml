@@ -42,17 +42,6 @@ management:
       exposure:
         include: health, metrics, logfile
 
-logging:
-  level:
-    root: debug
-    org.springframework.web: debug
-    server.haengdong: debug
-
-  file:
-    name: logs/spring-boot-application.log
-    path: logs
-  config: classpath:logback-spring.xml
-
 server:
   servlet:
     encoding:
@@ -75,4 +64,3 @@ spring:
     import: classpath:config/application-dev.yml
     activate:
       on-profile: dev
-
