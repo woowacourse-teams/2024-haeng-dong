@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 
-import useEventId from '@hooks/useEventId';
+import useEventId from '@hooks/useEventId/useEventId';
 
 import sendLogToSentry from '@utils/sendLogToSentry';
 
@@ -25,9 +25,11 @@ export const useFetch = () => {
 
   const fetch = async <T>({queryFunction, onSuccess, onError}: FetchProps<T>): Promise<T> => {
     setLoading(true);
-    clearError();
 
+    clearError();
     try {
+      console.log('fetch');
+
       const result = await queryFunction();
 
       if (onSuccess) {
@@ -40,6 +42,7 @@ export const useFetch = () => {
         const errorBody =
           error instanceof FetchError ? error.errorBody : {errorCode: error.name, message: error.message};
 
+        console.log(errorBody);
         setError(errorBody);
 
         if (onError) {
@@ -64,7 +67,8 @@ export const useFetch = () => {
   return {loading, fetch};
 };
 
-const captureError = async (error: Error, navigate: NavigateFunction, eventId: string) => {
+// TODO: (@weadie) 함수 분리
+export const captureError = async (error: Error, navigate: NavigateFunction, eventId: string) => {
   const errorBody: ServerError =
     error instanceof FetchError ? error.errorBody : {message: error.message, errorCode: error.name};
 
