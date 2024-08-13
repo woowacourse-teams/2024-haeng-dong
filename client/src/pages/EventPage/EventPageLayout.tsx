@@ -59,7 +59,7 @@ const EventPageLayout = () => {
                 message: '링크가 복사되었어요 :) \n참여자들에게 링크를 공유해 주세요!',
                 type: 'confirm',
                 position: 'bottom',
-                bottom: '14rem',
+                bottom: '8rem',
               })
             }
           >
