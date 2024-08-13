@@ -36,7 +36,7 @@ type ErrorHandlerProps = {
   body: string;
 };
 
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = process.env.API_BASE_URL ?? '';
 
 export const requestGet = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
   const response = await fetcher({
