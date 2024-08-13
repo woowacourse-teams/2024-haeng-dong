@@ -80,13 +80,18 @@
         </root>
     </springProfile>
 
-    <springProfile name="default">
+    <springProfile name="dev">
         <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
             <appender-ref ref="ERROR-ROLLING"/>
             <appender-ref ref="WARN-ROLLING"/>
             <appender-ref ref="INFO-ROLLING"/>
             <appender-ref ref="DEBUG-ROLLING"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="ERROR">
+            <appender-ref ref="ERROR-ROLLING"/>
         </root>
     </springProfile>
 </configuration>
