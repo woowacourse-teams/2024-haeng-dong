@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Title, FixedButton, ListButton} from 'haengdong-design';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
 import {requestGetEventName} from '@apis/request/event';
@@ -12,20 +12,20 @@ import useAuth from '@hooks/useAuth';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
+import {EventPageContextProps} from '../EventPageLayout';
+
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
 
 const AdminPage = () => {
+  const {eventId, eventName} = useOutletContext<EventPageContextProps>();
+
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
 
-  // TODO: (@weadie) eventName이 새로고침시 공간이 없다가 생겨나 레이아웃이 움직이는 문제
-  const [eventName, setEventName] = useState(' ');
   const {getTotalPrice, allMemberList} = useStepList();
-  const {eventId} = useEventId();
   const {postAuthentication} = useAuth();
   const navigate = useNavigate();
 
-  // TODO: (@weadie) 아래 로직을 훅으로 분리합니다.
   useEffect(() => {
     if (eventId === '') return;
 
@@ -37,14 +37,7 @@ const AdminPage = () => {
       }
     };
 
-    const getEventName = async () => {
-      const {eventName} = await requestGetEventName({eventId: eventId});
-
-      setEventName(eventName);
-    };
-
     postAuth();
-    getEventName();
   }, [eventId]);
 
   const handleOpenAllMemberListButton = () => {
