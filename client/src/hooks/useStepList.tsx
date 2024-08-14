@@ -34,6 +34,10 @@ const StepListProvider = ({children}: PropsWithChildren) => {
     setStepList(stepList);
   };
 
+  useEffect(() => {
+    refreshStepList();
+  }, []);
+
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
     try {
       await fetch({queryFunction: () => requestPostMemberList({eventId, type, memberNameList})});
