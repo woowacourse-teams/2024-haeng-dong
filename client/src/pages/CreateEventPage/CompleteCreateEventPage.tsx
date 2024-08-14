@@ -21,11 +21,13 @@ const CompleteCreateEventPage = () => {
       // TODO: (@weadie) eventId가 없는 경우에 대한 처리 필요
       setUrl(eventId ?? '');
     };
-
     getUrl();
   }, []);
 
   const {showToast} = useToast();
+
+  const env = process.env.NODE_ENV || '';
+  const homeUrlByEnvironment = `https://${env.includes('development') ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${url}/home`;
 
   return (
     <MainLayout>
@@ -39,17 +41,17 @@ const CompleteCreateEventPage = () => {
           <Text textColor="gray">링크가 없으면 페이지에 접근할 수 없어요.</Text>
           <Text textColor="primary">관리를 위해서 행사 링크를 복사 후 보관해 주세요.</Text>
         </Flex>
-        <Input value={`haengdong.pro${ROUTER_URLS.event}/${url}/home`} disabled />
+        <Input value={homeUrlByEnvironment} disabled />
 
         <CopyToClipboard
-          text={`haengdong.pro${ROUTER_URLS.event}/${url}/home`}
+          text={homeUrlByEnvironment}
           onCopy={() =>
             showToast({
               showingTime: 3000,
               message: '링크가 복사되었어요 :) \n링크를 절대 분실하지 마세요!',
               type: 'confirm',
               position: 'bottom',
-              bottom: '14rem',
+              bottom: '8rem',
             })
           }
         >

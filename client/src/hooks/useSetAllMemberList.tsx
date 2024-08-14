@@ -6,8 +6,8 @@ import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from 
 import {useFetch} from '@hooks/useFetch/useFetch';
 
 import isArraysEqual from '@utils/isArraysEqual';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-import useEventId from './useEventId/useEventId';
 import {useStepList} from './useStepList';
 
 interface UseSetAllMemberListProps {
@@ -29,7 +29,7 @@ const useSetAllMemberList = ({
   const [deleteMemberList, setDeleteMemberList] = useState<string[]>([]);
 
   const {refreshStepList} = useStepList();
-  const {eventId} = useEventId();
+  const eventId = getEventIdByUrl();
   const {fetch} = useFetch();
 
   useEffect(() => {

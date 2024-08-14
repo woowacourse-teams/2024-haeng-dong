@@ -20,7 +20,7 @@
     // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["node", "jest"],
+    "types": ["node", "cypress"],
     "esModuleInterop": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -48,5 +48,5 @@
     "outDir": "./dist"
   },
   "node": true,
-  "include": ["src", "jest.config.ts", "jest.setup.ts"]
+  "include": ["src", "jest.config.ts", "jest.setup.ts", "cypress/**/*.ts"]
 }

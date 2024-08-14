@@ -1,65 +1,49 @@
 import {useEffect, useState} from 'react';
 import {Title, FixedButton, ListButton} from 'haengdong-design';
-import {useNavigate} from 'react-router-dom';
+import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
-import {requestGetEventName} from '@apis/request/event';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
 import {useStepList} from '@hooks/useStepList';
-import useEventId from '@hooks/useEventId/useEventId';
-import useAuth from '@hooks/useAuth/useAuth';
+import useAuth from '@hooks/useAuth';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
+import {EventPageContextProps} from '../EventPageLayout';
 
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
 
 const AdminPage = () => {
+  const {eventId, eventName} = useOutletContext<EventPageContextProps>();
+
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
 
-  // TODO: (@weadie) eventName이 새로고침시 공간이 없다가 생겨나 레이아웃이 움직이는 문제
-  const [eventName, setEventName] = useState(' ');
   const {getTotalPrice, allMemberList} = useStepList();
-  const {eventId} = useEventId();
-  const {checkAuthentication} = useAuth();
-  const navigate = useNavigate();
+  const {postAuthentication} = useAuth();
 
-  // TODO: (@weadie) 아래 로직을 훅으로 분리합니다.
   useEffect(() => {
-    if (eventId === '') return;
-
     const postAuth = async () => {
-      try {
-        await checkAuthentication();
-      } catch (error) {
-        navigate(`${ROUTER_URLS.event}/${eventId}/login`);
-      }
-    };
-
-    const getEventName = async () => {
-      const {eventName} = await requestGetEventName({eventId: eventId});
-
-      setEventName(eventName);
+      await postAuthentication({eventId: eventId});
     };
 
     postAuth();
-    getEventName();
-  }, [eventId]);
+  }, []);
 
   const handleOpenAllMemberListButton = () => {
     setIsOpenFixedBottomBottomSheet(prev => !prev);
     setIsOpenAllMemberListButton(prev => !prev);
   };
 
+  const getTitleDescriptionByInitialMemberSetting = () => {
+    return allMemberList.length > 0
+      ? '“행동 추가하기” 버튼을 눌러서 지출 내역 및 인원 변동사항을 추가해 주세요.'
+      : '“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요.';
+  };
+
   return (
     <>
       <div css={titleAndListButtonContainerStyle}>
-        <Title
-          title={eventName}
-          description="“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요."
-          price={getTotalPrice()}
-        />
+        <Title title={eventName} description={getTitleDescriptionByInitialMemberSetting()} price={getTotalPrice()} />
         {allMemberList.length !== 0 && (
           <ListButton
             prefix="전체 참여자"

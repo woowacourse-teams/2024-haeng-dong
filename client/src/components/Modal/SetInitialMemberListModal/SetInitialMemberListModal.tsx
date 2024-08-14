@@ -24,6 +24,7 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
     getFilledInputList,
     errorMessage,
     canSubmit,
+    errorIndexList,
     focusNextInputOnEnter,
   } = useDynamicInput(validateMemberName);
   const {updateMemberList} = useStepList();
@@ -45,6 +46,7 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
                 elementKey={`${index}`}
                 type="text"
                 value={value}
+                isError={errorIndexList.includes(index)}
                 ref={el => (inputRefList.current[index] = el)}
                 onChange={e => handleInputChange(index, e)}
                 onBlur={() => deleteEmptyInputElementOnBlur()}

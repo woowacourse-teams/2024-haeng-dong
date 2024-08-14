@@ -4,9 +4,10 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Switch} from 'haengd
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
-import useEventId from '@hooks/useEventId/useEventId';
-import useAuth from '@hooks/useAuth/useAuth';
+import useAuth from '@hooks/useAuth';
 import useNavSwitch from '@hooks/useNavSwitch';
+
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
@@ -17,8 +18,8 @@ const EventLoginPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
-  const {eventId} = useEventId();
-  const {loginUser} = useAuth();
+  const eventId = getEventIdByUrl();
+  const {postLogin} = useAuth();
 
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

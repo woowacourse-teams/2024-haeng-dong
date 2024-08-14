@@ -6,9 +6,9 @@ import {requestPostBillList} from '@apis/request/bill';
 import {requestGetAllMemberList, requestPostMemberList} from '@apis/request/member';
 import {requestGetStepList} from '@apis/request/stepList';
 
-import useEventId from '@hooks/useEventId/useEventId';
+import {useFetch} from '@apis/useFetch';
 
-import {useFetch} from '@hooks/useFetch/useFetch';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
@@ -25,16 +25,7 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   const {fetch} = useFetch();
   const [stepList, setStepList] = useState<(BillStep | MemberStep)[]>([]);
   const [allMemberList, setAllMemberList] = useState<string[]>([]);
-
-  const {eventId} = useEventId();
-
-  useEffect(() => {
-    if (eventId === '') return;
-
-    refreshStepList();
-
-    // TODO: (@weadie) useEffect를 꼭 써야하는가?
-  }, [eventId]);
+  const eventId = getEventIdByUrl();
 
   const refreshStepList = async () => {
     const stepList = await fetch({queryFunction: () => requestGetStepList({eventId})});
@@ -42,6 +33,10 @@ const StepListProvider = ({children}: PropsWithChildren) => {
     getAllMemberList();
     setStepList(stepList);
   };
+
+  useEffect(() => {
+    refreshStepList();
+  }, []);
 
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
     try {

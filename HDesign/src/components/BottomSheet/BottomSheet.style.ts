@@ -9,10 +9,12 @@ export const display = (visible: boolean) =>
 
 export const dimmedLayerStyle = (theme: Theme, isOpened: boolean) =>
   css({
-    // TODO: (@todari) zindex foundation
     position: 'fixed',
     zIndex: '30',
-    inset: '0',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '768px',
     width: '100vw',
     height: '100vh',
     backgroundColor: theme.colors.black,
@@ -30,13 +32,14 @@ export const bottomSheetContainerStyle = (theme: Theme, isOpened: boolean, isDra
     alignItems: 'center',
     gap: '1.5rem',
     zIndex: '50',
-    inset: 'auto 0 0 0',
+    inset: 'auto 0 0 50%',
+    maxWidth: '768px',
     width: '100%',
     height: '80%',
     borderRadius: '1.5rem 1.5rem 0 0',
     backgroundColor: theme.colors.white,
 
-    transform: isOpened ? `translateY(${translateY}px)` : 'translateY(100%)',
+    transform: isOpened ? `translate(-50%, ${translateY}px)` : 'translate(-50%, 100%)',
     transition: isDragging ? 'none' : 'transform 0.2s ease-in-out',
   });
 

@@ -4,7 +4,7 @@ import {requestGetCurrentInMemberList} from '@apis/request/member';
 
 import {useFetch} from '@hooks/useFetch/useFetch';
 
-import useEventId from './useEventId/useEventId';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 export type ReturnUseSearchInMemberList = {
   currentInputIndex: number;
@@ -17,7 +17,7 @@ export type ReturnUseSearchInMemberList = {
 const useSearchInMemberList = (
   setInputValueTargetIndex: (index: number, value: string) => void,
 ): ReturnUseSearchInMemberList => {
-  const {eventId} = useEventId();
+  const eventId = getEventIdByUrl();
 
   const {fetch} = useFetch();
   const [currentInputIndex, setCurrentInputIndex] = useState(-1);
@@ -29,15 +29,13 @@ const useSearchInMemberList = (
   const [filteredInMemberList, setFilteredInMemberList] = useState<Array<string>>([]);
 
   useEffect(() => {
-    if (eventId === '') return;
-
     const getCurrentInMembers = async () => {
       const currentInMemberListFromServer = await fetch({queryFunction: () => requestGetCurrentInMemberList(eventId)});
       setCurrentInMemberList(currentInMemberListFromServer.members);
     };
 
     getCurrentInMembers();
-  }, [eventId]);
+  }, []);
 
   const filterMatchItems = (keyword: string) => {
     if (keyword.trim() === '') return [];
