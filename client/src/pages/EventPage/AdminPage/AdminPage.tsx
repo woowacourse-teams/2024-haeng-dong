@@ -1,16 +1,12 @@
 import {useEffect, useState} from 'react';
 import {Title, FixedButton, ListButton} from 'haengdong-design';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
-import {requestGetEventName} from '@apis/request/event';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
 import {useStepList} from '@hooks/useStepList';
-import useEventId from '@hooks/useEventId';
 import useAuth from '@hooks/useAuth';
-
-import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {EventPageContextProps} from '../EventPageLayout';
 
@@ -24,21 +20,14 @@ const AdminPage = () => {
 
   const {getTotalPrice, allMemberList} = useStepList();
   const {postAuthentication} = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (eventId === '') return;
-
     const postAuth = async () => {
-      try {
-        await postAuthentication({eventId: eventId});
-      } catch (error) {
-        navigate(`${ROUTER_URLS.event}/${eventId}/login`);
-      }
+      await postAuthentication({eventId: eventId});
     };
 
     postAuth();
-  }, [eventId]);
+  }, []);
 
   const handleOpenAllMemberListButton = () => {
     setIsOpenFixedBottomBottomSheet(prev => !prev);

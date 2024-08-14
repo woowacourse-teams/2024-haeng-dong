@@ -5,10 +5,11 @@ import {useState} from 'react';
 import {useToast} from '@components/Toast/ToastProvider';
 import {requestDeleteMemberAction} from '@apis/request/member';
 
-import useEventId from '@hooks/useEventId';
 import {useStepList} from '@hooks/useStepList';
 
 import {useFetch} from '@apis/useFetch';
+
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 const useDeleteMemberAction = (
   memberActionList: MemberAction[],
@@ -16,7 +17,7 @@ const useDeleteMemberAction = (
 ) => {
   const {stepList, refreshStepList} = useStepList();
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
-  const {eventId} = useEventId();
+  const eventId = getEventIdByUrl();
   const {showToast} = useToast();
   const {fetch} = useFetch();
 

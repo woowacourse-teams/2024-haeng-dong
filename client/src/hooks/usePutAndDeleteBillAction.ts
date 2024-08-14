@@ -5,11 +5,12 @@ import {useState} from 'react';
 import {ValidateResult} from '@utils/validate/type';
 import {requestDeleteBillAction, requestPutBillAction} from '@apis/request/bill';
 
-import useEventId from '@hooks/useEventId';
 import {useStepList} from '@hooks/useStepList';
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
 import {useFetch} from '@apis/useFetch';
+
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import ERROR_MESSAGE from '@constants/errorMessage';
 
@@ -18,7 +19,7 @@ const usePutAndDeleteBillAction = (
   validateFunc: (inputPair: Bill) => ValidateResult,
   onClose: () => void,
 ) => {
-  const {eventId} = useEventId();
+  const eventId = getEventIdByUrl();
   const {refreshStepList} = useStepList();
   const {fetch} = useFetch();
 

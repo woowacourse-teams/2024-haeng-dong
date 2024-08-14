@@ -1,5 +1,5 @@
 import {MainLayout, TopNav, Switch, Button, Flex} from 'haengdong-design';
-import {Outlet, useLocation, useMatch, useNavigate} from 'react-router-dom';
+import {Outlet, useMatch} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
@@ -8,7 +8,8 @@ import {requestGetEventName} from '@apis/request/event';
 
 import useNavSwitch from '@hooks/useNavSwitch';
 import StepListProvider from '@hooks/useStepList';
-import useEventId from '@hooks/useEventId';
+
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -21,8 +22,8 @@ export type EventPageContextProps = {
 const EventPageLayout = () => {
   const {nav, paths, onChange} = useNavSwitch();
 
-  const {eventId} = useEventId();
   const [eventName, setEventName] = useState('');
+  const eventId = getEventIdByUrl();
 
   useEffect(() => {
     const getEventName = async () => {
@@ -32,7 +33,7 @@ const EventPageLayout = () => {
     };
 
     getEventName();
-  }, [eventId]);
+  }, []);
 
   const isAdmin = useMatch(ROUTER_URLS.eventManage) !== null;
 
