@@ -1,5 +1,7 @@
+import REGEXP from '@constants/regExp';
+
 const extractEventIdFromUrl = (url: string) => {
-  const regex = /\/event\/([a-zA-Z0-9-]+)\//;
+  const regex = REGEXP.eventUrl;
   const match = url.match(regex);
   return match ? match[1] : null;
 };
