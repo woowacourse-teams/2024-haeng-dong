@@ -2,20 +2,13 @@ import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 
-import validateEventPassword from '@utils/validate/validateEventPassword';
-import {requestPostNewEvent} from '@apis/request/event';
-
-import useEvent from '@hooks/useEvent';
+import useSetPassword from '@hooks/useSetPassword';
 
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const SetEventPasswordPage = () => {
   const [eventName, setEventName] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [canSubmit, setCanSubmit] = useState(false);
-  const {createNewEvent} = useEvent();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,28 +20,8 @@ const SetEventPasswordPage = () => {
     }
   }, []);
 
-  const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const {password, errorMessage, canSubmit, submitPassword, handleChange} = useSetPassword(eventName);
 
-    const {eventId} = await createNewEvent({eventName, password: parseInt(password)});
-
-    navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    const validation = validateEventPassword(newValue);
-
-    setCanSubmit(newValue.length === RULE.maxEventPasswordLength);
-
-    if (validation.isValid) {
-      setPassword(newValue);
-      setErrorMessage('');
-    } else {
-      event.target.value = password;
-      setErrorMessage(validation.errorMessage ?? '');
-    }
-  };
   return (
     <MainLayout>
       <TopNav>
@@ -66,7 +39,7 @@ const SetEventPasswordPage = () => {
           onChange={e => handleChange(e)}
           isError={!!errorMessage}
           autoFocus
-        ></LabelInput>
+        />
         <FixedButton disabled={!canSubmit}>행동 개시!</FixedButton>
       </form>
     </MainLayout>
