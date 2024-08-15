@@ -9,7 +9,16 @@ const config: Config = {
   },
   collectCoverage: true,
   coverageReporters: ['text'],
-  coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/utils/', '<rootDir>/src/mocks/'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/src/utils/',
+    '<rootDir>/src/mocks/',
+    '<rootDir>/src/apis/',
+    '<rootDir>/src/request/',
+    '<rootDir>/src/constants/',
+    '<rootDir>/src/errors/',
+    '<rootDir>/src/ErrorProvider.tsx',
+  ],
 
   verbose: true,
   setupFiles: ['./jest.polyfills.ts'],
