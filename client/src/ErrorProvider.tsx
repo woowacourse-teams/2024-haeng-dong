@@ -30,17 +30,13 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   const [error, setErrorState] = useState<ServerError | null>(null);
 
   useEffect(() => {
-    console.log('ErrorProvider안에 있습니다.', error);
-    console.log(error, error?.errorCode);
     if (error) {
       if (isUnhandledError(error.errorCode)) {
         // 에러바운더리로 보내기
-        console.log('isUnhandledError입니다.');
 
         throw error;
       }
 
-      console.log('다뤄지는 에러입니다.');
       setHasError(true);
       const message = SERVER_ERROR_MESSAGES[error.errorCode];
       setErrorMessage(message);
@@ -57,7 +53,6 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   const clearError = (ms: number = 0) => {
     if (error === null) return;
 
-    console.log('clearError');
     setTimeout(() => {
       setHasError(false);
       setErrorMessage('');
