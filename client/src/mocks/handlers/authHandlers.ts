@@ -1,10 +1,8 @@
-import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {HttpResponse, http} from 'msw';
 
-type ErrorResponseBody = {
-  errorCode: string;
-  message: string;
-};
+import {TEMP_PREFIX} from '@apis/tempPrefix';
+
+import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
 
 type PostLoginParams = {
   eventId: string;
@@ -18,7 +16,11 @@ export const authHandler = [
   http.post(`${TEMP_PREFIX}/:eventId/auth`, ({cookies}) => {
     const token = cookies['eventToken'];
 
-    if (token === 'fake-token') {
+    if (token === VALID_TOKEN_FOR_TEST) {
+      return new HttpResponse(null, {
+        status: 200,
+      });
+    } else if (token !== undefined && token !== VALID_TOKEN_FOR_TEST) {
       return HttpResponse.json(
         {
           errorCode: 'TOKEN_INVALID',
@@ -26,10 +28,6 @@ export const authHandler = [
         },
         {status: 401},
       );
-    } else if (token) {
-      return new HttpResponse(null, {
-        status: 200,
-      });
     } else {
       return HttpResponse.json(
         {
@@ -47,7 +45,7 @@ export const authHandler = [
     async ({request}) => {
       const {password} = await request.json();
 
-      if (password === '1111') {
+      if (password === String(VALID_PASSWORD_FOR_TEST)) {
         return new HttpResponse(null, {
           headers: {
             'Set-Cookie': 'eventToken=abc-123',
