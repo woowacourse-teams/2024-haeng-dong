@@ -8,19 +8,16 @@ import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const SetEventPasswordPage = () => {
-  const [eventName, setEventName] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     if (!location.state) {
       navigate(ROUTER_URLS.main);
-    } else {
-      setEventName(location.state.eventName);
     }
-  }, []);
+  }, [location.state]);
 
-  const {password, errorMessage, canSubmit, submitPassword, handleChange} = useSetPassword(eventName);
+  const {password, errorMessage, canSubmit, submitPassword, handleChange} = useSetPassword(location.state?.eventName);
 
   return (
     <MainLayout>
