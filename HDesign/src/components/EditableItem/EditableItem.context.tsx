@@ -16,7 +16,7 @@ export const useEditableItemContext = () => {
   return context;
 };
 
-export const EditableItmProvider: React.FC<PropsWithChildren> = ({children}: React.PropsWithChildren) => {
+export const EditableItemProvider: React.FC<PropsWithChildren> = ({children}: React.PropsWithChildren) => {
   const [hasAnyFocus, setHasAnyFocus] = useState(false);
 
   return <EditableItemContext.Provider value={{hasAnyFocus, setHasAnyFocus}}>{children}</EditableItemContext.Provider>;

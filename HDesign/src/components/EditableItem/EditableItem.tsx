@@ -6,7 +6,7 @@ import {useTheme} from '@theme/HDesignProvider';
 import {editableItemStyle} from './EditableItem.style';
 import EditableItemInput from './EditableItem.Input';
 import {EditableItemProps} from './EditableItem.type';
-import {EditableItmProvider, useEditableItemContext} from './EditableItem.context';
+import {EditableItemProvider} from './EditableItem.context';
 import useEditableItem from './useEditableItem';
 
 const EditableItemBase = ({
@@ -29,9 +29,9 @@ const EditableItemBase = ({
 
 export const EditableItem = (props: EditableItemProps) => {
   return (
-    <EditableItmProvider>
+    <EditableItemProvider>
       <EditableItemBase {...props} />
-    </EditableItmProvider>
+    </EditableItemProvider>
   );
 };
 

@@ -4,7 +4,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import EditableItemInput from '@components/EditableItem/EditableItem.Input';
 
 import EditableItem from './EditableItem';
-import {EditableItmProvider} from './EditableItem.context';
+import {EditableItemProvider} from './EditableItem.context';
 
 const meta = {
   title: 'Components/EditableItemInput',
@@ -36,9 +36,9 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {
   render: ({...args}) => {
     return (
-      <EditableItmProvider>
+      <EditableItemProvider>
         <EditableItem.Input {...args} />
-      </EditableItmProvider>
+      </EditableItemProvider>
     );
   },
 };
