@@ -2,7 +2,6 @@ import type {MemberAction} from 'types/serviceType';
 
 import {useState} from 'react';
 
-import {useToast} from '@components/Toast/ToastProvider';
 import {requestDeleteMemberAction} from '@apis/request/member';
 
 import {useStepList} from '@hooks/useStepList';
@@ -18,7 +17,6 @@ const useDeleteMemberAction = (
   const {stepList, refreshStepList} = useStepList();
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
   const eventId = getEventIdByUrl();
-  const {showToast} = useToast();
   const {fetch} = useFetch();
 
   const deleteMemberAction = async (actionId: number) => {
@@ -47,35 +45,11 @@ const useDeleteMemberAction = (
   };
 
   const addDeleteMemberAction = (memberAction: MemberAction) => {
-    if (!memberActionList.includes(memberAction)) {
-      showToast({
-        isClickToClose: true,
-        showingTime: 3000,
-        message: '이미 삭제된 인원입니다.',
-        type: 'error',
-        bottom: '160px',
-      });
-      return;
-    }
-
-    if (isExistSameMemberFromAfterStep(memberAction)) {
-      showToast({
-        isClickToClose: true,
-        showingTime: 3000,
-        message: `이후의 ${memberAction.name}가 사라져요`,
-        type: 'error',
-        position: 'top',
-        top: '30px',
-        style: {
-          zIndex: 9000,
-        },
-      });
-    }
-
     setAliveActionList(prev => prev.filter(aliveMember => aliveMember.actionId !== memberAction.actionId));
   };
 
   // 현재 선택된 액션의 인덱스를 구해서 뒤의 동일인물의 액션이 있는지를 파악하는 기능
+  // 논의 후 제거 여부 결정
   const isExistSameMemberFromAfterStep = (memberAction: MemberAction) => {
     const memberActionList = stepList
       .filter(step => step.type !== 'BILL')
@@ -88,7 +62,7 @@ const useDeleteMemberAction = (
     return memberNameList.filter(member => member === memberAction.name).length >= 2;
   };
 
-  return {aliveActionList, deleteMemberActionList, addDeleteMemberAction};
+  return {aliveActionList, deleteMemberActionList, addDeleteMemberAction, isExistSameMemberFromAfterStep};
 };
 
 export default useDeleteMemberAction;
