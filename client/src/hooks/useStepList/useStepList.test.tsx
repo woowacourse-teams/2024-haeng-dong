@@ -102,4 +102,10 @@ describe('useStepList', () => {
 
     expect(result.current.stepListResult.stepList).toEqual(updatedStepList);
   });
+
+  it('provider안에서 호출되지 않으면 에러를 던진다.', () => {
+    expect(() => {
+      const {result} = renderHook(() => useStepList());
+    }).toThrow('useStepList는 StepListProvider 내에서 사용되어야 합니다.');
+  });
 });
