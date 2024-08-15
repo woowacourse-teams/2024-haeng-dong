@@ -1,12 +1,11 @@
 import {useEffect, useState} from 'react';
 import {Title, FixedButton, ListButton} from 'haengdong-design';
 import {useOutletContext} from 'react-router-dom';
+import useAuth from '@hooks/useAuth';
 
 import StepList from '@components/StepList/StepList';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
-
-import {useStepList} from '@hooks/useStepList';
-import useAuth from '@hooks/useAuth';
+import {useStepList} from '@hooks/useStepList/useStepList';
 
 import {EventPageContextProps} from '../EventPageLayout';
 

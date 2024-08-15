@@ -1,11 +1,11 @@
 import {RequestToken, requestPostAuthentication, requestPostToken} from '@apis/request/auth';
-
 import {useFetch} from '@hooks/useFetch/useFetch';
-import useEventId from '@hooks/useEventId/useEventId';
+
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 const useAuth = () => {
   const {fetch} = useFetch();
-  const {eventId} = useEventId();
+  const eventId = getEventIdByUrl();
 
   const checkAuthentication = async () => {
     return await fetch({queryFunction: () => requestPostAuthentication({eventId})});

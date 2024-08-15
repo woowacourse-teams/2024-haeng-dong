@@ -1,10 +1,13 @@
 import {renderHook} from '@testing-library/react';
-import useEvent from './useEvent';
 import {MemoryRouter} from 'react-router-dom';
-import {ErrorProvider, useError} from '../../ErrorProvider';
 import {act} from 'react';
+
 import {VALID_PASSWORD_FOR_TEST} from '@mocks/validValueForTest';
 import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
+
+import {ErrorProvider, useError} from '../../ErrorProvider';
+
+import useEvent from './useEvent';
 
 describe('useEvent', () => {
   const initializeProvider = () =>

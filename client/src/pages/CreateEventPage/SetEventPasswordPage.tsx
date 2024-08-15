@@ -4,7 +4,6 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdon
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 import {requestPostNewEvent} from '@apis/request/event';
-
 import useEvent from '@hooks/useEvent/useEvent';
 
 import RULE from '@constants/rule';

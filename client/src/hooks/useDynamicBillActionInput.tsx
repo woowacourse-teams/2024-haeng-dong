@@ -15,7 +15,6 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
   const [inputPairList, setInputPairList] = useState<InputPair[]>([{title: '', price: '', index: 0}]);
   const inputRefList = useRef<(HTMLInputElement | null)[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [errorIndexList, setErrorIndexList] = useState<number[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
 
   useEffect(() => {
@@ -35,14 +34,13 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
     });
 
     // TODO: (@weadie) 가독성이 안좋다는 리뷰. 함수로 분리
-    if (
-      isLastInputPairFilled({index, field, value}) &&
-      targetInputPair.title.trim().length !== 0 &&
-      targetInputPair.price.trim().length !== 0
-    ) {
+    if (isLastInputPairFilled({index, field, value})) {
       setErrorMessage('');
       setInputPairList(prevInputPairList => {
         const updatedInputPairList = [...prevInputPairList];
+        const targetInputPair = findInputPairByIndex(index, updatedInputPairList);
+
+        targetInputPair[field] = value;
 
         // 새로운 인덱스를 inputs 배열 길이를 기준으로 설정
         const newIndex = updatedInputPairList[updatedInputPairList.length - 1].index + 1;
@@ -50,22 +48,22 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
 
         return finalInputs;
       });
-    } else if (isValidInput) {
-      // 입력된 값이 유효하면 데이터(inputLis)를 변경합니다.
+    } else if (isValidInput || value.length === 0) {
       setErrorMessage('');
-      if (errorIndexList.includes(index)) {
-        setErrorIndexList(prev => prev.filter(i => i !== index));
-      }
+      setInputPairList(prevInputPairList => {
+        const updatedInputPairList = [...prevInputPairList];
+        const targetInputPair = findInputPairByIndex(index, updatedInputPairList);
 
-      changeInputListValue(index, value, field);
-    } else if (value.length === 0) {
-      setErrorMessage('');
-      changeErrorIndex(index);
+        targetInputPair[field] = value;
 
-      changeInputListValue(index, value, field);
+        return updatedInputPairList;
+      });
     } else {
+      const targetInput = findInputPairByIndex(index);
+
+      event.target.value = targetInput[field];
+
       setErrorMessage(validationResultMessage ?? '');
-      changeErrorIndex(targetInputPair.index);
     }
 
     handleCanSubmit();
@@ -98,26 +96,6 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
     setCanSubmit(inputPairList.length > 0 && getFilledInputPairList().length > 0);
   };
 
-  const changeInputListValue = (index: number, value: string, field: BillInputType) => {
-    setInputPairList(prevInputPairList => {
-      const updatedInputPairList = [...prevInputPairList];
-      const targetInputPair = findInputPairByIndex(index, updatedInputPairList);
-
-      targetInputPair[field] = value;
-
-      return updatedInputPairList;
-    });
-  };
-
-  const changeErrorIndex = (index: number) => {
-    setErrorIndexList(prev => {
-      if (!prev.includes(index)) {
-        return [...prev, index];
-      }
-      return prev;
-    });
-  };
-
   const focusNextInputOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, index: number, field: BillInputType) => {
     if (e.nativeEvent.isComposing) return;
 
@@ -138,7 +116,7 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
 
   // list 인자를 넘겨주면 그 인자로 찾고, 없다면 InputPairList state를 사용합니다.
   const getFilledInputPairList = (list?: InputPair[]) => {
-    return (list ?? inputPairList).filter(({title, price}) => title.trim().length !== 0 && price.trim().length !== 0);
+    return (list ?? inputPairList).filter(({title, price}) => title !== '' && price !== '');
   };
 
   const isLastInputPairFilled = ({index, value}: {index: number; field: BillInputType; value: string}) => {
@@ -151,7 +129,6 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
     inputPairList,
     getFilledInputPairList,
     inputRefList,
-    errorIndexList,
     handleInputChange,
     deleteEmptyInputPairElementOnBlur,
     errorMessage,

@@ -1,10 +1,12 @@
 import {renderHook} from '@testing-library/react';
-import StepListProvider, {useStepList} from '../useStepList';
 import {MemoryRouter} from 'react-router-dom';
-import useDeleteMemberAction from './useDeleteMemberAction';
-import stepListJson from '../../mocks/memberActionStepList.json';
 import {act} from 'react';
+
+import stepListJson from '../../mocks/memberActionStepList.json';
+import StepListProvider, {useStepList} from '../useStepList/useStepList';
 import {ErrorProvider} from '../../ErrorProvider';
+
+import useDeleteMemberAction from './useDeleteMemberAction';
 
 const stepListMockData = stepListJson;
 const memberActionList = stepListMockData[0].actions;

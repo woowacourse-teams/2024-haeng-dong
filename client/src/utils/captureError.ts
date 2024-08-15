@@ -1,8 +1,11 @@
+import {NavigateFunction} from 'react-router-dom';
+
 import FetchError from '@errors/FetchError';
 import {ServerError} from 'ErrorProvider';
-import {NavigateFunction} from 'react-router-dom';
-import sendLogToSentry from './sendLogToSentry';
+
 import {ROUTER_URLS} from '@constants/routerUrls';
+
+import sendLogToSentry from './sendLogToSentry';
 
 // TODO: (@weadie) 함수 분리
 export const captureError = async (error: Error, navigate: NavigateFunction, eventId: string) => {

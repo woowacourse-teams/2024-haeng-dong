@@ -1,13 +1,14 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import useEventId from '@hooks/useEventId/useEventId';
+import FetchError from '@errors/FetchError';
+
+import {captureError} from '@utils/captureError';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
 
 import {useError} from '../../ErrorProvider';
-import FetchError from '@errors/FetchError';
-import {captureError} from '@utils/captureError';
 
 type FetchProps<T> = {
   queryFunction: () => Promise<T>;
@@ -19,7 +20,7 @@ export const useFetch = () => {
   const {setError, clearError} = useError();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {eventId} = useEventId();
+  const eventId = getEventIdByUrl();
 
   const fetch = async <T>({queryFunction, onSuccess, onError}: FetchProps<T>): Promise<T> => {
     setLoading(true);
@@ -34,12 +35,10 @@ export const useFetch = () => {
 
       return result;
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) {
         const errorBody =
           error instanceof FetchError ? error.errorBody : {errorCode: error.name, message: error.message};
 
-        console.log(errorBody);
         setError(errorBody);
 
         if (onError) {

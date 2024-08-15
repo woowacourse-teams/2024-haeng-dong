@@ -1,12 +1,9 @@
 import {Tab, Tabs, Title} from 'haengdong-design';
-import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 
 import MemberReportList from '@components/MemberReportList/MemberReportList';
 import StepList from '@components/StepList/StepList';
-import {requestGetEventName} from '@apis/request/event';
-
-import {useStepList} from '@hooks/useStepList';
+import {useStepList} from '@hooks/useStepList/useStepList';
 
 import {EventPageContextProps} from '../EventPageLayout';
 
