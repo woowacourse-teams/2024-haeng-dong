@@ -39,13 +39,9 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   }, []);
 
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
-    try {
-      await fetch({queryFunction: () => requestPostMemberList({eventId, type, memberNameList})});
+    await fetch({queryFunction: () => requestPostMemberList({eventId, type, memberNameList})});
 
-      refreshStepList();
-    } catch (error) {
-      alert(error);
-    }
+    refreshStepList();
   };
 
   const getAllMemberList = async () => {
