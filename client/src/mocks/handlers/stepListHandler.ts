@@ -40,10 +40,22 @@ export const stepListHandler = [
     });
   }),
 
-  http.delete(`${TEMP_PREFIX}/:eventId/member-actions/:actionId`, () => {
-    return HttpResponse.json({
-      status: 200,
-    });
+  http.delete<{actionId: string}>(`${TEMP_PREFIX}/:eventId/member-actions/:actionId`, ({params}) => {
+    const {actionId} = params;
+
+    if (parseInt(actionId) < 0) {
+      return HttpResponse.json(
+        {
+          errorCode: 'MEMBER_ACTION_STATUS_INVALID',
+          message: 'actionId는 음수일 수 없습니다.',
+        },
+        {status: 401},
+      );
+    } else {
+      return HttpResponse.json({
+        status: 200,
+      });
+    }
   }),
 
   http.post<any, PostMemberListRequestBody, any, `${typeof TEMP_PREFIX}/:eventId/member-actions`>(
