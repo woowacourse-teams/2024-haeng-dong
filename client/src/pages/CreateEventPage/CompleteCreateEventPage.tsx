@@ -26,8 +26,8 @@ const CompleteCreateEventPage = () => {
 
   const {showToast} = useToast();
 
-  const env = process.env.NODE_ENV || '';
-  const homeUrlByEnvironment = `https://${env.includes('development') ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${url}/home`;
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  const homeUrlByEnvironment = `https://${isDevelopment ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${url}/home`;
 
   return (
     <MainLayout>

@@ -45,7 +45,7 @@ const EventPageLayout = () => {
 
   const {showToast} = useToast();
 
-  const env = process.env.NODE_ENV || '';
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
   return (
     <StepListProvider>
@@ -53,7 +53,7 @@ const EventPageLayout = () => {
         <TopNav>
           <Switch value={nav} values={paths} onChange={onChange} />
           <CopyToClipboard
-            text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\nhttps://${env.includes('development') ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${eventId}/home`}
+            text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\nhttps://${isDevelopment ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${eventId}/home`}
             onCopy={() =>
               showToast({
                 showingTime: 3000,
