@@ -4,7 +4,6 @@ import React, {useEffect} from 'react';
 import {useTheme} from '@theme/HDesignProvider';
 
 import {editableItemStyle} from './EditableItem.style';
-
 import EditableItemInput from './EditableItem.Input';
 import {EditableItemProps} from './EditableItem.type';
 import {EditableItmProvider, useEditableItemContext} from './EditableItem.context';

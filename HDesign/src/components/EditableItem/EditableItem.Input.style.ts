@@ -1,6 +1,9 @@
-import {TextSize} from '@components/Text/Text.type';
 import {css} from '@emotion/react';
+
+import {TextSize} from '@components/Text/Text.type';
+
 import {Theme} from '@theme/theme.type';
+
 import TYPOGRAPHY from '@token/typography';
 
 interface InputWrapperStyleProps {

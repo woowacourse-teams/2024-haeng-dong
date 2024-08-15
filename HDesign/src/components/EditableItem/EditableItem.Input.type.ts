@@ -1,4 +1,5 @@
 import {TextSize} from '@components/Text/Text.type';
+
 import {Theme} from '@theme/theme.type';
 
 export interface InputStyleProps {
