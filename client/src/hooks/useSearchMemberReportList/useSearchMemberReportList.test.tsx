@@ -19,7 +19,7 @@ describe('useSearchMemberReportList', () => {
   it('빈 값을 검색한다면 검색 목록은 비어있다.', async () => {
     const {result} = initializeProvider('');
 
-    await waitFor(() => expect(result.current.memberReportSearchList).toEqual(reportListJson));
+    await waitFor(() => expect(result.current.memberReportSearchList).toStrictEqual(reportListJson));
   });
 
   it('검색어의 일부와 일치하는 이름이 있다면 해당 이름을 목록에 반환한다.', async () => {

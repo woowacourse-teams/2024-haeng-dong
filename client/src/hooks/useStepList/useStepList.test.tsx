@@ -38,14 +38,14 @@ describe('useStepList', () => {
   it('처음 호출하면 stepList 값을 요청해 받아온다.', async () => {
     const {result} = initializeProvider();
 
-    await waitFor(() => expect(result.current.stepListResult.stepList).toEqual(stepListMockData));
+    await waitFor(() => expect(result.current.stepListResult.stepList).toStrictEqual(stepListMockData));
   });
 
   it('처음 호출하면 모든 멤버의 목록을 요청해 받아온다.', async () => {
     const {result} = initializeProvider();
     const allMemberList = getMemberNameList();
 
-    await waitFor(() => expect(result.current.stepListResult.allMemberList).toEqual(allMemberList));
+    await waitFor(() => expect(result.current.stepListResult.allMemberList).toStrictEqual(allMemberList));
   });
 
   it('지출 내역의 총액을 계산한다.', async () => {
@@ -58,9 +58,9 @@ describe('useStepList', () => {
     }, 0);
 
     // 값이 세팅되기까지 대기하기 위함. 그래서 아래 한 줄 없으면 에러남
-    await waitFor(() => expect(result.current.stepListResult.stepList).toEqual(stepListMockData));
+    await waitFor(() => expect(result.current.stepListResult.stepList).toStrictEqual(stepListMockData));
 
-    expect(result.current.stepListResult.getTotalPrice()).toEqual(totalPrice);
+    expect(result.current.stepListResult.getTotalPrice()).toStrictEqual(totalPrice);
   });
 
   it('들어옴 멤버를 추가한다.', async () => {
@@ -100,7 +100,7 @@ describe('useStepList', () => {
 
     await act(async () => result.current.stepListResult.addBill(billList, () => {}));
 
-    expect(result.current.stepListResult.stepList).toEqual(updatedStepList);
+    expect(result.current.stepListResult.stepList).toStrictEqual(updatedStepList);
   });
 
   it('provider안에서 호출되지 않으면 에러를 던진다.', () => {
