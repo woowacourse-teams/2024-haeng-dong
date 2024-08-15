@@ -11,6 +11,7 @@ import {UNKNOWN_ERROR} from '@constants/errorMessage';
 import {ErrorProvider, useError} from '../../ErrorProvider';
 
 import {useFetch} from './useFetch';
+import FetchError from '@errors/FetchError';
 
 describe('useFetch', () => {
   const initializeProvider = () =>
@@ -62,17 +63,45 @@ describe('useFetch', () => {
       };
       const errorThrowFunction = () => requestPostWithoutResponse({endpoint: '/throw-handle-error'});
 
-      it('에러가 발생하면 에러 상태가 저장된다.', async () => {
+      it('FetchError가 발생하면 해당 에러의 errorBody를 사용해 상태를 저장한다.', async () => {
         const {result} = initializeProvider();
+        const fetchError = new FetchError({
+          errorBody: {errorCode: 'UNHANDLED', message: 'Fetch error occurred'},
+          name: 'UNHANDLED',
+          message: 'Fetch error occurred',
+          requestBody: '',
+          status: 400,
+          endpoint: '',
+          method: 'POST',
+        });
+        const mockQueryFunction = jest.fn().mockRejectedValue(fetchError);
 
         await act(async () => {
-          await result.current.fetchResult.fetch({
-            queryFunction: errorThrowFunction,
-          });
+          await result.current.fetchResult.fetch({queryFunction: mockQueryFunction});
         });
 
         await waitFor(() => {
-          expect(result.current.errorResult.error?.message).toBe(error.message);
+          expect(result.current.errorResult.error?.errorCode).toBe('UNHANDLED');
+          expect(result.current.errorResult.error?.message).toBe('Fetch error occurred');
+        });
+      });
+
+      it('일반 Error가 발생하면 해당 에러의 name과 message를 사용해 상태를 저장한다.', async () => {
+        const {result} = initializeProvider();
+        const mockError = new Error('일반 에러 발생');
+        const mockQueryFunction = jest.fn().mockRejectedValue(mockError);
+
+        try {
+          await act(async () => {
+            await result.current.fetchResult.fetch({queryFunction: mockQueryFunction});
+          });
+        } catch (error) {
+          // 에러 바운더리로 보내지는 에러라서 throw하는데 이를 받아줄 에러 바운더리를 호출하지 않았으므로 catch문에서 별다른 로직을 작성하지 않음
+        }
+
+        await waitFor(() => {
+          expect(result.current.errorResult.error?.errorCode).toBe('Error');
+          expect(result.current.errorResult.error?.message).toBe('일반 에러 발생');
         });
       });
 
