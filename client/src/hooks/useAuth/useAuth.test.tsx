@@ -1,18 +1,13 @@
 import {renderHook, waitFor} from '@testing-library/react';
-import useAuth from './useAuth';
 import {act} from 'react';
-import {ErrorProvider, useError} from '../../ErrorProvider';
 import {MemoryRouter} from 'react-router-dom';
+
 import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
 import {VALID_PASSWORD_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 
-// 현재의 location path를 모킹합니다.
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    pathname: '/event/abc-123/',
-  }),
-}));
+import {ErrorProvider, useError} from '../../ErrorProvider';
+
+import useAuth from './useAuth';
 
 describe('useAuth', () => {
   const initializeProvider = () =>
