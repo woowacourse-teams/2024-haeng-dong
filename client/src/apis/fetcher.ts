@@ -1,9 +1,10 @@
 import {ServerError} from 'ErrorProvider';
 
+import objectToQueryString from '@utils/objectToQueryString';
+
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
 
 import FetchError from '../errors/FetchError';
-import objectToQueryString from '@utils/objectToQueryString';
 
 export type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
