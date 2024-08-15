@@ -17,7 +17,7 @@ export type ReturnUseDynamicInput = {
   focusNextInputOnEnter: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
   canSubmit: boolean;
   errorIndexList: number[];
-  setInputValueTargetIndex: (index: number, value: string) => void;
+  validateAndSetTargetInput: (index: number, value: string) => void;
 };
 
 const useDynamicInput = (validateFunc: (name: string) => ValidateResult): ReturnUseDynamicInput => {
@@ -37,11 +37,15 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     }
   }, [inputList]);
 
+  // event에서 value를 받아와서 새 인풋을 만들고 검증 후 set 하는 함수
   const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
-    const {isValid: isValidInput, errorMessage: validationResultMessage} = validateFunc(value);
+    makeNewInputWhenFirstCharacterInput(index, value);
+    validateAndSetTargetInput(index, value);
+  };
 
-    // TODO: (@weadie) 가독성이 안좋다는 리뷰. 함수 분리필요
+  // 첫 번째 문자가 입력됐을 때 새로운 인풋이 생기는 기능 분리
+  const makeNewInputWhenFirstCharacterInput = (index: number, value: string) => {
     if (isLastInputFilled(index, value) && value.trim().length !== 0) {
       // 마지막 인풋이 한 자라도 채워진다면 새로운 인풋을 생성해 간편한 다음 입력을 유도합니다.
       setInputList(prevInputs => {
@@ -52,8 +56,15 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
 
         return [...updatedInputList, {index: newIndex, value: ''}];
       });
-    } else if (isValidInput) {
-      // 입력된 값이 유효하면 데이터(inputLis)를 변경합니다.
+    }
+  };
+
+  // onChange와 setValue 둘 다 지원하기 위해서 validate를 분리
+  const validateAndSetTargetInput = (index: number, value: string) => {
+    const {isValid: isValidInput, errorMessage: validationResultMessage} = validateFunc(value);
+
+    if (isValidInput) {
+      // 입력된 값이 유효하면 데이터(inputList)를 변경합니다.
       setErrorMessage('');
 
       if (errorIndexList.includes(index)) {
@@ -76,13 +87,17 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
       setErrorMessage(validationResultMessage ?? '');
       changeErrorIndex(targetInput.index);
     }
-
-    handleCanSubmit();
   };
+
+  // inputList가 변했을 때 canSubmit이 반영되도록
+  // setValue가 수행되기 전에 handleCanSubmit이 실행되어 새로운 입력값에 대한 검증이 되지 않는 버그를 해결
+  useEffect(() => {
+    handleCanSubmit();
+  }, [inputList]);
 
   // 현재까지 입력된 값들로 submit을 할 수 있는지 여부를 핸들합니다.
   const handleCanSubmit = () => {
-    setCanSubmit(inputList.length > 0 && getFilledInputList().length > 0);
+    setCanSubmit(inputList.length > 0 && getFilledInputList().length > 0 && errorIndexList.length === 0);
   };
 
   const deleteEmptyInputElementOnBlur = () => {
@@ -128,17 +143,6 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     });
   };
 
-  const setInputValueTargetIndex = (index: number, value: string) => {
-    setInputList(prevInputs => {
-      const updatedInputList = [...prevInputs];
-      const targetInput = findInputByIndex(index, updatedInputList);
-
-      targetInput.value = value;
-
-      return updatedInputList;
-    });
-  };
-
   const focusNextInputOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.nativeEvent.isComposing) return;
 
@@ -174,7 +178,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     focusNextInputOnEnter,
     canSubmit,
     errorIndexList,
-    setInputValueTargetIndex,
+    validateAndSetTargetInput,
     // TODO: (@weadie) 네이밍 수정
   };
 };
