@@ -78,4 +78,23 @@ describe('useDeleteMemberAction', () => {
 
     expect(result.current.deleteMemberActionList.aliveActionList).toHaveLength(0);
   });
+
+  it('삭제 요청에서 오류가 발생했을 경우 삭제할 멤버 목록을 처음의 상태로 돌려놓는다.', async () => {
+    const {result} = initializeProvider();
+
+    await act(async () => {
+      const memberAction = {
+        actionId: -1, // 올바르지 않은 인덱스로 오류 유도
+        name: '망쵸',
+        price: null,
+        sequence: 1,
+      };
+
+      result.current.deleteMemberActionList.addDeleteMemberAction(memberAction);
+    });
+
+    await act(async () => result.current.deleteMemberActionList.deleteMemberActionList());
+
+    expect(result.current.deleteMemberActionList.aliveActionList).toStrictEqual(memberActionList);
+  });
 });
