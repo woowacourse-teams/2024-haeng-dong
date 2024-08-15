@@ -3,7 +3,6 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
-import {requestPostNewEvent} from '@apis/request/event';
 
 import useEvent from '@hooks/useEvent';
 
