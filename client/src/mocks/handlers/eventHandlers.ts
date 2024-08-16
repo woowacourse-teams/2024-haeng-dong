@@ -4,8 +4,9 @@ import {RequestPostNewEvent, ResponsePostNewEvent} from '@apis/request/event';
 
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 
-import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 import {PASSWORD_LENGTH} from '@constants/password';
+
+import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 
 type ErrorResponseBody = {
   errorCode: string;

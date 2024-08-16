@@ -2,12 +2,13 @@ import {renderHook, waitFor} from '@testing-library/react';
 import {act} from 'react';
 import {MemoryRouter} from 'react-router-dom';
 
+import {PASSWORD_LENGTH} from '@constants/password';
+
 import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
 
 import {ErrorProvider, useError} from '../../ErrorProvider';
 
 import useAuth from './useAuth';
-import {PASSWORD_LENGTH} from '@constants/password';
 
 describe('useAuth', () => {
   const initializeProvider = () =>

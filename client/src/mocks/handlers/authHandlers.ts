@@ -2,8 +2,9 @@ import {HttpResponse, http} from 'msw';
 
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 
-import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
 import {PASSWORD_LENGTH} from '@constants/password';
+
+import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
 
 type PostLoginParams = {
   eventId: string;

@@ -2,13 +2,14 @@ import {renderHook} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
 
+import {PASSWORD_LENGTH} from '@constants/password';
+
 import {VALID_PASSWORD_FOR_TEST} from '@mocks/validValueForTest';
 import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 
 import {ErrorProvider, useError} from '../../ErrorProvider';
 
 import useEvent from './useEvent';
-import {PASSWORD_LENGTH} from '@constants/password';
 
 describe('useEvent', () => {
   const initializeProvider = () =>
