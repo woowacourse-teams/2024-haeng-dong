@@ -43,11 +43,11 @@ export const stepListHandler = [
   http.delete<{actionId: string}>(`${TEMP_PREFIX}/:eventId/member-actions/:actionId`, ({params}) => {
     const {actionId} = params;
 
-    if (parseInt(actionId) < 0) {
+    if (parseInt(actionId) === 999) {
       return HttpResponse.json(
         {
           errorCode: 'MEMBER_ACTION_STATUS_INVALID',
-          message: 'actionId는 음수일 수 없습니다.',
+          message: 'actionId는 999일 수 없습니다.(고의로 만든 에러임)',
         },
         {status: 401},
       );
