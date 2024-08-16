@@ -25,7 +25,8 @@ const meta = {
   },
   args: {
     title: '페이지 제목이에요',
-    description: '이곳에는 페이지 설명이 들어가요. 페이지에 대한 설명을 자세하게 적어주면 좋아요 :)',
+    description: `이곳에는 페이지 설명이 들어가요.
+    페이지에 대한 설명을 자세하게 적어주면 좋아요 :)`,
     price: 100000,
   },
 } satisfies Meta<typeof Title>;
