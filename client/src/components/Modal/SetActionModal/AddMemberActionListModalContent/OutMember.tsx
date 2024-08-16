@@ -15,10 +15,10 @@ const OutMember = ({dynamicProps}: OutMemberProps) => {
     deleteEmptyInputElementOnBlur,
     focusNextInputOnEnter,
     handleInputChange,
-    validateAndSetTargetInput,
+    handleChange,
   } = dynamicProps;
   const {currentInputIndex, filteredInMemberList, handleCurrentInputIndex, searchCurrentInMember, chooseMember} =
-    useSearchInMemberList(validateAndSetTargetInput);
+    useSearchInMemberList(handleChange);
 
   const validationAndSearchOnChange = (inputIndex: number, event: React.ChangeEvent<HTMLInputElement>) => {
     handleCurrentInputIndex(inputIndex);

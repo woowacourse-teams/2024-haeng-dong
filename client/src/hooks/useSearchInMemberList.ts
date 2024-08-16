@@ -14,9 +14,7 @@ export type ReturnUseSearchInMemberList = {
   chooseMember: (inputIndex: number, name: string) => void;
 };
 
-const useSearchInMemberList = (
-  validateAndSetTargetInput: (index: number, value: string) => void,
-): ReturnUseSearchInMemberList => {
+const useSearchInMemberList = (handleChange: (index: number, value: string) => void): ReturnUseSearchInMemberList => {
   const eventId = getEventIdByUrl();
 
   const {fetch} = useFetch();
@@ -49,7 +47,7 @@ const useSearchInMemberList = (
 
   const chooseMember = (inputIndex: number, name: string) => {
     setFilteredInMemberList([]);
-    validateAndSetTargetInput(inputIndex, name);
+    handleChange(inputIndex, name);
   };
 
   const searchCurrentInMember = (event: React.ChangeEvent<HTMLInputElement>) => {
