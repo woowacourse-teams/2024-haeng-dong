@@ -14,7 +14,7 @@ export type BillInputType = 'title' | 'price';
 const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateResult) => {
   const [inputPairList, setInputPairList] = useState<InputPair[]>([{title: '', price: '', index: 0}]);
   const inputRefList = useRef<(HTMLInputElement | null)[]>([]);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errorIndexList, setErrorIndexList] = useState<number[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
 
@@ -34,13 +34,14 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
       [field]: value,
     });
 
+    setErrorMessage(validationResultMessage);
+
     // TODO: (@weadie) 가독성이 안좋다는 리뷰. 함수로 분리
     if (
       isLastInputPairFilled({index, field, value}) &&
       targetInputPair.title.trim().length !== 0 &&
       targetInputPair.price.trim().length !== 0
     ) {
-      setErrorMessage('');
       setInputPairList(prevInputPairList => {
         const updatedInputPairList = [...prevInputPairList];
 
@@ -52,19 +53,17 @@ const useDynamicBillActionInput = (validateFunc: (inputPair: Bill) => ValidateRe
       });
     } else if (isValidInput) {
       // 입력된 값이 유효하면 데이터(inputLis)를 변경합니다.
-      setErrorMessage('');
       if (errorIndexList.includes(index)) {
         setErrorIndexList(prev => prev.filter(i => i !== index));
       }
 
       changeInputListValue(index, value, field);
     } else if (value.length === 0) {
-      setErrorMessage('');
+      setErrorMessage(null);
       changeErrorIndex(index);
 
       changeInputListValue(index, value, field);
     } else {
-      setErrorMessage(validationResultMessage ?? '');
       changeErrorIndex(targetInputPair.index);
     }
 

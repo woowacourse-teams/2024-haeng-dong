@@ -12,7 +12,7 @@ type InputValue = {
 export type ReturnUseDynamicInput = {
   inputList: InputValue[];
   inputRefList: React.MutableRefObject<(HTMLInputElement | null)[]>;
-  errorMessage: string;
+  errorMessage: string | null;
   canSubmit: boolean;
   errorIndexList: number[];
   handleChange: (index: number, value: string) => void;

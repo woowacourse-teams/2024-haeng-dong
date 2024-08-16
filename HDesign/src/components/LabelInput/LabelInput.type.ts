@@ -2,7 +2,7 @@ export interface LabelInputStyleProps {}
 
 export interface LabelInputCustomProps {
   labelText: string;
-  errorText?: string;
+  errorText: string | null;
   isError?: boolean;
   autoFocus: boolean;
 }
