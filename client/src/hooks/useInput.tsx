@@ -6,7 +6,7 @@ import {ERROR_MESSAGE} from '@constants/errorMessage';
 
 export type InputValue = {
   value: string;
-  index: number;
+  index?: number;
 };
 
 export type UseInputReturn<T = InputValue> = {
@@ -35,7 +35,7 @@ const useInput = <T extends InputValue>({validateFunc, initialInputList}: UseInp
     changeCanSubmit();
   }, [errorMessage, errorIndexList]);
 
-  const handleChange = (index: number, value: string) => {
+  const handleChange = (index: number = 0, value: string) => {
     const {isValid, errorMessage: validationResultMessage} = validateFunc(value);
 
     if (validationResultMessage === ERROR_MESSAGE.preventEmpty) {
