@@ -30,7 +30,7 @@ describe('useFetch', () => {
     );
 
   describe('요청이 성공하는 경우', () => {
-    it('요청이 성공했다면 그대로 결과를 반환한다.', async () => {
+    it('요청이 성공했다면 그대로 api response body를 반환한다.', async () => {
       const {result} = initializeProvider();
       const mockQueryFunction = jest.fn().mockResolvedValue('mocked data');
 
@@ -58,10 +58,6 @@ describe('useFetch', () => {
 
   describe('요청이 실패하는 경우', () => {
     describe('발생한 에러가 Error 인스턴스인 경우', () => {
-      const error = {
-        errorCode: 'TOKEN_NOT_FOUND',
-        message: '핸들링되는 테스트 에러입니다.',
-      };
       const errorThrowFunction = () => requestPostWithoutResponse({endpoint: '/throw-handle-error'});
 
       it('FetchError가 발생하면 해당 에러의 errorBody를 사용해 상태를 저장한다.', async () => {
