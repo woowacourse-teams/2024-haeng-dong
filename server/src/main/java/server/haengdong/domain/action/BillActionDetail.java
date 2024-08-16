@@ -33,7 +33,11 @@ public class BillActionDetail {
         this.price = price;
     }
 
-    public BillActionDetail update(Long price) {
-        return new BillActionDetail(id, billAction, memberName, price);
+    public void updatePrice(Long price) {
+        this.price = price;
+    }
+
+    public boolean isSameName(String memberName) {
+        return this.memberName.equals(memberName);
     }
 }

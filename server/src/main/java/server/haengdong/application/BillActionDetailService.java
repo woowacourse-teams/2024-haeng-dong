@@ -1,6 +1,5 @@
 package server.haengdong.application;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,29 +27,21 @@ public class BillActionDetailService {
         BillAction billAction = billActionRepository.findByAction_Id(actionId)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND));
 
-        validateToken(token, billAction);
         List<BillActionDetailUpdateAppRequest> billActionDetailUpdateAppRequests = request.billActionDetailUpdateAppRequests();
 
-        Long requestsPriceSum = billActionDetailUpdateAppRequests.stream()
-                .map(BillActionDetailUpdateAppRequest::price)
-                .reduce(0L, Long::sum);
-        if (!billAction.getPrice().equals(requestsPriceSum)) {
-            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_PRICE_NOT_MATCHED);
-        }
+        validateToken(token, billAction);
+        validateTotalPrice(billActionDetailUpdateAppRequests, billAction);
 
         List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
 
-        List<BillActionDetail> updatedBillActionDetails = new ArrayList<>();
         for (BillActionDetailUpdateAppRequest updateRequest : billActionDetailUpdateAppRequests) {
             BillActionDetail detailToUpdate = billActionDetails.stream()
-                    .filter(detail -> detail.getMemberName().equals(updateRequest.name()))
+                    .filter(detail -> detail.isSameName(updateRequest.name()))
                     .findFirst()
                     .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_DETAIL_NOT_FOUND));
 
-            updatedBillActionDetails.add(detailToUpdate.update(updateRequest.price()));
+            detailToUpdate.updatePrice(updateRequest.price());
         }
-
-        billActionDetailRepository.saveAll(updatedBillActionDetails);
     }
 
     private void validateToken(String token, BillAction billAction) {
@@ -58,5 +49,19 @@ public class BillActionDetailService {
         if (event.isTokenMismatch(token)) {
             throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND);
         }
+    }
+
+    private void validateTotalPrice(List<BillActionDetailUpdateAppRequest> billActionDetailUpdateAppRequests,
+                                    BillAction billAction) {
+        Long requestsPriceSum = calculateUpdatePriceSum(billActionDetailUpdateAppRequests);
+        if (!billAction.isSamePrice(requestsPriceSum)) {
+            throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_PRICE_NOT_MATCHED);
+        }
+    }
+
+    private Long calculateUpdatePriceSum(List<BillActionDetailUpdateAppRequest> billActionDetailUpdateAppRequests) {
+        return billActionDetailUpdateAppRequests.stream()
+                .map(BillActionDetailUpdateAppRequest::price)
+                .reduce(0L, Long::sum);
     }
 }
