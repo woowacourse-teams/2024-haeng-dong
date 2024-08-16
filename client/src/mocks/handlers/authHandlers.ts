@@ -4,7 +4,12 @@ import {TEMP_PREFIX} from '@apis/tempPrefix';
 
 import {PASSWORD_LENGTH} from '@constants/password';
 
-import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
+import {
+  EXPIRED_TOKEN_FOR_TEST,
+  FORBIDDEN_TOKEN_FOR_TEST,
+  VALID_PASSWORD_FOR_TEST,
+  VALID_TOKEN_FOR_TEST,
+} from '@mocks/validValueForTest';
 
 type PostLoginParams = {
   eventId: string;
@@ -22,19 +27,35 @@ export const authHandler = [
       return new HttpResponse(null, {
         status: 200,
       });
-    } else if (token !== undefined && token !== VALID_TOKEN_FOR_TEST) {
+    } else if (token === EXPIRED_TOKEN_FOR_TEST) {
       return HttpResponse.json(
         {
-          errorCode: 'TOKEN_INVALID',
-          message: '유효하지 않은 토큰입니다.',
+          errorCode: 'TOKEN_EXPIRED',
+          message: '만료된 토큰입니다.',
+        },
+        {status: 401},
+      );
+    } else if (token === FORBIDDEN_TOKEN_FOR_TEST) {
+      return HttpResponse.json(
+        {
+          errorCode: 'FORBIDDEN',
+          message: '접근할 수 없는 행사입니다.',
+        },
+        {status: 401},
+      );
+    } else if (token === undefined) {
+      return HttpResponse.json(
+        {
+          errorCode: 'TOKEN_NOT_FOUND',
+          message: '토큰이 존재하지 않습니다.',
         },
         {status: 401},
       );
     } else {
       return HttpResponse.json(
         {
-          errorCode: 'TOKEN_NOT_FOUND',
-          message: '토큰이 존재하지 않습니다.',
+          errorCode: 'TOKEN_INVALID',
+          message: '유효하지 않은 토큰입니다.',
         },
         {status: 401},
       );
