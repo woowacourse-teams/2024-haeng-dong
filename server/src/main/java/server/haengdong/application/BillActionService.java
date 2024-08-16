@@ -9,6 +9,8 @@ import server.haengdong.application.request.BillActionUpdateAppRequest;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
+import server.haengdong.domain.action.BillActionDetail;
+import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
@@ -23,6 +25,7 @@ public class BillActionService {
     private final BillActionRepository billActionRepository;
     private final ActionRepository actionRepository;
     private final EventRepository eventRepository;
+    private final BillActionDetailRepository billActionDetailRepository;
 
     @Transactional
     public void saveAllBillAction(String eventToken, List<BillActionAppRequest> requests) {
@@ -49,8 +52,21 @@ public class BillActionService {
 
         validateToken(token, billAction);
 
+        resetBillActionDetail(billAction, request.price());
+
         BillAction updatedBillAction = billAction.update(request.title(), request.price());
         billActionRepository.save(updatedBillAction);
+    }
+
+    private void resetBillActionDetail(BillAction billAction, Long updatePrice) {
+        if (billAction.getPrice() != updatePrice) {
+            List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(billAction);
+            int memberCount = billActionDetails.size();
+            if (memberCount != 0) {
+                Long eachPrice = updatePrice / memberCount;
+                billActionDetails.forEach(billActionDetail -> billActionDetail.updatePrice(eachPrice));
+            }
+        }
     }
 
     private void validateToken(String token, BillAction billAction) {

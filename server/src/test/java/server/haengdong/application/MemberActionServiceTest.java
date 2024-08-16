@@ -14,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.action.Action;
+import server.haengdong.domain.action.BillAction;
+import server.haengdong.domain.action.BillActionDetail;
+import server.haengdong.domain.action.BillActionDetailRepository;
+import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.action.MemberActionStatus;
@@ -32,6 +36,12 @@ class MemberActionServiceTest extends ServiceTestSupport {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private BillActionRepository billActionRepository;
+
+    @Autowired
+    private BillActionDetailRepository billActionDetailRepository;
 
     @DisplayName("현재 행사에 참여하고 있는 경우에 나갈 수 있다.")
     @Test
@@ -115,6 +125,44 @@ class MemberActionServiceTest extends ServiceTestSupport {
                 );
     }
 
+    @DisplayName("이벤트에 속한 멤버을 삭제하면 전체 지출 내역 디테일이 초기화된다.")
+    @Test
+    void deleteMember1() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        Action targetAction = new Action(event, 2L);
+        MemberAction memberAction2 = createMemberAction(targetAction, "토다리", OUT, 2L);
+        MemberAction memberAction3 = createMemberAction(new Action(event, 3L), "쿠키", IN, 3L);
+        MemberAction memberAction4 = createMemberAction(new Action(event, 4L), "웨디", IN, 4L);
+        MemberAction memberAction5 = createMemberAction(new Action(event, 5L), "감자", IN, 5L);
+        memberActionRepository.saveAll(
+                List.of(memberAction1,
+                        memberAction2,
+                        memberAction3,
+                        memberAction4,
+                        memberAction5
+                )
+        );
+        BillAction billAction = new BillAction(new Action(event, 6L), "뽕족", 100_000L);
+        billActionRepository.save(billAction);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L);
+        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L);
+        billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
+
+        memberActionService.deleteMember(event.getToken(), "쿠키");
+
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(billAction);
+
+        assertThat(billActionDetails).hasSize(2)
+                .extracting("memberName", "price")
+                .containsExactlyInAnyOrder(
+                        tuple("웨디", 50_000L),
+                        tuple("감자", 50_000L)
+                );
+    }
+
     @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후에 기록된 해당 참여자의 모든 멤버 액션을 삭제한다.")
     @Test
     void deleteMemberAction() {
@@ -148,6 +196,45 @@ class MemberActionServiceTest extends ServiceTestSupport {
                         tuple(memberAction3.getId(), "쿠키", IN),
                         tuple(memberAction4.getId(), "웨디", IN),
                         tuple(memberAction7.getId(), "쿠키", OUT)
+                );
+    }
+
+    @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후 지출 내역 디테일이 초기화된다.")
+    @Test
+    void deleteMemberAction1() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        Action targetAction = new Action(event, 2L);
+        MemberAction memberAction2 = createMemberAction(targetAction, "토다리", OUT, 2L);
+        MemberAction memberAction3 = createMemberAction(new Action(event, 3L), "쿠키", IN, 3L);
+        MemberAction memberAction4 = createMemberAction(new Action(event, 4L), "웨디", IN, 4L);
+        MemberAction memberAction5 = createMemberAction(new Action(event, 5L), "감자", IN, 5L);
+        memberActionRepository.saveAll(
+                List.of(memberAction1,
+                        memberAction2,
+                        memberAction3,
+                        memberAction4,
+                        memberAction5
+                )
+        );
+        BillAction billAction = new BillAction(new Action(event, 6L), "뽕족", 100_000L);
+        billActionRepository.save(billAction);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L);
+        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L);
+        billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
+
+        memberActionService.deleteMemberAction(event.getToken(), targetAction.getId());
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(billAction);
+
+        assertThat(billActionDetails).hasSize(4)
+                .extracting("memberName", "price")
+                .containsExactlyInAnyOrder(
+                        tuple("토다리", 25_000L),
+                        tuple("쿠키", 25_000L),
+                        tuple("웨디", 25_000L),
+                        tuple("감자", 25_000L)
                 );
     }
 
