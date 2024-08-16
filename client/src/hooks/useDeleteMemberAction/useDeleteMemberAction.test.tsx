@@ -1,12 +1,14 @@
-import {renderHook} from '@testing-library/react';
+import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
 
-import stepListJson from '../../mocks/memberActionStepList.json';
+import stepListJson from '../../mocks/stepList.json';
 import StepListProvider, {useStepList} from '../useStepList/useStepList';
 import {ErrorProvider} from '../../ErrorProvider';
 
 import useDeleteMemberAction from './useDeleteMemberAction';
+import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
+import invalidMemberStepListJson from '../../mocks/invalidMemberStepList.json';
 
 const stepListMockData = stepListJson as (BillStep | MemberStep)[];
 let memberActionList: MemberAction[] = [];
@@ -18,12 +20,17 @@ for (let i = 0; i < stepListMockData.length; i++) {
 }
 
 describe('useDeleteMemberAction', () => {
-  const initializeProvider = () =>
+  const initializeProvider = (list: MemberAction[] = memberActionList) =>
     renderHook(
       () => {
         return {
           stepListResult: useStepList(),
-          deleteMemberActionList: useDeleteMemberAction(memberActionList, () => {}),
+          deleteMemberActionList: useDeleteMemberAction({
+            memberActionList: list,
+            setIsBottomSheetOpened: () => {},
+            showToastAlreadyExistMemberAction: () => {},
+            showToastExistSameMemberFromAfterStep: () => {},
+          }),
         };
       },
       {
@@ -39,6 +46,11 @@ describe('useDeleteMemberAction', () => {
 
   it('멤버를 삭제할 멤버 목록에 추가한다.', async () => {
     const {result} = initializeProvider();
+
+    // stepList 값이 채워지길 대기합니다.
+    await waitFor(() => {
+      expect(result.current.stepListResult.stepList).not.toStrictEqual([]);
+    });
 
     await act(async () => {
       const memberAction = {
@@ -62,27 +74,22 @@ describe('useDeleteMemberAction', () => {
   it('삭제할 멤버 목록에 있는 멤버들을 모두 삭제해 삭제할 멤버 목록을 비운다.', async () => {
     const {result} = initializeProvider();
 
-    await act(async () => {
-      const memberAction1 = {
-        actionId: 1,
-        name: '망쵸',
-        price: null,
-        sequence: 1,
-      };
-      const memberAction2 = {
-        actionId: 2,
-        name: '백호',
-        price: null,
-        sequence: 2,
-      };
+    // stepList 값이 채워지길 대기합니다.
+    await waitFor(() => {
+      expect(result.current.stepListResult.stepList).not.toStrictEqual([]);
+    });
 
-      result.current.deleteMemberActionList.addDeleteMemberAction(memberAction1);
-      result.current.deleteMemberActionList.addDeleteMemberAction(memberAction2);
+    await act(async () => {
+      memberActionList.forEach(memberAction => {
+        result.current.deleteMemberActionList.addDeleteMemberAction(memberAction);
+      });
     });
 
     await act(async () => result.current.deleteMemberActionList.deleteMemberActionList());
 
-    expect(result.current.deleteMemberActionList.aliveActionList).toHaveLength(0);
+    await waitFor(() => {
+      expect(result.current.deleteMemberActionList.aliveActionList).toHaveLength(0);
+    });
   });
 
   it('삭제 요청에서 오류가 발생했을 경우 삭제할 멤버 목록을 처음의 상태로 돌려놓는다.', async () => {
