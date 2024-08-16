@@ -1,6 +1,7 @@
 package server.haengdong.presentation;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
+import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.request.MemberNamesUpdateRequest;
+import server.haengdong.presentation.response.ActionsResponse;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventResponse;
 import server.haengdong.presentation.response.MembersResponse;
@@ -58,6 +61,14 @@ public class EventController {
         StepsResponse stepsResponse = StepsResponse.of(eventService.findActions(token));
 
         return ResponseEntity.ok(stepsResponse);
+    }
+
+    @GetMapping("/api/events/{eventId}/actions/v2")
+    public ResponseEntity<ActionsResponse> findActions2(@PathVariable("eventId") String token) {
+        List<ActionAppResponse> actions = eventService.findActions(token);
+        ActionsResponse actionsResponse = ActionsResponse.of(actions);
+
+        return ResponseEntity.ok(actionsResponse);
     }
 
     @GetMapping("/api/events/{eventId}/members")

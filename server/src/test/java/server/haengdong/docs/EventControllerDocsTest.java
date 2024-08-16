@@ -284,6 +284,69 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 );
     }
 
+    @DisplayName("행사 전체 액션 이력 조회 v2")
+    @Test
+    void findActions2() throws Exception {
+        String token = "TOKEN";
+        List<ActionAppResponse> actionAppResponses = List.of(
+                new ActionAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
+                new ActionAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
+                new ActionAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
+                new ActionAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
+        );
+        given(eventService.findActions(token)).willReturn(actionAppResponses);
+
+        mockMvc.perform(get("/api/events/{eventId}/actions/v2", token)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.actions[0].actionId").value(equalTo(1)))
+                .andExpect(jsonPath("$.actions[0].name").value(equalTo("망쵸")))
+                .andExpect(jsonPath("$.actions[0].price").value(equalTo(null)))
+                .andExpect(jsonPath("$.actions[0].sequence").value(equalTo(1)))
+                .andExpect(jsonPath("$.actions[0].type").value(equalTo("IN")))
+
+                .andExpect(jsonPath("$.actions[1].actionId").value(equalTo(2)))
+                .andExpect(jsonPath("$.actions[1].name").value(equalTo("족발")))
+                .andExpect(jsonPath("$.actions[1].price").value(equalTo(100)))
+                .andExpect(jsonPath("$.actions[1].sequence").value(equalTo(2)))
+                .andExpect(jsonPath("$.actions[1].type").value(equalTo("BILL")))
+
+                .andExpect(jsonPath("$.actions[2].actionId").value(equalTo(3)))
+                .andExpect(jsonPath("$.actions[2].name").value(equalTo("인생네컷")))
+                .andExpect(jsonPath("$.actions[2].price").value(equalTo(1000)))
+                .andExpect(jsonPath("$.actions[2].sequence").value(equalTo(3)))
+                .andExpect(jsonPath("$.actions[2].type").value(equalTo("BILL")))
+
+                .andExpect(jsonPath("$.actions[3].actionId").value(equalTo(4)))
+                .andExpect(jsonPath("$.actions[3].name").value(equalTo("망쵸")))
+                .andExpect(jsonPath("$.actions[3].price").value(equalTo(null)))
+                .andExpect(jsonPath("$.actions[3].sequence").value(equalTo(4)))
+                .andExpect(jsonPath("$.actions[3].type").value(equalTo("OUT")))
+
+                .andDo(
+                        document("findActions",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                responseFields(
+                                        fieldWithPath("actions[].actionId").type(JsonFieldType.NUMBER)
+                                                .description("액션 ID"),
+                                        fieldWithPath("actions[].name").type(JsonFieldType.STRING)
+                                                .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
+                                        fieldWithPath("actions[].price").type(JsonFieldType.NUMBER).optional()
+                                                .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
+                                        fieldWithPath("actions[].sequence").type(JsonFieldType.NUMBER)
+                                                .description("액션 순서"),
+                                        fieldWithPath("actions[].type").type(JsonFieldType.STRING)
+                                                .description("액션 타입")
+                                )
+                        )
+                );
+    }
+
     @DisplayName("행사 어드민 권한을 확인한다.")
     @Test
     void authenticateTest() throws Exception {
