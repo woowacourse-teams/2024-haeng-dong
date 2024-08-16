@@ -42,6 +42,7 @@ export const ERROR_MESSAGE = {
   purchasePrice: '10,000,000원 이하의 숫자만 입력이 가능해요',
   purchaseTitle: '지출 이름은 30자 이하의 한글, 영어, 숫자만 가능해요',
   preventEmpty: '값은 비어있을 수 없어요',
+  invalidInput: '올바르지 않은 입력이에요.',
 };
 
 export const UNKNOWN_ERROR = 'UNKNOWN_ERROR';

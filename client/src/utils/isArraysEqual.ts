@@ -1,4 +1,4 @@
-const isArraysEqual = (arr1: string[], arr2: string[]) => {
+const isArraysEqual = <T>(arr1: T[], arr2: T[]) => {
   if (arr1.length !== arr2.length) return false;
 
   // 배열을 정렬한 후 비교
