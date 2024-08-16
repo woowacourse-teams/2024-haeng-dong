@@ -5,11 +5,11 @@ import {useOutletContext} from 'react-router-dom';
 import StepList from '@components/StepList/StepList';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
 import {useStepList} from '@hooks/useStepList/useStepList';
+import useAuth from '@hooks/useAuth/useAuth';
 
 import {EventPageContextProps} from '../EventPageLayout';
 
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
-import useAuth from '@hooks/useAuth/useAuth';
 
 const AdminPage = () => {
   const {eventName} = useOutletContext<EventPageContextProps>();
