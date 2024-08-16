@@ -3,10 +3,8 @@ import type {MemberAction} from 'types/serviceType';
 import {useState} from 'react';
 
 import {requestDeleteMemberAction} from '@apis/request/member';
-
-import {useStepList} from '@hooks/useStepList';
-
-import {useFetch} from '@apis/useFetch';
+import {useStepList} from '@hooks/useStepList/useStepList';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 

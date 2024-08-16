@@ -3,13 +3,11 @@ import {useEffect, useState} from 'react';
 import {ValidateResult} from '@utils/validate/type';
 import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
 
-import {useFetch} from '@apis/useFetch';
-
 import isArraysEqual from '@utils/isArraysEqual';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-import {useStepList} from './useStepList';
-import useInput from './useInput';
+import {useStepList} from './useStepList/useStepList';
+import {useFetch} from './useFetch/useFetch';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;
@@ -17,36 +15,17 @@ interface UseSetAllMemberListProps {
   handleCloseAllMemberListModal: () => void;
 }
 
-interface UseSetAllMemberListReturns {
-  editedAllMemberList: string[];
-  canSubmit: boolean;
-  errorMessage: string;
-  errorIndexList: number[];
-  handleNameChange: (index: number, event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleClickDeleteButton: (index: number) => Promise<void>;
-  handlePutAllMemberList: () => Promise<void>;
-}
-
 const useSetAllMemberList = ({
   validateFunc,
   allMemberList,
   handleCloseAllMemberListModal,
-}: UseSetAllMemberListProps): UseSetAllMemberListReturns => {
-  const initialInputList = allMemberList.map((name, index) => ({index, value: name}));
-  const {
-    inputList,
-    errorMessage,
-    errorIndexList,
-    canSubmit,
-    handleChange,
-    setInputList: setEditedAllMemberList,
-    setCanSubmit,
-  } = useInput({validateFunc, initialInputList});
-
+}: UseSetAllMemberListProps) => {
+  const [editedAllMemberList, setEditedAllMemberList] = useState<string[]>(allMemberList);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorIndexList, setErrorIndexList] = useState<number[]>([]);
+  const [canSubmit, setCanSubmit] = useState(false);
   const [deleteInOriginal, setDeleteInOriginal] = useState<string[]>(allMemberList);
   const [deleteMemberList, setDeleteMemberList] = useState<string[]>([]);
-
-  const editedAllMemberList = inputList.map(input => input.value);
 
   const {refreshStepList} = useStepList();
   const eventId = getEventIdByUrl();
@@ -58,8 +37,35 @@ const useSetAllMemberList = ({
 
   const handleNameChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
+    const {isValid, errorMessage: validationResultMessage} = validateFunc(value);
 
-    handleChange(index, value);
+    if (isValid && value.length !== 0) {
+      setErrorMessage('');
+
+      setEditedAllMemberList(prev => {
+        const newList = [...prev];
+        newList[index] = value;
+        return newList;
+      });
+
+      setErrorIndexList(prev => prev.filter(i => i !== index));
+
+      setCanSubmit(true);
+    } else if (value.length === 0) {
+      setErrorMessage('');
+
+      setEditedAllMemberList(prev => {
+        const newList = [...prev];
+        newList[index] = value;
+        return newList;
+      });
+
+      changeErrorIndex(index);
+    } else {
+      setErrorMessage(validationResultMessage ?? '');
+
+      changeErrorIndex(index);
+    }
   };
 
   const handleClickDeleteButton = async (index: number) => {
@@ -100,6 +106,15 @@ const useSetAllMemberList = ({
         refreshStepList();
         handleCloseAllMemberListModal();
       },
+    });
+  };
+
+  const changeErrorIndex = (index: number) => {
+    setErrorIndexList(prev => {
+      if (!prev.includes(index)) {
+        return [...prev, index];
+      }
+      return prev;
     });
   };
 

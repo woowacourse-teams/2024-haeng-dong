@@ -6,9 +6,9 @@ import {requestPostBillList} from '@apis/request/bill';
 import {requestGetAllMemberList, requestPostMemberList} from '@apis/request/member';
 import {requestGetStepList} from '@apis/request/stepList';
 
-import {useFetch} from '@apis/useFetch';
-
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+
+import {useFetch} from '../useFetch/useFetch';
 
 interface StepListContextProps {
   stepList: (BillStep | MemberStep)[];
@@ -39,13 +39,9 @@ const StepListProvider = ({children}: PropsWithChildren) => {
   }, []);
 
   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
-    try {
-      await fetch({queryFunction: () => requestPostMemberList({eventId, type, memberNameList})});
+    await fetch({queryFunction: () => requestPostMemberList({eventId, type, memberNameList})});
 
-      refreshStepList();
-    } catch (error) {
-      alert(error);
-    }
+    refreshStepList();
   };
 
   const getAllMemberList = async () => {

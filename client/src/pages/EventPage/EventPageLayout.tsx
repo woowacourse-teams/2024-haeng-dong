@@ -5,9 +5,9 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 
 import {useToast} from '@components/Toast/ToastProvider';
 import {requestGetEventName} from '@apis/request/event';
+import StepListProvider from '@hooks/useStepList/useStepList';
 
 import useNavSwitch from '@hooks/useNavSwitch';
-import StepListProvider from '@hooks/useStepList';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';

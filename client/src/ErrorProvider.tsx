@@ -8,6 +8,7 @@ interface ErrorContextType {
   errorMessage: string;
   setError: (error: ServerError) => void;
   clearError: (ms?: number) => void;
+  error: ServerError | null;
 }
 
 const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
@@ -32,6 +33,7 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
     if (error) {
       if (isUnhandledError(error.errorCode)) {
         // 에러바운더리로 보내기
+
         throw error;
       }
 
@@ -49,6 +51,8 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   };
 
   const clearError = (ms: number = 0) => {
+    if (error === null) return;
+
     setTimeout(() => {
       setHasError(false);
       setErrorMessage('');
@@ -57,7 +61,9 @@ export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
   };
 
   return (
-    <ErrorContext.Provider value={{hasError, errorMessage, setError, clearError}}>{children}</ErrorContext.Provider>
+    <ErrorContext.Provider value={{error, hasError, errorMessage, setError, clearError}}>
+      {children}
+    </ErrorContext.Provider>
   );
 };
 
