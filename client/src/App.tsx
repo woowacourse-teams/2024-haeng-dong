@@ -2,7 +2,7 @@ import {Outlet} from 'react-router-dom';
 import {HDesignProvider} from 'haengdong-design';
 import {Global} from '@emotion/react';
 
-import {ToastProvider} from '@components/Toast/ToastProvider';
+import {ToastProvider} from '@hooks/useToast/ToastProvider';
 
 import {GlobalStyle} from './GlobalStyle';
 // import toast from 'react-simple-toasts';
