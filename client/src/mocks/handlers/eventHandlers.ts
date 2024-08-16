@@ -4,7 +4,8 @@ import {RequestPostNewEvent, ResponsePostNewEvent} from '@apis/request/event';
 
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 
-import {VALID_EVENT_NAME_LENGTH_IN_SERVER, VALID_PASSWORD_LENGTH_IN_SERVER} from '@mocks/serverConstants';
+import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
+import {PASSWORD_LENGTH} from '@constants/password';
 
 type ErrorResponseBody = {
   errorCode: string;
@@ -17,7 +18,7 @@ export const eventHandler = [
     async ({request}) => {
       const {eventName, password} = await request.json();
 
-      if (String(password).length < VALID_PASSWORD_LENGTH_IN_SERVER) {
+      if (String(password).length < PASSWORD_LENGTH) {
         return HttpResponse.json(
           {
             errorCode: 'EVENT_PASSWORD_FORMAT_INVALID',

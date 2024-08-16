@@ -8,6 +8,7 @@ import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 import {ErrorProvider, useError} from '../../ErrorProvider';
 
 import useEvent from './useEvent';
+import {PASSWORD_LENGTH} from '@constants/password';
 
 describe('useEvent', () => {
   const initializeProvider = () =>
@@ -50,7 +51,7 @@ describe('useEvent', () => {
     });
   });
 
-  it('비밀번호가 4자리수가 아닌 경우 이벤트를 생성할 수 없다', async () => {
+  it(`비밀번호가 ${PASSWORD_LENGTH}자리수가 아닌 경우 이벤트를 생성할 수 없다`, async () => {
     const {result} = initializeProvider();
 
     await act(async () => {

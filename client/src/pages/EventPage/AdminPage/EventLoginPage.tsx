@@ -11,6 +11,7 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import RULE from '@constants/rule';
 import {ROUTER_URLS} from '@constants/routerUrls';
+import {PASSWORD_LENGTH} from '@constants/password';
 
 const EventLoginPage = () => {
   const [password, setPassword] = useState('');
@@ -55,7 +56,7 @@ const EventLoginPage = () => {
       </TopNav>
       <Title
         title="행사 비밀번호 입력"
-        description="관리를 위해선 비밀번호가 필요해요. 행사 생성 시 설정한 4 자리의 숫자 비밀번호를 입력해 주세요."
+        description={`관리를 위해선 비밀번호가 필요해요. 행사 생성 시 설정한 ${PASSWORD_LENGTH} 자리의 숫자 비밀번호를 입력해 주세요.`}
       />
       <form onSubmit={submitPassword} style={{padding: '0 1rem'}}>
         <LabelInput

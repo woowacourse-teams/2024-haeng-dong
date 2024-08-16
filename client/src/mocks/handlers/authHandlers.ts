@@ -3,6 +3,7 @@ import {HttpResponse, http} from 'msw';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 
 import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
+import {PASSWORD_LENGTH} from '@constants/password';
 
 type PostLoginParams = {
   eventId: string;
@@ -51,11 +52,11 @@ export const authHandler = [
             'Set-Cookie': 'eventToken=abc-123',
           },
         });
-      } else if (password.length < 4) {
+      } else if (password.length < PASSWORD_LENGTH) {
         return HttpResponse.json(
           {
             errorCode: 'EVENT_PASSWORD_FORMAT_INVALID',
-            message: '비밀번호는 4자리 숫자만 가능합니다.',
+            message: `비밀번호는 ${PASSWORD_LENGTH}자리 숫자만 가능합니다.`,
           },
           {status: 401},
         );

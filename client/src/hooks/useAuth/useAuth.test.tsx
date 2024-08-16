@@ -3,11 +3,11 @@ import {act} from 'react';
 import {MemoryRouter} from 'react-router-dom';
 
 import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
-import {VALID_PASSWORD_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 
 import {ErrorProvider, useError} from '../../ErrorProvider';
 
 import useAuth from './useAuth';
+import {PASSWORD_LENGTH} from '@constants/password';
 
 describe('useAuth', () => {
   const initializeProvider = () =>
@@ -79,7 +79,7 @@ describe('useAuth', () => {
       });
     });
 
-    it(`비밀 번호가 ${VALID_PASSWORD_LENGTH_IN_SERVER}자리가 아니라면 로그인에 실패한다.`, async () => {
+    it(`비밀 번호가 ${PASSWORD_LENGTH}자리가 아니라면 로그인에 실패한다.`, async () => {
       const {result} = initializeProvider();
 
       await act(async () => {
