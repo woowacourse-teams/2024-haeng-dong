@@ -1,11 +1,11 @@
 import {useState} from 'react';
-import {useFetch} from '@apis/useFetch';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
 import RULE from '@constants/rule';
 
-import useEvent from './useEvent';
+import {useFetch} from './useFetch/useFetch';
+import useEvent from './useEvent/useEvent';
 
 const useSetPassword = (eventName: string) => {
   const {fetch} = useFetch();
