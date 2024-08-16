@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Title, FixedButton, ListButton} from 'haengdong-design';
 import {useOutletContext} from 'react-router-dom';
-import useAuth from '@hooks/useAuth';
 
 import StepList from '@components/StepList/StepList';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
@@ -10,19 +9,20 @@ import {useStepList} from '@hooks/useStepList/useStepList';
 import {EventPageContextProps} from '../EventPageLayout';
 
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
+import useAuth from '@hooks/useAuth/useAuth';
 
 const AdminPage = () => {
-  const {eventId, eventName} = useOutletContext<EventPageContextProps>();
+  const {eventName} = useOutletContext<EventPageContextProps>();
 
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
 
   const {getTotalPrice, allMemberList} = useStepList();
-  const {postAuthentication} = useAuth();
+  const {checkAuthentication} = useAuth();
 
   useEffect(() => {
     const postAuth = async () => {
-      await postAuthentication({eventId: eventId});
+      await checkAuthentication();
     };
 
     postAuth();
