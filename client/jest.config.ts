@@ -17,6 +17,7 @@ const config: Config = {
     '<rootDir>/src/request/',
     '<rootDir>/src/constants/',
     '<rootDir>/src/errors/',
+    '<rootDir>/src/components/',
   ],
 
   verbose: true,
