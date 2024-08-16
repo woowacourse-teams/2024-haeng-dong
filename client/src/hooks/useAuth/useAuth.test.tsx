@@ -65,6 +65,34 @@ describe('useAuth', () => {
         expect(result.current.errorResult.error?.errorCode).toBe('TOKEN_INVALID');
       });
     });
+
+    it('쿠키에 담겨있는 토큰이 만료되었다면 인증에 실패한다.', async () => {
+      document.cookie = 'eventToken=expired-token';
+
+      const {result} = initializeProvider();
+
+      await act(async () => {
+        expect(await result.current.authResult.checkAuthentication());
+      });
+
+      await waitFor(() => {
+        expect(result.current.errorResult.error?.errorCode).toBe('TOKEN_EXPIRED');
+      });
+    });
+
+    it('쿠키에 담겨있는 토큰이 forbidden이라면 인증에 실패한다.', async () => {
+      document.cookie = 'eventToken=forbidden-token';
+
+      const {result} = initializeProvider();
+
+      await act(async () => {
+        expect(await result.current.authResult.checkAuthentication());
+      });
+
+      await waitFor(() => {
+        expect(result.current.errorResult.error?.errorCode).toBe('FORBIDDEN');
+      });
+    });
   });
 
   describe('login', () => {
