@@ -86,6 +86,7 @@ public class BillActionService {
         Event event = eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
 
+        billActionDetailRepository.deleteByBillAction_Action_EventAndBillAction_ActionId(event, actionId);
         billActionRepository.deleteByAction_EventAndActionId(event, actionId);
     }
 }

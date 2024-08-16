@@ -46,6 +46,11 @@ class BillActionServiceTest extends ServiceTestSupport {
     void saveAllBillAction() {
         Event event = Fixture.EVENT1;
         Event savedEvent = eventRepository.save(event);
+        Action action1 = new Action(event, 1L);
+        Action action2 = new Action(event, 2L);
+        MemberAction memberAction1 = new MemberAction(action1, "백호", MemberActionStatus.IN, 1L);
+        MemberAction memberAction2 = new MemberAction(action2, "망쵸", MemberActionStatus.IN, 2L);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
 
         List<BillActionAppRequest> requests = List.of(
                 new BillActionAppRequest("뽕족", 10_000L),
@@ -58,8 +63,8 @@ class BillActionServiceTest extends ServiceTestSupport {
 
         assertThat(actions).extracting(BillAction::getTitle, BillAction::getPrice, BillAction::getSequence)
                 .containsExactlyInAnyOrder(
-                        tuple("뽕족", 10_000L, 1L),
-                        tuple("인생맥주", 15_000L, 2L)
+                        tuple("뽕족", 10_000L, 3L),
+                        tuple("인생맥주", 15_000L, 4L)
                 );
     }
 
@@ -161,6 +166,26 @@ class BillActionServiceTest extends ServiceTestSupport {
         billActionService.deleteBillAction(event.getToken(), actionId);
 
         assertThat(billActionRepository.findById(billAction.getId())).isEmpty();
+    }
+
+    @DisplayName("지출 내역을 삭제하면 지출 상세도 삭제된다.")
+    @Test
+    void deleteBillActionTest1() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "백호", MemberActionStatus.IN, 1L);
+        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "망쵸", MemberActionStatus.IN, 2L);
+        BillAction billAction = new BillAction(new Action(event, 3L), "커피", 50_900L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "백호", 25_450L);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "망쵸", 25_450L);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
+        billActionRepository.save(billAction);
+        billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));
+        Long actionId = billAction.getAction().getId();
+
+        billActionService.deleteBillAction(event.getToken(), actionId);
+
+        assertThat(billActionDetailRepository.findAll()).isEmpty();
     }
 
     @DisplayName("지출 내역 삭제 시 행사가 존재하지 않으면 예외가 발생한다.")
