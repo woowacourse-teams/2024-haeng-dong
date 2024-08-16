@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Title, FixedButton, ListButton} from 'haengdong-design';
+import {Title, FixedButton, ListButton, Button, Flex} from 'haengdong-design';
 import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
@@ -11,12 +11,15 @@ import useAuth from '@hooks/useAuth';
 import {EventPageContextProps} from '../EventPageLayout';
 
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
+import {css} from '@emotion/react';
+import AddExpense from '@components/AddExpense/AddExpense';
 
 const AdminPage = () => {
   const {eventId, eventName} = useOutletContext<EventPageContextProps>();
 
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
+  const [isShownNewExpenseItem, setIsShownNewExpenseItem] = useState(false);
 
   const {getTotalPrice, allMemberList} = useStepList();
   const {postAuthentication} = useAuth();
@@ -54,10 +57,26 @@ const AdminPage = () => {
       </div>
       <section css={receiptStyle}>
         <StepList />
-        <FixedButton
-          children={allMemberList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
-          onClick={() => setIsOpenFixedBottomBottomSheet(prev => !prev)}
-        />
+        {isShownNewExpenseItem ? <AddExpense /> : null}
+        {allMemberList.length === 0 ? (
+          <Button size="medium" onClick={() => setIsOpenFixedBottomBottomSheet(prev => !prev)}>
+            초기인원 설정하기
+          </Button>
+        ) : (
+          <Flex gap="0.5rem">
+            <Button
+              css={css({width: '100%'})}
+              size="medium"
+              variants="tertiary"
+              onClick={() => setIsOpenFixedBottomBottomSheet(prev => !prev)}
+            >
+              인원변동 추가
+            </Button>
+            <Button css={css({width: '100%'})} size="medium" onClick={() => setIsShownNewExpenseItem(prev => !prev)}>
+              지출내역 추가
+            </Button>
+          </Flex>
+        )}
         {isOpenFixedButtonBottomSheet && (
           <ModalBasedOnMemberCount
             allMemberList={allMemberList}
