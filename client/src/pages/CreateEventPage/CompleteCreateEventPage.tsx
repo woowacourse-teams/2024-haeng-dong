@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {Button, FixedButton, Flex, Input, MainLayout, Text, Title, TopNav} from 'haengdong-design';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -6,28 +5,20 @@ import {css} from '@emotion/react';
 
 import {useToast} from '@components/Toast/ToastProvider';
 
+import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
+
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const CompleteCreateEventPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [url, setUrl] = useState('');
 
-  useEffect(() => {
-    const getUrl = async () => {
-      // TODO: (@weadie) eventId를 location에서 불러오는 로직 함수로 분리해서 재사용
-      const params = new URLSearchParams(location.search);
-      const eventId = params.get('eventId');
-      // TODO: (@weadie) eventId가 없는 경우에 대한 처리 필요
-      setUrl(eventId ?? '');
-    };
-    getUrl();
-  }, []);
+  const params = new URLSearchParams(location.search);
+  const eventId = params.get('eventId');
 
   const {showToast} = useToast();
 
-  const env = process.env.NODE_ENV || '';
-  const homeUrlByEnvironment = `https://${env.includes('development') ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${url}/home`;
+  const homePageUrl = getEventPageUrlByEnvironment(eventId ?? '', 'home');
 
   return (
     <MainLayout>
@@ -41,10 +32,10 @@ const CompleteCreateEventPage = () => {
           <Text textColor="gray">링크가 없으면 페이지에 접근할 수 없어요.</Text>
           <Text textColor="primary">관리를 위해서 행사 링크를 복사 후 보관해 주세요.</Text>
         </Flex>
-        <Input value={homeUrlByEnvironment} disabled />
+        <Input value={homePageUrl} disabled />
 
         <CopyToClipboard
-          text={homeUrlByEnvironment}
+          text={homePageUrl}
           onCopy={() =>
             showToast({
               showingTime: 3000,
@@ -61,7 +52,7 @@ const CompleteCreateEventPage = () => {
         </CopyToClipboard>
       </div>
 
-      <FixedButton onClick={() => navigate(`${ROUTER_URLS.event}/${url}/admin`)}>관리 페이지로 이동</FixedButton>
+      <FixedButton onClick={() => navigate(`${ROUTER_URLS.event}/${eventId}/admin`)}>관리 페이지로 이동</FixedButton>
     </MainLayout>
   );
 };

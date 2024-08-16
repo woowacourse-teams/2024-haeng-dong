@@ -2,6 +2,8 @@ import type {MemberAction, MemberType} from 'types/serviceType';
 
 import {BottomSheet, Flex, Input, Text, IconButton, FixedButton, Icon} from 'haengdong-design';
 
+import {useToast} from '@components/Toast/ToastProvider';
+
 import useDeleteMemberAction from '@hooks/useDeleteMemberAction';
 
 import {bottomSheetHeaderStyle, bottomSheetStyle, inputGroupStyle} from './DeleteMemberActionModal.style';
@@ -19,10 +21,38 @@ const DeleteMemberActionModal = ({
   isBottomSheetOpened,
   setIsBottomSheetOpened,
 }: DeleteMemberActionModalProps) => {
-  const {aliveActionList, deleteMemberActionList, addDeleteMemberAction} = useDeleteMemberAction(
+  const {showToast} = useToast();
+
+  const showToastAlreadyExistMemberAction = () => {
+    showToast({
+      isClickToClose: true,
+      showingTime: 3000,
+      message: '이미 삭제된 인원입니다.',
+      type: 'error',
+      bottom: '160px',
+    });
+  };
+
+  const showToastExistSameMemberFromAfterStep = (name: string) => {
+    showToast({
+      isClickToClose: true,
+      showingTime: 3000,
+      message: `이후의 ${name}가 사라져요`,
+      type: 'error',
+      position: 'top',
+      top: '30px',
+      style: {
+        zIndex: 9000,
+      },
+    });
+  };
+
+  const {aliveActionList, deleteMemberActionList, addDeleteMemberAction} = useDeleteMemberAction({
     memberActionList,
     setIsBottomSheetOpened,
-  );
+    showToastAlreadyExistMemberAction,
+    showToastExistSameMemberFromAfterStep,
+  });
 
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>

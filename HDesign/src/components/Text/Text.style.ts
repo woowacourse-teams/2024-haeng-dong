@@ -21,5 +21,9 @@ export const getSizeStyling = ({size, textColor, theme}: Required<TextStyleProps
 
   const colorStyle = css({color: theme.colors[textColor]});
 
-  return [style[size], colorStyle];
+  const baseStyle = css({
+    whiteSpace: 'pre-line',
+  });
+
+  return [style[size], colorStyle, baseStyle];
 };
