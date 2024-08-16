@@ -25,7 +25,7 @@ const SetEventPasswordPage = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     const eventId = await submitPassword(event);
 
-    navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
+    navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`, {replace: true});
   };
 
   return (

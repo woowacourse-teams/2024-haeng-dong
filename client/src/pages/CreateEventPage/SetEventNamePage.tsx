@@ -12,7 +12,7 @@ const SetEventNamePage = () => {
   const submitEventName = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    navigate(ROUTER_URLS.eventCreatePassword, {state: {eventName}});
+    navigate(ROUTER_URLS.eventCreatePassword, {state: {eventName}, replace: true});
   };
 
   return (
