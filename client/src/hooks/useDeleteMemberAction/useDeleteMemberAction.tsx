@@ -81,7 +81,7 @@ const useDeleteMemberAction = ({
     return memberNameList.filter(member => member === memberAction.name).length >= 2;
   };
 
-  return {aliveActionList, deleteMemberActionList, addDeleteMemberAction, isExistSameMemberFromAfterStep};
+  return {aliveActionList, deleteMemberActionList, addDeleteMemberAction};
 };
 
 export default useDeleteMemberAction;
