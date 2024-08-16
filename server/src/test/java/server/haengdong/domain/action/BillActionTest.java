@@ -3,14 +3,15 @@ package server.haengdong.domain.action;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static server.haengdong.support.fixture.Fixture.EVENT1;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongException;
-import server.haengdong.support.fixture.Fixture;
 
 class BillActionTest {
 
@@ -18,7 +19,7 @@ class BillActionTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "1234567890123456789012345678901"})
     void validateTitle(String title) {
-        Event event = Fixture.EVENT1;
+        Event event = EVENT1;
         Action action = new Action(event, 1L);
         Long price = 100L;
 
@@ -31,7 +32,7 @@ class BillActionTest {
     @ParameterizedTest
     @ValueSource(longs = {0, 10_000_001, 20_000_000})
     void validatePrice(long price) {
-        Event event = Fixture.EVENT1;
+        Event event = EVENT1;
         Action action = new Action(event, 1L);
         String title = "title";
 
@@ -43,7 +44,7 @@ class BillActionTest {
     @DisplayName("지출 내역을 올바르게 생성한다.")
     @Test
     void createBillAction() {
-        Event event = Fixture.EVENT1;
+        Event event = EVENT1;
         Action action = new Action(event, 1L);
         String title = "title";
         Long price = 1_000L;
@@ -55,5 +56,33 @@ class BillActionTest {
                 () -> assertThat(billAction.getTitle()).isEqualTo(title),
                 () -> assertThat(billAction.getPrice()).isEqualTo(price)
         );
+    }
+
+    @DisplayName("지출 액션에 멤버별 고정 금액이 설정되어 있는지 확인한다.")
+    @Test
+    void isFixed1() {
+        BillAction fixedBillAction = new BillAction(new Action(EVENT1, 1L), "인생네컷", 2_000L);
+
+        List<BillActionDetail> unfixedBillActionDetails = List.of(
+                new BillActionDetail("감자", 1_000L),
+                new BillActionDetail("고구마", 1_000L)
+        );
+        fixedBillAction.addDetails(unfixedBillActionDetails);
+
+        assertThat(fixedBillAction.isFixed()).isEqualTo(false);
+    }
+
+    @DisplayName("지출 액션에 멤버별 고정 금액이 설정되어 있는지 확인한다.")
+    @Test
+    void isFixed2() {
+        BillAction fixedBillAction = new BillAction(new Action(EVENT1, 1L), "인생네컷", 5_000L);
+
+        List<BillActionDetail> unfixedBillActionDetails = List.of(
+                new BillActionDetail("감자", 4_000L),
+                new BillActionDetail("고구마", 1_000L)
+        );
+        fixedBillAction.addDetails(unfixedBillActionDetails);
+
+        assertThat(fixedBillAction.isFixed()).isEqualTo(true);
     }
 }
