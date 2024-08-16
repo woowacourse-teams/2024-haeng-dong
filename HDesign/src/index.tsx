@@ -2,6 +2,7 @@ import BottomSheet from '@components/BottomSheet/BottomSheet';
 import Button from '@components/Button/Button';
 import DragHandleItem from '@components/DragHandleItem/DragHandleItem';
 import DragHandleItemContainer from '@components/DragHandleItemContainer/DragHandleItemContainer';
+import EditableItem from '@components/EditableItem/EditableItem';
 import ExpenseList from '@components/ExpenseList/ExpenseList';
 import FixedButton from '@components/FixedButton/FixedButton';
 import Flex from '@components/Flex/Flex';
@@ -33,6 +34,7 @@ export {
   Button,
   DragHandleItem,
   DragHandleItemContainer,
+  EditableItem,
   ExpenseList,
   FixedButton,
   Flex,
