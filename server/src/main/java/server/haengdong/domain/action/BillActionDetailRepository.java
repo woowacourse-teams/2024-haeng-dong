@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface BillActionDetailRepository extends JpaRepository<BillActionDetail, Long> {
 
     List<BillActionDetail> findByBillAction(BillAction billAction);
+
+    void deleteAllByBillAction(BillAction billAction);
 }
