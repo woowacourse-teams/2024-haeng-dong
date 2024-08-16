@@ -1,8 +1,7 @@
 import {useState} from 'react';
+import {useFetch} from '@apis/useFetch';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
-
-import {useFetch} from '@apis/useFetch';
 
 import RULE from '@constants/rule';
 

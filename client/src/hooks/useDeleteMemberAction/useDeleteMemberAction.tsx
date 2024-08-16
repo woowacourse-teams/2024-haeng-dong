@@ -4,9 +4,9 @@ import {useState} from 'react';
 
 import {requestDeleteMemberAction} from '@apis/request/member';
 import {useStepList} from '@hooks/useStepList/useStepList';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
-import {useFetch} from '@hooks/useFetch/useFetch';
 
 type UseDeleteMemberActionProps = {
   memberActionList: MemberAction[];
