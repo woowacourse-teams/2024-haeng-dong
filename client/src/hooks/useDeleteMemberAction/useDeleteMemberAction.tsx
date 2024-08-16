@@ -22,7 +22,7 @@ const useDeleteMemberAction = ({
   showToastExistSameMemberFromAfterStep,
 }: UseDeleteMemberActionProps) => {
   const {stepList, refreshStepList} = useStepList();
-  const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
+  const [deleteActionList, setDeleteActionList] = useState<MemberAction[]>([]);
   const eventId = getEventIdByUrl();
   const {fetch} = useFetch();
 
@@ -34,20 +34,15 @@ const useDeleteMemberAction = ({
         setIsBottomSheetOpened(false);
       },
       onError: () => {
-        setAliveActionList(memberActionList);
+        setDeleteActionList([]);
       },
     });
   };
 
   // TODO: (@cookie: 추후에 반복문으로 delete하는 것이 아니라 한 번에 모아서 delete 처리하기 (backend에 문의))
   const deleteMemberActionList = async () => {
-    const aliveActionIdList = aliveActionList.map(({actionId}) => actionId);
-    const deleteMemberActionIdList = memberActionList
-      .filter(({actionId}) => !aliveActionIdList.includes(actionId))
-      .map(({actionId}) => actionId);
-
-    for (const deleteMemberActionId of deleteMemberActionIdList) {
-      await deleteMemberAction(deleteMemberActionId);
+    for (const {actionId} of deleteActionList) {
+      await deleteMemberAction(actionId);
     }
   };
 
@@ -66,7 +61,7 @@ const useDeleteMemberAction = ({
   const addDeleteMemberAction = (memberAction: MemberAction) => {
     checkAlreadyExistMemberAction(memberAction, showToastAlreadyExistMemberAction);
     checkExistSameMemberFromAfterStep(memberAction, () => showToastExistSameMemberFromAfterStep(memberAction.name));
-    setAliveActionList(prev => prev.filter(aliveMember => aliveMember.actionId !== memberAction.actionId));
+    setDeleteActionList(prev => [...prev, memberAction]);
   };
 
   const isExistSameMemberFromAfterStep = (memberAction: MemberAction) => {
@@ -81,6 +76,9 @@ const useDeleteMemberAction = ({
     return memberNameList.filter(member => member === memberAction.name).length >= 2;
   };
 
+  const aliveActionList = memberActionList.filter(
+    memberAction => !deleteActionList.some(deleteAction => deleteAction.actionId === memberAction.actionId),
+  );
   return {aliveActionList, deleteMemberActionList, addDeleteMemberAction};
 };
 
