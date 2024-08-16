@@ -1,6 +1,6 @@
 import {createContext, useState, useContext, useEffect, ReactNode} from 'react';
 
-import SERVER_ERROR_MESSAGES from '@constants/errorMessage';
+import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
 
 // 에러 컨텍스트 생성
 interface ErrorContextType {
