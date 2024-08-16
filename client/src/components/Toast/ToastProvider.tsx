@@ -3,7 +3,7 @@ import {createContext, useContext, useEffect, useState} from 'react';
 
 import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
 
-import {useError} from '../../ErrorProvider';
+import {useError} from '../../hooks/useError/ErrorProvider';
 
 import {ToastProps} from './Toast.type';
 import Toast from './Toast';
@@ -23,7 +23,7 @@ type ShowToast = ToastProps & {
 
 const ToastProvider = ({children}: React.PropsWithChildren) => {
   const [currentToast, setCurrentToast] = useState<ShowToast | null>(null);
-  const {hasError, errorMessage, clearError} = useError();
+  const {errorInfo, clearError, clientErrorMessage} = useError();
 
   const showToast = ({showingTime = DEFAULT_TIME, isAlwaysOn = false, ...toastProps}: ShowToast) => {
     setCurrentToast({showingTime, isAlwaysOn, ...toastProps});
@@ -34,9 +34,9 @@ const ToastProvider = ({children}: React.PropsWithChildren) => {
   };
 
   useEffect(() => {
-    if (hasError) {
+    if (errorInfo !== null) {
       showToast({
-        message: errorMessage || SERVER_ERROR_MESSAGES.UNHANDLED,
+        message: errorInfo.message || SERVER_ERROR_MESSAGES.UNHANDLED,
         showingTime: DEFAULT_TIME, // TODO: (@weadie) 나중에 토스트 프로바이더를 제거한 토스트를 만들 것이기 때문에 많이 리펙터링 안함
         isAlwaysOn: false,
         position: 'bottom',
@@ -47,7 +47,7 @@ const ToastProvider = ({children}: React.PropsWithChildren) => {
 
       clearError(DEFAULT_TIME);
     }
-  }, [errorMessage, hasError]);
+  }, [errorInfo, clientErrorMessage]);
 
   useEffect(() => {
     if (!currentToast) return;

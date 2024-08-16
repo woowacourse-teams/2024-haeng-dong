@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 
-import {ServerError} from 'ErrorProvider';
+import {ErrorInfo} from '@hooks/useError/ErrorProvider';
 
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
 
@@ -21,12 +21,12 @@ type SentryLevel = 'fatal' | 'error' | 'warning' | 'info' | 'debug' | 'log';
 type SendLogToSentry = {
   level?: SentryLevel;
   error: Error;
-  errorBody: ServerError;
+  errorInfo: ErrorInfo;
 };
 
-const sendLogToSentry = ({level = 'error', error, errorBody}: SendLogToSentry) => {
+const sendLogToSentry = ({level = 'error', error, errorInfo}: SendLogToSentry) => {
   Sentry.withScope(scope => {
-    const {errorCode, message} = errorBody;
+    const {errorCode, message} = errorInfo;
     scope.setLevel(level);
 
     scope.setTag('environment', process.env.NODE_ENV);
