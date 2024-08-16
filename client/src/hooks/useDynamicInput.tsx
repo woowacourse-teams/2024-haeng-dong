@@ -12,7 +12,7 @@ export type ReturnUseDynamicInput = {
   inputRefList: React.MutableRefObject<(HTMLInputElement | null)[]>;
   handleInputChange: (index: number, event: React.ChangeEvent<HTMLInputElement>) => void;
   deleteEmptyInputElementOnBlur: () => void;
-  errorMessage: string;
+  errorMessage: string | null;
   getFilledInputList: (list?: InputValue[]) => InputValue[];
   focusNextInputOnEnter: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
   canSubmit: boolean;
@@ -23,7 +23,7 @@ export type ReturnUseDynamicInput = {
 const useDynamicInput = (validateFunc: (name: string) => ValidateResult): ReturnUseDynamicInput => {
   const [inputList, setInputList] = useState<InputValue[]>([{index: 0, value: ''}]);
   const inputRefList = useRef<(HTMLInputElement | null)[]>([]);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errorIndexList, setErrorIndexList] = useState<number[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
 
@@ -62,11 +62,10 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
   // onChange와 setValue 둘 다 지원하기 위해서 validate를 분리
   const validateAndSetTargetInput = (index: number, value: string) => {
     const {isValid: isValidInput, errorMessage: validationResultMessage} = validateFunc(value);
+    setErrorMessage(validationResultMessage);
 
     if (isValidInput) {
       // 입력된 값이 유효하면 데이터(inputList)를 변경합니다.
-      setErrorMessage('');
-
       if (errorIndexList.includes(index)) {
         setErrorIndexList(prev => prev.filter(i => i !== index));
       }
@@ -75,7 +74,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     } else if (value.length === 0) {
       // value의 값이 0이라면 errorMessage는 띄워지지 않지만 값은 변경됩니다. 또한 invalid한 값이기에 errorIndex에 추가합니다.
 
-      setErrorMessage('');
+      setErrorMessage(null);
       changeErrorIndex(index);
 
       changeInputListValue(index, value);
@@ -83,8 +82,6 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
       // 유효성 검사에 실패한 입력입니다. 에러 메세지를 세팅합니다.
 
       const targetInput = findInputByIndex(index);
-
-      setErrorMessage(validationResultMessage ?? '');
       changeErrorIndex(targetInput.index);
     }
   };
