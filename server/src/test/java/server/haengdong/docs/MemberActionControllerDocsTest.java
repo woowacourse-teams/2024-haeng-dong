@@ -88,8 +88,8 @@ public class MemberActionControllerDocsTest extends RestDocsSupport {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.members[0].name").value(equalTo("소하")))
-                .andExpect(jsonPath("$.members[1].name").value(equalTo("토다리")))
+                .andExpect(jsonPath("$.memberNames[0]").value(equalTo("소하")))
+                .andExpect(jsonPath("$.memberNames[1]").value(equalTo("토다리")))
                 .andDo(
                         document("getCurrentMembers",
                                 preprocessRequest(prettyPrint()),
@@ -98,10 +98,8 @@ public class MemberActionControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 responseFields(
-                                        fieldWithPath("members").type(JsonFieldType.ARRAY)
-                                                .description("액션 대상 참여자 목록"),
-                                        fieldWithPath("members[0].name").type(JsonFieldType.STRING)
-                                                .description("참여자 이름")
+                                        fieldWithPath("memberNames").type(JsonFieldType.ARRAY)
+                                                .description("현재 탈주 가능한 참여 인원 이름 목록")
                                 )
                         )
                 );

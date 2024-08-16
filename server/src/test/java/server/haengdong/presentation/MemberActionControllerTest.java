@@ -46,8 +46,8 @@ class MemberActionControllerTest extends ControllerTestSupport {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.members[0].name").value(equalTo("소하")))
-                .andExpect(jsonPath("$.members[1].name").value(equalTo("토다리")));
+                .andExpect(jsonPath("$.memberNames[0]").value(equalTo("소하")))
+                .andExpect(jsonPath("$.memberNames[1]").value(equalTo("토다리")));
     }
 
     @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후에 기록된 해당 참여자의 모든 멤버 액션을 삭제한다.")
