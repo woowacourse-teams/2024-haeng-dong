@@ -25,4 +25,15 @@ public class BillActionDetail {
     private String memberName;
 
     private Long price;
+
+    public BillActionDetail(Long id, BillAction billAction, String memberName, Long price) {
+        this.id = id;
+        this.billAction = billAction;
+        this.memberName = memberName;
+        this.price = price;
+    }
+
+    public BillActionDetail update(Long price) {
+        return new BillActionDetail(id, billAction, memberName, price);
+    }
 }
