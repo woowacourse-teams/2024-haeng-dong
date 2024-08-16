@@ -1,36 +1,18 @@
-import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 
-import validateEventName from '@utils/validate/validateEventName';
+import useSetEventName from '@hooks/useSetEventName';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const SetEventNamePage = () => {
-  const [eventName, setEventName] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
+  const {eventName, errorMessage, canSubmit, handleEventNameChange} = useSetEventName();
 
-  const submitEventName = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitEventName = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     navigate(ROUTER_URLS.eventCreatePassword, {state: {eventName}});
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    const validation = validateEventName(newValue);
-
-    setCanSubmit(newValue.length !== 0);
-
-    if (validation.isValid) {
-      setEventName(newValue);
-      setErrorMessage('');
-    } else {
-      event.target.value = eventName;
-      setErrorMessage(validation.errorMessage ?? '');
-    }
   };
 
   return (
@@ -46,7 +28,7 @@ const SetEventNamePage = () => {
           value={eventName}
           type="text"
           placeholder="행사 이름"
-          onChange={e => handleChange(e)}
+          onChange={handleEventNameChange}
           isError={!!errorMessage}
           autoFocus
         ></LabelInput>
