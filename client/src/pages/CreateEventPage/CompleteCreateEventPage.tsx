@@ -18,7 +18,7 @@ const CompleteCreateEventPage = () => {
 
   const {showToast} = useToast();
 
-  const homePageUrl = getEventPageUrlByEnvironment(url, 'home');
+  const homePageUrl = getEventPageUrlByEnvironment(eventId ?? '', 'home');
 
   return (
     <MainLayout>
