@@ -1,4 +1,5 @@
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
+import {useEffect} from 'react';
 
 import validatePurchase from '@utils/validate/validatePurchase';
 
@@ -15,6 +16,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
   const {
     inputPairList,
     inputRefList,
+    errorMessage,
     errorIndexList,
     handleInputChange,
     getFilledInputPairList,
@@ -34,7 +36,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
   return (
     <div css={style.container}>
       <div css={style.inputContainer}>
-        <LabelGroupInput labelText="지출내역 / 금액">
+        <LabelGroupInput labelText="지출내역 / 금액" errorText={errorMessage}>
           {inputPairList.map(({index, title, price}) => (
             <div key={index} css={style.input}>
               <LabelGroupInput.Element

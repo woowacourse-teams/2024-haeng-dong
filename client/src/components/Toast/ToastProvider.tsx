@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {createContext, useContext, useEffect, useState} from 'react';
 
-import SERVER_ERROR_MESSAGES from '@constants/errorMessage';
+import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
 
 import {useError} from '../../ErrorProvider';
 

@@ -1,5 +1,5 @@
 export interface ValidateResult {
   isValid: boolean;
-  errorMessage?: string;
+  errorMessage: string | null;
   errorInfo?: Record<string, boolean>;
 }

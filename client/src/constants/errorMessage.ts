@@ -1,6 +1,6 @@
 type ErrorMessage = Record<string, string>;
 
-const SERVER_ERROR_MESSAGES: ErrorMessage = {
+export const SERVER_ERROR_MESSAGES: ErrorMessage = {
   EVENT_NOT_FOUND: '존재하지 않는 행사입니다.',
   EVENT_NAME_LENGTH_INVALID: '행사 이름은 2자 이상 30자 이하만 입력 가능합니다.',
   EVENT_NAME_CONSECUTIVE_SPACES: '행사 이름에는 공백 문자가 연속될 수 없습니다.',
@@ -45,5 +45,3 @@ export const ERROR_MESSAGE = {
 };
 
 export const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
-
-export default SERVER_ERROR_MESSAGES;
