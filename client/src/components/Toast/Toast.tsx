@@ -51,7 +51,7 @@ const Toast = ({
   };
 
   return createPortal(
-    <div css={toastMarginStyle({...styleProps})} {...htmlProps} onClick={handleClickToClose}>
+    <div css={toastMarginStyle({...styleProps})} {...htmlProps} onClick={handleClickToClose} id="toast">
       <div css={toastStyle(isVisible)}>
         <Flex justifyContent="spaceBetween" alignItems="center">
           <Flex alignItems="center" gap="0.5rem">
