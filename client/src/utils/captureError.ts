@@ -7,7 +7,6 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 import sendLogToSentry from './sendLogToSentry';
 
-// TODO: (@weadie) 함수 분리
 export const captureError = async (error: Error, navigate: NavigateFunction, eventId: string) => {
   // prod 환경에서만 Sentry capture 실행
   if (process.env.NODE_ENV !== 'production') return;
