@@ -154,6 +154,40 @@ class BillActionServiceTest extends ServiceTestSupport {
                 .isInstanceOf(HaengdongException.class);
     }
 
+    @DisplayName("지출 내역 금액을 변경하면 지출 디테일이 초기화 된다.")
+    @Test
+    void updateBillAction2() {
+        Event event = Fixture.EVENT1;
+        Event savedEvent = eventRepository.save(event);
+        Action action = Action.createFirst(savedEvent);
+        BillAction billAction = new BillAction(action, "뽕족", 10_000L);
+        BillAction savedBillAction = billActionRepository.save(billAction);
+        BillActionDetail billActionDetail1 = new BillActionDetail(savedBillAction, "감자", 3000L);
+        BillActionDetail billActionDetail2 = new BillActionDetail(savedBillAction, "고구마", 2000L);
+        BillActionDetail billActionDetail3 = new BillActionDetail(savedBillAction, "당근", 3000L);
+        BillActionDetail billActionDetail4 = new BillActionDetail(savedBillAction, "양파", 2000L);
+
+        billActionDetailRepository.saveAll(
+                List.of(billActionDetail1, billActionDetail2, billActionDetail3, billActionDetail4));
+
+        Long actionId = savedBillAction.getAction().getId();
+        BillActionUpdateAppRequest request = new BillActionUpdateAppRequest("인생맥주", 20_000L);
+
+        billActionService.updateBillAction(event.getToken(), actionId, request);
+
+        BillAction updatedBillAction = billActionRepository.findById(savedBillAction.getId()).get();
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(updatedBillAction);
+
+        assertThat(billActionDetails).hasSize(4)
+                .extracting("memberName", "price")
+                .containsExactlyInAnyOrder(
+                        tuple("감자", 5000L),
+                        tuple("고구마", 5000L),
+                        tuple("당근", 5000L),
+                        tuple("양파", 5000L)
+                );
+    }
+
     @DisplayName("지출 내역을 삭제한다.")
     @Test
     void deleteBillAction() {

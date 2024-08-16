@@ -31,4 +31,8 @@ public class BillActionDetail {
         this.memberName = memberName;
         this.price = price;
     }
+
+    public void updatePrice(Long price) {
+        this.price = price;
+    }
 }

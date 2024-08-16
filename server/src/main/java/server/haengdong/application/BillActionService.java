@@ -68,8 +68,21 @@ public class BillActionService {
 
         validateToken(token, billAction);
 
+        resetBillActionDetail(billAction, request.price());
+
         BillAction updatedBillAction = billAction.update(request.title(), request.price());
         billActionRepository.save(updatedBillAction);
+    }
+
+    private void resetBillActionDetail(BillAction billAction, Long updatePrice) {
+        if (billAction.getPrice() != updatePrice) {
+            List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(billAction);
+            int memberCount = billActionDetails.size();
+            if (memberCount != 0) {
+                Long eachPrice = updatePrice / memberCount;
+                billActionDetails.forEach(billActionDetail -> billActionDetail.updatePrice(eachPrice));
+            }
+        }
     }
 
     private void validateToken(String token, BillAction billAction) {
