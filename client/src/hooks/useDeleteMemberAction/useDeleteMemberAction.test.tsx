@@ -8,8 +8,14 @@ import {ErrorProvider} from '../../ErrorProvider';
 
 import useDeleteMemberAction from './useDeleteMemberAction';
 
-const stepListMockData = stepListJson;
-const memberActionList = stepListMockData[0].actions;
+const stepListMockData = stepListJson as (BillStep | MemberStep)[];
+let memberActionList: MemberAction[] = [];
+
+// filter로는 type narrowing이 안되어 부득이하게 for 문을 사용했습니다.
+for (let i = 0; i < stepListMockData.length; i++) {
+  const curAction = stepListMockData[i];
+  if (curAction.type !== 'BILL') curAction.actions.forEach(action => memberActionList.push(action));
+}
 
 describe('useDeleteMemberAction', () => {
   const initializeProvider = () =>
