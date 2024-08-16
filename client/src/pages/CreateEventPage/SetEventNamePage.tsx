@@ -3,7 +3,6 @@ import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 
 import validateEventName from '@utils/validate/validateEventName';
-import useEvent from '@hooks/useEvent/useEvent';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -12,7 +11,6 @@ const SetEventNamePage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
-  const {createNewEvent} = useEvent();
 
   const submitEventName = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

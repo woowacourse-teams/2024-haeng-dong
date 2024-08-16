@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import Flex from '@components/Flex/Flex';
 import Text from '@components/Text/Text';
 import {priceContainerStyle, titleContainerStyle} from '@components/Title/Title.style';
 import {TitleProps} from '@components/Title/Title.type';
@@ -11,7 +12,7 @@ export const Title: React.FC<TitleProps> = ({title, description, price}: TitlePr
     <div css={titleContainerStyle(theme)}>
       <Text size="subTitle">{title}</Text>
       {description && (
-        <Text textColor="darkGray" size="caption">
+        <Text textColor="darkGray" size="body">
           {description}
         </Text>
       )}
@@ -20,7 +21,10 @@ export const Title: React.FC<TitleProps> = ({title, description, price}: TitlePr
           <Text textColor="gray" size="caption">
             전체 지출 금액
           </Text>
-          <Text>{price.toLocaleString('ko-kr')}원</Text>
+          <Flex alignItems="center" gap="0.25rem">
+            <Text>{price.toLocaleString('ko-kr')}</Text>
+            <Text size="caption">원</Text>
+          </Flex>
         </div>
       )}
     </div>
