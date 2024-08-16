@@ -67,6 +67,10 @@ public class CurrentMembers {
         return members.isEmpty();
     }
 
+    public boolean isNotEmpty() {
+        return !members.isEmpty();
+    }
+
     public int size() {
         return members.size();
     }

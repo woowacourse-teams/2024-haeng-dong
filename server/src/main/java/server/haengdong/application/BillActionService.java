@@ -35,20 +35,16 @@ public class BillActionService {
     public void saveAllBillAction(String eventToken, List<BillActionAppRequest> requests) {
         Event event = getEvent(eventToken);
         Action action = createStartAction(event);
-
-        /* 이 부분 함께 쓰이는 경우가 많은데, 도메인 또는 별개로 */
         List<MemberAction> findMemberActions = memberActionRepository.findAllByEvent(event);
         CurrentMembers currentMembers = CurrentMembers.of(findMemberActions);
 
         for (BillActionAppRequest request : requests) {
             BillAction billAction = request.toBillAction(action);
-            /* 로직 숨기기  */
-            long pricePerMember = billAction.getPrice() / currentMembers.getMembers().size();
             billActionRepository.save(billAction);
-            currentMembers.getMembers().stream()
-                    .map(memberName -> new BillActionDetail(billAction, memberName, pricePerMember))
-                    .forEach(billActionDetailRepository::save);
             action = action.next();
+            if (currentMembers.isNotEmpty()) {
+                saveBillActionDetails(billAction, currentMembers);
+            }
         }
     }
 
@@ -56,6 +52,13 @@ public class BillActionService {
         return actionRepository.findLastByEvent(event)
                 .map(Action::next)
                 .orElse(Action.createFirst(event));
+    }
+
+    private void saveBillActionDetails(BillAction billAction, CurrentMembers currentMembers) {
+        long pricePerMember = billAction.getPrice() / currentMembers.size();
+        currentMembers.getMembers().stream()
+                .map(memberName -> new BillActionDetail(billAction, memberName, pricePerMember))
+                .forEach(billActionDetailRepository::save);
     }
 
     @Transactional
