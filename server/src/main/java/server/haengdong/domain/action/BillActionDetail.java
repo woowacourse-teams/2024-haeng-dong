@@ -25,4 +25,17 @@ public class BillActionDetail {
     private String memberName;
 
     private Long price;
+
+    public BillActionDetail(String memberName, Long price) {
+        this.memberName = memberName;
+        this.price = price;
+    }
+
+    public void setBillAction(BillAction billAction) {
+        this.billAction = billAction;
+    }
+
+    public boolean isMemberMatch(String memberName) {
+        return this.memberName.equals(memberName);
+    }
 }
