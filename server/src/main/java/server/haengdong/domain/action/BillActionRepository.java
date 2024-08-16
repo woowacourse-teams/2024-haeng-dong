@@ -21,7 +21,7 @@ public interface BillActionRepository extends JpaRepository<BillAction, Long> {
     @Query("""
                 select ba
                 from BillAction ba
-                where ba.action.sequence > :sequence
+                where ba.action.event = :event and ba.action.sequence > :sequence
             """)
-    List<BillAction> findByGreaterThanSequence(Long sequence);
+    List<BillAction> findByEventAndGreaterThanSequence(Event event, Long sequence);
 }

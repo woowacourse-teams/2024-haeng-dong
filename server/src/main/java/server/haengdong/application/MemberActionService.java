@@ -88,7 +88,7 @@ public class MemberActionService {
 
         memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(), memberAction.getSequence());
 
-        List<BillAction> billActions = billActionRepository.findByGreaterThanSequence(action.getSequence());
+        List<BillAction> billActions = billActionRepository.findByEventAndGreaterThanSequence(event, action.getSequence());
         billActions.forEach(billAction -> resetBillAction(event, billAction));
     }
 
