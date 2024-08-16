@@ -23,16 +23,7 @@ const DeleteMemberActionModal = ({
 }: DeleteMemberActionModalProps) => {
   const {showToast} = useToast();
 
-  const {aliveActionList, deleteMemberActionList, addDeleteMemberAction, isExistSameMemberFromAfterStep} =
-    useDeleteMemberAction(memberActionList, setIsBottomSheetOpened);
-
-  const onDeleteIconClick = (member: MemberAction) => {
-    alertSpecificCaseFromAddDeleteMember(member);
-    addDeleteMemberAction(member);
-  };
-
-  // 삭제버튼 누를 때 특수한 케이스이면 토스트를 띄우는 기능
-  const alertSpecificCaseFromAddDeleteMember = (memberAction: MemberAction) => {
+  const checkAlreadyExistMemberAction = (memberAction: MemberAction) => {
     if (!memberActionList.includes(memberAction)) {
       showToast({
         isClickToClose: true,
@@ -43,7 +34,12 @@ const DeleteMemberActionModal = ({
       });
       return;
     }
+  };
 
+  const checkExistSameMemberFromAfterStep = (
+    memberAction: MemberAction,
+    isExistSameMemberFromAfterStep: (memberAction: MemberAction) => boolean,
+  ) => {
     if (isExistSameMemberFromAfterStep(memberAction)) {
       showToast({
         isClickToClose: true,
@@ -59,6 +55,13 @@ const DeleteMemberActionModal = ({
     }
   };
 
+  const {aliveActionList, deleteMemberActionList, addDeleteMemberAction} = useDeleteMemberAction({
+    memberActionList,
+    setIsBottomSheetOpened,
+    checkAlreadyExistMemberAction,
+    checkExistSameMemberFromAfterStep,
+  });
+
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
       <div css={bottomSheetStyle}>
@@ -73,7 +76,7 @@ const DeleteMemberActionModal = ({
                 <div style={{flexGrow: 1}}>
                   <Input disabled key={`${member.actionId}`} type="text" style={{flexGrow: 1}} value={member.name} />
                 </div>
-                <IconButton size="medium" variants="tertiary" onClick={() => onDeleteIconClick(member)}>
+                <IconButton size="medium" variants="tertiary" onClick={() => addDeleteMemberAction(member)}>
                   <Icon iconType="trash" iconColor="onTertiary" />
                 </IconButton>
               </Flex>

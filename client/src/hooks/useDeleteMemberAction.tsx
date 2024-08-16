@@ -10,10 +10,22 @@ import {useFetch} from '@apis/useFetch';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-const useDeleteMemberAction = (
-  memberActionList: MemberAction[],
-  setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
+type UseDeleteMemberActionProps = {
+  memberActionList: MemberAction[];
+  setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  checkAlreadyExistMemberAction: (memberAction: MemberAction) => void;
+  checkExistSameMemberFromAfterStep: (
+    memberAction: MemberAction,
+    isExistSameMemberFromAfterStep: (memberAction: MemberAction) => boolean,
+  ) => void;
+};
+
+const useDeleteMemberAction = ({
+  memberActionList,
+  setIsBottomSheetOpened,
+  checkAlreadyExistMemberAction,
+  checkExistSameMemberFromAfterStep,
+}: UseDeleteMemberActionProps) => {
   const {stepList, refreshStepList} = useStepList();
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
   const eventId = getEventIdByUrl();
@@ -45,6 +57,8 @@ const useDeleteMemberAction = (
   };
 
   const addDeleteMemberAction = (memberAction: MemberAction) => {
+    checkAlreadyExistMemberAction(memberAction);
+    checkExistSameMemberFromAfterStep(memberAction, isExistSameMemberFromAfterStep);
     setAliveActionList(prev => prev.filter(aliveMember => aliveMember.actionId !== memberAction.actionId));
   };
 
@@ -62,7 +76,7 @@ const useDeleteMemberAction = (
     return memberNameList.filter(member => member === memberAction.name).length >= 2;
   };
 
-  return {aliveActionList, deleteMemberActionList, addDeleteMemberAction, isExistSameMemberFromAfterStep};
+  return {aliveActionList, deleteMemberActionList, addDeleteMemberAction};
 };
 
 export default useDeleteMemberAction;
