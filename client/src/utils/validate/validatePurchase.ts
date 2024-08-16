@@ -1,6 +1,6 @@
 import type {Bill} from 'types/serviceType';
 
-import ERROR_MESSAGE from '@constants/errorMessage';
+import {ERROR_MESSAGE} from '@constants/errorMessage';
 import RULE from '@constants/rule';
 import REGEXP from '@constants/regExp';
 
@@ -8,7 +8,7 @@ import {ValidateResult} from './type';
 
 const validatePurchase = (inputPair: Bill): ValidateResult => {
   const {title, price} = inputPair;
-  let errorMessage;
+  let errorMessage: string | null = null;
 
   const errorInfo = {
     price: false,
@@ -38,7 +38,7 @@ const validatePurchase = (inputPair: Bill): ValidateResult => {
   };
 
   if (validatePrice() && validateTitle()) {
-    return {isValid: true, errorMessage: ''};
+    return {isValid: true, errorMessage: null};
   }
 
   return {isValid: false, errorMessage, errorInfo};

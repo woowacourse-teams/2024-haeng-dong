@@ -10,7 +10,7 @@ import useEvent from './useEvent/useEvent';
 const useSetPassword = (eventName: string) => {
   const {fetch} = useFetch();
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
   const {createNewEvent} = useEvent();
 
@@ -26,13 +26,12 @@ const useSetPassword = (eventName: string) => {
     const {isValid, errorMessage} = validateEventPassword(newValue);
 
     setCanSubmit(newValue.length === RULE.maxEventPasswordLength);
+    setErrorMessage(errorMessage);
 
     if (isValid) {
       setPassword(newValue);
-      setErrorMessage('');
     } else {
       event.target.value = password;
-      setErrorMessage(errorMessage ?? '');
     }
   };
 

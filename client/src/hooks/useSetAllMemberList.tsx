@@ -2,12 +2,12 @@ import {useEffect, useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
 import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
-import {useFetch} from '@hooks/useFetch/useFetch';
 
 import isArraysEqual from '@utils/isArraysEqual';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import {useStepList} from './useStepList/useStepList';
+import {useFetch} from './useFetch/useFetch';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;

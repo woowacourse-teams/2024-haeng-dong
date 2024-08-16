@@ -2,7 +2,7 @@ export interface LabelGroupInputStyleProps {}
 
 export interface LabelGroupInputCustomProps {
   labelText: string;
-  errorText?: string;
+  errorText: string | null;
 }
 
 export type LabelGroupInputOptionProps = LabelGroupInputStyleProps & LabelGroupInputCustomProps;
