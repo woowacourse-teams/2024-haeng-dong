@@ -73,7 +73,7 @@ export const requestDeleteAllMemberList = async ({eventId, memberName}: WithEven
 };
 
 export type ResponseGetCurrentInMemberList = {
-  members: Array<{name: string}>;
+  memberNames: string[];
 };
 
 export const requestGetCurrentInMemberList = async (eventId: string) => {
