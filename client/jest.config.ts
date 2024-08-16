@@ -34,6 +34,7 @@ const config: Config = {
     '^@types/(.*)$': '<rootDir>/src/types/$1',
     '^@errors/(.*)$': '<rootDir>/src/errors/$1',
     '^@mocks/(.*)$': '<rootDir>/src/mocks/$1',
+    '\\.svg$': '<rootDir>/src/mocks/svg.ts',
   },
   testEnvironmentOptions: {
     customExportConditions: [''],
