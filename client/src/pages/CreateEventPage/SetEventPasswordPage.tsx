@@ -17,7 +17,9 @@ const SetEventPasswordPage = () => {
     }
   }, [location.state]);
 
-  const {password, errorMessage, canSubmit, submitPassword, handleChange} = useSetPassword(location.state?.eventName);
+  const {password, errorMessage, canSubmit, submitPassword, handlePasswordChange} = useSetPassword(
+    location.state?.eventName,
+  );
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     const eventId = await submitPassword(event);
@@ -39,7 +41,7 @@ const SetEventPasswordPage = () => {
           type="secret"
           maxLength={RULE.maxEventPasswordLength}
           placeholder="비밀번호"
-          onChange={e => handleChange(e)}
+          onChange={handlePasswordChange}
           isError={!!errorMessage}
           autoFocus
         />

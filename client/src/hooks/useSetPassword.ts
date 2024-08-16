@@ -22,7 +22,7 @@ const useSetPassword = (eventName: string) => {
     return eventId;
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     const {isValid, errorMessage} = validateEventPassword(newValue);
 
@@ -42,7 +42,7 @@ const useSetPassword = (eventName: string) => {
     errorMessage,
     canSubmit,
     submitPassword,
-    handleChange,
+    handlePasswordChange,
   };
 };
 
