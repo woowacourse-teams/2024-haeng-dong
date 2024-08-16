@@ -2,13 +2,14 @@ import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
 
+import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
+
 import stepListJson from '../../mocks/stepList.json';
 import StepListProvider, {useStepList} from '../useStepList/useStepList';
 import {ErrorProvider} from '../../ErrorProvider';
+import invalidMemberStepListJson from '../../mocks/invalidMemberStepList.json';
 
 import useDeleteMemberAction from './useDeleteMemberAction';
-import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
-import invalidMemberStepListJson from '../../mocks/invalidMemberStepList.json';
 
 const stepListMockData = stepListJson as (BillStep | MemberStep)[];
 let memberActionList: MemberAction[] = [];
