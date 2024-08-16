@@ -13,18 +13,15 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 type UseDeleteMemberActionProps = {
   memberActionList: MemberAction[];
   setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  checkAlreadyExistMemberAction: (memberAction: MemberAction) => void;
-  checkExistSameMemberFromAfterStep: (
-    memberAction: MemberAction,
-    isExistSameMemberFromAfterStep: (memberAction: MemberAction) => boolean,
-  ) => void;
+  showToastAlreadyExistMemberAction: () => void;
+  showToastExistSameMemberFromAfterStep: (name: string) => void;
 };
 
 const useDeleteMemberAction = ({
   memberActionList,
   setIsBottomSheetOpened,
-  checkAlreadyExistMemberAction,
-  checkExistSameMemberFromAfterStep,
+  showToastAlreadyExistMemberAction,
+  showToastExistSameMemberFromAfterStep,
 }: UseDeleteMemberActionProps) => {
   const {stepList, refreshStepList} = useStepList();
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
@@ -56,9 +53,21 @@ const useDeleteMemberAction = ({
     }
   };
 
+  const checkAlreadyExistMemberAction = (memberAction: MemberAction, showToast: () => void) => {
+    if (!memberActionList.includes(memberAction)) {
+      showToast();
+    }
+  };
+
+  const checkExistSameMemberFromAfterStep = (memberAction: MemberAction, showToast: () => void) => {
+    if (isExistSameMemberFromAfterStep(memberAction)) {
+      showToast();
+    }
+  };
+
   const addDeleteMemberAction = (memberAction: MemberAction) => {
-    checkAlreadyExistMemberAction(memberAction);
-    checkExistSameMemberFromAfterStep(memberAction, isExistSameMemberFromAfterStep);
+    checkAlreadyExistMemberAction(memberAction, showToastAlreadyExistMemberAction);
+    checkExistSameMemberFromAfterStep(memberAction, () => showToastExistSameMemberFromAfterStep(memberAction.name));
     setAliveActionList(prev => prev.filter(aliveMember => aliveMember.actionId !== memberAction.actionId));
   };
 

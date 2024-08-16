@@ -23,43 +23,35 @@ const DeleteMemberActionModal = ({
 }: DeleteMemberActionModalProps) => {
   const {showToast} = useToast();
 
-  const checkAlreadyExistMemberAction = (memberAction: MemberAction) => {
-    if (!memberActionList.includes(memberAction)) {
-      showToast({
-        isClickToClose: true,
-        showingTime: 3000,
-        message: '이미 삭제된 인원입니다.',
-        type: 'error',
-        bottom: '160px',
-      });
-      return;
-    }
+  const showToastAlreadyExistMemberAction = () => {
+    showToast({
+      isClickToClose: true,
+      showingTime: 3000,
+      message: '이미 삭제된 인원입니다.',
+      type: 'error',
+      bottom: '160px',
+    });
   };
 
-  const checkExistSameMemberFromAfterStep = (
-    memberAction: MemberAction,
-    isExistSameMemberFromAfterStep: (memberAction: MemberAction) => boolean,
-  ) => {
-    if (isExistSameMemberFromAfterStep(memberAction)) {
-      showToast({
-        isClickToClose: true,
-        showingTime: 3000,
-        message: `이후의 ${memberAction.name}가 사라져요`,
-        type: 'error',
-        position: 'top',
-        top: '30px',
-        style: {
-          zIndex: 9000,
-        },
-      });
-    }
+  const showToastExistSameMemberFromAfterStep = (name: string) => {
+    showToast({
+      isClickToClose: true,
+      showingTime: 3000,
+      message: `이후의 ${name}가 사라져요`,
+      type: 'error',
+      position: 'top',
+      top: '30px',
+      style: {
+        zIndex: 9000,
+      },
+    });
   };
 
   const {aliveActionList, deleteMemberActionList, addDeleteMemberAction} = useDeleteMemberAction({
     memberActionList,
     setIsBottomSheetOpened,
-    checkAlreadyExistMemberAction,
-    checkExistSameMemberFromAfterStep,
+    showToastAlreadyExistMemberAction,
+    showToastExistSameMemberFromAfterStep,
   });
 
   return (
