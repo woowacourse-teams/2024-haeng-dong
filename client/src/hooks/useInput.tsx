@@ -2,6 +2,8 @@ import {useEffect, useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
 
+import {ERROR_MESSAGE} from '@constants/errorMessage';
+
 export type InputValue = {
   value: string;
   index: number;
@@ -33,17 +35,18 @@ const useInput = <T extends InputValue>({validateFunc, initialInputList}: UseInp
     const {isValid, errorMessage: validationResultMessage} = validateFunc(value);
 
     if (isValid && value.length !== 0) {
+      // TODO: (@soha) 쿠키가 작업한 errorMessage를 위로 올리기 변경 추후에 merge후에 반영하기
       setErrorMessage('');
       updateInputList(index, value);
       removeErrorIndex(index);
       setCanSubmit(true);
     } else if (value.length === 0) {
       // TODO: (@soha) constants로 분리
-      setErrorMessage('공백은 입력할 수 없어요.');
+      setErrorMessage(ERROR_MESSAGE.preventEmpty);
       updateInputList(index, value);
       addErrorIndex(index);
     } else {
-      setErrorMessage(validationResultMessage ?? '올바르지 않은 입력이에요.');
+      setErrorMessage(validationResultMessage ?? ERROR_MESSAGE.invalidInput);
       addErrorIndex(index);
     }
   };
