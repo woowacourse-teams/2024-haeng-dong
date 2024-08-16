@@ -1,11 +1,9 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
 import {useFetch} from '@apis/useFetch';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
 import RULE from '@constants/rule';
 
 import useEvent from './useEvent';
@@ -16,18 +14,12 @@ const useSetPassword = (eventName: string) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
   const {createNewEvent} = useEvent();
-  const navigate = useNavigate();
-
-  const createEventAndNavigate = async () => {
-    const {eventId} = await createNewEvent({eventName, password: parseInt(password)});
-
-    navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId})}`);
-  };
 
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    await fetch({queryFunction: createEventAndNavigate});
+    const {eventId} = await fetch({queryFunction: () => createNewEvent({eventName, password: parseInt(password)})});
+    return eventId;
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
