@@ -22,7 +22,7 @@ const useSearchInMemberList = (
   const [currentInputIndex, setCurrentInputIndex] = useState(-1);
 
   // 서버에서 가져온 전체 리스트
-  const [currentInMemberList, setCurrentInMemberList] = useState<Array<{name: string}>>([]);
+  const [currentInMemberList, setCurrentInMemberList] = useState<Array<string>>([]);
 
   // 검색된 리스트 (따로 둔 이유는 검색 후 클릭했을 때 리스트를 비워주어야하기 때문)
   const [filteredInMemberList, setFilteredInMemberList] = useState<Array<string>>([]);
@@ -30,7 +30,7 @@ const useSearchInMemberList = (
   useEffect(() => {
     const getCurrentInMembers = async () => {
       const currentInMemberListFromServer = await fetch({queryFunction: () => requestGetCurrentInMemberList(eventId)});
-      setCurrentInMemberList(currentInMemberListFromServer.members);
+      setCurrentInMemberList(currentInMemberListFromServer.memberNames);
     };
 
     getCurrentInMembers();
@@ -39,11 +39,9 @@ const useSearchInMemberList = (
   const filterMatchItems = (keyword: string) => {
     if (keyword.trim() === '') return [];
 
-    const MatchItems = currentInMemberList.map(({name}) => name);
-
-    return MatchItems.filter(
-      matchItem => matchItem.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1,
-    ).slice(0, 3);
+    return currentInMemberList
+      .filter(member => member.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1)
+      .slice(0, 3);
   };
 
   const chooseMember = (inputIndex: number, name: string) => {
