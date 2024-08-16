@@ -6,7 +6,7 @@ import {ToastProvider} from '@components/Toast/ToastProvider';
 
 import {GlobalStyle} from './GlobalStyle';
 // import toast from 'react-simple-toasts';
-import {ErrorProvider} from './ErrorProvider';
+import {ErrorProvider} from './hooks/useError/ErrorProvider';
 import UnhandledErrorBoundary from './UnhandledErrorBoundary';
 
 const App: React.FC = () => {
