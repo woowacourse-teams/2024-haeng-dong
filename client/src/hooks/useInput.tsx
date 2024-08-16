@@ -31,23 +31,22 @@ const useInput = <T extends InputValue>({validateFunc, initialInputList}: UseInp
   const [errorIndexList, setErrorIndexList] = useState<number[]>([]);
   const [canSubmit, setCanSubmit] = useState(false);
 
+  useEffect(() => {
+    changeCanSubmit();
+  }, [errorMessage, errorIndexList]);
+
   const handleChange = (index: number, value: string) => {
     const {isValid, errorMessage: validationResultMessage} = validateFunc(value);
 
-    if (isValid && value.length !== 0) {
+    if (validationResultMessage === ERROR_MESSAGE.preventEmpty) {
+      setErrorMessage(validationResultMessage);
+      updateInputList(index, value);
+      addErrorIndex(index);
+    } else if (isValid && value.length !== 0) {
       // TODO: (@soha) 쿠키가 작업한 errorMessage를 위로 올리기 변경 추후에 merge후에 반영하기
       setErrorMessage('');
       updateInputList(index, value);
       removeErrorIndex(index);
-      setCanSubmit(true);
-    } else if (value.length === 0) {
-      // TODO: (@soha) constants로 분리
-      setErrorMessage(ERROR_MESSAGE.preventEmpty);
-      updateInputList(index, value);
-      addErrorIndex(index);
-    } else {
-      setErrorMessage(validationResultMessage ?? ERROR_MESSAGE.invalidInput);
-      addErrorIndex(index);
     }
   };
 
@@ -73,6 +72,10 @@ const useInput = <T extends InputValue>({validateFunc, initialInputList}: UseInp
       }
       return prev;
     });
+  };
+
+  const changeCanSubmit = () => {
+    setCanSubmit(errorIndexList.length || errorMessage.length ? false : true);
   };
 
   return {

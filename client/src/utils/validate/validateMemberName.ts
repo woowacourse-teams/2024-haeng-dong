@@ -5,6 +5,7 @@ import RULE from '@constants/rule';
 import {ValidateResult} from './type';
 
 const validateMemberName = (name: string): ValidateResult => {
+  let errorMessage = null;
   const validateOnlyString = () => {
     if (!REGEXP.memberName.test(name)) return false;
     return true;
@@ -15,11 +16,19 @@ const validateMemberName = (name: string): ValidateResult => {
     return true;
   };
 
-  if (validateOnlyString() && validateLength()) {
+  const validateEmpty = () => {
+    if (!name.trim().length) {
+      errorMessage = ERROR_MESSAGE.preventEmpty;
+      return false;
+    }
+    return true;
+  };
+
+  if (validateOnlyString() && validateLength() && validateEmpty()) {
     return {isValid: true};
   }
 
-  return {isValid: false, errorMessage: ERROR_MESSAGE.memberName};
+  return {isValid: false, errorMessage: errorMessage || ERROR_MESSAGE.memberName};
 };
 
 export default validateMemberName;
