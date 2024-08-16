@@ -53,7 +53,7 @@ describe('useDeleteMemberAction', () => {
       expect(result.current.stepListResult.stepList).not.toStrictEqual([]);
     });
 
-    await act(async () => {
+    act(() => {
       const memberAction = {
         actionId: 1,
         name: '망쵸',
