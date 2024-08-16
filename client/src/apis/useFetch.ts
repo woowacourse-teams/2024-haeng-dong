@@ -45,17 +45,10 @@ export const useFetch = () => {
           onError();
         }
 
-        // prod 환경에서만 Sentry capture 실행
-        if (process.env.NODE_ENV === 'production') {
-          captureError(error, navigate, eventId);
-        }
+        captureError(error, navigate, eventId);
       } else {
         setError({errorCode: UNKNOWN_ERROR, message: JSON.stringify(error)});
-
-        // prod 환경에서만 Sentry capture 실행
-        if (process.env.NODE_ENV === 'production') {
-          captureError(new Error(UNKNOWN_ERROR), navigate, eventId);
-        }
+        captureError(new Error(UNKNOWN_ERROR), navigate, eventId);
 
         // 에러를 throw 해 에러 바운더리로 보냅니다. 따라서 에러 이름은 중요하지 않음
         throw new Error(UNKNOWN_ERROR);
@@ -71,6 +64,9 @@ export const useFetch = () => {
 };
 
 const captureError = async (error: Error, navigate: NavigateFunction, eventId: string) => {
+  // prod 환경에서만 Sentry capture 실행
+  if (process.env.NODE_ENV !== 'production') return;
+
   const errorBody: ServerError =
     error instanceof FetchError ? error.errorBody : {message: error.message, errorCode: error.name};
 
