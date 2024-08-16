@@ -38,7 +38,7 @@ type ResponseGetAllMemberList = {
 
 export const requestGetAllMemberList = async ({eventId}: WithEventId) => {
   return requestGet<ResponseGetAllMemberList>({
-    endpoint: `${TEMP_PREFIX}/${eventId}/members/current`,
+    endpoint: `${TEMP_PREFIX}/${eventId}/members`,
   });
 };
 

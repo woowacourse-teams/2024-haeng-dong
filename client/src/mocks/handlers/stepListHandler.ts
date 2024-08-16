@@ -31,7 +31,7 @@ export const stepListHandler = [
     },
   ),
 
-  http.get(`${TEMP_PREFIX}/:eventId/members/current`, () => {
+  http.get(`${TEMP_PREFIX}/:eventId/members`, () => {
     return HttpResponse.json({
       memberNames: stepListMockData
         .filter(({type}) => type !== 'BILL')
@@ -94,7 +94,7 @@ export const stepListHandler = [
           type: 'BILL',
           stepName: '밥스카이',
           members: [],
-          actions: actions.map(({title, price}, index) => ({
+          actions: actions.map(({title, price}) => ({
             actionId: 999,
             name: title,
             price,
