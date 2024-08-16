@@ -16,7 +16,7 @@ const validateMemberName = (name: string): ValidateResult => {
   };
 
   if (validateOnlyString() && validateLength()) {
-    return {isValid: true};
+    return {isValid: true, errorMessage: null};
   }
 
   return {isValid: false, errorMessage: ERROR_MESSAGE.memberName};
