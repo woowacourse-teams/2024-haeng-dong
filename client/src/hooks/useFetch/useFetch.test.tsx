@@ -2,6 +2,8 @@ import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
 
+import FetchError from '@errors/FetchError';
+
 import {requestPostWithoutResponse} from '@apis/fetcher';
 
 import {captureError} from '@utils/captureError';
@@ -11,7 +13,6 @@ import {UNKNOWN_ERROR} from '@constants/errorMessage';
 import {ErrorProvider, useError} from '../../ErrorProvider';
 
 import {useFetch} from './useFetch';
-import FetchError from '@errors/FetchError';
 
 describe('useFetch', () => {
   const initializeProvider = () =>
