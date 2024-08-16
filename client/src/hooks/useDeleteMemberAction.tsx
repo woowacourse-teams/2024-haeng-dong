@@ -71,8 +71,6 @@ const useDeleteMemberAction = ({
     setAliveActionList(prev => prev.filter(aliveMember => aliveMember.actionId !== memberAction.actionId));
   };
 
-  // 현재 선택된 액션의 인덱스를 구해서 뒤의 동일인물의 액션이 있는지를 파악하는 기능
-  // 논의 후 제거 여부 결정
   const isExistSameMemberFromAfterStep = (memberAction: MemberAction) => {
     const memberActionList = stepList
       .filter(step => step.type !== 'BILL')
