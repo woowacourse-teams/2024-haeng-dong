@@ -1,7 +1,6 @@
 package server.haengdong.application;
 
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,14 +94,12 @@ public class MemberActionService {
     private void resetBillAction(Event event, BillAction billAction) {
         List<MemberAction> memberActions = memberActionRepository.findByEventAndSequence(event, billAction.getSequence());
         CurrentMembers currentMembers = CurrentMembers.of(memberActions);
-        Set<String> members = currentMembers.getMembers();
 
         billActionDetailRepository.deleteAllByBillAction(billAction);
 
-        int memberCount = members.size();
-        if (memberCount != 0) {
-            Long eachPrice = billAction.getPrice() / memberCount;
-            for (String member : members) {
+        if (currentMembers.isNotEmpty()) {
+            Long eachPrice = billAction.getPrice() / currentMembers.size();
+            for (String member : currentMembers.getMembers()) {
                 BillActionDetail billActionDetail = new BillActionDetail(billAction, member, eachPrice);
                 billActionDetailRepository.save(billActionDetail);
             }
