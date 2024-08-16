@@ -13,7 +13,12 @@ import server.haengdong.application.request.BillActionAppRequest;
 import server.haengdong.application.request.BillActionUpdateAppRequest;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.BillAction;
+import server.haengdong.domain.action.BillActionDetail;
+import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
+import server.haengdong.domain.action.MemberAction;
+import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
@@ -29,6 +34,12 @@ class BillActionServiceTest extends ServiceTestSupport {
 
     @Autowired
     private BillActionRepository billActionRepository;
+
+    @Autowired
+    private BillActionDetailRepository billActionDetailRepository;
+
+    @Autowired
+    private MemberActionRepository memberActionRepository;
 
     @DisplayName("지출 내역을 생성한다.")
     @Test
@@ -49,6 +60,37 @@ class BillActionServiceTest extends ServiceTestSupport {
                 .containsExactlyInAnyOrder(
                         tuple("뽕족", 10_000L, 1L),
                         tuple("인생맥주", 15_000L, 2L)
+                );
+    }
+
+    @DisplayName("지출 내역을 생성하면 지출 상세 내역이 생성된다.")
+    @Test
+    void saveAllBillActionTest1() {
+        Event event = Fixture.EVENT1;
+        Event savedEvent = eventRepository.save(event);
+        Action action1 = new Action(event, 1L);
+        Action action2 = new Action(event, 2L);
+        MemberAction memberAction1 = new MemberAction(action1, "백호", MemberActionStatus.IN, 1L);
+        MemberAction memberAction2 = new MemberAction(action2, "망쵸", MemberActionStatus.IN, 2L);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
+
+        List<BillActionAppRequest> request = List.of(
+                new BillActionAppRequest("뽕족", 10_000L),
+                new BillActionAppRequest("인생맥주", 15_000L)
+        );
+
+        billActionService.saveAllBillAction(event.getToken(), request);
+
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAll();
+
+        assertThat(billActionDetails)
+                .hasSize(4)
+                .extracting("memberName", "price")
+                .containsExactlyInAnyOrder(
+                        tuple("백호", 5_000L),
+                        tuple("망쵸", 5_000L),
+                        tuple("백호", 7_500L),
+                        tuple("망쵸", 7_500L)
                 );
     }
 
