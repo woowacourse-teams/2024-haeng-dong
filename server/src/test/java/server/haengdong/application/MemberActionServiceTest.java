@@ -125,6 +125,44 @@ class MemberActionServiceTest extends ServiceTestSupport {
                 );
     }
 
+    @DisplayName("이벤트에 속한 멤버을 삭제하면 전체 지출 내역 디테일이 초기화된다.")
+    @Test
+    void deleteMember1() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
+        Action targetAction = new Action(event, 2L);
+        MemberAction memberAction2 = createMemberAction(targetAction, "토다리", OUT, 2L);
+        MemberAction memberAction3 = createMemberAction(new Action(event, 3L), "쿠키", IN, 3L);
+        MemberAction memberAction4 = createMemberAction(new Action(event, 4L), "웨디", IN, 4L);
+        MemberAction memberAction5 = createMemberAction(new Action(event, 5L), "감자", IN, 5L);
+        memberActionRepository.saveAll(
+                List.of(memberAction1,
+                        memberAction2,
+                        memberAction3,
+                        memberAction4,
+                        memberAction5
+                )
+        );
+        BillAction billAction = new BillAction(new Action(event, 6L), "뽕족", 100_000L);
+        billActionRepository.save(billAction);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L);
+        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L);
+        billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
+
+        memberActionService.deleteMember(event.getToken(), "쿠키");
+
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(billAction);
+
+        assertThat(billActionDetails).hasSize(2)
+                .extracting("memberName", "price")
+                .containsExactlyInAnyOrder(
+                        tuple("웨디", 50_000L),
+                        tuple("감자", 50_000L)
+                );
+    }
+
     @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후에 기록된 해당 참여자의 모든 멤버 액션을 삭제한다.")
     @Test
     void deleteMemberAction() {

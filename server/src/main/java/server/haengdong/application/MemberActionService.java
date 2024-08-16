@@ -72,6 +72,9 @@ public class MemberActionService {
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
 
         memberActionRepository.deleteAllByEventAndMemberName(event, memberName);
+
+        List<BillAction> billActions = billActionRepository.findByAction_Event(event);
+        billActions.forEach(billAction -> resetBillAction(event, billAction));
     }
 
     @Transactional
