@@ -9,8 +9,13 @@ public record ActionAppResponse(
         String name,
         Long price,
         Long sequence,
+        boolean isFixed,
         ActionType actionType
 ) {
+
+    public ActionAppResponse(Long actionId, String name, Long price, Long sequence, ActionType actionType) {
+        this(actionId, name, price, sequence, false, actionType);
+    }
 
     public static ActionAppResponse of(BillAction billAction) {
         return new ActionAppResponse(
@@ -18,7 +23,8 @@ public record ActionAppResponse(
                 billAction.getTitle(),
                 billAction.getPrice(),
                 billAction.getSequence(),
-                ActionType.BILL
+                billAction.isFixed(),
+                ActionAppResponse.ActionType.BILL
         );
     }
 
@@ -30,7 +36,8 @@ public record ActionAppResponse(
                 memberAction.getMemberName(),
                 null,
                 memberAction.getSequence(),
-                ActionType.of(status)
+                false,
+                ActionAppResponse.ActionType.of(status)
         );
     }
 

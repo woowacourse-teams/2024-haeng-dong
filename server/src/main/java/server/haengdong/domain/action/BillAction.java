@@ -41,20 +41,27 @@ public class BillAction implements Comparable<BillAction> {
 
     private Long price;
 
+    private boolean isFixed;
+
     @OneToMany(mappedBy = "billAction", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BillActionDetail> billActionDetails = new ArrayList<>();
 
     public BillAction(Action action, String title, Long price) {
-        this(null, action, title, price);
+        this(null, action, title, price, false); // TODO: 수정 필요
     }
 
-    private BillAction(Long id, Action action, String title, Long price) {
+    public BillAction(Action action, String title, Long price, boolean isFixed) {
+        this(null, action, title, price, isFixed);
+    }
+
+    private BillAction(Long id, Action action, String title, Long price, boolean isFixed) {
         validateTitle(title);
         validatePrice(price);
         this.id = id;
         this.action = action;
         this.title = title.trim();
         this.price = price;
+        this.isFixed = isFixed;
     }
 
     private void validateTitle(String title) {
@@ -71,7 +78,7 @@ public class BillAction implements Comparable<BillAction> {
     }
 
     public BillAction update(String title, Long price) {
-        return new BillAction(id, action, title, price);
+        return new BillAction(id, action, title, price, isFixed);
     }
 
     public Long getSequence() {

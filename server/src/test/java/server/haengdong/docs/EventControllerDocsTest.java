@@ -72,27 +72,27 @@ public class EventControllerDocsTest extends RestDocsSupport {
         given(authService.getTokenName()).willReturn("eventToken");
 
         mockMvc.perform(post("/api/events")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(cookie().value("eventToken", "jwtToken"))
                 .andExpect(jsonPath("$.eventId").value("쿠키 토큰"))
                 .andDo(
                         document("createEvent",
-                                 preprocessRequest(prettyPrint()),
-                                 preprocessResponse(prettyPrint()),
-                                 requestFields(
-                                         fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름"),
-                                         fieldWithPath("password").type(JsonFieldType.STRING).description("행사 비밀 번호")
-                                 ),
-                                 responseFields(
-                                         fieldWithPath("eventId").type(JsonFieldType.STRING)
-                                                 .description("행사 ID")
-                                 ),
-                                 responseCookies(
-                                         cookieWithName("eventToken").description("행사 관리자용 토큰")
-                                 )
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                requestFields(
+                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름"),
+                                        fieldWithPath("password").type(JsonFieldType.STRING).description("행사 비밀 번호")
+                                ),
+                                responseFields(
+                                        fieldWithPath("eventId").type(JsonFieldType.STRING)
+                                                .description("행사 ID")
+                                ),
+                                responseCookies(
+                                        cookieWithName("eventToken").description("행사 관리자용 토큰")
+                                )
                         )
                 );
     }
@@ -110,14 +110,14 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.eventName").value("행동대장 회식"))
                 .andDo(
                         document("getEvent",
-                                 preprocessRequest(prettyPrint()),
-                                 preprocessResponse(prettyPrint()),
-                                 pathParameters(
-                                         parameterWithName("eventId").description("행사 ID")
-                                 ),
-                                 responseFields(
-                                         fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
-                                 )
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                responseFields(
+                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
+                                )
                         )
                 );
     }
@@ -178,8 +178,10 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                 ),
                                 requestFields(
                                         fieldWithPath("members").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
-                                        fieldWithPath("members[].before").type(JsonFieldType.STRING).description("수정 전 참여자 이름"),
-                                        fieldWithPath("members[].after").type(JsonFieldType.STRING).description("수정 후 참여자 이름")
+                                        fieldWithPath("members[].before").type(JsonFieldType.STRING)
+                                                .description("수정 전 참여자 이름"),
+                                        fieldWithPath("members[].after").type(JsonFieldType.STRING)
+                                                .description("수정 후 참여자 이름")
                                 )
                         )
                 );
@@ -278,7 +280,9 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                         fieldWithPath("steps[].actions[].price").type(JsonFieldType.NUMBER).optional()
                                                 .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
                                         fieldWithPath("steps[].actions[].sequence").type(JsonFieldType.NUMBER)
-                                                .description("액션 순서")
+                                                .description("액션 순서"),
+                                        fieldWithPath("steps[].actions[].isFixed").type(JsonFieldType.BOOLEAN)
+                                                .description("지출 액션의 지출 고정 금액이 설정 여부")
                                 )
                         )
                 );
@@ -289,20 +293,20 @@ public class EventControllerDocsTest extends RestDocsSupport {
     void authenticateTest() throws Exception {
         String token = "TOKEN";
         mockMvc.perform(post("/api/events/{eventId}/auth", token)
-                                .cookie(EVENT_COOKIE))
+                        .cookie(EVENT_COOKIE))
                 .andDo(print())
                 .andExpect(status().isOk())
 
                 .andDo(
                         document("authenticateEvent",
-                                 preprocessRequest(prettyPrint()),
-                                 preprocessResponse(prettyPrint()),
-                                 pathParameters(
-                                         parameterWithName("eventId").description("행사 ID")
-                                 ),
-                                 requestCookies(
-                                         cookieWithName("eventToken").description("행사 관리자 토큰").optional()
-                                 )
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                requestCookies(
+                                        cookieWithName("eventToken").description("행사 관리자 토큰").optional()
+                                )
                         )
                 );
     }
