@@ -1,106 +1,108 @@
-import type {MemberType, Bill, BillAction, BillStep, MemberStep} from 'types/serviceType.ts';
+// TODO: (@todari) : reactQuery를 적용하면서, 사용하지 않게 되긴 했어요 일단 혹시 모르니 주석처리 해놨습니다
 
-import {PropsWithChildren, createContext, useContext, useEffect, useState} from 'react';
+// import type {MemberType, Bill, BillAction, BillStep, MemberStep} from 'types/serviceType.ts';
 
-import {requestPostBillList} from '@apis/request/bill';
-import {requestGetAllMemberList, requestPostMemberList} from '@apis/request/member';
-import {requestGetStepList} from '@apis/request/stepList';
+// import {PropsWithChildren, createContext, useContext, useEffect, useState} from 'react';
 
-import {useFetch} from '@apis/useFetch';
+// import {requestPostBillList} from '@apis/request/bill';
+// import {requestGetAllMemberList, requestPostMemberList} from '@apis/request/member';
+// import {requestGetStepList} from '@apis/request/stepList';
 
-import getEventIdByUrl from '@utils/getEventIdByUrl';
+// import {useFetch} from '@apis/useFetch';
 
-interface StepListContextProps {
-  stepList: (BillStep | MemberStep)[];
-  allMemberList: string[];
-  getTotalPrice: () => number;
-  addBill: (billList: Bill[], onSuccess: () => void) => Promise<void>;
-  updateMemberList: ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => Promise<void>;
-  refreshStepList: () => Promise<void>;
-}
+// import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-export const StepListContext = createContext<StepListContextProps | null>(null); // TODO: (@weadie) 인자를 어떻게 줘야 하는지 고민하기.
+// interface StepListContextProps {
+//   stepList: (BillStep | MemberStep)[];
+//   allMemberList: string[];
+//   getTotalPrice: () => number;
+//   addBill: (billList: Bill[], onSuccess: () => void) => Promise<void>;
+//   updateMemberList: ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => Promise<void>;
+//   refreshStepList: () => Promise<void>;
+// }
 
-const StepListProvider = ({children}: PropsWithChildren) => {
-  const {fetch} = useFetch();
-  const [stepList, setStepList] = useState<(BillStep | MemberStep)[]>([]);
-  const [allMemberList, setAllMemberList] = useState<string[]>([]);
-  const eventId = getEventIdByUrl();
+// export const StepListContext = createContext<StepListContextProps | null>(null); // TODO: (@weadie) 인자를 어떻게 줘야 하는지 고민하기.
 
-  const refreshStepList = async () => {
-    const stepList = await fetch({queryFunction: () => requestGetStepList({eventId})});
+// const StepListProvider = ({children}: PropsWithChildren) => {
+//   const {fetch} = useFetch();
+//   const [stepList, setStepList] = useState<(BillStep | MemberStep)[]>([]);
+//   const [allMemberList, setAllMemberList] = useState<string[]>([]);
+//   const eventId = getEventIdByUrl();
 
-    getAllMemberList();
-    setStepList(stepList);
-  };
+//   const refreshStepList = async () => {
+//     const stepList = await fetch({queryFunction: () => requestGetStepList({eventId})});
 
-  useEffect(() => {
-    refreshStepList();
-  }, []);
+//     getAllMemberList();
+//     setStepList(stepList);
+//   };
 
-  const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
-    try {
-      await fetch({queryFunction: () => requestPostMemberList({eventId, type, memberNameList})});
+//   useEffect(() => {
+//     refreshStepList();
+//   }, []);
 
-      refreshStepList();
-    } catch (error) {
-      alert(error);
-    }
-  };
+//   const updateMemberList = async ({type, memberNameList}: {type: MemberType; memberNameList: string[]}) => {
+//     try {
+//       await fetch({queryFunction: () => requestPostMemberList({eventId, type, memberNameList})});
 
-  const getAllMemberList = async () => {
-    const allMembers = await requestGetAllMemberList({eventId});
+//       refreshStepList();
+//     } catch (error) {
+//       alert(error);
+//     }
+//   };
 
-    setAllMemberList(allMembers.memberNames);
-  };
+//   const getAllMemberList = async () => {
+//     const allMembers = await requestGetAllMemberList({eventId});
 
-  const addBill = async (billList: Bill[], onSuccess: () => void) => {
-    // TODO: (@weadie) 에러 처리
-    await fetch({
-      queryFunction: () => requestPostBillList({eventId, billList}),
-      onSuccess: () => {
-        refreshStepList();
-        onSuccess();
-      },
-    });
-  };
+//     setAllMemberList(allMembers.memberNames);
+//   };
 
-  const calculateBillSum = (actions: BillAction[]) => {
-    return actions.reduce((sum, {price}) => sum + price, 0);
-  };
+//   const addBill = async (billList: Bill[], onSuccess: () => void) => {
+//     // TODO: (@weadie) 에러 처리
+//     await fetch({
+//       queryFunction: () => requestPostBillList({eventId, billList}),
+//       onSuccess: () => {
+//         refreshStepList();
+//         onSuccess();
+//       },
+//     });
+//   };
 
-  const getTotalPrice = () => {
-    return stepList.reduce((sum, {type, actions}) => {
-      if (type === 'BILL') {
-        return sum + calculateBillSum(actions);
-      }
-      return sum;
-    }, 0);
-  };
+//   const calculateBillSum = (actions: BillAction[]) => {
+//     return actions.reduce((sum, {price}) => sum + price, 0);
+//   };
 
-  return (
-    <StepListContext.Provider
-      value={{
-        addBill,
-        getTotalPrice,
-        updateMemberList,
-        stepList,
-        allMemberList,
-        refreshStepList,
-      }}
-    >
-      {children}
-    </StepListContext.Provider>
-  );
-};
+//   const getTotalPrice = () => {
+//     return stepList.reduce((sum, {type, actions}) => {
+//       if (type === 'BILL') {
+//         return sum + calculateBillSum(actions);
+//       }
+//       return sum;
+//     }, 0);
+//   };
 
-export const useStepList = () => {
-  const context = useContext(StepListContext);
+//   return (
+//     <StepListContext.Provider
+//       value={{
+//         addBill,
+//         getTotalPrice,
+//         updateMemberList,
+//         stepList,
+//         allMemberList,
+//         refreshStepList,
+//       }}
+//     >
+//       {children}
+//     </StepListContext.Provider>
+//   );
+// };
 
-  if (!context) {
-    throw new Error('useStepList는 StepListProvider 내에서 사용되어야 합니다.');
-  }
-  return context;
-};
+// export const useStepList = () => {
+//   const context = useContext(StepListContext);
 
-export default StepListProvider;
+//   if (!context) {
+//     throw new Error('useStepList는 StepListProvider 내에서 사용되어야 합니다.');
+//   }
+//   return context;
+// };
+
+// export default StepListProvider;

@@ -1,11 +1,12 @@
 import type {MemberType} from 'types/serviceType';
 
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
+import {useEffect} from 'react';
 
 import validateMemberName from '@utils/validate/validateMemberName';
 
-import {useStepList} from '@hooks/useStepList';
 import useDynamicInput from '@hooks/useDynamicInput';
+import useRequestPostMemberList from '@hooks/useRequestPostMemberList';
 
 import style from './AddMemberActionListModalContent.style';
 import InMember from './InMember';
@@ -20,10 +21,10 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
   const dynamicProps = useDynamicInput(validateMemberName);
   const {inputList, getFilledInputList, errorMessage, canSubmit} = dynamicProps;
 
-  const {updateMemberList} = useStepList();
+  const {mutate: postMemberList, isSuccess: isSuccessPostMemberList} = useRequestPostMemberList();
 
   const handleUpdateMemberListSubmit = () => {
-    updateMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: inOutAction});
+    postMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: inOutAction});
     setIsOpenBottomSheet(false);
   };
 

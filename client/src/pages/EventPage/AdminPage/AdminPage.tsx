@@ -1,36 +1,36 @@
 import {useEffect, useState} from 'react';
 import {Title, FixedButton, ListButton} from 'haengdong-design';
-import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
-import {useStepList} from '@hooks/useStepList';
-import useAuth from '@hooks/useAuth';
+import useGetEventName from '@hooks/useRequestGetEventName';
+import useRequestGetAllMemberList from '@hooks/useRequestGetAllMemberList';
+import useRequestPostAuthenticate from '@hooks/useRequestPostAuthentication';
 
-import {EventPageContextProps} from '../EventPageLayout';
+import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
 
 const AdminPage = () => {
-  const {eventId, eventName} = useOutletContext<EventPageContextProps>();
-
-  const [isOpenFixedButtonBottomSheet, setIsOpenFixedBottomBottomSheet] = useState(false);
+  const [isOpenFixedButtonBottomSheet, setIsOpenFixedButtonBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
 
-  const {getTotalPrice, allMemberList} = useStepList();
-  const {postAuthentication} = useAuth();
+  const {data: eventNameData} = useGetEventName();
+  const eventName = eventNameData?.eventName ?? '';
+  const {data: allMemberListData} = useRequestGetAllMemberList();
+  const allMemberList = allMemberListData?.memberNames ?? [];
+
+  const {totalExpenseAmount} = useTotalExpenseAmountStore();
+
+  const {mutate: postAuthentication} = useRequestPostAuthenticate();
 
   useEffect(() => {
-    const postAuth = async () => {
-      await postAuthentication({eventId: eventId});
-    };
-
-    postAuth();
-  }, []);
+    postAuthentication();
+  }, [postAuthentication]);
 
   const handleOpenAllMemberListButton = () => {
-    setIsOpenFixedBottomBottomSheet(prev => !prev);
+    setIsOpenFixedButtonBottomSheet(prev => !prev);
     setIsOpenAllMemberListButton(prev => !prev);
   };
 
@@ -43,7 +43,7 @@ const AdminPage = () => {
   return (
     <>
       <div css={titleAndListButtonContainerStyle}>
-        <Title title={eventName} description={getTitleDescriptionByInitialMemberSetting()} price={getTotalPrice()} />
+        <Title title={eventName} description={getTitleDescriptionByInitialMemberSetting()} price={totalExpenseAmount} />
         {allMemberList.length !== 0 && (
           <ListButton
             prefix="전체 참여자"
@@ -56,12 +56,12 @@ const AdminPage = () => {
         <StepList />
         <FixedButton
           children={allMemberList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
-          onClick={() => setIsOpenFixedBottomBottomSheet(prev => !prev)}
+          onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)}
         />
         {isOpenFixedButtonBottomSheet && (
           <ModalBasedOnMemberCount
             allMemberList={allMemberList}
-            setIsOpenBottomSheet={setIsOpenFixedBottomBottomSheet}
+            setIsOpenBottomSheet={setIsOpenFixedButtonBottomSheet}
             isOpenBottomSheet={isOpenFixedButtonBottomSheet}
             isOpenAllMemberListButton={isOpenAllMemberListButton}
             setIsOpenAllMemberListButton={setIsOpenAllMemberListButton}

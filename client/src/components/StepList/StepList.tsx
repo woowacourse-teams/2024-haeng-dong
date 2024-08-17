@@ -1,11 +1,16 @@
 import {Flex} from 'haengdong-design';
 
-import {useStepList} from '@hooks/useStepList';
+import {BillStep, MemberStep} from 'types/serviceType';
+
+import useGetStepList from '@hooks/useRequestGetStepList';
 
 import Step from './Step';
 
 const StepList = () => {
-  const {stepList} = useStepList();
+  // const {stepList} = useStepList();
+
+  const {data: stepListData} = useGetStepList();
+  const stepList = stepListData ?? ([] as (MemberStep | BillStep)[]);
 
   // TODO: (@weadie) if else 구문이 지저분하므로 리펙터링이 필요합니다.
   return (

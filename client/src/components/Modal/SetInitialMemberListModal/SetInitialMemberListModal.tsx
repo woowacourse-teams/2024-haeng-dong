@@ -2,8 +2,8 @@ import {Text, BottomSheet, FixedButton, LabelGroupInput} from 'haengdong-design'
 
 import validateMemberName from '@utils/validate/validateMemberName';
 
-import {useStepList} from '@hooks/useStepList';
 import useDynamicInput from '@hooks/useDynamicInput';
+import useRequestPostMemberList from '@hooks/useRequestPostMemberList';
 
 import {
   setInitialMemberListModalInputGroupStyle,
@@ -27,10 +27,10 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
     errorIndexList,
     focusNextInputOnEnter,
   } = useDynamicInput(validateMemberName);
-  const {updateMemberList} = useStepList();
+  const {mutate: postMemberList} = useRequestPostMemberList();
 
   const handleSubmit = () => {
-    updateMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: 'IN'});
+    postMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: 'IN'});
     setIsOpenBottomSheet(false);
   };
 

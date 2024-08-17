@@ -1,37 +1,38 @@
-import type {MemberAction} from 'types/serviceType';
+import type {BillStep, MemberAction, MemberStep} from 'types/serviceType';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {useToast} from '@components/Toast/ToastProvider';
-import {requestDeleteMemberAction} from '@apis/request/member';
 
-import {useStepList} from '@hooks/useStepList';
-
-import {useFetch} from '@apis/useFetch';
-
-import getEventIdByUrl from '@utils/getEventIdByUrl';
+import useGetStepList from './useRequestGetStepList';
+import useRequestDeleteMemberAction from './useRequestDeleteMemberAction';
 
 const useDeleteMemberAction = (
   memberActionList: MemberAction[],
   setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-  const {stepList, refreshStepList} = useStepList();
+  // const {stepList, refreshStepList} = useStepList();
+  const {data} = useGetStepList();
+  const stepList = data ?? ([] as (MemberStep | BillStep)[]);
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
-  const eventId = getEventIdByUrl();
   const {showToast} = useToast();
-  const {fetch} = useFetch();
+
+  const {
+    mutate: requestDeleteMemberAction,
+    isSuccess: isSuccessDeleteMemberAction,
+    isError: isErrorDeleteMemberAction,
+  } = useRequestDeleteMemberAction();
 
   const deleteMemberAction = async (actionId: number) => {
-    await fetch({
-      queryFunction: () => requestDeleteMemberAction({actionId, eventId}),
-      onSuccess: () => {
-        refreshStepList();
-        setIsBottomSheetOpened(false);
+    requestDeleteMemberAction(
+      {actionId},
+      {
+        onError: () => {
+          setAliveActionList(memberActionList);
+        },
       },
-      onError: () => {
-        setAliveActionList(memberActionList);
-      },
-    });
+    );
+    setIsBottomSheetOpened(false);
   };
 
   // TODO: (@cookie: 추후에 반복문으로 delete하는 것이 아니라 한 번에 모아서 delete 처리하기 (backend에 문의))
