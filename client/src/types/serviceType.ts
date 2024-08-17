@@ -52,3 +52,17 @@ export type Member = {
   name: string;
   status: MemberType;
 };
+
+export type ActionType = 'IN' | 'OUT' | 'BILL';
+
+// export type StepList = {
+//   actions: Action[];
+// };
+
+export type ConvertedAction = {
+  actionId: number;
+  name: string;
+  price: string | null;
+  sequence: number;
+  type: ActionType;
+};
