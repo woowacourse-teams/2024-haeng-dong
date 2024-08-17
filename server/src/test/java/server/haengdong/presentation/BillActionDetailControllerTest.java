@@ -1,9 +1,5 @@
 package server.haengdong.presentation;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -12,7 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import server.haengdong.application.request.BillActionDetailsUpdateAppRequest;
 import server.haengdong.presentation.request.BillActionDetailUpdateRequest;
 import server.haengdong.presentation.request.BillActionDetailsUpdateRequest;
 
@@ -30,10 +25,7 @@ class BillActionDetailControllerTest extends ControllerTestSupport {
 
         String json = objectMapper.writeValueAsString(request);
 
-        doNothing().when(billActionDetailService)
-                .updateBillActionDetails(anyString(), anyLong(), any(BillActionDetailsUpdateAppRequest.class));
-
-        mockMvc.perform(put("/api/events/TOKEN/bill-actions/1/fixed")
+        mockMvc.perform(put("/api/events/{eventId}/bill-actions/{actionId}/fixed", "TOKEN", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andDo(print())
