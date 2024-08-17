@@ -1,35 +1,24 @@
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useEffect, useState} from 'react';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Switch} from 'haengdong-design';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
-import useAuth from '@hooks/useAuth';
 import useNavSwitch from '@hooks/useNavSwitch';
-
-import getEventIdByUrl from '@utils/getEventIdByUrl';
+import useRequestPostLogin from '@hooks/useRequestPostLogin';
 
 import RULE from '@constants/rule';
-import {ROUTER_URLS} from '@constants/routerUrls';
 
 const EventLoginPage = () => {
   const [password, setPassword] = useState('');
   const {nav, paths, onChange} = useNavSwitch();
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
-  const navigate = useNavigate();
-  const eventId = getEventIdByUrl();
-  const {postLogin} = useAuth();
+  const {mutate: postLogin} = useRequestPostLogin();
 
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    try {
-      await postLogin({eventId, password});
-      navigate(`${ROUTER_URLS.event}/${eventId}/admin`);
-    } catch (error) {
-      setErrorMessage('잘못된 비밀번호에요');
-    }
+    postLogin({password}, {onError: () => setErrorMessage('비밀번호가 틀렸어요')});
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
