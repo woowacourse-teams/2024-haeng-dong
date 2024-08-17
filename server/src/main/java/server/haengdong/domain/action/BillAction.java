@@ -84,7 +84,7 @@ public class BillAction implements Comparable<BillAction> {
 
     public Long findPriceByMemberName(String memberName) {
         return billActionDetails.stream()
-                .filter(billActionDetail -> billActionDetail.isMemberMatch(memberName))
+                .filter(billActionDetail -> billActionDetail.hasMemberName(memberName))
                 .map(BillActionDetail::getPrice)
                 .findFirst()
                 .orElse(DEFAULT_PRICE);

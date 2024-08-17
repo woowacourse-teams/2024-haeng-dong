@@ -35,7 +35,7 @@ public class BillActionDetail {
         this.billAction = billAction;
     }
 
-    public boolean isMemberMatch(String memberName) {
+    public boolean hasMemberName(String memberName) {
         return this.memberName.equals(memberName);
     }
 }
