@@ -13,6 +13,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 export type EventPageContextProps = {
   isAdmin: boolean;
+  eventName: string;
 };
 
 const EventPageLayout = () => {
@@ -25,6 +26,7 @@ const EventPageLayout = () => {
 
   const outletContext: EventPageContextProps = {
     isAdmin,
+    eventName,
   };
 
   const {showToast} = useToast();

@@ -4,20 +4,20 @@ import {Title, FixedButton, ListButton} from 'haengdong-design';
 import StepList from '@components/StepList/StepList';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
 
-import useGetEventName from '@hooks/useRequestGetEventName';
 import useRequestGetAllMemberList from '@hooks/useRequestGetAllMemberList';
 import useRequestPostAuthenticate from '@hooks/useRequestPostAuthentication';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
+import {useOutletContext} from 'react-router-dom';
+import {EventPageContextProps} from '../EventPageLayout';
 
 const AdminPage = () => {
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedButtonBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
 
-  const {data: eventNameData} = useGetEventName();
-  const eventName = eventNameData?.eventName ?? '';
+  const {eventName} = useOutletContext<EventPageContextProps>();
   const {data: allMemberListData} = useRequestGetAllMemberList();
   const allMemberList = allMemberListData?.memberNames ?? [];
 

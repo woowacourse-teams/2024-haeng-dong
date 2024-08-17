@@ -3,13 +3,12 @@ import {Tab, Tabs, Title} from 'haengdong-design';
 import MemberReportList from '@components/MemberReportList/MemberReportList';
 import StepList from '@components/StepList/StepList';
 
-import useGetEventName from '@hooks/useRequestGetEventName';
-
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
+import {useOutletContext} from 'react-router-dom';
+import {EventPageContextProps} from '../EventPageLayout';
 
 const HomePage = () => {
-  const {data} = useGetEventName();
-  const eventName = data?.eventName ?? '';
+  const {eventName} = useOutletContext<EventPageContextProps>();
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
   return (
