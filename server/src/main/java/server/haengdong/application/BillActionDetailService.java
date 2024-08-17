@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.BillActionDetailUpdateAppRequest;
 import server.haengdong.application.request.BillActionDetailsUpdateAppRequest;
+import server.haengdong.application.response.BillActionDetailsAppResponse;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionDetail;
 import server.haengdong.domain.action.BillActionDetailRepository;
@@ -21,6 +22,16 @@ public class BillActionDetailService {
 
     private final BillActionDetailRepository billActionDetailRepository;
     private final BillActionRepository billActionRepository;
+
+    public BillActionDetailsAppResponse findBillActionDetails(String token, Long actionId) {
+        BillAction billAction = billActionRepository.findByAction_Id(actionId)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND));
+        validateToken(token, billAction);
+        
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
+
+        return BillActionDetailsAppResponse.of(billActionDetails);
+    }
 
     @Transactional
     public void updateBillActionDetails(String token, Long actionId, BillActionDetailsUpdateAppRequest request) {
