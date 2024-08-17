@@ -22,11 +22,8 @@ const useRequestPostMemberList = () => {
     // TODO: (@todari) :  낙관적 업데이트 적고 있었어용
     // onMutate: async ({type, memberNameList}) => {
     //   await queryClient.cancelQueries({queryKey: [QUERY_KEYS.stepList]});
-
     //   const previousStepList = queryClient.getQueryData([QUERY_KEYS.stepList]);
-
     //   queryClient.setQueryData([QUERY_KEYS.stepList], (prev: (MemberStep | BillStep)[]) => prev && {
-
     //   });
     // },
     onSuccess: () => {

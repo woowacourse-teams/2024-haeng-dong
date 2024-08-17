@@ -1,5 +1,4 @@
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
-import {useEffect} from 'react';
 
 import validatePurchase from '@utils/validate/validatePurchase';
 
@@ -16,6 +15,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
   const {
     inputPairList,
     inputRefList,
+    errorMessage,
     errorIndexList,
     handleInputChange,
     getFilledInputPairList,
@@ -23,7 +23,7 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
     focusNextInputOnEnter,
   } = useDynamicBillActionInput(validatePurchase);
 
-  const {mutate: postBillList, isSuccess: isSuccessPostBillList} = useRequestPostBillList();
+  const {mutate: postBillList} = useRequestPostBillList();
 
   const handleSetPurchaseSubmit = () => {
     // TODO: (@weadie) 요청 실패시 오류 핸들 필요
@@ -34,30 +34,30 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
   return (
     <div css={style.container}>
       <div css={style.inputContainer}>
-        <LabelGroupInput labelText="지출내역 / 금액">
+        <LabelGroupInput labelText="지출내역 / 금액" errorText={errorMessage}>
           {inputPairList.map(({index, title, price}) => (
             <div key={index} css={style.input}>
               <LabelGroupInput.Element
                 elementKey={`${index}`}
                 type="text"
                 value={title}
-                isError={errorIndexList.includes(index)}
                 onChange={e => handleInputChange(index, 'title', e)}
                 onKeyDown={e => focusNextInputOnEnter(e, index, 'title')}
                 onBlur={() => deleteEmptyInputPairElementOnBlur()} // TODO: (@weadie) 이 블러프롭이 내부적으로 index를 넘기고 있기 때문에 화살표 함수로 써야만하내요..
                 placeholder="지출 내역"
                 ref={el => (inputRefList.current[index * 2] = el)}
+                isError={errorIndexList.includes(index)}
               />
               <LabelGroupInput.Element
                 elementKey={`${index}`}
                 type="number"
                 value={price}
-                isError={errorIndexList.includes(index)}
                 onChange={e => handleInputChange(index, 'price', e)}
                 onKeyDown={e => focusNextInputOnEnter(e, index, 'price')}
                 onBlur={() => deleteEmptyInputPairElementOnBlur()}
                 placeholder="금액"
                 ref={el => (inputRefList.current[index * 2 + 1] = el)}
+                isError={errorIndexList.includes(index)}
               />
             </div>
           ))}

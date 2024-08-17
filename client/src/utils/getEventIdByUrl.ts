@@ -7,7 +7,7 @@ const extractEventIdFromUrl = (url: string) => {
 };
 
 const getEventIdByUrl = () => {
-  return extractEventIdFromUrl(window.location.pathname) || '';
+  return extractEventIdFromUrl(window.location.pathname) ?? '';
 };
 
 export default getEventIdByUrl;
