@@ -5,7 +5,6 @@ import {useState} from 'react';
 import {ValidateResult} from '@utils/validate/type';
 import {requestDeleteBillAction, requestPutBillAction} from '@apis/request/bill';
 
-import {useStepList} from '@hooks/useStepList';
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
 import {useFetch} from '@apis/useFetch';
@@ -14,19 +13,21 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import ERROR_MESSAGE from '@constants/errorMessage';
 
+import usePutBillAction from './useRequestPutBillAction';
+import useDeleteBillAction from './useRequestDeleteBillAction';
+
 const usePutAndDeleteBillAction = (
   initialValue: InputPair,
   validateFunc: (inputPair: Bill) => ValidateResult,
   onClose: () => void,
 ) => {
-  const eventId = getEventIdByUrl();
-  const {refreshStepList} = useStepList();
-  const {fetch} = useFetch();
-
   const [inputPair, setInputPair] = useState<InputPair>(initialValue);
   const [canSubmit, setCanSubmit] = useState(false);
   const [errorInfo, setErrorInfo] = useState<Record<string, boolean>>({title: false, price: false});
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
+
+  const {mutate: putBillAction} = usePutBillAction();
+  const {mutate: deleteBillAction} = useDeleteBillAction();
 
   const handleInputChange = (field: BillInputType, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
@@ -89,23 +90,13 @@ const usePutAndDeleteBillAction = (
 
     const {title, price} = inputPair;
 
-    await fetch({
-      queryFunction: () => requestPutBillAction({eventId, actionId, title, price: Number(price)}),
-      onSuccess: () => {
-        refreshStepList();
-        onClose();
-      },
-    });
+    putBillAction({actionId, title, price: Number(price)});
+    onClose();
   };
 
   const onDelete = async (actionId: number) => {
-    await fetch({
-      queryFunction: () => requestDeleteBillAction({eventId, actionId}),
-      onSuccess: () => {
-        refreshStepList();
-        onClose();
-      },
-    });
+    deleteBillAction({actionId});
+    onClose();
   };
 
   return {
