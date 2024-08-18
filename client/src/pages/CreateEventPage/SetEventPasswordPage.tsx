@@ -3,6 +3,7 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdon
 import useSetEventPasswordPage from '@hooks/useSetEventPasswordPage';
 
 import RULE from '@constants/rule';
+import {PASSWORD_LENGTH} from '@constants/password';
 
 const SetEventPasswordPage = () => {
   const {submitPassword, errorMessage, password, handleChange, canSubmit} = useSetEventPasswordPage();
@@ -16,7 +17,7 @@ const SetEventPasswordPage = () => {
         title="행사 비밀번호 설정"
         description={`행사 관리에 필요한 ${PASSWORD_LENGTH} 자리의 숫자 비밀번호를 입력해 주세요.`}
       />
-      <form onSubmit={onSubmit} style={{padding: '0 1rem'}}>
+      <form onSubmit={submitPassword} style={{padding: '0 1rem'}}>
         <LabelInput
           labelText="비밀번호"
           errorText={errorMessage}
@@ -24,7 +25,7 @@ const SetEventPasswordPage = () => {
           type="secret"
           maxLength={RULE.maxEventPasswordLength}
           placeholder="비밀번호"
-          onChange={handlePasswordChange}
+          onChange={handleChange}
           isError={!!errorMessage}
           autoFocus
         />

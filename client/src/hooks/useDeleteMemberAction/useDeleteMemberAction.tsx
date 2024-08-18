@@ -3,8 +3,9 @@ import type {MemberAction} from 'types/serviceType';
 import {useState} from 'react';
 
 import {requestDeleteMemberAction} from '@apis/request/member';
-import {useStepList} from '@hooks/useStepList/useStepList';
-import {useFetch} from '@hooks/useFetch/useFetch';
+
+import useRequestGetStepList from '@hooks/useRequestGetStepList';
+import useRequestDeleteMemberAction from '@hooks/useRequestDeleteMemberAction';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
@@ -21,22 +22,22 @@ const useDeleteMemberAction = ({
   showToastAlreadyExistMemberAction,
   showToastExistSameMemberFromAfterStep,
 }: UseDeleteMemberActionProps) => {
-  const {stepList, refreshStepList} = useStepList();
+  const {data: stepListData} = useRequestGetStepList();
+  const stepList = stepListData ?? [];
+  const {mutate: deleteMemberActionMutate} = useRequestDeleteMemberAction();
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
   const eventId = getEventIdByUrl();
-  const {fetch} = useFetch();
 
   const deleteMemberAction = async (actionId: number) => {
-    await fetch({
-      queryFunction: () => requestDeleteMemberAction({actionId, eventId}),
-      onSuccess: () => {
-        refreshStepList();
-        setIsBottomSheetOpened(false);
+    deleteMemberActionMutate(
+      {actionId},
+      {
+        onError: () => {
+          setAliveActionList(memberActionList);
+        },
       },
-      onError: () => {
-        setAliveActionList(memberActionList);
-      },
-    });
+    );
+    setIsBottomSheetOpened(false);
   };
 
   // TODO: (@cookie: 추후에 반복문으로 delete하는 것이 아니라 한 번에 모아서 delete 처리하기 (backend에 문의))

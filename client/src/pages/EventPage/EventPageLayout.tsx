@@ -5,7 +5,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import {useToast} from '@components/Toast/ToastProvider';
 
 import useNavSwitch from '@hooks/useNavSwitch';
-import useGetEventName from '@hooks/useRequestGetEventName';
+import useRequestGetEventName from '@hooks/useRequestGetEventName';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
@@ -19,7 +19,7 @@ export type EventPageContextProps = {
 
 const EventPageLayout = () => {
   const {nav, paths, onChange} = useNavSwitch();
-  const {data} = useGetEventName();
+  const {data} = useRequestGetEventName();
   const eventName = data?.eventName ?? '';
   const eventId = getEventIdByUrl();
 
@@ -38,7 +38,7 @@ const EventPageLayout = () => {
       <TopNav>
         <Switch value={nav} values={paths} onChange={onChange} />
         <CopyToClipboard
-          text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\nhttps://${env.includes('development') ? 'dev.' : ''}haengdong.pro${ROUTER_URLS.event}/${eventId}/home`}
+          text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\n${url}`}
           onCopy={() =>
             showToast({
               showingTime: 3000,

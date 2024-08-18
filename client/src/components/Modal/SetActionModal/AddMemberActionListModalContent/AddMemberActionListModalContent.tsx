@@ -22,7 +22,7 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
   const dynamicProps = useDynamicInput(validateMemberName);
   const {inputList, getFilledInputList, errorMessage, canSubmit} = dynamicProps;
 
-  const {mutate: postMemberList, isSuccess: isSuccessPostMemberList} = useRequestPostMemberList();
+  const {mutate: postMemberList} = useRequestPostMemberList();
 
   const handleUpdateMemberListSubmit = () => {
     postMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: inOutAction});
@@ -32,7 +32,7 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
   return (
     <div css={style.container}>
       <div css={style.inputGroup}>
-        <LabelGroupInput labelText="이름" errorText={errorMessage}>
+        <LabelGroupInput labelText="이름" errorText={errorMessage ?? ''}>
           {inOutAction === 'IN' ? <InMember dynamicProps={dynamicProps} /> : <OutMember dynamicProps={dynamicProps} />}
         </LabelGroupInput>
       </div>

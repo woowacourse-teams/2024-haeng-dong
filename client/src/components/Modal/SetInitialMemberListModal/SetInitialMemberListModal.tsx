@@ -40,7 +40,7 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
       <div css={setInitialMemberListModalStyle}>
         <Text size="bodyBold">시작 인원 추가하기</Text>
         <div css={setInitialMemberListModalInputGroupStyle}>
-          <LabelGroupInput labelText="이름" errorText={errorMessage}>
+          <LabelGroupInput labelText="이름" errorText={errorMessage ?? ''}>
             {inputList.map(({value, index}) => (
               <LabelGroupInput.Element
                 key={`${index}`}

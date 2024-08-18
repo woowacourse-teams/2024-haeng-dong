@@ -33,7 +33,7 @@ const PutAndDeleteBillActionModal = ({
           <Text size="bodyBold">지출 내역 수정하기</Text>
         </h2>
         <fieldset css={inputContainerStyle}>
-          <LabelGroupInput labelText="지출내역 / 금액" errorText={errorMessage}>
+          <LabelGroupInput labelText="지출내역 / 금액" errorText={errorMessage ?? ''}>
             <LabelGroupInput.Element
               aria-label="지출 내역"
               elementKey={'title'}

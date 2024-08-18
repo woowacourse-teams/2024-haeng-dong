@@ -57,10 +57,8 @@ const AdminPage = () => {
       <section css={receiptStyle}>
         <StepList />
         <FixedButton
-          children={allMemberList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
-          onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)}
           children={allMemberList.length === 0 ? '시작인원 추가하기' : '행동 추가하기'}
-          onClick={() => setIsOpenFixedBottomBottomSheet(prev => !prev)}
+          onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)}
         />
         {isOpenFixedButtonBottomSheet && (
           <ModalBasedOnMemberCount
