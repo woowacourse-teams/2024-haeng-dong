@@ -1,6 +1,8 @@
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
+import {useEffect} from 'react';
 
 import validatePurchase from '@utils/validate/validatePurchase';
+import {useStepList} from '@hooks/useStepList/useStepList';
 
 import useDynamicBillActionInput from '@hooks/useDynamicBillActionInput';
 import useRequestPostBillList from '@hooks/useRequestPostBillList';
@@ -12,6 +14,7 @@ interface AddBillActionListModalContentProps {
 }
 
 const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionListModalContentProps) => {
+  // useDynamicBillActionInput에서 errorIndexList 반환하지 않음
   const {
     inputPairList,
     inputRefList,

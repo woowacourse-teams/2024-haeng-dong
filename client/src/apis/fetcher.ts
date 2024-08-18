@@ -1,5 +1,7 @@
 import {ServerError} from 'ErrorProvider';
 
+import objectToQueryString from '@utils/objectToQueryString';
+
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
 
 import FetchError from '../errors/FetchError';
@@ -35,13 +37,7 @@ type ErrorHandlerProps = {
   body: string;
 };
 
-const API_BASE_URL = process.env.API_BASE_URL;
-
-const objectToQueryString = (params: ObjectQueryParams): string => {
-  return Object.entries(params)
-    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-    .join('&');
-};
+const API_BASE_URL = process.env.API_BASE_URL ?? '';
 
 export const requestGet = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
   const response = await fetcher({

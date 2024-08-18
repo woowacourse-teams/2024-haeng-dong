@@ -7,11 +7,12 @@ import {requestDeleteBillAction, requestPutBillAction} from '@apis/request/bill'
 
 import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
-import {useFetch} from '@apis/useFetch';
-
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-import ERROR_MESSAGE from '@constants/errorMessage';
+import {ERROR_MESSAGE} from '@constants/errorMessage';
+
+import {useStepList} from './useStepList/useStepList';
+import {useFetch} from './useFetch/useFetch';
 
 import usePutBillAction from './useRequestPutBillAction';
 import useDeleteBillAction from './useRequestDeleteBillAction';
@@ -24,7 +25,7 @@ const usePutAndDeleteBillAction = (
   const [inputPair, setInputPair] = useState<InputPair>(initialValue);
   const [canSubmit, setCanSubmit] = useState(false);
   const [errorInfo, setErrorInfo] = useState<Record<string, boolean>>({title: false, price: false});
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {mutate: putBillAction} = usePutBillAction();
   const {mutate: deleteBillAction} = useDeleteBillAction();
@@ -43,9 +44,10 @@ const usePutAndDeleteBillAction = (
 
     const {isValid, errorMessage, errorInfo} = validateFunc(getFieldValue());
 
+    setErrorMessage(errorMessage);
+
     if (isValid) {
       // valid일 경우 에러메시지 nope, setValue, submit은 value가 비지 않았을 때 true를 설정
-      setErrorMessage(undefined);
       setInputPair(prevInputPair => {
         return {
           ...prevInputPair,
@@ -56,7 +58,6 @@ const usePutAndDeleteBillAction = (
     } else {
       // valid하지 않으면 event.target.value 덮어쓰기
       event.target.value = inputPair[field];
-      setErrorMessage(errorMessage);
       setCanSubmit(false);
     }
 

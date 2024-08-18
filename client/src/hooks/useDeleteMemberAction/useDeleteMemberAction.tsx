@@ -1,38 +1,42 @@
-import type {BillStep, MemberAction, MemberStep} from 'types/serviceType';
+import type {MemberAction} from 'types/serviceType';
 
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
-import {useToast} from '@components/Toast/ToastProvider';
+import {requestDeleteMemberAction} from '@apis/request/member';
+import {useStepList} from '@hooks/useStepList/useStepList';
+import {useFetch} from '@hooks/useFetch/useFetch';
 
-import useGetStepList from './useRequestGetStepList';
-import useRequestDeleteMemberAction from './useRequestDeleteMemberAction';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-const useDeleteMemberAction = (
-  memberActionList: MemberAction[],
-  setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
-  // const {stepList, refreshStepList} = useStepList();
-  const {data} = useGetStepList();
-  const stepList = data ?? ([] as (MemberStep | BillStep)[]);
+type UseDeleteMemberActionProps = {
+  memberActionList: MemberAction[];
+  setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  showToastAlreadyExistMemberAction: () => void;
+  showToastExistSameMemberFromAfterStep: (name: string) => void;
+};
+
+const useDeleteMemberAction = ({
+  memberActionList,
+  setIsBottomSheetOpened,
+  showToastAlreadyExistMemberAction,
+  showToastExistSameMemberFromAfterStep,
+}: UseDeleteMemberActionProps) => {
+  const {stepList, refreshStepList} = useStepList();
   const [aliveActionList, setAliveActionList] = useState<MemberAction[]>(memberActionList);
-  const {showToast} = useToast();
-
-  const {
-    mutate: requestDeleteMemberAction,
-    isSuccess: isSuccessDeleteMemberAction,
-    isError: isErrorDeleteMemberAction,
-  } = useRequestDeleteMemberAction();
+  const eventId = getEventIdByUrl();
+  const {fetch} = useFetch();
 
   const deleteMemberAction = async (actionId: number) => {
-    requestDeleteMemberAction(
-      {actionId},
-      {
-        onError: () => {
-          setAliveActionList(memberActionList);
-        },
+    await fetch({
+      queryFunction: () => requestDeleteMemberAction({actionId, eventId}),
+      onSuccess: () => {
+        refreshStepList();
+        setIsBottomSheetOpened(false);
       },
-    );
-    setIsBottomSheetOpened(false);
+      onError: () => {
+        setAliveActionList(memberActionList);
+      },
+    });
   };
 
   // TODO: (@cookie: 추후에 반복문으로 delete하는 것이 아니라 한 번에 모아서 delete 처리하기 (backend에 문의))
@@ -47,36 +51,24 @@ const useDeleteMemberAction = (
     }
   };
 
-  const addDeleteMemberAction = (memberAction: MemberAction) => {
+  const checkAlreadyExistMemberAction = (memberAction: MemberAction, showToast: () => void) => {
     if (!memberActionList.includes(memberAction)) {
-      showToast({
-        isClickToClose: true,
-        showingTime: 3000,
-        message: '이미 삭제된 인원입니다.',
-        type: 'error',
-        bottom: '160px',
-      });
-      return;
+      showToast();
     }
+  };
 
+  const checkExistSameMemberFromAfterStep = (memberAction: MemberAction, showToast: () => void) => {
     if (isExistSameMemberFromAfterStep(memberAction)) {
-      showToast({
-        isClickToClose: true,
-        showingTime: 3000,
-        message: `이후의 ${memberAction.name}가 사라져요`,
-        type: 'error',
-        position: 'top',
-        top: '30px',
-        style: {
-          zIndex: 9000,
-        },
-      });
+      showToast();
     }
+  };
 
+  const addDeleteMemberAction = (memberAction: MemberAction) => {
+    checkAlreadyExistMemberAction(memberAction, showToastAlreadyExistMemberAction);
+    checkExistSameMemberFromAfterStep(memberAction, () => showToastExistSameMemberFromAfterStep(memberAction.name));
     setAliveActionList(prev => prev.filter(aliveMember => aliveMember.actionId !== memberAction.actionId));
   };
 
-  // 현재 선택된 액션의 인덱스를 구해서 뒤의 동일인물의 액션이 있는지를 파악하는 기능
   const isExistSameMemberFromAfterStep = (memberAction: MemberAction) => {
     const memberActionList = stepList
       .filter(step => step.type !== 'BILL')

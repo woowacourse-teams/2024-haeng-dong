@@ -8,6 +8,7 @@ import useNavSwitch from '@hooks/useNavSwitch';
 import useGetEventName from '@hooks/useRequestGetEventName';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -30,8 +31,7 @@ const EventPageLayout = () => {
   };
 
   const {showToast} = useToast();
-
-  const env = process.env.NODE_ENV ?? '';
+  const url = getEventPageUrlByEnvironment(eventId, 'home');
 
   return (
     <MainLayout backgroundColor="gray">

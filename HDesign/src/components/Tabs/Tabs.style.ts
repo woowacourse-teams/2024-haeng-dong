@@ -10,6 +10,8 @@ export const tabListStyle = (theme: Theme) =>
 
     cursor: 'pointer',
 
+    WebkitTapHighlightColor: 'transparent',
+
     '&::after': {
       position: 'absolute',
       left: 0,

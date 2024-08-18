@@ -37,8 +37,9 @@ const AdminPage = () => {
 
   const getTitleDescriptionByInitialMemberSetting = () => {
     return allMemberList.length > 0
-      ? '“행동 추가하기” 버튼을 눌러서 지출 내역 및 인원 변동사항을 추가해 주세요.'
-      : '“초기인원 설정하기” 버튼을 눌러서 행사 초기 인원을 설정해 주세요.';
+      ? `지출 내역 및 인원 변동을 추가해 주세요.
+      인원 변동을 기준으로 몇 차인지 나뉘어져요.`
+      : '“시작 인원 추가” 버튼을 눌러 행사의 시작부터 참여하는 사람들의 이름을 입력해 주세요.';
   };
 
   return (
@@ -58,6 +59,8 @@ const AdminPage = () => {
         <FixedButton
           children={allMemberList.length === 0 ? '초기인원 설정하기' : '행동 추가하기'}
           onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)}
+          children={allMemberList.length === 0 ? '시작인원 추가하기' : '행동 추가하기'}
+          onClick={() => setIsOpenFixedBottomBottomSheet(prev => !prev)}
         />
         {isOpenFixedButtonBottomSheet && (
           <ModalBasedOnMemberCount

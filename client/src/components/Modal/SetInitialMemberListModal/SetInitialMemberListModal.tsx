@@ -1,6 +1,7 @@
 import {Text, BottomSheet, FixedButton, LabelGroupInput} from 'haengdong-design';
 
 import validateMemberName from '@utils/validate/validateMemberName';
+import {useStepList} from '@hooks/useStepList/useStepList';
 
 import useDynamicInput from '@hooks/useDynamicInput';
 import useRequestPostMemberList from '@hooks/useRequestPostMemberList';
@@ -37,7 +38,7 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
   return (
     <BottomSheet isOpened={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
       <div css={setInitialMemberListModalStyle}>
-        <Text size="bodyBold">초기 인원 설정하기</Text>
+        <Text size="bodyBold">시작 인원 추가하기</Text>
         <div css={setInitialMemberListModalInputGroupStyle}>
           <LabelGroupInput labelText="이름" errorText={errorMessage}>
             {inputList.map(({value, index}) => (
