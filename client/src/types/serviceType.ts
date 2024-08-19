@@ -38,6 +38,7 @@ export type Action = {
   name: string;
   price: number | null;
   sequence: number;
+  isFixed: boolean;
 };
 
 export type BillAction = Omit<Action, 'price'> & {
