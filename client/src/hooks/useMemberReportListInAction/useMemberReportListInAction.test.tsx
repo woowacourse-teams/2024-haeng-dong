@@ -124,6 +124,25 @@ describe('useMemberReportListInActionTest', () => {
   });
 
   describe('예외 & 엣지케이스', () => {
+    it('동일한 인원을 바꾸려고 할 때, 반영되지 않는다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      const anotherMemberList = result.current.memberReportListInAction.filter(member => member.name !== '망쵸');
+
+      expect(anotherMemberList[0].price).toBe(33300);
+    });
+
     it('참여인원의 가격을 모두 바꾸려고 하면, 마지막 사람의 조정치는 반영되지 않는다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
       const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
@@ -150,8 +169,6 @@ describe('useMemberReportListInActionTest', () => {
       act(() => {
         result.current.addAdjustedMember(adjustedMemberLeeSang);
       });
-
-      console.log(result.current.memberReportListInAction);
 
       const targetMember = result.current.memberReportListInAction.find(member => member.name === '이상');
 
