@@ -1,7 +1,6 @@
 import {Flex} from 'haengdong-design';
 
 import {BillStep, MemberStep} from 'types/serviceType';
-
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
 
 import Step from './Step';

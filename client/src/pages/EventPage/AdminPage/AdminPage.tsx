@@ -4,7 +4,6 @@ import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
 import {ModalBasedOnMemberCount} from '@components/Modal/index';
-
 import useRequestGetAllMemberList from '@hooks/queries/useRequestGetAllMemberList';
 import useRequestPostAuthenticate from '@hooks/queries/useRequestPostAuthentication';
 
