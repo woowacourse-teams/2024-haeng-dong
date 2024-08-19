@@ -1,10 +1,8 @@
 import type {MemberType} from 'types/serviceType';
 
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
-import {useEffect} from 'react';
 
 import validateMemberName from '@utils/validate/validateMemberName';
-import {useStepList} from '@hooks/useStepList/useStepList';
 
 import useDynamicInput from '@hooks/useDynamicInput';
 import useRequestPostMemberList from '@hooks/useRequestPostMemberList';
