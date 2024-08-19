@@ -7,7 +7,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +27,7 @@ public class BillAction implements Comparable<BillAction> {
     public static final int MAX_TITLE_LENGTH = 30;
     public static final long MIN_PRICE = 1L;
     public static final long MAX_PRICE = 10_000_000L;
+    private static final long DEFAULT_PRICE = 0L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +40,9 @@ public class BillAction implements Comparable<BillAction> {
     private String title;
 
     private Long price;
+
+    @OneToMany(mappedBy = "billAction", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BillActionDetail> billActionDetails = new ArrayList<>();
 
     public BillAction(Action action, String title, Long price) {
         this(null, action, title, price);
@@ -63,8 +70,11 @@ public class BillAction implements Comparable<BillAction> {
         }
     }
 
-    public BillAction update(String title, Long price) {
-        return new BillAction(id, action, title, price);
+    public void update(String title, Long price) {
+        validateTitle(title);
+        validatePrice(price);
+        this.title = title;
+        this.price = price;
     }
 
     public Long getSequence() {
@@ -73,6 +83,30 @@ public class BillAction implements Comparable<BillAction> {
 
     public Event getEvent() {
         return action.getEvent();
+    }
+
+    public Long findPriceByMemberName(String memberName) {
+        return billActionDetails.stream()
+                .filter(billActionDetail -> billActionDetail.hasMemberName(memberName))
+                .map(BillActionDetail::getPrice)
+                .findFirst()
+                .orElse(DEFAULT_PRICE);
+    }
+
+    public boolean isFixed() {
+        return billActionDetails.stream()
+                .map(BillActionDetail::getPrice)
+                .distinct()
+                .count() != 1L;
+    }
+
+    public void addDetails(List<BillActionDetail> billActionDetails) {
+        billActionDetails.forEach(this::addDetail);
+    }
+
+    private void addDetail(BillActionDetail billActionDetail) {
+        this.billActionDetails.add(billActionDetail);
+        billActionDetail.setBillAction(this);
     }
 
     @Override

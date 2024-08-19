@@ -70,8 +70,7 @@ public class BillActionService {
 
         resetBillActionDetail(billAction, request.price());
 
-        BillAction updatedBillAction = billAction.update(request.title(), request.price());
-        billActionRepository.save(updatedBillAction);
+        billAction.update(request.title(), request.price());
     }
 
     private void resetBillActionDetail(BillAction billAction, Long updatePrice) {

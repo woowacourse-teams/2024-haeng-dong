@@ -19,8 +19,20 @@ class MemberBillReportTest {
         Event event = Fixture.EVENT1;
         List<BillAction> billActions = List.of(
                 new BillAction(new Action(event, 4L), "뽕족", 60_000L),
-                new BillAction(new Action(event, 6L), "인생맥주", 40_000L),
                 new BillAction(new Action(event, 7L), "인생네컷", 20_000L)
+        );
+        billActions.get(0).addDetails(
+                List.of(
+                        new BillActionDetail("소하", 10_000L),
+                        new BillActionDetail("감자", 40_000L),
+                        new BillActionDetail("쿠키", 10_000L)
+                )
+        );
+        billActions.get(1).addDetails(
+                List.of(
+                        new BillActionDetail("소하", 5_000L),
+                        new BillActionDetail("쿠키", 15_000L)
+                )
         );
         List<MemberAction> memberActions = List.of(
                 new MemberAction(new Action(event, 1L), "소하", IN, 1L),
@@ -34,9 +46,9 @@ class MemberBillReportTest {
         assertThat(memberBillReport.getReports())
                 .containsAllEntriesOf(
                         Map.of(
-                                "감자", 20_000L,
-                                "쿠키", 50_000L,
-                                "소하", 50_000L
+                                "감자", 40_000L,
+                                "쿠키", 25_000L,
+                                "소하", 15_000L
                         )
                 );
     }

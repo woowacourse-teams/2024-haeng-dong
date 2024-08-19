@@ -3,6 +3,7 @@ package server.haengdong.application;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
@@ -15,6 +16,7 @@ import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class ActionService {
 

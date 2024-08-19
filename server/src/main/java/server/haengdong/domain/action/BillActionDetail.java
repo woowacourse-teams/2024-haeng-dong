@@ -26,6 +26,19 @@ public class BillActionDetail {
 
     private Long price;
 
+    public BillActionDetail(String memberName, Long price) {
+        this.memberName = memberName;
+        this.price = price;
+    }
+
+    public void setBillAction(BillAction billAction) {
+        this.billAction = billAction;
+    }
+
+    public boolean hasMemberName(String memberName) {
+        return this.memberName.equals(memberName);
+    }
+
     public BillActionDetail(BillAction billAction, String memberName, Long price) {
         this.billAction = billAction;
         this.memberName = memberName;

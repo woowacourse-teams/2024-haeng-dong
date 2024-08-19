@@ -66,9 +66,9 @@ public class MemberBillReport {
             return;
         }
 
-        Long pricePerMember = billAction.getPrice() / currentMembers.size();
         for (String currentMember : currentMembers.getMembers()) {
-            Long price = memberBillReports.get(currentMember) + pricePerMember;
+            Long currentPrice = billAction.findPriceByMemberName(currentMember);
+            Long price = memberBillReports.get(currentMember) + currentPrice;
             memberBillReports.put(currentMember, price);
         }
     }

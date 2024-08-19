@@ -161,14 +161,12 @@ class BillActionServiceTest extends ServiceTestSupport {
         Event savedEvent = eventRepository.save(event);
         Action action = Action.createFirst(savedEvent);
         BillAction billAction = new BillAction(action, "뽕족", 10_000L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "감자", 3000L);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "고구마", 2000L);
+        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "당근", 3000L);
+        BillActionDetail billActionDetail4 = new BillActionDetail(billAction, "양파", 2000L);
+        billAction.addDetails(List.of(billActionDetail1, billActionDetail2, billActionDetail3, billActionDetail4));
         BillAction savedBillAction = billActionRepository.save(billAction);
-        BillActionDetail billActionDetail1 = new BillActionDetail(savedBillAction, "감자", 3000L);
-        BillActionDetail billActionDetail2 = new BillActionDetail(savedBillAction, "고구마", 2000L);
-        BillActionDetail billActionDetail3 = new BillActionDetail(savedBillAction, "당근", 3000L);
-        BillActionDetail billActionDetail4 = new BillActionDetail(savedBillAction, "양파", 2000L);
-
-        billActionDetailRepository.saveAll(
-                List.of(billActionDetail1, billActionDetail2, billActionDetail3, billActionDetail4));
 
         Long actionId = savedBillAction.getAction().getId();
         BillActionUpdateAppRequest request = new BillActionUpdateAppRequest("인생맥주", 20_000L);
