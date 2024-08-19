@@ -153,7 +153,7 @@ class MemberActionServiceTest extends ServiceTestSupport {
 
         memberActionService.deleteMember(event.getToken(), "쿠키");
 
-        List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(billAction);
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
 
         assertThat(billActionDetails).hasSize(2)
                 .extracting("memberName", "price")
@@ -226,7 +226,7 @@ class MemberActionServiceTest extends ServiceTestSupport {
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
 
         memberActionService.deleteMemberAction(event.getToken(), targetAction.getId());
-        List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(billAction);
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
 
         assertThat(billActionDetails).hasSize(4)
                 .extracting("memberName", "price")

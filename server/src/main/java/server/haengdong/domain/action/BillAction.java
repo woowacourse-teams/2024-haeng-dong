@@ -77,6 +77,10 @@ public class BillAction implements Comparable<BillAction> {
         this.price = price;
     }
 
+    public boolean isSamePrice(Long price) {
+        return this.price.equals(price);
+    }
+
     public Long getSequence() {
         return action.getSequence();
     }

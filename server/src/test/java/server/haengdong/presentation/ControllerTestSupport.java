@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import server.haengdong.application.ActionService;
 import server.haengdong.application.AuthService;
+import server.haengdong.application.BillActionDetailService;
 import server.haengdong.application.BillActionService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.MemberActionService;
@@ -19,7 +20,8 @@ import server.haengdong.application.MemberActionService;
                 EventController.class,
                 ActionController.class,
                 BillActionController.class,
-                MemberActionController.class
+                MemberActionController.class,
+                BillActionDetailController.class
         },
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {WebMvcConfigurer.class})}
 )
@@ -27,6 +29,7 @@ abstract class ControllerTestSupport {
 
     @Autowired
     protected MockMvc mockMvc;
+
     @Autowired
     protected ObjectMapper objectMapper;
 
@@ -44,4 +47,7 @@ abstract class ControllerTestSupport {
 
     @MockBean
     protected BillActionService billActionService;
+
+    @MockBean
+    protected BillActionDetailService billActionDetailService;
 }

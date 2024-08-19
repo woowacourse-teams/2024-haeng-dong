@@ -31,15 +31,14 @@ public class BillActionDetail {
         this.price = price;
     }
 
-    public void setBillAction(BillAction billAction) {
-        this.billAction = billAction;
-    }
-
-    public boolean hasMemberName(String memberName) {
-        return this.memberName.equals(memberName);
-    }
-
     public BillActionDetail(BillAction billAction, String memberName, Long price) {
+        this.billAction = billAction;
+        this.memberName = memberName;
+        this.price = price;
+    }
+
+    public BillActionDetail(Long id, BillAction billAction, String memberName, Long price) {
+        this.id = id;
         this.billAction = billAction;
         this.memberName = memberName;
         this.price = price;
@@ -47,5 +46,17 @@ public class BillActionDetail {
 
     public void updatePrice(Long price) {
         this.price = price;
+    }
+
+    public boolean hasMemberName(String memberName) {
+        return this.memberName.equals(memberName);
+    }
+
+    public boolean isSameName(String memberName) {
+        return this.memberName.equals(memberName);
+    }
+
+    public void setBillAction(BillAction billAction) {
+        this.billAction = billAction;
     }
 }
