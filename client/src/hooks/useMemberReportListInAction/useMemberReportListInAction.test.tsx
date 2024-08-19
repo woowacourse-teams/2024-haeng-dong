@@ -98,6 +98,69 @@ describe('useMemberReportListInActionTest', () => {
       });
     });
 
+    it('망쵸의 가격을 100원 쿠키의 가격을 100원으로 바꾸면 나머지 인원의 가격이 49,900원으로 설정된다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
+      const adjustedMemberCookie: MemberReport = {name: '쿠키', price: 100};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberCookie);
+      });
+
+      const anotherMemberList = result.current.memberReportListInAction.filter(
+        member => !(member.name === '망쵸' || member.name === '쿠키'),
+      );
+
+      anotherMemberList.forEach(member => {
+        expect(member.price).toBe(49900);
+      });
+    });
+  });
+
+  describe('예외 & 엣지케이스', () => {
+    it('참여인원의 가격을 모두 바꾸려고 하면, 마지막 사람의 조정치는 반영되지 않는다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
+      const adjustedMemberCookie: MemberReport = {name: '쿠키', price: 100};
+      const adjustedMemberSoha: MemberReport = {name: '소하', price: 100};
+
+      // 마지막 사람
+      const adjustedMemberLeeSang: MemberReport = {name: '이상', price: 100};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberCookie);
+      });
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberSoha);
+      });
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberLeeSang);
+      });
+
+      console.log(result.current.memberReportListInAction);
+
+      const targetMember = result.current.memberReportListInAction.find(member => member.name === '이상');
+
+      expect(targetMember?.price).not.toBe(100);
+    });
+  });
+
+  // last
+  describe('onSubmit 실행 시 반영 테스트', () => {
     it('망쵸의 가격을 100원으로 바꾸고 저장하면 망쵸 100원이 반영된다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
       const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
