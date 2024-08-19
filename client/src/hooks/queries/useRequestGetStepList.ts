@@ -6,7 +6,6 @@ import {requestGetStepList} from '@apis/request/stepList';
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
-import {getTotalExpenseAmount} from '@utils/caculateExpense';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
