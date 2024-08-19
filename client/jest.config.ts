@@ -18,6 +18,7 @@ const config: Config = {
     '<rootDir>/src/constants/',
     '<rootDir>/src/errors/',
     '<rootDir>/src/components/',
+    '<rootDir>/src/store/',
   ],
 
   verbose: true,
@@ -34,6 +35,7 @@ const config: Config = {
     '^@types/(.*)$': '<rootDir>/src/types/$1',
     '^@errors/(.*)$': '<rootDir>/src/errors/$1',
     '^@mocks/(.*)$': '<rootDir>/src/mocks/$1',
+    '^@store/(.*)$': '<rootDir>/src/store/$1',
     '\\.svg$': '<rootDir>/src/mocks/svg.ts',
   },
   testEnvironmentOptions: {

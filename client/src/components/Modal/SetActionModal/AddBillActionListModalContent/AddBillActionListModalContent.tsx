@@ -1,8 +1,7 @@
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
-import {useEffect} from 'react';
 
 import validatePurchase from '@utils/validate/validatePurchase';
-import {useStepList} from '@hooks/useStepList/useStepList';
+import useRequestPostBillList from '@hooks/queries/useRequestPostBillList';
 
 import useDynamicBillActionInput from '@hooks/useDynamicBillActionInput';
 
@@ -13,6 +12,7 @@ interface AddBillActionListModalContentProps {
 }
 
 const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionListModalContentProps) => {
+  // useDynamicBillActionInput에서 errorIndexList 반환하지 않음
   const {
     inputPairList,
     inputRefList,
@@ -22,14 +22,13 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
     deleteEmptyInputPairElementOnBlur,
     focusNextInputOnEnter,
   } = useDynamicBillActionInput(validatePurchase);
-  const {addBill} = useStepList();
+
+  const {mutate: postBillList} = useRequestPostBillList();
 
   const handleSetPurchaseSubmit = () => {
     // TODO: (@weadie) 요청 실패시 오류 핸들 필요
-    addBill(
-      getFilledInputPairList().map(({title, price}) => ({title, price: Number(price)})),
-      () => setIsOpenBottomSheet(false),
-    ); // TODO: (@weadie) DTO같은게 다이내믹에 필요할까?
+    postBillList({billList: getFilledInputPairList().map(({title, price}) => ({title, price: Number(price)}))});
+    setIsOpenBottomSheet(false);
   };
 
   return (

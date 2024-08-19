@@ -3,7 +3,7 @@ import type {MemberType} from 'types/serviceType';
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
 
 import validateMemberName from '@utils/validate/validateMemberName';
-import {useStepList} from '@hooks/useStepList/useStepList';
+import useRequestPostMemberList from '@hooks/queries/useRequestPostMemberList';
 
 import useDynamicInput from '@hooks/useDynamicInput';
 
@@ -20,17 +20,17 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
   const dynamicProps = useDynamicInput(validateMemberName);
   const {inputList, getFilledInputList, errorMessage, canSubmit} = dynamicProps;
 
-  const {updateMemberList} = useStepList();
+  const {mutate: postMemberList} = useRequestPostMemberList();
 
   const handleUpdateMemberListSubmit = () => {
-    updateMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: inOutAction});
+    postMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: inOutAction});
     setIsOpenBottomSheet(false);
   };
 
   return (
     <div css={style.container}>
       <div css={style.inputGroup}>
-        <LabelGroupInput labelText="이름" errorText={errorMessage}>
+        <LabelGroupInput labelText="이름" errorText={errorMessage ?? ''}>
           {inOutAction === 'IN' ? <InMember dynamicProps={dynamicProps} /> : <OutMember dynamicProps={dynamicProps} />}
         </LabelGroupInput>
       </div>

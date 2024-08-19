@@ -76,7 +76,7 @@ export type ResponseGetCurrentInMemberList = {
   memberNames: string[];
 };
 
-export const requestGetCurrentInMemberList = async (eventId: string) => {
+export const requestGetCurrentInMemberList = async ({eventId}: WithEventId) => {
   return await requestGet<ResponseGetCurrentInMemberList>({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/members/current`,

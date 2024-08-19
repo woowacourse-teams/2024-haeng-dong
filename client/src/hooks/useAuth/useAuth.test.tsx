@@ -1,4 +1,5 @@
 import {renderHook, waitFor} from '@testing-library/react';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {act} from 'react';
 import {MemoryRouter} from 'react-router-dom';
 
@@ -13,6 +14,13 @@ import {ErrorProvider} from '../useError/ErrorProvider';
 import useAuth from './useAuth';
 
 describe('useAuth', () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 0,
+      },
+    },
+  });
   const initializeProvider = () =>
     renderHook(
       () => {
@@ -20,9 +28,11 @@ describe('useAuth', () => {
       },
       {
         wrapper: ({children}) => (
-          <MemoryRouter>
-            <ErrorProvider>{children}</ErrorProvider>
-          </MemoryRouter>
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <ErrorProvider>{children}</ErrorProvider>
+            </MemoryRouter>
+          </QueryClientProvider>
         ),
       },
     );

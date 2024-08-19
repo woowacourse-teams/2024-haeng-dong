@@ -57,6 +57,11 @@ export default [
               position: 'after',
             },
             {
+              pattern: '@store/*',
+              group: 'internal',
+              position: 'after',
+            },
+            {
               pattern: '@pages/*',
               group: 'internal',
               position: 'after',
@@ -67,12 +72,12 @@ export default [
               position: 'after',
             },
             {
-              pattern: '@assets/*',
+              pattern: '@utils/*',
               group: 'internal',
               position: 'after',
             },
             {
-              pattern: '@utils/*',
+              pattern: '@assets/*',
               group: 'internal',
               position: 'after',
             },

@@ -39,6 +39,7 @@
       "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
       "@constants/*": ["constants/*"],
+      "@store/*": ["store/*"],
       "@hooks/*": ["hooks/*"],
       "@mocks/*": ["mocks/*"],
       "@pages/*": ["pages/*"],

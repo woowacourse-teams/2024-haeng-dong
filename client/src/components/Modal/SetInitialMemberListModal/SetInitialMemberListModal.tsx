@@ -1,7 +1,7 @@
 import {Text, BottomSheet, FixedButton, LabelGroupInput} from 'haengdong-design';
 
 import validateMemberName from '@utils/validate/validateMemberName';
-import {useStepList} from '@hooks/useStepList/useStepList';
+import useRequestPostMemberList from '@hooks/queries/useRequestPostMemberList';
 
 import useDynamicInput from '@hooks/useDynamicInput';
 
@@ -27,10 +27,10 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
     errorIndexList,
     focusNextInputOnEnter,
   } = useDynamicInput(validateMemberName);
-  const {updateMemberList} = useStepList();
+  const {mutate: postMemberList} = useRequestPostMemberList();
 
   const handleSubmit = () => {
-    updateMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: 'IN'});
+    postMemberList({memberNameList: getFilledInputList().map(({value}) => value), type: 'IN'});
     setIsOpenBottomSheet(false);
   };
 
@@ -39,7 +39,7 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
       <div css={setInitialMemberListModalStyle}>
         <Text size="bodyBold">시작 인원 추가하기</Text>
         <div css={setInitialMemberListModalInputGroupStyle}>
-          <LabelGroupInput labelText="이름" errorText={errorMessage}>
+          <LabelGroupInput labelText="이름" errorText={errorMessage ?? ''}>
             {inputList.map(({value, index}) => (
               <LabelGroupInput.Element
                 key={`${index}`}

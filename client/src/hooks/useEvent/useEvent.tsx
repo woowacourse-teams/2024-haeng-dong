@@ -1,3 +1,5 @@
+// TODO: (@todari) useEvent는 이제 쓰지 않긴 해요...!
+
 import {RequestPostNewEvent, ResponsePostNewEvent, requestPostNewEvent} from '@apis/request/event';
 import {useFetch} from '@hooks/useFetch/useFetch';
 

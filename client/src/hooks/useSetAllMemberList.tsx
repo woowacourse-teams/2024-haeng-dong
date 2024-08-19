@@ -1,13 +1,12 @@
 import {useEffect, useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
-import {MemberChange, requestDeleteAllMemberList, requestPutAllMemberList} from '@apis/request/member';
+import {MemberChange} from '@apis/request/member';
 
 import isArraysEqual from '@utils/isArraysEqual';
-import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-import {useStepList} from './useStepList/useStepList';
-import {useFetch} from './useFetch/useFetch';
+import useDeleteAllMemberList from './queries/useRequestDeleteAllMemberList';
+import usePutAllMemberList from './queries/useRequestPutAllMemberList';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;
@@ -27,9 +26,8 @@ const useSetAllMemberList = ({
   const [deleteInOriginal, setDeleteInOriginal] = useState<string[]>(allMemberList);
   const [deleteMemberList, setDeleteMemberList] = useState<string[]>([]);
 
-  const {refreshStepList} = useStepList();
-  const eventId = getEventIdByUrl();
-  const {fetch} = useFetch();
+  const {mutate: deleteAllMemberList} = useDeleteAllMemberList();
+  const {mutate: putAllMemberList} = usePutAllMemberList();
 
   useEffect(() => {
     setCanSubmit(!isArraysEqual(editedAllMemberList, allMemberList));
@@ -71,23 +69,24 @@ const useSetAllMemberList = ({
   const handleClickDeleteButton = async (index: number) => {
     const memberToDelete = editedAllMemberList[index];
 
-    await fetch({
-      queryFunction: () => requestDeleteAllMemberList({eventId, memberName: memberToDelete}),
-      onSuccess: () => {
-        setDeleteMemberList(prev => [...prev, memberToDelete]);
-        setDeleteInOriginal(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-
-        setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-        refreshStepList();
+    deleteAllMemberList(
+      {memberName: memberToDelete},
+      {
+        onSuccess: () => {
+          setDeleteMemberList(prev => [...prev, memberToDelete]);
+          setDeleteInOriginal(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+          setEditedAllMemberList(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+        },
       },
-    });
+    );
+    handleCloseAllMemberListModal();
   };
 
   const handlePutAllMemberList = async () => {
     // deleteMemberList가 비어있지 않은 경우에만 반복문 실행 (삭제 api 요청)
     if (deleteMemberList.length > 0) {
       for (const deleteMember of deleteMemberList) {
-        await fetch({queryFunction: () => requestDeleteAllMemberList({eventId, memberName: deleteMember})});
+        deleteAllMemberList({memberName: deleteMember});
       }
     }
 
@@ -100,13 +99,8 @@ const useSetAllMemberList = ({
       })
       .filter(item => item !== null); // null인 항목을 필터링하여 제거
 
-    await fetch({
-      queryFunction: () => requestPutAllMemberList({eventId, members: editedMemberName}),
-      onSuccess: () => {
-        refreshStepList();
-        handleCloseAllMemberListModal();
-      },
-    });
+    putAllMemberList({members: editedMemberName});
+    handleCloseAllMemberListModal();
   };
 
   const changeErrorIndex = (index: number) => {
