@@ -22,7 +22,7 @@ const CompleteCreateEventPage = () => {
 
   return (
     <MainLayout>
-      <TopNav children={<></>} />
+      <TopNav />
       <Title
         title="행사 개시"
         description="행사가 성공적으로 개시됐어요 :) 행사 링크를 통해서 지출 내역 공유와 참여자 관리가 가능해요."
