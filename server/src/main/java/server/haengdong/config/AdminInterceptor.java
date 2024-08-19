@@ -23,8 +23,6 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.debug("login request = {}", request.getRequestURI());
-
         String requestURI = request.getRequestURI();
 
         if (requestURI.endsWith("/login")) {
@@ -46,6 +44,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         String tokenEventId = authService.findEventIdByToken(token);
         String eventId = request.getRequestURI().split("/")[3];
         if (!tokenEventId.equals(eventId)) {
+            log.warn("[행사 접근 불가] Cookie EventId = {}, URL EventId = {}", tokenEventId, eventId);
             throw new AuthenticationException(HaengdongErrorCode.FORBIDDEN);
         }
     }
