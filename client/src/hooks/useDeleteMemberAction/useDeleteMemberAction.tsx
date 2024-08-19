@@ -2,8 +2,6 @@ import type {MemberAction} from 'types/serviceType';
 
 import {useState} from 'react';
 
-import {requestDeleteMemberAction} from '@apis/request/member';
-
 import useRequestGetStepList from '@hooks/useRequestGetStepList';
 import useRequestDeleteMemberAction from '@hooks/useRequestDeleteMemberAction';
 
