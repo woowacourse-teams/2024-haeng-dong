@@ -19,10 +19,11 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class GlobalExceptionHandler {
 
     private static final String LOG_FORMAT = """
-                    
-            [Request URI] {} {}
-            [Request Body] {}
-            [Error Message] {}
+            {
+                "RequestURI": "{} {}",
+                "RequestBody": "{}",
+                "ErrorMessage": "{}"
+            }
             """;
 
     @ExceptionHandler(AuthenticationException.class)
