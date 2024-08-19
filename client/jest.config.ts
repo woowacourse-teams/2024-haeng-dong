@@ -17,10 +17,12 @@ const config: Config = {
     '<rootDir>/src/request/',
     '<rootDir>/src/constants/',
     '<rootDir>/src/errors/',
-    '<rootDir>/src/store/',
-    '<rootDir>/src/ErrorProvider.tsx',
     '<rootDir>/src/components/',
+    '<rootDir>/src/store/',
   ],
+
+  verbose: true,
+  setupFiles: ['./jest.polyfills.ts'],
   setupFilesAfterEnv: ['./jest.setup.ts'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   moduleNameMapper: {
@@ -34,6 +36,7 @@ const config: Config = {
     '^@errors/(.*)$': '<rootDir>/src/errors/$1',
     '^@mocks/(.*)$': '<rootDir>/src/mocks/$1',
     '^@store/(.*)$': '<rootDir>/src/store/$1',
+    '\\.svg$': '<rootDir>/src/mocks/svg.ts',
   },
   testEnvironmentOptions: {
     customExportConditions: [''],
