@@ -9,6 +9,8 @@ export interface EditableItemStyleProps {
 export interface EditableItemCustomProps {
   onInputFocus?: () => void;
   onInputBlur?: () => void;
+  prefixLabelText?: string;
+  suffixLabelText?: string;
 }
 
 export interface EditableItemStylePropsWithTheme extends EditableItemStyleProps {
