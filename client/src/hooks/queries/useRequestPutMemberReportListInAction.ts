@@ -16,7 +16,7 @@ const useRequestPutMemberReportListInAction = (actionId: number) => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.stepList]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReport]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReportInAction]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReportInAction, actionId]});
     },
   });
 
