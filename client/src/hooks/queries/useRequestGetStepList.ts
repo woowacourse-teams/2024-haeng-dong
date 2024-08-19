@@ -21,8 +21,7 @@ const useRequestGetStepList = () => {
 
   useEffect(() => {
     if (queryResult.isSuccess && queryResult.data) {
-      const totalExpenseAmount = getTotalExpenseAmount(queryResult.data);
-      updateTotalExpenseAmount(totalExpenseAmount);
+      updateTotalExpenseAmount(queryResult.data);
     }
   }, [queryResult.data, queryResult.isSuccess, updateTotalExpenseAmount]);
 
