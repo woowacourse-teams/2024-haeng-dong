@@ -70,8 +70,11 @@ public class BillAction implements Comparable<BillAction> {
         }
     }
 
-    public BillAction update(String title, Long price) {
-        return new BillAction(id, action, title, price);
+    public void update(String title, Long price) {
+        validateTitle(title);
+        validatePrice(price);
+        this.title = title;
+        this.price = price;
     }
 
     public Long getSequence() {
