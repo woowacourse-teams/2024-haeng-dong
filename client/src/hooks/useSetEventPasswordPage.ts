@@ -32,7 +32,9 @@ const useSetEventPasswordPage = () => {
       {eventName, password: parseInt(password)},
       {
         onSuccess: data => {
-          navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId: data.eventId})}`);
+          navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId: data.eventId})}`, {
+            replace: true,
+          });
         },
       },
     );
