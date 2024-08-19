@@ -1,5 +1,8 @@
 package server.haengdong.exception;
 
+import jakarta.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,9 +18,16 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final String LOG_FORMAT = """
+                    
+            [Request URI] {} {}
+            [Request Body] {}
+            [Error Message] {}
+            """;
+
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorResponse> authenticationException(AuthenticationException e) {
-        log.warn(e.getMessage(), e);
+    public ResponseEntity<ErrorResponse> authenticationException(HttpServletRequest req, AuthenticationException e) {
+        log.warn(LOG_FORMAT, req.getMethod(), req.getRequestURI(), getRequestBody(req), e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ErrorResponse.of(e.getErrorCode()));
     }
@@ -55,16 +65,25 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HaengdongException.class)
-    public ResponseEntity<ErrorResponse> haengdongException(HaengdongException e) {
-        log.warn(e.getMessage(), e);
+    public ResponseEntity<ErrorResponse> haengdongException(HttpServletRequest req, HaengdongException e) {
+        log.warn(LOG_FORMAT, req.getMethod(), req.getRequestURI(), getRequestBody(req), e.getMessage(), e);
         return ResponseEntity.badRequest()
                 .body(ErrorResponse.of(e.getErrorCode()));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(Exception e) {
-        log.error(e.getMessage(), e);
+    public ResponseEntity<ErrorResponse> handleException(HttpServletRequest req, Exception e) {
+        log.error(LOG_FORMAT, req.getMethod(), req.getRequestURI(), getRequestBody(req), e.getMessage(), e);
         return ResponseEntity.internalServerError()
                 .body(ErrorResponse.of(HaengdongErrorCode.INTERNAL_SERVER_ERROR));
+    }
+
+    private String getRequestBody(HttpServletRequest req) {
+        try (BufferedReader reader = req.getReader()) {
+            return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+        } catch (IOException e) {
+            log.error("Failed to read request body", e);
+            return "";
+        }
     }
 }
