@@ -21,10 +21,13 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
 
   // 가격이 조정된 멤버 리스트
   // 초기값은 어떻게 알지? 누가 조정된 가격인지 어떻게 파악하지?
-  const [adjustedMemberList, setAdjustedMemberList] = useState<MemberReport[]>([]);
+  const [adjustedMemberList, setAdjustedMemberList] = useState<Set<MemberReport>>(new Set());
+
+  // 조정된 금액 명단
+  const adjustedMemberNameList = [...adjustedMemberList].map(({name}) => name);
 
   const addAdjustedMember = (memberReport: MemberReport) => {
-    if (adjustedMemberList.length + 1 >= memberReportListInAction.length) {
+    if (adjustedMemberList.size + 1 >= memberReportListInAction.length) {
       return;
     }
 
@@ -35,11 +38,11 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     setMemberReportListInAction(newMemberReportListInAction);
 
     // 조정된 리스트에 추가한다.
-    setAdjustedMemberList(prev => [...prev, memberReport]);
+    setAdjustedMemberList(prev => new Set(prev.add(memberReport)));
   };
 
   const calculateDividedPrice = (totalAdjustedPrice: number) => {
-    const remainMemberCount = memberReportListInAction.length - adjustedMemberList.length;
+    const remainMemberCount = memberReportListInAction.length - adjustedMemberNameList.length;
 
     // 남은 인원이 0일 때는 초기화
     if (remainMemberCount === 0) return totalPrice / memberReportListInAction.length;
@@ -49,10 +52,8 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
 
   const calculateAnotherMemberPrice = () => {
     // 총 조정치 금액
-    const totalAdjustedPrice = adjustedMemberList.reduce((acc, cur) => acc + cur.price, 0);
+    const totalAdjustedPrice = [...adjustedMemberList].reduce((acc, cur) => acc + cur.price, 0);
 
-    // 조정된 금액 명단
-    const adjustedMemberNameList = adjustedMemberList.map(({name}) => name);
     const dividedPrice = calculateDividedPrice(totalAdjustedPrice);
 
     const newMemberReportListInAction = [...memberReportListInAction];
