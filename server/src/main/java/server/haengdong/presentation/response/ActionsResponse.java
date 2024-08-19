@@ -8,7 +8,7 @@ public record ActionsResponse(
 ) {
     public static ActionsResponse of(List<ActionAppResponse> actions) {
         return new ActionsResponse(actions.stream()
-                .map(ActionResponse2::of)
-                .toList());
+                                           .map(ActionResponse2::of)
+                                           .toList());
     }
 }

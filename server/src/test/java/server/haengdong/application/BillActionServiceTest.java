@@ -16,6 +16,9 @@ import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionDetail;
 import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
+import server.haengdong.domain.action.MemberAction;
+import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
@@ -35,11 +38,19 @@ class BillActionServiceTest extends ServiceTestSupport {
     @Autowired
     private BillActionDetailRepository billActionDetailRepository;
 
+    @Autowired
+    private MemberActionRepository memberActionRepository;
+
     @DisplayName("지출 내역을 생성한다.")
     @Test
     void saveAllBillAction() {
         Event event = Fixture.EVENT1;
         Event savedEvent = eventRepository.save(event);
+        Action action1 = new Action(event, 1L);
+        Action action2 = new Action(event, 2L);
+        MemberAction memberAction1 = new MemberAction(action1, "백호", MemberActionStatus.IN, 1L);
+        MemberAction memberAction2 = new MemberAction(action2, "망쵸", MemberActionStatus.IN, 2L);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
 
         List<BillActionAppRequest> requests = List.of(
                 new BillActionAppRequest("뽕족", 10_000L),
@@ -52,8 +63,39 @@ class BillActionServiceTest extends ServiceTestSupport {
 
         assertThat(actions).extracting(BillAction::getTitle, BillAction::getPrice, BillAction::getSequence)
                 .containsExactlyInAnyOrder(
-                        tuple("뽕족", 10_000L, 1L),
-                        tuple("인생맥주", 15_000L, 2L)
+                        tuple("뽕족", 10_000L, 3L),
+                        tuple("인생맥주", 15_000L, 4L)
+                );
+    }
+
+    @DisplayName("지출 내역을 생성하면 지출 상세 내역이 생성된다.")
+    @Test
+    void saveAllBillActionTest1() {
+        Event event = Fixture.EVENT1;
+        Event savedEvent = eventRepository.save(event);
+        Action action1 = new Action(event, 1L);
+        Action action2 = new Action(event, 2L);
+        MemberAction memberAction1 = new MemberAction(action1, "백호", MemberActionStatus.IN, 1L);
+        MemberAction memberAction2 = new MemberAction(action2, "망쵸", MemberActionStatus.IN, 2L);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
+
+        List<BillActionAppRequest> request = List.of(
+                new BillActionAppRequest("뽕족", 10_000L),
+                new BillActionAppRequest("인생맥주", 15_000L)
+        );
+
+        billActionService.saveAllBillAction(event.getToken(), request);
+
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAll();
+
+        assertThat(billActionDetails)
+                .hasSize(4)
+                .extracting("memberName", "price")
+                .containsExactlyInAnyOrder(
+                        tuple("백호", 5_000L),
+                        tuple("망쵸", 5_000L),
+                        tuple("백호", 7_500L),
+                        tuple("망쵸", 7_500L)
                 );
     }
 
@@ -125,7 +167,8 @@ class BillActionServiceTest extends ServiceTestSupport {
         BillActionDetail billActionDetail3 = new BillActionDetail(savedBillAction, "당근", 3000L);
         BillActionDetail billActionDetail4 = new BillActionDetail(savedBillAction, "양파", 2000L);
 
-        billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3, billActionDetail4));
+        billActionDetailRepository.saveAll(
+                List.of(billActionDetail1, billActionDetail2, billActionDetail3, billActionDetail4));
 
         Long actionId = savedBillAction.getAction().getId();
         BillActionUpdateAppRequest request = new BillActionUpdateAppRequest("인생맥주", 20_000L);
@@ -157,6 +200,26 @@ class BillActionServiceTest extends ServiceTestSupport {
         billActionService.deleteBillAction(event.getToken(), actionId);
 
         assertThat(billActionRepository.findById(billAction.getId())).isEmpty();
+    }
+
+    @DisplayName("지출 내역을 삭제하면 지출 상세도 삭제된다.")
+    @Test
+    void deleteBillActionTest1() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "백호", MemberActionStatus.IN, 1L);
+        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "망쵸", MemberActionStatus.IN, 2L);
+        BillAction billAction = new BillAction(new Action(event, 3L), "커피", 50_900L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "백호", 25_450L);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "망쵸", 25_450L);
+        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
+        billActionRepository.save(billAction);
+        billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));
+        Long actionId = billAction.getAction().getId();
+
+        billActionService.deleteBillAction(event.getToken(), actionId);
+
+        assertThat(billActionDetailRepository.findAll()).isEmpty();
     }
 
     @DisplayName("지출 내역 삭제 시 행사가 존재하지 않으면 예외가 발생한다.")

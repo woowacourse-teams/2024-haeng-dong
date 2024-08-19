@@ -85,14 +85,17 @@ public class MemberActionService {
         MemberAction memberAction = memberActionRepository.findByAction(action)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_ACTION_NOT_FOUND));
 
-        memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(), memberAction.getSequence());
+        memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(),
+                                                                   memberAction.getSequence());
 
-        List<BillAction> billActions = billActionRepository.findByEventAndGreaterThanSequence(event, action.getSequence());
+        List<BillAction> billActions = billActionRepository.findByEventAndGreaterThanSequence(event,
+                                                                                              action.getSequence());
         billActions.forEach(billAction -> resetBillAction(event, billAction));
     }
 
     private void resetBillAction(Event event, BillAction billAction) {
-        List<MemberAction> memberActions = memberActionRepository.findByEventAndSequence(event, billAction.getSequence());
+        List<MemberAction> memberActions = memberActionRepository.findByEventAndSequence(event,
+                                                                                         billAction.getSequence());
         CurrentMembers currentMembers = CurrentMembers.of(memberActions);
 
         billActionDetailRepository.deleteAllByBillAction(billAction);
