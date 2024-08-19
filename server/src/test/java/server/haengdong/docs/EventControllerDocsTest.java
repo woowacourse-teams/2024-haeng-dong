@@ -136,15 +136,15 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.memberNames[1]").value("쿠키"))
                 .andDo(
                         document("findAllEventMember",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
-                                ),
-                                responseFields(
-                                        fieldWithPath("memberNames").type(JsonFieldType.ARRAY)
-                                                .description("행사 참여자 목록")
-                                )
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 responseFields(
+                                         fieldWithPath("memberNames").type(JsonFieldType.ARRAY)
+                                                 .description("행사 참여자 목록")
+                                 )
                         )
                 );
     }
@@ -161,28 +161,28 @@ public class EventControllerDocsTest extends RestDocsSupport {
         String requestBody = objectMapper.writeValueAsString(memberNameUpdateRequest);
 
         mockMvc.perform(put("/api/events/{eventId}/members/nameChange", token)
-                        .cookie(EVENT_COOKIE)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                                .cookie(EVENT_COOKIE)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
                         document("updateEventMemberName",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
-                                ),
-                                requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰")
-                                ),
-                                requestFields(
-                                        fieldWithPath("members").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
-                                        fieldWithPath("members[].before").type(JsonFieldType.STRING)
-                                                .description("수정 전 참여자 이름"),
-                                        fieldWithPath("members[].after").type(JsonFieldType.STRING)
-                                                .description("수정 후 참여자 이름")
-                                )
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 requestCookies(
+                                         cookieWithName("eventToken").description("행사 관리자 토큰")
+                                 ),
+                                 requestFields(
+                                         fieldWithPath("members").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
+                                         fieldWithPath("members[].before").type(JsonFieldType.STRING)
+                                                 .description("수정 전 참여자 이름"),
+                                         fieldWithPath("members[].after").type(JsonFieldType.STRING)
+                                                 .description("수정 후 참여자 이름")
+                                 )
                         )
                 );
     }
@@ -197,25 +197,25 @@ public class EventControllerDocsTest extends RestDocsSupport {
         given(authService.getTokenName()).willReturn("eventToken");
 
         mockMvc.perform(post("/api/events/{eventId}/login", token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody))
                 .andDo(print())
                 .andExpect(cookie().value("eventToken", "jwtToken"))
                 .andExpect(status().isOk())
                 .andDo(
                         document("eventLogin",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
-                                ),
-                                requestFields(
-                                        fieldWithPath("password").type(JsonFieldType.STRING)
-                                                .description("행사 비밀 번호")
-                                ),
-                                responseCookies(
-                                        cookieWithName("eventToken").description("행사 관리자용 토큰")
-                                )
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 requestFields(
+                                         fieldWithPath("password").type(JsonFieldType.STRING)
+                                                 .description("행사 비밀 번호")
+                                 ),
+                                 responseCookies(
+                                         cookieWithName("eventToken").description("행사 관리자용 토큰")
+                                 )
                         )
                 );
     }
@@ -233,7 +233,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
         given(eventService.findActions(token)).willReturn(actionAppResponses);
 
         mockMvc.perform(get("/api/events/{eventId}/actions", token)
-                        .accept(MediaType.APPLICATION_JSON))
+                                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.steps[0].type").value(equalTo("IN")))
@@ -263,6 +263,25 @@ public class EventControllerDocsTest extends RestDocsSupport {
 
                 .andDo(
                         document("findActions",
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 responseFields(
+                                         fieldWithPath("steps[].type").type(JsonFieldType.STRING)
+                                                 .description("액션 유형 [BILL, IN, OUT]"),
+                                         fieldWithPath("steps[].members").type(JsonFieldType.ARRAY)
+                                                 .description("해당 step에 참여한 참여자 목록"),
+                                         fieldWithPath("steps[].actions[].actionId").type(JsonFieldType.NUMBER)
+                                                 .description("액션 ID"),
+                                         fieldWithPath("steps[].actions[].name").type(JsonFieldType.STRING)
+                                                 .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
+                                         fieldWithPath("steps[].actions[].price").type(JsonFieldType.NUMBER).optional()
+                                                 .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
+                                         fieldWithPath("steps[].actions[].sequence").type(JsonFieldType.NUMBER)
+                                                 .description("액션 순서")
+                                 )
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(
@@ -284,6 +303,69 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                         fieldWithPath("steps[].actions[].isFixed").type(JsonFieldType.BOOLEAN)
                                                 .description("지출 액션의 지출 고정 금액이 설정 여부")
                                 )
+                        )
+                );
+    }
+
+    @DisplayName("행사 전체 액션 이력 조회 v2")
+    @Test
+    void findActions2() throws Exception {
+        String token = "TOKEN";
+        List<ActionAppResponse> actionAppResponses = List.of(
+                new ActionAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
+                new ActionAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
+                new ActionAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
+                new ActionAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
+        );
+        given(eventService.findActions(token)).willReturn(actionAppResponses);
+
+        mockMvc.perform(get("/api/events/{eventId}/actions/v2", token)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.actions[0].actionId").value(equalTo(1)))
+                .andExpect(jsonPath("$.actions[0].name").value(equalTo("망쵸")))
+                .andExpect(jsonPath("$.actions[0].price").value(equalTo(null)))
+                .andExpect(jsonPath("$.actions[0].sequence").value(equalTo(1)))
+                .andExpect(jsonPath("$.actions[0].type").value(equalTo("IN")))
+
+                .andExpect(jsonPath("$.actions[1].actionId").value(equalTo(2)))
+                .andExpect(jsonPath("$.actions[1].name").value(equalTo("족발")))
+                .andExpect(jsonPath("$.actions[1].price").value(equalTo(100)))
+                .andExpect(jsonPath("$.actions[1].sequence").value(equalTo(2)))
+                .andExpect(jsonPath("$.actions[1].type").value(equalTo("BILL")))
+
+                .andExpect(jsonPath("$.actions[2].actionId").value(equalTo(3)))
+                .andExpect(jsonPath("$.actions[2].name").value(equalTo("인생네컷")))
+                .andExpect(jsonPath("$.actions[2].price").value(equalTo(1000)))
+                .andExpect(jsonPath("$.actions[2].sequence").value(equalTo(3)))
+                .andExpect(jsonPath("$.actions[2].type").value(equalTo("BILL")))
+
+                .andExpect(jsonPath("$.actions[3].actionId").value(equalTo(4)))
+                .andExpect(jsonPath("$.actions[3].name").value(equalTo("망쵸")))
+                .andExpect(jsonPath("$.actions[3].price").value(equalTo(null)))
+                .andExpect(jsonPath("$.actions[3].sequence").value(equalTo(4)))
+                .andExpect(jsonPath("$.actions[3].type").value(equalTo("OUT")))
+
+                .andDo(
+                        document("findActions",
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 responseFields(
+                                         fieldWithPath("actions[].actionId").type(JsonFieldType.NUMBER)
+                                                 .description("액션 ID"),
+                                         fieldWithPath("actions[].name").type(JsonFieldType.STRING)
+                                                 .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
+                                         fieldWithPath("actions[].price").type(JsonFieldType.NUMBER).optional()
+                                                 .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
+                                         fieldWithPath("actions[].sequence").type(JsonFieldType.NUMBER)
+                                                 .description("액션 순서"),
+                                         fieldWithPath("actions[].type").type(JsonFieldType.STRING)
+                                                 .description("액션 타입")
+                                 )
                         )
                 );
     }

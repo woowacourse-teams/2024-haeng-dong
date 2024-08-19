@@ -8,6 +8,10 @@ import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.application.response.CurrentMemberAppResponse;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.ActionRepository;
+import server.haengdong.domain.action.BillAction;
+import server.haengdong.domain.action.BillActionDetail;
+import server.haengdong.domain.action.BillActionDetailRepository;
+import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
@@ -25,6 +29,8 @@ public class MemberActionService {
     private final MemberActionRepository memberActionRepository;
     private final EventRepository eventRepository;
     private final ActionRepository actionRepository;
+    private final BillActionDetailRepository billActionDetailRepository;
+    private final BillActionRepository billActionRepository;
 
     @Transactional
     public void saveMemberAction(String token, MemberActionsSaveAppRequest request) {
@@ -65,6 +71,9 @@ public class MemberActionService {
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
 
         memberActionRepository.deleteAllByEventAndMemberName(event, memberName);
+
+        List<BillAction> billActions = billActionRepository.findByAction_Event(event);
+        billActions.forEach(billAction -> resetBillAction(event, billAction));
     }
 
     @Transactional
@@ -77,6 +86,26 @@ public class MemberActionService {
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_ACTION_NOT_FOUND));
 
         memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(),
-                memberAction.getSequence());
+                                                                   memberAction.getSequence());
+
+        List<BillAction> billActions = billActionRepository.findByEventAndGreaterThanSequence(event,
+                                                                                              action.getSequence());
+        billActions.forEach(billAction -> resetBillAction(event, billAction));
+    }
+
+    private void resetBillAction(Event event, BillAction billAction) {
+        List<MemberAction> memberActions = memberActionRepository.findByEventAndSequence(event,
+                                                                                         billAction.getSequence());
+        CurrentMembers currentMembers = CurrentMembers.of(memberActions);
+
+        billActionDetailRepository.deleteAllByBillAction(billAction);
+
+        if (currentMembers.isNotEmpty()) {
+            Long eachPrice = billAction.getPrice() / currentMembers.size();
+            for (String member : currentMembers.getMembers()) {
+                BillActionDetail billActionDetail = new BillActionDetail(billAction, member, eachPrice);
+                billActionDetailRepository.save(billActionDetail);
+            }
+        }
     }
 }

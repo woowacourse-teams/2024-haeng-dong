@@ -38,4 +38,14 @@ public class BillActionDetail {
     public boolean hasMemberName(String memberName) {
         return this.memberName.equals(memberName);
     }
+
+    public BillActionDetail(BillAction billAction, String memberName, Long price) {
+        this.billAction = billAction;
+        this.memberName = memberName;
+        this.price = price;
+    }
+
+    public void updatePrice(Long price) {
+        this.price = price;
+    }
 }

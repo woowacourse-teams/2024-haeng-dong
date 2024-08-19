@@ -9,7 +9,12 @@ import server.haengdong.application.request.BillActionUpdateAppRequest;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
+import server.haengdong.domain.action.BillActionDetail;
+import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
+import server.haengdong.domain.action.CurrentMembers;
+import server.haengdong.domain.action.MemberAction;
+import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -21,6 +26,8 @@ import server.haengdong.exception.HaengdongException;
 public class BillActionService {
 
     private final BillActionRepository billActionRepository;
+    private final BillActionDetailRepository billActionDetailRepository;
+    private final MemberActionRepository memberActionRepository;
     private final ActionRepository actionRepository;
     private final EventRepository eventRepository;
 
@@ -28,11 +35,16 @@ public class BillActionService {
     public void saveAllBillAction(String eventToken, List<BillActionAppRequest> requests) {
         Event event = getEvent(eventToken);
         Action action = createStartAction(event);
+        List<MemberAction> findMemberActions = memberActionRepository.findAllByEvent(event);
+        CurrentMembers currentMembers = CurrentMembers.of(findMemberActions);
 
         for (BillActionAppRequest request : requests) {
             BillAction billAction = request.toBillAction(action);
             billActionRepository.save(billAction);
             action = action.next();
+            if (currentMembers.isNotEmpty()) {
+                saveBillActionDetails(billAction, currentMembers);
+            }
         }
     }
 
@@ -42,6 +54,13 @@ public class BillActionService {
                 .orElse(Action.createFirst(event));
     }
 
+    private void saveBillActionDetails(BillAction billAction, CurrentMembers currentMembers) {
+        long pricePerMember = billAction.getPrice() / currentMembers.size();
+        currentMembers.getMembers().stream()
+                .map(memberName -> new BillActionDetail(billAction, memberName, pricePerMember))
+                .forEach(billActionDetailRepository::save);
+    }
+
     @Transactional
     public void updateBillAction(String token, Long actionId, BillActionUpdateAppRequest request) {
         BillAction billAction = billActionRepository.findByAction_Id(actionId)
@@ -49,8 +68,21 @@ public class BillActionService {
 
         validateToken(token, billAction);
 
+        resetBillActionDetail(billAction, request.price());
+
         BillAction updatedBillAction = billAction.update(request.title(), request.price());
         billActionRepository.save(updatedBillAction);
+    }
+
+    private void resetBillActionDetail(BillAction billAction, Long updatePrice) {
+        if (billAction.getPrice() != updatePrice) {
+            List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(billAction);
+            int memberCount = billActionDetails.size();
+            if (memberCount != 0) {
+                Long eachPrice = updatePrice / memberCount;
+                billActionDetails.forEach(billActionDetail -> billActionDetail.updatePrice(eachPrice));
+            }
+        }
     }
 
     private void validateToken(String token, BillAction billAction) {
@@ -70,6 +102,7 @@ public class BillActionService {
         Event event = eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
 
+        billActionDetailRepository.deleteByBillAction_Action_EventAndBillAction_ActionId(event, actionId);
         billActionRepository.deleteByAction_EventAndActionId(event, actionId);
     }
 }
