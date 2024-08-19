@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import useRequestGetCurrentInMemberList from './useRequestGetCurrentInMemberList';
+import useRequestGetCurrentInMemberList from './queries/useRequestGetCurrentInMemberList';
 
 export type ReturnUseSearchInMemberList = {
   currentInputIndex: number;

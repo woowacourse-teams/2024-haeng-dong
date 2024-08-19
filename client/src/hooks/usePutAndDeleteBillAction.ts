@@ -8,8 +8,8 @@ import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
 import {ERROR_MESSAGE} from '@constants/errorMessage';
 
-import usePutBillAction from './useRequestPutBillAction';
-import useDeleteBillAction from './useRequestDeleteBillAction';
+import usePutBillAction from './queries/useRequestPutBillAction';
+import useDeleteBillAction from './queries/useRequestDeleteBillAction';
 
 const usePutAndDeleteBillAction = (
   initialValue: InputPair,

@@ -4,7 +4,7 @@ import {FixedButton, MainLayout, LabelInput, Title, TopNav, Switch} from 'haengd
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
 import useNavSwitch from '@hooks/useNavSwitch';
-import useRequestPostLogin from '@hooks/useRequestPostLogin';
+import useRequestPostLogin from '@hooks/queries/useRequestPostLogin';
 
 import RULE from '@constants/rule';
 import {PASSWORD_LENGTH} from '@constants/password';

@@ -3,9 +3,9 @@ import {Outlet, useMatch} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import {useToast} from '@hooks/useToast/useToast';
+import useRequestGetEventName from '@hooks/queries/useRequestGetEventName';
 
 import useNavSwitch from '@hooks/useNavSwitch';
-import useRequestGetEventName from '@hooks/useRequestGetEventName';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';

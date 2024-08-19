@@ -3,7 +3,7 @@ import {Text, BottomSheet, FixedButton, LabelGroupInput} from 'haengdong-design'
 import validateMemberName from '@utils/validate/validateMemberName';
 
 import useDynamicInput from '@hooks/useDynamicInput';
-import useRequestPostMemberList from '@hooks/useRequestPostMemberList';
+import useRequestPostMemberList from '@hooks/queries/useRequestPostMemberList';
 
 import {
   setInitialMemberListModalInputGroupStyle,

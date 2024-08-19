@@ -3,9 +3,9 @@ import type {MemberType} from 'types/serviceType';
 import {FixedButton, LabelGroupInput} from 'haengdong-design';
 
 import validateMemberName from '@utils/validate/validateMemberName';
+import useRequestPostMemberList from '@hooks/queries/useRequestPostMemberList';
 
 import useDynamicInput from '@hooks/useDynamicInput';
-import useRequestPostMemberList from '@hooks/useRequestPostMemberList';
 
 import style from './AddMemberActionListModalContent.style';
 import InMember from './InMember';

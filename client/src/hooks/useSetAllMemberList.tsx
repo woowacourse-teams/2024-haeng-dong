@@ -5,8 +5,8 @@ import {MemberChange} from '@apis/request/member';
 
 import isArraysEqual from '@utils/isArraysEqual';
 
-import useDeleteAllMemberList from './useRequestDeleteAllMemberList';
-import usePutAllMemberList from './useRequestPutAllMemberList';
+import useDeleteAllMemberList from './queries/useRequestDeleteAllMemberList';
+import usePutAllMemberList from './queries/useRequestPutAllMemberList';
 
 interface UseSetAllMemberListProps {
   validateFunc: (name: string) => ValidateResult;

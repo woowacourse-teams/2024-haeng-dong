@@ -1,4 +1,4 @@
-import useRequestGetMemberReportList from '@hooks/useRequestGetMemberReportList';
+import useRequestGetMemberReportList from '@hooks/queries/useRequestGetMemberReportList';
 
 type UseSearchMemberReportListParams = {
   name: string;

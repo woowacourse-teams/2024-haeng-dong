@@ -6,7 +6,7 @@ import validateEventPassword from '@utils/validate/validateEventPassword';
 import {ROUTER_URLS} from '@constants/routerUrls';
 import RULE from '@constants/rule';
 
-import usePostEvent from './useRequestPostEvent';
+import usePostEvent from './queries/useRequestPostEvent';
 
 const useSetEventPasswordPage = () => {
   const [eventName, setEventName] = useState('');

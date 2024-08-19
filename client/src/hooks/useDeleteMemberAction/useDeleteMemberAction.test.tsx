@@ -5,8 +5,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
 import {ErrorProvider} from '@hooks/useError/ErrorProvider';
-
-import useRequestGetStepList from '@hooks/useRequestGetStepList';
+import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
 
 import stepListJson from '@mocks/stepList.json';
 import invalidMemberStepListJson from '@mocks/invalidMemberStepList.json';
