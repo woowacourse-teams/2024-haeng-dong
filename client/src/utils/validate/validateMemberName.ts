@@ -12,7 +12,7 @@ const validateMemberName = (name: string): ValidateResult => {
   };
 
   const validateLength = () => {
-    if (name.length > RULE.maxMemberNameLength || name.length < 1) return false;
+    if (name.length > RULE.maxMemberNameLength) return false;
     return true;
   };
 
