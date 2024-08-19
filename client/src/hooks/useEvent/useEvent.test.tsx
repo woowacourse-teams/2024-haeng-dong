@@ -1,6 +1,7 @@
 import {renderHook} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {PASSWORD_LENGTH} from '@constants/password';
 
@@ -12,6 +13,14 @@ import {ErrorProvider, useError} from '../../ErrorProvider';
 import useEvent from './useEvent';
 
 describe('useEvent', () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 0,
+      },
+    },
+  });
+
   const initializeProvider = () =>
     renderHook(
       () => {
@@ -19,9 +28,11 @@ describe('useEvent', () => {
       },
       {
         wrapper: ({children}) => (
-          <MemoryRouter>
-            <ErrorProvider>{children}</ErrorProvider>
-          </MemoryRouter>
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <ErrorProvider>{children}</ErrorProvider>
+            </MemoryRouter>
+          </QueryClientProvider>
         ),
       },
     );

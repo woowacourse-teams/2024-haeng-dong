@@ -1,11 +1,13 @@
 import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
 
+import useRequestGetStepList from '@hooks/useRequestGetStepList';
+
 import stepListJson from '../../mocks/stepList.json';
-import StepListProvider, {useStepList} from '../useStepList/useStepList';
 import {ErrorProvider} from '../../ErrorProvider';
 import invalidMemberStepListJson from '../../mocks/invalidMemberStepList.json';
 
@@ -21,11 +23,19 @@ for (let i = 0; i < stepListMockData.length; i++) {
 }
 
 describe('useDeleteMemberAction', () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 0,
+      },
+    },
+  });
+
   const initializeProvider = (list: MemberAction[] = memberActionList) =>
     renderHook(
       () => {
         return {
-          stepListResult: useStepList(),
+          stepListResult: useRequestGetStepList(),
           deleteMemberActionList: useDeleteMemberAction({
             memberActionList: list,
             setIsBottomSheetOpened: () => {},
@@ -36,11 +46,11 @@ describe('useDeleteMemberAction', () => {
       },
       {
         wrapper: ({children}) => (
-          <MemoryRouter>
-            <ErrorProvider>
-              <StepListProvider>{children}</StepListProvider>
-            </ErrorProvider>
-          </MemoryRouter>
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <ErrorProvider>{children}</ErrorProvider>
+            </MemoryRouter>
+          </QueryClientProvider>
         ),
       },
     );
@@ -50,7 +60,7 @@ describe('useDeleteMemberAction', () => {
 
     // stepList 값이 채워지길 대기합니다.
     await waitFor(() => {
-      expect(result.current.stepListResult.stepList).not.toStrictEqual([]);
+      expect(result.current.stepListResult.data).not.toStrictEqual([]);
     });
 
     await act(async () => {
@@ -77,7 +87,7 @@ describe('useDeleteMemberAction', () => {
 
     // stepList 값이 채워지길 대기합니다.
     await waitFor(() => {
-      expect(result.current.stepListResult.stepList).not.toStrictEqual([]);
+      expect(result.current.stepListResult.data).not.toStrictEqual([]);
     });
 
     await act(async () => {
@@ -115,7 +125,7 @@ describe('useDeleteMemberAction', () => {
 
     // stepList 값이 채워지길 대기합니다.
     await waitFor(() => {
-      expect(result.current.stepListResult.stepList).not.toStrictEqual([]);
+      expect(result.current.stepListResult.data).not.toStrictEqual([]);
     });
 
     await act(async () => {
