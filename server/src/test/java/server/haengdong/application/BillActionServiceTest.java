@@ -174,7 +174,7 @@ class BillActionServiceTest extends ServiceTestSupport {
         billActionService.updateBillAction(event.getToken(), actionId, request);
 
         BillAction updatedBillAction = billActionRepository.findById(savedBillAction.getId()).get();
-        List<BillActionDetail> billActionDetails = billActionDetailRepository.findByBillAction(updatedBillAction);
+        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(updatedBillAction);
 
         assertThat(billActionDetails).hasSize(4)
                 .extracting("memberName", "price")
