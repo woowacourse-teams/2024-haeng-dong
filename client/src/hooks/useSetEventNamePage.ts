@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 import validateEventName from '@utils/validate/validateEventName';
 
-const useSetEventName = () => {
+const useSetEventNamePage = () => {
   const [eventName, setEventName] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
@@ -29,4 +29,4 @@ const useSetEventName = () => {
   };
 };
 
-export default useSetEventName;
+export default useSetEventNamePage;
