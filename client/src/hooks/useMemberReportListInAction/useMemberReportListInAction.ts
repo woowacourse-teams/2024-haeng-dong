@@ -24,6 +24,10 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
   const [adjustedMemberList, setAdjustedMemberList] = useState<MemberReport[]>([]);
 
   const addAdjustedMember = (memberReport: MemberReport) => {
+    if (adjustedMemberList.length + 1 >= memberReportListInAction.length) {
+      return;
+    }
+
     // 새 조정값을 반영하고
     const newMemberReportListInAction = [...memberReportListInAction];
     const targetIndex = newMemberReportListInAction.findIndex(member => member.name === memberReport.name);
