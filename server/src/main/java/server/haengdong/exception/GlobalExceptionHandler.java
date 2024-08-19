@@ -19,11 +19,11 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class GlobalExceptionHandler {
 
     private static final String LOG_FORMAT = """
-            {
+            \n\t{
                 "RequestURI": "{} {}",
-                "RequestBody": "{}",
+                "RequestBody": {},
                 "ErrorMessage": "{}"
-            }
+            \t}
             """;
 
     @ExceptionHandler(AuthenticationException.class)
@@ -79,9 +79,9 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.of(HaengdongErrorCode.INTERNAL_SERVER_ERROR));
     }
 
-    private String getRequestBody(HttpServletRequest req) {
-        try (BufferedReader reader = req.getReader()) {
-            return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+    private String getRequestBody(HttpServletRequest request) {
+        try (BufferedReader reader = request.getReader()) {
+            return reader.lines().collect(Collectors.joining(System.lineSeparator() + "\t"));
         } catch (IOException e) {
             log.error("Failed to read request body", e);
             return "";
