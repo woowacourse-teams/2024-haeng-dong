@@ -3,11 +3,13 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {act} from 'react';
 import {MemoryRouter} from 'react-router-dom';
 
+import {useError} from '@hooks/useError/useError';
+
 import {PASSWORD_LENGTH} from '@constants/password';
 
 import {VALID_PASSWORD_FOR_TEST, VALID_TOKEN_FOR_TEST} from '@mocks/validValueForTest';
 
-import {ErrorProvider, useError} from '../../ErrorProvider';
+import {ErrorProvider} from '../useError/ErrorProvider';
 
 import useAuth from './useAuth';
 
@@ -44,7 +46,7 @@ describe('useAuth', () => {
       });
 
       await waitFor(() => {
-        expect(result.current.errorResult.error?.errorCode).toBe('TOKEN_NOT_FOUND');
+        expect(result.current.errorResult.errorInfo?.errorCode).toBe('TOKEN_NOT_FOUND');
       });
     });
 
@@ -58,7 +60,7 @@ describe('useAuth', () => {
       });
 
       await waitFor(() => {
-        expect(result.current.errorResult.error).toBe(null);
+        expect(result.current.errorResult.errorInfo).toBe(null);
       });
     });
 
@@ -72,7 +74,7 @@ describe('useAuth', () => {
       });
 
       await waitFor(() => {
-        expect(result.current.errorResult.error?.errorCode).toBe('TOKEN_INVALID');
+        expect(result.current.errorResult.errorInfo?.errorCode).toBe('TOKEN_INVALID');
       });
     });
 
@@ -86,7 +88,7 @@ describe('useAuth', () => {
       });
 
       await waitFor(() => {
-        expect(result.current.errorResult.error?.errorCode).toBe('TOKEN_EXPIRED');
+        expect(result.current.errorResult.errorInfo?.errorCode).toBe('TOKEN_EXPIRED');
       });
     });
 
@@ -100,7 +102,7 @@ describe('useAuth', () => {
       });
 
       await waitFor(() => {
-        expect(result.current.errorResult.error?.errorCode).toBe('FORBIDDEN');
+        expect(result.current.errorResult.errorInfo?.errorCode).toBe('FORBIDDEN');
       });
     });
   });
@@ -114,7 +116,7 @@ describe('useAuth', () => {
       });
 
       await waitFor(() => {
-        expect(result.current.errorResult.error).toBe(null);
+        expect(result.current.errorResult.errorInfo).toBe(null);
       });
     });
 
@@ -126,7 +128,7 @@ describe('useAuth', () => {
       });
 
       await waitFor(() => {
-        expect(result.current.errorResult.error?.errorCode).toBe('EVENT_PASSWORD_FORMAT_INVALID');
+        expect(result.current.errorResult.errorInfo?.errorCode).toBe('EVENT_PASSWORD_FORMAT_INVALID');
       });
     });
 
@@ -138,7 +140,7 @@ describe('useAuth', () => {
       });
 
       await waitFor(() => {
-        expect(result.current.errorResult.error?.errorCode).toBe('PASSWORD_INVALID');
+        expect(result.current.errorResult.errorInfo?.errorCode).toBe('PASSWORD_INVALID');
       });
     });
   });

@@ -4,12 +4,12 @@ import {act} from 'react';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
+import {ErrorProvider} from '@hooks/useError/ErrorProvider';
 
 import useRequestGetStepList from '@hooks/useRequestGetStepList';
 
-import stepListJson from '../../mocks/stepList.json';
-import {ErrorProvider} from '../../ErrorProvider';
-import invalidMemberStepListJson from '../../mocks/invalidMemberStepList.json';
+import stepListJson from '@mocks/stepList.json';
+import invalidMemberStepListJson from '@mocks/invalidMemberStepList.json';
 
 import useDeleteMemberAction from './useDeleteMemberAction';
 
@@ -63,7 +63,7 @@ describe('useDeleteMemberAction', () => {
       expect(result.current.stepListResult.data).not.toStrictEqual([]);
     });
 
-    await act(async () => {
+    act(() => {
       const memberAction = {
         actionId: 1,
         name: '망쵸',

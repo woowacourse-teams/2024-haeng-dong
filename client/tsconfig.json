@@ -20,7 +20,7 @@
     // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["jest", "node", "cypress"],
+    "types": ["jest", "@testing-library/jest-dom", "node", "cypress"],
     "esModuleInterop": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,

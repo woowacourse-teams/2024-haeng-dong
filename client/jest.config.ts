@@ -19,10 +19,8 @@ const config: Config = {
     '<rootDir>/src/errors/',
     '<rootDir>/src/store/',
     '<rootDir>/src/ErrorProvider.tsx',
+    '<rootDir>/src/components/',
   ],
-
-  verbose: true,
-  setupFiles: ['./jest.polyfills.ts'],
   setupFilesAfterEnv: ['./jest.setup.ts'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   moduleNameMapper: {

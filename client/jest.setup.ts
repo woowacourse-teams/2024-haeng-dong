@@ -1,5 +1,6 @@
 import {server} from './src/mocks/server';
 import * as router from 'react-router';
+import '@testing-library/jest-dom'; // toBeInTheDocument를 인식하기 위해 @testing-library/jest-dom/extend-expect추가
 
 beforeAll(() => {
   server.listen();

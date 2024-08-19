@@ -2,7 +2,7 @@ import {MainLayout, TopNav, Switch, Button} from 'haengdong-design';
 import {Outlet, useMatch} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import {useToast} from '@components/Toast/ToastProvider';
+import {useToast} from '@hooks/useToast/useToast';
 
 import useNavSwitch from '@hooks/useNavSwitch';
 import useRequestGetEventName from '@hooks/useRequestGetEventName';

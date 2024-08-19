@@ -1,10 +1,20 @@
+import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 import {css} from '@emotion/react';
 
-import useSetEventNamePage from '@hooks/useSetEventNamePage';
+import useSetEventName from '@hooks/useSetEventName';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 const SetEventNamePage = () => {
-  const {submitEventName, errorMessage, eventName, canSubmit, handleChange} = useSetEventNamePage();
+  const navigate = useNavigate();
+  const {eventName, errorMessage, canSubmit, handleEventNameChange} = useSetEventName();
+
+  const submitEventName = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    navigate(ROUTER_URLS.eventCreatePassword, {state: {eventName}});
+  };
 
   return (
     <MainLayout>
@@ -19,7 +29,7 @@ const SetEventNamePage = () => {
           value={eventName}
           type="text"
           placeholder="행사 이름"
-          onChange={e => handleChange(e)}
+          onChange={handleEventNameChange}
           isError={!!errorMessage}
           autoFocus
         ></LabelInput>

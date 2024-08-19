@@ -3,6 +3,7 @@ import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
 
 import FetchError from '@errors/FetchError';
+import {useError} from '@hooks/useError/useError';
 
 import {requestPostWithoutResponse} from '@apis/fetcher';
 
@@ -10,7 +11,7 @@ import {captureError} from '@utils/captureError';
 
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
 
-import {ErrorProvider, useError} from '../../ErrorProvider';
+import {ErrorProvider} from '../useError/ErrorProvider';
 
 import {useFetch} from './useFetch';
 
@@ -63,7 +64,7 @@ describe('useFetch', () => {
       it('FetchError가 발생하면 해당 에러의 errorBody를 사용해 상태를 저장한다.', async () => {
         const {result} = initializeProvider();
         const fetchError = new FetchError({
-          errorBody: {errorCode: 'UNHANDLED', message: 'Fetch error occurred'},
+          errorInfo: {errorCode: 'UNHANDLED', message: 'Fetch error occurred'},
           name: 'UNHANDLED',
           message: 'Fetch error occurred',
           requestBody: '',
@@ -78,8 +79,8 @@ describe('useFetch', () => {
         });
 
         await waitFor(() => {
-          expect(result.current.errorResult.error?.errorCode).toBe('UNHANDLED');
-          expect(result.current.errorResult.error?.message).toBe('Fetch error occurred');
+          expect(result.current.errorResult.errorInfo?.errorCode).toBe('UNHANDLED');
+          expect(result.current.errorResult.errorInfo?.message).toBe('Fetch error occurred');
         });
       });
 
@@ -97,8 +98,8 @@ describe('useFetch', () => {
         }
 
         await waitFor(() => {
-          expect(result.current.errorResult.error?.errorCode).toBe('Error');
-          expect(result.current.errorResult.error?.message).toBe('일반 에러 발생');
+          expect(result.current.errorResult.errorInfo?.errorCode).toBe('Error');
+          expect(result.current.errorResult.errorInfo?.message).toBe('일반 에러 발생');
         });
       });
 

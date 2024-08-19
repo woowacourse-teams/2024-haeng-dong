@@ -4,16 +4,16 @@ class FetchError extends Error {
   requestBody;
   status;
   endpoint;
-  errorBody;
+  errorInfo;
   method;
 
-  constructor({requestBody, status, endpoint, errorBody, method, name, message}: FetchErrorType) {
-    super(errorBody.errorCode);
+  constructor({requestBody, status, endpoint, errorInfo, method, name, message}: FetchErrorType) {
+    super(errorInfo.errorCode);
 
     this.requestBody = requestBody;
     this.status = status;
     this.endpoint = endpoint;
-    this.errorBody = errorBody;
+    this.errorInfo = errorInfo;
     this.method = method;
     this.name = name;
     this.message = message;

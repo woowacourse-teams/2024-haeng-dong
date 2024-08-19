@@ -2,13 +2,12 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import FetchError from '@errors/FetchError';
+import {useError} from '@hooks/useError/useError';
 
 import {captureError} from '@utils/captureError';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
-
-import {useError} from '../../ErrorProvider';
 
 type FetchProps<T> = {
   queryFunction: () => Promise<T>;
@@ -17,7 +16,7 @@ type FetchProps<T> = {
 };
 
 export const useFetch = () => {
-  const {setError, clearError} = useError();
+  const {setErrorInfo, clearError} = useError();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
@@ -36,10 +35,10 @@ export const useFetch = () => {
       return result;
     } catch (error) {
       if (error instanceof Error) {
-        const errorBody =
-          error instanceof FetchError ? error.errorBody : {errorCode: error.name, message: error.message};
+        const errorInfo =
+          error instanceof FetchError ? error.errorInfo : {errorCode: error.name, message: error.message};
 
-        setError(errorBody);
+        setErrorInfo(errorInfo);
 
         if (onError) {
           onError();
@@ -47,7 +46,7 @@ export const useFetch = () => {
 
         captureError(error, navigate, eventId);
       } else {
-        setError({errorCode: UNKNOWN_ERROR, message: JSON.stringify(error)});
+        setErrorInfo({errorCode: UNKNOWN_ERROR, message: JSON.stringify(error)});
         captureError(new Error(UNKNOWN_ERROR), navigate, eventId);
 
         // 에러를 throw 해 에러 바운더리로 보냅니다. 따라서 에러 이름은 중요하지 않음
