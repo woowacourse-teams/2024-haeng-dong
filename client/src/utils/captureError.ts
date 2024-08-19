@@ -1,7 +1,7 @@
 import FetchError from '@errors/FetchError';
-import {ErrorInfo} from '@hooks/useError/ErrorProvider';
 
 import sendLogToSentry from './sendLogToSentry';
+import {ErrorInfo} from 'AppErrorBoundary';
 
 export const captureError = async (error: Error) => {
   // prod 환경에서만 Sentry capture 실행
