@@ -17,7 +17,6 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
     inputPairList,
     inputRefList,
     errorMessage,
-    errorIndexList,
     handleInputChange,
     getFilledInputPairList,
     deleteEmptyInputPairElementOnBlur,
@@ -48,7 +47,6 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
                 onBlur={() => deleteEmptyInputPairElementOnBlur()} // TODO: (@weadie) 이 블러프롭이 내부적으로 index를 넘기고 있기 때문에 화살표 함수로 써야만하내요..
                 placeholder="지출 내역"
                 ref={el => (inputRefList.current[index * 2] = el)}
-                isError={errorIndexList.includes(index)}
               />
               <LabelGroupInput.Element
                 elementKey={`${index}`}
@@ -59,7 +57,6 @@ const AddBillActionListModalContent = ({setIsOpenBottomSheet}: AddBillActionList
                 onBlur={() => deleteEmptyInputPairElementOnBlur()}
                 placeholder="금액"
                 ref={el => (inputRefList.current[index * 2 + 1] = el)}
-                isError={errorIndexList.includes(index)}
               />
             </div>
           ))}
