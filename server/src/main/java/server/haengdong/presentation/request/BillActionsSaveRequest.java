@@ -1,12 +1,13 @@
 package server.haengdong.presentation.request;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 import server.haengdong.application.request.BillActionAppRequest;
 
 public record BillActionsSaveRequest(
 
-        @Valid List<BillActionSaveRequest> actions
+        @Valid @NotEmpty List<BillActionSaveRequest> actions
 ) {
 
     public List<BillActionAppRequest> toAppRequests() {
