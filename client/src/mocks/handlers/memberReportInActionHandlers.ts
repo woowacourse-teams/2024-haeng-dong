@@ -19,4 +19,17 @@ export const memberReportInActionHandler = [
       });
     },
   ),
+
+  http.put<any, MemberReportListBody, any, `${typeof TEMP_PREFIX}/:eventId/bill-actions/:actionId/fixed`>(
+    `${TEMP_PREFIX}/:eventId/bill-actions/:actionId/fixed`,
+    async ({request}) => {
+      const {members} = await request.json();
+
+      memberReportInActionMockData = members;
+
+      return HttpResponse.json({
+        status: 200,
+      });
+    },
+  ),
 ];
