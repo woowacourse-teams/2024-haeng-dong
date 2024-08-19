@@ -1,10 +1,10 @@
-import {StrictPropsWithChildren} from 'haengdong-design/dist/type/strictPropsWithChildren';
-import {ErrorBoundary} from 'react-error-boundary';
+// import {StrictPropsWithChildren} from 'haengdong-design/dist/type/strictPropsWithChildren';
+// import {ErrorBoundary} from 'react-error-boundary';
 
-import ErrorPage from '@pages/ErrorPage/ErrorPage';
+// import ErrorPage from '@pages/ErrorPage/ErrorPage';
 
-const UnhandledErrorBoundary = ({children}: StrictPropsWithChildren) => {
-  return <ErrorBoundary fallback={<ErrorPage />}>{children}</ErrorBoundary>;
-};
+// const UnhandledErrorBoundary = ({children}: StrictPropsWithChildren) => {
+//   return <ErrorBoundary fallback={<ErrorPage />}>{children}</ErrorBoundary>;
+// };
 
-export default UnhandledErrorBoundary;
+// export default UnhandledErrorBoundary;

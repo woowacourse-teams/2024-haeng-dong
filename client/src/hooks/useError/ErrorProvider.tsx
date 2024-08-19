@@ -1,69 +1,73 @@
-import {createContext, useState, useEffect, ReactNode} from 'react';
+// import {useState, useEffect, createContext, ReactNode} from 'react';
 
-import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
+// import {SERVER_ERROR_MESSAGES, UNKNOWN_ERROR} from '@constants/errorMessage';
+// import {useAppErrorStore} from '@store/appErrorStore';
+// import FetchError from '@errors/FetchError';
+// import {captureError} from '@utils/captureError';
+// import ErrorPage from '@pages/ErrorPage/ErrorPage';
+// import {useToast} from '@hooks/useToast/useToast';
+// import {ErrorBoundary} from 'react-error-boundary';
 
-// 에러 컨텍스트 생성
-export interface ErrorContextType {
-  clientErrorMessage: string;
-  setErrorInfo: (error: ErrorInfo) => void;
-  clearError: (ms?: number) => void;
-  errorInfo: ErrorInfo | null;
-}
+// export type ErrorInfo = {
+//   errorCode: string;
+//   message: string;
+// };
 
-export const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
+// export interface ErrorContextType {
+//   // clientErrorMessage: string;
+//   // setErrorInfo: (error: ErrorInfo) => void;
+//   // clearError: (ms?: number) => void;
+//   // errorInfo: ErrorInfo | null;
+//   setAppError: React.Dispatch<React.SetStateAction<Error | null>>;
+// }
 
-// 에러 컨텍스트를 제공하는 프로바이더 컴포넌트
-interface ErrorProviderProps {
-  children: ReactNode;
-  callback?: (message: string) => void;
-}
+// export const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
 
-export type ErrorInfo = {
-  errorCode: string;
-  message: string;
-};
+// export const ErrorProvider = ({children}: React.PropsWithChildren) => {
+//   const [appError, setAppError] = useState<Error | null>(null);
+//   const [errorInfo, setErrorInfo] = useState<ErrorInfo | null>(null);
+//   const {showToast} = useToast();
 
-export const ErrorProvider = ({children, callback}: ErrorProviderProps) => {
-  const [clientErrorMessage, setClientErrorMessage] = useState('');
-  const [errorInfo, setErrorState] = useState<ErrorInfo | null>(null);
+//   useEffect(() => {
+//     const catchAppError = () => {
+//       if (appError instanceof Error) {
+//         const errorInfo =
+//           appError instanceof FetchError ? appError.errorInfo : {errorCode: appError.name, message: appError.message};
+//         setErrorInfo(errorInfo);
+//         captureError(appError);
+//       } else {
+//         setErrorInfo({errorCode: UNKNOWN_ERROR, message: JSON.stringify(appError)});
+//         captureError(new Error(UNKNOWN_ERROR));
+//       }
+//     };
 
-  useEffect(() => {
-    if (errorInfo) {
-      if (isUnhandledError(errorInfo.errorCode)) {
-        // 에러바운더리로 보내기
+//     if (appError) {
+//       catchAppError();
+//     }
+//   }, [appError]);
 
-        throw errorInfo;
-      }
+//   useEffect(() => {
+//     if (errorInfo) {
+//       if (isUnhandledError(errorInfo.errorCode)) {
+//         // 에러바운더리로 보내기
+//         // throw new Error(errorInfo.message);
+//       } else {
+//         showToast({
+//           showingTime: 3000,
+//           message: errorInfo.message,
+//           type: 'error',
+//           position: 'bottom',
+//           bottom: '8rem',
+//         });
+//       }
+//     }
+//   }, [errorInfo]);
 
-      const message = SERVER_ERROR_MESSAGES[errorInfo.errorCode];
-      setClientErrorMessage(message);
-      // callback(message);
-    }
-  }, [errorInfo, callback]);
+//   const isUnhandledError = (errorCode: string) => {
+//     if (errorCode === 'INTERNAL_SERVER_ERROR') return true;
 
-  const setErrorInfo = (error: ErrorInfo) => {
-    setClientErrorMessage('');
-    setErrorState(error);
-  };
+//     return SERVER_ERROR_MESSAGES[errorCode] === undefined;
+//   };
 
-  const clearError = (ms: number = 0) => {
-    if (errorInfo === null) return;
-
-    setTimeout(() => {
-      setClientErrorMessage('');
-      setErrorState(null);
-    }, ms);
-  };
-
-  return (
-    <ErrorContext.Provider value={{errorInfo, clientErrorMessage, setErrorInfo, clearError}}>
-      {children}
-    </ErrorContext.Provider>
-  );
-};
-
-const isUnhandledError = (errorCode: string) => {
-  if (errorCode === 'INTERNAL_SERVER_ERROR') return true;
-
-  return SERVER_ERROR_MESSAGES[errorCode] === undefined;
-};
+//   return <ErrorContext.Provider value={{setAppError}}>{children}</ErrorContext.Provider>;
+// };
