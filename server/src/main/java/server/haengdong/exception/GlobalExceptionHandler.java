@@ -79,8 +79,8 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.of(HaengdongErrorCode.INTERNAL_SERVER_ERROR));
     }
 
-    private String getRequestBody(HttpServletRequest request) {
-        try (BufferedReader reader = request.getReader()) {
+    private String getRequestBody(HttpServletRequest req) {
+        try (BufferedReader reader = req.getReader()) {
             return reader.lines().collect(Collectors.joining(System.lineSeparator() + "\t"));
         } catch (IOException e) {
             log.error("Failed to read request body", e);
