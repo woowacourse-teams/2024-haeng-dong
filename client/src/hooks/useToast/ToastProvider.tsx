@@ -23,7 +23,6 @@ type ShowToast = ToastProps & {
 
 export const ToastProvider = ({children}: React.PropsWithChildren) => {
   const [currentToast, setCurrentToast] = useState<ShowToast | null>(null);
-  const {errorInfo, clearError, clientErrorMessage} = useError();
 
   const showToast = ({showingTime = DEFAULT_TIME, isAlwaysOn = false, ...toastProps}: ShowToast) => {
     setCurrentToast({showingTime, isAlwaysOn, ...toastProps});
@@ -32,22 +31,6 @@ export const ToastProvider = ({children}: React.PropsWithChildren) => {
   const closeToast = () => {
     setCurrentToast(null);
   };
-
-  useEffect(() => {
-    if (errorInfo !== null) {
-      showToast({
-        message: clientErrorMessage || SERVER_ERROR_MESSAGES.UNHANDLED,
-        showingTime: DEFAULT_TIME, // TODO: (@weadie) 나중에 토스트 프로바이더를 제거한 토스트를 만들 것이기 때문에 많이 리펙터링 안함
-        isAlwaysOn: false,
-        position: 'bottom',
-        bottom: '6.25rem',
-        // TODO: (@soha&weadie) zIndex의 값 추후에 꼭!!! 수정
-        style: {zIndex: '1000'},
-      });
-
-      clearError(DEFAULT_TIME);
-    }
-  }, [errorInfo, clientErrorMessage]);
 
   useEffect(() => {
     if (!currentToast) return;
