@@ -43,4 +43,11 @@ public interface MemberActionRepository extends JpaRepository<MemberAction, Long
     List<MemberAction> findAllByAction_EventAndMemberName(Event event, String memberName);
 
     boolean existsByAction_EventAndMemberName(Event event, String updatedMemberName);
+
+    @Query("""
+            select ma
+            from MemberAction ma
+            where ma.action.event = :event and ma.action.sequence < :sequence
+            """)
+    List<MemberAction> findByEventAndSequence(Event event, Long sequence);
 }
