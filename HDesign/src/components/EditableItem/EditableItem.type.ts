@@ -3,7 +3,7 @@ import {Theme} from '@theme/theme.type';
 import {ColorKeys} from '@token/colors';
 
 export interface EditableItemStyleProps {
-  backgroundColor: ColorKeys;
+  backgroundColor?: ColorKeys;
 }
 
 export interface EditableItemCustomProps {
