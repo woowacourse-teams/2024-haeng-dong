@@ -62,6 +62,8 @@ export const requestPutMemberReportListInAction = async ({
   return requestPut({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}/fixed`,
-    body: members,
+    body: {
+      members,
+    },
   });
 };
