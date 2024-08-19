@@ -3,7 +3,7 @@ import {Button, FixedButton, Flex, Input, MainLayout, Text, Title, TopNav} from 
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {css} from '@emotion/react';
 
-import {useToast} from '@components/Toast/ToastProvider';
+import {useToast} from '@hooks/useToast/useToast';
 
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
 

@@ -2,12 +2,14 @@ import {renderHook} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
 
+import {useError} from '@hooks/useError/useError';
+
 import {PASSWORD_LENGTH} from '@constants/password';
 
 import {VALID_PASSWORD_FOR_TEST} from '@mocks/validValueForTest';
 import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 
-import {ErrorProvider, useError} from '../../ErrorProvider';
+import {ErrorProvider} from '../useError/ErrorProvider';
 
 import useEvent from './useEvent';
 
@@ -36,7 +38,7 @@ describe('useEvent', () => {
     });
 
     await act(async () => {
-      expect(result.current.errorResult.error).toBe(null);
+      expect(result.current.errorResult.errorInfo).toBe(null);
     });
   });
 
@@ -48,7 +50,7 @@ describe('useEvent', () => {
     });
 
     await act(async () => {
-      expect(result.current.errorResult.error?.errorCode).toBe('EVENT_NAME_LENGTH_INVALID');
+      expect(result.current.errorResult.errorInfo?.errorCode).toBe('EVENT_NAME_LENGTH_INVALID');
     });
   });
 
@@ -60,7 +62,7 @@ describe('useEvent', () => {
     });
 
     await act(async () => {
-      expect(result.current.errorResult.error?.errorCode).toBe('EVENT_PASSWORD_FORMAT_INVALID');
+      expect(result.current.errorResult.errorInfo?.errorCode).toBe('EVENT_PASSWORD_FORMAT_INVALID');
     });
   });
 });

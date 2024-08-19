@@ -2,7 +2,7 @@ import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 
 import reportListJson from '../../mocks/reportList.json';
-import {ErrorProvider} from '../../ErrorProvider';
+import {ErrorProvider} from '../useError/ErrorProvider';
 
 import useSearchMemberReportList from './useSearchMemberReportList';
 

@@ -6,7 +6,7 @@ import {Bill} from 'types/serviceType';
 
 import StepListProvider, {useStepList} from '../useStepList/useStepList';
 import stepListJson from '../../mocks/stepList.json';
-import {ErrorProvider} from '../../ErrorProvider';
+import {ErrorProvider} from '../useError/ErrorProvider';
 
 const stepListMockData = stepListJson;
 
@@ -105,7 +105,7 @@ describe('useStepList', () => {
 
   it('provider안에서 호출되지 않으면 에러를 던진다.', () => {
     expect(() => {
-      const {result} = renderHook(() => useStepList());
+      const _ = renderHook(() => useStepList());
     }).toThrow('useStepList는 StepListProvider 내에서 사용되어야 합니다.');
   });
 });

@@ -1,4 +1,4 @@
-import {ServerError} from 'ErrorProvider';
+import {ErrorInfo} from '@hooks/useError/ErrorProvider';
 
 import objectToQueryString from '@utils/objectToQueryString';
 
@@ -96,15 +96,15 @@ const errorHandler = async ({url, options, body}: ErrorHandlerProps) => {
     const response: Response = await fetch(url, options);
 
     if (!response.ok) {
-      const serverErrorBody: ServerError = await response.json();
+      const serverErrorInfo: ErrorInfo = await response.json();
 
       throw new FetchError({
         status: response.status,
         requestBody: body,
         endpoint: response.url,
-        errorBody: serverErrorBody,
-        name: serverErrorBody.errorCode,
-        message: serverErrorBody.message || '',
+        errorInfo: serverErrorInfo,
+        name: serverErrorInfo.errorCode,
+        message: serverErrorInfo.message || '',
         method: options.method,
       });
     }
@@ -112,7 +112,7 @@ const errorHandler = async ({url, options, body}: ErrorHandlerProps) => {
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      throw error;
+      throw error; // 그대로 FetchError || Error 인스턴스를 던집니다.
     }
 
     throw new Error(UNKNOWN_ERROR);

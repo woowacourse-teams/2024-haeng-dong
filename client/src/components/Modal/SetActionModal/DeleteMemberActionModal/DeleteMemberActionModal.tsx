@@ -2,8 +2,8 @@ import type {MemberAction, MemberType} from 'types/serviceType';
 
 import {BottomSheet, Flex, Input, Text, IconButton, FixedButton, Icon} from 'haengdong-design';
 
-import {useToast} from '@components/Toast/ToastProvider';
 import useDeleteMemberAction from '@hooks/useDeleteMemberAction/useDeleteMemberAction';
+import {useToast} from '@hooks/useToast/useToast';
 
 import {bottomSheetHeaderStyle, bottomSheetStyle, inputGroupStyle} from './DeleteMemberActionModal.style';
 

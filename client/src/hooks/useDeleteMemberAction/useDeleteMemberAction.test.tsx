@@ -6,7 +6,7 @@ import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
 
 import stepListJson from '../../mocks/stepList.json';
 import StepListProvider, {useStepList} from '../useStepList/useStepList';
-import {ErrorProvider} from '../../ErrorProvider';
+import {ErrorProvider} from '../useError/ErrorProvider';
 import invalidMemberStepListJson from '../../mocks/invalidMemberStepList.json';
 
 import useDeleteMemberAction from './useDeleteMemberAction';

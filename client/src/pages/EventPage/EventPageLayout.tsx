@@ -3,9 +3,9 @@ import {Outlet, useMatch} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import {useToast} from '@components/Toast/ToastProvider';
 import {requestGetEventName} from '@apis/request/event';
 import StepListProvider from '@hooks/useStepList/useStepList';
+import {useToast} from '@hooks/useToast/useToast';
 
 import useNavSwitch from '@hooks/useNavSwitch';
 
