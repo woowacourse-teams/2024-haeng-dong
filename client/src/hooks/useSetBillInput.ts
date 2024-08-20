@@ -39,12 +39,11 @@ const useSetBillInput = ({setIsAddEditableItem}: UseSetBillInputProps): UseSetBi
   };
 
   const handleBlurBillRequest = () => {
-    // 두 input의 값이 모두 채워졌을 때 api 요청
-    // api 요청을 하면 더이상 Input이 아니게 됨
-
     const isEmptyTitle = billInput.title.trim().length;
     const isEmptyPrice = Number(billInput.price);
 
+    // 두 input의 값이 모두 채워졌을 때 api 요청
+    // api 요청을 하면 Input을 띄우지 않음
     if (isEmptyTitle && isEmptyPrice) {
       postBillList(
         {billList: [billInput]},
@@ -55,9 +54,6 @@ const useSetBillInput = ({setIsAddEditableItem}: UseSetBillInputProps): UseSetBi
         },
       );
     }
-
-    // 하나라도 공백이 존재하면 api 요청 X
-    // 여전히 input임
   };
 
   return {
