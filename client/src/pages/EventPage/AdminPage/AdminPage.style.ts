@@ -14,3 +14,10 @@ export const titleAndListButtonContainerStyle = () =>
     display: 'flex',
     flexDirection: 'column',
   });
+
+export const buttonGroupStyle = () =>
+  css({
+    display: 'flex',
+    width: '100%',
+    gap: '0.5rem',
+  });
