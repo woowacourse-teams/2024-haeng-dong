@@ -37,18 +37,22 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
   };
 
   const calculateDividedPrice = (remainMemberCount: number, totalAdjustedPrice: number) => {
-    // 조정되지 않은 멤버가 없거나 다 조정된 멤버라면
-    if (remainMemberCount === 0 || remainMemberCount === memberReportListInAction.length) {
-      return {
-        divided: Math.floor(totalPrice / memberReportListInAction.length),
-        remainder: (totalPrice - totalAdjustedPrice) % remainMemberCount,
-      };
-    }
-
     return {
       divided: Math.floor((totalPrice - totalAdjustedPrice) / remainMemberCount),
       remainder: (totalPrice - totalAdjustedPrice) % remainMemberCount,
     };
+  };
+
+  // 계산값으로 값을 변경했을 때 isFixed를 푸는 함수
+  // 100 true 33300 true 33300 false 33300 false
+  const setIsFixedFalseAtResetToDividedPrice = (memberReportListInAction: MemberReportInAction[], divided: number) => {
+    return memberReportListInAction.map(memberReport => {
+      if (memberReport.isFixed === true && memberReport.price === divided) {
+        return {...memberReport, isFixed: false};
+      }
+
+      return memberReport;
+    });
   };
 
   const calculateAnotherMemberPrice = (memberReportListInAction: MemberReportInAction[]) => {
@@ -75,7 +79,10 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
         updatedList[lastNonAdjustedMemberIndex].price += remainder;
       }
     }
-    setMemberReportListInAction(updatedList);
+
+    // 조정됐지만 계산값으로 가격이 변한 경우 fixed 상태를 풀어야한다.
+    const result = setIsFixedFalseAtResetToDividedPrice(updatedList, divided);
+    setMemberReportListInAction(result);
   };
 
   const onSubmit = () => {
