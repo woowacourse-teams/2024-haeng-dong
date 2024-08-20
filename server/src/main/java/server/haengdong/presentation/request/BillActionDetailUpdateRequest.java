@@ -10,9 +10,12 @@ public record BillActionDetailUpdateRequest(
         String name,
 
         @NotNull(message = "지출 금액은 공백일 수 없습니다.")
-        Long price
+        Long price,
+
+        @NotNull(message = "지출 금액은 공백일 수 없습니다.")
+        boolean isFixed
 ) {
     public BillActionDetailUpdateAppRequest toAppRequest() {
-        return new BillActionDetailUpdateAppRequest(this.name, this.price);
+        return new BillActionDetailUpdateAppRequest(this.name, this.price, this.isFixed);
     }
 }

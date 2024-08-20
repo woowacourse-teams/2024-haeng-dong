@@ -161,10 +161,10 @@ class BillActionServiceTest extends ServiceTestSupport {
         Event savedEvent = eventRepository.save(event);
         Action action = Action.createFirst(savedEvent);
         BillAction billAction = new BillAction(action, "뽕족", 10_000L);
-        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "감자", 3000L);
-        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "고구마", 2000L);
-        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "당근", 3000L);
-        BillActionDetail billActionDetail4 = new BillActionDetail(billAction, "양파", 2000L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "감자", 3000L, true);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "고구마", 2000L, true);
+        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "당근", 3000L, true);
+        BillActionDetail billActionDetail4 = new BillActionDetail(billAction, "양파", 2000L, true);
         billAction.addDetails(List.of(billActionDetail1, billActionDetail2, billActionDetail3, billActionDetail4));
         BillAction savedBillAction = billActionRepository.save(billAction);
 
@@ -208,8 +208,8 @@ class BillActionServiceTest extends ServiceTestSupport {
         MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "백호", MemberActionStatus.IN, 1L);
         MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "망쵸", MemberActionStatus.IN, 2L);
         BillAction billAction = new BillAction(new Action(event, 3L), "커피", 50_900L);
-        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "백호", 25_450L);
-        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "망쵸", 25_450L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "백호", 25_450L, false);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "망쵸", 25_450L, false);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
         billActionRepository.save(billAction);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));

@@ -47,7 +47,7 @@ public class BillActionDetailControllerDocsTest extends RestDocsSupport {
     @Test
     void findBillActionDetailsTest() throws Exception {
         BillActionDetailsAppResponse appResponse = new BillActionDetailsAppResponse(
-                List.of(new BillActionDetailAppResponse("토다리", 1000L)));
+                List.of(new BillActionDetailAppResponse("토다리", 1000L, false)));
         given(billActionDetailService.findBillActionDetails(anyString(), anyLong()))
                 .willReturn(appResponse);
 
@@ -58,6 +58,7 @@ public class BillActionDetailControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.members").isArray())
                 .andExpect(jsonPath("$.members[0].name").value("토다리"))
                 .andExpect(jsonPath("$.members[0].price").value(1000L))
+                .andExpect(jsonPath("$.members[0].isFixed").value(false))
                 .andDo(
                         document("findBillActionDetailsTest",
                                 preprocessRequest(prettyPrint()),
@@ -73,7 +74,9 @@ public class BillActionDetailControllerDocsTest extends RestDocsSupport {
                                         fieldWithPath("members[0].name").type(JsonFieldType.STRING)
                                                 .description("참여자 이름"),
                                         fieldWithPath("members[0].price").type(JsonFieldType.NUMBER)
-                                                .description("참여자 정산 금액")
+                                                .description("참여자 정산 금액"),
+                                        fieldWithPath("members[0].isFixed").type(JsonFieldType.BOOLEAN)
+                                                .description("참여자 정산 금액 수정 여부")
                                 )
                         )
                 );
@@ -83,8 +86,8 @@ public class BillActionDetailControllerDocsTest extends RestDocsSupport {
     @Test
     void updateBillActionDetailsTest() throws Exception {
         List<BillActionDetailUpdateRequest> billActionDetailUpdateRequests = List.of(
-                new BillActionDetailUpdateRequest("소하", 10000L),
-                new BillActionDetailUpdateRequest("웨디", 20000L)
+                new BillActionDetailUpdateRequest("소하", 10000L, true),
+                new BillActionDetailUpdateRequest("웨디", 20000L, true)
         );
         BillActionDetailsUpdateRequest request = new BillActionDetailsUpdateRequest(
                 billActionDetailUpdateRequests);
@@ -114,7 +117,9 @@ public class BillActionDetailControllerDocsTest extends RestDocsSupport {
                                         fieldWithPath("members[0].name").type(JsonFieldType.STRING)
                                                 .description("참여자 이름"),
                                         fieldWithPath("members[0].price").type(JsonFieldType.NUMBER)
-                                                .description("참여자 정산 금액")
+                                                .description("참여자 정산 금액"),
+                                        fieldWithPath("members[0].isFixed").type(JsonFieldType.BOOLEAN)
+                                                .description("참여자 정산 금액 수정 여부")
                                 )
                         )
                 );

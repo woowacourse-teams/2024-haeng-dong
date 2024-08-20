@@ -57,7 +57,7 @@ public class BillActionService {
     private void saveBillActionDetails(BillAction billAction, CurrentMembers currentMembers) {
         long pricePerMember = billAction.getPrice() / currentMembers.size();
         currentMembers.getMembers().stream()
-                .map(memberName -> new BillActionDetail(billAction, memberName, pricePerMember))
+                .map(memberName -> new BillActionDetail(billAction, memberName, pricePerMember, false))
                 .forEach(billActionDetailRepository::save);
     }
 

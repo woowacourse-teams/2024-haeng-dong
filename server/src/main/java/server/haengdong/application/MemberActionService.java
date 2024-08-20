@@ -1,6 +1,8 @@
 package server.haengdong.application;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,26 +88,49 @@ public class MemberActionService {
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_ACTION_NOT_FOUND));
 
         memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(),
-                                                                   memberAction.getSequence());
+                memberAction.getSequence());
 
         List<BillAction> billActions = billActionRepository.findByEventAndGreaterThanSequence(event,
-                                                                                              action.getSequence());
+                action.getSequence());
         billActions.forEach(billAction -> resetBillAction(event, billAction));
     }
 
     private void resetBillAction(Event event, BillAction billAction) {
         List<MemberAction> memberActions = memberActionRepository.findByEventAndSequence(event,
-                                                                                         billAction.getSequence());
+                billAction.getSequence());
         CurrentMembers currentMembers = CurrentMembers.of(memberActions);
 
         billActionDetailRepository.deleteAllByBillAction(billAction);
 
         if (currentMembers.isNotEmpty()) {
-            Long eachPrice = billAction.getPrice() / currentMembers.size();
-            for (String member : currentMembers.getMembers()) {
-                BillActionDetail billActionDetail = new BillActionDetail(billAction, member, eachPrice);
-                billActionDetailRepository.save(billActionDetail);
-            }
+            Long price = billAction.getPrice();
+            int currentMemberCount = currentMembers.size();
+            long eachPrice = price / currentMemberCount;
+            long remainder = price % currentMemberCount;
+            List<BillActionDetail> billActionDetails = getBillActionDetails(
+                    billAction,
+                    currentMembers,
+                    eachPrice,
+                    remainder
+            );
+            billActionDetailRepository.saveAll(billActionDetails);
         }
+    }
+
+    private List<BillActionDetail> getBillActionDetails(
+            BillAction billAction,
+            CurrentMembers currentMembers,
+            long eachPrice,
+            long remainder
+    ) {
+        List<String> members = currentMembers.getMembers().stream().toList();
+        List<BillActionDetail> billActionDetails = IntStream.range(0, members.size() - 1)
+                .mapToObj(index -> new BillActionDetail(billAction, members.get(index), eachPrice, false))
+                .collect(Collectors.toList());
+        BillActionDetail lastBillActionDetail = new BillActionDetail(billAction, members.get(members.size() - 1),
+                eachPrice + remainder, false);
+        billActionDetails.add(lastBillActionDetail);
+
+        return billActionDetails;
     }
 }

@@ -44,8 +44,8 @@ class BillActionDetailServiceTest extends ServiceTestSupport {
         Action action = new Action(event1, 1L);
         BillAction billAction = new BillAction(action, "뽕족", 10000L);
         billActionRepository.save(billAction);
-        BillActionDetail billActionDetail1 = new BillActionDetail(1L, billAction, "토다리", 6000L);
-        BillActionDetail billActionDetail2 = new BillActionDetail(2L, billAction, "쿠키", 4000L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "토다리", 6000L, true);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "쿠키", 4000L, true);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));
 
         BillActionDetailsAppResponse response = billActionDetailService.findBillActionDetails(
@@ -67,13 +67,13 @@ class BillActionDetailServiceTest extends ServiceTestSupport {
         Action action = new Action(event1, 1L);
         BillAction billAction = new BillAction(action, "뽕족", 10000L);
         billActionRepository.save(billAction);
-        BillActionDetail billActionDetail1 = new BillActionDetail(1L, billAction, "토다리", 5000L);
-        BillActionDetail billActionDetail2 = new BillActionDetail(2L, billAction, "쿠키", 5000L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "토다리", 5000L, false);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "쿠키", 5000L, false);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));
 
         BillActionDetailsUpdateAppRequest request = new BillActionDetailsUpdateAppRequest(List.of(
-                new BillActionDetailUpdateAppRequest("토다리", 3000L),
-                new BillActionDetailUpdateAppRequest("쿠키", 4000L)
+                new BillActionDetailUpdateAppRequest("토다리", 3000L, true),
+                new BillActionDetailUpdateAppRequest("쿠키", 4000L, true)
         ));
         assertThatCode(
                 () -> billActionDetailService.updateBillActionDetails(event1.getToken(), action.getId(), request))
@@ -89,13 +89,13 @@ class BillActionDetailServiceTest extends ServiceTestSupport {
         Action action = new Action(event1, 1L);
         BillAction billAction = new BillAction(action, "뽕족", 10000L);
         billActionRepository.save(billAction);
-        BillActionDetail billActionDetail1 = new BillActionDetail(1L, billAction, "토다리", 5000L);
-        BillActionDetail billActionDetail2 = new BillActionDetail(2L, billAction, "쿠키", 5000L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "토다리", 5000L, false);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "쿠키", 5000L, false);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));
 
         BillActionDetailsUpdateAppRequest request = new BillActionDetailsUpdateAppRequest(List.of(
-                new BillActionDetailUpdateAppRequest("토다리", 3000L),
-                new BillActionDetailUpdateAppRequest("쿠키", 7000L)
+                new BillActionDetailUpdateAppRequest("토다리", 3000L, true),
+                new BillActionDetailUpdateAppRequest("쿠키", 7000L, true)
         ));
         billActionDetailService.updateBillActionDetails(event1.getToken(), action.getId(), request);
 

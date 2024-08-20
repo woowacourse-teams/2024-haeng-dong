@@ -3,6 +3,7 @@ package server.haengdong.domain.action;
 import static org.assertj.core.api.Assertions.assertThat;
 import static server.haengdong.domain.action.MemberActionStatus.IN;
 import static server.haengdong.domain.action.MemberActionStatus.OUT;
+import static server.haengdong.support.fixture.Fixture.BILL_ACTION;
 
 import java.util.List;
 import java.util.Map;
@@ -23,15 +24,15 @@ class MemberBillReportTest {
         );
         billActions.get(0).addDetails(
                 List.of(
-                        new BillActionDetail("소하", 10_000L),
-                        new BillActionDetail("감자", 40_000L),
-                        new BillActionDetail("쿠키", 10_000L)
+                        new BillActionDetail(BILL_ACTION, "소하", 10_000L, false),
+                        new BillActionDetail(BILL_ACTION, "감자", 40_000L, true),
+                        new BillActionDetail(BILL_ACTION, "쿠키", 10_000L, false)
                 )
         );
         billActions.get(1).addDetails(
                 List.of(
-                        new BillActionDetail("소하", 5_000L),
-                        new BillActionDetail("쿠키", 15_000L)
+                        new BillActionDetail(BILL_ACTION, "소하", 5_000L, true),
+                        new BillActionDetail(BILL_ACTION, "쿠키", 15_000L, true)
                 )
         );
         List<MemberAction> memberActions = List.of(
