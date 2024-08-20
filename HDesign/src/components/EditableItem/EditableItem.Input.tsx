@@ -42,13 +42,11 @@ export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(functi
           <input
             onFocus={() => setHasFocus(true)}
             onBlur={() => setHasFocus(false)}
-            css={[
-              inputStyle({
-                theme,
-                textSize,
-                width: `${shadowRef.current?.offsetWidth}px`,
-              }),
-            ]}
+            css={inputStyle({
+              theme,
+              textSize,
+              width: `${shadowRef.current?.offsetWidth}px`,
+            })}
             ref={inputRef}
             autoFocus
             readOnly={readOnly}
