@@ -1,4 +1,4 @@
-import type {MemberReport} from 'types/serviceType';
+import type {MemberReport, MemberReportInAction} from 'types/serviceType';
 
 import {renderHook, waitFor, act} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
@@ -43,7 +43,7 @@ describe('useMemberReportListInActionTest', () => {
 
     it('망쵸의 가격을 100원으로 바꾸면 망쵸의 가격은 100원으로 설정된다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMember: MemberReport = {name: '망쵸', price: 100};
+      const adjustedMember: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
       await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
 
       act(() => {
@@ -57,7 +57,7 @@ describe('useMemberReportListInActionTest', () => {
 
     it('망쵸의 가격을 100원으로 바꾸면 망쵸의 가격은 100원으로 설정되고 나머지 인원의 가격이 33,300원으로 설정된다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMember: MemberReport = {name: '망쵸', price: 100};
+      const adjustedMember: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
       await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
 
       act(() => {
@@ -76,8 +76,8 @@ describe('useMemberReportListInActionTest', () => {
 
     it('망쵸의 가격을 100원 쿠키의 가격을 100원으로 바꾸면 나머지 인원의 가격이 49,900원으로 설정된다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
-      const adjustedMemberCookie: MemberReport = {name: '쿠키', price: 100};
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+      const adjustedMemberCookie: MemberReportInAction = {name: '쿠키', price: 100, isFixed: true};
 
       await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
 
@@ -100,8 +100,8 @@ describe('useMemberReportListInActionTest', () => {
 
     it('망쵸의 가격을 100원 쿠키의 가격을 100원으로 바꾸면 나머지 인원의 가격이 49,900원으로 설정된다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
-      const adjustedMemberCookie: MemberReport = {name: '쿠키', price: 100};
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+      const adjustedMemberCookie: MemberReportInAction = {name: '쿠키', price: 100, isFixed: false};
 
       await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
 
@@ -124,8 +124,8 @@ describe('useMemberReportListInActionTest', () => {
 
     it('망쵸의 가격을 100원으로 바꾸고 다시 망쵸의 가격을 10,000원으로 바꾸면 나머지 인원의 가격이 30,000원으로 설정된다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
-      const adjustedMemberMangchoAfter: MemberReport = {name: '망쵸', price: 10000};
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+      const adjustedMemberMangchoAfter: MemberReportInAction = {name: '망쵸', price: 10000, isFixed: true};
 
       await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
 
@@ -146,9 +146,9 @@ describe('useMemberReportListInActionTest', () => {
   });
 
   describe('예외 & 엣지케이스', () => {
-    it('동일한 인원을 바꾸려고 할 때, 반영되지 않는다.', async () => {
+    it('동일한 인원의 가격을 동일하게 바꾸면 변함없다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
 
       await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
 
@@ -157,7 +157,7 @@ describe('useMemberReportListInActionTest', () => {
       });
 
       act(() => {
-        result.current.addAdjustedMember(adjustedMemberMangcho);
+        result.current.addAdjustedMember({...adjustedMemberMangcho, isFixed: true});
       });
 
       const anotherMemberList = result.current.memberReportListInAction.filter(member => member.name !== '망쵸');
@@ -167,12 +167,12 @@ describe('useMemberReportListInActionTest', () => {
 
     it('참여인원의 가격을 모두 바꾸려고 하면, 마지막 사람의 조정치는 반영되지 않는다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
-      const adjustedMemberCookie: MemberReport = {name: '쿠키', price: 100};
-      const adjustedMemberSoha: MemberReport = {name: '소하', price: 100};
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+      const adjustedMemberCookie: MemberReportInAction = {name: '쿠키', price: 100, isFixed: false};
+      const adjustedMemberSoha: MemberReportInAction = {name: '소하', price: 100, isFixed: false};
 
       // 마지막 사람
-      const adjustedMemberLeeSang: MemberReport = {name: '이상', price: 100};
+      const adjustedMemberLeeSang: MemberReportInAction = {name: '이상', price: 100, isFixed: false};
 
       await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
 
@@ -196,13 +196,41 @@ describe('useMemberReportListInActionTest', () => {
 
       expect(targetMember?.price).not.toBe(100);
     });
+
+    it('망쵸에게 300원을 주면 나머지 사람들은 33233원이고 마지막 사람은 33234원이 된다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 300, isFixed: false};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      console.log(result.current.memberReportListInAction);
+
+      const targetMember = result.current.memberReportListInAction.find(member => member.name === '망쵸');
+      expect(targetMember?.price).toBe(300);
+
+      const anotherMemberList = result.current.memberReportListInAction.filter(
+        member => member.name === '이상' || member.name === '소하',
+      );
+
+      anotherMemberList.forEach(member => {
+        expect(member.price).toBe(33233);
+      });
+
+      const lastMember = result.current.memberReportListInAction.find(member => member.name === '쿠키');
+
+      expect(lastMember?.price).toBe(33234);
+    });
   });
 
   // last
   describe('onSubmit 실행 시 반영 테스트', () => {
     it('망쵸의 가격을 100원으로 바꾸고 저장하면 망쵸 100원이 반영된다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
 
       await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
 
