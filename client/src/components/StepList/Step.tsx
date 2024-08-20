@@ -7,16 +7,24 @@ import MemberStepItem from './MemberStepItem';
 
 interface StepProps {
   step: BillStep | MemberStep;
+  isAddEditableItem: boolean;
+  setIsAddEditableItem: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Step = ({step}: StepProps) => {
+const Step = ({step, isAddEditableItem, setIsAddEditableItem}: StepProps) => {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState<boolean>(false);
 
-  if (step.type === 'BILL') {
+  if (isAddEditableItem || (step.actions && step.type === 'BILL')) {
     return (
-      <BillStepItem step={step} isOpenBottomSheet={isOpenBottomSheet} setIsOpenBottomSheet={setIsOpenBottomSheet} />
+      <BillStepItem
+        step={step as BillStep}
+        isOpenBottomSheet={isOpenBottomSheet}
+        setIsOpenBottomSheet={setIsOpenBottomSheet}
+        isAddEditableItem={isAddEditableItem}
+        setIsAddEditableItem={setIsAddEditableItem}
+      />
     );
-  } else if (step.type === 'IN' || step.type === 'OUT') {
+  } else if (step.actions && (step.type === 'IN' || step.type === 'OUT')) {
     return (
       <MemberStepItem step={step} isOpenBottomSheet={isOpenBottomSheet} setIsOpenBottomSheet={setIsOpenBottomSheet} />
     );

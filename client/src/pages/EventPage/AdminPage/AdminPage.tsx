@@ -16,6 +16,7 @@ import {receiptStyle, titleAndListButtonContainerStyle, buttonGroupStyle} from '
 const AdminPage = () => {
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedButtonBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
+  const [isAddEditableItem, setIsAddEditableItem] = useState(false);
 
   const {eventName} = useOutletContext<EventPageContextProps>();
   const {data: allMemberListData} = useRequestGetAllMemberList();
@@ -54,7 +55,7 @@ const AdminPage = () => {
         )}
       </div>
       <section css={receiptStyle}>
-        <StepList />
+        <StepList isAddEditableItem={isAddEditableItem} setIsAddEditableItem={setIsAddEditableItem} />
         {allMemberList.length === 0 ? (
           <FixedButton children={'시작인원 추가하기'} onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)} />
         ) : (
@@ -67,7 +68,7 @@ const AdminPage = () => {
             >
               인원 변동 추가
             </Button>
-            <Button size="medium" style={{width: '100%'}}>
+            <Button size="medium" onClick={() => setIsAddEditableItem(true)} style={{width: '100%'}}>
               지출 내역 추가
             </Button>
           </div>
