@@ -225,8 +225,21 @@ export const ReadOnlyWithIsFixedIcon: Story = {
 
 export const ListView: Story = {
   render: ({...args}) => {
-    const [value, setValue] = useState('');
-    const [value2, setValue2] = useState('');
+    const LENGTH = 5;
+    const [valueList, setValueList] = useState(new Array(LENGTH).fill(''));
+    const [valueList2, setValueList2] = useState(new Array(LENGTH).fill(''));
+
+    const handleValueListChange = (index: number, newValue: string) => {
+      const updatedList = [...valueList];
+      updatedList[index] = newValue;
+      setValueList(updatedList);
+    };
+
+    const handleValueList2Change = (index: number, newValue: string) => {
+      const updatedList = [...valueList2];
+      updatedList[index] = newValue;
+      setValueList2(updatedList);
+    };
 
     return (
       <EditableItem
@@ -236,18 +249,18 @@ export const ListView: Story = {
         onBlur={() => console.log('blur')}
       >
         <Flex flexDirection="column" width="100%" gap="1rem">
-          {new Array(5).fill(0).map(() => (
-            <Flex justifyContent="spaceBetween">
+          {valueList.map((value, index) => (
+            <Flex key={index} justifyContent="spaceBetween">
               <EditableItem.Input
                 value={value}
-                onChange={e => setValue(e.target.value)}
+                onChange={e => handleValueListChange(index, e.target.value)}
                 placeholder="지출 내역"
                 textSize="bodyBold"
               ></EditableItem.Input>
               <Flex gap="0.25rem" alignItems="center">
                 <EditableItem.Input
-                  value={value2}
-                  onChange={e => setValue2(e.target.value)}
+                  value={valueList2[index]}
+                  onChange={e => handleValueList2Change(index, e.target.value)}
                   placeholder="0"
                   type="number"
                   style={{textAlign: 'right'}}
