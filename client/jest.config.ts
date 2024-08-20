@@ -29,6 +29,7 @@ const config: Config = {
     '@/(.*)$': '<rootDir>/src/$1', // path alias를 적용하기 위함
     '^@apis/(.*)$': '<rootDir>/src/apis/$1',
     '^@constants/(.*)$': '<rootDir>/src/constants/$1',
+    '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@hooks/(.*)$': '<rootDir>/src/hooks/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
