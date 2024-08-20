@@ -1,16 +1,18 @@
 import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
-import {ErrorProvider} from '@hooks/useError/ErrorProvider';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
 
 import stepListJson from '@mocks/stepList.json';
 import invalidMemberStepListJson from '@mocks/invalidMemberStepList.json';
 
 import useDeleteMemberAction from './useDeleteMemberAction';
+import AppErrorBoundary from '@components/AppErrorBoundary/AppErrorBoundary';
+import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
+import {ToastProvider} from '@hooks/useToast/ToastProvider';
+import {HDesignProvider} from 'haengdong-design';
 
 const stepListMockData = stepListJson as (BillStep | MemberStep)[];
 let memberActionList: MemberAction[] = [];
@@ -22,14 +24,6 @@ for (let i = 0; i < stepListMockData.length; i++) {
 }
 
 describe('useDeleteMemberAction', () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 0,
-      },
-    },
-  });
-
   const initializeProvider = (list: MemberAction[] = memberActionList) =>
     renderHook(
       () => {
@@ -45,11 +39,15 @@ describe('useDeleteMemberAction', () => {
       },
       {
         wrapper: ({children}) => (
-          <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-              <ErrorProvider>{children}</ErrorProvider>
-            </MemoryRouter>
-          </QueryClientProvider>
+          <HDesignProvider>
+            <ToastProvider>
+              <AppErrorBoundary>
+                <QueryClientBoundary>
+                  <MemoryRouter>{children}</MemoryRouter>
+                </QueryClientBoundary>
+              </AppErrorBoundary>
+            </ToastProvider>
+          </HDesignProvider>
         ),
       },
     );
