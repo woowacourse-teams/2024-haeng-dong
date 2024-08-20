@@ -15,6 +15,8 @@ interface BillStepItemProps {
   setIsOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
   isAddEditableItem: boolean;
   setIsAddEditableItem: React.Dispatch<React.SetStateAction<boolean>>;
+  isLastBillItem: boolean;
+  index: number;
 }
 
 const BillStepItem: React.FC<BillStepItemProps> = ({
@@ -23,6 +25,8 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
   setIsOpenBottomSheet,
   isAddEditableItem,
   setIsAddEditableItem,
+  isLastBillItem,
+  index,
 }) => {
   const {isAdmin} = useOutletContext<EventPageContextProps>();
   const {handleBlurBillRequest, handleChangeBillInput, billInput} = useSetBillInput({setIsAddEditableItem});
@@ -50,6 +54,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
   return (
     <>
       <DragHandleItemContainer
+        id={`${index}`}
         topLeftText={stepName}
         topRightText={`${step.members.length}명`}
         bottomLeftText="총액"
@@ -68,6 +73,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
                 backgroundColor="lightGrayContainer"
                 onClick={() => handleDragHandleItemClick(index)}
               />
+
               {isOpenBottomSheet && clickedIndex === index && isAdmin && (
                 <PutAndDeleteBillActionModal
                   billAction={action}
@@ -78,7 +84,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
             </Fragment>
           ))}
 
-        {isAddEditableItem && (
+        {isAddEditableItem && isLastBillItem && (
           <EditableItem backgroundColor="lightGrayContainer" onBlur={handleBlurBillRequest}>
             <EditableItem.Input
               placeholder="지출 내역"
