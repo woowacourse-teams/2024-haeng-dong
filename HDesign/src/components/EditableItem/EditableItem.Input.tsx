@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {forwardRef, useEffect, useRef, useState} from 'react';
+import {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
 
 import Flex from '@components/Flex/Flex';
 import Text from '@components/Text/Text';
@@ -14,6 +14,7 @@ import {
   underlineStyle,
 } from './EditableItem.Input.style';
 import {InputProps} from './EditableItem.Input.type';
+import useEditableItemInput from './useEditableItemInput';
 
 export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(function Input(
   {isFixed = false, textSize = 'body', value = '', hasError = false, readOnly = false, ...htmlProps},
@@ -22,7 +23,8 @@ export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(functi
   const {theme} = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
-  const [hasFocus, setHasFocus] = useState(false);
+  const {hasFocus} = useEditableItemInput({inputRef});
+  useImperativeHandle(ref, () => inputRef.current!);
 
   useEffect(() => {
     if (shadowRef.current && inputRef.current) {
@@ -40,8 +42,6 @@ export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(functi
         {isFixed && <div css={isFixedIconStyle({theme})}>*</div>}
         <div css={underlineStyle({theme, hasError, hasFocus})}>
           <input
-            onFocus={() => setHasFocus(true)}
-            onBlur={() => setHasFocus(false)}
             css={inputStyle({
               theme,
               textSize,
