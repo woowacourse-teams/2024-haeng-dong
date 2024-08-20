@@ -14,9 +14,7 @@ type InputSizeStyleProps = {
   textSize: TextSize;
 };
 
-type InputBaseStyleProps = {
-  width: string;
-};
+type InputBaseStyleProps = {};
 
 type InputStyleProps = InputBaseStyleProps & InputSizeStyleProps;
 
@@ -24,9 +22,9 @@ export const inputWrapperStyle = css({
   display: 'inline-block',
 });
 
-export const inputStyle = ({theme, textSize, width}: WithTheme<InputStyleProps>) => [
+export const inputStyle = ({theme, textSize}: WithTheme<InputStyleProps>) => [
   inputSizeStyle({textSize}),
-  inputBaseStyle({theme, width}),
+  inputBaseStyle({theme}),
 ];
 
 const inputSizeStyle = ({textSize}: InputSizeStyleProps) => {
@@ -46,7 +44,7 @@ const inputSizeStyle = ({textSize}: InputSizeStyleProps) => {
   return [style[textSize]];
 };
 
-const inputBaseStyle = ({theme, width}: WithTheme<InputBaseStyleProps>) =>
+const inputBaseStyle = ({theme}: WithTheme<InputBaseStyleProps>) =>
   css({
     border: 'none',
     outline: 'none',
@@ -57,8 +55,6 @@ const inputBaseStyle = ({theme, width}: WithTheme<InputBaseStyleProps>) =>
     '&:placeholder': {
       color: theme.colors.darkGray,
     },
-
-    width,
   });
 
 export const editingContainerStyle = css({
