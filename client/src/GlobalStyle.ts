@@ -136,7 +136,7 @@ export const GlobalStyle = css`
 
   body {
     max-width: 768px;
-    height: 100lvh;
+    height: 100%;
     margin: 0 auto;
 
     overflow-y: scroll;
