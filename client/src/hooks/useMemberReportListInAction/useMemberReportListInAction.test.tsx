@@ -224,6 +224,57 @@ describe('useMemberReportListInActionTest', () => {
 
       expect(lastMember?.price).toBe(33234);
     });
+
+    it('망쵸, 쿠키의 가격을 100원으로 바꾼 후 다시 쿠키의 가격을 33000원으로 바꾸면 쿠키의 isFixed는 false가 된다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+      const adjustedMemberCookie: MemberReportInAction = {name: '쿠키', price: 100, isFixed: false};
+      const adjustedMemberCookieReset: MemberReportInAction = {name: '쿠키', price: 33300, isFixed: true};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberCookie);
+      });
+
+      const targetMember = result.current.memberReportListInAction.find(member => member.name === '쿠키');
+
+      expect(targetMember?.isFixed).toBe(true);
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberCookieReset);
+      });
+
+      const targetMemberReset = result.current.memberReportListInAction.find(member => member.name === '쿠키');
+
+      expect(targetMemberReset?.isFixed).toBe(false);
+    });
+
+    it('망쵸의 가격을 100원으로 바꾼 후 다시 망쵸의 가격을 25000원으로 바꾸면 망쵸의 isFixed는 false가 된다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+      const adjustedMemberMangchoAfter: MemberReportInAction = {name: '망쵸', price: 25000, isFixed: true};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      const targetMember = result.current.memberReportListInAction.find(member => member.name === '망쵸');
+      expect(targetMember?.isFixed).toBe(true);
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangchoAfter);
+      });
+
+      const targetMemberReset = result.current.memberReportListInAction.find(member => member.name === '망쵸');
+      expect(targetMemberReset?.isFixed).toBe(false);
+    });
   });
 
   // last
