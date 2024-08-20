@@ -35,6 +35,10 @@ const useInput = <T extends InputValue>({validateFunc, initialInputList}: UseInp
     changeCanSubmit();
   }, [errorMessage, errorIndexList]);
 
+  useEffect(() => {
+    setInputList(prev => prev.map((value, index) => ({...value, index})));
+  }, [inputList.length]);
+
   const handleChange = (index: number = 0, value: string) => {
     const {isValid, errorMessage: validationResultMessage} = validateFunc(value);
 
