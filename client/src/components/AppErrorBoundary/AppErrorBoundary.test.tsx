@@ -31,7 +31,7 @@ describe('AppErrorBoundary', () => {
     useNavigate: jest.fn(),
   }));
 
-  it('핸들링 가능한 에러인 경우 토스트가 표시된다.', async () => {
+  it('예상했던 에러인 경우 토스트가 표시된다.', async () => {
     const errorCode = 'EVENT_NOT_FOUND';
     const error = new FetchError({
       errorInfo: {errorCode, message: '서버의 에러메세지'},
@@ -58,21 +58,16 @@ describe('AppErrorBoundary', () => {
     });
   });
 
-  // it('핸들링 불가능한 에러인 경우 fallback이 표시된다.', async () => {
-  //   const navigate = useNavigate();
-  //   (navigate as jest.Mock).mockImplementation(() => {});
-  //   const {updateAppError} = useAppErrorStore.getState();
+  it('예상치 못한 에러인 경우 fallback이 표시된다.', async () => {
+    const error = new Error('알 수 없는 에러');
+    const ErrorThrowingComponent = () => {
+      throw new Error('Test Error');
+    };
+    setup(<ErrorThrowingComponent />);
 
-  //   const error = new Error('알 수 없는 에러');
-  //   setup(<TestComponent triggerError={() => updateAppError(error)} />);
-
-  //   act(() => {
-  //     screen.getByText('Trigger Error').click();
-  //   });
-
-  //   // TODO: (@todari) 해결안됨
-  //   await waitFor(() => {
-  //     expect(navigate).toHaveBeenCalledWith('/error');
-  //   });
-  // });
+    // TODO: (@todari) 해결안됨
+    await waitFor(() => {
+      expect(screen.getByText('알 수 없는 오류입니다.')).toBeInTheDocument();
+    });
+  });
 });
