@@ -14,7 +14,7 @@ interface StepProps {
 const Step = ({step, isAddEditableItem, setIsAddEditableItem}: StepProps) => {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState<boolean>(false);
 
-  if (isAddEditableItem || (step.actions && step.type === 'BILL')) {
+  if (step.actions && step.type === 'BILL') {
     return (
       <BillStepItem
         step={step as BillStep}
