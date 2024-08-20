@@ -59,7 +59,12 @@ const AdminPage = () => {
           <FixedButton children={'시작인원 추가하기'} onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)} />
         ) : (
           <div css={buttonGroupStyle}>
-            <Button size="medium" variants="tertiary" style={{width: '100%'}}>
+            <Button
+              size="medium"
+              variants="tertiary"
+              style={{width: '100%'}}
+              onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)}
+            >
               인원 변동 추가
             </Button>
             <Button size="medium" style={{width: '100%'}}>
