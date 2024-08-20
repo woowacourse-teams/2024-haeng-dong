@@ -26,26 +26,21 @@ public class BillActionDetail {
 
     private Long price;
 
-    public BillActionDetail(String memberName, Long price) {
-        this.memberName = memberName;
-        this.price = price;
-    }
+    private boolean isFixed;
 
-    public BillActionDetail(BillAction billAction, String memberName, Long price) {
+    public BillActionDetail(BillAction billAction, String memberName, Long price, boolean isFixed) {
         this.billAction = billAction;
         this.memberName = memberName;
         this.price = price;
-    }
-
-    public BillActionDetail(Long id, BillAction billAction, String memberName, Long price) {
-        this.id = id;
-        this.billAction = billAction;
-        this.memberName = memberName;
-        this.price = price;
+        this.isFixed = isFixed;
     }
 
     public void updatePrice(Long price) {
         this.price = price;
+    }
+
+    public void updateIsFixed(boolean isFixed) {
+        this.isFixed = isFixed;
     }
 
     public boolean hasMemberName(String memberName) {

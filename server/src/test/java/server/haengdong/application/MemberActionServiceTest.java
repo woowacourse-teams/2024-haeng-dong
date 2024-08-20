@@ -146,10 +146,12 @@ class MemberActionServiceTest extends ServiceTestSupport {
         );
         BillAction billAction = new BillAction(new Action(event, 6L), "뽕족", 100_000L);
         billActionRepository.save(billAction);
-        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L);
-        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L);
-        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L, true);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L, false);
+        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L, false);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
+        List<BillActionDetail> allByBillAction = billActionDetailRepository.findAllByBillAction(billAction);
+        System.out.println("allByBillAction = " + allByBillAction.isEmpty());
 
         memberActionService.deleteMember(event.getToken(), "쿠키");
 
@@ -220,9 +222,9 @@ class MemberActionServiceTest extends ServiceTestSupport {
         );
         BillAction billAction = new BillAction(new Action(event, 6L), "뽕족", 100_000L);
         billActionRepository.save(billAction);
-        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L);
-        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L);
-        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L);
+        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L, true);
+        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L, false);
+        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L, false);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
 
         memberActionService.deleteMemberAction(event.getToken(), targetAction.getId());

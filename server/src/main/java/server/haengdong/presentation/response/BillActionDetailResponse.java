@@ -4,10 +4,15 @@ import server.haengdong.application.response.BillActionDetailAppResponse;
 
 public record BillActionDetailResponse(
         String name,
-        Long price
+        Long price,
+        boolean isFixed
 ) {
 
     public static BillActionDetailResponse of(BillActionDetailAppResponse billActionDetailAppResponse) {
-        return new BillActionDetailResponse(billActionDetailAppResponse.name(), billActionDetailAppResponse.price());
+        return new BillActionDetailResponse(
+                billActionDetailAppResponse.name(),
+                billActionDetailAppResponse.price(),
+                billActionDetailAppResponse.isFixed()
+        );
     }
 }

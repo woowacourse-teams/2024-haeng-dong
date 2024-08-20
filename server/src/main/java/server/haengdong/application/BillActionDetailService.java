@@ -27,7 +27,7 @@ public class BillActionDetailService {
         BillAction billAction = billActionRepository.findByAction_Id(actionId)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND));
         validateToken(token, billAction);
-        
+
         List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
 
         return BillActionDetailsAppResponse.of(billActionDetails);
@@ -52,6 +52,7 @@ public class BillActionDetailService {
                     .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_DETAIL_NOT_FOUND));
 
             detailToUpdate.updatePrice(updateRequest.price());
+            detailToUpdate.updateIsFixed(updateRequest.isFixed());
         }
     }
 

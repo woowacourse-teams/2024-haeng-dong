@@ -3,6 +3,7 @@ package server.haengdong.domain.action;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static server.haengdong.support.fixture.Fixture.BILL_ACTION;
 import static server.haengdong.support.fixture.Fixture.EVENT1;
 
 import java.util.List;
@@ -64,8 +65,8 @@ class BillActionTest {
         BillAction fixedBillAction = new BillAction(new Action(EVENT1, 1L), "인생네컷", 2_000L);
 
         List<BillActionDetail> unfixedBillActionDetails = List.of(
-                new BillActionDetail("감자", 1_000L),
-                new BillActionDetail("고구마", 1_000L)
+                new BillActionDetail(BILL_ACTION, "감자", 1_000L, false),
+                new BillActionDetail(BILL_ACTION, "고구마", 1_000L, false)
         );
         fixedBillAction.addDetails(unfixedBillActionDetails);
 
@@ -78,8 +79,8 @@ class BillActionTest {
         BillAction fixedBillAction = new BillAction(new Action(EVENT1, 1L), "인생네컷", 5_000L);
 
         List<BillActionDetail> unfixedBillActionDetails = List.of(
-                new BillActionDetail("감자", 4_000L),
-                new BillActionDetail("고구마", 1_000L)
+                new BillActionDetail(BILL_ACTION, "감자", 4_000L, true),
+                new BillActionDetail(BILL_ACTION, "고구마", 1_000L, true)
         );
         fixedBillAction.addDetails(unfixedBillActionDetails);
 

@@ -24,7 +24,7 @@ class BillActionDetailControllerTest extends ControllerTestSupport {
     @Test
     void findBillActionDetails() throws Exception {
         BillActionDetailsAppResponse appResponse = new BillActionDetailsAppResponse(
-                List.of(new BillActionDetailAppResponse("토다리", 1000L)));
+                List.of(new BillActionDetailAppResponse("토다리", 1000L, false)));
         given(billActionDetailService.findBillActionDetails(anyString(), anyLong()))
                 .willReturn(appResponse);
 
@@ -39,8 +39,8 @@ class BillActionDetailControllerTest extends ControllerTestSupport {
     @Test
     void updateBillActionDetailsTest() throws Exception {
         List<BillActionDetailUpdateRequest> billActionDetailUpdateRequests = List.of(
-                new BillActionDetailUpdateRequest("소하", 10000L),
-                new BillActionDetailUpdateRequest("웨디", 20000L)
+                new BillActionDetailUpdateRequest("소하", 10000L, true),
+                new BillActionDetailUpdateRequest("웨디", 20000L, true)
         );
         BillActionDetailsUpdateRequest request = new BillActionDetailsUpdateRequest(
                 billActionDetailUpdateRequests);
