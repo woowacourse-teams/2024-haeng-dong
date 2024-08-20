@@ -2,8 +2,9 @@ import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 import {css} from '@emotion/react';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
 import useSetEventNamePage from '@hooks/useSetEventNamePage';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 const SetEventNamePage = () => {
   const navigate = useNavigate();

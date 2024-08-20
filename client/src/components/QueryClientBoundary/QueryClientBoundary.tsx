@@ -1,5 +1,6 @@
-import {useAppErrorStore} from '@store/appErrorStore';
 import {MutationCache, QueryCache, QueryClient, QueryClientProvider} from '@tanstack/react-query';
+
+import {useAppErrorStore} from '@store/appErrorStore';
 
 const QueryClientBoundary = ({children}: React.PropsWithChildren) => {
   const {updateAppError} = useAppErrorStore();

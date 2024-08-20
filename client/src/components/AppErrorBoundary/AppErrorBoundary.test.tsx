@@ -1,13 +1,16 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import {act, ReactNode} from 'react';
-
-import {useAppErrorStore} from '@store/appErrorStore';
-import FetchError from '@errors/FetchError';
-import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
-import {ToastProvider} from '@hooks/useToast/ToastProvider';
-import AppErrorBoundary from './AppErrorBoundary';
 import {MemoryRouter, useNavigate} from 'react-router-dom';
 import {HDesignProvider} from 'haengdong-design';
+
+import FetchError from '@errors/FetchError';
+import {ToastProvider} from '@hooks/useToast/ToastProvider';
+
+import {useAppErrorStore} from '@store/appErrorStore';
+
+import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
+
+import AppErrorBoundary from './AppErrorBoundary';
 
 // 테스트용 헬퍼 컴포넌트
 const TestComponent = ({triggerError}: {triggerError: () => void}) => {

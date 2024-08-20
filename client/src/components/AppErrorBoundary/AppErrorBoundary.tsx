@@ -1,12 +1,15 @@
 import {ErrorBoundary} from 'react-error-boundary';
+import {useEffect} from 'react';
 
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
-import {captureError} from '@utils/captureError';
 import FetchError from '@errors/FetchError';
-import {SERVER_ERROR_MESSAGES, UNKNOWN_ERROR} from '@constants/errorMessage';
 import {useToast} from '@hooks/useToast/useToast';
+
 import {useAppErrorStore} from '@store/appErrorStore';
-import {useEffect} from 'react';
+
+import {captureError} from '@utils/captureError';
+
+import {SERVER_ERROR_MESSAGES, UNKNOWN_ERROR} from '@constants/errorMessage';
 
 export type ErrorInfo = {
   errorCode: string;
