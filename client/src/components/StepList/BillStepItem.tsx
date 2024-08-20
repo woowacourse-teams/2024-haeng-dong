@@ -7,6 +7,8 @@ import {PutAndDeleteBillActionModal} from '@components/Modal/SetActionModal/PutA
 import {MemberListInBillStep} from '@components/Modal/MemberListInBillStep';
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
+import useSetBillInput from '@hooks/useSetBillInput';
+
 interface BillStepItemProps {
   step: BillStep;
   isOpenBottomSheet: boolean;
@@ -23,6 +25,8 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
   setIsAddEditableItem,
 }) => {
   const {isAdmin} = useOutletContext<EventPageContextProps>();
+  const {handleBlurBillRequest, handleChangeBillInput} = useSetBillInput();
+
   const [clickedIndex, setClickedIndex] = useState(-1);
   const [isOpenMemberListInBillStep, setIsOpenMemberListInBillStep] = useState(false);
 
@@ -75,10 +79,22 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
           ))}
 
         {isAddEditableItem && (
-          <EditableItem backgroundColor="lightGrayContainer" onBlur={() => {}}>
-            <EditableItem.Input placeholder="지출 내역" textSize="bodyBold"></EditableItem.Input>
+          <EditableItem backgroundColor="lightGrayContainer" onBlur={handleBlurBillRequest}>
+            <EditableItem.Input
+              placeholder="지출 내역"
+              textSize="bodyBold"
+              onChange={e => handleChangeBillInput('title', e)}
+            ></EditableItem.Input>
             <Flex gap="0.25rem" alignItems="center">
-              <EditableItem.Input placeholder="0" type="number" style={{textAlign: 'right'}}></EditableItem.Input>
+              <EditableItem.Input
+                placeholder="0"
+                type="number"
+                onChange={e => {
+                  handleChangeBillInput('price', e);
+                  setIsAddEditableItem(false);
+                }}
+                style={{textAlign: 'right'}}
+              ></EditableItem.Input>
               <Text size="caption">원</Text>
             </Flex>
           </EditableItem>
