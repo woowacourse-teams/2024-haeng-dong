@@ -1,72 +1,86 @@
+import type {MemberReportInAction} from 'types/serviceType';
+
 import {useEffect, useState} from 'react';
 
 import useRequestGetMemberReportListInAction from '@hooks/queries/useRequestGetMemberReportListInAction';
-import {MemberReport} from 'types/serviceType';
 import useRequestPutMemberReportListInAction from '@hooks/queries/useRequestPutMemberReportListInAction';
 
 const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
   const {memberReportListInActionFromServer, queryResult} = useRequestGetMemberReportListInAction(actionId);
   const {putMemberReportListInAction} = useRequestPutMemberReportListInAction(actionId);
 
-  const [memberReportListInAction, setMemberReportListInAction] = useState<MemberReport[]>(
+  const [memberReportListInAction, setMemberReportListInAction] = useState<MemberReportInAction[]>(
     memberReportListInActionFromServer,
   );
 
-  // 초기에 랜더링할 때 정상적으로 서버의 값을 클라이언트 상태에 set 한다.
   useEffect(() => {
     if (queryResult.isSuccess) {
       setMemberReportListInAction(memberReportListInActionFromServer);
     }
   }, [memberReportListInActionFromServer, queryResult.isSuccess]);
 
-  // 가격이 조정된 멤버 리스트
-  // 초기값은 어떻게 알지? 누가 조정된 가격인지 어떻게 파악하지?
-  const [adjustedMemberList, setAdjustedMemberList] = useState<Set<string>>(new Set());
+  // 조정값 멤버의 수를 구하는 함수
+  const getAdjustedMemberCount = (memberReportListInAction: MemberReportInAction[]) => {
+    return memberReportListInAction.filter(member => member.isFixed === true).length;
+  };
 
-  // 조정값이 아닌 멤버의 수
-  const remainMemberCount = memberReportListInAction.length - adjustedMemberList.size;
-
-  const addAdjustedMember = (memberReport: MemberReport) => {
-    if (adjustedMemberList.size + 1 >= memberReportListInAction.length) {
+  const addAdjustedMember = (memberReport: MemberReportInAction) => {
+    if (getAdjustedMemberCount(memberReportListInAction) + 1 >= memberReportListInAction.length) {
       return;
     }
 
-    // 새 조정값을 반영하고
-    setMemberReportListInAction(prevList =>
-      prevList.map(member => (member.name === memberReport.name ? {...member, price: memberReport.price} : member)),
+    const newMemberReportListInAction = memberReportListInAction.map(member =>
+      member.name === memberReport.name ? {...member, price: memberReport.price, isFixed: true} : member,
     );
 
-    // 조정된 리스트에 추가한다.
-    setAdjustedMemberList(prev => new Set(prev.add(memberReport.name)));
+    calculateAnotherMemberPrice(newMemberReportListInAction);
   };
 
-  const calculateDividedPrice = (totalAdjustedPrice: number) => {
-    // 남은 인원이 0일 때는 초기화
-    if (remainMemberCount === 0) return totalPrice / memberReportListInAction.length;
+  const calculateDividedPrice = (remainMemberCount: number, totalAdjustedPrice: number) => {
+    // 조정되지 않은 멤버가 없거나 다 조정된 멤버라면
+    if (remainMemberCount === 0 || remainMemberCount === memberReportListInAction.length) {
+      return {
+        divided: Math.floor(totalPrice / memberReportListInAction.length),
+        remainder: (totalPrice - totalAdjustedPrice) % remainMemberCount,
+      };
+    }
 
-    return (totalPrice - totalAdjustedPrice) / remainMemberCount;
+    return {
+      divided: Math.floor((totalPrice - totalAdjustedPrice) / remainMemberCount),
+      remainder: (totalPrice - totalAdjustedPrice) % remainMemberCount,
+    };
   };
 
-  const calculateAnotherMemberPrice = () => {
+  const calculateAnotherMemberPrice = (memberReportListInAction: MemberReportInAction[]) => {
     // 총 조정치 금액
     const totalAdjustedPrice = memberReportListInAction
-      .filter(memberReport => adjustedMemberList.has(memberReport.name))
+      .filter(memberReport => memberReport.isFixed === true)
       .reduce((acc, cur) => acc + cur.price, 0);
 
-    const dividedPrice = calculateDividedPrice(totalAdjustedPrice);
+    const remainMemberCount = memberReportListInAction.length - getAdjustedMemberCount(memberReportListInAction);
+    const {divided, remainder} = calculateDividedPrice(remainMemberCount, totalAdjustedPrice);
 
-    setMemberReportListInAction(prevList =>
-      prevList.map(member => (adjustedMemberList.has(member.name) ? member : {...member, price: dividedPrice})),
+    const updatedList = memberReportListInAction.map(member =>
+      member.isFixed === true ? member : {...member, price: divided},
     );
+
+    // 나머지를 조정되지 않은 멤버 중 마지막 멤버에게 추가
+    if (remainder !== 0) {
+      const nonAdjustedMembers = updatedList.filter(member => member.isFixed === false);
+      const lastNonAdjustedMemberIndex = updatedList.findIndex(
+        member => member.name === nonAdjustedMembers[nonAdjustedMembers.length - 1].name,
+      );
+
+      if (lastNonAdjustedMemberIndex !== -1) {
+        updatedList[lastNonAdjustedMemberIndex].price += remainder;
+      }
+    }
+    setMemberReportListInAction(updatedList);
   };
 
   const onSubmit = () => {
     putMemberReportListInAction(memberReportListInAction);
   };
-
-  useEffect(() => {
-    calculateAnotherMemberPrice();
-  }, [adjustedMemberList]);
 
   return {
     memberReportListInAction,
