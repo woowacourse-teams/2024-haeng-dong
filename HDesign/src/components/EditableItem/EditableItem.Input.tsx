@@ -49,12 +49,6 @@ export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(functi
       : calculateTextWidthWithVirtualElement(htmlProps.placeholder || ' '),
   );
 
-  const handleDivClick = () => {
-    if (!readOnly) {
-      setHasFocus(true);
-    }
-  };
-
   useEffect(() => {
     if (shadowRef.current && inputRef.current) {
       // 보이지는 않지만 존재하며 value가 담겨있는 Shadow div의 크기를 기준으로 input의 너비를 설정
@@ -65,44 +59,32 @@ export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(functi
 
   return (
     <div css={inputWrapperStyle}>
-      {hasFocus && !readOnly ? (
-        <Flex flexDirection="row">
-          <div ref={shadowRef} css={editingContainerStyle}>
-            <Text size={textSize}>{value || htmlProps.placeholder}</Text>
-          </div>
-          {isFixed && <div css={isFixedIconStyle({theme})}>*</div>}
-          <div css={underlineStyle({theme, hasError, hasFocus})}>
-            <input
-              onFocus={() => setHasFocus(true)}
-              onBlur={() => setHasFocus(false)}
-              css={[
-                inputStyle({
-                  theme,
-                  textSize,
-                  width,
-                }),
-              ]}
-              ref={inputRef}
-              autoFocus
-              readOnly={readOnly}
-              disabled={readOnly}
-              {...htmlProps}
-              placeholder={htmlProps.placeholder}
-              value={value}
-            />
-          </div>
-        </Flex>
-      ) : (
-        <div onClick={handleDivClick} ref={inputRef} css={notEditingContainerStyle}>
-          <Flex flexDirection="row">
-            {isFixed && <div css={isFixedIconStyle({theme})}>*</div>}
-
-            <Text textColor={value === '' ? 'darkGray' : 'black'} css={notEditingTextStyle} size={textSize}>
-              {value || htmlProps.placeholder}
-            </Text>
-          </Flex>
+      <Flex flexDirection="row">
+        <div ref={shadowRef} css={editingContainerStyle}>
+          <Text size={textSize}>{value || htmlProps.placeholder}</Text>
         </div>
-      )}
+        {isFixed && <div css={isFixedIconStyle({theme})}>*</div>}
+        <div css={underlineStyle({theme, hasError, hasFocus})}>
+          <input
+            onFocus={() => setHasFocus(true)}
+            onBlur={() => setHasFocus(false)}
+            css={[
+              inputStyle({
+                theme,
+                textSize,
+                width,
+              }),
+            ]}
+            ref={inputRef}
+            autoFocus
+            readOnly={readOnly}
+            disabled={readOnly}
+            {...htmlProps}
+            placeholder={htmlProps.placeholder}
+            value={value}
+          />
+        </div>
+      </Flex>
     </div>
   );
 });
