@@ -1,7 +1,7 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {requestPutMemberReportListInAction} from '@apis/request/bill';
-import {MemberReport} from 'types/serviceType';
+import {MemberReportInAction} from 'types/serviceType';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
@@ -12,7 +12,7 @@ const useRequestPutMemberReportListInAction = (actionId: number) => {
   const queryClient = useQueryClient();
 
   const {mutate, ...mutationProps} = useMutation({
-    mutationFn: (members: MemberReport[]) => requestPutMemberReportListInAction({eventId, actionId, members}),
+    mutationFn: (members: MemberReportInAction[]) => requestPutMemberReportListInAction({eventId, actionId, members}),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.stepList]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReport]});

@@ -1,4 +1,4 @@
-import type {Bill, MemberReport} from 'types/serviceType';
+import type {Bill, MemberReportInAction} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
@@ -43,7 +43,7 @@ export const requestPutBillAction = async ({eventId, actionId, title, price}: Wi
   });
 };
 
-type MemberReportList = {members: MemberReport[]};
+type MemberReportList = {members: MemberReportInAction[]};
 
 export const requestGetMemberReportListInAction = async ({eventId, actionId}: WithEventId<RequestBillAction>) => {
   return requestGet<MemberReportList>({

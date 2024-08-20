@@ -7,6 +7,10 @@ export type MemberReport = {
   price: number;
 };
 
+export type MemberReportInAction = MemberReport & {
+  isFixed: boolean;
+};
+
 export type Bill = {
   title: string;
   price: number;
