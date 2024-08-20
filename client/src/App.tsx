@@ -5,8 +5,8 @@ import {Global} from '@emotion/react';
 import {ToastProvider} from '@hooks/useToast/ToastProvider';
 
 import {GlobalStyle} from './GlobalStyle';
-import AppErrorBoundary from './AppErrorBoundary';
-import QueryClientBoundary from './QueryClientBoundary';
+import AppErrorBoundary from '@components/AppErrorBoundary/AppErrorBoundary';
+import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
 
 const App: React.FC = () => {
   return (

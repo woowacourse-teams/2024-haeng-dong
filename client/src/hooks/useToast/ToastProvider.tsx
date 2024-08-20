@@ -1,9 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {createContext, useContext, useEffect, useState} from 'react';
-
-import {useError} from '@hooks/useError/useError';
-
-import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
+import {createContext, useEffect, useState} from 'react';
 
 import {ToastProps} from '../../components/Toast/Toast.type';
 import Toast from '../../components/Toast/Toast';
