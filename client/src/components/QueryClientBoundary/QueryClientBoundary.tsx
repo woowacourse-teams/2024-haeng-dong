@@ -7,6 +7,7 @@ const QueryClientBoundary = ({children}: React.PropsWithChildren) => {
     queryCache: new QueryCache({
       onError: (error: Error) => {
         updateAppError(error);
+        throw error;
       },
     }),
     mutationCache: new MutationCache({

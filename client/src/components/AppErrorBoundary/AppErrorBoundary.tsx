@@ -7,11 +7,14 @@ import {SERVER_ERROR_MESSAGES, UNKNOWN_ERROR} from '@constants/errorMessage';
 import {useToast} from '@hooks/useToast/useToast';
 import {useAppErrorStore} from '@store/appErrorStore';
 import {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
 
 export type ErrorInfo = {
   errorCode: string;
   message: string;
+};
+
+type FallbackComponentProps = {
+  error: Error;
 };
 
 const convertAppErrorToErrorInfo = (appError: Error) => {
@@ -36,7 +39,27 @@ const isUnhandledError = (errorInfo: ErrorInfo) => {
 const AppErrorBoundary = ({children}: React.PropsWithChildren) => {
   const {appError} = useAppErrorStore();
   const {showToast} = useToast();
-  const navigate = useNavigate();
+
+  const fallbackComponent = ({error}: FallbackComponentProps) => {
+    if (error) {
+      console.log(Error);
+      captureError(error instanceof FetchError ? error : new Error(UNKNOWN_ERROR));
+      const errorInfo = convertAppErrorToErrorInfo(error);
+      if (!isUnhandledError(errorInfo)) {
+        showToast({
+          showingTime: 3000,
+          message: SERVER_ERROR_MESSAGES[errorInfo.errorCode],
+          type: 'error',
+          position: 'bottom',
+          bottom: '8rem',
+        });
+      } else {
+        return <ErrorPage />;
+      }
+    }
+
+    return null;
+  };
 
   useEffect(() => {
     if (appError) {
@@ -52,12 +75,18 @@ const AppErrorBoundary = ({children}: React.PropsWithChildren) => {
           bottom: '8rem',
         });
       } else {
-        navigate('/error');
+        showToast({
+          showingTime: 3000,
+          message: SERVER_ERROR_MESSAGES.UNHANDLED,
+          type: 'error',
+          position: 'bottom',
+          bottom: '8rem',
+        });
       }
     }
   }, [appError]);
 
-  return <ErrorBoundary fallback={<ErrorPage />}>{children}</ErrorBoundary>;
+  return <ErrorBoundary FallbackComponent={fallbackComponent}>{children}</ErrorBoundary>;
 };
 
 export default AppErrorBoundary;
