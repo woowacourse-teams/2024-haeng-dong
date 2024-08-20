@@ -11,6 +11,7 @@ interface UseSetBillInputProps {
 }
 
 interface UseSetBillInputReturns {
+  billInput: Bill;
   handleChangeBillInput: (field: BillInputType, event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlurBillRequest: () => void;
 }
@@ -60,6 +61,7 @@ const useSetBillInput = ({setIsAddEditableItem}: UseSetBillInputProps): UseSetBi
   };
 
   return {
+    billInput,
     handleBlurBillRequest,
     handleChangeBillInput,
   };
