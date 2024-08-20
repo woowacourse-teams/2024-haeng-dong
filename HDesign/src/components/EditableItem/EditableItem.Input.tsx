@@ -46,7 +46,6 @@ export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(functi
               textSize,
             })}
             ref={inputRef}
-            autoFocus
             readOnly={readOnly}
             {...htmlProps}
             placeholder={htmlProps.placeholder}
