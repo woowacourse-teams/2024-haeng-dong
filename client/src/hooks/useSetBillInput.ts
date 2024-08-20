@@ -30,7 +30,6 @@ const useSetBillInput = ({setIsAddEditableItem}: UseSetBillInputProps): UseSetBi
     });
 
     if (isValid) {
-      console.log(billInput);
       setBillInput(prev => ({
         ...prev,
         [field]: value,
