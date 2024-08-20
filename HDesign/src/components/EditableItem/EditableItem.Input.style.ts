@@ -70,11 +70,6 @@ export const editingContainerStyle = css({
   margin: 0,
 });
 
-export const notEditingContainerStyle = css({
-  width: 'auto',
-  whiteSpace: 'nowrap',
-});
-
 export const isFixedIconStyle = ({theme}: WithTheme) =>
   css({
     color: theme.colors.error,
@@ -99,7 +94,3 @@ export const underlineStyle = ({theme, hasFocus, hasError}: WithTheme<UnderlineP
       transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
     },
   });
-
-export const notEditingTextStyle = css({
-  paddingBottom: '0.125rem',
-});
