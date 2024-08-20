@@ -21,10 +21,10 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
 
   // 가격이 조정된 멤버 리스트
   // 초기값은 어떻게 알지? 누가 조정된 가격인지 어떻게 파악하지?
-  const [adjustedMemberList, setAdjustedMemberList] = useState<Set<MemberReport>>(new Set());
+  const [adjustedMemberList, setAdjustedMemberList] = useState<Set<string>>(new Set());
 
-  // 조정된 금액 명단
-  const adjustedMemberNameList = [...adjustedMemberList].map(({name}) => name);
+  // 조정값이 아닌 멤버의 수
+  const remainMemberCount = memberReportListInAction.length - adjustedMemberList.size;
 
   const addAdjustedMember = (memberReport: MemberReport) => {
     if (adjustedMemberList.size + 1 >= memberReportListInAction.length) {
@@ -32,18 +32,15 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     }
 
     // 새 조정값을 반영하고
-    const newMemberReportListInAction = [...memberReportListInAction];
-    const targetIndex = newMemberReportListInAction.findIndex(member => member.name === memberReport.name);
-    newMemberReportListInAction[targetIndex].price = memberReport.price;
-    setMemberReportListInAction(newMemberReportListInAction);
+    setMemberReportListInAction(prevList =>
+      prevList.map(member => (member.name === memberReport.name ? {...member, price: memberReport.price} : member)),
+    );
 
     // 조정된 리스트에 추가한다.
-    setAdjustedMemberList(prev => new Set(prev.add(memberReport)));
+    setAdjustedMemberList(prev => new Set(prev.add(memberReport.name)));
   };
 
   const calculateDividedPrice = (totalAdjustedPrice: number) => {
-    const remainMemberCount = memberReportListInAction.length - adjustedMemberNameList.length;
-
     // 남은 인원이 0일 때는 초기화
     if (remainMemberCount === 0) return totalPrice / memberReportListInAction.length;
 
@@ -52,21 +49,15 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
 
   const calculateAnotherMemberPrice = () => {
     // 총 조정치 금액
-    const totalAdjustedPrice = [...adjustedMemberList].reduce((acc, cur) => acc + cur.price, 0);
+    const totalAdjustedPrice = memberReportListInAction
+      .filter(memberReport => adjustedMemberList.has(memberReport.name))
+      .reduce((acc, cur) => acc + cur.price, 0);
 
     const dividedPrice = calculateDividedPrice(totalAdjustedPrice);
 
-    const newMemberReportListInAction = [...memberReportListInAction];
-
-    if (totalAdjustedPrice !== 0) {
-      newMemberReportListInAction.forEach((memberReport, index) => {
-        if (!adjustedMemberNameList.includes(memberReport.name)) {
-          newMemberReportListInAction[index].price = dividedPrice;
-        }
-      });
-    }
-
-    setMemberReportListInAction(newMemberReportListInAction);
+    setMemberReportListInAction(prevList =>
+      prevList.map(member => (adjustedMemberList.has(member.name) ? member : {...member, price: dividedPrice})),
+    );
   };
 
   const onSubmit = () => {
