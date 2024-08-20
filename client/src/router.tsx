@@ -4,6 +4,7 @@ import {AdminPage} from '@pages/EventPage/AdminPage';
 import {HomePage} from '@pages/EventPage/HomePage';
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
+import Test from 'Test';
 
 import {CompleteCreateEventPage, SetEventNamePage, SetEventPasswordPage} from '@pages/CreateEventPage';
 import {MainPage} from '@pages/MainPage';
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
           {path: ROUTER_URLS.eventManage, element: <AdminPage />},
           {path: ROUTER_URLS.home, element: <HomePage />},
         ],
+      },
+      {
+        path: 'cookie-test',
+        element: <Test />,
       },
       {
         path: '*',
