@@ -1,10 +1,11 @@
-import {Logo} from '@components/Common/Logo';
-import {ROUTER_URLS} from '@constants/routerUrls';
 import {css, keyframes} from '@emotion/react';
 import {Button, Text} from 'haengdong-design';
 import {useNavigate} from 'react-router-dom';
 
+import {Logo} from '@components/Common/Logo';
 import ChevronDown from '@assets/image/chevronDownLarge.svg';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 const MainSection = () => {
   const navigate = useNavigate();

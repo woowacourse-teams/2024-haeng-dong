@@ -1,5 +1,6 @@
 import {css} from '@emotion/react';
 import {Text} from 'haengdong-design';
+
 import MemberReportMockup from '@assets/image/memberReportMockup.svg';
 
 const MemberReportSection = () => {

@@ -1,7 +1,8 @@
+import {MainLayout} from 'haengdong-design';
+
 import Nav from './Nav/Nav';
 import MainSection from './Section/MainSection';
 import DescriptionSection from './Section/DescriptionSection';
-import {MainLayout} from 'haengdong-design';
 import AddBillSection from './Section/AddBillSection';
 import AddMemberSection from './Section/AddMemberSection';
 import MemberReportSection from './Section/MemberReportSection';

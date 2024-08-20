@@ -1,9 +1,12 @@
 import {css} from '@emotion/react';
-import {logoStyle, navStyle} from './Nav.style';
-import {Logo} from '@components/Common/Logo';
 import {Button, Text} from 'haengdong-design';
 import {useNavigate} from 'react-router-dom';
+
+import {Logo} from '@components/Common/Logo';
+
 import {ROUTER_URLS} from '@constants/routerUrls';
+
+import {logoStyle, navStyle} from './Nav.style';
 
 const Nav = () => {
   const navigate = useNavigate();

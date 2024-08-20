@@ -1,7 +1,8 @@
 import {css} from '@emotion/react';
 import {Text} from 'haengdong-design';
-import AddMemberMockup from '@assets/image/addMemberMockup.svg';
 import {useTheme} from 'haengdong-design/dist/theme/HDesignProvider';
+
+import AddMemberMockup from '@assets/image/addMemberMockup.svg';
 
 const AddMemberSection = () => {
   const {theme} = useTheme();
