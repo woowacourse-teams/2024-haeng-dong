@@ -4,6 +4,9 @@ import {useEffect, useState} from 'react';
 
 import useRequestGetMemberReportListInAction from '@hooks/queries/useRequestGetMemberReportListInAction';
 import useRequestPutMemberReportListInAction from '@hooks/queries/useRequestPutMemberReportListInAction';
+import validateMemberReportInAction from '@utils/validate/validateMemberReportInAction';
+
+import useInput from '@hooks/useInput';
 
 const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
   const {memberReportListInActionFromServer, queryResult} = useRequestGetMemberReportListInAction(actionId);
@@ -12,6 +15,31 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
   const [memberReportListInAction, setMemberReportListInAction] = useState<MemberReportInAction[]>(
     memberReportListInActionFromServer,
   );
+
+  const {inputList, canSubmit, handleChange} = useInput({
+    validateFunc: validateMemberReportInAction,
+    initialInputList: memberReportListInActionFromServer.map((member, index) => ({value: String(member.price), index})),
+  });
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const {value} = event.target;
+    handleChange(index, value);
+  };
+
+  useEffect(() => {
+    inputList.forEach(input => {
+      const {index, value} = input;
+      const targetMemberReport = memberReportListInActionFromServer[index];
+
+      // 기존 값과 입력된 값이 다를 때만 addAdjustedMember 호출
+      if (targetMemberReport && Number(value) !== targetMemberReport.price) {
+        addAdjustedMember({
+          ...targetMemberReport,
+          price: Number(value),
+        });
+      }
+    });
+  }, [inputList]);
 
   useEffect(() => {
     if (queryResult.isSuccess) {
@@ -93,6 +121,8 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     memberReportListInAction,
     addAdjustedMember,
     onSubmit,
+    onChange,
+    canSubmit,
     queryResult,
   };
 };
