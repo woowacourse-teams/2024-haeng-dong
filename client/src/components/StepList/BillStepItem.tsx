@@ -25,7 +25,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
   setIsAddEditableItem,
 }) => {
   const {isAdmin} = useOutletContext<EventPageContextProps>();
-  const {handleBlurBillRequest, handleChangeBillInput} = useSetBillInput();
+  const {handleBlurBillRequest, handleChangeBillInput} = useSetBillInput({setIsAddEditableItem});
 
   const [clickedIndex, setClickedIndex] = useState(-1);
   const [isOpenMemberListInBillStep, setIsOpenMemberListInBillStep] = useState(false);
@@ -89,10 +89,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
               <EditableItem.Input
                 placeholder="0"
                 type="number"
-                onChange={e => {
-                  handleChangeBillInput('price', e);
-                  setIsAddEditableItem(false);
-                }}
+                onChange={e => handleChangeBillInput('price', e)}
                 style={{textAlign: 'right'}}
               ></EditableItem.Input>
               <Text size="caption">원</Text>

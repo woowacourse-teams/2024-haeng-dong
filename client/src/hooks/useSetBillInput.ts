@@ -6,12 +6,16 @@ import {Bill} from 'types/serviceType';
 import useRequestPostBillList from './queries/useRequestPostBillList';
 import {BillInputType, InputPair} from './useDynamicBillActionInput';
 
+interface UseSetBillInputProps {
+  setIsAddEditableItem: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 interface UseSetBillInputReturns {
   handleChangeBillInput: (field: BillInputType, event: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlurBillRequest: () => void;
 }
 
-const useSetBillInput = (): UseSetBillInputReturns => {
+const useSetBillInput = ({setIsAddEditableItem}: UseSetBillInputProps): UseSetBillInputReturns => {
   const initialInput = {title: '', price: 0};
   const [billInput, setBillInput] = useState<Bill>(initialInput);
 
@@ -41,13 +45,14 @@ const useSetBillInput = (): UseSetBillInputReturns => {
     const isEmptyPrice = Number(billInput.price);
 
     if (isEmptyTitle && isEmptyPrice) {
-      console.log('조건 충족!');
-      postBillList({billList: [billInput]}),
+      postBillList(
+        {billList: [billInput]},
         {
           onSuccess: () => {
-            console.log('post 요청 완료');
+            setIsAddEditableItem(false);
           },
-        };
+        },
+      );
     }
 
     // 하나라도 공백이 존재하면 api 요청 X
