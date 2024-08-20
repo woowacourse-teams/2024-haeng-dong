@@ -121,6 +121,28 @@ describe('useMemberReportListInActionTest', () => {
         expect(member.price).toBe(49900);
       });
     });
+
+    it('망쵸의 가격을 100원으로 바꾸고 다시 망쵸의 가격을 10,000원으로 바꾸면 나머지 인원의 가격이 30,000원으로 설정된다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReport = {name: '망쵸', price: 100};
+      const adjustedMemberMangchoAfter: MemberReport = {name: '망쵸', price: 10000};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangchoAfter);
+      });
+
+      const anotherMemberList = result.current.memberReportListInAction.filter(member => member.name !== '망쵸');
+
+      anotherMemberList.forEach(member => {
+        expect(member.price).toBe(30000);
+      });
+    });
   });
 
   describe('예외 & 엣지케이스', () => {
