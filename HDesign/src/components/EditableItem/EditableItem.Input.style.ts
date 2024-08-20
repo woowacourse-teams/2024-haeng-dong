@@ -14,9 +14,7 @@ type InputSizeStyleProps = {
   textSize: TextSize;
 };
 
-type InputBaseStyleProps = {};
-
-type InputStyleProps = InputBaseStyleProps & InputSizeStyleProps;
+type InputStyleProps = InputSizeStyleProps;
 
 export const inputWrapperStyle = css({
   display: 'inline-block',
@@ -44,7 +42,7 @@ const inputSizeStyle = ({textSize}: InputSizeStyleProps) => {
   return [style[textSize]];
 };
 
-const inputBaseStyle = ({theme}: WithTheme<InputBaseStyleProps>) =>
+const inputBaseStyle = ({theme}: WithTheme) =>
   css({
     border: 'none',
     outline: 'none',
