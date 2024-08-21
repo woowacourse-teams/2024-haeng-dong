@@ -1,18 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import {forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
+import {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
 
 import Flex from '@components/Flex/Flex';
 import Text from '@components/Text/Text';
+import IsFixedIcon from '@components/IsFixedIcon/IsFixedIcon';
 
 import {useTheme} from '@theme/HDesignProvider';
 
-import {
-  editingContainerStyle,
-  inputStyle,
-  inputWrapperStyle,
-  isFixedIconStyle,
-  underlineStyle,
-} from './EditableItem.Input.style';
+import {editingContainerStyle, inputStyle, inputWrapperStyle, underlineStyle} from './EditableItem.Input.style';
 import {InputProps} from './EditableItem.Input.type';
 import useEditableItemInput from './useEditableItemInput';
 
@@ -38,7 +33,7 @@ export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(functi
         <div ref={shadowRef} css={editingContainerStyle}>
           <Text size={textSize}>{htmlProps.value || htmlProps.placeholder}</Text>
         </div>
-        {isFixed && <div css={isFixedIconStyle({theme})}>*</div>}
+        {isFixed && <IsFixedIcon />}
         <div css={underlineStyle({theme, hasError, hasFocus})}>
           <input
             css={inputStyle({
