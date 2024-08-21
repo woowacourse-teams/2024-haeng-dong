@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
 import React, {forwardRef} from 'react';
+import Lottie from 'lottie-react';
 
 import {buttonStyle} from '@components/Button/Button.style';
 import {ButtonProps, ButtonSize} from '@components/Button/Button.type';
 
-import {useTheme} from '@theme/HDesignProvider';
-import Lottie from 'lottie-react';
-
 import loadingAnimation from '@assets/loadingAnimation.json';
+
+import {useTheme} from '@theme/HDesignProvider';
 
 const animationSize = (size: ButtonSize) => {
   switch (size) {
