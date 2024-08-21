@@ -16,6 +16,7 @@ const StepList = ({isAddEditableItem = false, setIsAddEditableItem = () => {}}: 
   const [stepList, setStepList] = useState<(MemberStep | BillStep)[]>([]);
   const existIndexInStepList = stepList.map((step, index) => ({...step, index}));
   const [hasAddedItem, setHasAddedItem] = useState(false);
+  const nextStepName = stepList.length > 0 ? String(stepList[stepList.length - 1].stepName).match(/.*(?=차)/) : '';
 
   useEffect(() => {
     if (stepListData) {
@@ -43,7 +44,7 @@ const StepList = ({isAddEditableItem = false, setIsAddEditableItem = () => {}}: 
         ...prev,
         {
           type: 'BILL',
-          stepName: '',
+          stepName: `${Number(nextStepName) + 1}차`,
           members: [],
           actions: [],
         },
