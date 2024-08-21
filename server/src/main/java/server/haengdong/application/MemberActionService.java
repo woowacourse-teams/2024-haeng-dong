@@ -9,7 +9,6 @@ import server.haengdong.application.response.CurrentMemberAppResponse;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
-import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.action.MemberAction;
@@ -28,7 +27,6 @@ public class MemberActionService {
     private final MemberActionRepository memberActionRepository;
     private final EventRepository eventRepository;
     private final ActionRepository actionRepository;
-    private final BillActionDetailRepository billActionDetailRepository;
     private final BillActionRepository billActionRepository;
 
     @Transactional
