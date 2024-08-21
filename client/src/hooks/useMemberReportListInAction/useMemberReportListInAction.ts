@@ -37,13 +37,17 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     if (totalPriceFromServer !== totalPrice) {
       reCalculatePriceByTotalPriceChange();
     }
-  }, [totalPrice, memberReportListInActionFromServer]);
+  }, [totalPrice]);
 
   useEffect(() => {
     if (queryResult.isSuccess) {
       setMemberReportListInAction(memberReportListInActionFromServer);
     }
   }, [memberReportListInActionFromServer, queryResult.isSuccess]);
+
+  const isExistAdjustedPrice = () => {
+    return memberReportListInAction.some(member => member.isFixed === true);
+  };
 
   // 조정값 멤버의 수를 구하는 함수
   const getAdjustedMemberCount = (memberReportListInAction: MemberReportInAction[]) => {
@@ -118,6 +122,7 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
   return {
     memberReportListInAction,
     addAdjustedMember,
+    isExistAdjustedPrice,
     onSubmit,
     queryResult,
   };
