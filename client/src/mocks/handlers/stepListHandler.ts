@@ -73,6 +73,7 @@ export const stepListHandler = [
             name,
             price: 0,
             sequence: 999,
+            isFixed: false,
           })),
         },
       ];
@@ -99,6 +100,7 @@ export const stepListHandler = [
             name: title,
             price,
             sequence: 999,
+            isFixed: false,
           })),
         },
       ];

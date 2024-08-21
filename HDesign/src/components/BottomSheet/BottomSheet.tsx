@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {createPortal} from 'react-dom';
-import {useEffect, useRef, useState} from 'react';
 
 import {BottomSheetProps} from '@components/BottomSheet/BottomSheet.type';
-import FixedButton from '@components/FixedButton/FixedButton';
 
 import {useTheme} from '@theme/HDesignProvider';
 

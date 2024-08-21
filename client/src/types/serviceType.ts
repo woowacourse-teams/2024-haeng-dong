@@ -7,6 +7,10 @@ export type MemberReport = {
   price: number;
 };
 
+export type MemberReportInAction = MemberReport & {
+  isFixed: boolean;
+};
+
 export type Bill = {
   title: string;
   price: number;
@@ -38,6 +42,7 @@ export type Action = {
   name: string;
   price: number | null;
   sequence: number;
+  isFixed: boolean;
 };
 
 export type BillAction = Omit<Action, 'price'> & {
@@ -66,3 +71,10 @@ export type ConvertedAction = {
   sequence: number;
   type: ActionType;
 };
+
+export type InputPair = Omit<Bill, 'price'> & {
+  price: string;
+  index: number;
+};
+
+export type BillInputType = 'title' | 'price';

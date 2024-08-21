@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Title, FixedButton, ListButton} from 'haengdong-design';
+import {Title, FixedButton, ListButton, Button} from 'haengdong-design';
 import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
@@ -11,11 +11,12 @@ import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import {EventPageContextProps} from '../EventPageLayout';
 
-import {receiptStyle, titleAndListButtonContainerStyle} from './AdminPage.style';
+import {receiptStyle, titleAndListButtonContainerStyle, buttonGroupStyle} from './AdminPage.style';
 
 const AdminPage = () => {
   const [isOpenFixedButtonBottomSheet, setIsOpenFixedButtonBottomSheet] = useState(false);
   const [isOpenAllMemberListButton, setIsOpenAllMemberListButton] = useState(false);
+  const [isAddEditableItem, setIsAddEditableItem] = useState(false);
 
   const {eventName} = useOutletContext<EventPageContextProps>();
   const {data: allMemberListData} = useRequestGetAllMemberList();
@@ -54,11 +55,24 @@ const AdminPage = () => {
         )}
       </div>
       <section css={receiptStyle}>
-        <StepList />
-        <FixedButton
-          children={allMemberList.length === 0 ? '시작인원 추가하기' : '행동 추가하기'}
-          onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)}
-        />
+        <StepList isAddEditableItem={isAddEditableItem} setIsAddEditableItem={setIsAddEditableItem} />
+        {allMemberList.length === 0 ? (
+          <FixedButton children={'시작인원 추가하기'} onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)} />
+        ) : (
+          <div css={buttonGroupStyle}>
+            <Button
+              size="medium"
+              variants="tertiary"
+              style={{width: '100%'}}
+              onClick={() => setIsOpenFixedButtonBottomSheet(prev => !prev)}
+            >
+              인원 변동 추가
+            </Button>
+            <Button size="medium" onClick={() => setIsAddEditableItem(true)} style={{width: '100%'}}>
+              지출 내역 추가
+            </Button>
+          </div>
+        )}
         {isOpenFixedButtonBottomSheet && (
           <ModalBasedOnMemberCount
             allMemberList={allMemberList}

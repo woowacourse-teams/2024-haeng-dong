@@ -7,7 +7,11 @@ export interface InputStyleProps {
   textSize?: TextSize;
 }
 
-export interface InputCustomProps {}
+export interface InputCustomProps {
+  isFixed?: boolean;
+  value: string | number;
+  readOnly?: boolean;
+}
 
 export interface InputStylePropsWithTheme extends InputStyleProps {
   theme: Theme;

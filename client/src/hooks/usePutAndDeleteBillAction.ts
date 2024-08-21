@@ -1,10 +1,8 @@
-import type {Bill} from 'types/serviceType';
+import type {Bill, BillInputType, InputPair} from 'types/serviceType';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
-
-import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
 import {ERROR_MESSAGE} from '@constants/errorMessage';
 
@@ -21,22 +19,24 @@ const usePutAndDeleteBillAction = (
   const [errorInfo, setErrorInfo] = useState<Record<string, boolean>>({title: false, price: false});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const {mutate: putBillAction} = usePutBillAction();
+  const {mutateAsync: putBillAction} = usePutBillAction();
   const {mutate: deleteBillAction} = useDeleteBillAction();
+
+  // 현재 타겟의 event.target.value를 넣어주기 위해서
+  const getFieldValue = (field: BillInputType, value: string) => {
+    if (field === 'title') {
+      return {title: value, price: Number(inputPair.price)};
+    } else {
+      return {title: inputPair.title, price: Number(value)};
+    }
+  };
+
+  // TODO: (@weadie) getFieldValue 를 리펙토링해야한다.
 
   const handleInputChange = (field: BillInputType, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
 
-    // 현재 타겟의 event.target.value를 넣어주기 위해서
-    const getFieldValue = (): Bill => {
-      if (field === 'title') {
-        return {title: value, price: Number(inputPair.price)};
-      } else {
-        return {title: inputPair.title, price: Number(value)};
-      }
-    };
-
-    const {isValid, errorMessage, errorInfo} = validateFunc(getFieldValue());
+    const {isValid, errorMessage, errorInfo} = validateFunc(getFieldValue(field, value));
 
     setErrorMessage(errorMessage);
 
@@ -50,9 +50,12 @@ const usePutAndDeleteBillAction = (
       });
       setCanSubmit(value.length !== 0);
     } else {
+      const {isValid: isValidName} = validateFunc(getFieldValue('title', inputPair.title));
+      const {isValid: isValidPrice} = validateFunc(getFieldValue('price', inputPair.price));
+
+      setCanSubmit(isValidName && isValidPrice);
       // valid하지 않으면 event.target.value 덮어쓰기
       event.target.value = inputPair[field];
-      setCanSubmit(false);
     }
 
     if (field === 'title') {
@@ -80,12 +83,13 @@ const usePutAndDeleteBillAction = (
     setErrorInfo(errorInfo ?? {title: false, price: false});
   };
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>, inputPair: InputPair, actionId: number) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>, inputPair: InputPair, actionId: number) => {
     event.preventDefault();
 
     const {title, price} = inputPair;
 
     putBillAction({actionId, title, price: Number(price)});
+
     onClose();
   };
 

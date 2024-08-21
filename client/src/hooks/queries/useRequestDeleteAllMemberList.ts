@@ -19,6 +19,7 @@ const useRequestDeleteAllMemberList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.stepList]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMemberList]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReportInAction]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReport]});
     },
   });

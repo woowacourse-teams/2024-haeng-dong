@@ -134,9 +134,13 @@ export const GlobalStyle = css`
     box-sizing: border-box;
   }
 
+  html {
+    height: 100%;
+  }
+
   body {
     max-width: 768px;
-    height: 100lvh;
+    height: 100%;
     margin: 0 auto;
 
     overflow-y: scroll;
@@ -153,5 +157,7 @@ export const GlobalStyle = css`
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    background-color: #f1f0f5;
   }
 `;

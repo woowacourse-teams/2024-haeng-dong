@@ -25,6 +25,10 @@ const meta = {
       description: '',
       control: {type: 'text'},
     },
+    isFixed: {
+      description: '컴포넌트가 고정되어 있는지 여부를 나타냅니다.',
+      control: {type: 'boolean'},
+    },
   },
   args: {
     backgroundColor: 'white',
@@ -39,3 +43,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+export const FixedItem: Story = {
+  args: {
+    isFixed: true,
+  },
+};

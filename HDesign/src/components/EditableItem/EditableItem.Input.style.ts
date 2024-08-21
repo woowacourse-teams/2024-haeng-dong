@@ -1,49 +1,29 @@
 import {css} from '@emotion/react';
 
 import {TextSize} from '@components/Text/Text.type';
-
-import {Theme} from '@theme/theme.type';
+import {WithTheme} from '@type/withTheme';
 
 import TYPOGRAPHY from '@token/typography';
 
-interface InputWrapperStyleProps {
-  theme: Theme;
+type UnderlineProps = {
   hasFocus: boolean;
   hasError: boolean;
-}
+};
 
-interface InputStyleProps {
-  theme: Theme;
+type InputSizeStyleProps = {
   textSize: TextSize;
-}
+};
 
-interface InputSizeStyleProps {
-  textSize: TextSize;
-}
+type InputStyleProps = InputSizeStyleProps;
 
-interface InputBaseStyleProps {
-  theme: Theme;
-}
+export const inputWrapperStyle = css({
+  display: 'inline-block',
+});
 
-export const inputWrapperStyle = ({theme, hasFocus, hasError}: InputWrapperStyleProps) =>
-  css({
-    position: 'relative',
-    display: 'inline-block',
-
-    '&::after': {
-      content: '""',
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      bottom: 0,
-      height: '0.125rem',
-      backgroundColor: hasFocus ? theme.colors.primary : hasError ? theme.colors.error : 'transparent',
-      transition: 'background-color 0.2s',
-      transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
-    },
-  });
-
-export const inputStyle = ({theme, textSize}: InputStyleProps) => [inputSizeStyle({textSize}), inputBaseStyle({theme})];
+export const inputStyle = ({theme, textSize}: WithTheme<InputStyleProps>) => [
+  inputSizeStyle({textSize}),
+  inputBaseStyle({theme}),
+];
 
 const inputSizeStyle = ({textSize}: InputSizeStyleProps) => {
   const style = {
@@ -62,14 +42,43 @@ const inputSizeStyle = ({textSize}: InputSizeStyleProps) => {
   return [style[textSize]];
 };
 
-const inputBaseStyle = ({theme}: InputBaseStyleProps) =>
+const inputBaseStyle = ({theme}: WithTheme) =>
   css({
     border: 'none',
     outline: 'none',
     paddingBottom: '0.125rem',
 
     color: theme.colors.black,
+
     '&:placeholder': {
-      color: theme.colors.gray,
+      color: theme.colors.darkGray,
+    },
+  });
+
+export const editingContainerStyle = css({
+  opacity: 0,
+  whiteSpace: 'pre',
+  position: 'absolute',
+  pointerEvents: 'none',
+  padding: 0,
+  margin: 0,
+});
+
+export const underlineStyle = ({theme, hasFocus, hasError}: WithTheme<UnderlineProps>) =>
+  css({
+    position: 'relative',
+    display: 'inline-block',
+
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+
+      left: 0,
+      right: 0,
+      bottom: 0,
+      height: '0.125rem',
+      backgroundColor: hasFocus ? theme.colors.primary : hasError ? theme.colors.error : 'transparent',
+      transition: 'background-color 0.2s',
+      transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
     },
   });
