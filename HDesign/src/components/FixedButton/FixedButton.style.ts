@@ -114,6 +114,13 @@ const getFixedButtonVariantsStyle = (variants: ButtonVariants, theme: Theme) => 
       }),
       getHoverAndActiveBackground(theme.colors.error),
     ],
+    loading: [
+      css({
+        backgroundColor: theme.colors.tertiary,
+        color: theme.colors.onTertiary,
+      }),
+      getHoverAndActiveBackground(theme.colors.tertiary),
+    ],
   };
 
   return style[variants];
