@@ -91,6 +91,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
               textSize="bodyBold"
               value={billInput.title}
               onChange={e => handleChangeBillInput('title', e)}
+              autoFocus
             ></EditableItem.Input>
             <Flex gap="0.25rem" alignItems="center">
               <EditableItem.Input
