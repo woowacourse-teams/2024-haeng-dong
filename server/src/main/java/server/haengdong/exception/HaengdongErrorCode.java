@@ -4,6 +4,7 @@ import lombok.Getter;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.event.Event;
+import server.haengdong.domain.event.Password;
 
 @Getter
 public enum HaengdongErrorCode {
@@ -15,7 +16,7 @@ public enum HaengdongErrorCode {
             Event.MIN_NAME_LENGTH,
             Event.MAX_NAME_LENGTH)),
     EVENT_NAME_CONSECUTIVE_SPACES("행사 이름에는 공백 문자가 연속될 수 없습니다. 입력한 이름 : %s"),
-    EVENT_PASSWORD_FORMAT_INVALID(String.format("비밀번호는 %d자리 숫자만 가능합니다.", Event.PASSWORD_LENGTH)),
+    EVENT_PASSWORD_FORMAT_INVALID(String.format("비밀번호는 %d자리 숫자만 가능합니다.", Password.PASSWORD_LENGTH)),
 
     ACTION_NOT_FOUND("존재하지 않는 액션입니다."),
 
