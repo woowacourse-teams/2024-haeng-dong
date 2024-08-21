@@ -19,7 +19,7 @@ describe('useMemberReportListInActionTest', () => {
   });
 
   const initializeProvider = (actionId: number, totalPrice: number) =>
-    renderHook(() => useMemberReportListInAction(actionId, totalPrice), {
+    renderHook(() => useMemberReportListInAction(actionId, totalPrice, () => {}), {
       wrapper: ({children}) => (
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>

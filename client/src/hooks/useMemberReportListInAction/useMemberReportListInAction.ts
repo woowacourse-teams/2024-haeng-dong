@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react';
 import useRequestGetMemberReportListInAction from '@hooks/queries/useRequestGetMemberReportListInAction';
 import useRequestPutMemberReportListInAction from '@hooks/queries/useRequestPutMemberReportListInAction';
 
-const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
+const useMemberReportListInAction = (actionId: number, totalPrice: number, onClose: () => void) => {
   const {memberReportListInActionFromServer, queryResult} = useRequestGetMemberReportListInAction(actionId);
   const {putMemberReportListInAction} = useRequestPutMemberReportListInAction(actionId);
 
@@ -122,6 +122,8 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
 
   const onSubmit = () => {
     putMemberReportListInAction(memberReportListInAction);
+
+    onClose();
   };
 
   const getIsSamePriceStateAndServerState = () => {

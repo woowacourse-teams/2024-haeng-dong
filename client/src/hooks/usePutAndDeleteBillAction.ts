@@ -19,7 +19,7 @@ const usePutAndDeleteBillAction = (
   const [errorInfo, setErrorInfo] = useState<Record<string, boolean>>({title: false, price: false});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const {mutate: putBillAction} = usePutBillAction();
+  const {mutateAsync: putBillAction} = usePutBillAction();
   const {mutate: deleteBillAction} = useDeleteBillAction();
 
   // 현재 타겟의 event.target.value를 넣어주기 위해서
@@ -83,12 +83,13 @@ const usePutAndDeleteBillAction = (
     setErrorInfo(errorInfo ?? {title: false, price: false});
   };
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>, inputPair: InputPair, actionId: number) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>, inputPair: InputPair, actionId: number) => {
     event.preventDefault();
 
     const {title, price} = inputPair;
 
     putBillAction({actionId, title, price: Number(price)});
+
     onClose();
   };
 

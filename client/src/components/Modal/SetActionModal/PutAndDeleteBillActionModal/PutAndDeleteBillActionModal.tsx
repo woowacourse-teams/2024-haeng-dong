@@ -6,6 +6,7 @@ import validatePurchase from '@utils/validate/validatePurchase';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
 import useMemberReportListInAction from '@hooks/useMemberReportListInAction/useMemberReportListInAction';
 import useMemberReportInput from '@hooks/useMemberReportListInAction/useMemberReportInput';
+import {useToast} from '@hooks/useToast/useToast';
 
 import usePutAndDeleteBillAction from '@hooks/usePutAndDeleteBillAction';
 
@@ -44,7 +45,7 @@ const PutAndDeleteBillActionModal = ({
     getIsSamePriceStateAndServerState,
     getOnlyOneNotAdjustedRemainMemberIndex,
     isExistAdjustedPrice,
-  } = useMemberReportListInAction(billAction.actionId, Number(inputPair.price));
+  } = useMemberReportListInAction(billAction.actionId, Number(inputPair.price), () => setIsBottomSheetOpened(false));
   const {
     inputList,
     onChange,
@@ -64,13 +65,17 @@ const PutAndDeleteBillActionModal = ({
     actions.find(({actionId}) => actionId === billAction.actionId),
   )[0].members;
 
+  const {showToast} = useToast();
+
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
       <form
         css={bottomSheetStyle}
-        onSubmit={event => {
-          putBillAction(event, inputPair, billAction.actionId);
-          putMemberReportListInAction();
+        onSubmit={async event => {
+          event.preventDefault();
+
+          if (canSubmit) await putBillAction(event, inputPair, billAction.actionId);
+          if (isChangedMemberReportInput) putMemberReportListInAction();
         }}
       >
         <h2 css={bottomSheetHeaderStyle}>
