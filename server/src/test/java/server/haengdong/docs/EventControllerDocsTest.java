@@ -237,6 +237,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.steps[0].type").value(equalTo("IN")))
+                .andExpect(jsonPath("$.steps[0].stepName").value(equalTo("0차")))
                 .andExpect(jsonPath("$.steps[0].members[0]").value(equalTo("망쵸")))
                 .andExpect(jsonPath("$.steps[0].actions[0].actionId").value(equalTo(1)))
                 .andExpect(jsonPath("$.steps[0].actions[0].name").value(equalTo("망쵸")))
@@ -244,6 +245,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.steps[0].actions[0].sequence").value(equalTo(1)))
 
                 .andExpect(jsonPath("$.steps[1].type").value(equalTo("BILL")))
+                .andExpect(jsonPath("$.steps[1].stepName").value(equalTo("1차")))
                 .andExpect(jsonPath("$.steps[1].members[0]").value(equalTo("망쵸")))
                 .andExpect(jsonPath("$.steps[1].actions[0].actionId").value(equalTo(2)))
                 .andExpect(jsonPath("$.steps[1].actions[0].name").value(equalTo("족발")))
@@ -256,6 +258,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
                 .andExpect(jsonPath("$.steps[1].actions[1].sequence").value(equalTo(3)))
 
                 .andExpect(jsonPath("$.steps[2].type").value(equalTo("OUT")))
+                .andExpect(jsonPath("$.steps[2].stepName").value(equalTo("1차")))
                 .andExpect(jsonPath("$.steps[2].actions[0].actionId").value(equalTo(4)))
                 .andExpect(jsonPath("$.steps[2].actions[0].name").value(equalTo("망쵸")))
                 .andExpect(jsonPath("$.steps[2].actions[0].price").value(equalTo(null)))
@@ -269,6 +272,8 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 responseFields(
+                                        fieldWithPath("steps[].stepName").type(JsonFieldType.STRING)
+                                                .description("스탭 이름"),
                                         fieldWithPath("steps[].type").type(JsonFieldType.STRING)
                                                 .description("액션 유형 [BILL, IN, OUT]"),
                                         fieldWithPath("steps[].members").type(JsonFieldType.ARRAY)
