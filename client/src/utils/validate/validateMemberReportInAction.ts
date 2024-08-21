@@ -17,21 +17,13 @@ const validateMemberReportInAction = (price: string, totalPrice: number): Valida
     return true;
   };
 
-  const validateEmpty = () => {
-    if (!price.trim().length) {
-      errorMessage = ERROR_MESSAGE.preventEmpty;
-      return false;
-    }
-    return true;
-  };
-
   const validateUnderTotalPrice = () => {
     if (numberTypePrice > totalPrice) return false;
 
     return true;
   };
 
-  if (validateOnlyNaturalNumber() && validatePrice() && validateEmpty() && validateUnderTotalPrice()) {
+  if (validateOnlyNaturalNumber() && validatePrice() && validateUnderTotalPrice()) {
     return {isValid: true, errorMessage: null};
   }
 
