@@ -7,11 +7,11 @@ import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
 import Step from './Step';
 
 interface StepListProps {
-  isAddEditableItem: boolean;
-  setIsAddEditableItem: React.Dispatch<React.SetStateAction<boolean>>;
+  isAddEditableItem?: boolean;
+  setIsAddEditableItem?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const StepList = ({isAddEditableItem, setIsAddEditableItem}: StepListProps) => {
+const StepList = ({isAddEditableItem = false, setIsAddEditableItem = () => {}}: StepListProps) => {
   const {data: stepListData} = useRequestGetStepList();
   const [stepList, setStepList] = useState<(MemberStep | BillStep)[]>([]);
   const existIndexInStepList = stepList.map((step, index) => ({...step, index}));
