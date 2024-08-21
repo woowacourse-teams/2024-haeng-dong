@@ -41,15 +41,20 @@ const PutAndDeleteBillActionModal = ({
     memberReportListInAction,
     addAdjustedMember,
     onSubmit: putMemberReportListInAction,
-  } = useMemberReportListInAction(billAction.actionId, billAction.price);
+    getIsSamePriceStateAndServerState,
+    getOnlyOneNotAdjustedRemainMemberIndex,
+  } = useMemberReportListInAction(billAction.actionId, Number(inputPair.price));
   const {
     inputList,
     onChange,
+    canEditList,
     canSubmit: isChangedMemberReportInput,
   } = useMemberReportInput({
     data: memberReportListInAction,
     addAdjustedMember,
     totalPrice: billAction.price,
+    getIsSamePriceStateAndServerState,
+    getOnlyOneNotAdjustedRemainMemberIndex,
   });
 
   const {data: stepListData = []} = useRequestGetStepList();
@@ -114,6 +119,7 @@ const PutAndDeleteBillActionModal = ({
                       value={price}
                       placeholder="0"
                       type="number"
+                      readOnly={!canEditList[index]}
                       style={{textAlign: 'right'}}
                     ></EditableItem.Input>
                     <Text size="caption">원</Text>
