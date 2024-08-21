@@ -1,8 +1,8 @@
-import type {Bill} from 'types/serviceType';
+import type {Bill, MemberReportInAction} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
-import {requestDelete, requestPostWithoutResponse, requestPut} from '@apis/fetcher';
+import {requestDelete, requestGet, requestPostWithoutResponse, requestPut} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
 type RequestPostBillList = {
@@ -19,20 +19,18 @@ export const requestPostBillList = async ({eventId, billList}: WithEventId<Reque
   });
 };
 
-type RequestDeleteBillAction = {
+type RequestBillAction = {
   actionId: number;
 };
 
-export const requestDeleteBillAction = async ({eventId, actionId}: WithEventId<RequestDeleteBillAction>) => {
+export const requestDeleteBillAction = async ({eventId, actionId}: WithEventId<RequestBillAction>) => {
   await requestDelete({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}`,
   });
 };
 
-type RequestPutBillAction = Bill & {
-  actionId: number;
-};
+type RequestPutBillAction = Bill & RequestBillAction;
 
 export const requestPutBillAction = async ({eventId, actionId, title, price}: WithEventId<RequestPutBillAction>) => {
   await requestPut({
@@ -41,6 +39,31 @@ export const requestPutBillAction = async ({eventId, actionId, title, price}: Wi
     body: {
       title,
       price,
+    },
+  });
+};
+
+type MemberReportList = {members: MemberReportInAction[]};
+
+export const requestGetMemberReportListInAction = async ({eventId, actionId}: WithEventId<RequestBillAction>) => {
+  return requestGet<MemberReportList>({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}/fixed`,
+  });
+};
+
+type RequestPutMemberReportList = RequestBillAction & MemberReportList;
+
+export const requestPutMemberReportListInAction = async ({
+  eventId,
+  actionId,
+  members,
+}: WithEventId<RequestPutMemberReportList>) => {
+  return requestPut({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}/fixed`,
+    body: {
+      members,
     },
   });
 };

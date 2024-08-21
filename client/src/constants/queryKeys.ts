@@ -4,6 +4,7 @@ const QUERY_KEYS = {
   allMemberList: 'allMemberList',
   currentInMember: 'currentInMember',
   memberReport: 'memberReport',
+  memberReportInAction: 'memberReportInAction',
 };
 
 export default QUERY_KEYS;
