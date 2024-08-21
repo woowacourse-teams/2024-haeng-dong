@@ -8,13 +8,15 @@
         "actionId": 1,
         "name": "망쵸",
         "price": null,
-        "sequence": 1
+        "sequence": 1,
+        "isFixed": false
       },
       {
         "actionId": 2,
         "name": "백호",
         "price": null,
-        "sequence": 2
+        "sequence": 2,
+        "isFixed": false
       }
     ]
   }
