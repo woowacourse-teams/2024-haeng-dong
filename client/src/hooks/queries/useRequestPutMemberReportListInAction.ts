@@ -18,6 +18,26 @@ const useRequestPutMemberReportListInAction = (actionId: number) => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReport]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReportInAction, actionId]});
     },
+    onMutate: async (newMembers: MemberReportInAction[]) => {
+      await queryClient.cancelQueries({queryKey: [QUERY_KEYS.memberReportInAction, actionId]});
+
+      const previousMembers = queryClient.getQueryData([QUERY_KEYS.memberReportInAction, actionId]);
+
+      queryClient.setQueryData([QUERY_KEYS.memberReportInAction, actionId], (oldData: any) => ({
+        ...oldData,
+        members: oldData?.members?.map((member: MemberReportInAction) => {
+          const updatedMember = newMembers.find(m => m.name === member.name);
+          return updatedMember ? {...member, ...updatedMember} : member;
+        }),
+      }));
+
+      return {previousMembers};
+    },
+    onError: (err, newMembers, context) => {
+      if (context?.previousMembers) {
+        queryClient.setQueryData([QUERY_KEYS.memberReportInAction, actionId], context.previousMembers);
+      }
+    },
   });
 
   return {
