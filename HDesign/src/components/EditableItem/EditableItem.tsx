@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import React, {useEffect} from 'react';
+import Text from '@components/Text/Text';
+import Flex from '@components/Flex/Flex';
 
 import {useTheme} from '@theme/HDesignProvider';
 
-import {editableItemStyle} from './EditableItem.style';
+import {editableItemStyle, labelTextStyle} from './EditableItem.style';
 import EditableItemInput from './EditableItem.Input';
 import {EditableItemProps} from './EditableItem.type';
 import {EditableItemProvider} from './EditableItem.context';
@@ -12,6 +13,8 @@ import useEditableItem from './useEditableItem';
 const EditableItemBase = ({
   onInputFocus,
   onInputBlur,
+  prefixLabelText,
+  suffixLabelText,
   backgroundColor = 'white',
   children,
   ...htmlProps
@@ -21,9 +24,20 @@ const EditableItemBase = ({
   useEditableItem({onInputFocus, onInputBlur});
 
   return (
-    <div css={editableItemStyle(theme, backgroundColor)} {...htmlProps}>
-      {children}
-    </div>
+    <Flex flexDirection="column">
+      <Flex justifyContent="spaceBetween" width="100%">
+        <Text size="caption" css={labelTextStyle(theme, 'prefix')}>
+          {prefixLabelText}
+        </Text>
+        <Text size="caption" css={labelTextStyle(theme, 'suffix')}>
+          {suffixLabelText}
+        </Text>
+      </Flex>
+
+      <div css={editableItemStyle(theme, backgroundColor)} {...htmlProps}>
+        {children}
+      </div>
+    </Flex>
   );
 };
 
