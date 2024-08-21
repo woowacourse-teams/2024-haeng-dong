@@ -10,6 +10,8 @@ import UnhandledErrorBoundary from '../../UnhandledErrorBoundary';
 import {ErrorInfo, ErrorProvider} from './ErrorProvider';
 import {useError} from './useError';
 
+jest.mock('lottie-react', () => () => <div>Lottie Mock</div>);
+
 describe('useError', () => {
   const initializeProvider = () =>
     renderHook(() => useError(), {
