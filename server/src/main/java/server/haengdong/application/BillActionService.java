@@ -39,12 +39,9 @@ public class BillActionService {
         CurrentMembers currentMembers = CurrentMembers.of(findMemberActions);
 
         for (BillActionAppRequest request : requests) {
-            BillAction billAction = request.toBillAction(action);
+            BillAction billAction = request.toBillAction(action, currentMembers);
             billActionRepository.save(billAction);
             action = action.next();
-            if (currentMembers.isNotEmpty()) {
-                saveBillActionDetails(billAction, currentMembers);
-            }
         }
     }
 
@@ -52,13 +49,6 @@ public class BillActionService {
         return actionRepository.findLastByEvent(event)
                 .map(Action::next)
                 .orElse(Action.createFirst(event));
-    }
-
-    private void saveBillActionDetails(BillAction billAction, CurrentMembers currentMembers) {
-        long pricePerMember = billAction.getPrice() / currentMembers.size();
-        currentMembers.getMembers().stream()
-                .map(memberName -> new BillActionDetail(billAction, memberName, pricePerMember, false))
-                .forEach(billActionDetailRepository::save);
     }
 
     @Transactional

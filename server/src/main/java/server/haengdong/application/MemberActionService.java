@@ -1,8 +1,6 @@
 package server.haengdong.application;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +9,6 @@ import server.haengdong.application.response.CurrentMemberAppResponse;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
-import server.haengdong.domain.action.BillActionDetail;
 import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.CurrentMembers;
@@ -100,37 +97,6 @@ public class MemberActionService {
                 billAction.getSequence());
         CurrentMembers currentMembers = CurrentMembers.of(memberActions);
 
-        billActionDetailRepository.deleteAllByBillAction(billAction);
-
-        if (currentMembers.isNotEmpty()) {
-            Long price = billAction.getPrice();
-            int currentMemberCount = currentMembers.size();
-            long eachPrice = price / currentMemberCount;
-            long remainder = price % currentMemberCount;
-            List<BillActionDetail> billActionDetails = getBillActionDetails(
-                    billAction,
-                    currentMembers,
-                    eachPrice,
-                    remainder
-            );
-            billActionDetailRepository.saveAll(billActionDetails);
-        }
-    }
-
-    private List<BillActionDetail> getBillActionDetails(
-            BillAction billAction,
-            CurrentMembers currentMembers,
-            long eachPrice,
-            long remainder
-    ) {
-        List<String> members = currentMembers.getMembers().stream().toList();
-        List<BillActionDetail> billActionDetails = IntStream.range(0, members.size() - 1)
-                .mapToObj(index -> new BillActionDetail(billAction, members.get(index), eachPrice, false))
-                .collect(Collectors.toList());
-        BillActionDetail lastBillActionDetail = new BillActionDetail(billAction, members.get(members.size() - 1),
-                eachPrice + remainder, false);
-        billActionDetails.add(lastBillActionDetail);
-
-        return billActionDetails;
+        billAction.calculateTmp(currentMembers);
     }
 }

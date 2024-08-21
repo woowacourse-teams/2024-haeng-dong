@@ -11,6 +11,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,6 +59,12 @@ public class BillAction implements Comparable<BillAction> {
         this.price = price;
     }
 
+    public static BillAction create(Action action, String title, Long price, CurrentMembers currentMembers) {
+        BillAction billAction = new BillAction(null, action, title, price);
+        billAction.calculateTmp(currentMembers);
+        return billAction;
+    }
+
     private void validateTitle(String title) {
         int titleLength = title.trim().length();
         if (titleLength < MIN_TITLE_LENGTH || titleLength > MAX_TITLE_LENGTH) {
@@ -75,6 +83,36 @@ public class BillAction implements Comparable<BillAction> {
         validatePrice(price);
         this.title = title;
         this.price = price;
+    }
+
+    public void calculateTmp(CurrentMembers currentMembers) {
+        this.billActionDetails.clear();
+        if (currentMembers.isNotEmpty()) {
+            int currentMemberCount = currentMembers.size();
+            long eachPrice = price / currentMemberCount;
+            long remainder = price % currentMemberCount;
+            this.billActionDetails.addAll(getBillActionDetails(
+                    currentMembers,
+                    eachPrice,
+                    remainder
+            ));
+        }
+    }
+
+    private List<BillActionDetail> getBillActionDetails(
+            CurrentMembers currentMembers,
+            long eachPrice,
+            long remainder
+    ) {
+        List<String> members = currentMembers.getMembers().stream().toList();
+        List<BillActionDetail> billActionDetails = IntStream.range(0, members.size() - 1)
+                .mapToObj(index -> new BillActionDetail(this, members.get(index), eachPrice, false))
+                .collect(Collectors.toList());
+        BillActionDetail lastBillActionDetail = new BillActionDetail(this, members.get(members.size() - 1),
+                eachPrice + remainder, false);
+        billActionDetails.add(lastBillActionDetail);
+
+        return billActionDetails;
     }
 
     public boolean isSamePrice(Long price) {
