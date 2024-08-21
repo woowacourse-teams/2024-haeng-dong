@@ -59,6 +59,8 @@ export default [
       'import/parsers': {
         '@typescript-eslint/parser': ['.ts', '.tsx'],
       },
+
+      'import/ignore': ['lottie-react'],
     },
 
     rules: {
