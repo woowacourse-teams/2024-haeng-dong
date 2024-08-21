@@ -34,7 +34,6 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
   const [clickedIndex, setClickedIndex] = useState(-1);
   const [isOpenMemberListInBillStep, setIsOpenMemberListInBillStep] = useState(false);
 
-  const stepName = `차`;
   const totalPrice = step.actions && step.type === 'BILL' ? step.actions.reduce((acc, cur) => acc + cur.price, 0) : 0;
 
   const handleDragHandleItemClick = (index: number) => {
@@ -55,12 +54,13 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
     <>
       <DragHandleItemContainer
         id={`${index}`}
-        topLeftText={stepName}
+        topLeftText={step.stepName}
         topRightText={`${step.members.length}명`}
         bottomLeftText="총액"
         bottomRightText={`${totalPrice.toLocaleString('ko-kr')} 원`}
         backgroundColor="white"
-        onTopRightTextClick={handleTopRightTextClick}
+        // TODO: (@soha) 백엔드의 요청으로 인해 인원수 click시 BottomSheet가 띄워지지 않도록 주석처리
+        // onTopRightTextClick={handleTopRightTextClick}
       >
         {step.actions &&
           step.type === 'BILL' &&
@@ -107,7 +107,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
       </DragHandleItemContainer>
       {isOpenMemberListInBillStep && (
         <MemberListInBillStep
-          stepName={stepName}
+          stepName={step.stepName}
           memberList={memberList}
           isOpenBottomSheet={isOpenMemberListInBillStep}
           setIsOpenBottomSheet={setIsOpenMemberListInBillStep}
