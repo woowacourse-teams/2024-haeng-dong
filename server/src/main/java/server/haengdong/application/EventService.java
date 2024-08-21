@@ -153,7 +153,7 @@ public class EventService {
 
     public void validatePassword(EventLoginAppRequest request) throws HaengdongException {
         Event event = getEvent(request.token());
-        if (event.isNotSamePassword(request.password())) {
+        if (event.isPasswordMismatch(request.password())) {
             throw new AuthenticationException(HaengdongErrorCode.PASSWORD_INVALID);
         }
     }

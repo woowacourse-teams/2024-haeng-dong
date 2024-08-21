@@ -1,11 +1,12 @@
 package server.haengdong.domain.event;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,7 @@ public class Event {
 
     public static final int MIN_NAME_LENGTH = 1;
     public static final int MAX_NAME_LENGTH = 20;
-    public static final int PASSWORD_LENGTH = 4;
     private static final String SPACES = "  ";
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile(String.format("^\\d{%d}$", PASSWORD_LENGTH));
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,15 +28,16 @@ public class Event {
 
     private String name;
 
-    private String password;
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "password"))
+    private Password password;
 
     private String token;
 
     public Event(String name, String password, String token) {
         validateName(name);
-        validatePassword(password);
         this.name = name;
-        this.password = password;
+        this.password = new Password(password);
         this.token = token;
     }
 
@@ -56,13 +56,6 @@ public class Event {
         }
     }
 
-    private void validatePassword(String password) {
-        Matcher matcher = PASSWORD_PATTERN.matcher(password);
-        if (!matcher.matches()) {
-            throw new HaengdongException(HaengdongErrorCode.EVENT_PASSWORD_FORMAT_INVALID, "비밀번호는 4자리 숫자만 가능합니다.");
-        }
-    }
-
     private boolean isBlankContinuous(String name) {
         return name.contains(SPACES);
     }
@@ -71,7 +64,7 @@ public class Event {
         return !this.token.equals(token);
     }
 
-    public boolean isNotSamePassword(String password) {
-        return !this.password.equals(password);
+    public boolean isPasswordMismatch(String rawPassword) {
+        return !password.matches(rawPassword);
     }
 }

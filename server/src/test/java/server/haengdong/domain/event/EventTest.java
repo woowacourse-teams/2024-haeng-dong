@@ -1,8 +1,10 @@
 package server.haengdong.domain.event;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import server.haengdong.exception.HaengdongException;
@@ -41,5 +43,23 @@ class EventTest {
     void validatePassword(String password) {
         assertThatCode(() -> new Event("이름", password, "TEST_TOKEN"))
                 .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("비밀번호가 다른지 검증한다.")
+    @Test
+    void isNotSamePassword() {
+        String rawPassword = "1234";
+        Event event = new Event("이름", rawPassword, "TEST_TOKEN");
+
+        assertThat(event.isPasswordMismatch(rawPassword)).isFalse();
+    }
+
+    @DisplayName("비밀번호가 다른지 검증한다.")
+    @Test
+    void isNotSamePassword1() {
+        String rawPassword = "1234";
+        Event event = new Event("이름", "5678", "TEST_TOKEN");
+
+        assertThat(event.isPasswordMismatch(rawPassword)).isTrue();
     }
 }
