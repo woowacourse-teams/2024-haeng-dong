@@ -48,6 +48,7 @@ const useSetBillInput = ({setIsAddEditableItem}: UseSetBillInputProps): UseSetBi
         {billList: [billInput]},
         {
           onSuccess: () => {
+            setBillInput(initialInput);
             setIsAddEditableItem(false);
           },
         },
