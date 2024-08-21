@@ -34,10 +34,10 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
   useEffect(() => {
     const totalPriceFromServer = memberReportListInActionFromServer.reduce((acc, cur) => acc + cur.price, 0);
 
-    if (totalPriceFromServer !== totalPrice) {
+    if (totalPriceFromServer !== totalPrice && totalPriceFromServer !== 0) {
       reCalculatePriceByTotalPriceChange();
     }
-  }, [totalPrice]);
+  }, [totalPrice, memberReportListInActionFromServer]);
 
   useEffect(() => {
     if (queryResult.isSuccess) {
