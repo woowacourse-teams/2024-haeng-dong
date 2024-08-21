@@ -67,11 +67,14 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
           step.actions.map((action, index) => (
             <Fragment key={action.actionId}>
               <DragHandleItem
-                hasDragHandler={isAdmin}
+                // TODO: (@todari) dnd 없으므로 false
+                // hasDragHandler={isAdmin}
+                hasDragHandler={false}
                 prefix={action.name}
                 suffix={`${action.price.toLocaleString('ko-kr')} 원`}
                 backgroundColor="lightGrayContainer"
                 onClick={() => handleDragHandleItemClick(index)}
+                isFixed={action.isFixed}
               />
 
               {isOpenBottomSheet && clickedIndex === index && isAdmin && (
