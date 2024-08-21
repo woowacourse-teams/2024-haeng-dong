@@ -64,12 +64,6 @@ export const editingContainerStyle = css({
   margin: 0,
 });
 
-export const isFixedIconStyle = ({theme}: WithTheme) =>
-  css({
-    color: theme.colors.error,
-    paddingRight: '0.25rem',
-  });
-
 export const underlineStyle = ({theme, hasFocus, hasError}: WithTheme<UnderlineProps>) =>
   css({
     position: 'relative',
