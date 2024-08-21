@@ -43,6 +43,7 @@ const PutAndDeleteBillActionModal = ({
     onSubmit: putMemberReportListInAction,
     getIsSamePriceStateAndServerState,
     getOnlyOneNotAdjustedRemainMemberIndex,
+    isExistAdjustedPrice,
   } = useMemberReportListInAction(billAction.actionId, Number(inputPair.price));
   const {
     inputList,
@@ -92,6 +93,7 @@ const PutAndDeleteBillActionModal = ({
                 type="number"
                 value={inputPair.price}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleInputChange('price', event)}
+                isFixed={isExistAdjustedPrice()}
               />
               <Text size="caption">원</Text>
             </Flex>
@@ -109,7 +111,7 @@ const PutAndDeleteBillActionModal = ({
                     value={name}
                     placeholder="참여자 명"
                     textSize="smallBodyBold"
-                    readOnly
+                    disabled
                   ></EditableItem.Input>
                   <Flex gap="0.25rem" alignItems="center">
                     <EditableItem.Input
