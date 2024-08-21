@@ -24,7 +24,7 @@ export const DragHandleItemContainer: React.FC<DragHandleItemContainerProps> = (
 
   return (
     <div css={containerStyle(theme, backgroundColor)} {...htmlProps}>
-      <Flex justifyContent="spaceBetween" paddingInline="0.5rem">
+      <Flex justifyContent="spaceBetween" paddingInline="1rem">
         <Text textColor="gray" size="captionBold" onClick={onTopLeftTextClick}>
           {topLeftText}
         </Text>
@@ -33,7 +33,7 @@ export const DragHandleItemContainer: React.FC<DragHandleItemContainerProps> = (
         </Text>
       </Flex>
       {children}
-      <Flex justifyContent="spaceBetween" paddingInline="0.5rem">
+      <Flex justifyContent="spaceBetween" paddingInline="1rem">
         <Text textColor="gray" size="captionBold" onClick={onBottomLeftTextClick}>
           {bottomLeftText}
         </Text>
