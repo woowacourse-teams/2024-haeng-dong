@@ -128,12 +128,29 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     putMemberReportListInAction(memberReportListInAction);
   };
 
+  const getIsSamePriceStateAndServerState = () => {
+    const serverStatePriceList = memberReportListInActionFromServer.map(({price}) => price);
+    const clientStatePriceList = memberReportListInAction.map(({price}) => price);
+
+    let isSame = true;
+
+    // isArrayEqual을 사용하지 않은 이유는 정렬이 영향을 받으면 안 되기 때문입니다
+    for (let i = 0; i < serverStatePriceList.length; i++) {
+      if (serverStatePriceList[i] !== clientStatePriceList[i]) {
+        isSame = false;
+      }
+    }
+
+    return isSame;
+  };
+
   return {
     memberReportListInAction,
     addAdjustedMember,
     isExistAdjustedPrice,
     onSubmit,
     getOnlyOneNotAdjustedRemainMemberIndex,
+    getIsSamePriceStateAndServerState,
     queryResult,
   };
 };
