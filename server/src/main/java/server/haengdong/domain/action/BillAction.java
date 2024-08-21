@@ -101,7 +101,7 @@ public class BillAction implements Comparable<BillAction> {
         long remainder = price % memberCount;
 
         List<Long> results = Stream.generate(() -> eachPrice)
-                .limit(memberCount)
+                .limit(memberCount - 1)
                 .collect(Collectors.toList());
         results.add(eachPrice + remainder);
         return results;
