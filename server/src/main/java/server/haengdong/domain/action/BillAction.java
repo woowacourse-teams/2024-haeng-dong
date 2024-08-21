@@ -10,9 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -75,42 +76,35 @@ public class BillAction implements Comparable<BillAction> {
 
     public void resetBillActionDetails(CurrentMembers currentMembers) {
         this.billActionDetails.clear();
-        if (currentMembers.isNotEmpty()) {
-            int currentMemberCount = currentMembers.size();
-            long eachPrice = price / currentMemberCount;
-            long remainder = price % currentMemberCount;
-            this.billActionDetails.addAll(createBillActionDetails(
-                    currentMembers,
-                    eachPrice,
-                    remainder
-            ));
+        Iterator<Long> priceIterator = distributePrice(currentMembers.size()).iterator();
+
+        for (String member : currentMembers.getMembers()) {
+            BillActionDetail billActionDetail = new BillActionDetail(this, member, priceIterator.next(), false);
+            this.billActionDetails.add(billActionDetail);
         }
     }
 
     private void resetBillActionDetails() {
-        int memberCount = billActionDetails.size();
-        if (memberCount != 0) {
-            long eachPrice = price / memberCount;
-            long remainder = price % memberCount;
-            updateBillActionDetails(eachPrice, remainder);
-        }
+        Iterator<Long> priceIterator = distributePrice(billActionDetails.size()).iterator();
+
+        billActionDetails.forEach(billActionDetail -> {
+            billActionDetail.updatePrice(priceIterator.next());
+            billActionDetail.updateIsFixed(false);
+        });
     }
 
-    private List<BillActionDetail> createBillActionDetails(
-            CurrentMembers currentMembers,
-            long eachPrice,
-            long remainder
-    ) {
-        List<String> members = currentMembers.getMembers().stream().toList();
-        List<BillActionDetail> billActionDetails = IntStream.range(0, members.size() - 1)
-                .mapToObj(index -> new BillActionDetail(this, members.get(index), eachPrice, false))
-                .collect(Collectors.toList());
-        BillActionDetail lastBillActionDetail = new BillActionDetail(this, members.get(members.size() - 1),
-                eachPrice + remainder, false
-        );
-        billActionDetails.add(lastBillActionDetail);
+    private List<Long> distributePrice(int memberCount) {
+        if (memberCount == 0) {
+            return new ArrayList<>();
+        }
+        long eachPrice = price / memberCount;
+        long remainder = price % memberCount;
 
-        return billActionDetails;
+        List<Long> results = Stream.generate(() -> eachPrice)
+                .limit(memberCount)
+                .collect(Collectors.toList());
+        results.add(eachPrice + remainder);
+        return results;
     }
 
     public void update(String title, Long price) {
@@ -121,18 +115,22 @@ public class BillAction implements Comparable<BillAction> {
         resetBillActionDetails();
     }
 
-    private void updateBillActionDetails(long eachPrice, long remainder) {
-        IntStream.range(0, billActionDetails.size() - 1)
-                .forEach(index -> {
-                            BillActionDetail billActionDetail = billActionDetails.get(index);
-                            billActionDetail.updatePrice(eachPrice);
-                            billActionDetail.updateIsFixed(false);
-                        }
-                );
+    public void addDetails(List<BillActionDetail> billActionDetails) {
+        billActionDetails.forEach(this::addDetail);
+    }
 
-        BillActionDetail lastBillActionDetail = billActionDetails.get(billActionDetails.size() - 1);
-        lastBillActionDetail.updatePrice(eachPrice + remainder);
-        lastBillActionDetail.updateIsFixed(false);
+    private void addDetail(BillActionDetail billActionDetail) {
+        this.billActionDetails.add(billActionDetail);
+        billActionDetail.setBillAction(this);
+    }
+
+    public boolean isFixed() {
+        return billActionDetails.stream()
+                .anyMatch(BillActionDetail::isFixed);
+    }
+
+    public boolean isSamePrice(Long price) {
+        return this.price.equals(price);
     }
 
     public Long findPriceByMemberName(String memberName) {
@@ -141,26 +139,6 @@ public class BillAction implements Comparable<BillAction> {
                 .map(BillActionDetail::getPrice)
                 .findFirst()
                 .orElse(DEFAULT_PRICE);
-    }
-
-    public boolean isSamePrice(Long price) {
-        return this.price.equals(price);
-    }
-
-    public boolean isFixed() {
-        return billActionDetails.stream()
-                       .map(BillActionDetail::getPrice)
-                       .distinct()
-                       .count() != 1L;
-    }
-
-    public void addDetails(List<BillActionDetail> billActionDetails) {
-        billActionDetails.forEach(this::addDetail);
-    }
-
-    private void addDetail(BillActionDetail billActionDetail) {
-        this.billActionDetails.add(billActionDetail);
-        billActionDetail.setBillAction(this);
     }
 
     public Long getSequence() {
