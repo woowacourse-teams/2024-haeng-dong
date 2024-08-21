@@ -53,7 +53,7 @@ const PutAndDeleteBillActionModal = ({
   } = useMemberReportInput({
     data: memberReportListInAction,
     addAdjustedMember,
-    totalPrice: billAction.price,
+    totalPrice: Number(inputPair.price),
     getIsSamePriceStateAndServerState,
     getOnlyOneNotAdjustedRemainMemberIndex,
   });
