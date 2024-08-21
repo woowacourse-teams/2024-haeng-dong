@@ -83,12 +83,13 @@ const usePutAndDeleteBillAction = (
     setErrorInfo(errorInfo ?? {title: false, price: false});
   };
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>, inputPair: InputPair, actionId: number) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>, inputPair: InputPair, actionId: number) => {
     event.preventDefault();
 
     const {title, price} = inputPair;
 
-    await putBillAction({actionId, title, price: Number(price)});
+    putBillAction({actionId, title, price: Number(price)});
+
     onClose();
   };
 
