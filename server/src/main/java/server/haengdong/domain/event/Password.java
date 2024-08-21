@@ -20,15 +20,6 @@ public class Password {
     public static final int PASSWORD_LENGTH = 4;
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(String.format("^\\d{%d}$", PASSWORD_LENGTH));
     private static final String HASH_ALGORITHM = "SHA-256";
-    private static final MessageDigest DIGEST;
-
-    static {
-        try {
-            DIGEST = MessageDigest.getInstance(HASH_ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException("해시 알고리즘이 존재하지 않습니다.");
-        }
-    }
 
     private String value;
 
@@ -45,8 +36,13 @@ public class Password {
     }
 
     private String encode(String rawPassword) {
-        byte[] hashedPassword = DIGEST.digest(rawPassword.getBytes());
-        return Base64.getEncoder().encodeToString(hashedPassword);
+        try {
+            MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+            byte[] hashedPassword = digest.digest(rawPassword.getBytes());
+            return Base64.getEncoder().encodeToString(hashedPassword);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException("해시 알고리즘이 존재하지 않습니다.");
+        }
     }
 
     public boolean matches(String rawPassword) {
