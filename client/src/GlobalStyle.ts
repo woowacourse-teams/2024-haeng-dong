@@ -134,6 +134,10 @@ export const GlobalStyle = css`
     box-sizing: border-box;
   }
 
+  html {
+    height: 100%;
+  }
+
   body {
     max-width: 768px;
     height: 100%;
