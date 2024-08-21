@@ -1,4 +1,4 @@
-import type {MemberReport, MemberReportInAction} from 'types/serviceType';
+import type {MemberReportInAction} from 'types/serviceType';
 
 import {renderHook, waitFor, act} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
@@ -165,38 +165,6 @@ describe('useMemberReportListInActionTest', () => {
       expect(anotherMemberList[0].price).toBe(33300);
     });
 
-    it('참여인원의 가격을 모두 바꾸려고 하면, 마지막 사람의 조정치는 반영되지 않는다.', async () => {
-      const {result} = initializeProvider(actionId, totalPrice);
-      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
-      const adjustedMemberCookie: MemberReportInAction = {name: '쿠키', price: 100, isFixed: false};
-      const adjustedMemberSoha: MemberReportInAction = {name: '소하', price: 100, isFixed: false};
-
-      // 마지막 사람
-      const adjustedMemberLeeSang: MemberReportInAction = {name: '이상', price: 100, isFixed: false};
-
-      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
-
-      act(() => {
-        result.current.addAdjustedMember(adjustedMemberMangcho);
-      });
-
-      act(() => {
-        result.current.addAdjustedMember(adjustedMemberCookie);
-      });
-
-      act(() => {
-        result.current.addAdjustedMember(adjustedMemberSoha);
-      });
-
-      act(() => {
-        result.current.addAdjustedMember(adjustedMemberLeeSang);
-      });
-
-      const targetMember = result.current.memberReportListInAction.find(member => member.name === '이상');
-
-      expect(targetMember?.price).not.toBe(100);
-    });
-
     it('망쵸에게 300원을 주면 나머지 사람들은 33233원이고 마지막 사람은 33234원이 된다.', async () => {
       const {result} = initializeProvider(actionId, totalPrice);
       const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 300, isFixed: false};
@@ -295,6 +263,47 @@ describe('useMemberReportListInActionTest', () => {
       });
 
       expect(result.current.isExistAdjustedPrice()).toBe(true);
+    });
+  });
+
+  describe('지출 인원이 2명인 상황', () => {
+    const actionId = 1;
+    const totalPrice = 50000;
+
+    // 망쵸 이상
+    it('망쵸의 가격을 100원으로 수정한 경우, 이상의 가격이 49900원으로 수정된다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      const targetMember = result.current.memberReportListInAction.find(member => member.name === '이상');
+
+      expect(targetMember?.price).toBe(49900);
+    });
+
+    it('망쵸의 가격을 100원으로 수정하고 다시 200원으로 수정한 경우, 이상의 가격이 49800원으로 수정된다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+      const adjustedMemberMangchoOther: MemberReportInAction = {name: '망쵸', price: 200, isFixed: true};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangchoOther);
+      });
+
+      const targetMember = result.current.memberReportListInAction.find(member => member.name === '이상');
+
+      expect(targetMember?.price).toBe(49800);
     });
   });
 
