@@ -6,6 +6,7 @@ import validatePurchase from '@utils/validate/validatePurchase';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
 import useMemberReportListInAction from '@hooks/useMemberReportListInAction/useMemberReportListInAction';
 import useMemberReportInput from '@hooks/useMemberReportListInAction/useMemberReportInput';
+import {useToast} from '@hooks/useToast/useToast';
 
 import usePutAndDeleteBillAction from '@hooks/usePutAndDeleteBillAction';
 
@@ -64,13 +65,33 @@ const PutAndDeleteBillActionModal = ({
     actions.find(({actionId}) => actionId === billAction.actionId),
   )[0].members;
 
+  const {showToast} = useToast();
+
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
       <form
         css={bottomSheetStyle}
-        onSubmit={event => {
-          putBillAction(event, inputPair, billAction.actionId);
-          putMemberReportListInAction();
+        // TODO: (@weadie) 페이탈 오류라 그냥 하드코딩했습니다.
+        onSubmit={async event => {
+          event.preventDefault();
+          try {
+            const onSuccessCallBack = isChangedMemberReportInput ? putMemberReportListInAction : () => {};
+            if (canSubmit) {
+              putBillAction(event, inputPair, billAction.actionId, onSuccessCallBack);
+            }
+          } catch (error) {
+            showToast({
+              isClickToClose: true,
+              showingTime: 3000,
+              message: '요청에 실패했습니다.',
+              type: 'error',
+              position: 'top',
+              top: '30px',
+              style: {
+                zIndex: 9000,
+              },
+            });
+          }
         }}
       >
         <h2 css={bottomSheetHeaderStyle}>

@@ -83,13 +83,19 @@ const usePutAndDeleteBillAction = (
     setErrorInfo(errorInfo ?? {title: false, price: false});
   };
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>, inputPair: InputPair, actionId: number) => {
+  // TODO: (@weadie) 페이탈 오류라 any쓰고 빨리 해결하겠습니다.
+  const onSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+    inputPair: InputPair,
+    actionId: number,
+    onSuccessCallback: any,
+  ) => {
     event.preventDefault();
 
     const {title, price} = inputPair;
 
-    putBillAction({actionId, title, price: Number(price)});
     onClose();
+    putBillAction({actionId, title, price: Number(price), onSuccessCallback});
   };
 
   const onDelete = async (actionId: number) => {
