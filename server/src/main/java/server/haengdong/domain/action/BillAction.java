@@ -87,6 +87,15 @@ public class BillAction implements Comparable<BillAction> {
         }
     }
 
+    private void resetBillActionDetails() {
+        int memberCount = billActionDetails.size();
+        if (memberCount != 0) {
+            long eachPrice = price / memberCount;
+            long remainder = price % memberCount;
+            updateBillActionDetails(eachPrice, remainder);
+        }
+    }
+
     private List<BillActionDetail> createBillActionDetails(
             CurrentMembers currentMembers,
             long eachPrice,
@@ -109,16 +118,7 @@ public class BillAction implements Comparable<BillAction> {
         validatePrice(price);
         this.title = title.trim();
         this.price = price;
-        resetBillActionDetail();
-    }
-
-    private void resetBillActionDetail() {
-        int memberCount = billActionDetails.size();
-        if (memberCount != 0) {
-            long eachPrice = price / memberCount;
-            long remainder = price % memberCount;
-            updateBillActionDetails(eachPrice, remainder);
-        }
+        resetBillActionDetails();
     }
 
     private void updateBillActionDetails(long eachPrice, long remainder) {
