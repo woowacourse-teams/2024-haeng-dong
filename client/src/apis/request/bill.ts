@@ -43,7 +43,7 @@ export const requestPutBillAction = async ({eventId, actionId, title, price}: Wi
   });
 };
 
-type MemberReportList = {members: MemberReportInAction[]};
+export type MemberReportList = {members: MemberReportInAction[]};
 
 export const requestGetMemberReportListInAction = async ({eventId, actionId}: WithEventId<RequestBillAction>) => {
   return requestGet<MemberReportList>({

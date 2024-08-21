@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-import {requestPutMemberReportListInAction} from '@apis/request/bill';
+import {MemberReportList, requestPutMemberReportListInAction} from '@apis/request/bill';
 import {MemberReportInAction} from 'types/serviceType';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
@@ -23,9 +23,9 @@ const useRequestPutMemberReportListInAction = (actionId: number) => {
 
       const previousMembers = queryClient.getQueryData([QUERY_KEYS.memberReportInAction, actionId]);
 
-      queryClient.setQueryData([QUERY_KEYS.memberReportInAction, actionId], (oldData: any) => ({
+      queryClient.setQueryData([QUERY_KEYS.memberReportInAction, actionId], (oldData: MemberReportList) => ({
         ...oldData,
-        members: oldData?.members?.map((member: MemberReportInAction) => {
+        members: oldData.members.map((member: MemberReportInAction) => {
           const updatedMember = newMembers.find(m => m.name === member.name);
           return updatedMember ? {...member, ...updatedMember} : member;
         }),
