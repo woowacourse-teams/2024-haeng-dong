@@ -1,0 +1,12 @@
+logs
+*.log
+npm-debug.log*
+
+node_modules
+dist
+
+.env
+
+storybook-static
+*storybook.log
+.DS_Store
