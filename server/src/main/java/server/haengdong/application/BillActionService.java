@@ -9,8 +9,6 @@ import server.haengdong.application.request.BillActionUpdateAppRequest;
 import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
-import server.haengdong.domain.action.BillActionDetail;
-import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.action.MemberAction;
@@ -26,7 +24,6 @@ import server.haengdong.exception.HaengdongException;
 public class BillActionService {
 
     private final BillActionRepository billActionRepository;
-    private final BillActionDetailRepository billActionDetailRepository;
     private final MemberActionRepository memberActionRepository;
     private final ActionRepository actionRepository;
     private final EventRepository eventRepository;
@@ -58,24 +55,7 @@ public class BillActionService {
 
         validateToken(token, billAction);
 
-        resetBillActionDetail(billAction, request.price());
-
         billAction.update(request.title(), request.price());
-    }
-
-    private void resetBillActionDetail(BillAction billAction, Long updatePrice) {
-        if (!billAction.getPrice().equals(updatePrice)) {
-            List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
-            int memberCount = billActionDetails.size();
-            if (memberCount != 0) {
-                Long eachPrice = updatePrice / memberCount;
-                billActionDetails.forEach(billActionDetail -> {
-                            billActionDetail.updatePrice(eachPrice);
-                            billActionDetail.updateIsFixed(false);
-                        }
-                );
-            }
-        }
     }
 
     private void validateToken(String token, BillAction billAction) {
@@ -85,17 +65,16 @@ public class BillActionService {
         }
     }
 
-    private Event getEvent(String eventToken) {
-        return eventRepository.findByToken(eventToken)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
-    }
-
     @Transactional
     public void deleteBillAction(String token, Long actionId) {
         Event event = eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
 
-        billActionDetailRepository.deleteByBillAction_Action_EventAndBillAction_ActionId(event, actionId);
         billActionRepository.deleteByAction_EventAndActionId(event, actionId);
+    }
+
+    private Event getEvent(String eventToken) {
+        return eventRepository.findByToken(eventToken)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
     }
 }

@@ -97,6 +97,6 @@ public class MemberActionService {
                 billAction.getSequence());
         CurrentMembers currentMembers = CurrentMembers.of(memberActions);
 
-        billAction.calculateTmp(currentMembers);
+        billAction.resetBillActionDetails(currentMembers);
     }
 }
