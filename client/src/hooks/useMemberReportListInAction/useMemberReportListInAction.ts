@@ -13,6 +13,32 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     memberReportListInActionFromServer,
   );
 
+  // isFixed를 모두 풀고 계산값으로 모두 처리하는 기능
+  const reCalculatePriceByTotalPriceChange = () => {
+    const {divided, remainder} = calculateDividedPrice(memberReportListInAction.length, 0);
+
+    const resetMemberReportList = [...memberReportListInAction];
+    resetMemberReportList.forEach((member, index) => {
+      if (index !== resetMemberReportList.length - 1) {
+        member.price = divided;
+      } else {
+        member.price = divided + remainder;
+      }
+      member.isFixed = false;
+    });
+
+    setMemberReportListInAction(resetMemberReportList);
+  };
+
+  // 총 금액이 변동됐을 때 (서버에서 온 값과 다를 때) 재계산 실행
+  useEffect(() => {
+    const totalPriceFromServer = memberReportListInActionFromServer.reduce((acc, cur) => acc + cur.price, 0);
+
+    if (totalPriceFromServer !== totalPrice) {
+      reCalculatePriceByTotalPriceChange();
+    }
+  }, [totalPrice, memberReportListInActionFromServer]);
+
   useEffect(() => {
     if (queryResult.isSuccess) {
       setMemberReportListInAction(memberReportListInActionFromServer);
