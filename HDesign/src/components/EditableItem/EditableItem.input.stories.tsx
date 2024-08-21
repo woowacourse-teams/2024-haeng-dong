@@ -26,6 +26,7 @@ const meta = {
     textSize: 'body',
     hasError: false,
     autoFocus: true,
+    value: '값',
   },
 } satisfies Meta<typeof EditableItemInput>;
 
