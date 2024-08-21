@@ -96,7 +96,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
               <EditableItem.Input
                 placeholder="0"
                 type="number"
-                value={billInput.price}
+                value={billInput.price || ''}
                 onChange={e => handleChangeBillInput('price', e)}
                 style={{textAlign: 'right'}}
               ></EditableItem.Input>
