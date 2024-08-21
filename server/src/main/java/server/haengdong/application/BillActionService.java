@@ -74,12 +74,13 @@ public class BillActionService {
     }
 
     private void resetBillActionDetail(BillAction billAction, Long updatePrice) {
-        if (billAction.getPrice() != updatePrice) {
+        if (billAction.getPrice().equals(updatePrice)) {
             List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
             int memberCount = billActionDetails.size();
             if (memberCount != 0) {
                 Long eachPrice = updatePrice / memberCount;
                 billActionDetails.forEach(billActionDetail -> billActionDetail.updatePrice(eachPrice));
+                billActionDetails.forEach(billActionDetail -> billActionDetail.updateIsFixed(false));
             }
         }
     }
