@@ -27,6 +27,7 @@ const InMember = ({dynamicProps}: InMemberProps) => {
       onBlur={() => deleteEmptyInputElementOnBlur()}
       onKeyDown={e => focusNextInputOnEnter(e, index)}
       placeholder="이름"
+      autoFocus={inputList.length === 1 && index === 0}
     />
   ));
 };
