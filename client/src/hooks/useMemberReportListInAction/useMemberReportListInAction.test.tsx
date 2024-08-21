@@ -275,6 +275,27 @@ describe('useMemberReportListInActionTest', () => {
       const targetMemberReset = result.current.memberReportListInAction.find(member => member.name === '망쵸');
       expect(targetMemberReset?.isFixed).toBe(false);
     });
+
+    it('아무도 조정된 값이 없다면 조정값이 있는지 확인 결과 false다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      expect(result.current.isExistAdjustedPrice()).toBe(false);
+    });
+
+    it('망쵸의 가격을 100원으로 바꾼 후 리스트 중 조정값이 있는지 확인 결과 true다.', async () => {
+      const {result} = initializeProvider(actionId, totalPrice);
+      const adjustedMemberMangcho: MemberReportInAction = {name: '망쵸', price: 100, isFixed: false};
+
+      await waitFor(() => expect(result.current.queryResult.isSuccess).toBe(true));
+
+      act(() => {
+        result.current.addAdjustedMember(adjustedMemberMangcho);
+      });
+
+      expect(result.current.isExistAdjustedPrice()).toBe(true);
+    });
   });
 
   // last

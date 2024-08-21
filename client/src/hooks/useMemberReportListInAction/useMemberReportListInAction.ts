@@ -13,11 +13,50 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     memberReportListInActionFromServer,
   );
 
+  // isFixed를 모두 풀고 계산값으로 모두 처리하는 기능
+  const reCalculatePriceByTotalPriceChange = () => {
+    const {divided, remainder} = calculateDividedPrice(memberReportListInAction.length, 0);
+
+    const resetMemberReportList = [...memberReportListInAction];
+    resetMemberReportList.forEach((member, index) => {
+      if (index !== resetMemberReportList.length - 1) {
+        member.price = divided;
+      } else {
+        member.price = divided + remainder;
+      }
+      member.isFixed = false;
+    });
+
+    setMemberReportListInAction(resetMemberReportList);
+  };
+
+  // 총 금액이 변동됐을 때 (서버에서 온 값과 다를 때) 재계산 실행
+  useEffect(() => {
+    const totalPriceFromServer = memberReportListInActionFromServer.reduce((acc, cur) => acc + cur.price, 0);
+
+    if (totalPriceFromServer !== totalPrice) {
+      reCalculatePriceByTotalPriceChange();
+    }
+  }, [totalPrice]);
+
   useEffect(() => {
     if (queryResult.isSuccess) {
       setMemberReportListInAction(memberReportListInActionFromServer);
     }
   }, [memberReportListInActionFromServer, queryResult.isSuccess]);
+
+  const isExistAdjustedPrice = () => {
+    return memberReportListInAction.some(member => member.isFixed === true);
+  };
+
+  // 조정되지 않은 인원이 단 1명인 경우의 index
+  const getOnlyOneNotAdjustedRemainMemberIndex = (): number | null => {
+    const adjustedPriceCount = getAdjustedMemberCount(memberReportListInAction);
+
+    if (adjustedPriceCount < memberReportListInAction.length - 1) return null;
+
+    return memberReportListInAction.findIndex(member => member.isFixed === false);
+  };
 
   // 조정값 멤버의 수를 구하는 함수
   const getAdjustedMemberCount = (memberReportListInAction: MemberReportInAction[]) => {
@@ -89,10 +128,29 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     putMemberReportListInAction(memberReportListInAction);
   };
 
+  const getIsSamePriceStateAndServerState = () => {
+    const serverStatePriceList = memberReportListInActionFromServer.map(({price}) => price);
+    const clientStatePriceList = memberReportListInAction.map(({price}) => price);
+
+    let isSame = true;
+
+    // isArrayEqual을 사용하지 않은 이유는 정렬이 영향을 받으면 안 되기 때문입니다
+    for (let i = 0; i < serverStatePriceList.length; i++) {
+      if (serverStatePriceList[i] !== clientStatePriceList[i]) {
+        isSame = false;
+      }
+    }
+
+    return isSame;
+  };
+
   return {
     memberReportListInAction,
     addAdjustedMember,
+    isExistAdjustedPrice,
     onSubmit,
+    getOnlyOneNotAdjustedRemainMemberIndex,
+    getIsSamePriceStateAndServerState,
     queryResult,
   };
 };
