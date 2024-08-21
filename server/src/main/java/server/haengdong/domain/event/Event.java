@@ -65,7 +65,6 @@ public class Event {
     }
 
     public boolean isPasswordMismatch(String rawPassword) {
-        Password password = new Password(rawPassword);
-        return !this.password.equals(password);
+        return !password.matches(rawPassword);
     }
 }
