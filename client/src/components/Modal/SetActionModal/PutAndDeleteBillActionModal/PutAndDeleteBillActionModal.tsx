@@ -42,7 +42,11 @@ const PutAndDeleteBillActionModal = ({
     addAdjustedMember,
     onSubmit: putMemberReportListInAction,
   } = useMemberReportListInAction(billAction.actionId, billAction.price);
-  const {inputList, onChange} = useMemberReportInput({
+  const {
+    inputList,
+    onChange,
+    canSubmit: isChangedMemberReportInput,
+  } = useMemberReportInput({
     data: memberReportListInAction,
     addAdjustedMember,
     totalPrice: billAction.price,
@@ -122,7 +126,7 @@ const PutAndDeleteBillActionModal = ({
         <FixedButton
           type="submit"
           variants="primary"
-          disabled={!canSubmit}
+          disabled={!(canSubmit || isChangedMemberReportInput)}
           onDeleteClick={() => onDelete(billAction.actionId)}
         >
           수정 완료
