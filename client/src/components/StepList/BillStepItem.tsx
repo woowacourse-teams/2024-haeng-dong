@@ -59,7 +59,8 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
         bottomLeftText="총액"
         bottomRightText={`${totalPrice.toLocaleString('ko-kr')} 원`}
         backgroundColor="white"
-        onTopRightTextClick={handleTopRightTextClick}
+        // TODO: (@soha) 백엔드의 요청으로 인해 인원수 click시 BottomSheet가 띄워지지 않도록 주석처리
+        // onTopRightTextClick={handleTopRightTextClick}
       >
         {step.actions &&
           step.type === 'BILL' &&
