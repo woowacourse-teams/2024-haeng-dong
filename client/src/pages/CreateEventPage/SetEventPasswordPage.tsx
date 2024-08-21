@@ -9,7 +9,7 @@ const SetEventPasswordPage = () => {
   const {submitPassword, errorMessage, password, handleChange, canSubmit} = useSetEventPasswordPage();
 
   return (
-    <MainLayout>
+    <MainLayout backgroundColor="white">
       <TopNav>
         <Back />
       </TopNav>

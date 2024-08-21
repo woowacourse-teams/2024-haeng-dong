@@ -21,7 +21,7 @@ const CompleteCreateEventPage = () => {
   const homePageUrl = getEventPageUrlByEnvironment(eventId ?? '', 'home');
 
   return (
-    <MainLayout>
+    <MainLayout backgroundColor="white">
       <TopNav />
       <Title
         title="행사 개시"
