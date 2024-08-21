@@ -64,19 +64,11 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
   };
 
   const addAdjustedMember = (memberReport: MemberReportInAction) => {
-    if (getAdjustedMemberCount(memberReportListInAction) + 1 >= memberReportListInAction.length) {
-      const newMemberReportListInAction = memberReportListInAction.map(member =>
-        member.name === memberReport.name ? {...member, price: memberReport.price} : member,
-      );
+    const newMemberReportListInAction = memberReportListInAction.map(member =>
+      member.name === memberReport.name ? {...member, price: memberReport.price, isFixed: true} : member,
+    );
 
-      calculateAnotherMemberPrice(newMemberReportListInAction);
-    } else {
-      const newMemberReportListInAction = memberReportListInAction.map(member =>
-        member.name === memberReport.name ? {...member, price: memberReport.price, isFixed: true} : member,
-      );
-
-      calculateAnotherMemberPrice(newMemberReportListInAction);
-    }
+    calculateAnotherMemberPrice(newMemberReportListInAction);
   };
 
   const calculateDividedPrice = (remainMemberCount: number, totalAdjustedPrice: number) => {
