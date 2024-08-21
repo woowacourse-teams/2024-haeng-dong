@@ -136,6 +136,7 @@ export const GlobalStyle = css`
 
   html {
     height: 100%;
+    background-color: #f1f0f5;
   }
 
   body {
