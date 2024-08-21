@@ -53,7 +53,7 @@ const PutAndDeleteBillActionModal = ({
   } = useMemberReportInput({
     data: memberReportListInAction,
     addAdjustedMember,
-    totalPrice: billAction.price,
+    totalPrice: Number(inputPair.price),
     getIsSamePriceStateAndServerState,
     getOnlyOneNotAdjustedRemainMemberIndex,
   });
@@ -68,9 +68,9 @@ const PutAndDeleteBillActionModal = ({
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
       <form
         css={bottomSheetStyle}
-        onSubmit={event => {
-          putBillAction(event, inputPair, billAction.actionId);
-          putMemberReportListInAction();
+        onSubmit={async event => {
+          if (canSubmit) await putBillAction(event, inputPair, billAction.actionId);
+          if (isChangedMemberReportInput) putMemberReportListInAction();
         }}
       >
         <h2 css={bottomSheetHeaderStyle}>

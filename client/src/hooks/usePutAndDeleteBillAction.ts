@@ -19,7 +19,7 @@ const usePutAndDeleteBillAction = (
   const [errorInfo, setErrorInfo] = useState<Record<string, boolean>>({title: false, price: false});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const {mutate: putBillAction} = usePutBillAction();
+  const {mutateAsync: putBillAction} = usePutBillAction();
   const {mutate: deleteBillAction} = useDeleteBillAction();
 
   // 현재 타겟의 event.target.value를 넣어주기 위해서
@@ -88,7 +88,7 @@ const usePutAndDeleteBillAction = (
 
     const {title, price} = inputPair;
 
-    putBillAction({actionId, title, price: Number(price)});
+    await putBillAction({actionId, title, price: Number(price)});
     onClose();
   };
 
