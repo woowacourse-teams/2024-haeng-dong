@@ -1,10 +1,9 @@
-import REGEXP from '@constants/regExp';
 import {ERROR_MESSAGE} from '@constants/errorMessage';
 import RULE from '@constants/rule';
 
 import {ValidateResult} from './type';
 
-const validateMemberReportInAction = (price: string): ValidateResult => {
+const validateMemberReportInAction = (price: string, totalPrice: number): ValidateResult => {
   let errorMessage = null;
   const numberTypePrice = Number(price);
 
@@ -26,7 +25,13 @@ const validateMemberReportInAction = (price: string): ValidateResult => {
     return true;
   };
 
-  if (validateOnlyNaturalNumber() && validatePrice() && validateEmpty()) {
+  const validateUnderTotalPrice = () => {
+    if (numberTypePrice > totalPrice) return false;
+
+    return true;
+  };
+
+  if (validateOnlyNaturalNumber() && validatePrice() && validateEmpty() && validateUnderTotalPrice()) {
     return {isValid: true, errorMessage: null};
   }
 
