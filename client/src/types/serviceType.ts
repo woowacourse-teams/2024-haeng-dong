@@ -71,3 +71,10 @@ export type ConvertedAction = {
   sequence: number;
   type: ActionType;
 };
+
+export type InputPair = Omit<Bill, 'price'> & {
+  price: string;
+  index: number;
+};
+
+export type BillInputType = 'title' | 'price';
