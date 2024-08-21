@@ -1,6 +1,6 @@
 import type {Bill} from 'types/serviceType';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
 
@@ -24,19 +24,21 @@ const usePutAndDeleteBillAction = (
   const {mutate: putBillAction} = usePutBillAction();
   const {mutate: deleteBillAction} = useDeleteBillAction();
 
+  // 현재 타겟의 event.target.value를 넣어주기 위해서
+  const getFieldValue = (field: BillInputType, value: string) => {
+    if (field === 'title') {
+      return {title: value, price: Number(inputPair.price)};
+    } else {
+      return {title: inputPair.title, price: Number(value)};
+    }
+  };
+
+  // TODO: (@weadie) getFieldValue 를 리펙토링해야한다.
+
   const handleInputChange = (field: BillInputType, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
 
-    // 현재 타겟의 event.target.value를 넣어주기 위해서
-    const getFieldValue = (): Bill => {
-      if (field === 'title') {
-        return {title: value, price: Number(inputPair.price)};
-      } else {
-        return {title: inputPair.title, price: Number(value)};
-      }
-    };
-
-    const {isValid, errorMessage, errorInfo} = validateFunc(getFieldValue());
+    const {isValid, errorMessage, errorInfo} = validateFunc(getFieldValue(field, value));
 
     setErrorMessage(errorMessage);
 
@@ -50,9 +52,12 @@ const usePutAndDeleteBillAction = (
       });
       setCanSubmit(value.length !== 0);
     } else {
+      const {isValid: isValidName} = validateFunc(getFieldValue('title', inputPair.title));
+      const {isValid: isValidPrice} = validateFunc(getFieldValue('price', inputPair.price));
+
+      setCanSubmit(isValidName && isValidPrice);
       // valid하지 않으면 event.target.value 덮어쓰기
       event.target.value = inputPair[field];
-      setCanSubmit(false);
     }
 
     if (field === 'title') {
