@@ -36,15 +36,15 @@ const router = createBrowserRouter([
         element: <CompleteCreateEventPage />,
       },
       {
-        path: ROUTER_URLS.eventLogin,
-        element: <EventLoginPage />,
-      },
-      {
         path: ROUTER_URLS.event,
         element: <EventPage />,
         children: [
           {path: ROUTER_URLS.eventManage, element: <AdminPage />},
           {path: ROUTER_URLS.home, element: <HomePage />},
+          {
+            path: ROUTER_URLS.eventLogin,
+            element: <EventLoginPage />,
+          },
         ],
       },
       {

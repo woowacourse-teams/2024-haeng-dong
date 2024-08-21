@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 
 const PATH_TABLE: Record<string, string> = {
@@ -21,6 +21,11 @@ const useNavSwitch = () => {
   const lastPath = pathArray[pathArray.length - 1];
 
   const [nav, setNav] = useState(PATH_DISPLAY_TABLE[lastPath]);
+
+  useEffect(() => {
+    const isLogin = lastPath === 'login';
+    setNav(isLogin ? '관리' : PATH_DISPLAY_TABLE[lastPath]);
+  }, [location]);
 
   const onChange = (displayName: string) => {
     setNav(displayName);
