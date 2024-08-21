@@ -85,7 +85,15 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
           ))}
 
         {isAddEditableItem && isLastBillItem && (
-          <EditableItem backgroundColor="lightGrayContainer" onBlur={handleBlurBillRequest}>
+          <EditableItem
+            backgroundColor="lightGrayContainer"
+            onBlur={handleBlurBillRequest}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                handleBlurBillRequest();
+              }
+            }}
+          >
             <EditableItem.Input
               placeholder="지출 내역"
               textSize="bodyBold"
