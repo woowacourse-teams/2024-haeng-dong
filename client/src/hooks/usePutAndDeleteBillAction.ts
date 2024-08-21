@@ -1,10 +1,8 @@
-import type {Bill} from 'types/serviceType';
+import type {Bill, BillInputType, InputPair} from 'types/serviceType';
 
 import {useEffect, useState} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
-
-import {BillInputType, InputPair} from '@hooks/useDynamicBillActionInput';
 
 import {ERROR_MESSAGE} from '@constants/errorMessage';
 

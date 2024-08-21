@@ -1,10 +1,9 @@
 import {useState} from 'react';
 
 import validatePurchase from '@utils/validate/validatePurchase';
-import {Bill} from 'types/serviceType';
+import {Bill, BillInputType} from 'types/serviceType';
 
 import useRequestPostBillList from './queries/useRequestPostBillList';
-import {BillInputType, InputPair} from './useDynamicBillActionInput';
 
 interface UseSetBillInputProps {
   setIsAddEditableItem: React.Dispatch<React.SetStateAction<boolean>>;
