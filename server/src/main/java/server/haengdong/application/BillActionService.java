@@ -79,8 +79,11 @@ public class BillActionService {
             int memberCount = billActionDetails.size();
             if (memberCount != 0) {
                 Long eachPrice = updatePrice / memberCount;
-                billActionDetails.forEach(billActionDetail -> billActionDetail.updatePrice(eachPrice));
-                billActionDetails.forEach(billActionDetail -> billActionDetail.updateIsFixed(false));
+                billActionDetails.forEach(billActionDetail -> {
+                            billActionDetail.updatePrice(eachPrice);
+                            billActionDetail.updateIsFixed(false);
+                        }
+                );
             }
         }
     }
