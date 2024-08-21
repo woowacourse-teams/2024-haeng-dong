@@ -35,6 +35,9 @@ const StepList = ({isAddEditableItem, setIsAddEditableItem}: StepListProps) => {
   }, [existIndexInStepList]);
 
   useEffect(() => {
+    // 최초로 빈 stepList가 생성되고 난 후, 다시 hasAddedItem을 false로 변환하기 위한 조건문
+    if (hasAddedItem) setHasAddedItem(prev => !prev);
+
     if (isAddEditableItem && lastBillItemIndex !== lastItemIndex && !hasAddedItem) {
       setStepList(prev => [
         ...prev,
@@ -45,9 +48,9 @@ const StepList = ({isAddEditableItem, setIsAddEditableItem}: StepListProps) => {
           actions: [],
         },
       ]);
-      setHasAddedItem(true);
+      setHasAddedItem(prev => !prev);
     }
-  }, [isAddEditableItem, lastBillItemIndex, lastItemIndex, hasAddedItem]);
+  }, [isAddEditableItem, lastBillItemIndex, lastItemIndex, hasAddedItem, existIndexInStepList, stepListData]);
 
   return (
     <Flex flexDirection="column" gap="0.5rem" paddingInline="0.5rem">

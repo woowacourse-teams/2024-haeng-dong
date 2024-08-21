@@ -9,18 +9,21 @@ interface StepProps {
   step: BillStep | MemberStep;
   isAddEditableItem: boolean;
   lastBillItemIndex: number;
-  setIsAddEditableItem: React.Dispatch<React.SetStateAction<boolean>>;
+  lastItemIndex: number;
   index: number;
+  setIsAddEditableItem: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Step = ({step, isAddEditableItem, lastBillItemIndex, setIsAddEditableItem, index}: StepProps) => {
+const Step = ({step, isAddEditableItem, lastBillItemIndex, lastItemIndex, setIsAddEditableItem, index}: StepProps) => {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState<boolean>(false);
   const [isLastBillItem, setIsLastBillItem] = useState<boolean>(false);
 
   useEffect(() => {
-    if (index === lastBillItemIndex) {
+    if (index === lastBillItemIndex && lastBillItemIndex === lastItemIndex) {
       // index를 사용하여 마지막 BillStep인지 확인
       setIsLastBillItem(true);
+    } else {
+      setIsLastBillItem(false);
     }
   }, [index, lastBillItemIndex]);
 
