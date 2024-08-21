@@ -16,7 +16,7 @@ const useRequestPutMemberReportListInAction = (actionId: number) => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.stepList]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReport]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.memberReportInAction, actionId]});
+      queryClient.removeQueries({queryKey: [QUERY_KEYS.memberReportInAction, actionId]});
     },
     onMutate: async (newMembers: MemberReportInAction[]) => {
       await queryClient.cancelQueries({queryKey: [QUERY_KEYS.memberReportInAction, actionId]});
