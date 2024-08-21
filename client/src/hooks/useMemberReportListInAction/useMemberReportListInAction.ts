@@ -49,6 +49,15 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     return memberReportListInAction.some(member => member.isFixed === true);
   };
 
+  // 조정되지 않은 인원이 단 1명인 경우의 index
+  const getOnlyOneNotAdjustedRemainMemberIndex = (): number | null => {
+    const adjustedPriceCount = getAdjustedMemberCount(memberReportListInAction);
+
+    if (adjustedPriceCount < memberReportListInAction.length - 1) return null;
+
+    return memberReportListInAction.findIndex(member => member.isFixed === false);
+  };
+
   // 조정값 멤버의 수를 구하는 함수
   const getAdjustedMemberCount = (memberReportListInAction: MemberReportInAction[]) => {
     return memberReportListInAction.filter(member => member.isFixed === true).length;
@@ -124,6 +133,7 @@ const useMemberReportListInAction = (actionId: number, totalPrice: number) => {
     addAdjustedMember,
     isExistAdjustedPrice,
     onSubmit,
+    getOnlyOneNotAdjustedRemainMemberIndex,
     queryResult,
   };
 };
