@@ -1,7 +1,4 @@
 import {css} from '@emotion/react';
-import {useTheme} from 'haengdong-design/dist/theme/HDesignProvider';
-
-interface NavStyleProps {}
 
 export const navStyle = css({
   position: 'fixed',
