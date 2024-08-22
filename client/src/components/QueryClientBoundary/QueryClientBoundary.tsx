@@ -4,6 +4,7 @@ import {useAppErrorStore} from '@store/appErrorStore';
 
 const QueryClientBoundary = ({children}: React.PropsWithChildren) => {
   const {updateAppError} = useAppErrorStore();
+
   const queryClient = new QueryClient({
     queryCache: new QueryCache({
       onError: (error: Error) => {
@@ -16,6 +17,7 @@ const QueryClientBoundary = ({children}: React.PropsWithChildren) => {
       },
     }),
   });
+
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
 
