@@ -23,14 +23,12 @@ const MemberStepItem: React.FC<MemberStepItemProps> = ({step, isOpenBottomSheet,
         prefix={`${step.actions.map(({name}) => name).join(', ')} ${step.type === 'IN' ? '들어옴' : '나감'}`}
         onClick={() => setIsOpenBottomSheet(prev => !prev)}
       />
-      {isOpenBottomSheet && isAdmin && (
-        <DeleteMemberActionModal
-          memberActionType={step.type}
-          memberActionList={step.actions}
-          isBottomSheetOpened={isOpenBottomSheet}
-          setIsBottomSheetOpened={setIsOpenBottomSheet}
-        />
-      )}
+      <DeleteMemberActionModal
+        memberActionType={step.type}
+        memberActionList={step.actions}
+        isBottomSheetOpened={isOpenBottomSheet && isAdmin}
+        setIsBottomSheetOpened={setIsOpenBottomSheet}
+      />
     </>
   );
 };
