@@ -117,14 +117,12 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
           </EditableItem>
         )}
       </DragHandleItemContainer>
-      {isOpenMemberListInBillStep && (
-        <MemberListInBillStep
-          stepName={step.stepName}
-          memberList={memberList}
-          isOpenBottomSheet={isOpenMemberListInBillStep}
-          setIsOpenBottomSheet={setIsOpenMemberListInBillStep}
-        />
-      )}
+      <MemberListInBillStep
+        stepName={step.stepName}
+        memberList={memberList}
+        isOpenBottomSheet={isOpenMemberListInBillStep}
+        setIsOpenBottomSheet={setIsOpenMemberListInBillStep}
+      />
     </>
   );
 };

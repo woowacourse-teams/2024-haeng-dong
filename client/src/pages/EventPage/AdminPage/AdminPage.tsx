@@ -3,7 +3,7 @@ import {Title, FixedButton, ListButton, Button} from 'haengdong-design';
 import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
-import {ModalBasedOnMemberCount} from '@components/Modal/index';
+import {ModalBasedOnMemberCount, SetAllMemberListModal} from '@components/Modal/index';
 import useRequestGetAllMemberList from '@hooks/queries/useRequestGetAllMemberList';
 import useRequestPostAuthenticate from '@hooks/queries/useRequestPostAuthentication';
 
@@ -73,15 +73,13 @@ const AdminPage = () => {
             </Button>
           </div>
         )}
-        {isOpenFixedButtonBottomSheet && (
-          <ModalBasedOnMemberCount
-            allMemberList={allMemberList}
-            setIsOpenBottomSheet={setIsOpenFixedButtonBottomSheet}
-            isOpenBottomSheet={isOpenFixedButtonBottomSheet}
-            isOpenAllMemberListButton={isOpenAllMemberListButton}
-            setIsOpenAllMemberListButton={setIsOpenAllMemberListButton}
-          />
-        )}
+        <ModalBasedOnMemberCount
+          allMemberList={allMemberList}
+          setIsOpenBottomSheet={setIsOpenFixedButtonBottomSheet}
+          isOpenBottomSheet={isOpenFixedButtonBottomSheet}
+          isOpenAllMemberListButton={isOpenAllMemberListButton}
+          setIsOpenAllMemberListButton={setIsOpenAllMemberListButton}
+        />
       </section>
     </>
   );
