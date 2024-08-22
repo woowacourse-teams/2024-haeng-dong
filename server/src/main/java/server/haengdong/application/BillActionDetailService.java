@@ -9,7 +9,6 @@ import server.haengdong.application.request.BillActionDetailsUpdateAppRequest;
 import server.haengdong.application.response.BillActionDetailsAppResponse;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionDetail;
-import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -20,7 +19,6 @@ import server.haengdong.exception.HaengdongException;
 @Service
 public class BillActionDetailService {
 
-    private final BillActionDetailRepository billActionDetailRepository;
     private final BillActionRepository billActionRepository;
 
     public BillActionDetailsAppResponse findBillActionDetails(String token, Long actionId) {
@@ -28,8 +26,7 @@ public class BillActionDetailService {
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND));
         validateToken(token, billAction);
 
-        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
-
+        List<BillActionDetail> billActionDetails = billAction.getBillActionDetails();
         return BillActionDetailsAppResponse.of(billActionDetails);
     }
 
@@ -43,7 +40,7 @@ public class BillActionDetailService {
         validateToken(token, billAction);
         validateTotalPrice(billActionDetailUpdateAppRequests, billAction);
 
-        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
+        List<BillActionDetail> billActionDetails = billAction.getBillActionDetails();
 
         for (BillActionDetailUpdateAppRequest updateRequest : billActionDetailUpdateAppRequests) {
             BillActionDetail detailToUpdate = billActionDetails.stream()

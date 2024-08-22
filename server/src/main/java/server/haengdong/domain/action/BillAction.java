@@ -10,7 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,13 +48,8 @@ public class BillAction implements Comparable<BillAction> {
     private List<BillActionDetail> billActionDetails = new ArrayList<>();
 
     public BillAction(Action action, String title, Long price) {
-        this(null, action, title, price);
-    }
-
-    private BillAction(Long id, Action action, String title, Long price) {
         validateTitle(title);
         validatePrice(price);
-        this.id = id;
         this.action = action;
         this.title = title.trim();
         this.price = price;
@@ -70,23 +68,69 @@ public class BillAction implements Comparable<BillAction> {
         }
     }
 
+    public static BillAction create(Action action, String title, Long price, CurrentMembers currentMembers) {
+        BillAction billAction = new BillAction(action, title, price);
+        billAction.resetBillActionDetails(currentMembers);
+        return billAction;
+    }
+
+    public void resetBillActionDetails(CurrentMembers currentMembers) {
+        this.billActionDetails.clear();
+        Iterator<Long> priceIterator = distributePrice(currentMembers.size()).iterator();
+
+        for (String member : currentMembers.getMembers()) {
+            BillActionDetail billActionDetail = new BillActionDetail(this, member, priceIterator.next(), false);
+            this.billActionDetails.add(billActionDetail);
+        }
+    }
+
+    private void resetBillActionDetails() {
+        Iterator<Long> priceIterator = distributePrice(billActionDetails.size()).iterator();
+
+        billActionDetails.forEach(billActionDetail -> {
+            billActionDetail.updatePrice(priceIterator.next());
+            billActionDetail.updateIsFixed(false);
+        });
+    }
+
+    private List<Long> distributePrice(int memberCount) {
+        if (memberCount == 0) {
+            return new ArrayList<>();
+        }
+        long eachPrice = price / memberCount;
+        long remainder = price % memberCount;
+
+        List<Long> results = Stream.generate(() -> eachPrice)
+                .limit(memberCount - 1)
+                .collect(Collectors.toList());
+        results.add(eachPrice + remainder);
+        return results;
+    }
+
     public void update(String title, Long price) {
         validateTitle(title);
         validatePrice(price);
-        this.title = title;
+        this.title = title.trim();
         this.price = price;
+        resetBillActionDetails();
+    }
+
+    public void addDetails(List<BillActionDetail> billActionDetails) {
+        billActionDetails.forEach(this::addDetail);
+    }
+
+    private void addDetail(BillActionDetail billActionDetail) {
+        this.billActionDetails.add(billActionDetail);
+        billActionDetail.setBillAction(this);
+    }
+
+    public boolean isFixed() {
+        return billActionDetails.stream()
+                .anyMatch(BillActionDetail::isFixed);
     }
 
     public boolean isSamePrice(Long price) {
         return this.price.equals(price);
-    }
-
-    public Long getSequence() {
-        return action.getSequence();
-    }
-
-    public Event getEvent() {
-        return action.getEvent();
     }
 
     public Long findPriceByMemberName(String memberName) {
@@ -97,20 +141,12 @@ public class BillAction implements Comparable<BillAction> {
                 .orElse(DEFAULT_PRICE);
     }
 
-    public boolean isFixed() {
-        return billActionDetails.stream()
-                .map(BillActionDetail::getPrice)
-                .distinct()
-                .count() != 1L;
+    public Long getSequence() {
+        return action.getSequence();
     }
 
-    public void addDetails(List<BillActionDetail> billActionDetails) {
-        billActionDetails.forEach(this::addDetail);
-    }
-
-    private void addDetail(BillActionDetail billActionDetail) {
-        this.billActionDetails.add(billActionDetail);
-        billActionDetail.setBillAction(this);
+    public Event getEvent() {
+        return action.getEvent();
     }
 
     @Override
