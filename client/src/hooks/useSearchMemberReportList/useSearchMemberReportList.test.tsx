@@ -1,6 +1,5 @@
 import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
-import {QueryClient} from '@tanstack/react-query';
 
 import AppErrorBoundary from '@components/AppErrorBoundary/ErrorCatcher';
 import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
