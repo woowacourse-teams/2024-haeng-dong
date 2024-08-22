@@ -44,6 +44,7 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
               <LabelGroupInput.Element
                 key={`${index}`}
                 elementKey={`${index}`}
+                placeholder="이름"
                 type="text"
                 value={value}
                 isError={errorIndexList.includes(index)}
