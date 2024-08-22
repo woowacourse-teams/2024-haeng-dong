@@ -2,7 +2,7 @@ import {css, keyframes} from '@emotion/react';
 import {Button, Text} from 'haengdong-design';
 import {useNavigate} from 'react-router-dom';
 
-import {Logo} from '@components/Common/Logo';
+import {StandingDog} from '@components/Common/Logo';
 import ChevronDown from '@assets/image/chevronDownLarge.svg';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
@@ -33,7 +33,7 @@ const MainSection = () => {
         })}
       >
         <div css={animateWithDelay(0)}>
-          <Logo />
+          <StandingDog />
         </div>
         <Text css={animateWithDelay(1)} style={{textAlign: 'center'}} size="title">{`행동대장을 통해
         간편하게 정산하세요
