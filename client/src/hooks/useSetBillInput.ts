@@ -52,6 +52,8 @@ const useSetBillInput = ({setIsAddEditableItem}: UseSetBillInputProps): UseSetBi
           },
         },
       );
+    } else if (!isEmptyTitle && !isEmptyPrice) {
+      setIsAddEditableItem(false);
     }
   };
 

@@ -10,7 +10,7 @@ const SetEventPasswordPage = () => {
     useSetEventPasswordPage();
 
   return (
-    <MainLayout>
+    <MainLayout backgroundColor="white">
       <TopNav>
         <Back />
       </TopNav>

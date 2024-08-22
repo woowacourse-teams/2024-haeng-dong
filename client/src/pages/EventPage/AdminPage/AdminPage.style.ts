@@ -5,7 +5,7 @@ export const receiptStyle = () =>
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
-    paddingBottom: '8.75rem',
+    paddingBottom: '2rem',
   });
 
 export const titleAndListButtonContainerStyle = () =>
