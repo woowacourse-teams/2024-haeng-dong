@@ -5,7 +5,6 @@ import {MemoryRouter} from 'react-router-dom';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import memberReportListInActionJson from '../../mocks/memberReportListInAction.json';
-import {ErrorProvider} from '../useError/ErrorProvider';
 
 import useMemberReportListInAction from './useMemberReportListInAction';
 
@@ -22,9 +21,7 @@ describe('useMemberReportListInActionTest', () => {
     renderHook(() => useMemberReportListInAction(actionId, totalPrice, () => {}), {
       wrapper: ({children}) => (
         <QueryClientProvider client={queryClient}>
-          <MemoryRouter>
-            <ErrorProvider>{children}</ErrorProvider>
-          </MemoryRouter>
+          <MemoryRouter>{children}</MemoryRouter>
         </QueryClientProvider>
       ),
     });

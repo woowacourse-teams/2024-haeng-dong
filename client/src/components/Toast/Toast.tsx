@@ -19,7 +19,7 @@ const Toast = ({
   bottom = '0px',
   isClickToClose = true,
   position = 'bottom',
-  showingTime,
+  showingTime = 3000,
   message,
   onUndo,
   onClose,

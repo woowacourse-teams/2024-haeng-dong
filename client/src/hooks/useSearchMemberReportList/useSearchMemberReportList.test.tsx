@@ -1,29 +1,26 @@
 import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {QueryClient} from '@tanstack/react-query';
+
+import AppErrorBoundary from '@components/AppErrorBoundary/ErrorCatcher';
+import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
+import {ToastProvider} from '@hooks/useToast/ToastProvider';
 
 import reportListJson from '../../mocks/reportList.json';
-import {ErrorProvider} from '../useError/ErrorProvider';
 
 import useSearchMemberReportList from './useSearchMemberReportList';
 
 describe('useSearchMemberReportList', () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 0,
-      },
-    },
-  });
-
   const initializeProvider = (name: string) =>
     renderHook(() => useSearchMemberReportList({name}), {
       wrapper: ({children}) => (
-        <QueryClientProvider client={queryClient}>
-          <MemoryRouter>
-            <ErrorProvider>{children}</ErrorProvider>
-          </MemoryRouter>
-        </QueryClientProvider>
+        <ToastProvider>
+          <AppErrorBoundary>
+            <QueryClientBoundary>
+              <MemoryRouter>{children}</MemoryRouter>
+            </QueryClientBoundary>
+          </AppErrorBoundary>
+        </ToastProvider>
       ),
     });
 

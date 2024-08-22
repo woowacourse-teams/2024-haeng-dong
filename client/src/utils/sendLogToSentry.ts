@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 
-import {ErrorInfo} from '@hooks/useError/ErrorProvider';
+import {ErrorInfo} from '@components/AppErrorBoundary/ErrorCatcher';
 
 import {UNKNOWN_ERROR} from '@constants/errorMessage';
 

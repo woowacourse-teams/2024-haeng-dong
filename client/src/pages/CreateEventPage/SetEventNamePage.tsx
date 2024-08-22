@@ -2,13 +2,13 @@ import {useNavigate} from 'react-router-dom';
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 import {css} from '@emotion/react';
 
-import useSetEventName from '@hooks/useSetEventName';
+import useSetEventNamePage from '@hooks/useSetEventNamePage';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const SetEventNamePage = () => {
   const navigate = useNavigate();
-  const {eventName, errorMessage, canSubmit, handleEventNameChange} = useSetEventName();
+  const {eventName, errorMessage, canSubmit, handleEventNameChange} = useSetEventNamePage();
 
   const submitEventName = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,7 +25,7 @@ const SetEventNamePage = () => {
       <form onSubmit={submitEventName} css={css({padding: '0 1rem'})}>
         <LabelInput
           labelText="행사 이름"
-          errorText={errorMessage}
+          errorText={errorMessage ?? ''}
           value={eventName}
           type="text"
           placeholder="행사 이름"

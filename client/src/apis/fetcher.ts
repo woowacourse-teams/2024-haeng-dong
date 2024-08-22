@@ -1,4 +1,4 @@
-import {ErrorInfo} from '@hooks/useError/ErrorProvider';
+import {ErrorInfo} from '@components/AppErrorBoundary/ErrorCatcher';
 
 import objectToQueryString from '@utils/objectToQueryString';
 
