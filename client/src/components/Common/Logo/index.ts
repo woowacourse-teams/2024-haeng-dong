@@ -1,1 +1,2 @@
-export {default as Logo} from './Logo';
+export {default as StandingDog} from './StandingDogLogo';
+export {default as RunningDog} from './RunningDogLogo';

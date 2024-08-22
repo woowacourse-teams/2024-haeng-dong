@@ -12,7 +12,6 @@ export const navStyle = css({
   maxWidth: '768px',
   zIndex: '20',
   height: '4rem',
-  boxShadow: '0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.12)',
   backgroundColor: 'white',
 });
 
