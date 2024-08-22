@@ -6,7 +6,6 @@ import validatePurchase from '@utils/validate/validatePurchase';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
 import useMemberReportListInAction from '@hooks/useMemberReportListInAction/useMemberReportListInAction';
 import useMemberReportInput from '@hooks/useMemberReportListInAction/useMemberReportInput';
-import {useToast} from '@hooks/useToast/useToast';
 
 import usePutAndDeleteBillAction from '@hooks/usePutAndDeleteBillAction';
 
@@ -64,8 +63,6 @@ const PutAndDeleteBillActionModal = ({
   const actionMemberList = stepListData.filter(({actions}) =>
     actions.find(({actionId}) => actionId === billAction.actionId),
   )[0].members;
-
-  const {showToast} = useToast();
 
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
