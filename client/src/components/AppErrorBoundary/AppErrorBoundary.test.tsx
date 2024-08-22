@@ -10,7 +10,7 @@ import {useAppErrorStore} from '@store/appErrorStore';
 
 import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
 
-import AppErrorBoundary from './AppErrorBoundary';
+import AppErrorBoundary from './ErrorCatcher';
 
 // 테스트용 헬퍼 컴포넌트
 const TestComponent = ({triggerError}: {triggerError: () => void}) => {

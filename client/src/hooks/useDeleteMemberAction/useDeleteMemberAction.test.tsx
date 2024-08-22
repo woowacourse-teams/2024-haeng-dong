@@ -5,7 +5,7 @@ import {HDesignProvider} from 'haengdong-design';
 
 import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
-import AppErrorBoundary from '@components/AppErrorBoundary/AppErrorBoundary';
+import AppErrorBoundary from '@components/AppErrorBoundary/ErrorCatcher';
 import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
 import {ToastProvider} from '@hooks/useToast/ToastProvider';
 
