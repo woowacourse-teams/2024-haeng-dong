@@ -18,7 +18,7 @@ interface AddMemberActionListModalContentProps {
 
 const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: AddMemberActionListModalContentProps) => {
   const dynamicProps = useDynamicInput(validateMemberName);
-  const {inputList, getFilledInputList, errorMessage, canSubmit} = dynamicProps;
+  const {inputList, getFilledInputList, errorMessage, canSubmit, resetInputValue} = dynamicProps;
 
   const {mutate: postMemberList} = useRequestPostMemberList();
 
@@ -38,7 +38,10 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
         disabled={!canSubmit}
         variants={'primary'}
         children={`${inputList.length - 1}명 ${inOutAction === 'OUT' ? '탈주' : '늦참'}`}
-        onClick={handleUpdateMemberListSubmit}
+        onClick={() => {
+          handleUpdateMemberListSubmit();
+          resetInputValue();
+        }}
       />
     </div>
   );
