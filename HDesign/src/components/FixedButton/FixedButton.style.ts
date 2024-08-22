@@ -47,7 +47,7 @@ export const deleteButtonStyle = (theme: Theme) => [
     color: theme.colors.white,
 
     fontFamily: 'Pretendard',
-    fontSize: '1.25rem',
+    fontSize: '1rem',
     fontWeight: '700',
     lineHeight: '1',
 
@@ -66,7 +66,7 @@ const getFixedButtonDefaultStyle = (theme: Theme) =>
     display: 'flex',
     justifyContent: 'center',
     padding: '1rem 1.5rem',
-    borderRadius: '1.25rem',
+    borderRadius: '1rem',
     width: '100%',
 
     fontFamily: 'Pretendard',
@@ -113,6 +113,13 @@ const getFixedButtonVariantsStyle = (variants: ButtonVariants, theme: Theme) => 
         color: theme.colors.onPrimary,
       }),
       getHoverAndActiveBackground(theme.colors.error),
+    ],
+    loading: [
+      css({
+        backgroundColor: theme.colors.tertiary,
+        color: theme.colors.onTertiary,
+      }),
+      getHoverAndActiveBackground(theme.colors.tertiary),
     ],
   };
 

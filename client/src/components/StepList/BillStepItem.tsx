@@ -108,7 +108,7 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
               <EditableItem.Input
                 placeholder="0"
                 type="number"
-                value={billInput.price || ''}
+                value={billInput.price ?? null}
                 onChange={e => handleChangeBillInput('price', e)}
                 style={{textAlign: 'right'}}
               ></EditableItem.Input>
@@ -117,14 +117,12 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
           </EditableItem>
         )}
       </DragHandleItemContainer>
-      {isOpenMemberListInBillStep && (
-        <MemberListInBillStep
-          stepName={step.stepName}
-          memberList={memberList}
-          isOpenBottomSheet={isOpenMemberListInBillStep}
-          setIsOpenBottomSheet={setIsOpenMemberListInBillStep}
-        />
-      )}
+      <MemberListInBillStep
+        stepName={step.stepName}
+        memberList={memberList}
+        isOpenBottomSheet={isOpenMemberListInBillStep}
+        setIsOpenBottomSheet={setIsOpenMemberListInBillStep}
+      />
     </>
   );
 };

@@ -2,7 +2,7 @@ import {PropsWithChildren} from 'react';
 
 import {Flex} from '..';
 
-type MainLayoutBackground = 'white' | 'gray';
+type MainLayoutBackground = 'white' | 'gray' | 'lightGray';
 
 interface MainLayoutProps extends PropsWithChildren {
   backgroundColor?: MainLayoutBackground;
@@ -18,6 +18,7 @@ export function MainLayout({backgroundColor, children}: MainLayoutProps) {
       gap="1rem"
       width="100%"
       height="100%"
+      minHeight="100vh"
     >
       {children}
     </Flex>

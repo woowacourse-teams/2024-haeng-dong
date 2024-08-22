@@ -6,10 +6,11 @@ import RULE from '@constants/rule';
 import {PASSWORD_LENGTH} from '@constants/password';
 
 const SetEventPasswordPage = () => {
-  const {submitPassword, errorMessage, password, handleChange, canSubmit} = useSetEventPasswordPage();
+  const {submitPassword, errorMessage, password, handleChange, canSubmit, isPostEventPending} =
+    useSetEventPasswordPage();
 
   return (
-    <MainLayout>
+    <MainLayout backgroundColor="white">
       <TopNav>
         <Back />
       </TopNav>
@@ -22,14 +23,16 @@ const SetEventPasswordPage = () => {
           labelText="비밀번호"
           errorText={errorMessage}
           value={password}
-          type="secret"
+          type="number"
           maxLength={RULE.maxEventPasswordLength}
           placeholder="비밀번호"
           onChange={handleChange}
           isError={!!errorMessage}
           autoFocus
         />
-        <FixedButton disabled={!canSubmit}>행동 개시!</FixedButton>
+        <FixedButton variants={isPostEventPending ? 'loading' : 'primary'} disabled={!canSubmit}>
+          행동 개시!
+        </FixedButton>
       </form>
     </MainLayout>
   );

@@ -15,7 +15,7 @@ const useSetEventPasswordPage = () => {
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const {mutate: postEvent} = usePostEvent();
+  const {mutate: postEvent, isPending: isPostEventPending} = usePostEvent();
 
   useEffect(() => {
     if (!location.state) {
@@ -55,6 +55,6 @@ const useSetEventPasswordPage = () => {
     }
   };
 
-  return {submitPassword, errorMessage, password, handleChange, canSubmit};
+  return {submitPassword, errorMessage, password, handleChange, canSubmit, isPostEventPending};
 };
 export default useSetEventPasswordPage;

@@ -8,8 +8,8 @@ export const dragHandleItemStyle = (theme: Theme, hasDragHandle: boolean, backgr
   css({
     display: 'flex',
     justifyContent: 'space-between',
-    padding: hasDragHandle ? '0.5rem 0.5rem 0.5rem 0.25rem' : '0.5rem',
-    borderRadius: '0.5rem',
+    padding: hasDragHandle ? '0.5rem 1rem 0.5rem 0.5rem' : '0.5rem 1rem',
+    borderRadius: '0.75rem',
     backgroundColor: theme.colors[backgroundColor],
   });
 

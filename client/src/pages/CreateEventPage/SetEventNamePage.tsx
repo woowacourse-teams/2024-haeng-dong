@@ -17,7 +17,7 @@ const SetEventNamePage = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout backgroundColor="white">
       <TopNav>
         <Back />
       </TopNav>

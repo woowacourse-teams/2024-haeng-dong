@@ -2,14 +2,14 @@ import {render, renderHook, screen, waitFor} from '@testing-library/react';
 import {act} from 'react';
 import {HDesignProvider} from 'haengdong-design';
 
-import {ToastProvider} from './ToastProvider';
+import {ToastProvider} from './ToastProvider'; // 위 코드에 해당하는 ToastProvider 경로
 import {useToast} from './useToast';
 
 const TOAST_CONFIG = {
   message: 'Test Toast Message',
 };
 
-// 테스트용 컴포넌트: 토스트를 표시하기 위한 버튼 제공
+// 테스트용 헬퍼 컴포넌트
 const TestComponent = () => {
   const {showToast} = useToast();
 
