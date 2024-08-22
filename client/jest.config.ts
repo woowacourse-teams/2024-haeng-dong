@@ -19,6 +19,8 @@ const config: Config = {
     '<rootDir>/src/errors/',
     '<rootDir>/src/components/',
     '<rootDir>/src/store/',
+    '<rootDir>/src/pages/',
+    '<rootDir>/src/hooks/queries',
   ],
 
   verbose: true,
