@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import server.haengdong.domain.event.Event;
 
 @Repository
 public interface BillActionDetailRepository extends JpaRepository<BillActionDetail, Long> {
@@ -15,5 +16,5 @@ public interface BillActionDetailRepository extends JpaRepository<BillActionDeta
             """)
     List<BillActionDetail> findAllByBillAction(BillAction billAction);
 
-    List<BillActionDetail> findAllByMemberName(String memberName);
+    List<BillActionDetail> findAllByBillAction_Action_EventAndMemberName(Event event, String memberName);
 }

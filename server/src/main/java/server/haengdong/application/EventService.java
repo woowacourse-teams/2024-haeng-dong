@@ -152,7 +152,7 @@ public class EventService {
     private void updateMemberName(Event event, String beforeName, String afterName) {
         memberActionRepository.findAllByAction_EventAndMemberName(event, beforeName)
                 .forEach(memberAction -> memberAction.updateMemberName(afterName));
-        billActionDetailRepository.findAllByMemberName(beforeName)
+        billActionDetailRepository.findAllByBillAction_Action_EventAndMemberName(event, beforeName)
                 .forEach(billActionDetail -> billActionDetail.updateMemberName(afterName));
     }
 
