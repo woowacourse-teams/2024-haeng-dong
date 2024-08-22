@@ -83,7 +83,7 @@ const useSetAllMemberList = ({
         return null; // 조건에 맞지 않으면 null을 반환
       })
       .filter(item => item !== null); // null인 항목을 필터링하여 제거
-    putAllMemberList({members: editedMemberName});
+    if (!isArraysEqual(editedAllMemberList, deleteInOriginal)) putAllMemberList({members: editedMemberName});
     handleCloseAllMemberListModal();
   };
 
