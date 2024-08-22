@@ -1,14 +1,10 @@
-import FetchError from '@errors/FetchError';
-import {ErrorInfo} from '@components/AppErrorBoundary/AppErrorBoundary';
+import {ErrorInfo} from '@components/AppErrorBoundary/ErrorCatcher';
 
 import sendLogToSentry from './sendLogToSentry';
 
-export const captureError = async (error: Error) => {
+export const captureError = async (error: Error, errorInfo: ErrorInfo) => {
   // prod 환경에서만 Sentry capture 실행
   if (process.env.NODE_ENV !== 'production') return;
-
-  const errorInfo: ErrorInfo =
-    error instanceof FetchError ? error.errorInfo : {message: error.message, errorCode: error.name};
 
   switch (errorInfo?.errorCode) {
     case 'INTERNAL_SERVER_ERROR':
