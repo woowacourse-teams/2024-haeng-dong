@@ -65,8 +65,6 @@ const PutAndDeleteBillActionModal = ({
     actions.find(({actionId}) => actionId === billAction.actionId),
   )[0].members;
 
-  const {showToast} = useToast();
-
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
       <form
