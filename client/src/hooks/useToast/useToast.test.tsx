@@ -11,6 +11,8 @@ import {ErrorInfo, ErrorProvider} from '../../hooks/useError/ErrorProvider'; // 
 
 import {ToastProvider} from './ToastProvider'; // 위 코드에 해당하는 ToastProvider 경로
 
+jest.mock('lottie-react', () => () => <div>Lottie Mock</div>);
+
 // 테스트용 헬퍼 컴포넌트
 const TestComponent = ({errorInfo}: {errorInfo: ErrorInfo}) => {
   const {setErrorInfo} = useError();

@@ -6,7 +6,8 @@ import RULE from '@constants/rule';
 import {PASSWORD_LENGTH} from '@constants/password';
 
 const SetEventPasswordPage = () => {
-  const {submitPassword, errorMessage, password, handleChange, canSubmit} = useSetEventPasswordPage();
+  const {submitPassword, errorMessage, password, handleChange, canSubmit, isPostEventPending} =
+    useSetEventPasswordPage();
 
   return (
     <MainLayout backgroundColor="white">
@@ -29,7 +30,9 @@ const SetEventPasswordPage = () => {
           isError={!!errorMessage}
           autoFocus
         />
-        <FixedButton disabled={!canSubmit}>행동 개시!</FixedButton>
+        <FixedButton variants={isPostEventPending ? 'loading' : 'primary'} disabled={!canSubmit}>
+          행동 개시!
+        </FixedButton>
       </form>
     </MainLayout>
   );

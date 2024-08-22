@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {forwardRef} from 'react';
+import Lottie from 'lottie-react';
 
 import {
   fixedButtonContainerStyle,
@@ -10,10 +11,12 @@ import {FixedButtonProps} from '@components/FixedButton/FixedButton.type';
 import IconButton from '@components/IconButton/IconButton';
 import Icon from '@components/Icon/Icon';
 
+import loadingAnimation from '@assets/loadingAnimation.json';
+
 import {useTheme} from '@theme/HDesignProvider';
 
 export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElement, FixedButtonProps>(function Button(
-  {variants = 'primary', onDeleteClick, ...htmlProps}: FixedButtonProps,
+  {variants = 'primary', onDeleteClick, disabled, children, ...htmlProps}: FixedButtonProps,
   ref,
 ) {
   const {theme} = useTheme();
@@ -25,7 +28,18 @@ export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElem
             <Icon iconType="trash" />
           </IconButton>
         )}
-        <button css={fixedButtonStyle({variants, theme})} ref={ref} {...htmlProps} />
+        <button
+          css={fixedButtonStyle({variants, theme})}
+          ref={ref}
+          disabled={variants === 'loading' ? true : disabled}
+          {...htmlProps}
+        >
+          {variants === 'loading' ? (
+            <Lottie animationData={loadingAnimation} loop={true} style={{width: 240, height: 20}} />
+          ) : (
+            children
+          )}
+        </button>
       </div>
     </div>
   );
