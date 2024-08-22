@@ -10,7 +10,7 @@ import {useAppErrorStore} from '@store/appErrorStore';
 
 import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
 
-import UnhandledErrorBoundary from '../../UnhandledErrorBoudnary';
+import UnhandledErrorBoundary from '../../UnhandledErrorBoundary';
 
 import ErrorCatcher from './ErrorCatcher';
 
