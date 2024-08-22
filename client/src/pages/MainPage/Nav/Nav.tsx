@@ -1,12 +1,12 @@
 import {Button, Flex, Text} from 'haengdong-design';
 import {useNavigate} from 'react-router-dom';
+import HeundeutLoto from '@components/Common/Logo/HeunDeutLogo';
+
+import Heundeut from '@assets/image/heundeut.svg';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {logoStyle, navStyle} from './Nav.style';
-
-import Heundeut from '@assets/image/heundeut.svg';
-import HeundeutLoto from '@components/Common/Logo/HeunDeutLogo';
 
 const Nav = () => {
   const navigate = useNavigate();
