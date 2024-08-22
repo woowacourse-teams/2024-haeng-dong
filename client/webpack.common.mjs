@@ -44,6 +44,8 @@ export default {
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
+      hash: true,
+      favicon: './favicon.ico',
     }),
     new ForkTsCheckerWebpackPlugin(),
     new ModifySourcePlugin({
