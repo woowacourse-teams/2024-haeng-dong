@@ -44,7 +44,7 @@ const useSetAllMemberList = ({
   const [deleteInOriginal, setDeleteInOriginal] = useState<string[]>(allMemberList);
   const [deleteMemberList, setDeleteMemberList] = useState<string[]>([]);
 
-  const {mutate: deleteAllMemberList} = useDeleteAllMemberList();
+  const {mutateAsync: deleteAllMemberList} = useDeleteAllMemberList();
   const {mutate: putAllMemberList} = usePutAllMemberList();
 
   const editedAllMemberList = inputList.map(input => input.value);
@@ -71,7 +71,7 @@ const useSetAllMemberList = ({
     // deleteMemberList가 비어있지 않은 경우에만 반복문 실행 (삭제 api 요청)
     if (deleteMemberList.length > 0) {
       for (const deleteMember of deleteMemberList) {
-        deleteAllMemberList({memberName: deleteMember});
+        await deleteAllMemberList({memberName: deleteMember});
       }
     }
 
