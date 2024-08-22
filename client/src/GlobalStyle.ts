@@ -156,8 +156,5 @@ export const GlobalStyle = css`
   #root {
     display: flex;
     flex-direction: column;
-    height: 100%;
-
-    background-color: #f1f0f5;
   }
 `;
