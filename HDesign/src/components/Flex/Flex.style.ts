@@ -38,6 +38,8 @@ export const flexStyle = ({
           return theme?.colors.white;
         case 'gray':
           return theme?.colors.grayContainer;
+        case 'lightGray':
+          return theme?.colors.lightGrayContainer;
         default:
           return 'none';
       }

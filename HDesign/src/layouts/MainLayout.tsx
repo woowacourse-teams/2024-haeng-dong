@@ -2,7 +2,7 @@ import {PropsWithChildren} from 'react';
 
 import {Flex} from '..';
 
-type MainLayoutBackground = 'white' | 'gray';
+type MainLayoutBackground = 'white' | 'gray' | 'lightGray';
 
 interface MainLayoutProps extends PropsWithChildren {
   backgroundColor?: MainLayoutBackground;

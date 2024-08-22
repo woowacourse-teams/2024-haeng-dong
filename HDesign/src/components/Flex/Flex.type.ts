@@ -2,7 +2,7 @@ import {Theme} from '@theme/theme.type';
 
 export type FlexDirectionType = 'row' | 'column' | 'rowReverse' | 'columnReverse';
 export type FlexDirectionStrictType = 'row' | 'column' | 'row-reverse' | 'column-reverse';
-export type FlexBackgroundColor = 'gray' | 'white';
+export type FlexBackgroundColor = 'gray' | 'white' | 'lightGray';
 
 export interface FlexProps {
   justifyContent?: 'flexStart' | 'center' | 'flexEnd' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly';
