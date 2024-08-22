@@ -29,12 +29,8 @@ export const ToastProvider = ({children}: React.PropsWithChildren) => {
   };
 
   useEffect(() => {
-    if (!currentToast) return;
-
-    if (!currentToast.isAlwaysOn) {
-      const timer = setTimeout(() => {
-        setCurrentToast(null);
-      }, currentToast.showingTime);
+    if (currentToast && !currentToast.isAlwaysOn) {
+      const timer = setTimeout(() => setCurrentToast(null), currentToast.showingTime);
 
       return () => clearTimeout(timer);
     }
