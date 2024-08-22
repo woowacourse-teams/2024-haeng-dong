@@ -9,7 +9,11 @@ import useMemberReportInput from '@hooks/useMemberReportListInAction/useMemberRe
 
 import usePutAndDeleteBillAction from '@hooks/usePutAndDeleteBillAction';
 
-import {bottomSheetHeaderStyle, bottomSheetStyle, inputContainerStyle} from './PutAndDeltetBillActionModal.style';
+import {
+  bottomSheetHeaderStyle,
+  bottomSheetStyle,
+  inputContainerStyle,
+} from '../SetActionModal/PutAndDeleteBillActionModal/PutAndDeltetBillActionModal.style';
 
 type PutAndDeleteBillActionModalProps = {
   billAction: BillAction;
@@ -17,7 +21,7 @@ type PutAndDeleteBillActionModalProps = {
   setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const PutAndDeleteBillActionModal = ({
+const ExpenseDetailModal = ({
   billAction,
   isBottomSheetOpened,
   setIsBottomSheetOpened,
@@ -66,17 +70,9 @@ const PutAndDeleteBillActionModal = ({
 
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
-      <form
-        css={bottomSheetStyle}
-        onSubmit={async event => {
-          event.preventDefault();
-
-          if (canSubmit) await putBillAction(event, inputPair, billAction.actionId);
-          if (isChangedMemberReportInput) putMemberReportListInAction();
-        }}
-      >
+      <form css={bottomSheetStyle} onSubmit={() => setIsBottomSheetOpened(false)}>
         <h2 css={bottomSheetHeaderStyle}>
-          <Text size="bodyBold">지출 내역 수정하기</Text>
+          <Text size="bodyBold">지출 내역 상세</Text>
         </h2>
         <fieldset css={inputContainerStyle}>
           <EditableItem backgroundColor="lightGrayContainer" prefixLabelText="지출 내역 / 금액">
@@ -85,6 +81,7 @@ const PutAndDeleteBillActionModal = ({
               textSize="bodyBold"
               value={inputPair.title}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleInputChange('title', event)}
+              disabled
             />
             <Flex alignItems="center" gap="0.25rem">
               <EditableItem.Input
@@ -96,6 +93,7 @@ const PutAndDeleteBillActionModal = ({
                 value={inputPair.price}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleInputChange('price', event)}
                 isFixed={isExistAdjustedPrice()}
+                disabled
               />
               <Text size="caption">원</Text>
             </Flex>
@@ -123,7 +121,7 @@ const PutAndDeleteBillActionModal = ({
                       value={price}
                       placeholder="0"
                       type="number"
-                      readOnly={!canEditList[index]}
+                      disabled
                       style={{textAlign: 'right'}}
                     ></EditableItem.Input>
                     <Text size="caption">원</Text>
@@ -133,17 +131,12 @@ const PutAndDeleteBillActionModal = ({
             </Flex>
           </EditableItem>
         </fieldset>
-        <FixedButton
-          type="submit"
-          variants="primary"
-          disabled={!(canSubmit || isChangedMemberReportInput)}
-          onDeleteClick={() => onDelete(billAction.actionId)}
-        >
-          수정 완료
+        <FixedButton type="submit" variants="tertiary">
+          닫기
         </FixedButton>
       </form>
     </BottomSheet>
   );
 };
 
-export default PutAndDeleteBillActionModal;
+export default ExpenseDetailModal;
