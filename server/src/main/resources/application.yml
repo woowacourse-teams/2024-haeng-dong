@@ -1,0 +1,66 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:database
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.time_zone: Asia/Seoul
+    show-sql: true
+
+cors:
+  max-age: 3600
+  allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
+
+security:
+  jwt:
+    token:
+      secret-key: skdmeejEKJdkDjklDlkj123DKLJ3kDkeDkDKQMEOD1D90D8dE
+      expire-length: 604800000 # 1주일
+
+cookie:
+  http-only: false
+  secure: false
+  path: /
+  same-site: none
+  max-age: 7D
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, logfile
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+---
+
+spring:
+  config:
+    import: classpath:config/application-prod.yml
+    activate:
+      on-profile: prod
+
+---
+
+spring:
+  config:
+    import: classpath:config/application-dev.yml
+    activate:
+      on-profile: dev
