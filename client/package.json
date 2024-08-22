@@ -23,6 +23,7 @@
     "@jest/types": "^29.6.3",
     "@sentry/webpack-plugin": "^2.22.0",
     "@svgr/webpack": "^8.1.0",
+    "@tanstack/react-query-devtools": "^5.52.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
