@@ -38,6 +38,7 @@ public class EventService {
     private final MemberActionRepository memberActionRepository;
     private final BillActionDetailRepository billActionDetailRepository;
 
+
     @Transactional
     public EventAppResponse saveEvent(EventAppRequest request) {
         String token = eventTokenProvider.createToken();
