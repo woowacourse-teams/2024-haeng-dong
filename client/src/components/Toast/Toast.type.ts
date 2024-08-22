@@ -12,7 +12,7 @@ export interface ToastOptionProps {
   onUndo?: () => void;
   isClickToClose?: boolean;
   onClose?: () => void;
-  showingTime: number;
+  showingTime?: number;
 }
 
 export interface ToastRequiredProps {
