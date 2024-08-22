@@ -22,7 +22,7 @@ const SetEventPasswordPage = () => {
           labelText="비밀번호"
           errorText={errorMessage}
           value={password}
-          type="secret"
+          type="number"
           maxLength={RULE.maxEventPasswordLength}
           placeholder="비밀번호"
           onChange={handleChange}
