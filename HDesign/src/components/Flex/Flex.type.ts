@@ -16,4 +16,5 @@ export interface FlexProps {
   height?: string;
   backgroundColor?: FlexBackgroundColor;
   theme?: Theme;
+  minHeight?: string;
 }
