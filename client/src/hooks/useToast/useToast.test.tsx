@@ -1,99 +1,80 @@
-// import {render, screen, waitFor} from '@testing-library/react';
-// import {act, ReactNode} from 'react';
-// import {HDesignProvider} from 'haengdong-design';
+import {render, renderHook, screen, waitFor} from '@testing-library/react';
+import {act} from 'react';
+import {HDesignProvider} from 'haengdong-design';
 
-// import {useError} from '@hooks/useError/useError';
+import {ToastProvider} from './ToastProvider';
+import {useToast} from './useToast';
 
-// import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
+const TOAST_CONFIG = {
+  message: 'Test Toast Message',
+};
 
-// import UnhandledErrorBoundary from '../../UnhandledErrorBoundary';
-// import {ErrorInfo, ErrorProvider} from '../../hooks/useError/ErrorProvider'; // useError 경로에 맞게 설정
+// 테스트용 컴포넌트: 토스트를 표시하기 위한 버튼 제공
+const TestComponent = () => {
+  const {showToast} = useToast();
 
-// import {ToastProvider} from './ToastProvider'; // 위 코드에 해당하는 ToastProvider 경로
+  const handleClick = () => {
+    showToast(TOAST_CONFIG);
+  };
 
-// // 테스트용 헬퍼 컴포넌트
-// const TestComponent = ({errorInfo}: {errorInfo: ErrorInfo}) => {
-//   const {setErrorInfo} = useError();
+  return <button onClick={handleClick}>Show Toast</button>;
+};
 
-//   // 테스트에서 직접 에러를 설정합니다.
-//   const triggerError = () => {
-//     setErrorInfo(errorInfo);
-//   };
+const setup = () =>
+  render(
+    <HDesignProvider>
+      <ToastProvider>
+        <TestComponent />
+      </ToastProvider>
+    </HDesignProvider>,
+  );
 
-//   return <button onClick={triggerError}>Trigger Error</button>;
-// };
+describe('ToastProvider', () => {
+  it('토스트를 띄우고 자동으로 사라지게 한다', async () => {
+    setup();
 
-// const setup = (ui: ReactNode) =>
-//   render(
-//     <HDesignProvider>
-//       <UnhandledErrorBoundary>
-//         <ErrorProvider>
-//           <ToastProvider>{ui}</ToastProvider>
-//         </ErrorProvider>
-//       </UnhandledErrorBoundary>
-//     </HDesignProvider>,
-//   );
+    // 토스트를 띄우기 위해 버튼 클릭
+    act(() => {
+      screen.getByText('Show Toast').click();
+    });
 
-// beforeEach(() => {
-//   jest.useFakeTimers();
-// });
+    // 토스트 메시지가 나타나는지 확인
+    expect(screen.getByText(TOAST_CONFIG.message)).toBeInTheDocument();
 
-// afterEach(() => {
-//   jest.useRealTimers();
-// });
+    // 1초 후에 토스트 메시지가 사라지는지 확인
+    await waitFor(
+      () => {
+        expect(screen.queryByText(TOAST_CONFIG.message)).not.toBeInTheDocument();
+      },
+      {timeout: 3100},
+    ); // 타임아웃을 3100ms로 설정하여 정확히 3초 후 확인
+  });
 
-// describe('useToast', () => {
-//   describe('error의 경우 자동으로 토스트를 띄워준다.', () => {
-//     it('핸들링 가능한 에러인 경우 토스트가 뜬다.', async () => {
-//       const errorCode = 'ACTION_NOT_FOUND';
+  it('토스트 닫기 버튼을 눌렀을 때 사라진다', async () => {
+    setup();
 
-//       setup(
-//         <TestComponent
-//           errorInfo={{
-//             errorCode,
-//             message: '서버의 에러메세지',
-//           }}
-//         />,
-//       );
-//       const errorMessage = SERVER_ERROR_MESSAGES[errorCode];
+    // 토스트를 띄우기 위해 버튼 클릭
+    act(() => {
+      screen.getByText('Show Toast').click();
+    });
 
-//       act(() => {
-//         // 에러 트리거 버튼을 클릭
-//         screen.getByText('Trigger Error').click();
-//       });
+    // 토스트 메시지가 나타나는지 확인
+    expect(screen.getByText(TOAST_CONFIG.message)).toBeInTheDocument();
 
-//       // 토스트가 표시되는지 확인
-//       await waitFor(() => {
-//         expect(screen.getByText(errorMessage)).toBeInTheDocument();
-//       });
+    // 토스트의 닫기 버튼을 클릭
+    act(() => {
+      document.getElementById('toast')?.click();
+    });
 
-//       // 타이머가 지나서 토스트가 사라지는지 확인
-//       jest.runAllTimers(); // Jest의 타이머를 실행
-//       await waitFor(() => {
-//         expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
-//       });
-//     });
+    // 닫기 버튼을 클릭한 후 토스트가 사라지는지 확인
+    await waitFor(() => {
+      expect(screen.queryByText(TOAST_CONFIG.message)).not.toBeInTheDocument();
+    });
+  });
 
-//     it('핸들링 불가능한 에러인 경우 토스트가 안뜬다.', async () => {
-//       const errorCode = '핸들링이 안되는 에러 코드';
-
-//       setup(
-//         <TestComponent
-//           errorInfo={{
-//             errorCode,
-//             message: '핸들링이 안되는 에러 메세지',
-//           }}
-//         />,
-//       );
-
-//       act(() => {
-//         // 에러 트리거 버튼을 클릭
-//         screen.getByText('Trigger Error').click();
-//       });
-
-//       await waitFor(() => {
-//         expect(document.getElementById('toast')).not.toBeInTheDocument();
-//       });
-//     });
-//   });
-// });
+  it('Provider없이 useToast 사용할 경우 에러를 던진다.', () => {
+    expect(() => {
+      const _ = renderHook(() => useToast());
+    }).toThrow('useToast는 ToastProvider 내에서 사용되어야 합니다.');
+  });
+});
