@@ -1,6 +1,5 @@
 import {Button, Flex, Text} from 'haengdong-design';
 import {useNavigate} from 'react-router-dom';
-import HeundeutLoto from '@components/Common/Logo/HeunDeutLogo';
 
 import Heundeut from '@assets/image/heundeut.svg';
 
