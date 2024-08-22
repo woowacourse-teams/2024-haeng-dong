@@ -6,6 +6,7 @@ import {BillStep, MemberReport} from 'types/serviceType';
 import {PutAndDeleteBillActionModal} from '@components/Modal/SetActionModal/PutAndDeleteBillActionModal';
 import {MemberListInBillStep} from '@components/Modal/MemberListInBillStep';
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
+import ExpenseDetailModal from '@components/Modal/ExpenseDetailModal/ExpenseDetailModal';
 
 import useSetBillInput from '@hooks/useSetBillInput';
 
@@ -79,6 +80,13 @@ const BillStepItem: React.FC<BillStepItemProps> = ({
 
               {isOpenBottomSheet && clickedIndex === index && isAdmin && (
                 <PutAndDeleteBillActionModal
+                  billAction={action}
+                  isBottomSheetOpened={isOpenBottomSheet}
+                  setIsBottomSheetOpened={setIsOpenBottomSheet}
+                />
+              )}
+              {isOpenBottomSheet && clickedIndex === index && !isAdmin && (
+                <ExpenseDetailModal
                   billAction={action}
                   isBottomSheetOpened={isOpenBottomSheet}
                   setIsBottomSheetOpened={setIsOpenBottomSheet}
