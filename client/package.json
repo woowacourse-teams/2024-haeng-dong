@@ -68,7 +68,7 @@
     "@emotion/react": "^11.11.4",
     "@sentry/react": "^8.25.0",
     "@tanstack/react-query": "^5.51.23",
-    "haengdong-design": "^0.1.77",
+    "haengdong-design": "^0.1.79",
     "react": "^18.3.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.3.1",

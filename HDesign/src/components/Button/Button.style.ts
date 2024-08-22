@@ -46,21 +46,21 @@ const getButtonSizeStyle = (size: ButtonSize) => {
   const style = {
     small: css({
       padding: '0.5rem 0.75rem',
-      borderRadius: '0.75rem',
+      borderRadius: '0.5rem',
       fontFamily: 'Pretendard',
       fontSize: '0.75rem',
       fontWeight: '400',
     }),
     medium: css({
       padding: '0.75rem 1rem',
-      borderRadius: '1rem',
+      borderRadius: '0.75rem',
       fontFamily: 'Pretendard',
       fontSize: '1rem',
       fontWeight: '700',
     }),
     large: css({
       padding: '1rem 1.5rem',
-      borderRadius: '1.25rem',
+      borderRadius: '1rem',
       fontFamily: 'Pretendard',
       fontSize: '1.25rem',
       fontWeight: '700',
