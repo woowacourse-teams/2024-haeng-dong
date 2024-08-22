@@ -43,6 +43,10 @@ public class BillActionDetail {
         this.isFixed = isFixed;
     }
 
+    public void updateMemberName(String name) {
+        this.memberName = name;
+    }
+
     public boolean hasMemberName(String memberName) {
         return this.memberName.equals(memberName);
     }

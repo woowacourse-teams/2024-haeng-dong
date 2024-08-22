@@ -16,6 +16,7 @@ import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.domain.action.BillAction;
+import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
@@ -35,6 +36,7 @@ public class EventService {
     private final EventTokenProvider eventTokenProvider;
     private final BillActionRepository billActionRepository;
     private final MemberActionRepository memberActionRepository;
+    private final BillActionDetailRepository billActionDetailRepository;
 
     @Transactional
     public EventAppResponse saveEvent(EventAppRequest request) {
@@ -149,6 +151,8 @@ public class EventService {
     private void updateMemberName(Event event, String beforeName, String afterName) {
         memberActionRepository.findAllByAction_EventAndMemberName(event, beforeName)
                 .forEach(memberAction -> memberAction.updateMemberName(afterName));
+        billActionDetailRepository.findAllByMemberName(beforeName)
+                .forEach(billActionDetail -> billActionDetail.updateMemberName(afterName));
     }
 
     public void validatePassword(EventLoginAppRequest request) throws HaengdongException {
