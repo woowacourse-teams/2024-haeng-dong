@@ -27,8 +27,6 @@ const AddMemberActionListModalContent = ({inOutAction, setIsOpenBottomSheet}: Ad
     setIsOpenBottomSheet(false);
   };
 
-  console.log(inputList);
-
   return (
     <div css={style.container}>
       <div css={style.inputGroup}>
