@@ -13,7 +13,7 @@ const HomePage = () => {
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
   return (
-    <div>
+    <div style={{paddingBottom: '2rem'}}>
       <Title title={eventName} price={totalExpenseAmount} />
       <Tabs tabsContainerStyle={{gap: '1rem'}}>
         <Tab label="전체 지출 내역" content={<StepList />} />

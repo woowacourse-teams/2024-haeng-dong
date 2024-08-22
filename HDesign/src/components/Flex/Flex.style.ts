@@ -14,6 +14,7 @@ export const flexStyle = ({
   margin = '0',
   width = 'auto',
   height = 'auto',
+  minHeight,
   backgroundColor,
   theme,
   ...rest
@@ -30,6 +31,7 @@ export const flexStyle = ({
     margin,
     width,
     height,
+    minHeight,
     ...rest,
 
     backgroundColor: (() => {
@@ -38,6 +40,8 @@ export const flexStyle = ({
           return theme?.colors.white;
         case 'gray':
           return theme?.colors.grayContainer;
+        case 'lightGray':
+          return theme?.colors.lightGrayContainer;
         default:
           return 'none';
       }
