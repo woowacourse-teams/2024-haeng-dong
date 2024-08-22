@@ -73,13 +73,15 @@ const AdminPage = () => {
             </Button>
           </div>
         )}
-        <ModalBasedOnMemberCount
-          allMemberList={allMemberList}
-          setIsOpenBottomSheet={setIsOpenFixedButtonBottomSheet}
-          isOpenBottomSheet={isOpenFixedButtonBottomSheet}
-          isOpenAllMemberListButton={isOpenAllMemberListButton}
-          setIsOpenAllMemberListButton={setIsOpenAllMemberListButton}
-        />
+        {isOpenFixedButtonBottomSheet && (
+          <ModalBasedOnMemberCount
+            allMemberList={allMemberList}
+            setIsOpenBottomSheet={setIsOpenFixedButtonBottomSheet}
+            isOpenBottomSheet={isOpenFixedButtonBottomSheet}
+            isOpenAllMemberListButton={isOpenAllMemberListButton}
+            setIsOpenAllMemberListButton={setIsOpenAllMemberListButton}
+          />
+        )}
       </section>
     </>
   );
