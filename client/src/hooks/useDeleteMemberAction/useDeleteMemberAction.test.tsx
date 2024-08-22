@@ -66,6 +66,7 @@ describe('useDeleteMemberAction', () => {
         name: '망쵸',
         price: null,
         sequence: 1,
+        isFixed: false,
       };
 
       result.current.deleteMemberActionList.addDeleteMemberAction(memberAction);

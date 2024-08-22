@@ -24,6 +24,7 @@ const EventPageLayout = () => {
   const eventId = getEventIdByUrl();
 
   const isAdmin = useMatch(ROUTER_URLS.eventManage) !== null;
+  const isLoginPage = useMatch(ROUTER_URLS.eventLogin) !== null;
 
   const outletContext: EventPageContextProps = {
     isAdmin,
@@ -37,22 +38,24 @@ const EventPageLayout = () => {
     <MainLayout backgroundColor="gray">
       <TopNav>
         <Switch value={nav} values={paths} onChange={onChange} />
-        <CopyToClipboard
-          text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\n${url}`}
-          onCopy={() =>
-            showToast({
-              showingTime: 3000,
-              message: '링크가 복사되었어요 :) \n참여자들에게 링크를 공유해 주세요!',
-              type: 'confirm',
-              position: 'bottom',
-              bottom: '8rem',
-            })
-          }
-        >
-          <Button size="small" variants="secondary">
-            정산 초대하기
-          </Button>
-        </CopyToClipboard>
+        {!isLoginPage && (
+          <CopyToClipboard
+            text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\n${url}`}
+            onCopy={() =>
+              showToast({
+                showingTime: 3000,
+                message: '링크가 복사되었어요 :) \n참여자들에게 링크를 공유해 주세요!',
+                type: 'confirm',
+                position: 'bottom',
+                bottom: '8rem',
+              })
+            }
+          >
+            <Button size="small" variants="secondary">
+              정산 초대하기
+            </Button>
+          </CopyToClipboard>
+        )}
       </TopNav>
       <Outlet context={outletContext} />
     </MainLayout>

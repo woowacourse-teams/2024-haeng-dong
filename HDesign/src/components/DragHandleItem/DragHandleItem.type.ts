@@ -11,6 +11,7 @@ export interface DragHandleItemCustomProps {
   hasDragHandler?: boolean;
   prefix?: string;
   suffix?: string;
+  isFixed?: boolean;
 }
 
 export type DragHandleItemOptionProps = DragHandleItemStyleProps & DragHandleItemCustomProps;

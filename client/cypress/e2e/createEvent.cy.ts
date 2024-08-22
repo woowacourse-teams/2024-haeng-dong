@@ -6,7 +6,7 @@ beforeEach(() => {
 describe('Flow: 랜딩 페이지에서부터 이벤트를 생성 완료하는 flow', () => {
   it('랜딩페이지에서 "행사 생성하기" 버튼을 눌러 행사 이름 입력 페이지로 이동해야 한다.', () => {
     cy.visit('/');
-    cy.get('button').should('have.text', '행사 생성하기').click();
+    cy.get('header').find('button').click();
     cy.url().should('include', '/event/create/name');
   });
 

@@ -51,6 +51,7 @@ const SetInitialMemberListModal = ({isOpenBottomSheet, setIsOpenBottomSheet}: Se
                 onChange={e => handleInputChange(index, e)}
                 onBlur={() => deleteEmptyInputElementOnBlur()}
                 onKeyDown={e => focusNextInputOnEnter(e, index)}
+                autoFocus={inputList.length === 1 && index === 0}
               />
             ))}
           </LabelGroupInput>

@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 
 import {ValidateResult} from '@utils/validate/type';
 
@@ -44,7 +44,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
 
   const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
-    console.log(value);
+
     makeNewInputWhenFirstCharacterInput(index, value);
     handleChange(index, value);
   };
