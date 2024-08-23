@@ -29,7 +29,7 @@ const useSetEventPasswordPage = () => {
     event.preventDefault();
 
     postEvent(
-      {eventName, password: parseInt(password)},
+      {eventName, password: String(password).padStart(4, '0')},
       {
         onSuccess: data => {
           navigate(`${ROUTER_URLS.eventCreateComplete}?${new URLSearchParams({eventId: data.eventId})}`, {

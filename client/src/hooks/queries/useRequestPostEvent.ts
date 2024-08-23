@@ -4,7 +4,7 @@ import {requestPostNewEvent} from '@apis/request/event';
 
 interface PostEventMutationProps {
   eventName: string;
-  password: number;
+  password: string;
 }
 
 const usePostEvent = () => {

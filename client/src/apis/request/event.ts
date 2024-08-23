@@ -4,7 +4,7 @@ import {WithEventId} from '@apis/withEventId.type';
 
 export type RequestPostNewEvent = {
   eventName: string;
-  password: number;
+  password: string;
 };
 
 export type ResponsePostNewEvent = {
