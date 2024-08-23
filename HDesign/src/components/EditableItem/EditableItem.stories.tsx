@@ -47,13 +47,7 @@ export const Playground: Story = {
         <Flex gap="0.25rem" alignItems="center">
           <EditableItem.Input
             value={value2}
-            onChange={e => {
-              // 숫자인 경우 막아야됨
-              if (isNaN(parseInt(e.target.value))) alert('안녕');
-              else {
-                setValue2(e.target.value);
-              }
-            }}
+            onChange={e => setValue2(e.target.value)}
             placeholder="0"
             type="number"
             style={{textAlign: 'right'}}

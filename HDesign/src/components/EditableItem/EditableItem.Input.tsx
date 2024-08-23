@@ -32,9 +32,10 @@ export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(functi
       <input type="number" />
 
       <Flex flexDirection="row">
-        {/* <div ref={shadowRef} css={editingContainerStyle}>
+        <div ref={shadowRef} css={editingContainerStyle}>
           <Text size={textSize}>{htmlProps.value || htmlProps.placeholder}</Text>
-        </div> */}
+        </div>
+
         {isFixed && <IsFixedIcon />}
         <div css={underlineStyle({theme, hasError, hasFocus})}>
           <input
