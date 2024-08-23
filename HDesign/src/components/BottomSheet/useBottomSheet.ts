@@ -32,8 +32,10 @@ export const useBottomSheet = ({isOpened, onClose, onOpen}: UseBottomSheetProps)
       handleOpen();
     }
 
-    document.body.style.overflow = 'hidden';
-    document.body.addEventListener('keydown', handleKeyDownEsc);
+    if (isOpened) {
+      document.body.style.overflow = 'hidden';
+      document.body.addEventListener('keydown', handleKeyDownEsc);
+    }
 
     return () => {
       document.body.style.overflow = 'scroll';
