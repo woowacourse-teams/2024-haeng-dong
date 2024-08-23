@@ -1,0 +1,17 @@
+== 정산
+
+=== 참여자별 정산 결과 조회
+
+operation::getMemberBillReports[snippets="path-parameters,http-request,response-body,response-fields,http-response,http-request"]
+
+==== [.red]#Exceptions#
+
+[source,json,options="nowrap"]
+----
+[
+   {
+      "code":"EVENT_NOT_FOUND",
+      "message":"존재하지 않는 행사입니다."
+   }
+]
+----

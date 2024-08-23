@@ -1,0 +1,15 @@
+ifndef::snippets[]
+:snippets: ../../build/generated-snippets
+endif::[]
+= 행동대장
+:source-highlighter: highlightjs :hardbreaks:
+:toc: left :doctype: book :icons: font :toc-title: 전체 API 목록 :toclevels: 2 :sectlinks:
+:sectnums:
+:sectnumlevels: 2
+
+
+include::{docdir}/event.adoc[]
+include::{docdir}/memberBillReport.adoc[]
+include::{docdir}/memberAction.adoc[]
+include::{docdir}/billAction.adoc[]
+include::{docdir}/billActionDetail.adoc[]
