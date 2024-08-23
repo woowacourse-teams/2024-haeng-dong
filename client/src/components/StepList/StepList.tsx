@@ -1,4 +1,4 @@
-import {Flex} from 'haengdong-design';
+import {Flex, Text} from 'haengdong-design';
 import {useEffect, useMemo, useState} from 'react';
 
 import {BillStep, MemberStep} from 'types/serviceType';
@@ -58,17 +58,25 @@ const StepList = ({isAddEditableItem = false, setIsAddEditableItem = () => {}}: 
 
   return (
     <Flex flexDirection="column" gap="0.5rem" paddingInline="0.5rem">
-      {stepList.map((step, index) => (
-        <Step
-          index={index}
-          step={step}
-          lastBillItemIndex={lastBillItemIndex}
-          lastItemIndex={lastItemIndex}
-          key={`${step.stepName}${index}`}
-          isAddEditableItem={isAddEditableItem}
-          setIsAddEditableItem={setIsAddEditableItem}
-        />
-      ))}
+      {stepList.length > 0 ? (
+        stepList.map((step, index) => (
+          <Step
+            index={index}
+            step={step}
+            lastBillItemIndex={lastBillItemIndex}
+            lastItemIndex={lastItemIndex}
+            key={`${step.stepName}${index}`}
+            isAddEditableItem={isAddEditableItem}
+            setIsAddEditableItem={setIsAddEditableItem}
+          />
+        ))
+      ) : (
+        <Flex width="100%" justifyContent="center">
+          <Text size="body" textColor="gray" style={{paddingTop: '1rem'}}>
+            지금은 지출 내역이 없어요. :(
+          </Text>
+        </Flex>
+      )}
     </Flex>
   );
 };
