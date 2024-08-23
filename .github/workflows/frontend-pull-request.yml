@@ -1,0 +1,49 @@
+name: frontend-pull-request
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main, fe-dev]
+    paths:
+      - 'client/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./client
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm install
+
+      - name: Run lint
+        working-directory: ./client
+        run: npm run lint
+
+      - name: Run test
+        working-directory: ./client
+        run: npm run test
+
+      - name: Cypress test
+        run: npm run dev &
+        env:
+          CI: true
+
+      - name: Wait for the server to start
+        run: sleep 3
+
+      - name: Run Cypress tests
+        run: npm run cypress-run
