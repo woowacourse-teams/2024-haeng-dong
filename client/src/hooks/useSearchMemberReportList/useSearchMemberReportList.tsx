@@ -10,6 +10,7 @@ const useSearchMemberReportList = ({name}: UseSearchMemberReportListParams) => {
 
   return {
     memberReportSearchList: memberReportList.filter(memberReport => memberReport.name.includes(name)),
+    memberReportList,
   };
 };
 
