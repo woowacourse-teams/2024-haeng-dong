@@ -1,6 +1,7 @@
 import type {BillAction} from 'types/serviceType';
 
 import {BottomSheet, EditableItem, FixedButton, Flex, Text} from 'haengdong-design';
+import {useEffect} from 'react';
 
 import validatePurchase from '@utils/validate/validatePurchase';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
@@ -63,6 +64,10 @@ const PutAndDeleteBillActionModal = ({
   const actionMemberList = stepListData.filter(({actions}) =>
     actions.find(({actionId}) => actionId === billAction.actionId),
   )[0].members;
+
+  useEffect(() => {
+    console.log(inputList);
+  }, [inputList]);
 
   return (
     <BottomSheet isOpened={isBottomSheetOpened} onClose={() => setIsBottomSheetOpened(false)}>
