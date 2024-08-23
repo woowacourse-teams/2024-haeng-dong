@@ -1,0 +1,100 @@
+[
+  {
+    "type": "IN",
+    "stepName": null,
+    "members": [],
+    "actions": [
+      {
+        "actionId": 1,
+        "name": "망쵸",
+        "price": null,
+        "sequence": 1,
+        "isFixed": false
+      },
+      {
+        "actionId": 2,
+        "name": "백호",
+        "price": null,
+        "sequence": 2,
+        "isFixed": false
+      }
+    ]
+  },
+  {
+    "type": "BILL",
+    "stepName": "1차",
+    "members": ["망쵸", "백호"],
+    "actions": [
+      {
+        "actionId": 3,
+        "name": "감자탕",
+        "price": 10000,
+        "sequence": 3,
+        "isFixed": false
+      },
+      {
+        "actionId": 4,
+        "name": "인생네컷",
+        "price": 10000,
+        "sequence": 4,
+        "isFixed": false
+      }
+    ]
+  },
+  {
+    "type": "IN",
+    "stepName": null,
+    "members": [],
+    "actions": [
+      {
+        "actionId": 5,
+        "name": "소하",
+        "price": null,
+        "sequence": 5,
+        "isFixed": false
+      },
+      {
+        "actionId": 6,
+        "name": "웨디",
+        "price": null,
+        "sequence": 6,
+        "isFixed": false
+      }
+    ]
+  },
+  {
+    "type": "BILL",
+    "stepName": "2차",
+    "members": ["소하", "웨디"],
+    "actions": [
+      {
+        "actionId": 9,
+        "name": "노래방",
+        "price": 20000,
+        "sequence": 10,
+        "isFixed": false
+      }
+    ]
+  },
+  {
+    "type": "OUT",
+    "stepName": null,
+    "members": [],
+    "actions": [
+      {
+        "actionId": 7,
+        "name": "망쵸",
+        "price": null,
+        "sequence": 7,
+        "isFixed": false
+      },
+      {
+        "actionId": 8,
+        "name": "백호",
+        "price": null,
+        "sequence": 8,
+        "isFixed": false
+      }
+    ]
+  }
+]
