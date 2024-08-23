@@ -23,6 +23,9 @@ const useSetBillInput = ({setIsAddEditableItem}: UseSetBillInputProps): UseSetBi
 
   const handleChangeBillInput = (field: BillInputType, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
+
+    if (value.length > 20) return;
+
     const {isValid} = validatePurchase({
       ...billInput,
       [field]: value,

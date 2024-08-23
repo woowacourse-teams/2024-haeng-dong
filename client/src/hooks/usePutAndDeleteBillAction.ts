@@ -36,6 +36,8 @@ const usePutAndDeleteBillAction = (
   const handleInputChange = (field: BillInputType, event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
 
+    if (value.length > 20) return;
+
     const {isValid, errorMessage, errorInfo} = validateFunc(getFieldValue(field, value));
 
     setErrorMessage(errorMessage);
