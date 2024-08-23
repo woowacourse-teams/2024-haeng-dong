@@ -18,7 +18,7 @@ const MemberStepItem: React.FC<MemberStepItemProps> = ({step, isOpenBottomSheet,
   return (
     <>
       <DragHandleItem
-        hasDragHandler={isAdmin}
+        hasDragHandler={false}
         backgroundColor="white"
         prefix={`${step.actions.map(({name}) => name).join(', ')} ${step.type === 'IN' ? '들어옴' : '나감'}`}
         onClick={() => setIsOpenBottomSheet(prev => !prev)}

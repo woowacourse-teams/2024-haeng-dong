@@ -21,6 +21,7 @@ export type ReturnUseDynamicInput = {
   getFilledInputList: (list?: InputValue[]) => InputValue[];
   focusNextInputOnEnter: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
   setInputValueTargetIndex: (index: number, value: string) => void;
+  resetInputValue: () => void;
 };
 
 const useDynamicInput = (validateFunc: (name: string) => ValidateResult): ReturnUseDynamicInput => {
@@ -96,6 +97,10 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     });
   };
 
+  const resetInputValue = () => {
+    setInputList(initialInputList);
+  };
+
   const focusNextInputOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.nativeEvent.isComposing) return;
 
@@ -130,6 +135,7 @@ const useDynamicInput = (validateFunc: (name: string) => ValidateResult): Return
     getFilledInputList,
     focusNextInputOnEnter,
     setInputValueTargetIndex,
+    resetInputValue,
   };
 };
 

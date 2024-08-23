@@ -172,8 +172,6 @@ describe('useMemberReportListInActionTest', () => {
         result.current.addAdjustedMember(adjustedMemberMangcho);
       });
 
-      console.log(result.current.memberReportListInAction);
-
       const targetMember = result.current.memberReportListInAction.find(member => member.name === '망쵸');
       expect(targetMember?.price).toBe(300);
 
