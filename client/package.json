@@ -9,7 +9,7 @@
     "lint": "npx lerna run lint",
     "test": "npx lerna run test --scope=haengdong-client",
     "build": "npx lerna run build",
-    "publish": "npx lerna publish --no-private",
+    "publish": "npx lerna publish from-package --scope=haengdong-design",
     "version": "npx lerna version --no-private",
     "graph": "npx nx graph"
   },
