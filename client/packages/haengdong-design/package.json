@@ -1,6 +1,6 @@
 {
   "name": "haengdong-design",
-  "version": "0.1.82",
+  "version": "0.1.81",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -11,6 +11,7 @@
   "scripts": {
     "start": "webpack serve ",
     "build": "rm -rf dist && mkdir dist && tsc && cp -r ./src/assets ./dist && tsc-alias",
+    "build:watch": "tsc --watch & tsc-alias --watch",
     "storybook": "storybook dev -p 6006",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --write {src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",

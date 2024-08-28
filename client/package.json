@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "npx lerna run build --scope=haengdong-design && npx lerna run dev --scope=haengdong-client",
+    "start": "npx lerna run build:watch --scope=haengdong-design --parallel & npx lerna run dev --scope=haengdong-client --parallel",
     "lint": "npx lerna run lint",
     "test": "npx lerna run test --scope=haengdong-client",
     "build": "npx lerna run build",
