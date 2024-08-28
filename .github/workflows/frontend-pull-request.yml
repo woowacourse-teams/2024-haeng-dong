@@ -14,7 +14,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./client/package/haengdong-client/package/haengdong-client
+        working-directory: ./client/package/haengdong-client
 
     steps:
       - name: Checkout code
@@ -26,19 +26,20 @@ jobs:
           node-version: '20.15.1'
 
       - name: Install dependencies
-        working-directory: ./client/package/haengdong-client
+        working-directory: ./client
         run: npm install
 
       - name: Run lint
-        working-directory: ./client/package/haengdong-client
+        working-directory: ./client
         run: npm run lint
 
       - name: Run test
-        working-directory: ./client/package/haengdong-client
+        working-directory: ./client
         run: npm run test
 
       - name: Cypress test
-        run: npm run dev &
+        working-directory: ./client/packages/haengdong-client
+        run: npm run dev
         env:
           CI: true
 
