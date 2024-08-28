@@ -5,7 +5,7 @@ on:
     branches:
       - fe-dev
     paths:
-      - 'HDesign/**'
+      - './client/package/haengdong-design/**'
 
 jobs:
   chromatic:
@@ -34,18 +34,18 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          cd HDesign
+          cd client/package/haengdong-design
           npm install
 
       - name: Run lint
         run: npm run lint
-        working-directory: ./HDesign
+        working-directory: ./client/package/haengdong-design
 
       - name: Run Chromatic
         uses: chromaui/action@latest
         id: publish_chromatic
         with:
-          workingDir: HDesign
+          workingDir: client/package/haengdong-design
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Comment on PR

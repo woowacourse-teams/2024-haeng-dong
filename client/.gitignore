@@ -1,14 +1,1 @@
-logs
-*.log
-npm-debug.log*
-
-node_modules
-dist
-
-.env.*
-
-*storybook.log
-.DS_Store
-
-# Sentry Config File
-.env.sentry-build-plugin
+node_modules/

@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize]
     branches: [main, fe-dev]
     paths:
-      - 'client/**'
+      - './client/package/haengdong-client/**'
 
 jobs:
   test:
@@ -14,7 +14,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./client
+        working-directory: ./client/package/haengdong-client/package/haengdong-client
 
     steps:
       - name: Checkout code
@@ -26,15 +26,15 @@ jobs:
           node-version: '20.15.1'
 
       - name: Install dependencies
-        working-directory: ./client
+        working-directory: ./client/package/haengdong-client
         run: npm install
 
       - name: Run lint
-        working-directory: ./client
+        working-directory: ./client/package/haengdong-client
         run: npm run lint
 
       - name: Run test
-        working-directory: ./client
+        working-directory: ./client/package/haengdong-client
         run: npm run test
 
       - name: Cypress test
