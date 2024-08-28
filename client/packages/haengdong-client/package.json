@@ -11,8 +11,8 @@
     "build-dev": "NODE_ENV=development webpack --config webpack.dev.mjs",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
-    "cypress-open": "cypress open",
-    "cypress-run": "cypress run",
+    "cypress-open": "npm run dev & SERVER_PID=$! && npx cypress open && kill $SERVER_PID",
+    "cypress-run": "npm run dev & SERVER_PID=$! && npx cypress run && kill $SERVER_PID",
     "test": "jest"
   },
   "keywords": [],

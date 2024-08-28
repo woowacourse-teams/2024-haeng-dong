@@ -75,6 +75,7 @@ const getButtonVariantsStyle = (variants: ButtonVariants, theme: Theme) => {
     primary: [
       css({
         backgroundColor: theme.colors.primary,
+        // backgroundColor: 'white',
         color: theme.colors.onPrimary,
       }),
       getHoverAndActiveBackground(theme.colors.primary),

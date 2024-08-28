@@ -1,9 +1,13 @@
 {
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "packages": [
+    "packages/*"
+  ],
   "version": "0.1.81",
+  "includeMergedTags": true,
   "command": {
     "publish": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "registry": "https://npm.pkg.github.com"
     }
   }
 }

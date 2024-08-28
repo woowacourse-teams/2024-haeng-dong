@@ -1,11 +1,11 @@
-name: frontend-pull-request
+name: Client Pull Request
 
 on:
   pull_request:
     types: [opened, synchronize]
     branches: [main, fe-dev]
     paths:
-      - './client/package/haengdong-client/**'
+      - 'client/**'
 
 jobs:
   test:
@@ -14,7 +14,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./client/package/haengdong-client
+        working-directory: ./client
 
     steps:
       - name: Checkout code
@@ -26,25 +26,16 @@ jobs:
           node-version: '20.15.1'
 
       - name: Install dependencies
-        working-directory: ./client
         run: npm install
 
+      - name: Run build
+        run: npm run build
+
       - name: Run lint
-        working-directory: ./client
         run: npm run lint
 
       - name: Run test
-        working-directory: ./client
         run: npm run test
 
       - name: Cypress test
-        working-directory: ./client/packages/haengdong-client
-        run: npm run dev
-        env:
-          CI: true
-
-      - name: Wait for the server to start
-        run: sleep 3
-
-      - name: Run Cypress tests
-        run: npm run cypress-run
+        run: npm run e2e

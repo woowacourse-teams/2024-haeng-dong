@@ -1,5 +1,6 @@
 {
   "name": "client",
+  "version": "0.1.81",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -8,9 +9,14 @@
     "start": "npx lerna run build:watch --scope=haengdong-design --parallel & npx lerna run dev --scope=haengdong-client --parallel",
     "lint": "npx lerna run lint",
     "test": "npx lerna run test --scope=haengdong-client",
+    "e2e": "npx lerna run cypress-run --scope=haengdong-client",
     "build": "npx lerna run build",
-    "publish": "npx lerna publish --no-private",
-    "version": "npx lerna version --no-private",
+    "ci:versionup:patch": "npx lerna version patch --no-push --no-git-tag-version --yes && npm run commit-version",
+    "ci:versionup:minor": "npx lerna version minor --no-push --no-git-tag-version --yes && npm run commit-version",
+    "ci:versionup:major": "npx lerna version major --no-push --no-git-tag-version --yes && npm run commit-version",
+    "commit-version": "git add . && git commit -m \"chore(release): v`node -p 'require(\"./lerna.json\").version'`\"",
+    "release": "npx lerna publish from-package",
+    "ci:release": "npx lerna publish from-package --yes",
     "graph": "npx nx graph"
   },
   "dependencies": {},
