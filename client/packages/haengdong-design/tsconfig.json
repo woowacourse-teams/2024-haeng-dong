@@ -11,6 +11,7 @@
     "declarationDir": "./dist",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "types": ["jest", "@testing-library/jest-dom"],
     "forceConsistentCasingInFileNames": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "react-jsx",
