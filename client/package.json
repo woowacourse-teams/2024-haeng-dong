@@ -7,10 +7,11 @@
   ],
   "scripts": {
     "start": "npx lerna run build:watch --scope=haengdong-design --parallel & npx lerna run dev --scope=haengdong-client --parallel",
+    "build": "npx lerna run build",
     "lint": "npx lerna run lint",
     "test": "npx lerna run test --scope=haengdong-client",
     "e2e": "npx lerna run cypress-run --scope=haengdong-client",
-    "build": "npx lerna run build",
+    "storybook": "npx lerna run storybook --scope=haengdong-design",
     "ci:versionup:patch": "npx lerna version patch --no-push --no-git-tag-version --yes && npm run commit-version",
     "ci:versionup:minor": "npx lerna version minor --no-push --no-git-tag-version --yes && npm run commit-version",
     "ci:versionup:major": "npx lerna version major --no-push --no-git-tag-version --yes && npm run commit-version",
