@@ -3,7 +3,7 @@ name: Design System Release
 on:
   pull_request:
     branches:
-      - fe-dev
+      - main
     types: [ closed ]
   workflow_dispatch: # for force release
 
@@ -44,6 +44,7 @@ jobs:
       run:
         working-directory: ./client
     needs: check
+    if: always() && (needs.check.outputs.EXISTS_TAG == 'false')
     permissions:
       contents: write
       issues: write
@@ -56,7 +57,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.15.1'
-          # registry-url: 'https://registry.npmjs.org/haengdong-design'
+          registry-url: 'https://registry.npmjs.org'
       - name: Git Identity
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -73,10 +74,10 @@ jobs:
         env:
           # actions/setup-node create .npmrc with `NODE_AUTH_TOKEN` env if `registry-url` is defined
           # === `echo "${ registry-url }/:_authToken=${ NODE_AUTH_TOKEN }" > .npmrc`
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # [EXAMPLE]
+          # NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # [EXAMPLE]
           # for publishing packages to npm
-          # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Git Tag
         uses: pkgdeps/git-tag-action@v2
         with:

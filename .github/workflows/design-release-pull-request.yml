@@ -108,6 +108,7 @@ jobs:
           title: 'v${{ env.PACKAGE_VERSION }}'
           body: |
             ${{ steps.release_note.outputs.stdout }}
+            '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
           labels: "Type: Release"
       - name: Check Pull Request
         run: |
