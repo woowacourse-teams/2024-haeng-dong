@@ -1,13 +1,53 @@
-name: Storybook Deployment
+name: Client test on PR created
 
 on:
   pull_request:
-    branches:
-      - fe-dev
+    types: [opened, synchronize]
+    branches: [main, fe-dev]
     paths:
-      - 'HDesign/**'
+      - 'client/**'
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./client
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm install
+
+      - name: Run lint
+        working-directory: ./client
+        run: npm run lint
+
+      - name: Run test
+        working-directory: ./client
+        run: npm run test
+
+      - name: Cypress test
+        run: npm run dev &
+        env:
+          CI: true
+
+      - name: Wait for the server to start
+        run: sleep 3
+
+      - name: Run Cypress tests
+        run: npm run cypress-run
+
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
@@ -52,3 +92,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+
