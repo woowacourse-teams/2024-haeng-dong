@@ -11,19 +11,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import server.haengdong.application.ActionService;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.response.ActionAppResponse;
+import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
-import server.haengdong.presentation.request.MemberNamesUpdateRequest;
 import server.haengdong.presentation.response.ActionsResponse;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventResponse;
+import server.haengdong.presentation.response.MemberBillReportsResponse;
 import server.haengdong.presentation.response.MembersResponse;
 import server.haengdong.presentation.response.StepsResponse;
 
@@ -36,18 +37,7 @@ public class EventController {
     private final EventService eventService;
     private final AuthService authService;
     private final CookieProperties cookieProperties;
-
-    @PostMapping("/api/events")
-    public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
-        EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
-
-        String jwtToken = authService.createToken(eventResponse.eventId());
-
-        ResponseCookie responseCookie = createResponseCookie(jwtToken);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                .body(eventResponse);
-    }
+    private final ActionService actionService;
 
     @GetMapping("/api/events/{eventId}")
     public ResponseEntity<EventDetailResponse> findEvent(@PathVariable("eventId") String token) {
@@ -78,14 +68,24 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/api/events/{eventId}/members/nameChange")
-    public ResponseEntity<Void> updateMember(
-            @PathVariable("eventId") String token,
-            @Valid @RequestBody MemberNamesUpdateRequest request
-    ) {
-        eventService.updateMember(token, request.toAppRequest());
+    @GetMapping("/api/events/{eventId}/reports")
+    public ResponseEntity<MemberBillReportsResponse> getMemberBillReports(@PathVariable("eventId") String token) {
+        List<MemberBillReportAppResponse> memberBillReports = actionService.getMemberBillReports(token);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok()
+                .body(MemberBillReportsResponse.of(memberBillReports));
+    }
+
+    @PostMapping("/api/events")
+    public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
+        EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
+
+        String jwtToken = authService.createToken(eventResponse.eventId());
+
+        ResponseCookie responseCookie = createResponseCookie(jwtToken);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(eventResponse);
     }
 
     @PostMapping("/api/events/{eventId}/login")
@@ -100,11 +100,6 @@ public class EventController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .build();
-    }
-
-    @PostMapping("/api/events/{eventId}/auth")
-    public ResponseEntity<Void> authenticate(@PathVariable("eventId") String token) {
-        return ResponseEntity.ok().build();
     }
 
     private ResponseCookie createResponseCookie(String token) {

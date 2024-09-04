@@ -22,19 +22,24 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
+import server.haengdong.application.BillActionDetailService;
 import server.haengdong.application.BillActionService;
-import server.haengdong.presentation.BillActionController;
+import server.haengdong.presentation.admin.AdminBillActionController;
+import server.haengdong.presentation.request.BillActionDetailUpdateRequest;
+import server.haengdong.presentation.request.BillActionDetailsUpdateRequest;
 import server.haengdong.presentation.request.BillActionSaveRequest;
 import server.haengdong.presentation.request.BillActionUpdateRequest;
 import server.haengdong.presentation.request.BillActionsSaveRequest;
 
-class BillActionControllerDocsTest extends RestDocsSupport {
+class AdminBillActionControllerDocsTest extends RestDocsSupport {
 
     private final BillActionService billActionService = mock(BillActionService.class);
+    private final BillActionDetailService billActionDetailService = mock(BillActionDetailService.class);
 
     @Override
     protected Object initController() {
-        return new BillActionController(billActionService);
+        return new AdminBillActionController(billActionService, billActionDetailService);
     }
 
     @DisplayName("지출 내역을 생성한다.")
@@ -49,7 +54,7 @@ class BillActionControllerDocsTest extends RestDocsSupport {
         String requestBody = objectMapper.writeValueAsString(request);
         String eventId = "쿠키토큰";
 
-        mockMvc.perform(post("/api/events/{eventId}/bill-actions", eventId)
+        mockMvc.perform(post("/api/admin/events/{eventId}/bill-actions", eventId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .cookie(EVENT_COOKIE)
                         .content(requestBody))
@@ -80,7 +85,7 @@ class BillActionControllerDocsTest extends RestDocsSupport {
         String requestBody = objectMapper.writeValueAsString(request);
         String eventId = "웨디토큰";
 
-        mockMvc.perform(put("/api/events/{eventId}/bill-actions/{actionId}", eventId, 1L)
+        mockMvc.perform(put("/api/admin/events/{eventId}/bill-actions/{actionId}", eventId, 1L)
                         .cookie(EVENT_COOKIE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
@@ -103,12 +108,55 @@ class BillActionControllerDocsTest extends RestDocsSupport {
                 ));
     }
 
+    @DisplayName("참여자별 지출 금액을 수정한다.")
+    @Test
+    void updateBillActionDetailsTest() throws Exception {
+        List<BillActionDetailUpdateRequest> billActionDetailUpdateRequests = List.of(
+                new BillActionDetailUpdateRequest("소하", 10000L, true),
+                new BillActionDetailUpdateRequest("웨디", 20000L, true)
+        );
+        BillActionDetailsUpdateRequest request = new BillActionDetailsUpdateRequest(
+                billActionDetailUpdateRequests);
+
+        String json = objectMapper.writeValueAsString(request);
+
+        mockMvc.perform(put("/api/admin/events/{eventId}/bill-actions/{actionId}/fixed", "TOKEN", 1L)
+                        .cookie(EVENT_COOKIE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("updateBillActionDetailsTest",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID"),
+                                        parameterWithName("actionId").description("액션 ID")
+                                ),
+                                requestCookies(
+                                        cookieWithName("eventToken").description("행사 관리자 토큰")
+                                ),
+                                requestFields(
+                                        fieldWithPath("members").type(JsonFieldType.ARRAY)
+                                                .description("전체 정산 수정 요청 목록"),
+                                        fieldWithPath("members[0].name").type(JsonFieldType.STRING)
+                                                .description("참여자 이름"),
+                                        fieldWithPath("members[0].price").type(JsonFieldType.NUMBER)
+                                                .description("참여자 정산 금액"),
+                                        fieldWithPath("members[0].isFixed").type(JsonFieldType.BOOLEAN)
+                                                .description("참여자 정산 금액 수정 여부")
+                                )
+                        )
+                );
+    }
+
     @DisplayName("지출 내역을 삭제한다.")
     @Test
     void deleteBillAction() throws Exception {
         String eventId = "토다리토큰";
 
-        mockMvc.perform(delete("/api/events/{eventId}/bill-actions/{actionId}", eventId, 1)
+        mockMvc.perform(delete("/api/admin/events/{eventId}/bill-actions/{actionId}", eventId, 1)
                         .cookie(EVENT_COOKIE)
                 )
                 .andDo(print())
