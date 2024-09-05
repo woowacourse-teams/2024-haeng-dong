@@ -9,8 +9,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +28,7 @@ import server.haengdong.exception.HaengdongException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"event_id", "sequence"})})
 @Entity
 public class BillAction implements Comparable<BillAction> {
 
@@ -38,16 +42,18 @@ public class BillAction implements Comparable<BillAction> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JoinColumn(name = "event_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Event event;
 
-    @AttributeOverride(name = "value", column = @Column(name = "sequence"))
+    @AttributeOverride(name = "value", column = @Column(name = "sequence", nullable = false))
     @Embedded
     private Sequence sequence;
 
-    @Column(length = MAX_TITLE_LENGTH)
+    @Column(nullable = false, length = MAX_TITLE_LENGTH)
     private String title;
 
+    @Column(nullable = false)
     private Long price;
 
     @OneToMany(mappedBy = "billAction", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

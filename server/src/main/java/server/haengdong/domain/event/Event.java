@@ -26,12 +26,14 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "password"))
+    @AttributeOverride(name = "value", column = @Column(name = "password", nullable = false))
     private Password password;
 
+    @Column(nullable = false, unique = true)
     private String token;
 
     public Event(String name, String password, String token) {

@@ -10,7 +10,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,25 +23,29 @@ import server.haengdong.exception.HaengdongException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"event_id", "sequence"})})
 @Entity
 public class MemberAction implements Comparable<MemberAction> {
 
     public static final int MIN_NAME_LENGTH = 1;
-    public static final int MAX_NAME_LENGTH = 4;
+    public static final int MAX_NAME_LENGTH = 8;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JoinColumn(name = "event_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Event event;
 
-    @AttributeOverride(name = "value", column = @Column(name = "sequence"))
+    @AttributeOverride(name = "value", column = @Column(name = "sequence", nullable = false))
     @Embedded
     private Sequence sequence;
 
+    @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String memberName;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MemberActionStatus status;
 
