@@ -48,6 +48,12 @@ jobs:
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./client
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
