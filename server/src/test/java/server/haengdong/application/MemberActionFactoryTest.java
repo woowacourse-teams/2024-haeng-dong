@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
-import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
 import server.haengdong.domain.action.MemberActionStatus;
+import server.haengdong.domain.action.Sequence;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
@@ -36,10 +36,8 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     @Test
     void createMemberActionsTest() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action1 = new Action(event, 1L);
-        Action action2 = new Action(event, 2L);
-        MemberAction memberAction1 = new MemberAction(action1, "토다리", MemberActionStatus.IN, 1L);
-        MemberAction memberAction2 = new MemberAction(action2, "토다리", MemberActionStatus.OUT, 2L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", MemberActionStatus.IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "토다리", MemberActionStatus.OUT);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
@@ -47,9 +45,9 @@ class MemberActionFactoryTest extends ServiceTestSupport {
 
         List<MemberAction> unorderedMemberActions = List.of(memberAction2, memberAction1);
         CurrentMembers currentMembers = CurrentMembers.of(unorderedMemberActions);
-        Action startAction = new Action(event, 3L);
+        Sequence sequence = new Sequence(3L);
 
-        assertThatThrownBy(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+        assertThatThrownBy(() -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -57,23 +55,23 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     @Test
     void createMemberActionsTest1() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
+        MemberAction memberAction = Fixture.createMemberAction(event, 1L, "토다리", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
         MemberActionsSaveAppRequest memberActionsSaveAppRequest = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
-        Action startAction = new Action(event, 2L);
+        Sequence sequence = new Sequence(2L);
 
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
-        List<MemberAction> memberActions = memberActionFactory.createMemberActions(memberActionsSaveAppRequest,
-                                                                                   currentMembers, startAction
+        List<MemberAction> memberActions = memberActionFactory.createMemberActions(event, memberActionsSaveAppRequest,
+                currentMembers, sequence
         );
 
         assertThat(memberActions).hasSize(1)
-                .extracting(MemberAction::getAction, MemberAction::getMemberName, MemberAction::getStatus)
+                .extracting(MemberAction::getEvent, MemberAction::getSequence, MemberAction::getMemberName,
+                        MemberAction::getStatus)
                 .containsExactly(
-                        tuple(startAction, "토다리", MemberActionStatus.OUT)
+                        tuple(event, sequence, "토다리", MemberActionStatus.OUT)
                 );
     }
 
@@ -81,16 +79,15 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     @Test
     void createMemberActionsTest2() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
+        MemberAction memberAction = Fixture.createMemberAction(event, 1L, "토다리", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
-        Action startAction = new Action(event, 2L);
+        Sequence sequence = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence))
                 .doesNotThrowAnyException();
     }
 
@@ -98,19 +95,17 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     @Test
     void createMemberActionsTest3() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action1 = new Action(event, 1L);
-        MemberAction memberAction1 = new MemberAction(action1, "토다리", MemberActionStatus.IN, 1L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", MemberActionStatus.IN);
         memberActionRepository.save(memberAction1);
-        Action action2 = new Action(event, 2L);
-        MemberAction memberAction2 = new MemberAction(action2, "토다리", MemberActionStatus.OUT, 2L);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "토다리", MemberActionStatus.OUT);
         memberActionRepository.save(memberAction2);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "IN")));
-        Action startAction = new Action(event, 3L);
+        Sequence sequence = new Sequence(3L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction1, memberAction2));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence))
                 .doesNotThrowAnyException();
     }
 
@@ -118,16 +113,15 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     @Test
     void createMemberActionsTest4() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "토다리", MemberActionStatus.IN, 1L);
+        MemberAction memberAction = Fixture.createMemberAction(event, 1L, "토다리", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "IN")));
-        Action startAction = new Action(event, 2L);
+        Sequence sequence = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence))
                 .doesNotThrowAnyException();
     }
 
@@ -138,11 +132,11 @@ class MemberActionFactoryTest extends ServiceTestSupport {
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "OUT")));
-        Action startAction = new Action(event, 2L);
+        Sequence sequence = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of());
 
         assertThatCode(
-                () -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+                () -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -150,16 +144,15 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     @Test
     void createMemberActionTest6() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
+        MemberAction memberAction = Fixture.createMemberAction(event, 1L, "쿠키", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "IN")));
-        Action startAction = new Action(event, 2L);
+        Sequence sequence = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -173,11 +166,11 @@ class MemberActionFactoryTest extends ServiceTestSupport {
                         new MemberActionSaveAppRequest("쿠키", "IN"),
                         new MemberActionSaveAppRequest("쿠키", "IN")
                 ));
-        Action startAction = new Action(event, 1L);
+        Sequence sequence = new Sequence(1L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of());
 
         assertThatCode(
-                () -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+                () -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -185,8 +178,8 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     @Test
     void createMemberActionTest8() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
+        Sequence sequence1 = new Sequence(1L);
+        MemberAction memberAction = new MemberAction(event, sequence1, "쿠키", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
@@ -194,10 +187,10 @@ class MemberActionFactoryTest extends ServiceTestSupport {
                         new MemberActionSaveAppRequest("쿠키", "OUT"),
                         new MemberActionSaveAppRequest("쿠키", "OUT")
                 ));
-        Action startAction = new Action(event, 2L);
+        Sequence sequence2 = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence2))
                 .isInstanceOf(HaengdongException.class);
     }
 
@@ -205,8 +198,8 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     @Test
     void createMemberActionTest9() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "쿠키", MemberActionStatus.IN, 1L);
+        Sequence sequence = new Sequence(1L);
+        MemberAction memberAction = new MemberAction(event, sequence, "쿠키", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
         MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
@@ -214,10 +207,10 @@ class MemberActionFactoryTest extends ServiceTestSupport {
                         new MemberActionSaveAppRequest("쿠키", "IN"),
                         new MemberActionSaveAppRequest("쿠키", "OUT")
                 ));
-        Action startAction = new Action(event, 2L);
+        Sequence sequence2 = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
 
-        assertThatCode(() -> memberActionFactory.createMemberActions(request, currentMembers, startAction))
+        assertThatCode(() -> memberActionFactory.createMemberActions(event, request, currentMembers, sequence2))
                 .isInstanceOf(HaengdongException.class);
     }
 }

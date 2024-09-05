@@ -1,6 +1,8 @@
 package server.haengdong.domain.action;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,10 +10,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
@@ -27,22 +30,24 @@ public class MemberAction implements Comparable<MemberAction> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Action action;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Event event;
+
+    @AttributeOverride(name = "value", column = @Column(name = "sequence"))
+    @Embedded
+    private Sequence sequence;
 
     private String memberName;
 
     @Enumerated(EnumType.STRING)
     private MemberActionStatus status;
 
-    private Long memberGroupId;
-
-    public MemberAction(Action action, String memberName, MemberActionStatus status, Long memberGroupId) {
+    public MemberAction(Event event, Sequence sequence, String memberName, MemberActionStatus status) {
         validateMemberName(memberName);
-        this.action = action;
+        this.event = event;
+        this.sequence = sequence;
         this.memberName = memberName;
         this.status = status;
-        this.memberGroupId = memberGroupId;
     }
 
     private void validateMemberName(String memberName) {
@@ -65,12 +70,8 @@ public class MemberAction implements Comparable<MemberAction> {
         return status == memberActionStatus;
     }
 
-    public Long getSequence() {
-        return action.getSequence();
-    }
-
     @Override
     public int compareTo(MemberAction o) {
-        return Long.compare(this.getSequence(), o.getSequence());
+        return sequence.compareTo(o.sequence);
     }
 }

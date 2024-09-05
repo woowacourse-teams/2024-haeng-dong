@@ -12,11 +12,11 @@ import server.haengdong.application.request.BillActionDetailUpdateAppRequest;
 import server.haengdong.application.request.BillActionDetailsUpdateAppRequest;
 import server.haengdong.application.response.BillActionDetailAppResponse;
 import server.haengdong.application.response.BillActionDetailsAppResponse;
-import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionDetail;
 import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
+import server.haengdong.domain.action.Sequence;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
@@ -41,15 +41,15 @@ class BillActionDetailServiceTest extends ServiceTestSupport {
     void findBillActionDetailsTest() {
         Event event1 = Fixture.EVENT1;
         eventRepository.save(event1);
-        Action action = new Action(event1, 1L);
-        BillAction billAction = new BillAction(action, "뽕족", 10000L);
+        Sequence sequence = Sequence.createFirst();
+        BillAction billAction = new BillAction(event1, sequence, "뽕족", 10000L);
         billActionRepository.save(billAction);
         BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "토다리", 6000L, true);
         BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "쿠키", 4000L, true);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));
 
         BillActionDetailsAppResponse response = billActionDetailService.findBillActionDetails(
-                event1.getToken(), action.getId());
+                event1.getToken(), billAction.getId());
 
         assertThat(response.billActionDetailAppResponses()).hasSize(2)
                 .extracting(BillActionDetailAppResponse::name, BillActionDetailAppResponse::price)
@@ -64,8 +64,8 @@ class BillActionDetailServiceTest extends ServiceTestSupport {
     void updateBillActionDetailsTest1() {
         Event event1 = Fixture.EVENT1;
         eventRepository.save(event1);
-        Action action = new Action(event1, 1L);
-        BillAction billAction = new BillAction(action, "뽕족", 10000L);
+        Sequence sequence = Sequence.createFirst();
+        BillAction billAction = new BillAction(event1, sequence, "뽕족", 10000L);
         billActionRepository.save(billAction);
         BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "토다리", 5000L, false);
         BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "쿠키", 5000L, false);
@@ -76,7 +76,7 @@ class BillActionDetailServiceTest extends ServiceTestSupport {
                 new BillActionDetailUpdateAppRequest("쿠키", 4000L, true)
         ));
         assertThatCode(
-                () -> billActionDetailService.updateBillActionDetails(event1.getToken(), action.getId(), request))
+                () -> billActionDetailService.updateBillActionDetails(event1.getToken(), billAction.getId(), request))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("지출 총액이 일치하지 않습니다.");
     }
@@ -86,8 +86,8 @@ class BillActionDetailServiceTest extends ServiceTestSupport {
     void updateBillActionDetailsTest2() {
         Event event1 = Fixture.EVENT1;
         eventRepository.save(event1);
-        Action action = new Action(event1, 1L);
-        BillAction billAction = new BillAction(action, "뽕족", 10000L);
+        Sequence sequence = Sequence.createFirst();
+        BillAction billAction = new BillAction(event1, sequence, "뽕족", 10000L);
         billActionRepository.save(billAction);
         BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "토다리", 5000L, false);
         BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "쿠키", 5000L, false);
@@ -97,7 +97,7 @@ class BillActionDetailServiceTest extends ServiceTestSupport {
                 new BillActionDetailUpdateAppRequest("토다리", 3000L, true),
                 new BillActionDetailUpdateAppRequest("쿠키", 7000L, true)
         ));
-        billActionDetailService.updateBillActionDetails(event1.getToken(), action.getId(), request);
+        billActionDetailService.updateBillActionDetails(event1.getToken(), billAction.getId(), request);
 
         List<BillActionDetail> results = billActionDetailRepository.findAll();
 

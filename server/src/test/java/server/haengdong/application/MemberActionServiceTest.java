@@ -13,14 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
-import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionDetail;
 import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
-import server.haengdong.domain.action.MemberActionStatus;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
@@ -47,8 +45,7 @@ class MemberActionServiceTest extends ServiceTestSupport {
     @Test
     void saveMemberActionTest() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "망쵸", IN, 1L);
+        MemberAction memberAction = Fixture.createMemberAction(event, 1L, "망쵸", IN);
         memberActionRepository.save(memberAction);
 
         assertThatCode(() -> memberActionService.saveMemberAction(event.getToken(), new MemberActionsSaveAppRequest(
@@ -60,12 +57,10 @@ class MemberActionServiceTest extends ServiceTestSupport {
     @Test
     void saveMemberActionTest1() {
         Event event = eventRepository.save(Fixture.EVENT1);
-        Action actionOne = new Action(event, 1L);
-        MemberAction memberActionOne = new MemberAction(actionOne, "망쵸", IN, 1L);
+        MemberAction memberActionOne = Fixture.createMemberAction(event, 1L, "망쵸", IN);
         memberActionRepository.save(memberActionOne);
 
-        Action actionTwo = new Action(event, 2L);
-        MemberAction memberActionTwo = new MemberAction(actionTwo, "망쵸", OUT, 1L);
+        MemberAction memberActionTwo = Fixture.createMemberAction(event, 2L, "망쵸", OUT);
         memberActionRepository.save(memberActionTwo);
 
         assertThatCode(() -> memberActionService.saveMemberAction(event.getToken(), new MemberActionsSaveAppRequest(
@@ -95,19 +90,18 @@ class MemberActionServiceTest extends ServiceTestSupport {
     void deleteMember() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "참여자", IN, 1L);
-        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "토다리", IN, 1L);
-        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "쿠키", IN, 1L);
-        MemberAction memberAction4 = new MemberAction(new Action(event, 4L), "소하", IN, 1L);
-        MemberAction memberAction5 = new MemberAction(new Action(event, 5L), "웨디", IN, 1L);
-        MemberAction memberAction6 = new MemberAction(new Action(event, 6L), "참여자", OUT, 1L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "참여자", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "토다리", IN);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "쿠키", IN);
+        MemberAction memberAction4 = Fixture.createMemberAction(event, 4L, "소하", IN);
+        MemberAction memberAction5 = Fixture.createMemberAction(event, 5L, "웨디", IN);
+        MemberAction memberAction6 = Fixture.createMemberAction(event, 6L, "참여자", OUT);
         memberActionRepository.saveAll(
                 List.of(memberAction1, memberAction2, memberAction3, memberAction4, memberAction5, memberAction6));
 
         Event event2 = Fixture.EVENT2;
         eventRepository.save(event2);
-        Action action2 = Action.createFirst(event2);
-        MemberAction anotherMemberAction = new MemberAction(action2, "참여자", IN, 1L);
+        MemberAction anotherMemberAction = Fixture.createMemberAction(event2, 1L, "참여자", IN);
         memberActionRepository.save(anotherMemberAction);
 
         memberActionService.deleteMember(event.getToken(), "참여자");
@@ -130,12 +124,11 @@ class MemberActionServiceTest extends ServiceTestSupport {
     void deleteMember1() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
-        Action targetAction = new Action(event, 2L);
-        MemberAction memberAction2 = createMemberAction(targetAction, "토다리", OUT, 2L);
-        MemberAction memberAction3 = createMemberAction(new Action(event, 3L), "쿠키", IN, 3L);
-        MemberAction memberAction4 = createMemberAction(new Action(event, 4L), "웨디", IN, 4L);
-        MemberAction memberAction5 = createMemberAction(new Action(event, 5L), "감자", IN, 5L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "토다리", OUT);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "쿠키", IN);
+        MemberAction memberAction4 = Fixture.createMemberAction(event, 4L, "웨디", IN);
+        MemberAction memberAction5 = Fixture.createMemberAction(event, 5L, "감자", IN);
         memberActionRepository.saveAll(
                 List.of(memberAction1,
                         memberAction2,
@@ -144,14 +137,12 @@ class MemberActionServiceTest extends ServiceTestSupport {
                         memberAction5
                 )
         );
-        BillAction billAction = new BillAction(new Action(event, 6L), "뽕족", 100_000L);
+        BillAction billAction = Fixture.createBillAction(event, 6L, "뽕족", 100_000L);
         billActionRepository.save(billAction);
         BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L, true);
         BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L, false);
         BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L, false);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
-        List<BillActionDetail> allByBillAction = billActionDetailRepository.findAllByBillAction(billAction);
-        System.out.println("allByBillAction = " + allByBillAction.isEmpty());
 
         memberActionService.deleteMember(event.getToken(), "쿠키");
 
@@ -170,14 +161,13 @@ class MemberActionServiceTest extends ServiceTestSupport {
     void deleteMemberAction() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
-        Action targetAction = new Action(event, 2L);
-        MemberAction memberAction2 = createMemberAction(targetAction, "토다리", OUT, 2L);
-        MemberAction memberAction3 = createMemberAction(new Action(event, 3L), "쿠키", IN, 3L);
-        MemberAction memberAction4 = createMemberAction(new Action(event, 4L), "웨디", IN, 4L);
-        MemberAction memberAction5 = createMemberAction(new Action(event, 5L), "토다리", IN, 5L);
-        MemberAction memberAction6 = createMemberAction(new Action(event, 6L), "토다리", OUT, 6L);
-        MemberAction memberAction7 = createMemberAction(new Action(event, 7L), "쿠키", OUT, 7L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "토다리", OUT);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "쿠키", IN);
+        MemberAction memberAction4 = Fixture.createMemberAction(event, 4L, "웨디", IN);
+        MemberAction memberAction5 = Fixture.createMemberAction(event, 5L, "토다리", IN);
+        MemberAction memberAction6 = Fixture.createMemberAction(event, 6L, "토다리", OUT);
+        MemberAction memberAction7 = Fixture.createMemberAction(event, 7L, "쿠키", OUT);
         memberActionRepository.saveAll(
                 List.of(memberAction1,
                         memberAction2,
@@ -188,7 +178,7 @@ class MemberActionServiceTest extends ServiceTestSupport {
                         memberAction7)
         );
 
-        memberActionService.deleteMemberAction(event.getToken(), targetAction.getId());
+        memberActionService.deleteMemberAction(event.getToken(), memberAction2.getId());
         List<MemberAction> memberActions = memberActionRepository.findAll();
 
         assertThat(memberActions).hasSize(4)
@@ -206,12 +196,11 @@ class MemberActionServiceTest extends ServiceTestSupport {
     void deleteMemberAction1() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        MemberAction memberAction1 = createMemberAction(new Action(event, 1L), "토다리", IN, 1L);
-        Action targetAction = new Action(event, 2L);
-        MemberAction memberAction2 = createMemberAction(targetAction, "토다리", OUT, 2L);
-        MemberAction memberAction3 = createMemberAction(new Action(event, 3L), "쿠키", IN, 3L);
-        MemberAction memberAction4 = createMemberAction(new Action(event, 4L), "웨디", IN, 4L);
-        MemberAction memberAction5 = createMemberAction(new Action(event, 5L), "감자", IN, 5L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "토다리", OUT);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "쿠키", IN);
+        MemberAction memberAction4 = Fixture.createMemberAction(event, 4L, "웨디", IN);
+        MemberAction memberAction5 = Fixture.createMemberAction(event, 5L, "감자", IN);
         memberActionRepository.saveAll(
                 List.of(memberAction1,
                         memberAction2,
@@ -220,14 +209,14 @@ class MemberActionServiceTest extends ServiceTestSupport {
                         memberAction5
                 )
         );
-        BillAction billAction = new BillAction(new Action(event, 6L), "뽕족", 100_000L);
+        BillAction billAction = Fixture.createBillAction(event, 6L, "뽕족", 100_000L);
         billActionRepository.save(billAction);
         BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L, true);
         BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L, false);
         BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L, false);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
 
-        memberActionService.deleteMemberAction(event.getToken(), targetAction.getId());
+        memberActionService.deleteMemberAction(event.getToken(), memberAction2.getId());
         List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
 
         assertThat(billActionDetails).hasSize(4)
@@ -238,14 +227,5 @@ class MemberActionServiceTest extends ServiceTestSupport {
                         tuple("웨디", 25_000L),
                         tuple("감자", 25_000L)
                 );
-    }
-
-    private MemberAction createMemberAction(
-            Action action,
-            String memberName,
-            MemberActionStatus memberActionStatus,
-            long memberGroupId
-    ) {
-        return new MemberAction(action, memberName, memberActionStatus, memberGroupId);
     }
 }

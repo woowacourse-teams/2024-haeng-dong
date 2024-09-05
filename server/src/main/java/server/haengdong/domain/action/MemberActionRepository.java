@@ -12,42 +12,50 @@ import server.haengdong.domain.event.Event;
 @Repository
 public interface MemberActionRepository extends JpaRepository<MemberAction, Long> {
 
-    @Query("select m from MemberAction m join fetch m.action where m.action.event = :event")
     List<MemberAction> findAllByEvent(@Param("event") Event event);
 
     @Query("""
-            select distinct m.memberName
-            from MemberAction m
-            where m.action.event = :event
+            select distinct ma.memberName
+            from MemberAction ma
+            where ma.event = :event
             """)
     List<String> findAllUniqueMemberByEvent(Event event);
 
     @Modifying
     @Query("""
             delete
-            from MemberAction m
-            where m.memberName = :memberName and m.action.event = :event
+            from MemberAction ma
+            where ma.memberName = :memberName and ma.event = :event
             """)
     void deleteAllByEventAndMemberName(Event event, String memberName);
-
-    Optional<MemberAction> findByAction(Action action);
 
     @Modifying
     @Query("""
             delete
-            from MemberAction m
-            where m.memberName = :memberName and m.action.sequence >= :sequence
+            from MemberAction ma
+            where ma.memberName = :memberName and ma.sequence.value >= :sequence
             """)
     void deleteAllByMemberNameAndMinSequence(String memberName, Long sequence);
 
-    List<MemberAction> findAllByAction_EventAndMemberName(Event event, String memberName);
+    List<MemberAction> findAllByEventAndMemberName(Event event, String memberName);
 
-    boolean existsByAction_EventAndMemberName(Event event, String updatedMemberName);
+    boolean existsByEventAndMemberName(Event event, String updatedMemberName);
 
     @Query("""
             select ma
             from MemberAction ma
-            where ma.action.event = :event and ma.action.sequence < :sequence
+            where ma.event = :event and ma.sequence.value < :sequence
             """)
     List<MemberAction> findByEventAndSequence(Event event, Long sequence);
+
+    @Query("""
+            select ma
+            from MemberAction ma
+            WHERE ma.event = :event
+            ORDER BY ma.sequence.value DESC
+            LIMIT 1
+            """)
+    Optional<MemberAction> findLastByEvent(@Param("event") Event event);
+
+    MemberAction findByIdAndEvent(Long actionId, Event event);
 }

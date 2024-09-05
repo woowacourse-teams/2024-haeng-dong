@@ -1,12 +1,13 @@
 package server.haengdong.application.request;
 
-import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionStatus;
+import server.haengdong.domain.action.Sequence;
+import server.haengdong.domain.event.Event;
 
 public record MemberActionSaveAppRequest(String name, String status) {
 
-    public MemberAction toMemberAction(Action action, Long memberGroupId) {
-        return new MemberAction(action, name, MemberActionStatus.of(status), memberGroupId);
+    public MemberAction toMemberAction(Event event, Sequence sequence) {
+        return new MemberAction(event, sequence, name, MemberActionStatus.of(status));
     }
 }

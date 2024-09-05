@@ -16,5 +16,5 @@ public interface BillActionDetailRepository extends JpaRepository<BillActionDeta
             """)
     List<BillActionDetail> findAllByBillAction(BillAction billAction);
 
-    List<BillActionDetail> findAllByBillAction_Action_EventAndMemberName(Event event, String memberName);
+    List<BillActionDetail> findAllByBillAction_EventAndMemberName(Event event, String memberName);
 }

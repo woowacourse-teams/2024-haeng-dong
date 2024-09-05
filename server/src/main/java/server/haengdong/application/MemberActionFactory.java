@@ -6,11 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
-import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionStatus;
-import server.haengdong.domain.action.MemberGroupIdProvider;
+import server.haengdong.domain.action.Sequence;
+import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
@@ -18,23 +18,21 @@ import server.haengdong.exception.HaengdongException;
 @Component
 public class MemberActionFactory {
 
-    private final MemberGroupIdProvider memberGroupIdProvider;
-
     public List<MemberAction> createMemberActions(
+            Event event,
             MemberActionsSaveAppRequest request,
             CurrentMembers currentMembers,
-            Action action
+            Sequence sequence
     ) {
         validateMemberNames(request);
         validateActions(request, currentMembers);
 
-        Long memberGroupId = memberGroupIdProvider.createGroupId();
         List<MemberAction> createdMemberActions = new ArrayList<>();
         List<MemberActionSaveAppRequest> actions = request.actions();
         for (MemberActionSaveAppRequest appRequest : actions) {
-            MemberAction memberAction = appRequest.toMemberAction(action, memberGroupId);
+            MemberAction memberAction = appRequest.toMemberAction(event, sequence);
             createdMemberActions.add(memberAction);
-            action = action.next();
+            sequence = sequence.next();
         }
 
         return createdMemberActions;

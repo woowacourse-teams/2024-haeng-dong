@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import server.haengdong.application.ActionService;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
@@ -49,14 +48,13 @@ public class EventControllerDocsTest extends RestDocsSupport {
 
     private final EventService eventService = mock(EventService.class);
     private final AuthService authService = mock(AuthService.class);
-    private final ActionService actionService = mock(ActionService.class);
     private final CookieProperties cookieProperties = new CookieProperties(
             true, true, "domain", "path", "none", Duration.ofDays(7)
     );
 
     @Override
     protected Object initController() {
-        return new EventController(eventService, authService, cookieProperties, actionService);
+        return new EventController(eventService, authService, cookieProperties);
     }
 
     @DisplayName("토큰으로 행사를 조회한다.")
@@ -253,7 +251,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
         List<MemberBillReportAppResponse> memberBillReportAppResponses = List.of(
                 new MemberBillReportAppResponse("소하", 20_000L), new MemberBillReportAppResponse("토다리", 200_000L));
 
-        given(actionService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);
+        given(eventService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);
 
         mockMvc.perform(get("/api/events/{eventId}/reports", "망쵸토큰")
                         .accept(MediaType.APPLICATION_JSON))

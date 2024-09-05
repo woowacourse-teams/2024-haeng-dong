@@ -60,7 +60,7 @@ class EventControllerTest extends ControllerTestSupport {
         List<MemberBillReportAppResponse> memberBillReportAppResponses = List.of(
                 new MemberBillReportAppResponse("소하", 20_000L), new MemberBillReportAppResponse("토다리", 200_000L));
 
-        given(actionService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);
+        given(eventService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);
 
         mockMvc.perform(get("/api/events/{eventId}/reports", "망쵸토큰")
                         .accept(MediaType.APPLICATION_JSON))

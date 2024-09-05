@@ -14,12 +14,14 @@ import server.haengdong.application.request.MemberNamesUpdateAppRequest;
 import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
+import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionDetailRepository;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.MemberBillReport;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
@@ -57,7 +59,7 @@ public class EventService {
     public List<ActionAppResponse> findActions(String token) {
         Event event = getEvent(token);
 
-        List<BillAction> billActions = billActionRepository.findByAction_Event(event).stream()
+        List<BillAction> billActions = billActionRepository.findByEvent(event).stream()
                 .sorted(Comparator.comparing(BillAction::getSequence)).toList();
         List<MemberAction> memberActions = memberActionRepository.findAllByEvent(event).stream()
                 .sorted(Comparator.comparing(MemberAction::getSequence)).toList();
@@ -76,7 +78,7 @@ public class EventService {
         while (billActionIndex < billActions.size() && memberActionIndex < memberActions.size()) {
             BillAction billAction = billActions.get(billActionIndex);
             MemberAction memberAction = memberActions.get(memberActionIndex);
-            if (billAction.getSequence() < memberAction.getSequence()) {
+            if (billAction.getSequence().getValue() < memberAction.getSequence().getValue()) {
                 actionAppResponses.add(ActionAppResponse.of(billAction));
                 billActionIndex++;
             } else {
@@ -126,7 +128,7 @@ public class EventService {
     }
 
     private void validateBeforeMemberNameExist(Event event, String beforeName) {
-        boolean isMemberNameExist = memberActionRepository.existsByAction_EventAndMemberName(event, beforeName);
+        boolean isMemberNameExist = memberActionRepository.existsByEventAndMemberName(event, beforeName);
         if (!isMemberNameExist) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_EXIST);
         }
@@ -143,16 +145,16 @@ public class EventService {
     }
 
     private void validateAfterMemberNameNotExist(Event event, String afterName) {
-        boolean isMemberNameExist = memberActionRepository.existsByAction_EventAndMemberName(event, afterName);
+        boolean isMemberNameExist = memberActionRepository.existsByEventAndMemberName(event, afterName);
         if (isMemberNameExist) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE);
         }
     }
 
     private void updateMemberName(Event event, String beforeName, String afterName) {
-        memberActionRepository.findAllByAction_EventAndMemberName(event, beforeName)
+        memberActionRepository.findAllByEventAndMemberName(event, beforeName)
                 .forEach(memberAction -> memberAction.updateMemberName(afterName));
-        billActionDetailRepository.findAllByBillAction_Action_EventAndMemberName(event, beforeName)
+        billActionDetailRepository.findAllByBillAction_EventAndMemberName(event, beforeName)
                 .forEach(billActionDetail -> billActionDetail.updateMemberName(afterName));
     }
 
@@ -166,5 +168,18 @@ public class EventService {
     private Event getEvent(String token) {
         return eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
+    }
+
+    public List<MemberBillReportAppResponse> getMemberBillReports(String token) {
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
+        List<BillAction> billActions = billActionRepository.findByEvent(event);
+        List<MemberAction> memberActions = memberActionRepository.findAllByEvent(event);
+
+        MemberBillReport memberBillReport = MemberBillReport.createByActions(billActions, memberActions);
+
+        return memberBillReport.getReports().entrySet().stream()
+                .map(entry -> new MemberBillReportAppResponse(entry.getKey(), entry.getValue()))
+                .toList();
     }
 }

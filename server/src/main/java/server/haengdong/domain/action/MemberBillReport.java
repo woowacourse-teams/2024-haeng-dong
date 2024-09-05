@@ -53,7 +53,7 @@ public class MemberBillReport {
         MemberAction memberAction = memberActions.peek();
         BillAction billAction = billActions.peek();
 
-        return memberAction.getSequence() < billAction.getSequence();
+        return memberAction.getSequence().getValue() < billAction.getSequence().getValue();
     }
 
     private static void addBillAction(

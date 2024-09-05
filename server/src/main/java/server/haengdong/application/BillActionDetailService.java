@@ -21,8 +21,8 @@ public class BillActionDetailService {
 
     private final BillActionRepository billActionRepository;
 
-    public BillActionDetailsAppResponse findBillActionDetails(String token, Long actionId) {
-        BillAction billAction = billActionRepository.findByAction_Id(actionId)
+    public BillActionDetailsAppResponse findBillActionDetails(String token, Long billActionId) {
+        BillAction billAction = billActionRepository.findById(billActionId)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND));
         validateToken(token, billAction);
 
@@ -31,8 +31,8 @@ public class BillActionDetailService {
     }
 
     @Transactional
-    public void updateBillActionDetails(String token, Long actionId, BillActionDetailsUpdateAppRequest request) {
-        BillAction billAction = billActionRepository.findByAction_Id(actionId)
+    public void updateBillActionDetails(String token, Long billActionId, BillActionDetailsUpdateAppRequest request) {
+        BillAction billAction = billActionRepository.findById(billActionId)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_NOT_FOUND));
 
         List<BillActionDetailUpdateAppRequest> billActionDetailUpdateAppRequests = request.billActionDetailUpdateAppRequests();
@@ -60,8 +60,10 @@ public class BillActionDetailService {
         }
     }
 
-    private void validateTotalPrice(List<BillActionDetailUpdateAppRequest> billActionDetailUpdateAppRequests,
-                                    BillAction billAction) {
+    private void validateTotalPrice(
+            List<BillActionDetailUpdateAppRequest> billActionDetailUpdateAppRequests,
+            BillAction billAction
+    ) {
         Long requestsPriceSum = calculateUpdatePriceSum(billActionDetailUpdateAppRequests);
         if (!billAction.isSamePrice(requestsPriceSum)) {
             throw new HaengdongException(HaengdongErrorCode.BILL_ACTION_PRICE_NOT_MATCHED);
