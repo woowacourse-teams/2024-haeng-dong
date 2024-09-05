@@ -1,4 +1,4 @@
-import {ExpenseList, Flex, Input, Text} from 'haengdong-design';
+import {ExpenseList, Flex, Input, Text} from '@HDesign/index';
 import React, {useEffect, useState} from 'react';
 
 import useSearchMemberReportList from '@hooks/useSearchMemberReportList/useSearchMemberReportList';

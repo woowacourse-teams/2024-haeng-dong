@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
-import {Text} from 'haengdong-design';
-import {useTheme} from 'haengdong-design/dist/theme/HDesignProvider';
+import {Text} from '@HDesign/index';
+import {useTheme} from '@HDesign/index';
 
 import AddMemberMockup from '@assets/image/addMemberMockup.svg';
 

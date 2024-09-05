@@ -1,5 +1,5 @@
 import {css, keyframes} from '@emotion/react';
-import {Button, Text} from 'haengdong-design';
+import {Button, Text} from '@HDesign/index';
 import {useNavigate} from 'react-router-dom';
 
 import {StandingDog} from '@components/Common/Logo';

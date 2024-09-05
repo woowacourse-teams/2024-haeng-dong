@@ -1,5 +1,5 @@
 import {css} from '@emotion/react';
-import {Text} from 'haengdong-design';
+import {Text} from '@HDesign/index';
 
 import AddBillMockup from '@assets/image/addBillMockup.svg';
 

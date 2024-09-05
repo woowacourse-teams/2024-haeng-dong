@@ -1,6 +1,6 @@
 import type {MemberAction, MemberType} from 'types/serviceType';
 
-import {BottomSheet, Flex, Input, Text, IconButton, FixedButton, Icon} from 'haengdong-design';
+import {BottomSheet, Flex, Input, Text, IconButton, FixedButton, Icon} from '@HDesign/index';
 
 import useDeleteMemberAction from '@hooks/useDeleteMemberAction/useDeleteMemberAction';
 import {useToast} from '@hooks/useToast/useToast';

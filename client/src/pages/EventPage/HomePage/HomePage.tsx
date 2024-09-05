@@ -1,4 +1,4 @@
-import {Tab, Tabs, Title} from 'haengdong-design';
+import {Tab, Tabs, Title} from '@HDesign/index';
 import {useOutletContext} from 'react-router-dom';
 
 import MemberReportList from '@components/MemberReportList/MemberReportList';

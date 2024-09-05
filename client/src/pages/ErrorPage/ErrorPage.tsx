@@ -1,4 +1,4 @@
-import {MainLayout, Title} from 'haengdong-design';
+import {MainLayout, Title} from '@HDesign/index';
 
 const ErrorPage = () => {
   return (

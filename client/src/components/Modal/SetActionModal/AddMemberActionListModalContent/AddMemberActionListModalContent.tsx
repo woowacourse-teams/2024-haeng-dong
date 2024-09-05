@@ -1,6 +1,6 @@
 import type {MemberType} from 'types/serviceType';
 
-import {FixedButton, LabelGroupInput} from 'haengdong-design';
+import {FixedButton, LabelGroupInput} from '@HDesign/index';
 
 import validateMemberName from '@utils/validate/validateMemberName';
 import useRequestPostMemberList from '@hooks/queries/useRequestPostMemberList';

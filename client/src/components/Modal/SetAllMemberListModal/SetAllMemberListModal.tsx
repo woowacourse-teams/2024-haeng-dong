@@ -1,4 +1,4 @@
-import {BottomSheet, Text, LabelGroupInput, FixedButton, IconButton, Icon} from 'haengdong-design';
+import {BottomSheet, Text, LabelGroupInput, FixedButton, IconButton, Icon} from '@HDesign/index';
 
 import validateMemberName from '@utils/validate/validateMemberName';
 

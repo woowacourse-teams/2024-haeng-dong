@@ -1,5 +1,5 @@
 import {Outlet} from 'react-router-dom';
-import {HDesignProvider} from 'haengdong-design';
+import {HDesignProvider} from '@HDesign/index';
 import {Global} from '@emotion/react';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 

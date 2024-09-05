@@ -1,7 +1,7 @@
 import type {InOutType} from 'types/serviceType';
 
 import {useState} from 'react';
-import {BottomSheet, Switch, Text} from 'haengdong-design';
+import {BottomSheet, Switch, Text} from '@HDesign/index';
 
 import {AddMemberActionListModalContent} from './AddMemberActionListModalContent';
 import style from './SetActionListModal.style';

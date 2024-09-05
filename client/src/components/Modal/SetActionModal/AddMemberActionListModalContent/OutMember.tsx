@@ -1,4 +1,4 @@
-import {LabelGroupInput, Search} from 'haengdong-design';
+import {LabelGroupInput, Search} from '@HDesign/index';
 
 import {ReturnUseDynamicInput} from '@hooks/useDynamicInput';
 import useSearchInMemberList from '@hooks/useSearchInMemberList';

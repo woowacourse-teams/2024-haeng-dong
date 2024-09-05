@@ -44,7 +44,16 @@
       "@mocks/*": ["mocks/*"],
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
-      "@errors/*": ["errors/*"]
+      "@errors/*": ["errors/*"],
+
+      "@HDesign/*": ["components/Design/*"],
+      "@HDcomponents/*": ["components/Design/components/*"],
+      "@HDassets/*": ["components/Design/assets/*"],
+      "@token/*": ["components/Design/token/*"],
+      "@layouts/*": ["components/Design/layouts/*"],
+      "@type/*": ["components/Design/type/*"],
+      "@theme/*": ["components/Design/theme/*"],
+      "@HDutils/*": ["components/Design/utils/*"]
     },
     "outDir": "./dist"
   },

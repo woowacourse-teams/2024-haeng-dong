@@ -1,4 +1,4 @@
-import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
+import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from '@HDesign/index';
 
 import useSetEventPasswordPage from '@hooks/useSetEventPasswordPage';
 

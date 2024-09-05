@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Title, FixedButton, ListButton, Button} from 'haengdong-design';
+import {Title, FixedButton, ListButton, Button} from '@HDesign/index';
 import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';

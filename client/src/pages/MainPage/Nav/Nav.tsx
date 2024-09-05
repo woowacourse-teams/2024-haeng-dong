@@ -1,4 +1,4 @@
-import {Button, Flex, Text} from 'haengdong-design';
+import {Button, Flex, Text} from '@HDesign/index';
 import {useNavigate} from 'react-router-dom';
 
 import Heundeut from '@assets/image/heundeut.svg';

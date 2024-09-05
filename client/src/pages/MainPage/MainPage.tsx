@@ -1,4 +1,4 @@
-import {MainLayout} from 'haengdong-design';
+import {MainLayout} from '@HDesign/index';
 
 import Nav from './Nav/Nav';
 import MainSection from './Section/MainSection';

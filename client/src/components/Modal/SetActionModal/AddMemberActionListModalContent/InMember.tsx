@@ -1,4 +1,4 @@
-import {LabelGroupInput} from 'haengdong-design';
+import {LabelGroupInput} from '@HDesign/index';
 
 import {ReturnUseDynamicInput} from '@hooks/useDynamicInput';
 

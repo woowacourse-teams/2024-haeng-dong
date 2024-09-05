@@ -1,6 +1,6 @@
 import {render, renderHook, screen, waitFor} from '@testing-library/react';
 import {act} from 'react';
-import {HDesignProvider} from 'haengdong-design';
+import {HDesignProvider} from '@HDesign/index';
 
 import {ToastProvider} from './ToastProvider'; // 위 코드에 해당하는 ToastProvider 경로
 import {useToast} from './useToast';

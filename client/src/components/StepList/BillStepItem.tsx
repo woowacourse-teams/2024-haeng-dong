@@ -1,4 +1,4 @@
-import {DragHandleItem, DragHandleItemContainer, EditableItem, Flex, Text} from 'haengdong-design';
+import {DragHandleItem, DragHandleItemContainer, EditableItem, Flex, Text} from '@HDesign/index';
 import {Fragment, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 

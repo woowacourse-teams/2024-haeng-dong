@@ -1,4 +1,4 @@
-import {Flex, Text} from 'haengdong-design';
+import {Flex, Text} from '@HDesign/index';
 import {useEffect, useMemo, useState} from 'react';
 
 import {BillStep, MemberStep} from 'types/serviceType';

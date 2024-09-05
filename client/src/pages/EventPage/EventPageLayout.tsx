@@ -1,4 +1,4 @@
-import {MainLayout, TopNav, Switch, Button} from 'haengdong-design';
+import {MainLayout, TopNav, Switch, Button} from '@HDesign/index';
 import {Outlet, useMatch} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 

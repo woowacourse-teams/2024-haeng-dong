@@ -1,4 +1,4 @@
-import {FixedButton, LabelInput, Title} from 'haengdong-design';
+import {FixedButton, LabelInput, Title} from '@HDesign/index';
 
 import useEventLogin from '@hooks/useEventLogin';
 

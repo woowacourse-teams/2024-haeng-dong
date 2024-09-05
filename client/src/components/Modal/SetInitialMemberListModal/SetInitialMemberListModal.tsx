@@ -1,4 +1,4 @@
-import {Text, BottomSheet, FixedButton, LabelGroupInput} from 'haengdong-design';
+import {Text, BottomSheet, FixedButton, LabelGroupInput} from '@HDesign/index';
 
 import validateMemberName from '@utils/validate/validateMemberName';
 import useRequestPostMemberList from '@hooks/queries/useRequestPostMemberList';

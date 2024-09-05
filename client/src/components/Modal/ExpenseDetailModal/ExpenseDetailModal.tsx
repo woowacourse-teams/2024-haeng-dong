@@ -1,6 +1,6 @@
 import type {BillAction} from 'types/serviceType';
 
-import {BottomSheet, EditableItem, FixedButton, Flex, Text} from 'haengdong-design';
+import {BottomSheet, EditableItem, FixedButton, Flex, Text} from '@HDesign/index';
 
 import validatePurchase from '@utils/validate/validatePurchase';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';

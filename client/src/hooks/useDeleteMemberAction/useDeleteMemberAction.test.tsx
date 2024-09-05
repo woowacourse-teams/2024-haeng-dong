@@ -1,7 +1,7 @@
 import {renderHook, waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {act} from 'react';
-import {HDesignProvider} from 'haengdong-design';
+import {HDesignProvider} from '@HDesign/index';
 
 import {BillStep, MemberAction, MemberStep} from 'types/serviceType';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';

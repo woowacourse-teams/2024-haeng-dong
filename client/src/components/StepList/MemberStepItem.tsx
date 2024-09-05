@@ -1,6 +1,6 @@
 import type {MemberStep} from 'types/serviceType';
 
-import {DragHandleItem} from 'haengdong-design';
+import {DragHandleItem} from '@HDesign/index';
 import {useOutletContext} from 'react-router-dom';
 
 import {DeleteMemberActionModal} from '@components/Modal/SetActionModal/DeleteMemberActionModal';
