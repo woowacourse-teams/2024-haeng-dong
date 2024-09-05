@@ -3,7 +3,6 @@ import Flex from '@HDcomponents/Flex/Flex';
 import Text from '@HDcomponents/Text/Text';
 import {priceContainerStyle, titleContainerStyle} from '@HDcomponents/Title/Title.style';
 import {TitleProps} from '@HDcomponents/Title/Title.type';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 export const Title: React.FC<TitleProps> = ({title, description, price}: TitleProps) => {

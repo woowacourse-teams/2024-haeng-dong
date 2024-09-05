@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react';
+
 import {StrictPropsWithChildren} from '@type/strictPropsWithChildren';
 
 import {useTheme} from '../../index';

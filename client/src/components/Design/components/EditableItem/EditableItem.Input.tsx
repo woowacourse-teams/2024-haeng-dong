@@ -4,7 +4,6 @@ import {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
 import Flex from '@HDcomponents/Flex/Flex';
 import Text from '@HDcomponents/Text/Text';
 import IsFixedIcon from '@HDcomponents/IsFixedIcon/IsFixedIcon';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import {editingContainerStyle, inputStyle, inputWrapperStyle, underlineStyle} from './EditableItem.Input.style';

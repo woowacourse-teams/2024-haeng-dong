@@ -1,8 +1,8 @@
 import {Outlet} from 'react-router-dom';
-import {HDesignProvider} from '@HDesign/index';
 import {Global} from '@emotion/react';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
+import {HDesignProvider} from '@HDesign/index';
 import {ToastProvider} from '@hooks/useToast/ToastProvider';
 import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
 import ErrorCatcher from '@components/AppErrorBoundary/ErrorCatcher';

@@ -2,7 +2,6 @@
 
 import Text from '@HDcomponents/Text/Text';
 import Icon from '@HDcomponents/Icon/Icon';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';

@@ -2,7 +2,6 @@
 import {forwardRef} from 'react';
 
 import {IconButtonProps} from '@HDcomponents/IconButton/IconButton.type';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import {iconButtonStyle} from './IconButton.style';

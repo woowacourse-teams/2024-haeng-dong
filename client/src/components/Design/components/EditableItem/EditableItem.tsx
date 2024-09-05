@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import Text from '@HDcomponents/Text/Text';
 import Flex from '@HDcomponents/Flex/Flex';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import {editableItemStyle, labelTextStyle} from './EditableItem.style';

@@ -1,5 +1,6 @@
 import {createPortal} from 'react-dom';
 import {useState, useEffect} from 'react';
+
 import {Button, Flex, Icon, Text} from '@HDesign/index';
 
 import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';

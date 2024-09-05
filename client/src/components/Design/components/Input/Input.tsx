@@ -6,7 +6,6 @@ import {InputProps} from '@HDcomponents/Input/Input.type';
 import {inputBoxStyle, inputStyle} from '@HDcomponents/Input/Input.style';
 import {useInput} from '@HDcomponents/Input/useInput';
 import Icon from '@HDcomponents/Icon/Icon';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(

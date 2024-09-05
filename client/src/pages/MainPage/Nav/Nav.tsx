@@ -1,6 +1,6 @@
-import {Button, Flex, Text} from '@HDesign/index';
 import {useNavigate} from 'react-router-dom';
 
+import {Button, Flex, Text} from '@HDesign/index';
 import Heundeut from '@assets/image/heundeut.svg';
 
 import {ROUTER_URLS} from '@constants/routerUrls';

@@ -1,5 +1,4 @@
 import {ButtonVariants} from '@HDcomponents/Button/Button.type';
-
 import {Theme} from '@theme/theme.type';
 
 export interface FixedButtonStyleProps {

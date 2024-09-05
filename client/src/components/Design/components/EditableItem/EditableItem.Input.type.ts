@@ -1,5 +1,4 @@
 import {TextSize} from '@HDcomponents/Text/Text.type';
-
 import {Theme} from '@theme/theme.type';
 
 export interface InputStyleProps {

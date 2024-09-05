@@ -2,6 +2,7 @@
 
 import React, {forwardRef} from 'react';
 import Lottie from 'lottie-react';
+
 import loadingAnimation from '@HDassets/loadingAnimation.json';
 import {useTheme} from '@theme/HDesignProvider';
 

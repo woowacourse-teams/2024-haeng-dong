@@ -2,9 +2,7 @@ import {css} from '@emotion/react';
 
 import {ButtonVariants} from '@HDcomponents/Button/Button.type';
 import {FixedButtonStyleProps} from '@HDcomponents/FixedButton/FixedButton.type';
-
 import {Theme} from '@theme/theme.type';
-
 import {setDarker, setLighter} from '@HDutils/colors';
 
 export const fixedButtonContainerStyle = (theme: Theme) =>

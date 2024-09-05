@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import Flex from '@HDcomponents/Flex/Flex';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import {searchStyle, searchTermsStyle, searchTermStyle} from './Search.style';

@@ -1,4 +1,5 @@
 import {ComponentPropsWithoutRef} from 'react';
+
 import {Theme} from '@theme/theme.type';
 
 export interface BottomSheetStyleProps {

@@ -10,9 +10,7 @@ import {
 import {FixedButtonProps} from '@HDcomponents/FixedButton/FixedButton.type';
 import IconButton from '@HDcomponents/IconButton/IconButton';
 import Icon from '@HDcomponents/Icon/Icon';
-
 import loadingAnimation from '@HDassets/loadingAnimation.json';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElement, FixedButtonProps>(function Button(

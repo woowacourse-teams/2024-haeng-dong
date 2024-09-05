@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import Text from '@HDcomponents/Text/Text';
-
 import {useTheme} from '@theme/HDesignProvider';
 
 import Flex from '../Flex/Flex';

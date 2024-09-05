@@ -1,5 +1,4 @@
 import {BottomSheet, Text, LabelGroupInput, FixedButton, IconButton, Icon} from '@HDesign/index';
-
 import validateMemberName from '@utils/validate/validateMemberName';
 
 import useSetAllMemberList from '@hooks/useSetAllMemberList';

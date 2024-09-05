@@ -1,5 +1,4 @@
 import {Theme} from '@theme/theme.type';
-
 import {ColorKeys} from '@token/colors';
 
 export type TextSize =
