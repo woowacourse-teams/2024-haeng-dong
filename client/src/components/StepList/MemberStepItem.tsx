@@ -2,9 +2,10 @@ import type {MemberStep} from 'types/serviceType';
 
 import {useOutletContext} from 'react-router-dom';
 
-import {DragHandleItem} from '@HDesign/index';
 import {DeleteMemberActionModal} from '@components/Modal/SetActionModal/DeleteMemberActionModal';
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
+
+import {DragHandleItem} from '@HDesign/index';
 
 interface MemberStepItemProps {
   step: MemberStep;

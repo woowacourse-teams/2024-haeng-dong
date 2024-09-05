@@ -1,8 +1,9 @@
 import {css} from '@emotion/react';
 
+import AddMemberMockup from '@assets/image/addMemberMockup.svg';
+
 import {Text} from '@HDesign/index';
 import {useTheme} from '@HDesign/index';
-import AddMemberMockup from '@assets/image/addMemberMockup.svg';
 
 const AddMemberSection = () => {
   const {theme} = useTheme();

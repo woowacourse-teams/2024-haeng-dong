@@ -1,6 +1,6 @@
-import {LabelGroupInput} from '@HDesign/index';
-
 import {ReturnUseDynamicInput} from '@hooks/useDynamicInput';
+
+import {LabelGroupInput} from '@HDesign/index';
 
 interface InMemberProps {
   dynamicProps: ReturnUseDynamicInput;

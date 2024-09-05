@@ -1,7 +1,8 @@
 import {css} from '@emotion/react';
 
-import {Text} from '@HDesign/index';
 import MemberReportMockup from '@assets/image/memberReportMockup.svg';
+
+import {Text} from '@HDesign/index';
 
 const MemberReportSection = () => {
   return (
