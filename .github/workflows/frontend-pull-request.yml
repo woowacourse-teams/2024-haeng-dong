@@ -69,8 +69,8 @@ jobs:
         run: npm install
 
       - name: Run Chromatic
-        working-directory: ./client
         uses: chromaui/action@latest
+        working-directory: ./client
         id: publish_chromatic
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
