@@ -79,9 +79,11 @@ jobs:
         run: npm install
 
       - name: Run Chromatic
-        run: |
-          npx chromatic --exit-zero-on-changes --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-        working-directory: ./client
+        uses: chromaui/action@latest
+        id: publish_chromatic
+        with:
+          workingDir: client
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
