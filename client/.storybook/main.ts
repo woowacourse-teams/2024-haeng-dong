@@ -22,7 +22,6 @@ const config: StorybookConfig = {
         ...config.resolve.alias,
         '@HDesign': path.resolve(__dirname, '../src/components/Design/'),
         '@HDcomponents': path.resolve(__dirname, '../src/components/Design/components/'),
-        '@HDassets': path.resolve(__dirname, '../src/components/Design/assets/'),
         '@HDutils': path.resolve(__dirname, '../src/components/Design/utils/'),
         '@token': path.resolve(__dirname, '../src/components/Design/token/'),
         '@theme': path.resolve(__dirname, '../src/components/Design/theme/'),

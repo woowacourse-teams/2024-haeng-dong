@@ -48,7 +48,6 @@
 
       "@HDesign/*": ["components/Design/*"],
       "@HDcomponents/*": ["components/Design/components/*"],
-      "@HDassets/*": ["components/Design/assets/*"],
       "@token/*": ["components/Design/token/*"],
       "@layouts/*": ["components/Design/layouts/*"],
       "@type/*": ["components/Design/type/*"],

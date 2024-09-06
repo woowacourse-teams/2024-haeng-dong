@@ -6,6 +6,7 @@ const config: Config = {
   testEnvironment: 'jsdom', // 브라우저 내에서의 JavaScript 동작을 모방하여, DOM 조작, 이벤트 핸들링, 브라우저 관련 API 호출
   transform: {
     '^.+\\.ts?$': 'ts-jest',
+    '^.+\\.svg$': '<rootDir>/src/mocks/svgMock.ts',
   },
   collectCoverage: true,
   coverageReporters: ['text'],
@@ -30,6 +31,7 @@ const config: Config = {
   moduleNameMapper: {
     '@/(.*)$': '<rootDir>/src/$1', // path alias를 적용하기 위함
     '^@apis/(.*)$': '<rootDir>/src/apis/$1',
+    '^@assets/(.*)$': '<rootDir>/src/assets/$1',
     '^@constants/(.*)$': '<rootDir>/src/constants/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@hooks/(.*)$': '<rootDir>/src/hooks/$1',
@@ -41,7 +43,6 @@ const config: Config = {
     '^@store/(.*)$': '<rootDir>/src/store/$1',
     '^@HDesign/(.*)$': '<rootDir>/src/components/Design/$1',
     '^@HDcomponents/(.*)$': '<rootDir>/src/components/Design/components/$1',
-    '^@HDassets/(.*)$': '<rootDir>/src/components/Design/assets/$1',
     '^@HDutils/(.*)$': '<rootDir>/src/components/Design/utils/$1',
     '^@token/(.*)$': '<rootDir>/src/components/Design/token/$1',
     '^@theme/(.*)$': '<rootDir>/src/components/Design/theme/$1',
