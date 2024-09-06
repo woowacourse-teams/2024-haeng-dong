@@ -68,6 +68,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: test
+        run: |
+          pwd
+          ls -al
+
       - name: Run Chromatic
         uses: chromaui/action@latest
         id: publish_chromatic
