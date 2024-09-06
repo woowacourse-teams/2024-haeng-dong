@@ -1,6 +1,7 @@
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 import type {StorybookConfig} from '@storybook/react-webpack5';
 import path from 'path';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -20,6 +21,16 @@ const config: StorybookConfig = {
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,
+        '@apis': path.resolve(__dirname, '../src/apis/'),
+        '@assets': path.resolve(__dirname, '../src/assets/'),
+        '@components': path.resolve(__dirname, '../src/components/'),
+        '@constants': path.resolve(__dirname, '../src/constants/'),
+        '@hooks': path.resolve(__dirname, '../src/hooks/'),
+        '@store': path.resolve(__dirname, '../src/store/'),
+        '@mocks': path.resolve(__dirname, '../src/mocks/'),
+        '@pages': path.resolve(__dirname, '../src/pages/'),
+        '@utils': path.resolve(__dirname, '../src/utils/'),
+        '@errors': path.resolve(__dirname, '../src/errors/'),
         '@HDesign': path.resolve(__dirname, '../src/components/Design/'),
         '@HDcomponents': path.resolve(__dirname, '../src/components/Design/components/'),
         '@HDutils': path.resolve(__dirname, '../src/components/Design/utils/'),
