@@ -3,7 +3,7 @@
 import React, {forwardRef} from 'react';
 import Lottie from 'lottie-react';
 
-import loadingAnimation from '@HDassets/loadingAnimation.json';
+import loadingAnimation from '@assets/image/loadingAnimation.json';
 import {useTheme} from '@theme/HDesignProvider';
 
 import {ButtonProps, ButtonSize} from './Button.type';

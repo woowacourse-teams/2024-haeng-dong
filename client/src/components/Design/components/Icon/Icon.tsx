@@ -1,7 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
+import InputDelete from '@assets/image/inputDelete.svg';
+import Buljusa from '@assets/image/buljusa.svg';
+import Error from '@assets/image/error.svg';
+import Confirm from '@assets/image/confirm.svg';
+import Trash from '@assets/image/trash.svg';
+import Search from '@assets/image/search.svg';
+import RightChevron from '@assets/image/rightChevron.svg';
 import {IconProps} from '@HDcomponents/Icon/Icon.type';
-import {InputDelete, Buljusa, RightChevron, Search, Trash, Confirm, Error} from '@HDassets/index';
 import {useTheme} from '@theme/HDesignProvider';
 
 import {iconStyle} from './Icon.style';
