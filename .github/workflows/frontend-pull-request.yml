@@ -70,7 +70,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-v1
           restore-keys: |
             ${{ runner.os }}-npm-
 
@@ -78,11 +78,16 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
 
+      - name: List files in the working directory
+        run: ls -al
+        working-directory: ./client
+
       - name: Run Chromatic
         uses: chromaui/action@latest
         id: publish_chromatic
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        working-directory: ./client
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
