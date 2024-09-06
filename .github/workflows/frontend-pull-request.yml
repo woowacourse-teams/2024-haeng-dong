@@ -80,7 +80,6 @@ jobs:
 
       - name: Run Chromatic
         uses: chromaui/action@latest
-        working-directory: ./client
         id: publish_chromatic
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
