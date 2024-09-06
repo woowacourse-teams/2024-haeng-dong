@@ -72,6 +72,11 @@ export default [
               position: 'after',
             },
             {
+              pattern: '@HDesign/*',
+              group: 'internal',
+              position: 'after',
+            },
+            {
               pattern: '@utils/*',
               group: 'internal',
               position: 'after',

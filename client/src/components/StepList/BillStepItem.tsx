@@ -1,4 +1,3 @@
-import {DragHandleItem, DragHandleItemContainer, EditableItem, Flex, Text} from 'haengdong-design';
 import {Fragment, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 
@@ -9,6 +8,8 @@ import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 import ExpenseDetailModal from '@components/Modal/ExpenseDetailModal/ExpenseDetailModal';
 
 import useSetBillInput from '@hooks/useSetBillInput';
+
+import {DragHandleItem, DragHandleItemContainer, EditableItem, Flex, Text} from '@HDesign/index';
 
 interface BillStepItemProps {
   step: BillStep;

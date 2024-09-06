@@ -1,8 +1,9 @@
-import {Flex, Text} from 'haengdong-design';
 import {useEffect, useMemo, useState} from 'react';
 
 import {BillStep, MemberStep} from 'types/serviceType';
 import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
+
+import {Flex, Text} from '@HDesign/index';
 
 import Step from './Step';
 

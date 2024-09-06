@@ -1,6 +1,6 @@
 import type {MemberReport} from 'types/serviceType';
 
-import {BottomSheet, FixedButton, Flex, Text} from 'haengdong-design';
+import {BottomSheet, FixedButton, Flex, Text} from '@HDesign/index';
 
 import {bottomSheetStyle} from './MemberListInBillStep.style';
 

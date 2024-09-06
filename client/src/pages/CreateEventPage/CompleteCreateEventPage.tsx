@@ -1,7 +1,8 @@
 import {useLocation, useNavigate} from 'react-router-dom';
-import {FixedButton, MainLayout, Title, TopNav} from 'haengdong-design';
 
 import {RunningDog} from '@components/Common/Logo';
+
+import {FixedButton, MainLayout, Title, TopNav} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 

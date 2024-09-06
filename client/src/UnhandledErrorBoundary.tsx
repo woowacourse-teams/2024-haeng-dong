@@ -1,6 +1,6 @@
-import {StrictPropsWithChildren} from 'haengdong-design/dist/type/strictPropsWithChildren';
 import {ErrorBoundary} from 'react-error-boundary';
 
+import {StrictPropsWithChildren} from '@type/strictPropsWithChildren';
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 
 const UnhandledErrorBoundary = ({children}: StrictPropsWithChildren) => {

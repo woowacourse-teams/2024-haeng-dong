@@ -1,8 +1,9 @@
 import {useNavigate} from 'react-router-dom';
-import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from 'haengdong-design';
 import {css} from '@emotion/react';
 
 import useSetEventNamePage from '@hooks/useSetEventNamePage';
+
+import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 

@@ -1,7 +1,7 @@
-import {LabelGroupInput, Search} from 'haengdong-design';
-
 import {ReturnUseDynamicInput} from '@hooks/useDynamicInput';
 import useSearchInMemberList from '@hooks/useSearchInMemberList';
+
+import {LabelGroupInput, Search} from '@HDesign/index';
 
 interface OutMemberProps {
   dynamicProps: ReturnUseDynamicInput;

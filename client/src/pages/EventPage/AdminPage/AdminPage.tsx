@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import {Title, FixedButton, ListButton, Button} from 'haengdong-design';
 import {useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/StepList';
@@ -8,6 +7,8 @@ import useRequestGetAllMemberList from '@hooks/queries/useRequestGetAllMemberLis
 import useRequestPostAuthenticate from '@hooks/queries/useRequestPostAuthentication';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
+
+import {Title, FixedButton, ListButton, Button} from '@HDesign/index';
 
 import {EventPageContextProps} from '../EventPageLayout';
 

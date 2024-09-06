@@ -1,7 +1,8 @@
-import {ExpenseList, Flex, Input, Text} from 'haengdong-design';
 import React, {useEffect, useState} from 'react';
 
 import useSearchMemberReportList from '@hooks/useSearchMemberReportList/useSearchMemberReportList';
+
+import {ExpenseList, Flex, Input, Text} from '@HDesign/index';
 
 const MemberReportList = () => {
   const [name, setName] = useState('');

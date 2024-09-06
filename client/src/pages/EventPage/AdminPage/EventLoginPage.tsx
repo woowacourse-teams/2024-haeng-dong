@@ -1,6 +1,6 @@
-import {FixedButton, LabelInput, Title} from 'haengdong-design';
-
 import useEventLogin from '@hooks/useEventLogin';
+
+import {FixedButton, LabelInput, Title} from '@HDesign/index';
 
 import RULE from '@constants/rule';
 import {PASSWORD_LENGTH} from '@constants/password';

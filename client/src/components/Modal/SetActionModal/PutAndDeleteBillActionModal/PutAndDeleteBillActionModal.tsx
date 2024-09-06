@@ -1,6 +1,5 @@
 import type {BillAction} from 'types/serviceType';
 
-import {BottomSheet, EditableItem, FixedButton, Flex, Text} from 'haengdong-design';
 import {useEffect} from 'react';
 
 import validatePurchase from '@utils/validate/validatePurchase';
@@ -9,6 +8,8 @@ import useMemberReportListInAction from '@hooks/useMemberReportListInAction/useM
 import useMemberReportInput from '@hooks/useMemberReportListInAction/useMemberReportInput';
 
 import usePutAndDeleteBillAction from '@hooks/usePutAndDeleteBillAction';
+
+import {BottomSheet, EditableItem, FixedButton, Flex, Text} from '@HDesign/index';
 
 import {bottomSheetHeaderStyle, bottomSheetStyle, inputContainerStyle} from './PutAndDeltetBillActionModal.style';
 

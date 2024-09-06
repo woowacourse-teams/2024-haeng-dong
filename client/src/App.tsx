@@ -1,11 +1,12 @@
 import {Outlet} from 'react-router-dom';
-import {HDesignProvider} from 'haengdong-design';
 import {Global} from '@emotion/react';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
 import {ToastProvider} from '@hooks/useToast/ToastProvider';
 import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
 import ErrorCatcher from '@components/AppErrorBoundary/ErrorCatcher';
+
+import {HDesignProvider} from '@HDesign/index';
 
 import {GlobalStyle} from './GlobalStyle';
 import UnhandledErrorBoundary from './UnhandledErrorBoundary';

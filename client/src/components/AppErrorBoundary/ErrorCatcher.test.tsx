@@ -1,12 +1,13 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import {act, ReactNode} from 'react';
 import {MemoryRouter} from 'react-router-dom';
-import {HDesignProvider} from 'haengdong-design';
 
 import FetchError from '@errors/FetchError';
 import {ToastProvider} from '@hooks/useToast/ToastProvider';
 
 import {useAppErrorStore} from '@store/appErrorStore';
+
+import {HDesignProvider} from '@HDesign/index';
 
 import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
 

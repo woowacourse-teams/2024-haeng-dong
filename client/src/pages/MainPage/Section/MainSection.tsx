@@ -1,9 +1,10 @@
 import {css, keyframes} from '@emotion/react';
-import {Button, Text} from 'haengdong-design';
 import {useNavigate} from 'react-router-dom';
 
 import {StandingDog} from '@components/Common/Logo';
 import ChevronDown from '@assets/image/chevronDownLarge.svg';
+
+import {Button, Text} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
