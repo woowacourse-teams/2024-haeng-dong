@@ -78,14 +78,11 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: List files in the working directory
-        run: ls -al
-        working-directory: ./client
-
       - name: Run Chromatic
-        run: |
-          npx chromatic --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-        working-directory: ./client
+        uses: chromaui/action@latest
+        id: publish_chromatic
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
