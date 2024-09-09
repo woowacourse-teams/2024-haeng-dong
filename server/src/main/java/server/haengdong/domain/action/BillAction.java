@@ -1,14 +1,19 @@
 package server.haengdong.domain.action;
 
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +28,7 @@ import server.haengdong.exception.HaengdongException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"event_id", "sequence"})})
 @Entity
 public class BillAction implements Comparable<BillAction> {
 
@@ -36,21 +42,28 @@ public class BillAction implements Comparable<BillAction> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Action action;
+    @JoinColumn(name = "event_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Event event;
 
-    @Column(length = MAX_TITLE_LENGTH)
+    @AttributeOverride(name = "value", column = @Column(name = "sequence", nullable = false))
+    @Embedded
+    private Sequence sequence;
+
+    @Column(nullable = false, length = MAX_TITLE_LENGTH)
     private String title;
 
+    @Column(nullable = false)
     private Long price;
 
     @OneToMany(mappedBy = "billAction", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BillActionDetail> billActionDetails = new ArrayList<>();
 
-    public BillAction(Action action, String title, Long price) {
+    public BillAction(Event event, Sequence sequence, String title, Long price) {
         validateTitle(title);
         validatePrice(price);
-        this.action = action;
+        this.event = event;
+        this.sequence = sequence;
         this.title = title.trim();
         this.price = price;
     }
@@ -68,8 +81,10 @@ public class BillAction implements Comparable<BillAction> {
         }
     }
 
-    public static BillAction create(Action action, String title, Long price, CurrentMembers currentMembers) {
-        BillAction billAction = new BillAction(action, title, price);
+    public static BillAction create(
+            Event event, Sequence sequence, String title, Long price, CurrentMembers currentMembers
+    ) {
+        BillAction billAction = new BillAction(event, sequence, title, price);
         billAction.resetBillActionDetails(currentMembers);
         return billAction;
     }
@@ -138,19 +153,11 @@ public class BillAction implements Comparable<BillAction> {
                 .filter(billActionDetail -> billActionDetail.hasMemberName(memberName))
                 .map(BillActionDetail::getPrice)
                 .findFirst()
-                .orElse(DEFAULT_PRICE);
-    }
-
-    public Long getSequence() {
-        return action.getSequence();
-    }
-
-    public Event getEvent() {
-        return action.getEvent();
+                .orElseGet(() -> DEFAULT_PRICE);
     }
 
     @Override
     public int compareTo(BillAction o) {
-        return Long.compare(this.getSequence(), o.getSequence());
+        return sequence.compareTo(o.sequence);
     }
 }

@@ -1,6 +1,8 @@
 package server.haengdong.domain.action;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,41 +10,51 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"event_id", "sequence"})})
 @Entity
 public class MemberAction implements Comparable<MemberAction> {
 
     public static final int MIN_NAME_LENGTH = 1;
-    public static final int MAX_NAME_LENGTH = 4;
+    public static final int MAX_NAME_LENGTH = 8;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Action action;
+    @JoinColumn(name = "event_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Event event;
 
+    @AttributeOverride(name = "value", column = @Column(name = "sequence", nullable = false))
+    @Embedded
+    private Sequence sequence;
+
+    @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String memberName;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MemberActionStatus status;
 
-    private Long memberGroupId;
-
-    public MemberAction(Action action, String memberName, MemberActionStatus status, Long memberGroupId) {
+    public MemberAction(Event event, Sequence sequence, String memberName, MemberActionStatus status) {
         validateMemberName(memberName);
-        this.action = action;
+        this.event = event;
+        this.sequence = sequence;
         this.memberName = memberName;
         this.status = status;
-        this.memberGroupId = memberGroupId;
     }
 
     private void validateMemberName(String memberName) {
@@ -65,12 +77,8 @@ public class MemberAction implements Comparable<MemberAction> {
         return status == memberActionStatus;
     }
 
-    public Long getSequence() {
-        return action.getSequence();
-    }
-
     @Override
     public int compareTo(MemberAction o) {
-        return Long.compare(this.getSequence(), o.getSequence());
+        return sequence.compareTo(o.sequence);
     }
 }

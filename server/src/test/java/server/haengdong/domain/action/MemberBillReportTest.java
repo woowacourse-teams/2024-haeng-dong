@@ -19,8 +19,8 @@ class MemberBillReportTest {
     void createByActions() {
         Event event = Fixture.EVENT1;
         List<BillAction> billActions = List.of(
-                new BillAction(new Action(event, 4L), "뽕족", 60_000L),
-                new BillAction(new Action(event, 7L), "인생네컷", 20_000L)
+                Fixture.createBillAction(event, 4L, "뽕족", 60_000L),
+                Fixture.createBillAction(event, 7L, "인생네컷", 20_000L)
         );
         billActions.get(0).addDetails(
                 List.of(
@@ -36,10 +36,10 @@ class MemberBillReportTest {
                 )
         );
         List<MemberAction> memberActions = List.of(
-                new MemberAction(new Action(event, 1L), "소하", IN, 1L),
-                new MemberAction(new Action(event, 2L), "감자", IN, 1L),
-                new MemberAction(new Action(event, 3L), "쿠키", IN, 1L),
-                new MemberAction(new Action(event, 5L), "감자", OUT, 2L)
+                Fixture.createMemberAction(event, 1L, "소하", IN),
+                Fixture.createMemberAction(event, 2L, "감자", IN),
+                Fixture.createMemberAction(event, 3L, "쿠키", IN),
+                Fixture.createMemberAction(event, 5L, "감자", OUT)
         );
 
         MemberBillReport memberBillReport = MemberBillReport.createByActions(billActions, memberActions);

@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.BDDMockito.given;
 import static server.haengdong.domain.action.MemberActionStatus.IN;
 import static server.haengdong.domain.action.MemberActionStatus.OUT;
+import static server.haengdong.support.fixture.Fixture.BILL_ACTION;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -19,15 +20,18 @@ import server.haengdong.application.request.MemberNamesUpdateAppRequest;
 import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
+import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.application.response.MembersAppResponse;
-import server.haengdong.domain.action.Action;
 import server.haengdong.domain.action.BillAction;
+import server.haengdong.domain.action.BillActionDetail;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.Sequence;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
+import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.fixture.Fixture;
 
@@ -74,12 +78,9 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void findActionsTest() {
         Event event = Fixture.EVENT1;
-        Action action = new Action(event, 1L);
-        MemberAction memberAction = new MemberAction(action, "토다리", IN, 1L);
-        Action action1 = new Action(event, 2L);
-        MemberAction memberAction1 = new MemberAction(action1, "쿠키", IN, 1L);
-        Action action2 = new Action(event, 3L);
-        BillAction billAction = new BillAction(action2, "뽕나무쟁이족발", 30000L);
+        MemberAction memberAction = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
+        BillAction billAction = Fixture.createBillAction(event, 3L, "뽕나무쟁이족발", 30000L);
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(memberAction, memberAction1));
         billActionRepository.save(billAction);
@@ -88,14 +89,14 @@ class EventServiceTest extends ServiceTestSupport {
 
         assertThat(actionAppResponses).hasSize(3)
                 .extracting(ActionAppResponse::actionId,
-                            ActionAppResponse::name,
-                            ActionAppResponse::price,
-                            ActionAppResponse::sequence,
-                            ActionAppResponse::actionTypeName)
+                        ActionAppResponse::name,
+                        ActionAppResponse::price,
+                        ActionAppResponse::sequence,
+                        ActionAppResponse::actionTypeName)
                 .containsExactly(
                         tuple(1L, "토다리", null, 1L, "IN"),
                         tuple(2L, "쿠키", null, 2L, "IN"),
-                        tuple(3L, "뽕나무쟁이족발", 30000L, 3L, "BILL")
+                        tuple(1L, "뽕나무쟁이족발", 30000L, 3L, "BILL")
                 );
     }
 
@@ -103,14 +104,10 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void findAllMembersTest() {
         Event event = Fixture.EVENT1;
-        Action action1 = new Action(event, 1L);
-        Action action2 = new Action(event, 2L);
-        Action action3 = new Action(event, 3L);
-        Action action4 = new Action(event, 4L);
-        BillAction billAction = new BillAction(action3, "뽕나무쟁이족발", 30000L);
-        MemberAction memberAction1 = new MemberAction(action1, "토다리", IN, 1L);
-        MemberAction memberAction2 = new MemberAction(action2, "쿠키", IN, 1L);
-        MemberAction memberAction3 = new MemberAction(action4, "쿠키", OUT, 1L);
+        BillAction billAction = Fixture.createBillAction(event, 3L, "뽕나무쟁이족발", 30000L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 4L, "쿠키", OUT);
         eventRepository.save(event);
         billActionRepository.save(billAction);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
@@ -124,12 +121,12 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void updateMember() {
         Event event = Fixture.EVENT1;
-        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
-        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
-        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
-        MemberAction memberAction4 = new MemberAction(new Action(event, 4L), "쿠키", OUT, 3L);
-        MemberAction memberAction5 = new MemberAction(new Action(event, 5L), "쿠키", IN, 4L);
-        MemberAction memberAction6 = new MemberAction(new Action(event, 6L), "쿠키", OUT, 5L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "웨디", IN);
+        MemberAction memberAction4 = Fixture.createMemberAction(event, 4L, "쿠키", OUT);
+        MemberAction memberAction5 = Fixture.createMemberAction(event, 5L, "쿠키", IN);
+        MemberAction memberAction6 = Fixture.createMemberAction(event, 6L, "쿠키", OUT);
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(
                 memberAction1, memberAction2, memberAction3, memberAction4, memberAction5, memberAction6
@@ -157,9 +154,9 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void updateMember1() {
         Event event = Fixture.EVENT1;
-        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
-        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
-        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "웨디", IN);
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
@@ -176,9 +173,9 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void updateMember2() {
         Event event = Fixture.EVENT1;
-        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
-        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
-        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "웨디", IN);
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
@@ -195,9 +192,9 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void updateMember3() {
         Event event = Fixture.EVENT1;
-        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
-        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
-        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "웨디", IN);
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
@@ -214,9 +211,9 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void updateMember4() {
         Event event = Fixture.EVENT1;
-        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "토다리", IN, 1L);
-        MemberAction memberAction2 = new MemberAction(new Action(event, 2L), "쿠키", IN, 1L);
-        MemberAction memberAction3 = new MemberAction(new Action(event, 3L), "웨디", IN, 2L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
+        MemberAction memberAction3 = Fixture.createMemberAction(event, 3L, "웨디", IN);
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
@@ -227,5 +224,56 @@ class EventServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> eventService.updateMember(event.getToken(), appRequest))
                 .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("참여자별 정산 현황을 조회한다.")
+    @Test
+    void getMemberBillReports() {
+        Event event = Fixture.EVENT1;
+        Event savedEvent = eventRepository.save(event);
+        List<MemberAction> memberActions = List.of(
+                new MemberAction(savedEvent, new Sequence(1L), "소하", IN),
+                new MemberAction(savedEvent, new Sequence(2L), "감자", IN),
+                new MemberAction(savedEvent, new Sequence(3L), "쿠키", IN),
+                new MemberAction(savedEvent, new Sequence(5L), "감자", OUT)
+        );
+        List<BillAction> billActions = List.of(
+                new BillAction(savedEvent, new Sequence(4L), "뽕족", 60_000L),
+                new BillAction(savedEvent, new Sequence(7L), "인생네컷", 20_000L)
+        );
+        billActions.get(0).addDetails(
+                List.of(
+                        new BillActionDetail(BILL_ACTION, "소하", 10_000L, false),
+                        new BillActionDetail(BILL_ACTION, "감자", 40_000L, true),
+                        new BillActionDetail(BILL_ACTION, "쿠키", 10_000L, false)
+                )
+        );
+        billActions.get(1).addDetails(
+                List.of(
+                        new BillActionDetail(BILL_ACTION, "소하", 5_000L, true),
+                        new BillActionDetail(BILL_ACTION, "쿠키", 15_000L, true)
+                )
+        );
+        memberActionRepository.saveAll(memberActions);
+        billActionRepository.saveAll(billActions);
+
+        List<MemberBillReportAppResponse> responses = eventService.getMemberBillReports(event.getToken());
+
+        assertThat(responses)
+                .hasSize(3)
+                .extracting(MemberBillReportAppResponse::name, MemberBillReportAppResponse::price)
+                .containsExactlyInAnyOrder(
+                        tuple("감자", 40_000L),
+                        tuple("쿠키", 25_000L),
+                        tuple("소하", 15_000L)
+                );
+    }
+
+    @DisplayName("존재하지 않는 이벤트의 참여자별 정산 현황을 조회하는 경우 예외가 발생한다.")
+    @Test
+    void getMemberBillReports1() {
+        assertThatThrownBy(() -> eventService.getMemberBillReports("invalid token"))
+                .isInstanceOf(HaengdongException.class)
+                .hasMessage(HaengdongErrorCode.EVENT_NOT_FOUND.getMessage());
     }
 }

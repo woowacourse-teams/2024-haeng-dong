@@ -20,10 +20,10 @@ class CurrentMembersTest {
     void of() {
         Event event = Fixture.EVENT1;
         List<MemberAction> memberActions = List.of(
-                new MemberAction(new Action(event, 1L), "망쵸", IN, 1L),
-                new MemberAction(new Action(event, 2L), "백호", IN, 1L),
-                new MemberAction(new Action(event, 3L), "백호", OUT, 1L),
-                new MemberAction(new Action(event, 4L), "웨디", IN, 1L)
+                Fixture.createMemberAction(event, 1L, "망쵸", IN),
+                Fixture.createMemberAction(event, 2L, "백호", IN),
+                Fixture.createMemberAction(event, 3L, "백호", OUT),
+                Fixture.createMemberAction(event, 4L, "웨디", IN)
         );
 
         CurrentMembers currentMembers = CurrentMembers.of(memberActions);
@@ -37,7 +37,7 @@ class CurrentMembersTest {
     void addMemberAction1() {
         CurrentMembers currentMembers = new CurrentMembers();
         Event event = Fixture.EVENT1;
-        MemberAction memberAction = new MemberAction(new Action(event, 1L), "웨디", IN, 1L);
+        MemberAction memberAction = Fixture.createMemberAction(event, 1L, "웨디", IN);
 
         CurrentMembers addedCurrentMembers = currentMembers.addMemberAction(memberAction);
         Set<String> members = addedCurrentMembers.getMembers();
@@ -50,9 +50,9 @@ class CurrentMembersTest {
     @Test
     void addMemberAction2() {
         Event event = Fixture.EVENT1;
-        MemberAction memberAction1 = new MemberAction(new Action(event, 1L), "웨디", IN, 1L);
+        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "웨디", IN);
         CurrentMembers currentMembers = new CurrentMembers().addMemberAction(memberAction1);
-        MemberAction memberAction2 = new MemberAction(new Action(event, 1L), "웨디", OUT, 1L);
+        MemberAction memberAction2 = Fixture.createMemberAction(event, 1L, "웨디", OUT);
 
         CurrentMembers addedCurrentMembers = currentMembers.addMemberAction(memberAction2);
 

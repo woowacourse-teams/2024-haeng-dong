@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import server.haengdong.application.ActionService;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.response.ActionAppResponse;
@@ -37,7 +36,6 @@ public class EventController {
     private final EventService eventService;
     private final AuthService authService;
     private final CookieProperties cookieProperties;
-    private final ActionService actionService;
 
     @GetMapping("/api/events/{eventId}")
     public ResponseEntity<EventDetailResponse> findEvent(@PathVariable("eventId") String token) {
@@ -70,7 +68,7 @@ public class EventController {
 
     @GetMapping("/api/events/{eventId}/reports")
     public ResponseEntity<MemberBillReportsResponse> getMemberBillReports(@PathVariable("eventId") String token) {
-        List<MemberBillReportAppResponse> memberBillReports = actionService.getMemberBillReports(token);
+        List<MemberBillReportAppResponse> memberBillReports = eventService.getMemberBillReports(token);
 
         return ResponseEntity.ok()
                 .body(MemberBillReportsResponse.of(memberBillReports));

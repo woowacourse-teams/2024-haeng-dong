@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import server.haengdong.application.ActionService;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.BillActionDetailService;
 import server.haengdong.application.BillActionService;
@@ -42,9 +41,6 @@ public abstract class ControllerTestSupport {
 
     @MockBean
     protected AuthService authService;
-
-    @MockBean
-    protected ActionService actionService;
 
     @MockBean
     protected MemberActionService memberActionService;

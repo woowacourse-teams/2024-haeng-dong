@@ -6,13 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.application.response.CurrentMemberAppResponse;
-import server.haengdong.domain.action.Action;
-import server.haengdong.domain.action.ActionRepository;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionRepository;
 import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.Sequence;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -26,7 +25,6 @@ public class MemberActionService {
     private final MemberActionFactory memberActionFactory;
     private final MemberActionRepository memberActionRepository;
     private final EventRepository eventRepository;
-    private final ActionRepository actionRepository;
     private final BillActionRepository billActionRepository;
 
     @Transactional
@@ -35,15 +33,20 @@ public class MemberActionService {
 
         List<MemberAction> findMemberActions = memberActionRepository.findAllByEvent(event);
         CurrentMembers currentMembers = CurrentMembers.of(findMemberActions);
-        Action action = createStartAction(event);
-        List<MemberAction> memberActions = memberActionFactory.createMemberActions(request, currentMembers, action);
+        Sequence sequence = createStartSequence(event);
+        List<MemberAction> memberActions = memberActionFactory.createMemberActions(event, request, currentMembers,
+                sequence);
         memberActionRepository.saveAll(memberActions);
     }
 
-    private Action createStartAction(Event event) {
-        return actionRepository.findLastByEvent(event)
-                .map(Action::next)
-                .orElse(Action.createFirst(event));
+    private Sequence createStartSequence(Event event) {
+        Sequence memberActionSequence = memberActionRepository.findLastByEvent(event)
+                .map(MemberAction::getSequence)
+                .orElseGet(Sequence::createFirst);
+        Sequence billActionSequence = billActionRepository.findLastByEvent(event)
+                .map(BillAction::getSequence)
+                .orElseGet(Sequence::createFirst);
+        return Sequence.getGreater(memberActionSequence, billActionSequence).next();
     }
 
     public List<CurrentMemberAppResponse> getCurrentMembers(String token) {
@@ -69,30 +72,27 @@ public class MemberActionService {
 
         memberActionRepository.deleteAllByEventAndMemberName(event, memberName);
 
-        List<BillAction> billActions = billActionRepository.findByAction_Event(event);
+        List<BillAction> billActions = billActionRepository.findByEvent(event);
         billActions.forEach(billAction -> resetBillAction(event, billAction));
     }
 
     @Transactional
-    public void deleteMemberAction(String token, Long actionId) {
+    public void deleteMemberAction(String token, Long id) {
         Event event = eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
-        Action action = actionRepository.findByIdAndEvent(actionId, event)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.ACTION_NOT_FOUND));
-        MemberAction memberAction = memberActionRepository.findByAction(action)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_ACTION_NOT_FOUND));
+        MemberAction memberAction = memberActionRepository.findByIdAndEvent(id, event);
 
         memberActionRepository.deleteAllByMemberNameAndMinSequence(memberAction.getMemberName(),
-                memberAction.getSequence());
+                memberAction.getSequence().getValue());
 
         List<BillAction> billActions = billActionRepository.findByEventAndGreaterThanSequence(event,
-                action.getSequence());
+                memberAction.getSequence().getValue());
         billActions.forEach(billAction -> resetBillAction(event, billAction));
     }
 
     private void resetBillAction(Event event, BillAction billAction) {
         List<MemberAction> memberActions = memberActionRepository.findByEventAndSequence(event,
-                billAction.getSequence());
+                billAction.getSequence().getValue());
         CurrentMembers currentMembers = CurrentMembers.of(memberActions);
 
         billAction.resetBillActionDetails(currentMembers);

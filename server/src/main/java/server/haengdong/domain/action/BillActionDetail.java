@@ -1,10 +1,12 @@
 package server.haengdong.domain.action;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,13 +21,17 @@ public class BillActionDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JoinColumn(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private BillAction billAction;
 
+    @Column(nullable = false)
     private String memberName;
 
+    @Column(nullable = false)
     private Long price;
 
+    @Column(nullable = false)
     private boolean isFixed;
 
     public BillActionDetail(BillAction billAction, String memberName, Long price, boolean isFixed) {

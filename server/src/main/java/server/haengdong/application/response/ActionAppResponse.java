@@ -19,10 +19,10 @@ public record ActionAppResponse(
 
     public static ActionAppResponse of(BillAction billAction) {
         return new ActionAppResponse(
-                billAction.getAction().getId(),
+                billAction.getId(),
                 billAction.getTitle(),
                 billAction.getPrice(),
-                billAction.getSequence(),
+                billAction.getSequence().getValue(),
                 billAction.isFixed(),
                 ActionAppResponse.ActionType.BILL
         );
@@ -32,10 +32,10 @@ public record ActionAppResponse(
         MemberActionStatus status = memberAction.getStatus();
 
         return new ActionAppResponse(
-                memberAction.getAction().getId(),
+                memberAction.getId(),
                 memberAction.getMemberName(),
                 null,
-                memberAction.getSequence(),
+                memberAction.getSequence().getValue(),
                 false,
                 ActionAppResponse.ActionType.of(status)
         );
