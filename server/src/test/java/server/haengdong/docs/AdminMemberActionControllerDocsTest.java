@@ -24,7 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import server.haengdong.application.MemberActionService;
 import server.haengdong.presentation.admin.AdminMemberActionController;
-import server.haengdong.presentation.request.MemberActionsSaveRequest;
+import server.haengdong.presentation.request.MemberInActionsSaveRequest;
 
 public class AdminMemberActionControllerDocsTest extends RestDocsSupport {
 
@@ -38,10 +38,10 @@ public class AdminMemberActionControllerDocsTest extends RestDocsSupport {
     @DisplayName("참여자 행동을 추가한다.")
     @Test
     void saveMemberActionTest() throws Exception {
-        MemberActionsSaveRequest memberActionsSaveRequest = new MemberActionsSaveRequest(
+        MemberInActionsSaveRequest memberActionsInSaveRequest = new MemberInActionsSaveRequest(
                 List.of("웨디", "소하", "토다리", "쿠키"), "IN");
 
-        String requestBody = objectMapper.writeValueAsString(memberActionsSaveRequest);
+        String requestBody = objectMapper.writeValueAsString(memberActionsInSaveRequest);
 
         mockMvc.perform(post("/api/admin/events/{eventId}/member-actions", "망쵸토큰")
                         .contentType(MediaType.APPLICATION_JSON)

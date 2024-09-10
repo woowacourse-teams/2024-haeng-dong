@@ -10,21 +10,21 @@ import server.haengdong.exception.HaengdongException;
 
 public class CurrentMembers {
 
-    private final Set<String> members;
+    private final Set<Member> members;
 
     public CurrentMembers() {
         this(new HashSet<>());
     }
 
-    protected CurrentMembers(Set<String> members) {
+    protected CurrentMembers(Set<Member> members) {
         this.members = members;
     }
 
     public static CurrentMembers of(List<MemberAction> memberActions) {
         List<MemberAction> sortedMemberActions = getSortedMemberActions(memberActions);
-        Set<String> members = new HashSet<>();
+        Set<Member> members = new HashSet<>();
         for (MemberAction memberAction : sortedMemberActions) {
-            String member = memberAction.getMemberName();
+            Member member = memberAction.getMember();
             if (memberAction.isSameStatus(MemberActionStatus.IN)) {
                 members.add(member);
                 continue;
@@ -42,23 +42,23 @@ public class CurrentMembers {
     }
 
     public CurrentMembers addMemberAction(MemberAction memberAction) {
-        String memberName = memberAction.getMemberName();
+        Member member = memberAction.getMember();
 
-        Set<String> currentMembers = new HashSet<>(members);
+        Set<Member> currentMembers = new HashSet<>(members);
 
         if (memberAction.isIn()) {
-            currentMembers.add(memberName);
+            currentMembers.add(member);
         } else {
-            currentMembers.remove(memberName);
+            currentMembers.remove(member);
         }
         return new CurrentMembers(currentMembers);
     }
 
-    public void validate(String memberName, MemberActionStatus memberActionStatus) {
-        if (memberActionStatus == MemberActionStatus.IN && members.contains(memberName)) {
+    public void validate(Member member, MemberActionStatus memberActionStatus) {
+        if (memberActionStatus == MemberActionStatus.IN && members.contains(member)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_ALREADY_EXIST);
         }
-        if (memberActionStatus == MemberActionStatus.OUT && !members.contains(memberName)) {
+        if (memberActionStatus == MemberActionStatus.OUT && !members.contains(member)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_EXIST);
         }
     }
@@ -75,7 +75,7 @@ public class CurrentMembers {
         return members.size();
     }
 
-    public Set<String> getMembers() {
+    public Set<Member> getMembers() {
         return Collections.unmodifiableSet(members);
     }
 }

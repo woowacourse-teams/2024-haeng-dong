@@ -12,50 +12,33 @@ import server.haengdong.domain.event.Event;
 @Repository
 public interface MemberActionRepository extends JpaRepository<MemberAction, Long> {
 
-    List<MemberAction> findAllByEvent(@Param("event") Event event);
+    List<MemberAction> findAllByMember_Event(@Param("event") Event event);
 
-    @Query("""
-            select distinct ma.memberName
-            from MemberAction ma
-            where ma.event = :event
-            """)
-    List<String> findAllUniqueMemberByEvent(Event event);
+    void deleteAllByMember(Member member);
 
     @Modifying
     @Query("""
             delete
             from MemberAction ma
-            where ma.memberName = :memberName and ma.event = :event
+            where ma.member = :member and ma.sequence.value >= :sequence
             """)
-    void deleteAllByEventAndMemberName(Event event, String memberName);
-
-    @Modifying
-    @Query("""
-            delete
-            from MemberAction ma
-            where ma.memberName = :memberName and ma.sequence.value >= :sequence
-            """)
-    void deleteAllByMemberNameAndMinSequence(String memberName, Long sequence);
-
-    List<MemberAction> findAllByEventAndMemberName(Event event, String memberName);
-
-    boolean existsByEventAndMemberName(Event event, String updatedMemberName);
+    void deleteAllByMemberAndMinSequence(Member member, Long sequence);
 
     @Query("""
             select ma
             from MemberAction ma
-            where ma.event = :event and ma.sequence.value < :sequence
+            where ma.member.event = :event and ma.sequence.value < :sequence
             """)
     List<MemberAction> findByEventAndSequence(Event event, Long sequence);
 
     @Query("""
             select ma
             from MemberAction ma
-            WHERE ma.event = :event
+            WHERE ma.member.event = :event
             ORDER BY ma.sequence.value DESC
             LIMIT 1
             """)
     Optional<MemberAction> findLastByEvent(@Param("event") Event event);
 
-    MemberAction findByIdAndEvent(Long actionId, Event event);
+    MemberAction findByIdAndMember_Event(Long actionId, Event event);
 }

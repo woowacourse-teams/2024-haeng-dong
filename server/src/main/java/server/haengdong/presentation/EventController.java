@@ -24,7 +24,6 @@ import server.haengdong.presentation.response.ActionsResponse;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventResponse;
 import server.haengdong.presentation.response.MemberBillReportsResponse;
-import server.haengdong.presentation.response.MembersResponse;
 import server.haengdong.presentation.response.StepsResponse;
 
 @Slf4j
@@ -57,13 +56,6 @@ public class EventController {
         ActionsResponse actionsResponse = ActionsResponse.of(actions);
 
         return ResponseEntity.ok(actionsResponse);
-    }
-
-    @GetMapping("/api/events/{eventId}/members")
-    public ResponseEntity<MembersResponse> findAllMembers(@PathVariable("eventId") String token) {
-        MembersResponse response = MembersResponse.of(eventService.findAllMembers(token));
-
-        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/api/events/{eventId}/reports")

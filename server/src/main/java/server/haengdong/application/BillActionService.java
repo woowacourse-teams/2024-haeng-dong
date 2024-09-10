@@ -30,7 +30,7 @@ public class BillActionService {
     public void saveAllBillAction(String eventToken, List<BillActionAppRequest> requests) {
         Event event = getEvent(eventToken);
         Sequence sequence = createStartSequence(event);
-        List<MemberAction> findMemberActions = memberActionRepository.findAllByEvent(event);
+        List<MemberAction> findMemberActions = memberActionRepository.findAllByMember_Event(event);
         CurrentMembers currentMembers = CurrentMembers.of(findMemberActions);
 
         for (BillActionAppRequest request : requests) {

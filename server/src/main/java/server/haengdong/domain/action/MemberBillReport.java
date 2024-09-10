@@ -11,9 +11,9 @@ import lombok.Getter;
 @Getter
 public class MemberBillReport {
 
-    private final Map<String, Long> reports;
+    private final Map<Member, Long> reports;
 
-    private MemberBillReport(Map<String, Long> reports) {
+    private MemberBillReport(Map<Member, Long> reports) {
         this.reports = reports;
     }
 
@@ -21,7 +21,7 @@ public class MemberBillReport {
         PriorityQueue<BillAction> sortedBillActions = new PriorityQueue<>(billActions);
         PriorityQueue<MemberAction> sortedMemberActions = new PriorityQueue<>(memberActions);
 
-        Map<String, Long> memberBillReports = initReports(memberActions);
+        Map<Member, Long> memberBillReports = initReports(memberActions);
         CurrentMembers currentMembers = new CurrentMembers();
         while (!sortedBillActions.isEmpty() && !sortedMemberActions.isEmpty()) {
             if (isMemberActionTurn(sortedMemberActions, sortedBillActions)) {
@@ -39,9 +39,9 @@ public class MemberBillReport {
         return new MemberBillReport(memberBillReports);
     }
 
-    private static Map<String, Long> initReports(List<MemberAction> memberActions) {
+    private static Map<Member, Long> initReports(List<MemberAction> memberActions) {
         return memberActions.stream()
-                .map(MemberAction::getMemberName)
+                .map(MemberAction::getMember)
                 .distinct()
                 .collect(toMap(Function.identity(), i -> 0L));
     }
@@ -59,15 +59,15 @@ public class MemberBillReport {
     private static void addBillAction(
             PriorityQueue<BillAction> sortedBillActions,
             CurrentMembers currentMembers,
-            Map<String, Long> memberBillReports
+            Map<Member, Long> memberBillReports
     ) {
         BillAction billAction = sortedBillActions.poll();
         if (currentMembers.isEmpty()) {
             return;
         }
 
-        for (String currentMember : currentMembers.getMembers()) {
-            Long currentPrice = billAction.findPriceByMemberName(currentMember);
+        for (Member currentMember : currentMembers.getMembers()) {
+            Long currentPrice = billAction.findPriceByMember(currentMember);
             Long price = memberBillReports.get(currentMember) + currentPrice;
             memberBillReports.put(currentMember, price);
         }

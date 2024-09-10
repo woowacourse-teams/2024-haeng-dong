@@ -25,8 +25,9 @@ public class BillActionDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     private BillAction billAction;
 
-    @Column(nullable = false)
-    private String memberName;
+    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
     @Column(nullable = false)
     private Long price;
@@ -34,9 +35,9 @@ public class BillActionDetail {
     @Column(nullable = false)
     private boolean isFixed;
 
-    public BillActionDetail(BillAction billAction, String memberName, Long price, boolean isFixed) {
+    public BillActionDetail(BillAction billAction, Member member, Long price, boolean isFixed) {
         this.billAction = billAction;
-        this.memberName = memberName;
+        this.member = member;
         this.price = price;
         this.isFixed = isFixed;
     }
@@ -49,16 +50,12 @@ public class BillActionDetail {
         this.isFixed = isFixed;
     }
 
-    public void updateMemberName(String name) {
-        this.memberName = name;
+    public boolean isMemberId(Long memberId) {
+        return member.isId(memberId);
     }
 
-    public boolean hasMemberName(String memberName) {
-        return this.memberName.equals(memberName);
-    }
-
-    public boolean isSameName(String memberName) {
-        return this.memberName.equals(memberName);
+    public boolean isMember(Member member) {
+        return this.member.equals(member);
     }
 
     public void setBillAction(BillAction billAction) {

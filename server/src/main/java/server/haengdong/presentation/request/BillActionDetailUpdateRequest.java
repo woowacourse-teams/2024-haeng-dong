@@ -7,7 +7,7 @@ import server.haengdong.application.request.BillActionDetailUpdateAppRequest;
 public record BillActionDetailUpdateRequest(
 
         @NotBlank(message = "맴버 이름은 공백일 수 없습니다.")
-        String name,
+        Long memberId,
 
         @NotNull(message = "지출 금액은 공백일 수 없습니다.")
         Long price,
@@ -16,6 +16,6 @@ public record BillActionDetailUpdateRequest(
         boolean isFixed
 ) {
     public BillActionDetailUpdateAppRequest toAppRequest() {
-        return new BillActionDetailUpdateAppRequest(this.name, this.price, this.isFixed);
+        return new BillActionDetailUpdateAppRequest(this.memberId, this.price, this.isFixed);
     }
 }

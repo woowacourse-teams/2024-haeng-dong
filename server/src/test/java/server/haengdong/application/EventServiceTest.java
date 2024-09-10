@@ -137,7 +137,7 @@ class EventServiceTest extends ServiceTestSupport {
                 new MemberNameUpdateAppRequest("토다리", "토쟁이")
         )));
 
-        List<MemberAction> foundMemberActions = memberActionRepository.findAllByEvent(event);
+        List<MemberAction> foundMemberActions = memberActionRepository.findAllByMember_Event(event);
         assertThat(foundMemberActions)
                 .extracting(MemberAction::getId, MemberAction::getMemberName)
                 .contains(

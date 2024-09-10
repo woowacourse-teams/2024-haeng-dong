@@ -12,7 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
-import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.action.BillAction;
 import server.haengdong.domain.action.BillActionDetail;
 import server.haengdong.domain.action.BillActionDetailRepository;
@@ -48,7 +47,7 @@ class MemberActionServiceTest extends ServiceTestSupport {
         MemberAction memberAction = Fixture.createMemberAction(event, 1L, "망쵸", IN);
         memberActionRepository.save(memberAction);
 
-        assertThatCode(() -> memberActionService.saveMemberAction(event.getToken(), new MemberActionsSaveAppRequest(
+        assertThatCode(() -> memberActionService.saveMemberAction(event.getToken(), new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("망쵸", "OUT")))))
                 .doesNotThrowAnyException();
     }
@@ -63,7 +62,7 @@ class MemberActionServiceTest extends ServiceTestSupport {
         MemberAction memberActionTwo = Fixture.createMemberAction(event, 2L, "망쵸", OUT);
         memberActionRepository.save(memberActionTwo);
 
-        assertThatCode(() -> memberActionService.saveMemberAction(event.getToken(), new MemberActionsSaveAppRequest(
+        assertThatCode(() -> memberActionService.saveMemberAction(event.getToken(), new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("망쵸", "IN")))))
                 .doesNotThrowAnyException();
     }
@@ -71,7 +70,7 @@ class MemberActionServiceTest extends ServiceTestSupport {
     @DisplayName("행사에 입장하지 않았을 경우 퇴장할 수 없다.")
     @Test
     void saveMemberActionTest2() {
-        MemberActionsSaveAppRequest appRequest = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest appRequest = new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("TOKEN", "OUT")));
 
         assertThatCode(() -> memberActionService.saveMemberAction("TOKEN", appRequest))

@@ -10,7 +10,7 @@ public record BillActionDetailAppResponse(
 
     public static BillActionDetailAppResponse of(BillActionDetail billActionDetail) {
         return new BillActionDetailAppResponse(
-                billActionDetail.getMemberName(),
+                billActionDetail.getMember().getName(),
                 billActionDetail.getPrice(),
                 billActionDetail.isFixed()
         );

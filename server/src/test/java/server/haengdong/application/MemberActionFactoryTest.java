@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
-import server.haengdong.application.request.MemberActionsSaveAppRequest;
 import server.haengdong.domain.action.CurrentMembers;
 import server.haengdong.domain.action.MemberAction;
 import server.haengdong.domain.action.MemberActionRepository;
@@ -40,7 +39,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
         MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "토다리", MemberActionStatus.OUT);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
 
         List<MemberAction> unorderedMemberActions = List.of(memberAction2, memberAction1);
@@ -58,12 +57,12 @@ class MemberActionFactoryTest extends ServiceTestSupport {
         MemberAction memberAction = Fixture.createMemberAction(event, 1L, "토다리", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
-        MemberActionsSaveAppRequest memberActionsSaveAppRequest = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest memberActionsSaveInAppRequest = new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
         Sequence sequence = new Sequence(2L);
 
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
-        List<MemberAction> memberActions = memberActionFactory.createMemberActions(event, memberActionsSaveAppRequest,
+        List<MemberAction> memberActions = memberActionFactory.createMemberActions(event, memberActionsSaveInAppRequest,
                 currentMembers, sequence
         );
 
@@ -82,7 +81,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
         MemberAction memberAction = Fixture.createMemberAction(event, 1L, "토다리", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "OUT")));
         Sequence sequence = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
@@ -100,7 +99,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
         MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "토다리", MemberActionStatus.OUT);
         memberActionRepository.save(memberAction2);
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("토다리", "IN")));
         Sequence sequence = new Sequence(3L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction1, memberAction2));
@@ -116,7 +115,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
         MemberAction memberAction = Fixture.createMemberAction(event, 1L, "토다리", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "IN")));
         Sequence sequence = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
@@ -130,7 +129,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     void createMemberActionTest5() {
         Event event = eventRepository.save(Fixture.EVENT1);
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "OUT")));
         Sequence sequence = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of());
@@ -147,7 +146,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
         MemberAction memberAction = Fixture.createMemberAction(event, 1L, "쿠키", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(new MemberActionSaveAppRequest("쿠키", "IN")));
         Sequence sequence = new Sequence(2L);
         CurrentMembers currentMembers = CurrentMembers.of(List.of(memberAction));
@@ -161,7 +160,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
     void createMemberActionTest7() {
         Event event = eventRepository.save(Fixture.EVENT1);
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(
                         new MemberActionSaveAppRequest("쿠키", "IN"),
                         new MemberActionSaveAppRequest("쿠키", "IN")
@@ -182,7 +181,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
         MemberAction memberAction = new MemberAction(event, sequence1, "쿠키", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(
                         new MemberActionSaveAppRequest("쿠키", "OUT"),
                         new MemberActionSaveAppRequest("쿠키", "OUT")
@@ -202,7 +201,7 @@ class MemberActionFactoryTest extends ServiceTestSupport {
         MemberAction memberAction = new MemberAction(event, sequence, "쿠키", MemberActionStatus.IN);
         memberActionRepository.save(memberAction);
 
-        MemberActionsSaveAppRequest request = new MemberActionsSaveAppRequest(
+        MemberInActionsSaveAppRequest request = new MemberInActionsSaveAppRequest(
                 List.of(
                         new MemberActionSaveAppRequest("쿠키", "IN"),
                         new MemberActionSaveAppRequest("쿠키", "OUT")

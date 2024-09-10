@@ -10,17 +10,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import server.haengdong.presentation.ControllerTestSupport;
-import server.haengdong.presentation.request.MemberActionsSaveRequest;
+import server.haengdong.presentation.request.MemberInActionsSaveRequest;
 
 class AdminMemberActionControllerTest extends ControllerTestSupport {
 
     @DisplayName("참여자 행동을 추가한다.")
     @Test
     void saveMemberActionTest() throws Exception {
-        MemberActionsSaveRequest memberActionsSaveRequest = new MemberActionsSaveRequest(
+        MemberInActionsSaveRequest memberActionsInSaveRequest = new MemberInActionsSaveRequest(
                 List.of("웨디", "소하", "토다리", "쿠키"), "IN");
 
-        String requestBody = objectMapper.writeValueAsString(memberActionsSaveRequest);
+        String requestBody = objectMapper.writeValueAsString(memberActionsInSaveRequest);
 
         mockMvc.perform(post("/api/admin/events/{eventId}/member-actions", "망쵸토큰")
                         .contentType(MediaType.APPLICATION_JSON)

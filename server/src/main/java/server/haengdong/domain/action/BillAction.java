@@ -93,7 +93,7 @@ public class BillAction implements Comparable<BillAction> {
         this.billActionDetails.clear();
         Iterator<Long> priceIterator = distributePrice(currentMembers.size()).iterator();
 
-        for (String member : currentMembers.getMembers()) {
+        for (Member member : currentMembers.getMembers()) {
             BillActionDetail billActionDetail = new BillActionDetail(this, member, priceIterator.next(), false);
             this.billActionDetails.add(billActionDetail);
         }
@@ -148,9 +148,9 @@ public class BillAction implements Comparable<BillAction> {
         return this.price.equals(price);
     }
 
-    public Long findPriceByMemberName(String memberName) {
+    public Long findPriceByMember(Member member) {
         return billActionDetails.stream()
-                .filter(billActionDetail -> billActionDetail.hasMemberName(memberName))
+                .filter(billActionDetail -> billActionDetail.isMember(member))
                 .map(BillActionDetail::getPrice)
                 .findFirst()
                 .orElseGet(() -> DEFAULT_PRICE);

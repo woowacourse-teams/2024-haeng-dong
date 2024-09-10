@@ -33,7 +33,7 @@ public record ActionAppResponse(
 
         return new ActionAppResponse(
                 memberAction.getId(),
-                memberAction.getMemberName(),
+                memberAction.getMember().getName(),
                 null,
                 memberAction.getSequence().getValue(),
                 false,

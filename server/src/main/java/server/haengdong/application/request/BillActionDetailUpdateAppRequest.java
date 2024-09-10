@@ -1,7 +1,7 @@
 package server.haengdong.application.request;
 
 public record BillActionDetailUpdateAppRequest(
-        String name,
+        Long memberId,
         Long price,
         boolean isFixed
 ) {

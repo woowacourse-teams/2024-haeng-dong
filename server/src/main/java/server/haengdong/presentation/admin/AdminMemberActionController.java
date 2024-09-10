@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.MemberActionService;
-import server.haengdong.presentation.request.MemberActionsSaveRequest;
+import server.haengdong.presentation.request.MemberInActionsSaveRequest;
+import server.haengdong.presentation.request.MemberOutActionsSaveRequest;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,22 +17,22 @@ public class AdminMemberActionController {
 
     private final MemberActionService memberActionService;
 
-    @PostMapping("/api/admin/events/{eventId}/member-actions")
-    public ResponseEntity<Void> saveMemberAction(
+    @PostMapping("/api/admin/events/{eventId}/member-actions/in")
+    public ResponseEntity<Void> saveMemberInAction(
             @PathVariable("eventId") String token,
-            @RequestBody MemberActionsSaveRequest request
+            @RequestBody MemberInActionsSaveRequest request
     ) {
-        memberActionService.saveMemberAction(token, request.toAppRequest());
+        memberActionService.saveMemberInAction(token, request.members());
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/api/admin/events/{eventId}/members/{memberName}")
-    public ResponseEntity<Void> deleteMember(
+    @PostMapping("/api/admin/events/{eventId}/member-actions/out")
+    public ResponseEntity<Void> saveMemberOutAction(
             @PathVariable("eventId") String token,
-            @PathVariable("memberName") String memberName
+            @RequestBody MemberOutActionsSaveRequest request
     ) {
-        memberActionService.deleteMember(token, memberName);
+        memberActionService.saveMemberOutAction(token, request.memberIds());
 
         return ResponseEntity.ok().build();
     }

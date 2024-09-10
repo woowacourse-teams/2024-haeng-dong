@@ -44,7 +44,7 @@ public class BillActionDetailService {
 
         for (BillActionDetailUpdateAppRequest updateRequest : billActionDetailUpdateAppRequests) {
             BillActionDetail detailToUpdate = billActionDetails.stream()
-                    .filter(detail -> detail.isSameName(updateRequest.name()))
+                    .filter(detail -> detail.isMemberId(updateRequest.memberId()))
                     .findFirst()
                     .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_ACTION_DETAIL_NOT_FOUND));
 
