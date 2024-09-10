@@ -21,7 +21,6 @@ const useEventPageLayoutPage = () => {
 
   const url = getEventPageUrlByEnvironment(eventId, 'home');
 
-  // OS 공유 기능
   const shareInfo = {
     title: `[행동대장]\n${eventName}에 대한 정산을 시작할게요:)`,
     text: '아래 링크에 접속해서 정산 내역을 확인해 주세요!',
@@ -55,7 +54,7 @@ const useEventPageLayoutPage = () => {
     });
   };
 
-  const shareText = `[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\n${url}`;
+  const shareText = `${shareInfo.title}\n${shareInfo.text}\n${url}`;
 
   return {
     navProps,
