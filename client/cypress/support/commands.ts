@@ -21,6 +21,10 @@ Cypress.Commands.add('blockSentry', () => {
   cy.intercept('POST', /.*sentry.io\/api.*/, {statusCode: 200}).as('sentry');
 });
 
+Cypress.Commands.add('blockKakao', () => {
+  cy.intercept('POST', /.*kakaocdn.\/api.*/, {statusCode: 200}).as('kakao');
+});
+
 Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: InterceptAPIProps) => {
   if (type === 'postEvent')
     cy.intercept(POST_EVENT, {
@@ -49,6 +53,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       blockSentry(): Chainable<void>;
+      blockKakao(): Chainable<void>;
       interceptAPI(props: InterceptAPIProps): Chainable<void>;
       createEventName(eventName: string): Chainable<void>;
     }
