@@ -28,6 +28,10 @@ const useSetEventPasswordPage = () => {
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    onSuccess();
+  };
+
+  const onSuccess = () => {
     postEvent(
       {eventName, password: String(password).padStart(4, '0')},
       {
@@ -55,6 +59,6 @@ const useSetEventPasswordPage = () => {
     }
   };
 
-  return {submitPassword, errorMessage, password, handleChange, canSubmit, isPostEventPending};
+  return {submitPassword, errorMessage, password, handleChange, onSuccess, canSubmit, isPostEventPending};
 };
 export default useSetEventPasswordPage;
