@@ -22,7 +22,11 @@ Cypress.Commands.add('blockSentry', () => {
 });
 
 Cypress.Commands.add('blockKakao', () => {
-  cy.intercept('POST', /.*kakaocdn.\/api.*/, {statusCode: 200}).as('kakao');
+  Cypress.on('uncaught:exception', (err, runnable) => {
+    if (err.message.includes('Kakao.init: App key must be provided')) {
+      return false;
+    }
+  });
 });
 
 Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: InterceptAPIProps) => {
