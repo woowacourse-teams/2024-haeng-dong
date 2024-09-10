@@ -1,7 +1,7 @@
 import type {MemberType} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
-import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/enpointPrefix';
 import {requestDelete, requestGet, requestPut, requestPostWithoutResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
@@ -13,7 +13,7 @@ type RequestPostMemberList = {
 export const requestPostMemberList = async ({eventId, type, memberNameList}: WithEventId<RequestPostMemberList>) => {
   await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/member-actions`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/member-actions`,
     body: {
       members: memberNameList,
       status: type,
@@ -28,7 +28,7 @@ type RequestDeleteMemberAction = {
 export const requestDeleteMemberAction = async ({eventId, actionId}: WithEventId<RequestDeleteMemberAction>) => {
   await requestDelete({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/member-actions/${actionId}`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/member-actions/${actionId}`,
   });
 };
 
@@ -38,7 +38,7 @@ type ResponseGetAllMemberList = {
 
 export const requestGetAllMemberList = async ({eventId}: WithEventId) => {
   return requestGet<ResponseGetAllMemberList>({
-    endpoint: `${TEMP_PREFIX}/${eventId}/members`,
+    endpoint: `${USER_API_PREFIX}/${eventId}/members`,
   });
 };
 
@@ -54,7 +54,7 @@ type RequestPutAllMemberList = {
 export const requestPutAllMemberList = async ({eventId, members}: WithEventId<RequestPutAllMemberList>) => {
   await requestPut({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/members/nameChange`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/members/nameChange`,
     body: {
       members,
     },
@@ -68,7 +68,7 @@ type RequestDeleteAllMemberList = {
 export const requestDeleteAllMemberList = async ({eventId, memberName}: WithEventId<RequestDeleteAllMemberList>) => {
   await requestDelete({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/members/${memberName}`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/members/${memberName}`,
   });
 };
 
@@ -79,6 +79,6 @@ export type ResponseGetCurrentInMemberList = {
 export const requestGetCurrentInMemberList = async ({eventId}: WithEventId) => {
   return await requestGet<ResponseGetCurrentInMemberList>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/members/current`,
+    endpoint: `${USER_API_PREFIX}/${eventId}/members/current`,
   });
 };

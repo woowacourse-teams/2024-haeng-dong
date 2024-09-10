@@ -1,6 +1,6 @@
 import {HttpResponse, http} from 'msw';
 
-import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {USER_API_PREFIX} from '@apis/enpointPrefix';
 
 import {PASSWORD_LENGTH} from '@constants/password';
 
@@ -20,7 +20,7 @@ type PostLoginRequestBody = {
 };
 
 export const authHandler = [
-  http.post(`${TEMP_PREFIX}/:eventId/auth`, ({cookies}) => {
+  http.post(`${USER_API_PREFIX}/:eventId/auth`, ({cookies}) => {
     const token = cookies['eventToken'];
 
     if (token === VALID_TOKEN_FOR_TEST) {
@@ -63,8 +63,8 @@ export const authHandler = [
   }),
 
   // TODO: (@weadie) any를 사용한 이유는..  any가 있는 위치가 이 handler함수의 responseBody타입인데, 아래처럼 return하는 것에 대한 예시가 공문에 없습니다. 함수를 까면 되겠지만 시간이 아깝고 알아낸다고 해서 이 responseBody 타입은 사실 중요한게 아니기 때문에 any로 대체하였습니다.
-  http.post<PostLoginParams, PostLoginRequestBody, any, `${typeof TEMP_PREFIX}/:eventId/login`>(
-    `${TEMP_PREFIX}/:eventId/login`,
+  http.post<PostLoginParams, PostLoginRequestBody, any, `${typeof USER_API_PREFIX}/:eventId/login`>(
+    `${USER_API_PREFIX}/:eventId/login`,
     async ({request}) => {
       const {password} = await request.json();
 

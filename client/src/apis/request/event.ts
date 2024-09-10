@@ -1,4 +1,4 @@
-import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {USER_API_PREFIX} from '@apis/enpointPrefix';
 import {requestGet, requestPostWithResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
@@ -13,7 +13,7 @@ export type ResponsePostNewEvent = {
 
 export const requestPostNewEvent = async ({eventName, password}: RequestPostNewEvent) => {
   return await requestPostWithResponse<ResponsePostNewEvent>({
-    endpoint: TEMP_PREFIX,
+    endpoint: USER_API_PREFIX,
     body: {
       eventName: eventName,
       password: password,
@@ -27,6 +27,6 @@ type ResponseGetEventName = {
 
 export const requestGetEventName = async ({eventId}: WithEventId) => {
   return requestGet<ResponseGetEventName>({
-    endpoint: `${TEMP_PREFIX}/${eventId}`,
+    endpoint: `${USER_API_PREFIX}/${eventId}`,
   });
 };
