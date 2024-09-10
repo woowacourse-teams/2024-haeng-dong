@@ -22,13 +22,11 @@ Cypress.Commands.add('blockSentry', () => {
 });
 
 Cypress.Commands.add('blockKakao', () => {
-  Cypress.on('uncaught:exception', (err, runnable) => {
-    if (err.message.includes('Kakao.init: App key must be provided')) {
-      return false;
-    }
-  });
+  cy.intercept('GET', 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js', {
+    statusCode: 200,
+    body: '',
+  }).as('blockKakao');
 });
-
 Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: InterceptAPIProps) => {
   if (type === 'postEvent')
     cy.intercept(POST_EVENT, {
