@@ -1,78 +1,31 @@
 /** @jsxImportSource @emotion/react */
-import {Button, TextButton, useTheme} from '@components/Design';
 import {css} from '@emotion/react';
-import {RefObject, useEffect, useState} from 'react';
-import {createPortal} from 'react-dom';
-import {Keypad} from './Keypad';
+import {useEffect, useState} from 'react';
 
-type KeyboardType = 'number' | 'amount';
+import {Button, useTheme} from '@components/Design';
+
+import {Keypad} from './Keypad';
+import useNumberKeyboard from './useNumberKeyboard';
+
+export type KeyboardType = 'number' | 'amount';
 
 interface Props {
-  // inputRef: RefObject<HTMLInputElement> | null;
   type: KeyboardType;
   maxNumber: number;
   onChange: (value: string) => void;
 }
 
 export default function NumberKeyboard({type, maxNumber, onChange}: Props) {
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    onChange(value);
-  }, [value, setValue]);
-
   const {theme} = useTheme();
   const amountKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '<-'];
   const numberKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '<-'];
-  const onClickKeypad = (inputValue: string) => {
-    const newNumber = Number((value + inputValue).replace(/,/g, ''));
 
-    if (newNumber > maxNumber) {
-      setValue(type === 'amount' ? maxNumber.toLocaleString() : `${maxNumber}`);
-    } else {
-      const newValue =
-        type === 'amount' ? Number((value + inputValue).replace(/,/g, '')).toLocaleString() : value + inputValue;
-      setValue(newValue);
-    }
-  };
+  const {onClickKeypad, onClickDelete, onClickDeleteAll, onClickAddAmount} = useNumberKeyboard({
+    type,
+    maxNumber,
+    onChange,
+  });
 
-  const onClickDelete = () => {
-    const newValue =
-      type === 'amount'
-        ? Number(value.slice(0, value.length - 1).replace(/,/g, '')).toLocaleString()
-        : value.slice(0, value.length - 1);
-    setValue(newValue === '0' ? '' : newValue);
-  };
-
-  const onClickOneThousand = () => {
-    const newNumber = Number(value.replace(/,/g, '')) + 10000;
-    if (newNumber > maxNumber) {
-      setValue(type === 'amount' ? maxNumber.toLocaleString() : `${maxNumber}`);
-    } else {
-      const newValue = newNumber.toLocaleString();
-      setValue(newValue);
-    }
-  };
-
-  const onClickFiveThousand = () => {
-    const newNumber = Number(value.replace(/,/g, '')) + 50000;
-    if (newNumber > maxNumber) {
-      setValue(type === 'amount' ? maxNumber.toLocaleString() : `${maxNumber}`);
-    } else {
-      const newValue = newNumber.toLocaleString();
-      setValue(newValue);
-    }
-  };
-
-  const onClickTenThousand = () => {
-    const newNumber = Number(value.replace(/,/g, '')) + 100000;
-    if (newNumber > maxNumber) {
-      setValue(type === 'amount' ? maxNumber.toLocaleString() : `${maxNumber}`);
-    } else {
-      const newValue = newNumber.toLocaleString();
-      setValue(newValue);
-    }
-  };
   return (
     <div
       css={css`
@@ -93,16 +46,16 @@ export default function NumberKeyboard({type, maxNumber, onChange}: Props) {
             gap: 1rem;
           `}
         >
-          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickOneThousand()}>
+          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickAddAmount(10000)}>
             +1만
           </Button>
-          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickFiveThousand()}>
+          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickAddAmount(50000)}>
             +5만
           </Button>
-          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickTenThousand()}>
+          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickAddAmount(100000)}>
             +10만
           </Button>
-          <Button isFull={true} size="small" variants="tertiary" onClick={() => setValue('')}>
+          <Button isFull={true} size="small" variants="tertiary" onClick={onClickDeleteAll}>
             전체 삭제
           </Button>
         </div>
@@ -112,7 +65,7 @@ export default function NumberKeyboard({type, maxNumber, onChange}: Props) {
           key={el}
           value={el}
           disabled={el === ''}
-          onClick={el === '<-' ? () => onClickDelete() : () => onClickKeypad(el)}
+          onClick={el === '<-' ? onClickDelete : () => onClickKeypad(el)}
         />
       ))}
     </div>

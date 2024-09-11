@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import {Text, useTheme} from '@components/Design';
-import {setDarker, setLighter} from '@components/Design/utils/colors';
 import {css} from '@emotion/react';
+
+import {setDarker, setLighter} from '@components/Design/utils/colors';
+
+import {Text, useTheme} from '@components/Design';
 
 interface Props {
   value: string;

@@ -2,8 +2,10 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import {useRef, useState} from 'react';
-import NumberKeyboard from './NumberKeyboard';
+
 import {Flex, Input} from '@components/Design';
+
+import NumberKeyboard from './NumberKeyboard';
 
 const meta = {
   title: 'Components/NumberKeyboard',
