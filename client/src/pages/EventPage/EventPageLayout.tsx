@@ -2,7 +2,7 @@ import {Outlet} from 'react-router-dom';
 
 import useEventPageLayoutPage from '@hooks/useEventPageLayoutPage';
 
-import {MemberInviteButton} from '@components/MemberInviteButton';
+import {ShareEventButton} from '@components/ShareEventButton';
 
 import {MainLayout, TopNav, Switch} from '@HDesign/index';
 
@@ -24,7 +24,7 @@ const EventPageLayout = () => {
     <MainLayout backgroundColor="gray">
       <TopNav>
         <Switch value={nav} values={paths} onChange={onChange} />
-        {!isLoginPage && <MemberInviteButton shareText={shareText} onInviteButtonClick={onInviteButtonClick} />}
+        {!isLoginPage && <ShareEventButton shareText={shareText} onInviteButtonClick={onInviteButtonClick} />}
       </TopNav>
       <Outlet context={outletContext} />
     </MainLayout>

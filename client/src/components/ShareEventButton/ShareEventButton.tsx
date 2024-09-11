@@ -6,12 +6,12 @@ import {Button} from '@components/Design';
 
 import isMobileDevice from '@utils/isMobileDevice';
 
-type MemberInviteButtonProps = {
+type ShareEventButtonProps = {
   shareText: string;
   onInviteButtonClick: () => void;
 };
 
-const MemberInviteButton = ({shareText, onInviteButtonClick}: MemberInviteButtonProps) => {
+const ShareEventButton = ({shareText, onInviteButtonClick}: ShareEventButtonProps) => {
   const {showToast} = useToast();
   const isMobile = isMobileDevice();
 
@@ -39,4 +39,4 @@ const MemberInviteButton = ({shareText, onInviteButtonClick}: MemberInviteButton
   );
 };
 
-export default MemberInviteButton;
+export default ShareEventButton;
