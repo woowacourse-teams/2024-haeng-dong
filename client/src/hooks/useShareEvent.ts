@@ -24,10 +24,10 @@ const useShareEvent = () => {
   const onInviteButtonClick = () => {
     if (!isMobile) return;
 
-    shareUnSupportedOSShareEnvUsingKakao();
+    kakaoShare();
   };
 
-  const shareUnSupportedOSShareEnvUsingKakao = () => {
+  const kakaoShare = () => {
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
