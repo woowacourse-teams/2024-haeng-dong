@@ -15,7 +15,7 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    type: {description: '', control: {type: 'select'}, options: ['amount', 'number']},
+    type: {description: '', control: {type: 'select'}, options: ['amount', 'number', 'string']},
   },
   args: {
     type: 'amount',

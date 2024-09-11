@@ -7,7 +7,7 @@ import {Button, useTheme} from '@components/Design';
 import {Keypad} from './Keypad';
 import useNumberKeyboard from './useNumberKeyboard';
 
-export type KeyboardType = 'number' | 'amount';
+export type KeyboardType = 'number' | 'string' | 'amount';
 
 interface Props {
   type: KeyboardType;

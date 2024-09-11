@@ -3,7 +3,7 @@ import {KeyboardType} from './NumberKeyboard';
 
 interface Props {
   type: KeyboardType;
-  maxNumber: number;
+  maxNumber?: number;
   onChange: (value: string) => void;
 }
 
@@ -11,23 +11,13 @@ const useNumberKeyboard = ({type, maxNumber, onChange}: Props) => {
   const [value, setValue] = useState('');
 
   const onClickKeypad = (inputValue: string) => {
-    const newNumber = Number((value + inputValue).replace(/,/g, ''));
-
-    if (newNumber > maxNumber) {
-      setValue(type === 'amount' ? maxNumber.toLocaleString() : `${maxNumber}`);
-    } else {
-      const newValue =
-        type === 'amount' ? Number((value + inputValue).replace(/,/g, '')).toLocaleString() : value + inputValue;
-      setValue(newValue);
-    }
+    const newValue = (value + inputValue).replace(/,/g, '');
+    setValueByType(newValue);
   };
 
   const onClickDelete = () => {
-    const newValue =
-      type === 'amount'
-        ? Number(value.slice(0, value.length - 1).replace(/,/g, '')).toLocaleString()
-        : value.slice(0, value.length - 1);
-    setValue(newValue === '0' ? '' : newValue);
+    const newValue = value.slice(0, value.length - 1).replace(/,/g, '');
+    setValueByType(newValue);
   };
 
   const onClickDeleteAll = () => {
@@ -35,18 +25,26 @@ const useNumberKeyboard = ({type, maxNumber, onChange}: Props) => {
   };
 
   const onClickAddAmount = (amount: number) => {
-    const newNumber = Number(value.replace(/,/g, '')) + amount;
-    if (newNumber > maxNumber) {
-      setValue(type === 'amount' ? maxNumber.toLocaleString() : `${maxNumber}`);
+    const newValue = `${Number(value.replace(/,/g, '')) + amount}`;
+    setValueByType(newValue);
+  };
+
+  const setValueByType = (value: string) => {
+    if (type === 'string') {
+      setValue(value);
     } else {
-      const newValue = newNumber.toLocaleString();
-      setValue(newValue);
+      const limitedValue = maxNumber && Number(value) > maxNumber ? `${maxNumber}` : value;
+      if (Number(limitedValue) === 0) {
+        setValue('');
+      } else {
+        setValue(type === 'amount' ? Number(limitedValue).toLocaleString() : `${limitedValue}`);
+      }
     }
   };
 
   useEffect(() => {
     onChange(value);
-  }, [value, setValue]);
+  }, [value]);
 
   return {value, onClickKeypad, onClickDelete, onClickDeleteAll, onClickAddAmount};
 };
