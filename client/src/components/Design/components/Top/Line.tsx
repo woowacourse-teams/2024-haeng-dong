@@ -22,11 +22,14 @@ export default function Line({text, emphasize = []}: Props) {
         display: flex;
       `}
     >
-      {elements.map(text => (
-        <Text size="subTitle" textColor={emphasize.includes(text) ? 'black' : 'gray'}>
-          {text}
-        </Text>
-      ))}
+      {elements.map(text => {
+        console.log(text);
+        return (
+          <Text size="subTitle" textColor={emphasize.includes(text) ? 'black' : 'gray'} style={{whiteSpace: 'pre'}}>
+            {`${text}`}
+          </Text>
+        );
+      })}
     </div>
   );
 }

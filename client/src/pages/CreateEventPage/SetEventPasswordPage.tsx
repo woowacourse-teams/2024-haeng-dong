@@ -31,8 +31,8 @@ const SetEventPasswordPage = () => {
         `}
       >
         <Top>
-          <Top.Line text="정산을 시작하려는" />
-          <Top.Line text="행사의 이름은 무엇인가요?" emphasize={['행사의 이름']} />
+          <Top.Line text="관리에 필요한 네자리 숫자" emphasize={['네자리 숫자']} />
+          <Top.Line text="비밀번호는 무엇으로 할까요?" emphasize={['비밀번호']} />
         </Top>
         <form onSubmit={submitPassword}>
           <LabelInput
