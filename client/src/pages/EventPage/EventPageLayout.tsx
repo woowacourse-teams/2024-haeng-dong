@@ -12,7 +12,7 @@ export type EventPageContextProps = {
 };
 
 const EventPageLayout = () => {
-  const {navProps, isAdmin, isLoginPage, eventName, shareText, onInviteButtonClick} = useEventPageLayoutPage();
+  const {navProps, isAdmin, isLoginPage, eventName} = useEventPageLayoutPage();
   const {nav, paths, onChange} = navProps;
 
   const outletContext: EventPageContextProps = {
@@ -24,7 +24,7 @@ const EventPageLayout = () => {
     <MainLayout backgroundColor="gray">
       <TopNav>
         <Switch value={nav} values={paths} onChange={onChange} />
-        {!isLoginPage && <ShareEventButton shareText={shareText} onInviteButtonClick={onInviteButtonClick} />}
+        {!isLoginPage && <ShareEventButton />}
       </TopNav>
       <Outlet context={outletContext} />
     </MainLayout>

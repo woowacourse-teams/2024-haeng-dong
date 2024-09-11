@@ -2,18 +2,17 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 
 import {useToast} from '@hooks/useToast/useToast';
 
+import useShareEvent from '@hooks/useShareEvent';
+
 import {Button} from '@components/Design';
 
 import isMobileDevice from '@utils/isMobileDevice';
 
-type ShareEventButtonProps = {
-  shareText: string;
-  onInviteButtonClick: () => void;
-};
-
-const ShareEventButton = ({shareText, onInviteButtonClick}: ShareEventButtonProps) => {
+const ShareEventButton = () => {
   const {showToast} = useToast();
+
   const isMobile = isMobileDevice();
+  const {shareText, onInviteButtonClick} = useShareEvent();
 
   return isMobile ? (
     <Button size="small" variants="secondary" onClick={onInviteButtonClick}>
