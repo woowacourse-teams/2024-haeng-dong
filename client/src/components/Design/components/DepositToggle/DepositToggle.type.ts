@@ -1,6 +1,9 @@
 export interface DepositToggleStyleProps {}
 
-export interface DepositToggleCustomProps {}
+export interface DepositToggleCustomProps {
+  isDeposit: boolean;
+  onToggle: () => void;
+}
 
 export type DepositToggleOptionProps = DepositToggleStyleProps & DepositToggleCustomProps;
 

@@ -18,7 +18,7 @@ export const depositToggleStyle = (theme: Theme) =>
       color: theme.colors.gray,
     },
 
-    '& .on-focus': {
+    '& .on-toggle': {
       backgroundColor: theme.colors.white,
       '&.completed': {
         color: theme.colors.onTertiary,
