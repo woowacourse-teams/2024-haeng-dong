@@ -9,8 +9,21 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  argTypes: {},
-  args: {},
+  argTypes: {
+    isDeposit: {
+      description: '',
+      control: {type: 'boolean'},
+    },
+    onToggle: {
+      description: '',
+      control: {type: 'select'},
+      options: [undefined, () => alert('change toggle')],
+    },
+  },
+  args: {
+    isDeposit: false,
+    onToggle: () => {},
+  },
 } satisfies Meta<typeof DepositToggle>;
 
 export default meta;
