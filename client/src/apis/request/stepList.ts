@@ -1,7 +1,7 @@
 import type {StepList} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
-import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
@@ -10,7 +10,7 @@ export const requestGetStepList = async ({eventId}: WithEventId) => {
   // TODO: (@weadie) response가 어떻게 오는지 안나와서 data로만 써뒀어요.
   const {steps} = await requestGet<StepList>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/actions`,
+    endpoint: `${USER_API_PREFIX}/${eventId}/actions`,
   });
 
   return steps;
