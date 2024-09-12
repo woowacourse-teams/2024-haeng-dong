@@ -1,13 +1,8 @@
 import {css} from '@emotion/react';
 
-import {Theme} from '@theme/theme.type';
+import {DepositToggleStylePropsWithTheme} from './DepositToggle.type';
 
-interface Props {
-  theme: Theme;
-  isDeposit: boolean;
-}
-
-export const depositToggleStyle = ({theme, isDeposit}: Props) =>
+export const depositToggleStyle = ({theme, isDeposit}: DepositToggleStylePropsWithTheme) =>
   css({
     display: `flex`,
     flexDirection: 'column',
@@ -16,10 +11,6 @@ export const depositToggleStyle = ({theme, isDeposit}: Props) =>
     backgroundColor: theme.colors.tertiary,
     cursor: 'pointer',
     width: '4rem',
-
-    div: {
-      // zIndex: '5',
-    },
 
     p: {
       display: 'flex',
