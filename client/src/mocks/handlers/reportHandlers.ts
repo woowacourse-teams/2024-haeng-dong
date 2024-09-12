@@ -1,11 +1,11 @@
 import {HttpResponse, http} from 'msw';
 
-import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {MSW_TEMP_PRIFIX} from '@mocks/serverConstants';
 
 import reportListJson from '../reportList.json';
 
 export const reportHandlers = [
-  http.get(`${TEMP_PREFIX}/:eventId/actions/reports`, () => {
+  http.get(`${MSW_TEMP_PRIFIX}/:eventId/actions/reports`, () => {
     return HttpResponse.json({
       reports: reportListJson,
     });

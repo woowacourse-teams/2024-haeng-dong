@@ -2,7 +2,7 @@ import {http, HttpResponse} from 'msw';
 
 import {MemberReport} from 'types/serviceType';
 
-import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {MSW_TEMP_PRIFIX} from '@mocks/serverConstants';
 
 import memberReportInActionJson from '../memberReportListInAction.json';
 
@@ -19,8 +19,8 @@ export const memberReportInActionHandler = [
     MemberReportListRequestParams,
     MemberReportListBody,
     any,
-    `${typeof TEMP_PREFIX}/:eventId/bill-actions/:actionId/fixed`
-  >(`${TEMP_PREFIX}/:eventId/bill-actions/:actionId/fixed`, ({params}) => {
+    `${typeof MSW_TEMP_PRIFIX}/:eventId/bill-actions/:actionId/fixed`
+  >(`${MSW_TEMP_PRIFIX}/:eventId/bill-actions/:actionId/fixed`, ({params}) => {
     const {actionId} = params;
 
     if (Number(actionId) === 123) {
@@ -34,8 +34,8 @@ export const memberReportInActionHandler = [
     });
   }),
 
-  http.put<any, MemberReportListBody, any, `${typeof TEMP_PREFIX}/:eventId/bill-actions/:actionId/fixed`>(
-    `${TEMP_PREFIX}/:eventId/bill-actions/:actionId/fixed`,
+  http.put<any, MemberReportListBody, any, `${typeof MSW_TEMP_PRIFIX}/:eventId/bill-actions/:actionId/fixed`>(
+    `${MSW_TEMP_PRIFIX}/:eventId/bill-actions/:actionId/fixed`,
     async ({request}) => {
       const {members} = await request.json();
 

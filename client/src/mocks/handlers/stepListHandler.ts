@@ -2,7 +2,7 @@ import {HttpResponse, http} from 'msw';
 
 import {Bill, MemberType, StepList} from 'types/serviceType';
 
-import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {MSW_TEMP_PRIFIX} from '@mocks/serverConstants';
 
 import stepListJson from '../stepList.json';
 
@@ -22,8 +22,8 @@ type PostBillListRequestBody = {
 let stepListMockData = stepListJson;
 
 export const stepListHandler = [
-  http.get<any, StepListResponseBody, any, `${typeof TEMP_PREFIX}/:eventId/actions`>(
-    `${TEMP_PREFIX}/:eventId/actions`,
+  http.get<any, StepListResponseBody, any, `${typeof MSW_TEMP_PRIFIX}/:eventId/actions`>(
+    `${MSW_TEMP_PRIFIX}/:eventId/actions`,
     () => {
       return HttpResponse.json({
         steps: stepListMockData,
@@ -31,7 +31,7 @@ export const stepListHandler = [
     },
   ),
 
-  http.get(`${TEMP_PREFIX}/:eventId/members`, () => {
+  http.get(`${MSW_TEMP_PRIFIX}/:eventId/members`, () => {
     return HttpResponse.json({
       memberNames: stepListMockData
         .filter(({type}) => type !== 'BILL')
@@ -40,7 +40,7 @@ export const stepListHandler = [
     });
   }),
 
-  http.delete<{actionId: string}>(`${TEMP_PREFIX}/:eventId/member-actions/:actionId`, ({params}) => {
+  http.delete<{actionId: string}>(`${MSW_TEMP_PRIFIX}/:eventId/member-actions/:actionId`, ({params}) => {
     const {actionId} = params;
 
     if (parseInt(actionId) === 999) {
@@ -58,8 +58,8 @@ export const stepListHandler = [
     }
   }),
 
-  http.post<any, PostMemberListRequestBody, any, `${typeof TEMP_PREFIX}/:eventId/member-actions`>(
-    `${TEMP_PREFIX}/:eventId/member-actions`,
+  http.post<any, PostMemberListRequestBody, any, `${typeof MSW_TEMP_PRIFIX}/:eventId/member-actions`>(
+    `${MSW_TEMP_PRIFIX}/:eventId/member-actions`,
     async ({request}) => {
       const {members, status} = await request.json();
       stepListMockData = [
@@ -84,8 +84,8 @@ export const stepListHandler = [
     },
   ),
 
-  http.post<any, PostBillListRequestBody, any, `${typeof TEMP_PREFIX}/:eventId/bill-actions`>(
-    `${TEMP_PREFIX}/:eventId/bill-actions`,
+  http.post<any, PostBillListRequestBody, any, `${typeof MSW_TEMP_PRIFIX}/:eventId/bill-actions`>(
+    `${MSW_TEMP_PRIFIX}/:eventId/bill-actions`,
     async ({request}) => {
       const {actions} = await request.json();
 

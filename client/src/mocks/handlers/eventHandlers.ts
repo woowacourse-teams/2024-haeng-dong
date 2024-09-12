@@ -2,10 +2,9 @@ import {HttpResponse, http} from 'msw';
 
 import {RequestPostNewEvent, ResponsePostNewEvent} from '@apis/request/event';
 
-import {TEMP_PREFIX} from '@apis/tempPrefix';
-
 import {PASSWORD_LENGTH} from '@constants/password';
 
+import {MSW_TEMP_PRIFIX} from '@mocks/serverConstants';
 import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 
 type ErrorResponseBody = {
@@ -14,8 +13,8 @@ type ErrorResponseBody = {
 };
 
 export const eventHandler = [
-  http.post<any, RequestPostNewEvent, ResponsePostNewEvent | ErrorResponseBody, `${typeof TEMP_PREFIX}`>(
-    `${TEMP_PREFIX}`,
+  http.post<any, RequestPostNewEvent, ResponsePostNewEvent | ErrorResponseBody, `${typeof MSW_TEMP_PRIFIX}`>(
+    `${MSW_TEMP_PRIFIX}`,
     async ({request}) => {
       const {eventName, password} = await request.json();
 
