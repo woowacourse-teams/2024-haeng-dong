@@ -12,17 +12,17 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import server.haengdong.application.response.CurrentMemberAppResponse;
+import server.haengdong.application.response.LastBillMemberAppResponse;
 
 class MemberActionControllerTest extends ControllerTestSupport {
 
     @DisplayName("현재 참여 인원을 조회합니다.")
     @Test
     void getCurrentMembers() throws Exception {
-        List<CurrentMemberAppResponse> currentMemberAppResponses = List.of(
-                new CurrentMemberAppResponse("소하"), new CurrentMemberAppResponse("토다리"));
+        List<LastBillMemberAppResponse> lastBillMemberAppRespons = List.of(
+                new LastBillMemberAppResponse("소하"), new LastBillMemberAppResponse("토다리"));
 
-        given(memberActionService.getCurrentMembers(any())).willReturn(currentMemberAppResponses);
+        given(memberActionService.getCurrentMembers(any())).willReturn(lastBillMemberAppRespons);
 
         mockMvc.perform(get("/api/events/{eventId}/members/current", "망쵸토큰")
                         .accept(MediaType.APPLICATION_JSON))

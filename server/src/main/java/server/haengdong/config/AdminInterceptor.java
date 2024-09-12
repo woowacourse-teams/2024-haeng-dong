@@ -27,9 +27,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         if (HttpMethod.OPTIONS.equals(method)) {
             return true;
         }
-
         validateToken(request);
-
         return true;
     }
 

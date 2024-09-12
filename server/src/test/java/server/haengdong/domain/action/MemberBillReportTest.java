@@ -18,21 +18,21 @@ class MemberBillReportTest {
     @Test
     void createByActions() {
         Event event = Fixture.EVENT1;
-        List<BillAction> billActions = List.of(
+        List<Bill> billActions = List.of(
                 Fixture.createBillAction(event, 4L, "뽕족", 60_000L),
                 Fixture.createBillAction(event, 7L, "인생네컷", 20_000L)
         );
         billActions.get(0).addDetails(
                 List.of(
-                        new BillActionDetail(BILL_ACTION, "소하", 10_000L, false),
-                        new BillActionDetail(BILL_ACTION, "감자", 40_000L, true),
-                        new BillActionDetail(BILL_ACTION, "쿠키", 10_000L, false)
+                        new BillDetail(BILL_ACTION, "소하", 10_000L, false),
+                        new BillDetail(BILL_ACTION, "감자", 40_000L, true),
+                        new BillDetail(BILL_ACTION, "쿠키", 10_000L, false)
                 )
         );
         billActions.get(1).addDetails(
                 List.of(
-                        new BillActionDetail(BILL_ACTION, "소하", 5_000L, true),
-                        new BillActionDetail(BILL_ACTION, "쿠키", 15_000L, true)
+                        new BillDetail(BILL_ACTION, "소하", 5_000L, true),
+                        new BillDetail(BILL_ACTION, "쿠키", 15_000L, true)
                 )
         );
         List<MemberAction> memberActions = List.of(

@@ -9,13 +9,11 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import server.haengdong.application.AuthService;
-import server.haengdong.application.BillActionDetailService;
-import server.haengdong.application.BillActionService;
+import server.haengdong.application.BillDetailService;
+import server.haengdong.application.BillService;
 import server.haengdong.application.EventService;
-import server.haengdong.application.MemberActionService;
 import server.haengdong.presentation.admin.AdminBillActionController;
 import server.haengdong.presentation.admin.AdminEventController;
-import server.haengdong.presentation.admin.AdminMemberActionController;
 
 @WebMvcTest(
         controllers = {
@@ -46,8 +44,8 @@ public abstract class ControllerTestSupport {
     protected MemberActionService memberActionService;
 
     @MockBean
-    protected BillActionService billActionService;
+    protected BillService billService;
 
     @MockBean
-    protected BillActionDetailService billActionDetailService;
+    protected BillDetailService billDetailService;
 }

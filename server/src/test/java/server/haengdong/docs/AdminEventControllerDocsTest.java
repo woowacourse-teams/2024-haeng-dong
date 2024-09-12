@@ -70,7 +70,7 @@ public class AdminEventControllerDocsTest extends RestDocsSupport {
 
         String requestBody = objectMapper.writeValueAsString(memberNameUpdateRequest);
 
-        mockMvc.perform(put("/api/admin/events/{eventId}/members/nameChange", token)
+        mockMvc.perform(put("/api/admin/events/{eventId}/billDetails/nameChange", token)
                         .cookie(EVENT_COOKIE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
@@ -87,10 +87,10 @@ public class AdminEventControllerDocsTest extends RestDocsSupport {
                                         cookieWithName("eventToken").description("행사 관리자 토큰")
                                 ),
                                 requestFields(
-                                        fieldWithPath("members").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
-                                        fieldWithPath("members[].before").type(JsonFieldType.STRING)
+                                        fieldWithPath("billDetails").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
+                                        fieldWithPath("billDetails[].before").type(JsonFieldType.STRING)
                                                 .description("수정 전 참여자 이름"),
-                                        fieldWithPath("members[].after").type(JsonFieldType.STRING)
+                                        fieldWithPath("billDetails[].after").type(JsonFieldType.STRING)
                                                 .description("수정 후 참여자 이름")
                                 )
                         )

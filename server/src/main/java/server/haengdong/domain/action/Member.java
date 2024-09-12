@@ -38,10 +38,19 @@ public class Member {
     @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;
 
+    @Column(nullable = false)
+    private boolean isDeposited;
+
     public Member(Event event, String name) {
+        this(null, event, name, false);
+    }
+
+    public Member(Long id, Event event, String name, boolean isDeposited) {
         validateName(name);
+        this.id = id;
         this.event = event;
         this.name = name;
+        this.isDeposited = isDeposited;
     }
 
     public void updateName(String name) {
@@ -54,6 +63,10 @@ public class Member {
         if (nameLength < MIN_NAME_LENGTH || nameLength > MAX_NAME_LENGTH) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID);
         }
+    }
+
+    public void updateDepositedStatus(boolean isDeposited) {
+        this.isDeposited = isDeposited;
     }
 
     public boolean isId(Long memberId) {

@@ -20,7 +20,7 @@ import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
-import server.haengdong.application.response.MembersAppResponse;
+import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 
@@ -43,7 +43,7 @@ class EventControllerTest extends ControllerTestSupport {
     @DisplayName("행사에 참여한 전체 인원을 중복 없이 조회한다.")
     @Test
     void findAllMembersTest() throws Exception {
-        MembersAppResponse memberAppResponse = new MembersAppResponse(List.of("토다리", "쿠키"));
+        MembersDepositAppResponse memberAppResponse = new MembersDepositAppResponse(List.of("토다리", "쿠키"));
         given(eventService.findAllMembers(anyString())).willReturn(memberAppResponse);
 
         mockMvc.perform(get("/api/events/{eventId}/members", "TOKEN"))

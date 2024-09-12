@@ -20,6 +20,8 @@ public class Event {
 
     public static final int MIN_NAME_LENGTH = 1;
     public static final int MAX_NAME_LENGTH = 20;
+    public static final int MIN_ACCOUNT_NUMBER_LENGTH = 8;
+    public static final int MAX_ACCOUNT_NUMBER_LENGTH = 30;
     private static final String SPACES = "  ";
 
     @Id
@@ -36,25 +38,25 @@ public class Event {
     @Column(nullable = false, unique = true)
     private String token;
 
+    @Column(length = MAX_ACCOUNT_NUMBER_LENGTH)
+    private String account;
+
+
     public Event(String name, String password, String token) {
         validateName(name);
         this.name = name;
         this.password = new Password(password);
         this.token = token;
+        this.account = "";
     }
 
     private void validateName(String name) {
         int nameLength = name.trim().length();
         if (nameLength < MIN_NAME_LENGTH || MAX_NAME_LENGTH < nameLength) {
-            throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_LENGTH_INVALID,
-                    String.format("행사 이름은 %d자 이상 %d자 이하만 입력 가능합니다. 입력한 이름 길이 : %d",
-                            MIN_NAME_LENGTH,
-                            MAX_NAME_LENGTH,
-                            name.length()));
+            throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_LENGTH_INVALID);
         }
         if (isBlankContinuous(name)) {
-            throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_CONSECUTIVE_SPACES,
-                    String.format("행사 이름에는 공백 문자가 연속될 수 없습니다. 입력한 이름 : %s", name));
+            throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_CONSECUTIVE_SPACES);
         }
     }
 
@@ -68,5 +70,17 @@ public class Event {
 
     public boolean isPasswordMismatch(String rawPassword) {
         return !password.matches(rawPassword);
+    }
+
+    public void changeAccount(String account) {
+        validateAccountNumber(account);
+        this.account = account;
+    }
+
+    private void validateAccountNumber(String accountNumber) {
+        int accountLength = accountNumber.trim().length();
+        if (accountLength < MIN_ACCOUNT_NUMBER_LENGTH || MAX_ACCOUNT_NUMBER_LENGTH < accountLength) {
+            throw new HaengdongException(HaengdongErrorCode.ACCOUNT_LENGTH_INVALID);
+        }
     }
 }

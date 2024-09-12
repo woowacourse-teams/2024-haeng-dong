@@ -91,7 +91,7 @@ class AdminBillActionControllerTest extends ControllerTestSupport {
     void deleteBillAction1() throws Exception {
         String eventId = "이상해토큰";
         doThrow(new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND))
-                .when(billActionService).deleteBillAction(any(String.class), any(Long.class));
+                .when(billService).deleteBillAction(any(String.class), any(Long.class));
 
         mockMvc.perform(delete("/api/admin/events/{eventId}/bill-actions/{actionId}", eventId, 1))
                 .andDo(print())

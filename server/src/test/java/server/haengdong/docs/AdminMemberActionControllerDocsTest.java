@@ -22,8 +22,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
-import server.haengdong.application.MemberActionService;
-import server.haengdong.presentation.admin.AdminMemberActionController;
 import server.haengdong.presentation.request.MemberInActionsSaveRequest;
 
 public class AdminMemberActionControllerDocsTest extends RestDocsSupport {
@@ -60,7 +58,7 @@ public class AdminMemberActionControllerDocsTest extends RestDocsSupport {
                                         cookieWithName("eventToken").description("토큰 토큰")
                                 ),
                                 requestFields(
-                                        fieldWithPath("members").type(JsonFieldType.ARRAY)
+                                        fieldWithPath("billDetails").type(JsonFieldType.ARRAY)
                                                 .description("액션 대상 참여자 목록"),
                                         fieldWithPath("status").type(JsonFieldType.STRING)
                                                 .description("참여자 액션 상태 [IN(늦참), OUT(탈주)]")
@@ -100,7 +98,7 @@ public class AdminMemberActionControllerDocsTest extends RestDocsSupport {
         String eventId = "망쵸토큰";
         String memberName = "행동대장";
 
-        mockMvc.perform(delete("/api/admin/events/{eventId}/members/{memberName}", eventId, memberName)
+        mockMvc.perform(delete("/api/admin/events/{eventId}/billDetails/{memberName}", eventId, memberName)
                         .cookie(EVENT_COOKIE))
                 .andDo(print())
                 .andExpect(status().isOk())

@@ -12,12 +12,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.MemberActionSaveAppRequest;
-import server.haengdong.domain.action.BillAction;
-import server.haengdong.domain.action.BillActionDetail;
-import server.haengdong.domain.action.BillActionDetailRepository;
-import server.haengdong.domain.action.BillActionRepository;
-import server.haengdong.domain.action.MemberAction;
-import server.haengdong.domain.action.MemberActionRepository;
+import server.haengdong.domain.action.Bill;
+import server.haengdong.domain.action.BillDetail;
+import server.haengdong.domain.action.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
@@ -35,7 +32,7 @@ class MemberActionServiceTest extends ServiceTestSupport {
     private EventRepository eventRepository;
 
     @Autowired
-    private BillActionRepository billActionRepository;
+    private BillRepository billActionRepository;
 
     @Autowired
     private BillActionDetailRepository billActionDetailRepository;
@@ -136,16 +133,16 @@ class MemberActionServiceTest extends ServiceTestSupport {
                         memberAction5
                 )
         );
-        BillAction billAction = Fixture.createBillAction(event, 6L, "뽕족", 100_000L);
+        Bill billAction = Fixture.createBillAction(event, 6L, "뽕족", 100_000L);
         billActionRepository.save(billAction);
-        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L, true);
-        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L, false);
-        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L, false);
+        BillDetail billActionDetail1 = new BillDetail(billAction, "쿠키", 40_000L, true);
+        BillDetail billActionDetail2 = new BillDetail(billAction, "웨디", 30_000L, false);
+        BillDetail billActionDetail3 = new BillDetail(billAction, "감자", 30_000L, false);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
 
         memberActionService.deleteMember(event.getToken(), "쿠키");
 
-        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
+        List<BillDetail> billActionDetails = billActionDetailRepository.findAllByBill(billAction);
 
         assertThat(billActionDetails).hasSize(2)
                 .extracting("memberName", "price")
@@ -208,15 +205,15 @@ class MemberActionServiceTest extends ServiceTestSupport {
                         memberAction5
                 )
         );
-        BillAction billAction = Fixture.createBillAction(event, 6L, "뽕족", 100_000L);
+        Bill billAction = Fixture.createBillAction(event, 6L, "뽕족", 100_000L);
         billActionRepository.save(billAction);
-        BillActionDetail billActionDetail1 = new BillActionDetail(billAction, "쿠키", 40_000L, true);
-        BillActionDetail billActionDetail2 = new BillActionDetail(billAction, "웨디", 30_000L, false);
-        BillActionDetail billActionDetail3 = new BillActionDetail(billAction, "감자", 30_000L, false);
+        BillDetail billActionDetail1 = new BillDetail(billAction, "쿠키", 40_000L, true);
+        BillDetail billActionDetail2 = new BillDetail(billAction, "웨디", 30_000L, false);
+        BillDetail billActionDetail3 = new BillDetail(billAction, "감자", 30_000L, false);
         billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2, billActionDetail3));
 
         memberActionService.deleteMemberAction(event.getToken(), memberAction2.getId());
-        List<BillActionDetail> billActionDetails = billActionDetailRepository.findAllByBillAction(billAction);
+        List<BillDetail> billActionDetails = billActionDetailRepository.findAllByBill(billAction);
 
         assertThat(billActionDetails).hasSize(4)
                 .extracting("memberName", "price")

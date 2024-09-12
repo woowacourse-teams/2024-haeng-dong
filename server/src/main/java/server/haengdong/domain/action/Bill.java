@@ -1,0 +1,177 @@
+package server.haengdong.domain.action;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import server.haengdong.domain.event.Event;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+public class Bill {
+
+    public static final int MIN_TITLE_LENGTH = 1;
+    public static final int MAX_TITLE_LENGTH = 30;
+    public static final long MIN_PRICE = 1L;
+    public static final long MAX_PRICE = 10_000_000L;
+    private static final long DEFAULT_PRICE = 0L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @JoinColumn(name = "event_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Event event;
+
+    @Column(nullable = false, length = MAX_TITLE_LENGTH)
+    private String title;
+
+    @Column(nullable = false)
+    private Long price;
+
+    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BillDetail> billDetails = new ArrayList<>();
+
+    public Bill(Event event, String title, Long price) {
+        validateTitle(title);
+        validatePrice(price);
+        this.event = event;
+        this.title = title.trim();
+        this.price = price;
+    }
+
+    private void validateTitle(String title) {
+        int titleLength = title.trim().length();
+        if (titleLength < MIN_TITLE_LENGTH || titleLength > MAX_TITLE_LENGTH) {
+            throw new HaengdongException(HaengdongErrorCode.BILL_TITLE_INVALID);
+        }
+    }
+
+    private void validatePrice(Long price) {
+        if (price < MIN_PRICE || price > MAX_PRICE) {
+            throw new HaengdongException(HaengdongErrorCode.BILL_PRICE_INVALID);
+        }
+    }
+
+    public static Bill create(
+            Event event, String title, Long price, List<Member> members
+    ) {
+        Bill bill = new Bill(event, title, price);
+        bill.resetBillDetails(members);
+        return bill;
+    }
+
+    public void resetBillDetails(List<Member> members) {
+        this.billDetails.clear();
+        Iterator<Long> priceIterator = distributePrice(members.size()).iterator();
+
+        for (Member member : members) {
+            BillDetail billDetail = new BillDetail(this, member, priceIterator.next(), false);
+            this.billDetails.add(billDetail);
+        }
+    }
+
+    private void resetBillDetails() {
+        Iterator<Long> priceIterator = distributePrice(billDetails.size()).iterator();
+
+        billDetails.forEach(billDetail -> {
+            billDetail.updatePrice(priceIterator.next());
+            billDetail.updateIsFixed(false);
+        });
+    }
+
+    private List<Long> distributePrice(int memberCount) {
+        if (memberCount == 0) {
+            return new ArrayList<>();
+        }
+        long eachPrice = price / memberCount;
+        long remainder = price % memberCount;
+
+        List<Long> results = Stream.generate(() -> eachPrice)
+                .limit(memberCount - 1)
+                .collect(Collectors.toList());
+        results.add(eachPrice + remainder);
+        return results;
+    }
+
+    public void removeMember(Member member) {
+        BillDetail foundBillDetail = billDetails.stream()
+                .filter(billDetail -> billDetail.isMember(member))
+                .findFirst()
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND));
+
+        billDetails.remove(foundBillDetail);
+        resetBillDetails();
+    }
+
+    public void update(String title, Long price) {
+        validateTitle(title);
+        validatePrice(price);
+        this.title = title.trim();
+        this.price = price;
+        resetBillDetails();
+    }
+
+    public void addDetails(List<BillDetail> billDetails) {
+        billDetails.forEach(this::addDetail);
+    }
+
+    private void addDetail(BillDetail billDetail) {
+        this.billDetails.add(billDetail);
+        billDetail.setBill(this);
+    }
+
+    public boolean containMember(Member member) {
+        return billDetails.stream()
+                .anyMatch(billDetail -> billDetail.isMember(member));
+    }
+
+    public boolean isFixed() {
+        return billDetails.stream()
+                .anyMatch(BillDetail::isFixed);
+    }
+
+    public boolean isSamePrice(Long price) {
+        return this.price.equals(price);
+    }
+
+    // TODO : 테스트 필요
+    public boolean isSameMembers(Bill other) {
+        Set<Member> members = Set.copyOf(this.getMembers());
+        Set<Member> otherMembers = Set.copyOf(other.getMembers());
+
+        return members.equals(otherMembers);
+    }
+
+    public Long findPriceByMember(Member member) {
+        return billDetails.stream()
+                .filter(billDetail -> billDetail.isMember(member))
+                .map(BillDetail::getPrice)
+                .findFirst()
+                .orElseGet(() -> DEFAULT_PRICE);
+    }
+    public List<Member> getMembers() {
+        return billDetails.stream()
+                .map(BillDetail::getMember)
+                .toList();
+    }
+}

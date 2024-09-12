@@ -6,11 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.MemberService;
-import server.haengdong.presentation.request.MemberNamesUpdateRequest;
+import server.haengdong.application.response.MembersSaveAppResponse;
+import server.haengdong.presentation.request.MembersSaveRequest;
+import server.haengdong.presentation.request.MembersUpdateRequest;
+import server.haengdong.presentation.response.MembersSaveResponse;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,10 +23,20 @@ public class AdminMemberController {
 
     private final MemberService memberService;
 
-    @PutMapping("/api/admin/events/{eventId}/members/nameChange")
+    @PostMapping("/api/admin/events/{eventId}/members")
+    public ResponseEntity<MembersSaveResponse> updateMember(
+            @PathVariable("eventId") String token,
+            @Valid @RequestBody MembersSaveRequest request
+    ) {
+        MembersSaveAppResponse response = memberService.saveAllMembers(token, request.toAppRequest());
+
+        return ResponseEntity.ok(MembersSaveResponse.of(response));
+    }
+
+    @PutMapping("/api/admin/events/{eventId}/members")
     public ResponseEntity<Void> updateMember(
             @PathVariable("eventId") String token,
-            @Valid @RequestBody MemberNamesUpdateRequest request
+            @Valid @RequestBody MembersUpdateRequest request
     ) {
         memberService.updateMember(token, request.toAppRequest());
 

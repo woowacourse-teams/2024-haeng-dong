@@ -6,24 +6,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import server.haengdong.application.response.ActionAppResponse;
-import server.haengdong.application.response.ActionAppResponse.ActionType;
 
 class StepsResponseTest {
 
     @DisplayName("이웃한 같은 타입의 액션들을 그룹화 하여 응답객체를 생성한다.")
     @Test
     void of() {
-        List<ActionAppResponse> actions = List.of(
-                new ActionAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
-                new ActionAppResponse(2L, "백호", null, 2L, ActionType.IN),
-                new ActionAppResponse(3L, "감자탕", 10_000L, 3L, ActionType.BILL),
-                new ActionAppResponse(4L, "인생네컷", 10_000L, 4L, ActionType.BILL),
-                new ActionAppResponse(5L, "소하", null, 5L, ActionType.IN),
-                new ActionAppResponse(6L, "웨디", null, 6L, ActionType.IN),
-                new ActionAppResponse(7L, "망쵸", null, 7L, ActionType.OUT),
-                new ActionAppResponse(8L, "백호", null, 8L, ActionType.OUT),
-                new ActionAppResponse(9L, "노래방", 20_000L, 9L, ActionType.BILL)
+        List<StepAppResponse> actions = List.of(
+                new StepAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
+                new StepAppResponse(2L, "백호", null, 2L, ActionType.IN),
+                new StepAppResponse(3L, "감자탕", 10_000L, 3L, ActionType.BILL),
+                new StepAppResponse(4L, "인생네컷", 10_000L, 4L, ActionType.BILL),
+                new StepAppResponse(5L, "소하", null, 5L, ActionType.IN),
+                new StepAppResponse(6L, "웨디", null, 6L, ActionType.IN),
+                new StepAppResponse(7L, "망쵸", null, 7L, ActionType.OUT),
+                new StepAppResponse(8L, "백호", null, 8L, ActionType.OUT),
+                new StepAppResponse(9L, "노래방", 20_000L, 9L, ActionType.BILL)
         );
 
         StepsResponse stepsResponse = StepsResponse.of(actions);

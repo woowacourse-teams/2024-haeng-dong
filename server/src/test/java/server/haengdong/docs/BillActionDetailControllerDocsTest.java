@@ -24,26 +24,26 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.JsonFieldType;
-import server.haengdong.application.BillActionDetailService;
-import server.haengdong.application.response.BillActionDetailAppResponse;
-import server.haengdong.application.response.BillActionDetailsAppResponse;
+import server.haengdong.application.BillDetailService;
+import server.haengdong.application.response.BillDetailAppResponse;
+import server.haengdong.application.response.BillDetailsAppResponse;
 import server.haengdong.presentation.BillActionDetailController;
 
 public class BillActionDetailControllerDocsTest extends RestDocsSupport {
 
-    private final BillActionDetailService billActionDetailService = mock(BillActionDetailService.class);
+    private final BillDetailService billDetailService = mock(BillDetailService.class);
 
     @Override
     protected Object initController() {
-        return new BillActionDetailController(billActionDetailService);
+        return new BillActionDetailController(billDetailService);
     }
 
     @DisplayName("참여자별 지출 금액을 조회한다.")
     @Test
     void findBillActionDetailsTest() throws Exception {
-        BillActionDetailsAppResponse appResponse = new BillActionDetailsAppResponse(
-                List.of(new BillActionDetailAppResponse("토다리", 1000L, false)));
-        given(billActionDetailService.findBillActionDetails(anyString(), anyLong()))
+        BillDetailsAppResponse appResponse = new BillDetailsAppResponse(
+                List.of(new BillDetailAppResponse("토다리", 1000L, false)));
+        given(billDetailService.findBillDetails(anyString(), anyLong()))
                 .willReturn(appResponse);
 
         mockMvc.perform(get("/api/events/{eventId}/bill-actions/{actionId}/fixed", "TOKEN", 1L)
@@ -64,13 +64,13 @@ public class BillActionDetailControllerDocsTest extends RestDocsSupport {
                                 ), requestCookies(
                                         cookieWithName("eventToken").description("행사 관리자 토큰")
                                 ), responseFields(
-                                        fieldWithPath("members").type(JsonFieldType.ARRAY)
+                                        fieldWithPath("billDetails").type(JsonFieldType.ARRAY)
                                                 .description("전체 정산 수정 요청 목록"),
-                                        fieldWithPath("members[0].name").type(JsonFieldType.STRING)
+                                        fieldWithPath("billDetails[0].title").type(JsonFieldType.STRING)
                                                 .description("참여자 이름"),
-                                        fieldWithPath("members[0].price").type(JsonFieldType.NUMBER)
+                                        fieldWithPath("billDetails[0].price").type(JsonFieldType.NUMBER)
                                                 .description("참여자 정산 금액"),
-                                        fieldWithPath("members[0].isFixed").type(JsonFieldType.BOOLEAN)
+                                        fieldWithPath("billDetails[0].isFixed").type(JsonFieldType.BOOLEAN)
                                                 .description("참여자 정산 금액 수정 여부")
                                 )
                         )

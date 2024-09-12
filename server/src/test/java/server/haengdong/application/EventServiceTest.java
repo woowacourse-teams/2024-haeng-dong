@@ -17,17 +17,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.request.MemberNameUpdateAppRequest;
 import server.haengdong.application.request.MemberNamesUpdateAppRequest;
-import server.haengdong.application.response.ActionAppResponse;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
-import server.haengdong.application.response.MembersAppResponse;
-import server.haengdong.domain.action.BillAction;
-import server.haengdong.domain.action.BillActionDetail;
-import server.haengdong.domain.action.BillActionRepository;
-import server.haengdong.domain.action.MemberAction;
-import server.haengdong.domain.action.MemberActionRepository;
-import server.haengdong.domain.action.Sequence;
+import server.haengdong.application.response.MembersDepositAppResponse;
+import server.haengdong.application.response.StepAppResponse;
+import server.haengdong.domain.action.Bill;
+import server.haengdong.domain.action.BillDetail;
+import server.haengdong.domain.action.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
@@ -44,7 +41,7 @@ class EventServiceTest extends ServiceTestSupport {
     private EventRepository eventRepository;
 
     @Autowired
-    private BillActionRepository billActionRepository;
+    private BillRepository billActionRepository;
 
     @Autowired
     private MemberActionRepository memberActionRepository;
@@ -80,19 +77,20 @@ class EventServiceTest extends ServiceTestSupport {
         Event event = Fixture.EVENT1;
         MemberAction memberAction = Fixture.createMemberAction(event, 1L, "토다리", IN);
         MemberAction memberAction1 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
-        BillAction billAction = Fixture.createBillAction(event, 3L, "뽕나무쟁이족발", 30000L);
+        Bill billAction = Fixture.createBillAction(event, 3L, "뽕나무쟁이족발", 30000L);
         eventRepository.save(event);
         memberActionRepository.saveAll(List.of(memberAction, memberAction1));
         billActionRepository.save(billAction);
 
-        List<ActionAppResponse> actionAppResponses = eventService.findActions(event.getToken());
+        List<StepAppResponse> stepAppRespons = eventService.findActions(event.getToken());
 
-        assertThat(actionAppResponses).hasSize(3)
-                .extracting(ActionAppResponse::actionId,
-                        ActionAppResponse::name,
-                        ActionAppResponse::price,
-                        ActionAppResponse::sequence,
-                        ActionAppResponse::actionTypeName)
+        assertThat(stepAppRespons).hasSize(3)
+                .extracting(
+                        StepAppResponse::actionId,
+                        StepAppResponse::name,
+                        StepAppResponse::price,
+                        StepAppResponse::sequence,
+                        StepAppResponse::actionTypeName)
                 .containsExactly(
                         tuple(1L, "토다리", null, 1L, "IN"),
                         tuple(2L, "쿠키", null, 2L, "IN"),
@@ -104,7 +102,7 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void findAllMembersTest() {
         Event event = Fixture.EVENT1;
-        BillAction billAction = Fixture.createBillAction(event, 3L, "뽕나무쟁이족발", 30000L);
+        Bill billAction = Fixture.createBillAction(event, 3L, "뽕나무쟁이족발", 30000L);
         MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
         MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
         MemberAction memberAction3 = Fixture.createMemberAction(event, 4L, "쿠키", OUT);
@@ -112,9 +110,9 @@ class EventServiceTest extends ServiceTestSupport {
         billActionRepository.save(billAction);
         memberActionRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
 
-        MembersAppResponse membersAppResponse = eventService.findAllMembers(event.getToken());
+        MembersDepositAppResponse membersDepositAppResponse = eventService.findAllMembers(event.getToken());
 
-        assertThat(membersAppResponse.memberNames()).containsExactlyInAnyOrder("토다리", "쿠키");
+        assertThat(membersDepositAppResponse.memberNames()).containsExactlyInAnyOrder("토다리", "쿠키");
     }
 
     @DisplayName("행사 참여 인원들의 이름을 변경한다.")
@@ -237,21 +235,21 @@ class EventServiceTest extends ServiceTestSupport {
                 new MemberAction(savedEvent, new Sequence(3L), "쿠키", IN),
                 new MemberAction(savedEvent, new Sequence(5L), "감자", OUT)
         );
-        List<BillAction> billActions = List.of(
-                new BillAction(savedEvent, new Sequence(4L), "뽕족", 60_000L),
-                new BillAction(savedEvent, new Sequence(7L), "인생네컷", 20_000L)
+        List<Bill> billActions = List.of(
+                new Bill(savedEvent, new Sequence(4L), "뽕족", 60_000L),
+                new Bill(savedEvent, new Sequence(7L), "인생네컷", 20_000L)
         );
         billActions.get(0).addDetails(
                 List.of(
-                        new BillActionDetail(BILL_ACTION, "소하", 10_000L, false),
-                        new BillActionDetail(BILL_ACTION, "감자", 40_000L, true),
-                        new BillActionDetail(BILL_ACTION, "쿠키", 10_000L, false)
+                        new BillDetail(BILL_ACTION, "소하", 10_000L, false),
+                        new BillDetail(BILL_ACTION, "감자", 40_000L, true),
+                        new BillDetail(BILL_ACTION, "쿠키", 10_000L, false)
                 )
         );
         billActions.get(1).addDetails(
                 List.of(
-                        new BillActionDetail(BILL_ACTION, "소하", 5_000L, true),
-                        new BillActionDetail(BILL_ACTION, "쿠키", 15_000L, true)
+                        new BillDetail(BILL_ACTION, "소하", 5_000L, true),
+                        new BillDetail(BILL_ACTION, "쿠키", 15_000L, true)
                 )
         );
         memberActionRepository.saveAll(memberActions);

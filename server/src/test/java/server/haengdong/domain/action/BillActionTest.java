@@ -23,7 +23,7 @@ class BillActionTest {
         Sequence sequence = new Sequence(1L);
         Long price = 100L;
 
-        assertThatThrownBy(() -> new BillAction(EVENT1, sequence, title, price))
+        assertThatThrownBy(() -> new Bill(EVENT1, sequence, title, price))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("앞뒤 공백을 제거한 지출 내역 제목은 1 ~ 30자여야 합니다.");
     }
@@ -35,7 +35,7 @@ class BillActionTest {
         Sequence sequence = new Sequence(1L);
         String title = "title";
 
-        assertThatThrownBy(() -> new BillAction(EVENT1, sequence, title, price))
+        assertThatThrownBy(() -> new Bill(EVENT1, sequence, title, price))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("지출 금액은 10,000,000 이하의 자연수여야 합니다.");
     }
@@ -47,7 +47,7 @@ class BillActionTest {
         String title = "title";
         Long price = 1_000L;
 
-        BillAction billAction = new BillAction(EVENT1, sequence, title, price);
+        Bill billAction = new Bill(EVENT1, sequence, title, price);
 
         assertAll(
                 () -> assertThat(billAction.getSequence().getValue()).isEqualTo(1L),
@@ -59,11 +59,11 @@ class BillActionTest {
     @DisplayName("지출 액션에 멤버별 고정 금액이 설정되어 있는지 확인한다.")
     @Test
     void isFixed1() {
-        BillAction fixedBillAction = Fixture.createBillAction(EVENT1, 1L, "인생네컷", 2_000L);
+        Bill fixedBillAction = Fixture.createBillAction(EVENT1, 1L, "인생네컷", 2_000L);
 
-        List<BillActionDetail> unfixedBillActionDetails = List.of(
-                new BillActionDetail(BILL_ACTION, "감자", 1_000L, false),
-                new BillActionDetail(BILL_ACTION, "고구마", 1_000L, false)
+        List<BillDetail> unfixedBillActionDetails = List.of(
+                new BillDetail(BILL_ACTION, "감자", 1_000L, false),
+                new BillDetail(BILL_ACTION, "고구마", 1_000L, false)
         );
         fixedBillAction.addDetails(unfixedBillActionDetails);
 
@@ -73,11 +73,11 @@ class BillActionTest {
     @DisplayName("지출 액션에 멤버별 고정 금액이 설정되어 있는지 확인한다.")
     @Test
     void isFixed2() {
-        BillAction fixedBillAction = Fixture.createBillAction(EVENT1, 1L, "인생네컷", 5_000L);
+        Bill fixedBillAction = Fixture.createBillAction(EVENT1, 1L, "인생네컷", 5_000L);
 
-        List<BillActionDetail> unfixedBillActionDetails = List.of(
-                new BillActionDetail(BILL_ACTION, "감자", 4_000L, true),
-                new BillActionDetail(BILL_ACTION, "고구마", 1_000L, true)
+        List<BillDetail> unfixedBillActionDetails = List.of(
+                new BillDetail(BILL_ACTION, "감자", 4_000L, true),
+                new BillDetail(BILL_ACTION, "고구마", 1_000L, true)
         );
         fixedBillAction.addDetails(unfixedBillActionDetails);
 

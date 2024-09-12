@@ -10,17 +10,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import server.haengdong.application.response.BillActionDetailAppResponse;
-import server.haengdong.application.response.BillActionDetailsAppResponse;
+import server.haengdong.application.response.BillDetailAppResponse;
+import server.haengdong.application.response.BillDetailsAppResponse;
 
 class BillActionDetailControllerTest extends ControllerTestSupport {
 
     @DisplayName("참여자별 지출 금액을 조회한다.")
     @Test
     void findBillActionDetails() throws Exception {
-        BillActionDetailsAppResponse appResponse = new BillActionDetailsAppResponse(
-                List.of(new BillActionDetailAppResponse("토다리", 1000L, false)));
-        given(billActionDetailService.findBillActionDetails(anyString(), anyLong()))
+        BillDetailsAppResponse appResponse = new BillDetailsAppResponse(
+                List.of(new BillDetailAppResponse("토다리", 1000L, false)));
+        given(billDetailService.findBillDetails(anyString(), anyLong()))
                 .willReturn(appResponse);
 
         mockMvc.perform(get("/api/events/{eventId}/bill-actions/{actionId}/fixed", "TOKEN", 1L))

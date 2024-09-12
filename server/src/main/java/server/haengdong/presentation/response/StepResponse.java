@@ -1,27 +1,22 @@
 package server.haengdong.presentation.response;
 
-import java.util.ArrayList;
 import java.util.List;
-import server.haengdong.application.response.ActionAppResponse;
+import server.haengdong.application.response.StepAppResponse;
 
 public record StepResponse(
-        String stepName,
-        String type,
-        List<String> members,
-        List<ActionResponse> actions
+        List<BillResponse> bills,
+        List<MemberResponse> members
 ) {
-    public static StepResponse of(String stepName, List<String> members, List<ActionAppResponse> actions) {
-        return new StepResponse(
-                stepName,
-                actions.get(0).actionTypeName(),
-                new ArrayList<>(members),
-                toActionsResponse(actions)
-        );
-    }
-
-    private static List<ActionResponse> toActionsResponse(List<ActionAppResponse> actions) {
-        return actions.stream()
-                .map(ActionResponse::of)
+    public static StepResponse of(StepAppResponse response) {
+        List<BillResponse> bills = response.bills().stream()
+                .map(BillResponse::of)
                 .toList();
+
+        List<MemberResponse> members = response.members().stream()
+                .map(MemberResponse::of)
+                .toList();
+        return new StepResponse(bills, members);
+
     }
 }
+

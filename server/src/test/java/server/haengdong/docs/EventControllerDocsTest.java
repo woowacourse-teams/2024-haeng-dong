@@ -33,12 +33,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
-import server.haengdong.application.response.ActionAppResponse;
-import server.haengdong.application.response.ActionAppResponse.ActionType;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
-import server.haengdong.application.response.MembersAppResponse;
+import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.EventController;
 import server.haengdong.presentation.request.EventLoginRequest;
@@ -85,10 +83,10 @@ public class EventControllerDocsTest extends RestDocsSupport {
     @DisplayName("행사에 참여한 전체 인원을 중복 없이 조회한다.")
     @Test
     void findAllMembersTest() throws Exception {
-        MembersAppResponse memberAppResponse = new MembersAppResponse(List.of("토다리", "쿠키"));
+        MembersDepositAppResponse memberAppResponse = new MembersDepositAppResponse(List.of("토다리", "쿠키"));
         given(eventService.findAllMembers(anyString())).willReturn(memberAppResponse);
 
-        mockMvc.perform(get("/api/events/{eventId}/members", "TOKEN"))
+        mockMvc.perform(get("/api/events/{eventId}/billDetails", "TOKEN"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.memberNames").isArray())
@@ -113,13 +111,13 @@ public class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void findActions() throws Exception {
         String token = "TOKEN";
-        List<ActionAppResponse> actionAppResponses = List.of(
-                new ActionAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
-                new ActionAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
-                new ActionAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
-                new ActionAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
+        List<StepAppResponse> stepAppRespons = List.of(
+                new StepAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
+                new StepAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
+                new StepAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
+                new StepAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
         );
-        given(eventService.findActions(token)).willReturn(actionAppResponses);
+        given(eventService.findActions(token)).willReturn(stepAppRespons);
 
         mockMvc.perform(get("/api/events/{eventId}/actions", token)
                         .accept(MediaType.APPLICATION_JSON))
@@ -165,11 +163,11 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                                 .description("스탭 이름"),
                                         fieldWithPath("steps[].type").type(JsonFieldType.STRING)
                                                 .description("액션 유형 [BILL, IN, OUT]"),
-                                        fieldWithPath("steps[].members").type(JsonFieldType.ARRAY)
+                                        fieldWithPath("steps[].billDetails").type(JsonFieldType.ARRAY)
                                                 .description("해당 step에 참여한 참여자 목록"),
                                         fieldWithPath("steps[].actions[].actionId").type(JsonFieldType.NUMBER)
                                                 .description("액션 ID"),
-                                        fieldWithPath("steps[].actions[].name").type(JsonFieldType.STRING)
+                                        fieldWithPath("steps[].actions[].title").type(JsonFieldType.STRING)
                                                 .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
                                         fieldWithPath("steps[].actions[].price").type(JsonFieldType.NUMBER).optional()
                                                 .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
@@ -186,13 +184,13 @@ public class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void findActions2() throws Exception {
         String token = "TOKEN";
-        List<ActionAppResponse> actionAppResponses = List.of(
-                new ActionAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
-                new ActionAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
-                new ActionAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
-                new ActionAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
+        List<StepAppResponse> stepAppRespons = List.of(
+                new StepAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
+                new StepAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
+                new StepAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
+                new StepAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
         );
-        given(eventService.findActions(token)).willReturn(actionAppResponses);
+        given(eventService.findActions(token)).willReturn(stepAppRespons);
 
         mockMvc.perform(get("/api/events/{eventId}/actions/v2", token)
                         .accept(MediaType.APPLICATION_JSON))
@@ -232,7 +230,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                 responseFields(
                                         fieldWithPath("actions[].actionId").type(JsonFieldType.NUMBER)
                                                 .description("액션 ID"),
-                                        fieldWithPath("actions[].name").type(JsonFieldType.STRING)
+                                        fieldWithPath("actions[].title").type(JsonFieldType.STRING)
                                                 .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
                                         fieldWithPath("actions[].price").type(JsonFieldType.NUMBER).optional()
                                                 .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
@@ -270,7 +268,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                 ),
                                 responseFields(
                                         fieldWithPath("reports").type(JsonFieldType.ARRAY).description("전체 정산 현황 목록"),
-                                        fieldWithPath("reports[0].name").type(JsonFieldType.STRING)
+                                        fieldWithPath("reports[0].title").type(JsonFieldType.STRING)
                                                 .description("참여자 이름"),
                                         fieldWithPath("reports[0].price").type(JsonFieldType.NUMBER)
                                                 .description("참여자 정산 금액")

@@ -23,8 +23,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
-import server.haengdong.application.BillActionDetailService;
-import server.haengdong.application.BillActionService;
+import server.haengdong.application.BillDetailService;
+import server.haengdong.application.BillService;
 import server.haengdong.presentation.admin.AdminBillActionController;
 import server.haengdong.presentation.request.BillActionDetailUpdateRequest;
 import server.haengdong.presentation.request.BillActionDetailsUpdateRequest;
@@ -34,12 +34,12 @@ import server.haengdong.presentation.request.BillActionsSaveRequest;
 
 class AdminBillActionControllerDocsTest extends RestDocsSupport {
 
-    private final BillActionService billActionService = mock(BillActionService.class);
-    private final BillActionDetailService billActionDetailService = mock(BillActionDetailService.class);
+    private final BillService billService = mock(BillService.class);
+    private final BillDetailService billDetailService = mock(BillDetailService.class);
 
     @Override
     protected Object initController() {
-        return new AdminBillActionController(billActionService, billActionDetailService);
+        return new AdminBillActionController(billService, billDetailService);
     }
 
     @DisplayName("지출 내역을 생성한다.")
@@ -138,13 +138,13 @@ class AdminBillActionControllerDocsTest extends RestDocsSupport {
                                         cookieWithName("eventToken").description("행사 관리자 토큰")
                                 ),
                                 requestFields(
-                                        fieldWithPath("members").type(JsonFieldType.ARRAY)
+                                        fieldWithPath("billDetails").type(JsonFieldType.ARRAY)
                                                 .description("전체 정산 수정 요청 목록"),
-                                        fieldWithPath("members[0].name").type(JsonFieldType.STRING)
+                                        fieldWithPath("billDetails[0].title").type(JsonFieldType.STRING)
                                                 .description("참여자 이름"),
-                                        fieldWithPath("members[0].price").type(JsonFieldType.NUMBER)
+                                        fieldWithPath("billDetails[0].price").type(JsonFieldType.NUMBER)
                                                 .description("참여자 정산 금액"),
-                                        fieldWithPath("members[0].isFixed").type(JsonFieldType.BOOLEAN)
+                                        fieldWithPath("billDetails[0].isFixed").type(JsonFieldType.BOOLEAN)
                                                 .description("참여자 정산 금액 수정 여부")
                                 )
                         )
