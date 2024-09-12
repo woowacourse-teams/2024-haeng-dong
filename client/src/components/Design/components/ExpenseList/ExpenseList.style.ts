@@ -16,7 +16,7 @@ export const expenseItemLeftStyle = () =>
   css({
     display: 'flex',
     alignItems: 'center',
-    gap: '1rem',
+    gap: '0.5rem',
   });
 
 export const expenseListStyle = (theme: Theme) =>
