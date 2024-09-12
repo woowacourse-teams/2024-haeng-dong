@@ -46,16 +46,16 @@ export default function NumberKeyboard({type, maxNumber, onChange}: Props) {
             gap: 1rem;
           `}
         >
-          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickAddAmount(10000)}>
+          <Button size="small" variants="tertiary" onClick={() => onClickAddAmount(10000)}>
             +1만
           </Button>
-          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickAddAmount(50000)}>
+          <Button size="small" variants="tertiary" onClick={() => onClickAddAmount(50000)}>
             +5만
           </Button>
-          <Button isFull={true} size="small" variants="tertiary" onClick={() => onClickAddAmount(100000)}>
+          <Button size="small" variants="tertiary" onClick={() => onClickAddAmount(100000)}>
             +10만
           </Button>
-          <Button isFull={true} size="small" variants="tertiary" onClick={onClickDeleteAll}>
+          <Button size="small" variants="tertiary" onClick={onClickDeleteAll}>
             전체 삭제
           </Button>
         </div>

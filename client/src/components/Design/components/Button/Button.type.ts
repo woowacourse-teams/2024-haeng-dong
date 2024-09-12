@@ -7,7 +7,6 @@ export interface ButtonStyleProps {
   variants?: ButtonVariants;
   size?: ButtonSize;
   theme?: Theme;
-  isFull?: boolean;
 }
 
 export interface ButtonCustomProps {}

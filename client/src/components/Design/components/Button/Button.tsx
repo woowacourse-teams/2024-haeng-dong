@@ -23,13 +23,13 @@ const animationSize = (size: ButtonSize) => {
 };
 
 export const Button: React.FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  {variants = 'primary', size = 'medium', disabled, isFull = false, children, ...htmlProps}: ButtonProps,
+  {variants = 'primary', size = 'medium', disabled, children, ...htmlProps}: ButtonProps,
   ref,
 ) {
   const {theme} = useTheme();
   return (
     <button
-      css={buttonStyle({variants, size, theme, isFull})}
+      css={buttonStyle({variants, size, theme})}
       ref={ref}
       disabled={variants === 'loading' ? true : disabled}
       {...htmlProps}
