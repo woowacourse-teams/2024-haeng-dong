@@ -7,25 +7,19 @@ export const depositToggleStyle = (theme: Theme) =>
     display: `flex`,
     flexDirection: 'column',
     padding: '0.25rem',
-    borderRadius: '12px',
+    borderRadius: '0.75rem',
     backgroundColor: theme.colors.tertiary,
+    cursor: 'pointer',
+    width: '4rem',
 
-    p: {
-      padding: '1px 4px',
-      borderRadius: '8px',
-      width: '100%',
-      textAlign: 'center',
-      color: theme.colors.gray,
+    div: {
+      display: 'flex',
+      justifyContent: 'center',
+      borderRadius: '0.5rem',
+      padding: ' 0.125rem 0 0 0',
     },
 
     '& .on-toggle': {
       backgroundColor: theme.colors.white,
-      '&.completed': {
-        color: theme.colors.onTertiary,
-      },
-
-      '&.not-completed': {
-        color: theme.colors.error,
-      },
     },
   });

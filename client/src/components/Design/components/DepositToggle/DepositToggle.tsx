@@ -12,12 +12,16 @@ export const DepositToggle: React.FC<DepositToggleProps> = ({isDeposit = false, 
 
   return (
     <div css={depositToggleStyle(theme)} onClick={onToggle} role="button">
-      <Text size="caption" className={`${isDeposit && 'on-toggle'} completed`}>
-        입금 완료
-      </Text>
-      <Text size="caption" className={`${isDeposit || 'on-toggle'} not-completed`}>
-        미입금
-      </Text>
+      <div className={`${isDeposit && 'on-toggle'}`}>
+        <Text size="caption" textColor={isDeposit ? `onTertiary` : 'gray'} className="completed">
+          입금 완료
+        </Text>
+      </div>
+      <div className={`${isDeposit || 'on-toggle'}`}>
+        <Text size="caption" textColor={isDeposit ? `gray` : 'error'} className="not-completed">
+          미입금
+        </Text>
+      </div>
     </div>
   );
 };

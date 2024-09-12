@@ -22,7 +22,7 @@ const meta = {
   },
   args: {
     isDeposit: false,
-    onToggle: () => {},
+    onToggle: () => alert('change toggle'),
   },
 } satisfies Meta<typeof DepositToggle>;
 
