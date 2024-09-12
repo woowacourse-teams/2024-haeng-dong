@@ -21,5 +21,6 @@ export const depositToggleStyle = (theme: Theme) =>
 
     '& .on-toggle': {
       backgroundColor: theme.colors.white,
+      transition: '0.5s',
     },
   });
