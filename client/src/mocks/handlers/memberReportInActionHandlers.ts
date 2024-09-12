@@ -5,6 +5,7 @@ import {MemberReport} from 'types/serviceType';
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
 
 import memberReportInActionJson from '../memberReportListInAction.json';
+import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 
 let memberReportInActionMockData = memberReportInActionJson as MemberReport[];
 
@@ -19,8 +20,8 @@ export const memberReportInActionHandler = [
     MemberReportListRequestParams,
     MemberReportListBody,
     any,
-    `${typeof USER_API_PREFIX}/:eventId/bill-actions/:actionId/fixed`
-  >(`${USER_API_PREFIX}/:eventId/bill-actions/:actionId/fixed`, ({params}) => {
+    `${typeof MOCK_API_PREFIX}${typeof USER_API_PREFIX}/:eventId/bill-actions/:actionId/fixed`
+  >(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/bill-actions/:actionId/fixed`, ({params}) => {
     const {actionId} = params;
 
     if (Number(actionId) === 123) {
@@ -34,16 +35,18 @@ export const memberReportInActionHandler = [
     });
   }),
 
-  http.put<any, MemberReportListBody, any, `${typeof USER_API_PREFIX}/:eventId/bill-actions/:actionId/fixed`>(
-    `${USER_API_PREFIX}/:eventId/bill-actions/:actionId/fixed`,
-    async ({request}) => {
-      const {members} = await request.json();
+  http.put<
+    any,
+    MemberReportListBody,
+    any,
+    `${typeof MOCK_API_PREFIX}${typeof USER_API_PREFIX}/:eventId/bill-actions/:actionId/fixed`
+  >(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/bill-actions/:actionId/fixed`, async ({request}) => {
+    const {members} = await request.json();
 
-      memberReportInActionMockData = members;
+    memberReportInActionMockData = members;
 
-      return HttpResponse.json({
-        status: 200,
-      });
-    },
-  ),
+    return HttpResponse.json({
+      status: 200,
+    });
+  }),
 ];

@@ -23,7 +23,10 @@
   {
     "type": "BILL",
     "stepName": "1차",
-    "members": ["망쵸", "백호"],
+    "members": [
+      "망쵸",
+      "백호"
+    ],
     "actions": [
       {
         "actionId": 3,
@@ -65,7 +68,10 @@
   {
     "type": "BILL",
     "stepName": "2차",
-    "members": ["소하", "웨디"],
+    "members": [
+      "소하",
+      "웨디"
+    ],
     "actions": [
       {
         "actionId": 9,
