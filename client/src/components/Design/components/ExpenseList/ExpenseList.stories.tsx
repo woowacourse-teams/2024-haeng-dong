@@ -14,10 +14,10 @@ const meta = {
   },
   args: {
     expenseList: [
-      {name: '소하', price: 2000, onBankButtonClick: () => console.log('')},
-      {name: '토다리', price: 2000, onBankButtonClick: () => console.log('')},
-      {name: '웨디', price: 1080, onBankButtonClick: () => console.log('')},
-      {name: '쿠키', price: 3020, onBankButtonClick: () => console.log('')},
+      {name: '소하', price: 2000},
+      {name: '토다리', price: 2000},
+      {name: '웨디', price: 1080},
+      {name: '쿠키', price: 3020},
     ],
   },
 } satisfies Meta<typeof ExpenseList>;
