@@ -6,7 +6,7 @@ const config: Config = {
   testEnvironment: 'jsdom', // 브라우저 내에서의 JavaScript 동작을 모방하여, DOM 조작, 이벤트 핸들링, 브라우저 관련 API 호출
   transform: {
     '^.+\\.ts?$': 'ts-jest',
-    '^.+\\.svg$': '<rootDir>/src/mocks/svgMock.ts',
+    '^.+\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/src/mocks/fileMock.ts',
   },
   collectCoverage: true,
   coverageReporters: ['text'],
@@ -48,7 +48,7 @@ const config: Config = {
     '^@theme/(.*)$': '<rootDir>/src/components/Design/theme/$1',
     '^@layouts/(.*)$': '<rootDir>/src/components/Design/layouts/$1',
     '^@type/(.*)$': '<rootDir>/src/components/Design/type/$1',
-    '\\.svg$': '<rootDir>/src/mocks/svg.ts',
+    '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/src/mocks/fileMock.ts',
   },
   testEnvironmentOptions: {
     customExportConditions: [''],
