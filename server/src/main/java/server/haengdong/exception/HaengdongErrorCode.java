@@ -15,7 +15,7 @@ public enum HaengdongErrorCode {
     EVENT_NAME_LENGTH_INVALID(String.format("행사 이름은 %d자 이상 %d자 이하만 입력 가능합니다.",
             Event.MIN_NAME_LENGTH,
             Event.MAX_NAME_LENGTH)),
-    EVENT_NAME_CONSECUTIVE_SPACES("행사 이름에는 공백 문자가 연속될 수 없습니다. 입력한 이름 : %s"),
+    EVENT_NAME_CONSECUTIVE_SPACES("행사 이름에는 공백 문자가 연속될 수 없습니다."),
     EVENT_PASSWORD_FORMAT_INVALID(String.format("비밀번호는 %d자리 숫자만 가능합니다.", Password.PASSWORD_LENGTH)),
     ACCOUNT_LENGTH_INVALID(String.format("계좌번호는 %d자 이상 %d자 이하만 입력 가능합니다.",
             Event.MIN_ACCOUNT_NUMBER_LENGTH,

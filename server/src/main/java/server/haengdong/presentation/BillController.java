@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.BillService;
+import server.haengdong.application.response.BillDetailsAppResponse;
 import server.haengdong.application.response.LastBillMemberAppResponse;
+import server.haengdong.presentation.response.BillDetailsResponse;
 import server.haengdong.presentation.response.CurrentMembersResponse;
 import server.haengdong.presentation.response.StepsResponse;
 
@@ -30,5 +32,15 @@ public class BillController {
 
         return ResponseEntity.ok()
                 .body(CurrentMembersResponse.of(currentMembers));
+    }
+
+    @GetMapping("/api/events/{eventId}/bills/{billId}/fixed")
+    public ResponseEntity<BillDetailsResponse> findBillDetails(
+            @PathVariable("eventId") String token,
+            @PathVariable("actionId") Long actionId
+    ) {
+        BillDetailsAppResponse appResponse = billService.findBillDetails(token, actionId);
+
+        return ResponseEntity.ok(BillDetailsResponse.of(appResponse));
     }
 }

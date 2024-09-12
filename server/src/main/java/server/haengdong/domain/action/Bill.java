@@ -131,10 +131,6 @@ public class Bill {
         resetBillDetails();
     }
 
-    public void addDetails(List<BillDetail> billDetails) {
-        billDetails.forEach(this::addDetail);
-    }
-
     private void addDetail(BillDetail billDetail) {
         this.billDetails.add(billDetail);
         billDetail.setBill(this);

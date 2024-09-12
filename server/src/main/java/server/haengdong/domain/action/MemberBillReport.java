@@ -15,7 +15,7 @@ public class MemberBillReport {
         this.reports = reports;
     }
 
-    public static MemberBillReport createByActions(List<Bill> bills) {
+    public static MemberBillReport createByBills(List<Bill> bills) {
         Map<Member, Long> reports = bills.stream()
                 .flatMap(bill -> bill.getBillDetails().stream())
                 .collect(toMap(

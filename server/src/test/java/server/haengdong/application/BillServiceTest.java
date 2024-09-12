@@ -1,40 +1,42 @@
-//package server.haengdong.application;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static org.assertj.core.api.Assertions.assertThatThrownBy;
-//import static org.assertj.core.api.Assertions.tuple;
-//import static org.junit.jupiter.api.Assertions.assertAll;
-//
-//import java.util.List;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import server.haengdong.application.request.BillAppRequest;
-//import server.haengdong.application.request.BillActionUpdateAppRequest;
-//import server.haengdong.domain.action.Bill;
-//import server.haengdong.domain.action.BillDetail;
-//import server.haengdong.domain.action.BillRepository;
-//import server.haengdong.domain.event.Event;
-//import server.haengdong.domain.event.EventRepository;
-//import server.haengdong.exception.HaengdongException;
-//import server.haengdong.support.fixture.Fixture;
-//
-//class BillServiceTest extends ServiceTestSupport {
-//
-//    @Autowired
-//    private BillService billService;
-//
-//    @Autowired
-//    private EventRepository eventRepository;
-//
-//    @Autowired
-//    private BillRepository billActionRepository;
-//
-//    @Autowired
-//    private BillActionDetailRepository billActionDetailRepository;
-//
-//    @Autowired
-//    private MemberActionRepository memberActionRepository;
+package server.haengdong.application;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
+
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import server.haengdong.application.request.BillDetailUpdateAppRequest;
+import server.haengdong.application.request.BillDetailsUpdateAppRequest;
+import server.haengdong.domain.action.Bill;
+import server.haengdong.domain.action.BillDetail;
+import server.haengdong.domain.action.BillDetailRepository;
+import server.haengdong.domain.action.BillRepository;
+import server.haengdong.domain.action.Member;
+import server.haengdong.domain.action.MemberRepository;
+import server.haengdong.domain.event.Event;
+import server.haengdong.domain.event.EventRepository;
+import server.haengdong.exception.HaengdongException;
+import server.haengdong.support.fixture.Fixture;
+
+class BillServiceTest extends ServiceTestSupport {
+
+    @Autowired
+    private BillService billService;
+
+    @Autowired
+    private EventRepository eventRepository;
+
+    @Autowired
+    private BillRepository billRepository;
+
+    @Autowired
+    private BillDetailRepository billDetailRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 //
 //    @DisplayName("지출 내역을 생성한다.")
 //    @Test
@@ -180,45 +182,106 @@
 //                        tuple("양파", 5000L)
 //                );
 //    }
+
+    @DisplayName("지출 내역을 삭제한다.")
+    @Test
+    void deleteBillAction() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        Member member1 = new Member(event, "토다리");
+        Member member2 = new Member(event, "쿠키");
+        memberRepository.saveAll(List.of(member1, member2));
+
+        Bill billAction = Bill.create(event, "뽕족", 10000L, List.of(member1, member2));
+        billRepository.save(billAction);
+        Long billId = billAction.getId();
+
+        billService.deleteBill(event.getToken(), billId);
+
+        assertThat(billRepository.findById(billId)).isEmpty();
+    }
+
+    @DisplayName("지출 내역 삭제 시 행사가 존재하지 않으면 예외가 발생한다.")
+    @Test
+    void deleteBillAction1() {
+        assertThatThrownBy(() -> billService.deleteBill("소하망쵸", 1L))
+                .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("지출 금액 수정 요청의 총합이 지출 금액과 일치하지 않으면 예외가 발생한다.")
+    @Test
+    void updateBillDetailsTest1() {
+        Event event1 = Fixture.EVENT1;
+        eventRepository.save(event1);
+        Member member1 = new Member(event1, "토다리");
+        Member member2 = new Member(event1, "쿠키");
+        memberRepository.saveAll(List.of(member1, member2));
+
+        Bill billAction = Bill.create(event1, "뽕족", 10000L, List.of(member1, member2));
+        billRepository.save(billAction);
+        List<BillDetail> billDetails = billAction.getBillDetails();
+
+        BillDetailsUpdateAppRequest request = new BillDetailsUpdateAppRequest(List.of(
+                new BillDetailUpdateAppRequest(billDetails.get(0).getId(), 3000L, true),
+                new BillDetailUpdateAppRequest(billDetails.get(1).getId(), 4000L, true)
+        ));
+
+        assertThatThrownBy(
+                        () -> billService.updateBillDetails(event1.getToken(), billAction.getId(), request))
+                .isInstanceOf(HaengdongException.class)
+                .hasMessage("지출 총액이 일치하지 않습니다.");
+    }
+
+    @DisplayName("지출 고정 금액을 수정한다.")
+    @Test
+    void updateBillDetailsTest2() {
+        Event event1 = Fixture.EVENT1;
+        eventRepository.save(event1);
+        Member member1 = new Member(event1, "토다리");
+        Member member2 = new Member(event1, "쿠키");
+        memberRepository.saveAll(List.of(member1, member2));
+
+        Bill bill = Bill.create(event1, "뽕족", 10000L, List.of(member1, member2));
+        billRepository.save(bill);
+        List<BillDetail> billDetails = bill.getBillDetails();
+
+        BillDetailsUpdateAppRequest request = new BillDetailsUpdateAppRequest(List.of(
+                new BillDetailUpdateAppRequest(billDetails.get(0).getId(), 3000L, true),
+                new BillDetailUpdateAppRequest(billDetails.get(1).getId(), 7000L, true)
+        ));
+
+        billService.updateBillDetails(event1.getToken(), bill.getId(), request);
+
+        List<BillDetail> foundBillDetails = billDetailRepository.findAllByBill(bill);
+
+        assertThat(foundBillDetails).hasSize(2)
+                .extracting(BillDetail::getId, BillDetail::getPrice)
+                .containsExactly(
+                        tuple(billDetails.get(0).getId(), 3000L),
+                        tuple(billDetails.get(1).getId(), 7000L)
+                );
+    }
 //
-//    @DisplayName("지출 내역을 삭제한다.")
+//    @DisplayName("참여자별 지출 금액을 조회한다.")
 //    @Test
-//    void deleteBillAction() {
-//        Event event = Fixture.EVENT1;
-//        eventRepository.save(event);
-//        Bill billAction = Fixture.createBillAction(event, 1L, "커피", 50_900L);
+//    void findBillDetailsTest() {
+//        Event event1 = Fixture.EVENT1;
+//        eventRepository.save(event1);
+//        Sequence sequence = Sequence.createFirst();
+//        Bill billAction = new Bill(event1, sequence, "뽕족", 10000L);
 //        billActionRepository.save(billAction);
-//        Long actionId = billAction.getId();
-//
-//        billService.deleteBillAction(event.getToken(), actionId);
-//
-//        assertThat(billActionRepository.findById(billAction.getId())).isEmpty();
-//    }
-//
-//    @DisplayName("지출 내역을 삭제하면 지출 상세도 삭제된다.")
-//    @Test
-//    void deleteBillActionTest1() {
-//        Event event = Fixture.EVENT1;
-//        eventRepository.save(event);
-//        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "백호", MemberActionStatus.IN);
-//        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "망쵸", MemberActionStatus.IN);
-//        Bill billAction = Fixture.createBillAction(event, 3L, "커피", 50_900L);
-//        BillDetail billActionDetail1 = new BillDetail(billAction, "백호", 25_450L, false);
-//        BillDetail billActionDetail2 = new BillDetail(billAction, "망쵸", 25_450L, false);
-//        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
-//        billActionRepository.save(billAction);
+//        BillDetail billActionDetail1 = new BillDetail(billAction, "토다리", 6000L, true);
+//        BillDetail billActionDetail2 = new BillDetail(billAction, "쿠키", 4000L, true);
 //        billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));
-//        Long actionId = billAction.getId();
 //
-//        billService.deleteBillAction(event.getToken(), actionId);
+//        BillDetailsAppResponse response = billDetailService.findBillDetails(
+//                event1.getToken(), billAction.getId());
 //
-//        assertThat(billActionDetailRepository.findAll()).isEmpty();
+//        assertThat(response.billDetails()).hasSize(2)
+//                .extracting(BillDetailAppResponse::memberName, BillDetailAppResponse::price)
+//                .containsExactly(
+//                        tuple("토다리", 6000L),
+//                        tuple("쿠키", 4000L)
+//                );
 //    }
-//
-//    @DisplayName("지출 내역 삭제 시 행사가 존재하지 않으면 예외가 발생한다.")
-//    @Test
-//    void deleteBillAction1() {
-//        assertThatThrownBy(() -> billService.deleteBillAction("소하망쵸", 1L))
-//                .isInstanceOf(HaengdongException.class);
-//    }
-//}
+}

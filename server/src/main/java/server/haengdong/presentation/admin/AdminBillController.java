@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import server.haengdong.application.BillDetailService;
 import server.haengdong.application.BillService;
 import server.haengdong.presentation.request.BillDetailsUpdateRequest;
 import server.haengdong.presentation.request.BillSaveRequest;
@@ -18,9 +17,8 @@ import server.haengdong.presentation.request.BillUpdateRequest;
 @RequiredArgsConstructor
 @RestController
 public class AdminBillController {
-    private final BillService billService;
 
-    private final BillDetailService billDetailService;
+    private final BillService billService;
 
     @PostMapping("/api/admin/events/{eventId}/bills")
     public ResponseEntity<Void> saveAllBill(
@@ -59,7 +57,7 @@ public class AdminBillController {
             @PathVariable("billId") Long actionId,
             @Valid @RequestBody BillDetailsUpdateRequest request
     ) {
-        billDetailService.updateBillDetails(token, actionId, request.toAppRequest());
+        billService.updateBillDetails(token, actionId, request.toAppRequest());
 
         return ResponseEntity.ok().build();
     }

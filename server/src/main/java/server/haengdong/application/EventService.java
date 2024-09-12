@@ -62,7 +62,7 @@ public class EventService {
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
         List<Bill> bills = billRepository.findByEvent(event);
 
-        MemberBillReport memberBillReport = MemberBillReport.createByActions(bills);
+        MemberBillReport memberBillReport = MemberBillReport.createByBills(bills);
 
         return memberBillReport.getReports().entrySet().stream()
                 .map(this::createMemberBillReportResponse)
