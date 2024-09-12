@@ -8,7 +8,7 @@ import {Back, Button, LabelInput, MainLayout, Title, TopNav} from '@components/D
 
 const Account = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const {bank, account, selectBank, handleAccount, enrollAccount} = useAccount();
+  const {bank, account, canSubmit, selectBank, handleAccount, enrollAccount} = useAccount();
 
   return (
     <MainLayout backgroundColor="white">
@@ -42,7 +42,9 @@ const Account = () => {
           />
         )}
       </fieldset>
-      <Button onClick={enrollAccount}>확인</Button>
+      <Button disabled={!canSubmit} onClick={enrollAccount}>
+        확인
+      </Button>
     </MainLayout>
   );
 };
