@@ -1,4 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import {useTheme} from '@components/Design/theme/HDesignProvider';
+
 import BANKS from '@constants/bank';
 
 import Text from '../Text/Text';

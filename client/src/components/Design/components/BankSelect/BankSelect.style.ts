@@ -1,12 +1,14 @@
 import {css} from '@emotion/react';
 
 import ImageSprite from '@assets/image/banksprite.png';
+import {Theme} from '@components/Design/theme/theme.type';
 
 export const bankButtonStyle = css({
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
   gap: '0.5rem',
-  width: '5rem',
+  width: '100%',
 });
 
 export const iconStyle = (position: string) =>
@@ -21,4 +23,19 @@ export const bankSelectStyle = css({
   gridTemplateColumns: 'repeat(3, 1fr)',
   gridRowGap: '1rem',
   gridColumnGap: '2rem',
+  placeItems: 'center',
+
+  height: '100%',
+
+  '@media (min-width: 450px)': {
+    gridTemplateColumns: 'repeat(4, 1fr)',
+  },
+
+  overflowY: 'scroll',
+  scrollbarWidth: 'none',
+  '-ms-overflow-style': 'none',
+
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 });
