@@ -1,7 +1,6 @@
 import {css} from '@emotion/react';
 
 import ImageSprite from '@assets/image/banksprite.png';
-import {Theme} from '@components/Design/theme/theme.type';
 
 export const bankButtonStyle = css({
   display: 'flex',
@@ -33,7 +32,6 @@ export const bankSelectStyle = css({
 
   overflowY: 'scroll',
   scrollbarWidth: 'none',
-  '-ms-overflow-style': 'none',
 
   '&::-webkit-scrollbar': {
     display: 'none',
