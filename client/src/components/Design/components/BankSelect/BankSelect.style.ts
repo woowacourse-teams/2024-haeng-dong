@@ -2,14 +2,6 @@ import {css} from '@emotion/react';
 
 import ImageSprite from '@assets/image/banksprite.png';
 
-export const bankButtonStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '0.5rem',
-  width: '100%',
-});
-
 export const iconStyle = (position: string) =>
   css({
     width: '80px',
