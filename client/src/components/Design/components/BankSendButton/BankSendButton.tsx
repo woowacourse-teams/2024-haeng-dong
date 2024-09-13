@@ -5,6 +5,7 @@ import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
+import Flex from '../Flex/Flex';
 
 import {bankButtonStyle} from './BankSendButton.style';
 
@@ -18,10 +19,12 @@ const BankSendButton = ({clipboardText, onBankButtonClick, ...buttonProps}: Bank
   return (
     <CopyToClipboard text={clipboardText} onCopy={onBankButtonClick}>
       <button css={bankButtonStyle(theme)} {...buttonProps}>
-        <Icon iconType="toss" />
-        <Text size="caption" textColor="black">
-          송금
-        </Text>
+        <Flex alignItems="center" gap="0.25rem">
+          <Icon iconType="toss" />
+          <Text size="caption" textColor="black">
+            송금
+          </Text>
+        </Flex>
       </button>
     </CopyToClipboard>
   );
