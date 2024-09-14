@@ -1,5 +1,6 @@
 package server.haengdong.docs;
 
+import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -15,13 +16,16 @@ import static server.haengdong.support.fixture.Fixture.EVENT_COOKIE;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import server.haengdong.application.EventService;
 import server.haengdong.presentation.admin.AdminEventController;
 
 class AdminEventControllerDocsTest extends RestDocsSupport {
 
+    private final EventService eventService = mock(EventService.class);
+
     @Override
     protected Object initController() {
-        return new AdminEventController();
+        return new AdminEventController(eventService);
     }
 
     @DisplayName("행사 어드민 권한을 확인한다.")
