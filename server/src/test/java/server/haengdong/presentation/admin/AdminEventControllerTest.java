@@ -16,13 +16,11 @@ class AdminEventControllerTest extends ControllerTestSupport {
     @DisplayName("행사 정보를 수정한다.")
     @Test
     void updateEventTest() throws Exception {
-        // given
         String token = "TOKEN";
         EventUpdateRequest eventUpdateRequest = new EventUpdateRequest("행동대장 비대위", "행대뱅크", "12345678");
 
         String requestBody = objectMapper.writeValueAsString(eventUpdateRequest);
 
-        // when
         mockMvc.perform(patch("/api/admin/events/{eventId}", token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(requestBody))
