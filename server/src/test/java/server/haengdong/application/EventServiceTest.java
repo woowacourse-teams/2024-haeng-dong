@@ -154,23 +154,6 @@ class EventServiceTest extends ServiceTestSupport {
 //                );
 //    }
 //
-//    @DisplayName("행사에 참여한 전체 인원을 중복 없이 조회한다.")
-//    @Test
-//    void findAllMembersTest() {
-//        Event event = Fixture.EVENT1;
-//        Bill billAction = Fixture.createBillAction(event, 3L, "뽕나무쟁이족발", 30000L);
-//        MemberAction memberAction1 = Fixture.createMemberAction(event, 1L, "토다리", IN);
-//        MemberAction memberAction2 = Fixture.createMemberAction(event, 2L, "쿠키", IN);
-//        MemberAction memberAction3 = Fixture.createMemberAction(event, 4L, "쿠키", OUT);
-//        eventRepository.save(event);
-//        billRepository.save(billAction);
-//        memberRepository.saveAll(List.of(memberAction1, memberAction2, memberAction3));
-//
-//        MembersDepositAppResponse membersDepositAppResponse = eventService.findAllMembers(event.getToken());
-//
-//        assertThat(membersDepositAppResponse.memberNames()).containsExactlyInAnyOrder("토다리", "쿠키");
-//    }
-//
 //    @DisplayName("행사 참여 인원들의 이름을 변경한다.")
 //    @Test
 //    void updateMember() {
