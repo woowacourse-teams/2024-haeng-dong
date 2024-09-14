@@ -3,6 +3,7 @@ package server.haengdong.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.BillAppRequest;
 import server.haengdong.application.request.BillDetailUpdateAppRequest;
 import server.haengdong.application.request.BillDetailsUpdateAppRequest;
+import server.haengdong.application.request.BillUpdateAppRequest;
 import server.haengdong.application.response.BillAppResponse;
 import server.haengdong.application.response.BillDetailAppResponse;
 import server.haengdong.application.response.BillDetailsAppResponse;
@@ -92,91 +94,88 @@ class BillServiceTest extends ServiceTestSupport {
                 );
     }
 
-//    @DisplayName("지출 내역을 생성하면 지출 상세 내역이 생성된다.")
-//    @Test
-//    void saveBillActionTest1() {
-//        Event event = Fixture.EVENT1;
-//        Event savedEvent = eventRepository.save(event);
-//        Sequence sequence1 = Sequence.createFirst();
-//        Sequence sequence2 = sequence1.next();
-//        MemberAction memberAction1 = new MemberAction(event, sequence1, "백호", MemberActionStatus.IN);
-//        MemberAction memberAction2 = new MemberAction(event, sequence2, "망쵸", MemberActionStatus.IN);
-//        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
-//
-//        List<BillAppRequest> request = List.of(
-//                new BillAppRequest("뽕족", 10_000L),
-//                new BillAppRequest("인생맥주", 15_000L)
-//        );
-//
-//        billService.saveAllBillAction(event.getToken(), request);
-//
-//        List<BillDetail> billActionDetails = billActionDetailRepository.findAll();
-//
-//        assertThat(billActionDetails)
-//                .hasSize(4)
-//                .extracting("memberName", "price")
-//                .containsExactlyInAnyOrder(
-//                        tuple("백호", 5_000L),
-//                        tuple("망쵸", 5_000L),
-//                        tuple("백호", 7_500L),
-//                        tuple("망쵸", 7_500L)
-//                );
-//    }
-//
-//    @DisplayName("이벤트가 존재하지 않으면 지출 내역을 생성할 수 없다.")
-//    @Test
-//    void saveBillAction1() {
-//        List<BillAppRequest> requests = List.of(
-//                new BillAppRequest("뽕족", 10_000L),
-//                new BillAppRequest("인생맥주", 15_000L)
-//        );
-//
-//        assertThatThrownBy(() -> billService.saveAllBillAction("token", requests))
-//                .isInstanceOf(HaengdongException.class);
-//    }
-//
-//    @DisplayName("지출 액션을 수정한다.")
-//    @Test
-//    void updateBillAction() {
-//        Event event = Fixture.EVENT1;
-//        Event savedEvent = eventRepository.save(event);
-//        Sequence sequence = Sequence.createFirst();
-//        Bill billAction = new Bill(event, sequence, "뽕족", 10_000L);
-//        Bill savedBillAction = billActionRepository.save(billAction);
-//
-//        Long actionId = savedBillAction.getId();
-//        BillActionUpdateAppRequest request = new BillActionUpdateAppRequest("인생맥주", 20_000L);
-//
-//        billService.updateBillAction(event.getToken(), actionId, request);
-//
-//        Bill updatedBillAction = billActionRepository.findById(savedBillAction.getId()).get();
-//
-//        assertAll(
-//                () -> assertThat(updatedBillAction.getTitle()).isEqualTo("인생맥주"),
-//                () -> assertThat(updatedBillAction.getPrice()).isEqualTo(20_000L)
-//        );
-//    }
-//
-//    @DisplayName("행사에 속하지 않은 지출 액션은 수정할 수 없다.")
-//    @Test
-//    void updateBillAction1() {
-//        Event event1 = Fixture.EVENT1;
-//        Event event2 = Fixture.EVENT2;
-//        Event savedEvent1 = eventRepository.save(event1);
-//        Event savedEvent2 = eventRepository.save(event2);
-//        Sequence sequence1 = Sequence.createFirst();
-//        Sequence sequence2 = Sequence.createFirst();
-//        Bill billAction1 = new Bill(event1, sequence1, "뽕족", 10_000L);
-//        Bill billAction2 = new Bill(event2, sequence2, "뽕족", 10_000L);
-//        Bill savedBillAction1 = billActionRepository.save(billAction1);
-//        billActionRepository.save(billAction2);
-//
-//        Long actionId = savedBillAction1.getId();
-//        BillActionUpdateAppRequest request = new BillActionUpdateAppRequest("인생맥주", 20_000L);
-//
-//        assertThatThrownBy(() -> billService.updateBillAction(event2.getToken(), actionId, request))
-//                .isInstanceOf(HaengdongException.class);
-//    }
+    @DisplayName("지출 내역을 생성하면 지출 상세 내역이 생성된다.")
+    @Test
+    void saveBillActionTest1() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+
+        Member member1 = Fixture.MEMBER1;
+        Member member2 = Fixture.MEMBER2;
+        List<Member> members = List.of(member1, member2);
+        memberRepository.saveAll(members);
+
+        BillAppRequest request = new BillAppRequest("뽕족", 10_000L, List.of(member1.getId(), member2.getId()));
+
+        billService.saveBill(event.getToken(), request);
+
+        List<BillDetail> billDetails = billDetailRepository.findAllByBillId(1L);
+
+        assertThat(billDetails)
+                .hasSize(2)
+                .extracting("member", "price")
+                .containsExactlyInAnyOrder(
+                        tuple(member1, 5_000L),
+                        tuple(member2, 5_000L)
+                );
+    }
+
+    @DisplayName("토큰에 해당하는 이벤트가 존재하지 않으면 지출 내역을 생성할 수 없다.")
+    @Test
+    void saveBillAction1() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+
+        Member member1 = Fixture.MEMBER1;
+        Member member2 = Fixture.MEMBER2;
+        List<Member> members = List.of(member1, member2);
+        memberRepository.saveAll(members);
+
+        BillAppRequest request = new BillAppRequest("뽕족", 10_000L, List.of(member1.getId(), member2.getId()));
+
+        assertThatThrownBy(() -> billService.saveBill("wrongToken", request))
+                .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("지출 액션을 수정한다.")
+    @Test
+    void updateBillAction() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+
+        Bill billAction = new Bill(event, "뽕족", 10_000L);
+        Bill savedBillAction = billRepository.save(billAction);
+
+        Long actionId = savedBillAction.getId();
+        BillUpdateAppRequest request = new BillUpdateAppRequest("인생맥주", 20_000L);
+
+        billService.updateBill(event.getToken(), actionId, request);
+
+        Bill updatedBillAction = billRepository.findById(savedBillAction.getId()).get();
+
+        assertAll(
+                () -> assertThat(updatedBillAction.getTitle()).isEqualTo("인생맥주"),
+                () -> assertThat(updatedBillAction.getPrice()).isEqualTo(20_000L)
+        );
+    }
+
+    @DisplayName("행사에 속하지 않은 지출 액션은 수정할 수 없다.")
+    @Test
+    void updateBillAction1() {
+        Event event1 = Fixture.EVENT1;
+        Event event2 = Fixture.EVENT2;
+        eventRepository.saveAll(List.of(event1, event2));
+        Bill billAction1 = new Bill(event1, "뽕족", 10_000L);
+        Bill billAction2 = new Bill(event2, "뽕족", 10_000L);
+        Bill savedBillAction1 = billRepository.save(billAction1);
+        billRepository.save(billAction2);
+
+        Long actionId = savedBillAction1.getId();
+        BillUpdateAppRequest request = new BillUpdateAppRequest("인생맥주", 20_000L);
+
+        assertThatThrownBy(() -> billService.updateBill(event2.getToken(), actionId, request))
+                .isInstanceOf(HaengdongException.class);
+    }
 //
 //    @DisplayName("지출 내역 금액을 변경하면 지출 디테일이 초기화 된다.")
 //    @Test

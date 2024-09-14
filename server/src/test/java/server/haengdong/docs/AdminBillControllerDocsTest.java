@@ -28,6 +28,7 @@ import server.haengdong.presentation.admin.AdminBillController;
 import server.haengdong.presentation.request.BillDetailUpdateRequest;
 import server.haengdong.presentation.request.BillDetailsUpdateRequest;
 import server.haengdong.presentation.request.BillSaveRequest;
+import server.haengdong.presentation.request.BillUpdateRequest;
 import server.haengdong.support.fixture.Fixture;
 
 class AdminBillControllerDocsTest extends RestDocsSupport {
@@ -71,36 +72,36 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
                 ));
     }
 
-//    @DisplayName("지출 액션을 수정한다.")
-//    @Test
-//    void updateBillAction() throws Exception {
-//        BillActionUpdateRequest request = new BillActionUpdateRequest("뽕족", 10_000L);
-//
-//        String requestBody = objectMapper.writeValueAsString(request);
-//        String eventId = "웨디토큰";
-//
-//        mockMvc.perform(put("/api/admin/events/{eventId}/bill-actions/{actionId}", eventId, 1L)
-//                        .cookie(EVENT_COOKIE)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andDo(document("updateBillAction",
-//                        preprocessRequest(prettyPrint()),
-//                        preprocessResponse(prettyPrint()),
-//                        pathParameters(
-//                                parameterWithName("eventId").description("행사 ID"),
-//                                parameterWithName("actionId").description("지출 액션 ID")
-//                        ),
-//                        requestCookies(
-//                                cookieWithName("eventToken").description("행사 관리자 토큰")
-//                        ),
-//                        requestFields(
-//                                fieldWithPath("title").description("수정할 지출 액션의 제목"),
-//                                fieldWithPath("price").description("수정할 지출 액션의 금액")
-//                        )
-//                ));
-//    }
+    @DisplayName("지출 액션을 수정한다.")
+    @Test
+    void updateBillAction() throws Exception {
+        BillUpdateRequest request = new BillUpdateRequest("뽕족", 10_000L);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        String eventId = "웨디토큰";
+
+        mockMvc.perform(put("/api/admin/events/{eventId}/bills/{billId}", eventId, 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .cookie(EVENT_COOKIE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("updateBillAction",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("eventId").description("행사 ID"),
+                                parameterWithName("billId").description("지출 액션 ID")
+                        ),
+                        requestCookies(
+                                cookieWithName("eventToken").description("행사 관리자 토큰")
+                        ),
+                        requestFields(
+                                fieldWithPath("title").description("수정할 지출 액션의 제목"),
+                                fieldWithPath("price").description("수정할 지출 액션의 금액")
+                        )
+                ));
+    }
 
     @DisplayName("참여자별 지출 금액을 수정한다.")
     @Test
