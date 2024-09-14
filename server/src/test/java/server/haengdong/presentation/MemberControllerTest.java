@@ -1,5 +1,7 @@
 package server.haengdong.presentation;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,6 +15,8 @@ import static server.haengdong.support.fixture.Fixture.MEMBER3;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import server.haengdong.application.response.LastBillMemberAppResponse;
 import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.domain.action.Member;
@@ -47,5 +51,28 @@ class MemberControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.members[2].id").value(member3.getId()))
                 .andExpect(jsonPath("$.members[2].name").value(member3.getName()))
                 .andExpect(jsonPath("$.members[2].isDeposited").value(member3.isDeposited()));
+    }
+
+    @DisplayName("현재 참여 인원을 조회합니다.")
+    @Test
+    void getCurrentMembers() throws Exception {
+        Member member1 = MEMBER1;
+        Member member2 = MEMBER2;
+        List<LastBillMemberAppResponse> members = List.of(
+                LastBillMemberAppResponse.of(member1),
+                LastBillMemberAppResponse.of(member2)
+        );
+
+        given(memberService.getLastMembers(any())).willReturn(members);
+
+        mockMvc.perform(get("/api/events/{eventId}/members/current", "망쵸토큰")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.members").isArray())
+                .andExpect(jsonPath("$.members[0].id").value(equalTo(member1.getId())))
+                .andExpect(jsonPath("$.members[0].name").value(equalTo(member1.getName())))
+                .andExpect(jsonPath("$.members[1].id").value(equalTo(member2.getId())))
+                .andExpect(jsonPath("$.members[1].name").value(equalTo(member2.getName())));
     }
 }
