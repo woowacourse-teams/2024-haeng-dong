@@ -12,10 +12,10 @@ const ShareEventButton = () => {
   const {showToast} = useToast();
 
   const isMobile = isMobileDevice();
-  const {shareText, onInviteButtonClick} = useShareEvent();
+  const {shareText, onShareButtonClick} = useShareEvent();
 
   return isMobile ? (
-    <Button size="small" variants="secondary" onClick={onInviteButtonClick}>
+    <Button size="small" variants="secondary" onClick={onShareButtonClick}>
       카카오톡으로 정산 초대하기
     </Button>
   ) : (
@@ -31,7 +31,7 @@ const ShareEventButton = () => {
         })
       }
     >
-      <Button size="small" variants="secondary" onClick={onInviteButtonClick}>
+      <Button size="small" variants="secondary" onClick={onShareButtonClick}>
         정산 초대하기
       </Button>
     </CopyToClipboard>

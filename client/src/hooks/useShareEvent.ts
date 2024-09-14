@@ -21,7 +21,7 @@ const useShareEvent = () => {
 
   // 모바일이 아닌 기기는 단순 텍스트 복사
   // 모바일 기기에서는 카카오톡 공유를 사용
-  const onInviteButtonClick = () => {
+  const onShareButtonClick = () => {
     if (!isMobile) return;
 
     kakaoShare();
@@ -48,7 +48,7 @@ const useShareEvent = () => {
 
   return {
     shareText,
-    onInviteButtonClick,
+    onShareButtonClick,
   };
 };
 
