@@ -83,11 +83,11 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                  ),
                                  requestFields(
                                         fieldWithPath("eventName").type(JsonFieldType.STRING)
-                                                .description("수정할 이벤트 이름"),
+                                                .description("수정할 이벤트 이름").optional(),
                                         fieldWithPath("bankName").type(JsonFieldType.STRING)
-                                                .description("은행 이름"),
+                                                .description("은행 이름").optional(),
                                         fieldWithPath("accountNumber").type(JsonFieldType.STRING)
-                                                .description("계좌 번호")
+                                                .description("계좌 번호").optional()
                                  )
                         )
                 );
