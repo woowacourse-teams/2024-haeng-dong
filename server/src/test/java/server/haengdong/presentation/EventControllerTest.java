@@ -37,20 +37,6 @@ class EventControllerTest extends ControllerTestSupport {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.eventName").value("행동대장 회식"));
     }
-//
-//    @DisplayName("행사에 참여한 전체 인원을 중복 없이 조회한다.")
-//    @Test
-//    void findAllMembersTest() throws Exception {
-//        MembersDepositAppResponse memberAppResponse = new MembersDepositAppResponse(List.of("토다리", "쿠키"));
-//        given(eventService.findAllMembers(anyString())).willReturn(memberAppResponse);
-//
-//        mockMvc.perform(get("/api/events/{eventId}/members", "TOKEN"))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.memberNames").isArray())
-//                .andExpect(jsonPath("$.memberNames[0]").value("토다리"))
-//                .andExpect(jsonPath("$.memberNames[1]").value("쿠키"));
-//    }
 
     @DisplayName("참여자별 정산 현황을 조회한다.")
     @Test

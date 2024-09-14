@@ -4,14 +4,12 @@ import java.util.List;
 import server.haengdong.domain.action.Member;
 
 public record MembersDepositAppResponse(
-        List<MemberDepositAppResponse> memberNames
+        List<MemberDepositAppResponse> members
 ) {
 
     public static MembersDepositAppResponse of(List<Member> members) {
-        List<MemberDepositAppResponse> memberNames = members.stream()
+        return new MembersDepositAppResponse(members.stream()
                 .map(MemberDepositAppResponse::of)
-                .toList();
-
-        return new MembersDepositAppResponse(memberNames);
+                .toList());
     }
 }
