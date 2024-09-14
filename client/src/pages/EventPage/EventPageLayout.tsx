@@ -1,6 +1,6 @@
 import {Outlet} from 'react-router-dom';
 
-import useEventPageLayoutPage from '@hooks/useEventPageLayoutPage';
+import useEventPageLayout from '@hooks/useEventPageLayout';
 
 import {ShareEventButton} from '@components/ShareEventButton';
 
@@ -12,7 +12,7 @@ export type EventPageContextProps = {
 };
 
 const EventPageLayout = () => {
-  const {navProps, isAdmin, isLoginPage, eventName} = useEventPageLayoutPage();
+  const {navProps, isAdmin, isLoginPage, eventName} = useEventPageLayout();
   const {nav, paths, onChange} = navProps;
 
   const outletContext: EventPageContextProps = {

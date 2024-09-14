@@ -5,7 +5,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 import useRequestGetEventName from './queries/useRequestGetEventName';
 import useNavSwitch from './useNavSwitch';
 
-const useEventPageLayoutPage = () => {
+const useEventPageLayout = () => {
   const navProps = useNavSwitch();
   const {data} = useRequestGetEventName();
 
@@ -22,4 +22,4 @@ const useEventPageLayoutPage = () => {
   };
 };
 
-export default useEventPageLayoutPage;
+export default useEventPageLayout;
