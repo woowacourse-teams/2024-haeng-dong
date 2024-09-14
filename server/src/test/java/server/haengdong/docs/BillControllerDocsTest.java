@@ -69,10 +69,22 @@ public class BillControllerDocsTest extends RestDocsSupport {
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID")
+                                ),
+                                responseFields(
+                                        fieldWithPath("steps").description("지출 차수 목록"),
+                                        fieldWithPath("steps[].bills").description("해당 차수의 지출 내역"),
+                                        fieldWithPath("steps[].bills[].id").description("지출 ID"),
+                                        fieldWithPath("steps[].bills[].title").description("지출 이름"),
+                                        fieldWithPath("steps[].bills[].price").description("지출 금액"),
+                                        fieldWithPath("steps[].bills[].isFixed").description("지출 수정 여부"),
+                                        fieldWithPath("steps[].members").description("해당 차수의 참여자 목록"),
+                                        fieldWithPath("steps[].members[].id").description("참여자 ID"),
+                                        fieldWithPath("steps[].members[].name").description("참여자 이름")
                                 )
                         )
                 );
     }
+
 
     @DisplayName("참여자별 지출 금액을 조회한다.")
     @Test
