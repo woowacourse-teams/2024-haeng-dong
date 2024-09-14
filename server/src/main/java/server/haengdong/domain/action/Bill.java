@@ -72,9 +72,7 @@ public class Bill {
         }
     }
 
-    public static Bill create(
-            Event event, String title, Long price, List<Member> members
-    ) {
+    public static Bill create(Event event, String title, Long price, List<Member> members) {
         Bill bill = new Bill(event, title, price);
         bill.resetBillDetails(members);
         return bill;
@@ -131,7 +129,7 @@ public class Bill {
         resetBillDetails();
     }
 
-    private void addDetail(BillDetail billDetail) {
+    public void addDetail(BillDetail billDetail) {
         this.billDetails.add(billDetail);
         billDetail.setBill(this);
     }
@@ -165,6 +163,7 @@ public class Bill {
                 .findFirst()
                 .orElseGet(() -> DEFAULT_PRICE);
     }
+
     public List<Member> getMembers() {
         return billDetails.stream()
                 .map(BillDetail::getMember)

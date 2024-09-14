@@ -5,8 +5,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static server.haengdong.support.fixture.Fixture.EVENT_COOKIE;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -17,61 +19,59 @@ import server.haengdong.exception.HaengdongException;
 import server.haengdong.presentation.ControllerTestSupport;
 import server.haengdong.presentation.request.BillDetailUpdateRequest;
 import server.haengdong.presentation.request.BillDetailsUpdateRequest;
+import server.haengdong.presentation.request.BillSaveRequest;
+import server.haengdong.presentation.request.BillUpdateRequest;
 
 class AdminBillControllerTest extends ControllerTestSupport {
 
-//    @DisplayName("지출 내역을 생성한다.")
-//    @Test
-//    void saveAllBillAction() throws Exception {
-//        BillActionsSaveRequest request = new BillActionsSaveRequest(
-//                List.of(
-//                        new BillActionSaveRequest("뽕족", 10_000L),
-//                        new BillActionSaveRequest("인생맥주", 10_000L)
-//                )
-//        );
-//        String requestBody = objectMapper.writeValueAsString(request);
-//        String eventId = "쿠키토큰";
-//
-//        mockMvc.perform(post("/api/admin/events/{eventId}/bill-actions", eventId)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//    }
-//
-//    @DisplayName("title이 비어 있는 경우 지출 내역을 생성할 수 없다.")
-//    @Test
-//    void saveAllBillAction1() throws Exception {
-//        BillActionsSaveRequest request = new BillActionsSaveRequest(
-//                List.of(
-//                        new BillActionSaveRequest("", 10_000L),
-//                        new BillActionSaveRequest("인생맥주", 10_000L)
-//                )
-//        );
-//        String requestBody = objectMapper.writeValueAsString(request);
-//        String eventId = "소하토큰";
-//
-//        mockMvc.perform(post("/api/admin/events/{eventId}/bill-actions", eventId)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andDo(print())
-//                .andExpect(status().isBadRequest());
-//    }
-//
-//    @DisplayName("지출 액션을 수정한다.")
-//    @Test
-//    void updateBillAction() throws Exception {
-//        BillActionUpdateRequest request = new BillActionUpdateRequest("뽕족", 10_000L);
-//
-//        String requestBody = objectMapper.writeValueAsString(request);
-//        String eventId = "웨디토큰";
-//
-//        mockMvc.perform(put("/api/admin/events/{eventId}/bill-actions/{actionId}", eventId, 1L)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//    }
+    @DisplayName("지출 내역을 생성한다.")
+    @Test
+    void saveAllBillAction() throws Exception {
+        List<Long> members = List.of(1L, 2L);
+        BillSaveRequest request = new BillSaveRequest("뽕족", 10_000L, members);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        String eventId = "쿠키토큰";
+
+        mockMvc.perform(post("/api/admin/events/{eventId}/bills", eventId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .cookie(EVENT_COOKIE))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("title이 비어 있는 경우 지출 내역을 생성할 수 없다.")
+    @Test
+    void saveAllBillAction1() throws Exception {
+        List<Long> members = List.of(1L, 2L);
+        BillSaveRequest request = new BillSaveRequest("", 10_000L, members);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        String eventId = "소하토큰";
+
+        mockMvc.perform(post("/api/admin/events/{eventId}/bills", eventId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("지출 액션을 수정한다.")
+    @Test
+    void updateBillAction() throws Exception {
+        BillUpdateRequest request = new BillUpdateRequest("뽕족", 10_000L);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+        String eventId = "웨디토큰";
+
+        mockMvc.perform(put("/api/admin/events/{eventId}/bills/{billId}", eventId, 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .cookie(EVENT_COOKIE))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 
     @DisplayName("지출 내역을 삭제한다.")
     @Test

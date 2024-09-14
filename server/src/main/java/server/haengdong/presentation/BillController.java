@@ -20,7 +20,7 @@ public class BillController {
     private final BillService billService;
 
     @GetMapping("/api/events/{eventId}/bills")
-    public ResponseEntity<StepsResponse> findActions(@PathVariable("eventId") String token) {
+    public ResponseEntity<StepsResponse> findBills(@PathVariable("eventId") String token) {
         StepsResponse stepsResponse = StepsResponse.of(billService.findSteps(token));
 
         return ResponseEntity.ok(stepsResponse);
@@ -29,9 +29,9 @@ public class BillController {
     @GetMapping("/api/events/{eventId}/bills/{billId}/fixed")
     public ResponseEntity<BillDetailsResponse> findBillDetails(
             @PathVariable("eventId") String token,
-            @PathVariable("actionId") Long actionId
+            @PathVariable("billId") Long billId
     ) {
-        BillDetailsAppResponse appResponse = billService.findBillDetails(token, actionId);
+        BillDetailsAppResponse appResponse = billService.findBillDetails(token, billId);
 
         return ResponseEntity.ok(BillDetailsResponse.of(appResponse));
     }
