@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.BillDetailUpdateAppRequest;
 import server.haengdong.application.request.BillDetailsUpdateAppRequest;
+import server.haengdong.application.response.BillAppResponse;
+import server.haengdong.application.response.MemberAppResponse;
+import server.haengdong.application.response.StepAppResponse;
 import server.haengdong.domain.action.Bill;
 import server.haengdong.domain.action.BillDetail;
 import server.haengdong.domain.action.BillDetailRepository;
@@ -37,6 +40,32 @@ class BillServiceTest extends ServiceTestSupport {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @DisplayName("전체 지출 내역을 조회한다.")
+    @Test
+    void findSteps() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        Member member = new Member(event, "토다리");
+        memberRepository.save(member);
+        Bill bill = Bill.create(event, "행동대장 회식", 100000L, List.of(member));
+        billRepository.save(bill);
+
+        List<StepAppResponse> steps = billService.findSteps(event.getToken());
+
+        assertThat(steps.get(0).bills()).hasSize(1)
+                .extracting(BillAppResponse::id, BillAppResponse::title, BillAppResponse::price,
+                        BillAppResponse::isFixed)
+                .containsExactlyInAnyOrder(
+                        tuple(bill.getId(), bill.getTitle(), bill.getPrice(), bill.isFixed())
+                );
+
+        assertThat(steps.get(0).members()).hasSize(1)
+                .extracting(MemberAppResponse::id, MemberAppResponse::name)
+                .containsExactlyInAnyOrder(
+                        tuple(member.getId(), member.getName())
+                );
+    }
 //
 //    @DisplayName("지출 내역을 생성한다.")
 //    @Test
@@ -227,7 +256,7 @@ class BillServiceTest extends ServiceTestSupport {
         ));
 
         assertThatThrownBy(
-                        () -> billService.updateBillDetails(event1.getToken(), billAction.getId(), request))
+                () -> billService.updateBillDetails(event1.getToken(), billAction.getId(), request))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("지출 총액이 일치하지 않습니다.");
     }
