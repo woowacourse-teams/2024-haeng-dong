@@ -15,7 +15,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import server.haengdong.application.response.LastBillMemberAppResponse;
+import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.domain.action.Member;
@@ -57,9 +57,9 @@ class MemberControllerTest extends ControllerTestSupport {
     void getCurrentMembers() throws Exception {
         Member member1 = MEMBER1;
         Member member2 = MEMBER2;
-        List<LastBillMemberAppResponse> members = List.of(
-                LastBillMemberAppResponse.of(member1),
-                LastBillMemberAppResponse.of(member2)
+        List<MemberAppResponse> members = List.of(
+                MemberAppResponse.of(member1),
+                MemberAppResponse.of(member2)
         );
 
         given(memberService.getCurrentMembers(any())).willReturn(members);

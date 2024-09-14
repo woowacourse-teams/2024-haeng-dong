@@ -16,19 +16,15 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static server.haengdong.support.fixture.Fixture.MEMBER1;
-import static server.haengdong.support.fixture.Fixture.MEMBER2;
-import static server.haengdong.support.fixture.Fixture.MEMBER3;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.JsonFieldType;
 import server.haengdong.application.MemberService;
-import server.haengdong.application.response.LastBillMemberAppResponse;
+import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
-import server.haengdong.domain.action.Member;
 import server.haengdong.presentation.MemberController;
 
 public class MemberControllerDocsTest extends RestDocsSupport {
@@ -89,9 +85,9 @@ public class MemberControllerDocsTest extends RestDocsSupport {
     @DisplayName("현재 참여 인원을 조회합니다.")
     @Test
     void getCurrentMembers() throws Exception {
-        List<LastBillMemberAppResponse> members = List.of(
-                new LastBillMemberAppResponse(1L, "감자"),
-                new LastBillMemberAppResponse(2L, "백호")
+        List<MemberAppResponse> members = List.of(
+                new MemberAppResponse(1L, "감자"),
+                new MemberAppResponse(2L, "백호")
         );
 
         given(memberService.getCurrentMembers(any())).willReturn(members);

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.MemberService;
-import server.haengdong.application.response.LastBillMemberAppResponse;
+import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.presentation.response.CurrentMembersResponse;
 import server.haengdong.presentation.response.MembersResponse;
 
@@ -28,7 +28,7 @@ public class MemberController {
 
     @GetMapping("/api/events/{eventId}/members/current")
     public ResponseEntity<CurrentMembersResponse> getCurrentMembers(@PathVariable("eventId") String token) {
-        List<LastBillMemberAppResponse> currentMembers = memberService.getCurrentMembers(token);
+        List<MemberAppResponse> currentMembers = memberService.getCurrentMembers(token);
 
         return ResponseEntity.ok()
                 .body(CurrentMembersResponse.of(currentMembers));

@@ -10,7 +10,7 @@ import server.haengdong.application.request.MemberSaveAppRequest;
 import server.haengdong.application.request.MemberUpdateAppRequest;
 import server.haengdong.application.request.MembersSaveAppRequest;
 import server.haengdong.application.request.MembersUpdateAppRequest;
-import server.haengdong.application.response.LastBillMemberAppResponse;
+import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.domain.action.Bill;
@@ -47,14 +47,14 @@ public class MemberService {
         return MembersSaveAppResponse.of(savedMembers);
     }
 
-    public List<LastBillMemberAppResponse> getCurrentMembers(String token) {
+    public List<MemberAppResponse> getCurrentMembers(String token) {
         Event event = getEvent(token);
 
         return billRepository.findFirstByEventOrderByIdDesc(event)
                 .map(Bill::getMembers)
                 .orElseGet(() -> memberRepository.findAllByEvent(event))
                 .stream()
-                .map(LastBillMemberAppResponse::of)
+                .map(MemberAppResponse::of)
                 .toList();
     }
 
