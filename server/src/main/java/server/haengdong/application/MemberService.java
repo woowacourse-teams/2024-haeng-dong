@@ -10,8 +10,10 @@ import server.haengdong.application.request.MemberSaveAppRequest;
 import server.haengdong.application.request.MemberUpdateAppRequest;
 import server.haengdong.application.request.MembersSaveAppRequest;
 import server.haengdong.application.request.MembersUpdateAppRequest;
+import server.haengdong.application.response.LastBillMemberAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
+import server.haengdong.domain.action.Bill;
 import server.haengdong.domain.action.BillRepository;
 import server.haengdong.domain.action.Member;
 import server.haengdong.domain.action.MemberRepository;
@@ -43,6 +45,17 @@ public class MemberService {
 
         List<Member> savedMembers = memberRepository.saveAll(members);
         return MembersSaveAppResponse.of(savedMembers);
+    }
+
+    public List<LastBillMemberAppResponse> getLastMembers(String token) {
+        Event event = getEvent(token);
+
+        return billRepository.findFirstByEventOrderByIdDesc(event)
+                .map(Bill::getMembers)
+                .orElseGet(() -> memberRepository.findAllByEvent(event))
+                .stream()
+                .map(LastBillMemberAppResponse::of)
+                .toList();
     }
 
     private void validateMemberSave(List<String> memberNames, Event event) {

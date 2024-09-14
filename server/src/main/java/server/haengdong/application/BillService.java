@@ -174,15 +174,4 @@ public class BillService {
         return billRepository.findById(billId)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BILL_NOT_FOUND));
     }
-
-    public List<LastBillMemberAppResponse> getLastMembers(String token) {
-        Event event = getEvent(token);
-
-        return billRepository.findFirstByEventOrderByIdDesc(event)
-                .map(Bill::getMembers)
-                .orElseGet(() -> memberRepository.findAllByEvent(event))
-                .stream()
-                .map(LastBillMemberAppResponse::of)
-                .toList();
-    }
 }
