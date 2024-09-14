@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import server.haengdong.application.request.BillAppRequest;
 import server.haengdong.application.request.BillDetailUpdateAppRequest;
 import server.haengdong.application.request.BillDetailsUpdateAppRequest;
 import server.haengdong.application.response.BillAppResponse;
@@ -68,34 +69,29 @@ class BillServiceTest extends ServiceTestSupport {
                         tuple(member.getId(), member.getName())
                 );
     }
-//
-//    @DisplayName("지출 내역을 생성한다.")
-//    @Test
-//    void saveBillAction() {
-//        Event event = Fixture.EVENT1;
-//        Event savedEvent = eventRepository.save(event);
-//        Sequence sequence1 = Sequence.createFirst();
-//        Sequence sequence2 = sequence1.next();
-//        MemberAction memberAction1 = new MemberAction(event, sequence1, "백호", MemberActionStatus.IN);
-//        MemberAction memberAction2 = new MemberAction(event, sequence2, "망쵸", MemberActionStatus.IN);
-//        memberActionRepository.saveAll(List.of(memberAction1, memberAction2));
-//
-//        List<BillAppRequest> requests = List.of(
-//                new BillAppRequest("뽕족", 10_000L),
-//                new BillAppRequest("인생맥주", 15_000L)
-//        );
-//
-//        billService.saveAllBillAction(event.getToken(), requests);
-//
-//        List<Bill> actions = billActionRepository.findByEvent(savedEvent);
-//
-//        assertThat(actions).extracting(Bill::getTitle, Bill::getPrice, Bill::getSequence)
-//                .containsExactlyInAnyOrder(
-//                        tuple("뽕족", 10_000L, new Sequence(3L)),
-//                        tuple("인생맥주", 15_000L, new Sequence(4L))
-//                );
-//    }
-//
+
+    @DisplayName("지출 내역을 생성한다.")
+    @Test
+    void saveBillAction() {
+        Event event = Fixture.EVENT1;
+        Event savedEvent = eventRepository.save(event);
+
+        Member member1 = Fixture.MEMBER1;
+        Member member2 = Fixture.MEMBER2;
+        memberRepository.saveAll(List.of(member1, member2));
+        List<Long> memberIds = List.of(member1.getId(), member2.getId());
+        BillAppRequest billAppRequest = new BillAppRequest("뽕족", 10_000L, memberIds);
+
+        billService.saveBill(event.getToken(), billAppRequest);
+
+        List<Bill> actions = billRepository.findByEvent(savedEvent);
+
+        assertThat(actions).extracting(Bill::getTitle, Bill::getPrice)
+                .containsExactlyInAnyOrder(
+                        tuple("뽕족", 10_000L)
+                );
+    }
+
 //    @DisplayName("지출 내역을 생성하면 지출 상세 내역이 생성된다.")
 //    @Test
 //    void saveBillActionTest1() {
