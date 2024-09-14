@@ -1,6 +1,5 @@
 package server.haengdong.presentation;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -63,16 +62,16 @@ class MemberControllerTest extends ControllerTestSupport {
                 LastBillMemberAppResponse.of(member2)
         );
 
-        given(memberService.getLastMembers(any())).willReturn(members);
+        given(memberService.getCurrentMembers(any())).willReturn(members);
 
-        mockMvc.perform(get("/api/events/{eventId}/members/current", "망쵸토큰")
+        mockMvc.perform(get("/api/events/{eventId}/members/current", "TOKEN")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
-                .andExpect(jsonPath("$.members[0].id").value(equalTo(member1.getId())))
-                .andExpect(jsonPath("$.members[0].name").value(equalTo(member1.getName())))
-                .andExpect(jsonPath("$.members[1].id").value(equalTo(member2.getId())))
-                .andExpect(jsonPath("$.members[1].name").value(equalTo(member2.getName())));
+                .andExpect(jsonPath("$.members[0].id").value(member1.getId()))
+                .andExpect(jsonPath("$.members[0].name").value(member1.getName()))
+                .andExpect(jsonPath("$.members[1].id").value(member2.getId()))
+                .andExpect(jsonPath("$.members[1].name").value(member2.getName()));
     }
 }

@@ -47,7 +47,7 @@ public class MemberService {
         return MembersSaveAppResponse.of(savedMembers);
     }
 
-    public List<LastBillMemberAppResponse> getLastMembers(String token) {
+    public List<LastBillMemberAppResponse> getCurrentMembers(String token) {
         Event event = getEvent(token);
 
         return billRepository.findFirstByEventOrderByIdDesc(event)

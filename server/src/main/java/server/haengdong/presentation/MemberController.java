@@ -28,7 +28,7 @@ public class MemberController {
 
     @GetMapping("/api/events/{eventId}/members/current")
     public ResponseEntity<CurrentMembersResponse> getCurrentMembers(@PathVariable("eventId") String token) {
-        List<LastBillMemberAppResponse> currentMembers = memberService.getLastMembers(token);
+        List<LastBillMemberAppResponse> currentMembers = memberService.getCurrentMembers(token);
 
         return ResponseEntity.ok()
                 .body(CurrentMembersResponse.of(currentMembers));
