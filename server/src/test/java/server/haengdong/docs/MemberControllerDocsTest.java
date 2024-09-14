@@ -43,13 +43,10 @@ public class MemberControllerDocsTest extends RestDocsSupport {
     @DisplayName("행사에 참여한 전체 인원을 조회한다.")
     @Test
     void findAllMembersTest() throws Exception {
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
-        Member member3 = MEMBER3;
         List<MemberDepositAppResponse> members = List.of(
-                MemberDepositAppResponse.of(member1),
-                MemberDepositAppResponse.of(member2),
-                MemberDepositAppResponse.of(member3)
+                new MemberDepositAppResponse(1L, "감자", false),
+                new MemberDepositAppResponse(2L, "백호", true),
+                new MemberDepositAppResponse(3L, "이상", true)
         );
 
         MembersDepositAppResponse memberAppResponse = new MembersDepositAppResponse(members);
@@ -59,15 +56,15 @@ public class MemberControllerDocsTest extends RestDocsSupport {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
-//                .andExpect(jsonPath("$.members[0].id").value(member1.getId()))
-                .andExpect(jsonPath("$.members[0].name").value(member1.getName()))
-                .andExpect(jsonPath("$.members[0].isDeposited").value(member1.isDeposited()))
-//                .andExpect(jsonPath("$.members[1].id").value(member2.getId()))
-                .andExpect(jsonPath("$.members[1].name").value(member2.getName()))
-                .andExpect(jsonPath("$.members[1].isDeposited").value(member2.isDeposited()))
-//                .andExpect(jsonPath("$.members[2].id").value(member3.getId()))
-                .andExpect(jsonPath("$.members[2].name").value(member3.getName()))
-                .andExpect(jsonPath("$.members[2].isDeposited").value(member3.isDeposited()))
+                .andExpect(jsonPath("$.members[0].id").value(1L))
+                .andExpect(jsonPath("$.members[0].name").value("감자"))
+                .andExpect(jsonPath("$.members[0].isDeposited").value(false))
+                .andExpect(jsonPath("$.members[1].id").value(2L))
+                .andExpect(jsonPath("$.members[1].name").value("백호"))
+                .andExpect(jsonPath("$.members[1].isDeposited").value(true))
+                .andExpect(jsonPath("$.members[2].id").value(3L))
+                .andExpect(jsonPath("$.members[2].name").value("이상"))
+                .andExpect(jsonPath("$.members[2].isDeposited").value(true))
                 .andDo(
                         document("findAllMembers",
                                  preprocessRequest(prettyPrint()),
@@ -78,7 +75,7 @@ public class MemberControllerDocsTest extends RestDocsSupport {
                                  responseFields(
                                          fieldWithPath("members").type(JsonFieldType.ARRAY)
                                                  .description("행사에 참여 중인 전체 멤버 목록"),
-                                         fieldWithPath("members[0].id").type(JsonFieldType.NULL)
+                                         fieldWithPath("members[0].id").type(JsonFieldType.NUMBER)
                                                  .description("멤버 ID"),
                                          fieldWithPath("members[0].name").type(JsonFieldType.STRING)
                                                  .description("멤버 이름"),
@@ -92,11 +89,9 @@ public class MemberControllerDocsTest extends RestDocsSupport {
     @DisplayName("현재 참여 인원을 조회합니다.")
     @Test
     void getCurrentMembers() throws Exception {
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
         List<LastBillMemberAppResponse> members = List.of(
-                LastBillMemberAppResponse.of(member1),
-                LastBillMemberAppResponse.of(member2)
+                new LastBillMemberAppResponse(1L, "감자"),
+                new LastBillMemberAppResponse(2L, "백호")
         );
 
         given(memberService.getCurrentMembers(any())).willReturn(members);
@@ -104,10 +99,10 @@ public class MemberControllerDocsTest extends RestDocsSupport {
         mockMvc.perform(get("/api/events/{eventId}/members/current", "TOKEN"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
-//                .andExpect(jsonPath("$.members[0].id").value(member1.getId()))
-                .andExpect(jsonPath("$.members[0].name").value(member1.getName()))
-//                .andExpect(jsonPath("$.members[1].id").value(member2.getId()))
-                .andExpect(jsonPath("$.members[1].name").value(member2.getName()))
+                .andExpect(jsonPath("$.members[0].id").value(1L))
+                .andExpect(jsonPath("$.members[0].name").value("감자"))
+                .andExpect(jsonPath("$.members[1].id").value(2L))
+                .andExpect(jsonPath("$.members[1].name").value("백호"))
                 .andDo(
                         document("getCurrentMembers",
                                  preprocessRequest(prettyPrint()),
@@ -118,7 +113,7 @@ public class MemberControllerDocsTest extends RestDocsSupport {
                                  responseFields(
                                          fieldWithPath("members").type(JsonFieldType.ARRAY)
                                                  .description("현재 행사에 참여 중인 멤버 목록"),
-                                         fieldWithPath("members[0].id").type(JsonFieldType.NULL)
+                                         fieldWithPath("members[0].id").type(JsonFieldType.NUMBER)
                                                  .description("멤버 ID"),
                                          fieldWithPath("members[0].name").type(JsonFieldType.STRING)
                                                  .description("멤버 이름")
