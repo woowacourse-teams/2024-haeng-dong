@@ -22,6 +22,8 @@ public class Event {
     public static final int MAX_NAME_LENGTH = 20;
     public static final int MIN_ACCOUNT_NUMBER_LENGTH = 8;
     public static final int MAX_ACCOUNT_NUMBER_LENGTH = 30;
+    public static final int MIN_BANK_NAME_LENGTH = 1;
+    public static final int MAX_BANK_NAME_LENGTH = 10;
     private static final String SPACES = "  ";
 
     @Id
@@ -72,9 +74,22 @@ public class Event {
         return !password.matches(rawPassword);
     }
 
-    public void changeAccount(String account) {
-        validateAccountNumber(account);
-        this.account = account;
+    public void rename(String name) {
+        validateName(name);
+        this.name = name;
+    }
+
+    public void changeAccount(String bankName, String accountNumber) {
+        validateBankName(bankName);
+        validateAccountNumber(accountNumber);
+        this.account = bankName + " " + accountNumber;
+    }
+
+    private void validateBankName(String bankName) {
+        int bankNameLength = bankName.trim().length();
+        if (bankNameLength < MIN_BANK_NAME_LENGTH || MAX_BANK_NAME_LENGTH < bankNameLength) {
+            throw new HaengdongException(HaengdongErrorCode.BANK_NAME_LENGTH_INVALID);
+        }
     }
 
     private void validateAccountNumber(String accountNumber) {
