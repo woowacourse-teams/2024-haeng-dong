@@ -70,13 +70,13 @@ class EventServiceTest extends ServiceTestSupport {
         Event event = new Event("행동대장 비대위", "1234", "token");
         eventRepository.save(event);
 
-        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest("새로운 행사 이름", "망쵸뱅크", "12345678");
+        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest("새로운 행사 이름", "토스뱅크", "12345678");
         eventService.updateEvent(event.getToken(), eventUpdateAppRequest);
 
         Event updateEvent = eventRepository.findByToken(event.getToken()).get();
         assertAll(
                 () -> assertThat(updateEvent.getName()).isEqualTo("새로운 행사 이름"),
-                () -> assertThat(updateEvent.getAccount()).isEqualTo("망쵸뱅크 12345678")
+                () -> assertThat(updateEvent.getAccount()).isEqualTo("토스뱅크 12345678")
         );
     }
 
@@ -86,13 +86,13 @@ class EventServiceTest extends ServiceTestSupport {
         Event event = new Event("행동대장 비대위", "1234", "token");
         eventRepository.save(event);
 
-        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest(null, "망쵸뱅크", "12345678");
+        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest(null, "토스뱅크", "12345678");
         eventService.updateEvent(event.getToken(), eventUpdateAppRequest);
 
         Event updateEvent = eventRepository.findByToken(event.getToken()).get();
         assertAll(
                 () -> assertThat(updateEvent.getName()).isEqualTo("행동대장 비대위"),
-                () -> assertThat(updateEvent.getAccount()).isEqualTo("망쵸뱅크 12345678")
+                () -> assertThat(updateEvent.getAccount()).isEqualTo("토스뱅크 12345678")
         );
     }
 

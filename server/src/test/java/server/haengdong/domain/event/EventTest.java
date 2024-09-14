@@ -79,9 +79,9 @@ class EventTest {
     void changeAccountTest() {
         Event event = new Event("이름", "1234", "TEST_TOKEN");
 
-        event.changeAccount("행대뱅크", "12345678");
+        event.changeAccount("토스뱅크", "12345678");
 
-        assertThat(event.getAccount()).isEqualTo("행대뱅크 12345678");
+        assertThat(event.getAccount()).isEqualTo("토스뱅크 12345678");
     }
 
     @DisplayName("계좌 정보에 은행 이름과 계좌 번호가 모두 포함되지 않으면 예외가 발생한다.")
@@ -93,9 +93,9 @@ class EventTest {
                 .isInstanceOf(HaengdongException.class);
     }
 
-    @DisplayName("은행 이름이 1자 이상 10자 이하면 예외가 발생하지 않는다.")
+    @DisplayName("지원하는 은행이면 예외가 발생하지 않는다.")
     @ParameterizedTest
-    @ValueSource(strings = {"1", "1234567890"})
+    @ValueSource(strings = {"토스뱅크", "KB국민은행"})
     void changeAccountTest2(String bankName) {
         Event event = new Event("이름", "1234", "TEST_TOKEN");
 
@@ -103,9 +103,9 @@ class EventTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("은행 이름이 1자 미만 10자 초과면 예외가 발생한다.")
+    @DisplayName("지원하지 않는 은행이면 예외가 발생한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"", "  ", "12345678901"})
+    @ValueSource(strings = {"행대뱅크", "토스 뱅크", "망쵸뱅크", "KB 국민은행"})
     void changeAccountTest3(String bankName) {
         Event event = new Event("이름", "1234", "TEST_TOKEN");
 
@@ -119,7 +119,7 @@ class EventTest {
     void changeAccountTest4(String accountNumber) {
         Event event = new Event("이름", "1234", "TEST_TOKEN");
 
-        assertThatCode(() -> event.changeAccount("행대뱅크", accountNumber))
+        assertThatCode(() -> event.changeAccount("토스뱅크", accountNumber))
                 .doesNotThrowAnyException();
     }
 
@@ -129,7 +129,7 @@ class EventTest {
     void changeAccountTest5(String accountNumber) {
         Event event = new Event("이름", "1234", "TEST_TOKEN");
 
-        assertThatThrownBy(() -> event.changeAccount("행대뱅크", accountNumber))
+        assertThatThrownBy(() -> event.changeAccount("토스뱅크", accountNumber))
                 .isInstanceOf(HaengdongException.class);
     }
 }

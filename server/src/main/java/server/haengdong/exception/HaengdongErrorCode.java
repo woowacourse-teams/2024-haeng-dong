@@ -3,6 +3,7 @@ package server.haengdong.exception;
 import lombok.Getter;
 import server.haengdong.domain.action.Bill;
 import server.haengdong.domain.action.Member;
+import server.haengdong.domain.event.Bank;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.Password;
 
@@ -17,9 +18,8 @@ public enum HaengdongErrorCode {
             Event.MAX_NAME_LENGTH)),
     EVENT_NAME_CONSECUTIVE_SPACES("행사 이름에는 공백 문자가 연속될 수 없습니다."),
     EVENT_PASSWORD_FORMAT_INVALID(String.format("비밀번호는 %d자리 숫자만 가능합니다.", Password.PASSWORD_LENGTH)),
-    BANK_NAME_LENGTH_INVALID(String.format("은행 이름은 %d자 이상 %d자 이하만 입력 가능합니다.",
-            Event.MIN_BANK_NAME_LENGTH,
-            Event.MAX_BANK_NAME_LENGTH)),
+    BANK_NAME_INVALID(String.format("지원하지 않는 은행입니다. 지원하는 은행 목록: %s",
+            Bank.getSupportedBanks())),
     ACCOUNT_LENGTH_INVALID(String.format("계좌번호는 %d자 이상 %d자 이하만 입력 가능합니다.",
             Event.MIN_ACCOUNT_NUMBER_LENGTH,
             Event.MAX_ACCOUNT_NUMBER_LENGTH)),
