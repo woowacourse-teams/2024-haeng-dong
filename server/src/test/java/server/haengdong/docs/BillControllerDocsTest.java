@@ -1,5 +1,6 @@
 package server.haengdong.docs;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -19,6 +20,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import server.haengdong.application.BillService;
 import server.haengdong.application.response.BillAppResponse;
+import server.haengdong.application.response.BillDetailAppResponse;
+import server.haengdong.application.response.BillDetailsAppResponse;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.StepAppResponse;
 import server.haengdong.domain.action.Bill;
@@ -64,6 +67,31 @@ public class BillControllerDocsTest extends RestDocsSupport {
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID")
+                                )
+                        )
+                );
+    }
+
+    @DisplayName("참여자별 지출 금액을 조회한다.")
+    @Test
+    void findBillActionDetails() throws Exception {
+        BillDetailsAppResponse appResponse = new BillDetailsAppResponse(
+                List.of(new BillDetailAppResponse(1L, "토다리", 1000L, false)));
+        given(billService.findBillDetails(anyString(), anyLong())).willReturn(appResponse);
+
+        mockMvc.perform(get("/api/events/{eventId}/bills/{billId}/fixed", "TOKEN", 1L))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.members").isArray())
+                .andExpect(jsonPath("$.members[0].id").value(1L))
+                .andExpect(jsonPath("$.members[0].memberName").value("토다리"))
+                .andExpect(jsonPath("$.members[0].price").value(1000L))
+                .andExpect(jsonPath("$.members[0].isFixed").value(false))
+                .andDo(document("findBillActionDetails",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID"),
+                                        parameterWithName("billId").description("지출 ID")
                                 )
                         )
                 );

@@ -129,7 +129,7 @@ public class Bill {
         resetBillDetails();
     }
 
-    private void addDetail(BillDetail billDetail) {
+    public void addDetail(BillDetail billDetail) {
         this.billDetails.add(billDetail);
         billDetail.setBill(this);
     }

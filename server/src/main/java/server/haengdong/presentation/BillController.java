@@ -37,9 +37,9 @@ public class BillController {
     @GetMapping("/api/events/{eventId}/bills/{billId}/fixed")
     public ResponseEntity<BillDetailsResponse> findBillDetails(
             @PathVariable("eventId") String token,
-            @PathVariable("actionId") Long actionId
+            @PathVariable("billId") Long billId
     ) {
-        BillDetailsAppResponse appResponse = billService.findBillDetails(token, actionId);
+        BillDetailsAppResponse appResponse = billService.findBillDetails(token, billId);
 
         return ResponseEntity.ok(BillDetailsResponse.of(appResponse));
     }

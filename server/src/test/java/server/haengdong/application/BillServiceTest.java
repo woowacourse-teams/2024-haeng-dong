@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.BillDetailUpdateAppRequest;
 import server.haengdong.application.request.BillDetailsUpdateAppRequest;
 import server.haengdong.application.response.BillAppResponse;
+import server.haengdong.application.response.BillDetailAppResponse;
+import server.haengdong.application.response.BillDetailsAppResponse;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.StepAppResponse;
 import server.haengdong.domain.action.Bill;
@@ -290,27 +292,28 @@ class BillServiceTest extends ServiceTestSupport {
                         tuple(billDetails.get(1).getId(), 7000L)
                 );
     }
-//
-//    @DisplayName("참여자별 지출 금액을 조회한다.")
-//    @Test
-//    void findBillDetailsTest() {
-//        Event event1 = Fixture.EVENT1;
-//        eventRepository.save(event1);
-//        Sequence sequence = Sequence.createFirst();
-//        Bill billAction = new Bill(event1, sequence, "뽕족", 10000L);
-//        billActionRepository.save(billAction);
-//        BillDetail billActionDetail1 = new BillDetail(billAction, "토다리", 6000L, true);
-//        BillDetail billActionDetail2 = new BillDetail(billAction, "쿠키", 4000L, true);
-//        billActionDetailRepository.saveAll(List.of(billActionDetail1, billActionDetail2));
-//
-//        BillDetailsAppResponse response = billDetailService.findBillDetails(
-//                event1.getToken(), billAction.getId());
-//
-//        assertThat(response.billDetails()).hasSize(2)
-//                .extracting(BillDetailAppResponse::memberName, BillDetailAppResponse::price)
-//                .containsExactly(
-//                        tuple("토다리", 6000L),
-//                        tuple("쿠키", 4000L)
-//                );
-//    }
+
+    @DisplayName("참여자별 지출 금액을 조회한다.")
+    @Test
+    void findBillDetailsTest() {
+        Event event1 = Fixture.EVENT1;
+        eventRepository.save(event1);
+
+        Member member1 = Fixture.MEMBER1;
+        Member member2 = Fixture.MEMBER2;
+        List<Member> members = List.of(member1, member2);
+        memberRepository.saveAll(members);
+
+        Bill bill = Bill.create(event1, "뽕족", 10000L, members);
+        billRepository.save(bill);
+
+        BillDetailsAppResponse response = billService.findBillDetails(event1.getToken(), bill.getId());
+
+        assertThat(response.billDetails()).hasSize(2)
+                .extracting(BillDetailAppResponse::memberName, BillDetailAppResponse::price)
+                .containsExactly(
+                        tuple("토다리", 5000L),
+                        tuple("쿠키", 5000L)
+                );
+    }
 }
