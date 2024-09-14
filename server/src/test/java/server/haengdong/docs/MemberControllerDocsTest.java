@@ -1,5 +1,6 @@
 package server.haengdong.docs;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -24,6 +25,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.JsonFieldType;
 import server.haengdong.application.MemberService;
+import server.haengdong.application.response.LastBillMemberAppResponse;
 import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.domain.action.Member;
@@ -57,13 +59,13 @@ public class MemberControllerDocsTest extends RestDocsSupport {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
-//                .andExpect(jsonPath("$.members[0].id").value("null"))
+//                .andExpect(jsonPath("$.members[0].id").value(member1.getId()))
                 .andExpect(jsonPath("$.members[0].name").value(member1.getName()))
                 .andExpect(jsonPath("$.members[0].isDeposited").value(member1.isDeposited()))
-//                .andExpect(jsonPath("$.members[1].id").value("null"))
+//                .andExpect(jsonPath("$.members[1].id").value(member2.getId()))
                 .andExpect(jsonPath("$.members[1].name").value(member2.getName()))
                 .andExpect(jsonPath("$.members[1].isDeposited").value(member2.isDeposited()))
-//                .andExpect(jsonPath("$.members[2].id").value("null"))
+//                .andExpect(jsonPath("$.members[2].id").value(member3.getId()))
                 .andExpect(jsonPath("$.members[2].name").value(member3.getName()))
                 .andExpect(jsonPath("$.members[2].isDeposited").value(member3.isDeposited()))
                 .andDo(
@@ -87,32 +89,41 @@ public class MemberControllerDocsTest extends RestDocsSupport {
                 );
     }
 
-//    @DisplayName("현재 참여 인원을 조회합니다.")
-//    @Test
-//    void getCurrentMembers() throws Exception {
-//        List<LastBillMemberAppResponse> lastBillMemberAppRespons = List.of(
-//                new LastBillMemberAppResponse("소하"), new LastBillMemberAppResponse("토다리"));
-//
-//        given(memberService.getCurrentMembers(any())).willReturn(lastBillMemberAppRespons);
-//
-//        mockMvc.perform(get("/api/events/{eventId}/billDetails/current", "망쵸토큰")
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.memberNames[0]").value(equalTo("소하")))
-//                .andExpect(jsonPath("$.memberNames[1]").value(equalTo("토다리")))
-//                .andDo(
-//                        document("getCurrentMembers",
-//                                preprocessRequest(prettyPrint()),
-//                                preprocessResponse(prettyPrint()),
-//                                pathParameters(
-//                                        parameterWithName("eventId").description("행사 ID")
-//                                ),
-//                                responseFields(
-//                                        fieldWithPath("memberNames").type(JsonFieldType.ARRAY)
-//                                                .description("현재 탈주 가능한 참여 인원 이름 목록")
-//                                )
-//                        )
-//                );
-//    }
+    @DisplayName("현재 참여 인원을 조회합니다.")
+    @Test
+    void getCurrentMembers() throws Exception {
+        Member member1 = MEMBER1;
+        Member member2 = MEMBER2;
+        List<LastBillMemberAppResponse> members = List.of(
+                LastBillMemberAppResponse.of(member1),
+                LastBillMemberAppResponse.of(member2)
+        );
+
+        given(memberService.getCurrentMembers(any())).willReturn(members);
+
+        mockMvc.perform(get("/api/events/{eventId}/members/current", "TOKEN"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.members").isArray())
+//                .andExpect(jsonPath("$.members[0].id").value(member1.getId()))
+                .andExpect(jsonPath("$.members[0].name").value(member1.getName()))
+//                .andExpect(jsonPath("$.members[1].id").value(member2.getId()))
+                .andExpect(jsonPath("$.members[1].name").value(member2.getName()))
+                .andDo(
+                        document("getCurrentMembers",
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 responseFields(
+                                         fieldWithPath("members").type(JsonFieldType.ARRAY)
+                                                 .description("현재 행사에 참여 중인 멤버 목록"),
+                                         fieldWithPath("members[0].id").type(JsonFieldType.NULL)
+                                                 .description("멤버 ID"),
+                                         fieldWithPath("members[0].name").type(JsonFieldType.STRING)
+                                                 .description("멤버 이름")
+                                 )
+                        )
+                );
+    }
 }

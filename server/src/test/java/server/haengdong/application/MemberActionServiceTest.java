@@ -74,12 +74,6 @@
 //                .isInstanceOf(HaengdongException.class);
 //    }
 //
-//    @DisplayName("이벤트가 없으면 현재 참여 인원을 조회할 수 없다.")
-//    @Test
-//    void getCurrentMembers() {
-//        assertThatThrownBy(() -> memberActionService.getCurrentMembers("token"))
-//                .isInstanceOf(HaengdongException.class);
-//    }
 //
 //    @DisplayName("행사의 전체 참여자 중에서 특정 참여자의 맴버 액션을 전부 삭제한다.")
 //    @Test
