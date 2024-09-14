@@ -1,10 +1,9 @@
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
-import isMobileDevice from '@utils/isMobileDevice';
 
 import useRequestGetEventName from './queries/useRequestGetEventName';
 
-const useShareEvent = () => {
+const useShareEvent = (isMobile: boolean) => {
   const {data} = useRequestGetEventName();
   const eventName = data?.eventName ?? '';
 
@@ -16,8 +15,6 @@ const useShareEvent = () => {
     text: '아래 링크에 접속해서 정산 내역을 확인해 주세요!',
     url,
   };
-
-  const isMobile = isMobileDevice();
 
   // 모바일이 아닌 기기는 단순 텍스트 복사
   // 모바일 기기에서는 카카오톡 공유를 사용

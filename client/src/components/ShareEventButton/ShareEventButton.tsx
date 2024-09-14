@@ -12,7 +12,7 @@ const ShareEventButton = () => {
   const {showToast} = useToast();
 
   const isMobile = isMobileDevice();
-  const {shareText, onShareButtonClick} = useShareEvent();
+  const {shareText, onShareButtonClick} = useShareEvent(isMobile);
 
   return isMobile ? (
     <Button size="small" variants="secondary" onClick={onShareButtonClick}>
