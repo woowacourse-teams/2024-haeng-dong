@@ -42,7 +42,7 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
 
     @DisplayName("지출 내역을 생성한다.")
     @Test
-    void saveAllBillAction() throws Exception {
+    void saveAllBill() throws Exception {
         List<Long> members = List.of(1L, 2L);
         BillSaveRequest request = new BillSaveRequest("뽕족", 10_000L, members);
 
@@ -72,9 +72,9 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
                 ));
     }
 
-    @DisplayName("지출 액션을 수정한다.")
+    @DisplayName("지출을 수정한다.")
     @Test
-    void updateBillAction() throws Exception {
+    void updateBill() throws Exception {
         BillUpdateRequest request = new BillUpdateRequest("뽕족", 10_000L);
 
         String requestBody = objectMapper.writeValueAsString(request);
@@ -86,32 +86,32 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
                         .cookie(EVENT_COOKIE))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(document("updateBillAction",
+                .andDo(document("updateBill",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         pathParameters(
                                 parameterWithName("eventId").description("행사 ID"),
-                                parameterWithName("billId").description("지출 액션 ID")
+                                parameterWithName("billId").description("지출 ID")
                         ),
                         requestCookies(
                                 cookieWithName("eventToken").description("행사 관리자 토큰")
                         ),
                         requestFields(
-                                fieldWithPath("title").description("수정할 지출 액션의 제목"),
-                                fieldWithPath("price").description("수정할 지출 액션의 금액")
+                                fieldWithPath("title").description("수정할 지출 제목"),
+                                fieldWithPath("price").description("수정할 지출 금액")
                         )
                 ));
     }
 
     @DisplayName("참여자별 지출 금액을 수정한다.")
     @Test
-    void updateBillActionDetailsTest() throws Exception {
-        List<BillDetailUpdateRequest> billActionDetailUpdateRequests = List.of(
+    void updateBillDetailsTest() throws Exception {
+        List<BillDetailUpdateRequest> billDetailUpdateRequests = List.of(
                 new BillDetailUpdateRequest(1L, 10000L, true),
                 new BillDetailUpdateRequest(2L, 20000L, true)
         );
         BillDetailsUpdateRequest request = new BillDetailsUpdateRequest(
-                billActionDetailUpdateRequests);
+                billDetailUpdateRequests);
 
         String json = objectMapper.writeValueAsString(request);
 
@@ -148,7 +148,7 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
 
     @DisplayName("지출 내역을 삭제한다.")
     @Test
-    void deleteBillAction() throws Exception {
+    void deleteBill() throws Exception {
         String eventId = "토다리토큰";
 
         mockMvc.perform(delete("/api/admin/events/{eventId}/bills/{billId}", eventId, 1)

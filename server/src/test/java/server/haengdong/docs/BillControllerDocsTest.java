@@ -9,6 +9,8 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -92,6 +94,12 @@ public class BillControllerDocsTest extends RestDocsSupport {
                                 pathParameters(
                                         parameterWithName("eventId").description("행사 ID"),
                                         parameterWithName("billId").description("지출 ID")
+                                ), responseFields(
+                                        fieldWithPath("members").description("참여자 목록"),
+                                        fieldWithPath("members[].id").description("참여자 ID"),
+                                        fieldWithPath("members[].memberName").description("참여자 이름"),
+                                        fieldWithPath("members[].price").description("참여자별 지출 금액"),
+                                        fieldWithPath("members[].isFixed").description("지출 수정 여부")
                                 )
                         )
                 );

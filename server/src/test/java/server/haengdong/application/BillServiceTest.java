@@ -137,7 +137,7 @@ class BillServiceTest extends ServiceTestSupport {
                 .isInstanceOf(HaengdongException.class);
     }
 
-    @DisplayName("지출 액션을 수정한다.")
+    @DisplayName("지출을 수정한다.")
     @Test
     void updateBillAction() {
         Event event = Fixture.EVENT1;
@@ -159,7 +159,7 @@ class BillServiceTest extends ServiceTestSupport {
         );
     }
 
-    @DisplayName("행사에 속하지 않은 지출 액션은 수정할 수 없다.")
+    @DisplayName("행사에 속하지 않은 지출은 수정할 수 없다.")
     @Test
     void updateBillAction1() {
         Event event1 = Fixture.EVENT1;

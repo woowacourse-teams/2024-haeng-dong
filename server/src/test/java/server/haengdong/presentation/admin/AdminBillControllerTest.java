@@ -50,7 +50,7 @@ class AdminBillControllerTest extends ControllerTestSupport {
         String requestBody = objectMapper.writeValueAsString(request);
         String eventId = "소하토큰";
 
-        mockMvc.perform(post("/api/admin/events/{eventId}/bill-actions", eventId)
+        mockMvc.perform(post("/api/admin/events/{eventId}/bills", eventId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
