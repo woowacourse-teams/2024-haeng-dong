@@ -8,16 +8,28 @@ import FetchError from '../errors/FetchError';
 
 export type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
-type Body = ReadableStream | XMLHttpRequestBodyInit;
+export type ObjectQueryParams = Record<string, string | number | boolean>;
+
+type ErrorInfo = {
+  errorCode: string;
+  message: string;
+};
+
+/**
+ * fetch의 2번째 인자로 들어가는 데이터의 타입은 RequestInit으로 기본적으로 제공됩니다.
+ * 다만 이 RequestInit의 타입이 method가 optional이라서 이를 반드시 받도록하기 위해 RequestInitWithMethod라는 타입으로 확장하게 되었습니다.
+ */
+type RequestInitWithMethod = Omit<RequestInit, 'method'> & {method: Method};
+
 type HeadersType = [string, string][] | Record<string, string> | Headers;
 
-export type ObjectQueryParams = Record<string, string | number | boolean>;
+export type Body = BodyInit | object | null;
 
 type RequestProps = {
   baseUrl?: string;
   endpoint: string;
   headers?: HeadersType;
-  body?: Body | object | null;
+  body?: Body;
   queryParams?: ObjectQueryParams;
 };
 
@@ -25,16 +37,11 @@ type FetcherProps = RequestProps & {
   method: Method;
 };
 
-type Options = {
-  method: Method;
-  headers: HeadersType;
-  body?: Body | null;
-};
+type RequestMethodProps = Omit<RequestProps, 'method'>;
 
-type ErrorHandlerProps = {
+type FetchType = {
   url: string;
-  options: Options;
-  body: string;
+  requestInit: RequestInitWithMethod;
 };
 
 const API_BASE_URL = process.env.API_BASE_URL ?? '';
