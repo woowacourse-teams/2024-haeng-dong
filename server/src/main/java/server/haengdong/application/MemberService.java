@@ -62,7 +62,7 @@ public class MemberService {
     }
 
     private void validateMemberSave(List<String> memberNames, Event event) {
-        if (memberNames.size() != Set.copyOf(memberNames).size()) {
+        if (memberNamesDuplicated(memberNames)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE,
                     "중복된 이름이 존재합니다. 입력된 이름: " + memberNames);
         }
@@ -83,7 +83,7 @@ public class MemberService {
     @Transactional
     public void updateMembers(String token, MembersUpdateAppRequest request) {
         Event event = getEvent(token);
-        validateUpdateMemberName(request);
+        validateMemberUpdate(request);
 
         List<Member> updatedMembers = request.members().stream()
                 .map(memberRequest -> memberRequest.toMember(event))
@@ -100,7 +100,7 @@ public class MemberService {
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
     }
 
-    private void validateUpdateMemberName(MembersUpdateAppRequest request) {
+    private void validateMemberUpdate(MembersUpdateAppRequest request) {
         validateChangedNameUnique(request.members());
         validateMemberUnique(request.members());
     }
@@ -108,11 +108,14 @@ public class MemberService {
     private void validateChangedNameUnique(List<MemberUpdateAppRequest> members) {
         List<String> memberNames = members.stream()
                 .map(MemberUpdateAppRequest::name)
-                .distinct()
                 .toList();
-        if (members.size() != memberNames.size()) {
+        if (memberNamesDuplicated(memberNames)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
         }
+    }
+
+    private boolean memberNamesDuplicated(List<String> memberNames) {
+        return memberNames.size() != Set.copyOf(memberNames).size();
     }
 
     private void validateMemberUnique(List<MemberUpdateAppRequest> members) {
