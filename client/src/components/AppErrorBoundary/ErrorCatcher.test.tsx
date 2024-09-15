@@ -11,7 +11,7 @@ import {HDesignProvider} from '@HDesign/index';
 
 import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
 
-import UnhandledErrorBoundary from '../../UnhandledErrorBoundary';
+import UnPredictableErrorBoundary from '../../UnPredictableErrorBoundary';
 
 import ErrorCatcher from './ErrorCatcher';
 
@@ -23,13 +23,13 @@ const TestComponent = ({triggerError}: {triggerError: () => void}) => {
 const setup = (ui: ReactNode) =>
   render(
     <HDesignProvider>
-      <UnhandledErrorBoundary>
+      <UnPredictableErrorBoundary>
         <ToastProvider>
           <ErrorCatcher>
             <MemoryRouter>{ui}</MemoryRouter>
           </ErrorCatcher>
         </ToastProvider>
-      </UnhandledErrorBoundary>
+      </UnPredictableErrorBoundary>
     </HDesignProvider>,
   );
 
