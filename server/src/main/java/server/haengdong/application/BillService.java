@@ -18,6 +18,7 @@ import server.haengdong.domain.member.Member;
 import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.domain.step.Steps;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
@@ -55,32 +56,33 @@ public class BillService {
     }
 
     private List<StepAppResponse> createStepAppResponses(List<Bill> bills) {
-        return divideByMembers(bills).stream()
+        Steps steps = Steps.of(bills);
+        return steps.getSteps().stream()
                 .map(StepAppResponse::of)
                 .toList();
     }
 
-    private static List<List<Bill>> divideByMembers(List<Bill> bills) {
-        List<List<Bill>> split = new ArrayList<>();
-        for (Bill bill : bills) {
-            if (split.isEmpty()) {
-                List<Bill> temp = new ArrayList<>();
-                temp.add(bill);
-                split.add(temp);
-                continue;
-            }
-            List<Bill> bills1 = split.get(split.size() - 1);
-            Bill find = bills1.get(0);
-            if (find.isSameMembers(bill)) {
-                bills1.add(bill);
-            } else {
-                List<Bill> temp = new ArrayList<>();
-                temp.add(bill);
-                split.add(temp);
-            }
-        }
-        return split;
-    }
+//    private static List<List<Bill>> divideByMembers(List<Bill> bills) {
+//        List<List<Bill>> split = new ArrayList<>();
+//        for (Bill bill : bills) {
+//            if (split.isEmpty()) {
+//                List<Bill> temp = new ArrayList<>();
+//                temp.add(bill);
+//                split.add(temp);
+//                continue;
+//            }
+//            List<Bill> bills1 = split.get(split.size() - 1);
+//            Bill find = bills1.get(0);
+//            if (find.isSameMembers(bill)) {
+//                bills1.add(bill);
+//            } else {
+//                List<Bill> temp = new ArrayList<>();
+//                temp.add(bill);
+//                split.add(temp);
+//            }
+//        }
+//        return split;
+//    }
 
     @Transactional
     public void updateBill(String token, Long billId, BillUpdateAppRequest request) {

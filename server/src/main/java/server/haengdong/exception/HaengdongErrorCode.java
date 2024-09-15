@@ -40,6 +40,8 @@ public enum HaengdongErrorCode {
     BILL_DETAIL_NOT_FOUND("존재하지 않는 참여자 지출입니다."),
     BILL_PRICE_NOT_MATCHED("지출 총액이 일치하지 않습니다."),
 
+    DIFFERENT_STEP_MEMBERS("회원 목록이 일치하지 않습니다."),
+
     /* Authentication */
 
     PASSWORD_INVALID("비밀번호가 일치하지 않습니다."),
