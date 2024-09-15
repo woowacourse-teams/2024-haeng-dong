@@ -1,10 +1,8 @@
-import {ErrorInfo} from '@components/AppErrorBoundary/ErrorCatcher';
+import {RequestGetError, WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import objectToQueryString from '@utils/objectToQueryString';
 
-import {UNKNOWN_ERROR} from '@constants/errorMessage';
-
-import FetchError from '../errors/FetchError';
+import RequestError from '../errors/RequestError';
 
 export type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -59,27 +57,27 @@ export const requestGet = async <T>({
   return data;
 };
 
-export const requestPatch = ({headers = {}, ...args}: RequestProps) => {
-  return fetcher({method: 'PATCH', headers, ...args});
+export const requestPatch = ({headers = {}, ...args}: RequestMethodProps) => {
+  return request({method: 'PATCH', headers, ...args});
 };
 
-export const requestPut = ({headers = {}, ...args}: RequestProps) => {
-  return fetcher({method: 'PUT', headers, ...args});
+export const requestPut = ({headers = {}, ...args}: RequestMethodProps) => {
+  return request({method: 'PUT', headers, ...args});
 };
 
-export const requestPostWithoutResponse = async ({headers = {}, ...args}: RequestProps) => {
-  await fetcher({method: 'POST', headers, ...args});
+export const requestPostWithoutResponse = async ({headers = {}, ...args}: RequestMethodProps) => {
+  await request({method: 'POST', headers, ...args});
 };
 
-export const requestPostWithResponse = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
-  const response = await fetcher({method: 'POST', headers, ...args});
+export const requestPostWithResponse = async <T>({headers = {}, ...args}: RequestMethodProps): Promise<T> => {
+  const response = await request({method: 'POST', headers, ...args});
 
   const data: T = await response!.json();
   return data;
 };
 
-export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
-  return fetcher({method: 'DELETE', headers, ...args});
+export const requestDelete = ({headers = {}, ...args}: RequestMethodProps) => {
+  return request({method: 'DELETE', headers, ...args});
 };
 
 const prepareRequest = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: RequestProps) => {
@@ -142,6 +140,26 @@ const createError = async ({
 }: WithErrorHandlingStrategy<CreateError>) => {
   const {errorCode, message}: ErrorInfo = await response.json();
 
-    throw new Error(UNKNOWN_ERROR);
+  if (requestInit.method === 'GET') {
+    return new RequestGetError({
+      status: response.status,
+      requestBody: body,
+      endpoint: response.url,
+      name: errorCode,
+      method: requestInit.method,
+      errorHandlingStrategy,
+      message,
+      errorCode,
+    });
   }
+
+  return new RequestError({
+    status: response.status,
+    requestBody: body,
+    endpoint: response.url,
+    name: errorCode,
+    method: requestInit.method,
+    message,
+    errorCode,
+  });
 };
