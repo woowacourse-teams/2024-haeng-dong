@@ -92,43 +92,4 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                         )
                 );
     }
-
-//
-//    @DisplayName("행사 참여 인원의 이름을 수정한다.")
-//    @Test
-//    void updateMember() throws Exception {
-//        String token = "TOKEN";
-//        MemberNamesUpdateRequest memberNameUpdateRequest = new MemberNamesUpdateRequest(List.of(
-//                new MemberNameUpdateRequest("토다링", "토쟁이"),
-//                new MemberNameUpdateRequest("감자", "고구마")
-//        ));
-//
-//        String requestBody = objectMapper.writeValueAsString(memberNameUpdateRequest);
-//
-//        mockMvc.perform(put("/api/admin/events/{eventId}/billDetails/nameChange", token)
-//                        .cookie(EVENT_COOKIE)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andDo(
-//                        document("updateEventMemberName",
-//                                preprocessRequest(prettyPrint()),
-//                                preprocessResponse(prettyPrint()),
-//                                pathParameters(
-//                                        parameterWithName("eventId").description("행사 ID")
-//                                ),
-//                                requestCookies(
-//                                        cookieWithName("eventToken").description("행사 관리자 토큰")
-//                                ),
-//                                requestFields(
-//                                        fieldWithPath("billDetails").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
-//                                        fieldWithPath("billDetails[].before").type(JsonFieldType.STRING)
-//                                                .description("수정 전 참여자 이름"),
-//                                        fieldWithPath("billDetails[].after").type(JsonFieldType.STRING)
-//                                                .description("수정 후 참여자 이름")
-//                                )
-//                        )
-//                );
-//    }
 }

@@ -1,8 +1,8 @@
 package server.haengdong.exception;
 
 import lombok.Getter;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.member.Member;
 import server.haengdong.domain.event.Bank;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.Password;

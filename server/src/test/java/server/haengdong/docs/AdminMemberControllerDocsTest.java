@@ -36,7 +36,7 @@ import server.haengdong.presentation.request.MemberUpdateRequest;
 import server.haengdong.presentation.request.MembersSaveRequest;
 import server.haengdong.presentation.request.MembersUpdateRequest;
 
-public class AdminMemberControllerDocsTest extends RestDocsSupport {
+class AdminMemberControllerDocsTest extends RestDocsSupport {
 
     private final MemberService memberService = mock(MemberService.class);
 

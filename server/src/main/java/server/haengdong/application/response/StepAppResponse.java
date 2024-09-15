@@ -1,7 +1,7 @@
 package server.haengdong.application.response;
 
 import java.util.List;
-import server.haengdong.domain.action.Bill;
+import server.haengdong.domain.bill.Bill;
 
 public record StepAppResponse(
         List<BillAppResponse> bills,

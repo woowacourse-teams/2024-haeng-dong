@@ -16,11 +16,11 @@ import server.haengdong.application.response.BillDetailAppResponse;
 import server.haengdong.application.response.BillDetailsAppResponse;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.StepAppResponse;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.member.Member;
 import server.haengdong.support.fixture.Fixture;
 
-public class BillControllerTest extends ControllerTestSupport {
+class BillControllerTest extends ControllerTestSupport {
 
     @DisplayName("전체 지출 내역을 조회한다.")
     @Test

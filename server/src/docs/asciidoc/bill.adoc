@@ -1,8 +1,8 @@
-== 지출 액션
+== 지출
 
-=== 지출 액션 생성
+=== 지출 생성
 
-operation::createBillActions[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
+operation::createBills[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
 
 ==== [.red]#Exceptions#
 
@@ -18,11 +18,11 @@ operation::createBillActions[snippets="path-parameters,http-request,request-body
       "message":"지출 내역은 비어 있으면 안됩니다."
    },
    {
-      "code":"BILL_ACTION_TITLE_INVALID",
+      "code":"BILL_TITLE_INVALID",
       "message":"앞뒤 공백을 제거한 지출 내역 제목은 %d ~ %d자여야 합니다."
    },
    {
-      "code":"BILL_ACTION_PRICE_INVALID",
+      "code":"BILL_PRICE_INVALID",
       "message":"지출 금액은 10,000,000 이하의 자연수여야 합니다."
    },
    {
@@ -44,9 +44,9 @@ operation::createBillActions[snippets="path-parameters,http-request,request-body
 ]
 ----
 
-=== 지출 액션 수정
+=== 지출 수정
 
-operation::updateBillAction[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
+operation::updateBill[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
 
 ==== [.red]#Exceptions#
 
@@ -62,11 +62,11 @@ operation::updateBillAction[snippets="path-parameters,http-request,request-body,
       "message":"지출 금액은 공백일 수 없습니다."
    },
    {
-      "code":"BILL_ACTION_TITLE_INVALID",
+      "code":"BILL_TITLE_INVALID",
       "message":"앞뒤 공백을 제거한 지출 내역 제목은 %d ~ %d자여야 합니다."
    },
    {
-      "code":"BILL_ACTION_PRICE_INVALID",
+      "code":"BILL_PRICE_INVALID",
       "message":"지출 금액은 %,d 이하의 자연수여야 합니다."
    },
    {
@@ -74,7 +74,7 @@ operation::updateBillAction[snippets="path-parameters,http-request,request-body,
       "message":"존재하지 않는 행사입니다."
    },
    {
-      "code":"BILL_ACTION_NOT_FOUND",
+      "code":"BILL_NOT_FOUND",
       "message":"존재하지 않는 지출 액션입니다."
    },
    {
@@ -92,9 +92,9 @@ operation::updateBillAction[snippets="path-parameters,http-request,request-body,
 ]
 ----
 
-=== 지출 액션 삭제
+=== 지출 삭제
 
-operation::deleteBillAction[snippets="path-parameters,http-request,http-response,request-cookies"]
+operation::deleteBill[snippets="path-parameters,http-request,http-response,request-cookies"]
 
 ==== [.red]#Exceptions#
 

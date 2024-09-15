@@ -10,13 +10,12 @@ import server.haengdong.application.request.BillDetailUpdateAppRequest;
 import server.haengdong.application.request.BillDetailsUpdateAppRequest;
 import server.haengdong.application.request.BillUpdateAppRequest;
 import server.haengdong.application.response.BillDetailsAppResponse;
-import server.haengdong.application.response.LastBillMemberAppResponse;
 import server.haengdong.application.response.StepAppResponse;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.BillDetail;
-import server.haengdong.domain.action.BillRepository;
-import server.haengdong.domain.action.Member;
-import server.haengdong.domain.action.MemberRepository;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.bill.BillDetail;
+import server.haengdong.domain.bill.BillRepository;
+import server.haengdong.domain.member.Member;
+import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -50,7 +49,7 @@ public class BillService {
 
     public List<StepAppResponse> findSteps(String token) {
         Event event = getEvent(token);
-        List<Bill> bills = billRepository.findByEvent(event);
+        List<Bill> bills = billRepository.findAllByEvent(event);
 
         return createStepAppResponses(bills);
     }

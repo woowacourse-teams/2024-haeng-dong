@@ -26,12 +26,12 @@ import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MemberSaveAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.BillDetail;
-import server.haengdong.domain.action.BillDetailRepository;
-import server.haengdong.domain.action.BillRepository;
-import server.haengdong.domain.action.Member;
-import server.haengdong.domain.action.MemberRepository;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.bill.BillDetail;
+import server.haengdong.domain.bill.BillDetailRepository;
+import server.haengdong.domain.bill.BillRepository;
+import server.haengdong.domain.member.Member;
+import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongException;
@@ -336,13 +336,10 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void getCurrentMembersTest() {
         Event event = EVENT1;
-        Bill bill = BILL1;
         Member member1 = MEMBER1;
         Member member2 = MEMBER2;
         Member member3 = MEMBER3;
-        bill.addDetail(new BillDetail(bill, member1, 10000L, false));
-        bill.addDetail(new BillDetail(bill, member2, 20000L, false));
-        bill.addDetail(new BillDetail(bill, member3, 30000L, false));
+        Bill bill = Bill.create(event, "title", 100000L, List.of(member1, member2, member3));
         eventRepository.save(event);
         memberRepository.saveAll(List.of(member1, member2, member3));
         billRepository.save(bill);

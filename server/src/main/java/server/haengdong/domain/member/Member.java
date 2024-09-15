@@ -1,4 +1,4 @@
-package server.haengdong.domain.action;
+package server.haengdong.domain.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,24 +53,11 @@ public class Member {
         this.isDeposited = isDeposited;
     }
 
-    public void updateName(String name) {
-        validateName(name);
-        this.name = name;
-    }
-
     private void validateName(String name) {
         int nameLength = name.length();
         if (nameLength < MIN_NAME_LENGTH || nameLength > MAX_NAME_LENGTH) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID);
         }
-    }
-
-    public void updateDepositedStatus(boolean isDeposited) {
-        this.isDeposited = isDeposited;
-    }
-
-    public boolean isId(Long memberId) {
-        return id.equals(memberId);
     }
 
     @Override

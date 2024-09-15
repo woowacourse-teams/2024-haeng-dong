@@ -1,6 +1,6 @@
 package server.haengdong.application.response;
 
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.member.Member;
 
 public record MemberAppResponse(
         Long id,

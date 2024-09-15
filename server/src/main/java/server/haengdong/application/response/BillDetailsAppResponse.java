@@ -2,7 +2,7 @@ package server.haengdong.application.response;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import server.haengdong.domain.action.BillDetail;
+import server.haengdong.domain.bill.BillDetail;
 
 public record BillDetailsAppResponse(List<BillDetailAppResponse> billDetails) {
 

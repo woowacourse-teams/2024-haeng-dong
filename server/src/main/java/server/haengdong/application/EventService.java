@@ -11,10 +11,10 @@ import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.BillRepository;
-import server.haengdong.domain.action.Member;
-import server.haengdong.domain.action.MemberBillReport;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.bill.BillRepository;
+import server.haengdong.domain.member.Member;
+import server.haengdong.domain.member.MemberBillReport;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
@@ -61,7 +61,7 @@ public class EventService {
     public List<MemberBillReportAppResponse> getMemberBillReports(String token) {
         Event event = eventRepository.findByToken(token)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
-        List<Bill> bills = billRepository.findByEvent(event);
+        List<Bill> bills = billRepository.findAllByEvent(event);
 
         MemberBillReport memberBillReport = MemberBillReport.createByBills(bills);
 

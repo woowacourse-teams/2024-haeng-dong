@@ -27,7 +27,8 @@ public enum Bank {
     SBI_SAVINGS_BANK("SBI저축"),
     KAKAO_BANK("카카오뱅크"),
     TOSS_BANK("토스뱅크"),
-    K_BANK("케이뱅크");
+    K_BANK("케이뱅크"),
+    ;
 
     private final String name;
 
