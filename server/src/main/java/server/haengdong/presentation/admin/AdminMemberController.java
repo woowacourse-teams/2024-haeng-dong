@@ -38,7 +38,7 @@ public class AdminMemberController {
             @PathVariable("eventId") String token,
             @Valid @RequestBody MembersUpdateRequest request
     ) {
-        memberService.updateMember(token, request.toAppRequest());
+        memberService.updateMembers(token, request.toAppRequest());
 
         return ResponseEntity.ok().build();
     }

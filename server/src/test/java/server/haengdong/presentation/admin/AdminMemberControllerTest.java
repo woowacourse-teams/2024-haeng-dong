@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static server.haengdong.support.fixture.Fixture.EVENT_COOKIE;
@@ -17,7 +18,9 @@ import server.haengdong.application.response.MemberSaveAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.presentation.ControllerTestSupport;
 import server.haengdong.presentation.request.MemberSaveRequest;
+import server.haengdong.presentation.request.MemberUpdateRequest;
 import server.haengdong.presentation.request.MembersSaveRequest;
+import server.haengdong.presentation.request.MembersUpdateRequest;
 
 class AdminMemberControllerTest extends ControllerTestSupport {
 
@@ -60,6 +63,27 @@ class AdminMemberControllerTest extends ControllerTestSupport {
         Long memberId = 1L;
 
         mockMvc.perform(delete("/api/admin/events/{eventId}/members/{memberId}", eventId, memberId))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("행사 참여 인원 정보를 수정한다.")
+    @Test
+    void updateMembers() throws Exception {
+        String eventId = "망쵸토큰";
+        MembersUpdateRequest membersUpdateRequest = new MembersUpdateRequest(
+                List.of(
+                        new MemberUpdateRequest(1L, "토다리", true),
+                        new MemberUpdateRequest(2L, "쿠키", false)
+                )
+        );
+        String requestBody = objectMapper.writeValueAsString(membersUpdateRequest);
+
+        mockMvc.perform(put("/api/admin/events/{eventId}/members", eventId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .cookie(EVENT_COOKIE)
+                )
                 .andDo(print())
                 .andExpect(status().isOk());
     }

@@ -8,6 +8,7 @@ import static org.springframework.restdocs.cookies.CookieDocumentation.requestCo
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -31,7 +32,9 @@ import server.haengdong.application.response.MemberSaveAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.presentation.admin.AdminMemberController;
 import server.haengdong.presentation.request.MemberSaveRequest;
+import server.haengdong.presentation.request.MemberUpdateRequest;
 import server.haengdong.presentation.request.MembersSaveRequest;
+import server.haengdong.presentation.request.MembersUpdateRequest;
 
 public class AdminMemberControllerDocsTest extends RestDocsSupport {
 
@@ -120,6 +123,49 @@ public class AdminMemberControllerDocsTest extends RestDocsSupport {
                                 ),
                                 requestCookies(
                                         cookieWithName("eventToken").description("행사 토큰")
+                                )
+                        )
+                );
+    }
+
+    @DisplayName("행사 참여 인원 정보를 수정한다.")
+    @Test
+    void updateMembers() throws Exception {
+        String eventId = "망쵸토큰";
+        MembersUpdateRequest membersUpdateRequest = new MembersUpdateRequest(
+                List.of(
+                        new MemberUpdateRequest(1L, "토다리", true),
+                        new MemberUpdateRequest(2L, "쿠키", false)
+                )
+        );
+        String requestBody = objectMapper.writeValueAsString(membersUpdateRequest);
+
+        mockMvc.perform(put("/api/admin/events/{eventId}/members", eventId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .cookie(EVENT_COOKIE)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("updateMembers",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                requestCookies(
+                                        cookieWithName("eventToken").description("행사 토큰")
+                                ),
+                                requestFields(
+                                        fieldWithPath("members").type(JsonFieldType.ARRAY)
+                                                .description("수정할 참여자 목록"),
+                                        fieldWithPath("members[].id").type(JsonFieldType.NUMBER)
+                                                .description("참여자 ID"),
+                                        fieldWithPath("members[].name").type(JsonFieldType.STRING)
+                                                .description("참여자 이름"),
+                                        fieldWithPath("members[].isDeposited").type(JsonFieldType.BOOLEAN)
+                                                .description("참여자 입금 여부")
                                 )
                         )
                 );

@@ -6,7 +6,7 @@ import server.haengdong.application.request.MemberUpdateAppRequest;
 
 public record MemberUpdateRequest(
 
-        @NotNull(message = "멤버 id는 공백일 수 없습니다.")
+        @NotNull(message = "멤버 ID는 공백일 수 없습니다.")
         Long id,
 
         @NotBlank(message = "멤버 이름은 공백일 수 없습니다.")
@@ -16,7 +16,7 @@ public record MemberUpdateRequest(
         boolean isDeposited
 ) {
 
-        public MemberUpdateAppRequest toAppRequest() {
-                return new MemberUpdateAppRequest(id, name, isDeposited);
-        }
+    public MemberUpdateAppRequest toAppRequest() {
+        return new MemberUpdateAppRequest(id, name, isDeposited);
+    }
 }
