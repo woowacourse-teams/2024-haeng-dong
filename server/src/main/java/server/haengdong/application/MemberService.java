@@ -159,12 +159,10 @@ public class MemberService {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND);
         }
 
-        billDetailRepository.deleteAllByMember(member);
-
         billRepository.findByEvent(event).stream()
                 .filter(bill -> bill.containMember(member))
                 .forEach(bill -> bill.removeMemberBillDetail(member));
-
+        billDetailRepository.deleteAllByMember(member);
         memberRepository.delete(member);
     }
 }
