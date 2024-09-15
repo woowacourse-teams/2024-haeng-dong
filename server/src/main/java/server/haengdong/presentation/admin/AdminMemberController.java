@@ -24,21 +24,21 @@ public class AdminMemberController {
     private final MemberService memberService;
 
     @PostMapping("/api/admin/events/{eventId}/members")
-    public ResponseEntity<MembersSaveResponse> updateMember(
+    public ResponseEntity<MembersSaveResponse> saveMembers(
             @PathVariable("eventId") String token,
             @Valid @RequestBody MembersSaveRequest request
     ) {
-        MembersSaveAppResponse response = memberService.saveAllMembers(token, request.toAppRequest());
+        MembersSaveAppResponse response = memberService.saveMembers(token, request.toAppRequest());
 
         return ResponseEntity.ok(MembersSaveResponse.of(response));
     }
 
     @PutMapping("/api/admin/events/{eventId}/members")
-    public ResponseEntity<Void> updateMember(
+    public ResponseEntity<Void> updateMembers(
             @PathVariable("eventId") String token,
             @Valid @RequestBody MembersUpdateRequest request
     ) {
-        memberService.updateMember(token, request.toAppRequest());
+        memberService.updateMembers(token, request.toAppRequest());
 
         return ResponseEntity.ok().build();
     }

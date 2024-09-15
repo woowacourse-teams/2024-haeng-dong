@@ -29,6 +29,7 @@ public enum HaengdongErrorCode {
             Member.MAX_NAME_LENGTH)),
     MEMBER_NAME_DUPLICATE("중복된 행사 참여 인원 이름이 존재합니다."),
     MEMBER_NOT_FOUND("존재하지 않는 참여자입니다."),
+    MEMBER_ALREADY_EXIST("현재 참여하고 있는 인원이 존재합니다."),
     MEMBER_NAME_CHANGE_DUPLICATE("중복된 참여 인원 이름 변경 요청이 존재합니다."),
 
     BILL_NOT_FOUND("존재하지 않는 지출입니다."),
