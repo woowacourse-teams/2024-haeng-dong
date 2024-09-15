@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.request.EventLoginAppRequest;
+import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
@@ -79,5 +80,16 @@ public class EventService {
                 member.isDeposited(),
                 price
         );
+    }
+
+    @Transactional
+    public void updateEvent(String token, EventUpdateAppRequest request) {
+        Event event = getEvent(token);
+        if (request.isEventNameExist()) {
+            event.rename(request.eventName());
+        }
+        if (request.isAccountExist()) {
+            event.changeAccount(request.bankName(), request.accountNumber());
+        }
     }
 }

@@ -1,5 +1,6 @@
 package server.haengdong.presentation;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.MemberService;
+import server.haengdong.application.response.MemberAppResponse;
+import server.haengdong.presentation.response.CurrentMembersResponse;
 import server.haengdong.presentation.response.MembersResponse;
 
 @Slf4j
@@ -22,6 +25,12 @@ public class MemberController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/api/events/{eventId}/members/current")
+    public ResponseEntity<CurrentMembersResponse> getCurrentMembers(@PathVariable("eventId") String token) {
+        List<MemberAppResponse> currentMembers = memberService.getCurrentMembers(token);
+
+        return ResponseEntity.ok()
+                .body(CurrentMembersResponse.of(currentMembers));
+    }
 }
-
-

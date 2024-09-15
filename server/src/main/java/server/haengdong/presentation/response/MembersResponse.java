@@ -9,7 +9,7 @@ public record MembersResponse(
 ) {
 
     public static MembersResponse of(MembersDepositAppResponse response) {
-        return new MembersResponse(response.memberNames().stream()
+        return new MembersResponse(response.members().stream()
                 .map(MemberDepositResponse::of)
                 .toList());
     }

@@ -72,9 +72,19 @@ public class Event {
         return !password.matches(rawPassword);
     }
 
-    public void changeAccount(String account) {
-        validateAccountNumber(account);
-        this.account = account;
+    public void rename(String name) {
+        validateName(name);
+        this.name = name;
+    }
+
+    public void changeAccount(String bankName, String accountNumber) {
+        validateBankName(bankName);
+        validateAccountNumber(accountNumber);
+        this.account = bankName + " " + accountNumber;
+    }
+
+    private void validateBankName(String bankName) {
+        Bank.isExists(bankName);
     }
 
     private void validateAccountNumber(String accountNumber) {

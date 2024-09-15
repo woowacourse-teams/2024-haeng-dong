@@ -26,14 +26,6 @@ public class BillController {
         return ResponseEntity.ok(stepsResponse);
     }
 
-    @GetMapping("/api/events/{eventId}/members/current")
-    public ResponseEntity<CurrentMembersResponse> getCurrentMembers(@PathVariable("eventId") String token) {
-        List<LastBillMemberAppResponse> currentMembers = billService.getLastMembers(token);
-
-        return ResponseEntity.ok()
-                .body(CurrentMembersResponse.of(currentMembers));
-    }
-
     @GetMapping("/api/events/{eventId}/bills/{billId}/fixed")
     public ResponseEntity<BillDetailsResponse> findBillDetails(
             @PathVariable("eventId") String token,
