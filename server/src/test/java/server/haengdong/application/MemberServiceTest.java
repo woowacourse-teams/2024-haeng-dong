@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static server.haengdong.support.fixture.Fixture.BILL1;
 import static server.haengdong.support.fixture.Fixture.EVENT1;
 import static server.haengdong.support.fixture.Fixture.EVENT2;
@@ -17,7 +18,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import server.haengdong.application.request.MemberSaveAppRequest;
+import server.haengdong.application.request.MemberUpdateAppRequest;
 import server.haengdong.application.request.MembersSaveAppRequest;
+import server.haengdong.application.request.MembersUpdateAppRequest;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MemberSaveAppResponse;
@@ -146,14 +149,16 @@ class MemberServiceTest extends ServiceTestSupport {
         Event event1 = EVENT1;
         Member member1 = MEMBER1;
         Member member2 = MEMBER2;
-        Bill bill = BILL1;
-
-        BillDetail billDetail1 = new BillDetail(bill, member1, 8000L, false);
-        BillDetail billDetail2 = new BillDetail(bill, member2, 2000L, true);
-        bill.addDetail(billDetail1);
-        bill.addDetail(billDetail2);
+        Bill bill = Bill.create(event1, "title", 10000L, List.of(member1, member2));
         eventRepository.save(event1);
         memberRepository.saveAll(List.of(member1, member2));
+
+        BillDetail billDetail1 = getDetailByMember(bill, member1);
+        BillDetail billDetail2 = getDetailByMember(bill, member2);
+        billDetail1.updatePrice(8000L);
+        billDetail1.updateIsFixed(false);
+        billDetail2.updatePrice(2000L);
+        billDetail2.updateIsFixed(true);
         billRepository.save(bill);
 
         memberService.deleteMember(event1.getToken(), member1.getId());
@@ -167,6 +172,133 @@ class MemberServiceTest extends ServiceTestSupport {
                     assertThat(foundDetail.isFixed()).isEqualTo(false);
                 }
         );
+    }
+
+    private BillDetail getDetailByMember(Bill bill, Member member) {
+        return bill.getBillDetails()
+                .stream()
+                .filter(billDetail -> billDetail.isMember(member))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    @DisplayName("멤버 정보를 수정한다.")
+    @Test
+    void updateMembersTest() {
+        Event event = EVENT1;
+        Member member = MEMBER1;
+        eventRepository.save(event);
+        memberRepository.save(member);
+        MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
+                List.of(
+                        new MemberUpdateAppRequest(member.getId(), "수정된이름", true)
+                )
+        );
+
+        memberService.updateMembers(event.getToken(), membersUpdateAppRequest);
+
+        Member updatedMember = memberRepository.findById(member.getId()).orElseThrow();
+        assertAll(
+                () -> assertThat(updatedMember.getName()).isEqualTo("수정된이름"),
+                () -> assertTrue(updatedMember.isDeposited())
+        );
+    }
+
+    @DisplayName("수정할 멤버 id가 중복된 경우 예외가 발생한다.")
+    @Test
+    void updateMembersTest2() {
+        Event event = EVENT1;
+        Member member = MEMBER1;
+        eventRepository.save(event);
+        memberRepository.save(member);
+        MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
+                List.of(
+                        new MemberUpdateAppRequest(member.getId(), "수정", true),
+                        new MemberUpdateAppRequest(member.getId(), "수정수정", false)
+                )
+        );
+
+        assertThatThrownBy(() -> memberService.updateMembers(event.getToken(), membersUpdateAppRequest))
+                .isInstanceOf(HaengdongException.class)
+                .hasMessage("중복된 참여 인원 이름 변경 요청이 존재합니다.");
+    }
+
+    @DisplayName("수정할 멤버 이름이 중복된 경우 예외가 발생한다.")
+    @Test
+    void updateMembersTest3() {
+        Event event = EVENT1;
+        Member member1 = MEMBER1;
+        Member member2 = MEMBER2;
+        eventRepository.save(event);
+        memberRepository.saveAll(List.of(member1, member2));
+        MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
+                List.of(
+                        new MemberUpdateAppRequest(member1.getId(), "수정", true),
+                        new MemberUpdateAppRequest(member2.getId(), "수정", false)
+                )
+        );
+
+        assertThatThrownBy(() -> memberService.updateMembers(event.getToken(), membersUpdateAppRequest))
+                .isInstanceOf(HaengdongException.class)
+                .hasMessage("중복된 참여 인원 이름 변경 요청이 존재합니다.");
+    }
+
+    @DisplayName("수정할 멤버가 행사에 존재하지 않는 경우 예외가 발생한다.")
+    @Test
+    void updateMembersTest4() {
+        Event event1 = EVENT1;
+        Event event2 = EVENT2;
+        Member member = new Member(event2, "이상");
+        eventRepository.saveAll(List.of(event1, event2));
+        memberRepository.save(member);
+        MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
+                List.of(
+                        new MemberUpdateAppRequest(member.getId(), "수정", true)
+                )
+        );
+
+        assertThatThrownBy(() -> memberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
+                .isInstanceOf(HaengdongException.class)
+                .hasMessage("존재하지 않는 참여자입니다.");
+    }
+
+    @DisplayName("변경하려는 행사 참여 인원 이름이 이미 존재하는 경우 예외가 발생한다.")
+    @Test
+    void updateMembersTest5() {
+        Event event1 = EVENT1;
+        Member member1 = MEMBER1;
+        Member member2 = MEMBER2;
+        eventRepository.save(event1);
+        memberRepository.saveAll(List.of(member1, member2));
+        MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
+                List.of(
+                        new MemberUpdateAppRequest(member1.getId(), member2.getName(), true)
+                )
+        );
+
+        assertThatThrownBy(() -> memberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
+                .isInstanceOf(HaengdongException.class)
+                .hasMessage("중복된 행사 참여 인원 이름이 존재합니다.");
+    }
+
+    @DisplayName("참여자 간 서로의 이름으로 변경하려는 경우 예외가 발생한다.")
+    @Test
+    void updateMembersTest6() {
+        Event event = EVENT1;
+        Member member1 = MEMBER1;
+        Member member2 = MEMBER2;
+        eventRepository.save(event);
+        memberRepository.saveAll(List.of(member1, member2));
+        MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
+                List.of(
+                        new MemberUpdateAppRequest(member1.getId(), member2.getName(), true),
+                        new MemberUpdateAppRequest(member2.getId(), member1.getName(), false)
+                )
+        );
+
+        assertThatThrownBy(() -> memberService.updateMembers(event.getToken(), membersUpdateAppRequest))
+                .isInstanceOf(HaengdongException.class)
+                .hasMessage("중복된 행사 참여 인원 이름이 존재합니다.");
     }
 
     @DisplayName("행사에 참여한 전체 인원을 조회한다.")
