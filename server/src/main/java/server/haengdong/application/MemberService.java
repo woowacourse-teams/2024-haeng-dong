@@ -156,7 +156,7 @@ public class MemberService {
     private void deleteMember(String token, Member member) {
         Event event = member.getEvent();
         if (event.isTokenMismatch(token)) {
-            return;
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND);
         }
 
         billDetailRepository.deleteAllByMember(member);
