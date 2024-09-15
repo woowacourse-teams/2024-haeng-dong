@@ -1,8 +1,8 @@
 == 참여자 액션
 
-=== 참여자 액션 생성
+=== 행사 참여자 추가(멤버 추가)
 
-operation::createMemberAction[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
+operation::saveMembers[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
 
 ==== [.red]#Exceptions#
 
@@ -11,27 +11,19 @@ operation::createMemberAction[snippets="path-parameters,http-request,request-bod
 [
    {
       "code":"REQUEST_EMPTY",
-      "message":"멤버 액션은 공백일 수 없습니다."
+      "message":"멤버 목록은 공백일 수 없습니다."
    },
    {
       "code":"EVENT_NOT_FOUND",
       "message":"존재하지 않는 행사입니다."
    },
    {
-      "code":"MEMBER_ACTION_STATUS_INVALID",
-      "message":"멤버 액션은 IN, OUT만 가능합니다. 입력한 멤버 액션: I_N"
-   },
-   {
       "code":"MEMBER_ALREADY_EXIST",
       "message":"현재 참여하고 있는 인원이 존재합니다."
    },
    {
-      "code":"MEMBER_NOT_EXIST",
-      "message":"현재 참여하고 있지 않는 인원이 존재합니다."
-   },
-   {
       "code":"MEMBER_NAME_DUPLICATE",
-      "message":"중복된 이름이 존재합니다. 입력된 이름: 이상, 이상, 감자, 백호"
+      "message":"중복된 이름이 존재합니다. 입력된 이름: [이상, 이상, 감자, 백호]"
    },
    {
       "code":"TOKEN_NOT_FOUND",

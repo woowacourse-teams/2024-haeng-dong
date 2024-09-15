@@ -72,7 +72,7 @@ public class AdminMemberControllerDocsTest extends RestDocsSupport {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.members[1].id").value(equalTo(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.members[1].name").value(equalTo("소하")))
                 .andDo(
-                        document("saveMember",
+                        document("saveMembers",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(
