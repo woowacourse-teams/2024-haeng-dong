@@ -2,6 +2,8 @@ package server.haengdong.presentation.admin;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static server.haengdong.support.fixture.Fixture.EVENT_COOKIE;
@@ -10,7 +12,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.response.MemberSaveAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
@@ -40,7 +41,7 @@ class AdminMemberControllerTest extends ControllerTestSupport {
         given(memberService.saveMembers(eventToken, membersSaveRequest.toAppRequest()))
                 .willReturn(appResponse);
 
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/admin/events/{eventId}/members", "망쵸토큰")
+        mockMvc.perform(post("/api/admin/events/{eventId}/members", "망쵸토큰")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
                         .cookie(EVENT_COOKIE))
@@ -52,14 +53,14 @@ class AdminMemberControllerTest extends ControllerTestSupport {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.members[1].name").value(equalTo("소하")));
     }
 
-//    @DisplayName("행사의 전체 참여자 중에서 특정 참여자의 맴버 액션을 전부 삭제한다.")
-//    @Test
-//    void deleteMember() throws Exception {
-//        String eventId = "망쵸토큰";
-//        String memberName = "행동대장";
-//
-//        mockMvc.perform(delete("/api/admin/events/{eventId}/members/{memberName}", eventId, memberName))
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//    }
+    @DisplayName("행사 참여 인원을 삭제한다.")
+    @Test
+    void deleteMember() throws Exception {
+        String eventId = "망쵸토큰";
+        Long memberId = 1L;
+
+        mockMvc.perform(delete("/api/admin/events/{eventId}/members/{memberId}", eventId, memberId))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }

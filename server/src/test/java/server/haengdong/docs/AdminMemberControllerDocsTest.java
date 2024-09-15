@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -99,53 +100,28 @@ public class AdminMemberControllerDocsTest extends RestDocsSupport {
                 );
     }
 
-//    @DisplayName("이벤트에 속한 멤버 액션을 삭제하면 이후에 기록된 해당 참여자의 모든 멤버 액션을 삭제한다.")
-//    @Test
-//    void deleteMemberAction() throws Exception {
-//        String eventId = "망쵸토큰";
-//        Long actionId = 2L;
-//
-//        mockMvc.perform(delete("/api/admin/events/{eventId}/member-actions/{actionId}", eventId, actionId)
-//                        .cookie(EVENT_COOKIE))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andDo(
-//                        document("deleteMemberAction",
-//                                preprocessRequest(prettyPrint()),
-//                                preprocessResponse(prettyPrint()),
-//                                pathParameters(
-//                                        parameterWithName("eventId").description("행사 ID"),
-//                                        parameterWithName("actionId").description("액션 ID")
-//                                ),
-//                                requestCookies(
-//                                        cookieWithName("eventToken").description("행사 관리자용 토큰")
-//                                )
-//                        )
-//                );
-//    }
-//
-//    @DisplayName("행사의 전체 참여자 중에서 특정 참여자의 맴버 액션을 전부 삭제한다.")
-//    @Test
-//    void deleteMember() throws Exception {
-//        String eventId = "망쵸토큰";
-//        String memberName = "행동대장";
-//
-//        mockMvc.perform(delete("/api/admin/events/{eventId}/billDetails/{memberName}", eventId, memberName)
-//                        .cookie(EVENT_COOKIE))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andDo(
-//                        document("deleteAllMemberActionByName",
-//                                preprocessRequest(prettyPrint()),
-//                                preprocessResponse(prettyPrint()),
-//                                pathParameters(
-//                                        parameterWithName("eventId").description("행사 ID"),
-//                                        parameterWithName("memberName").description("행사 참여자 이름")
-//                                ),
-//                                requestCookies(
-//                                        cookieWithName("eventToken").description("행사 관리자용 토큰")
-//                                )
-//                        )
-//                );
-//    }
+    @DisplayName("행사 참여 인원을 삭제한다.")
+    @Test
+    void deleteMember() throws Exception {
+        String eventId = "망쵸토큰";
+        Long memberId = 1L;
+
+        mockMvc.perform(delete("/api/admin/events/{eventId}/members/{memberId}", eventId, memberId)
+                        .cookie(EVENT_COOKIE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("deleteMember",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID"),
+                                        parameterWithName("memberId").description("삭제할 참여자 ID")
+                                ),
+                                requestCookies(
+                                        cookieWithName("eventToken").description("행사 토큰")
+                                )
+                        )
+                );
+    }
 }
