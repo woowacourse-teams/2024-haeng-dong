@@ -2,7 +2,7 @@ import {render, screen, waitFor} from '@testing-library/react';
 import {act, ReactNode} from 'react';
 import {MemoryRouter} from 'react-router-dom';
 
-import FetchError from '@errors/FetchError';
+import RequestError from '@errors/RequestError';
 import {ToastProvider} from '@hooks/useToast/ToastProvider';
 
 import {useAppErrorStore} from '@store/appErrorStore';
@@ -39,16 +39,16 @@ describe('ErrorCatcher', () => {
     useNavigate: jest.fn(),
   }));
 
-  it('핸들링 가능한 에러인 경우 토스트가 표시된다.', async () => {
-    const errorCode = 'EVENT_NOT_FOUND';
-    const error = new FetchError({
-      errorInfo: {errorCode, message: '서버의 에러메세지'},
-      name: errorCode,
-      message: '에러메세지',
+  it('예측 가능한 에러인 경우 토스트가 표시된다.', async () => {
+    const predictableErrorCode = 'EVENT_NOT_FOUND';
+    const error = new RequestError({
+      message: '서버의 에러메세지',
+      name: predictableErrorCode,
       status: 200,
       endpoint: '',
       method: 'GET',
       requestBody: '',
+      errorCode: predictableErrorCode,
     });
 
     const {updateAppError} = useAppErrorStore.getState();
@@ -59,7 +59,7 @@ describe('ErrorCatcher', () => {
       screen.getByText('Trigger Error').click();
     });
 
-    const errorMessage = SERVER_ERROR_MESSAGES[errorCode];
+    const errorMessage = SERVER_ERROR_MESSAGES[predictableErrorCode];
 
     await waitFor(() => {
       expect(screen.getByText(errorMessage)).toBeInTheDocument();
@@ -67,15 +67,15 @@ describe('ErrorCatcher', () => {
   });
 
   it('핸들링 불가능한 에러인 경우 에러 바운더리가 표시된다.', async () => {
-    const errorCode = '모르겠는 에러';
-    const error = new FetchError({
-      errorInfo: {errorCode, message: '모르겠는 에러메세지'},
-      name: errorCode,
-      message: '에러메세지',
+    const unPredictableErrorCode = '모르겠는 에러';
+    const error = new RequestError({
+      message: '모르겠는 에러메세지',
+      name: unPredictableErrorCode,
       status: 400,
       endpoint: '',
       method: 'GET',
       requestBody: '',
+      errorCode: unPredictableErrorCode,
     });
 
     const {updateAppError} = useAppErrorStore.getState();
