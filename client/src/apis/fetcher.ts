@@ -31,9 +31,6 @@ type RequestProps = {
   headers?: HeadersType;
   body?: Body;
   queryParams?: ObjectQueryParams;
-};
-
-type FetcherProps = RequestProps & {
   method: Method;
 };
 
@@ -46,11 +43,16 @@ type FetchType = {
 
 const API_BASE_URL = process.env.API_BASE_URL ?? '';
 
-export const requestGet = async <T>({headers = {}, ...args}: RequestProps): Promise<T> => {
-  const response = await fetcher({
+export const requestGet = async <T>({
+  headers = {},
+  errorHandlingStrategy,
+  ...args
+}: WithErrorHandlingStrategy<RequestMethodProps>): Promise<T> => {
+  const response = await request({
     ...args,
     method: 'GET',
     headers,
+    errorHandlingStrategy,
   });
 
   const data: T = await response!.json();
