@@ -155,9 +155,10 @@ class MemberServiceTest extends ServiceTestSupport {
         Event event1 = EVENT1;
         Member member1 = MEMBER1;
         Member member2 = MEMBER2;
-        Bill bill = Bill.create(event1, "title", 10000L, List.of(member1, member2));
+        List<Member> members = List.of(member1, member2);
+        Bill bill = Bill.create(event1, "title", 10000L, members);
         eventRepository.save(event1);
-        memberRepository.saveAll(List.of(member1, member2));
+        memberRepository.saveAll(members);
 
         BillDetail billDetail1 = getDetailByMember(bill, member1);
         BillDetail billDetail2 = getDetailByMember(bill, member2);
@@ -268,7 +269,7 @@ class MemberServiceTest extends ServiceTestSupport {
                 .hasMessage("존재하지 않는 참여자입니다.");
     }
 
-    @DisplayName("변경하려는 행사 참여 인원 이름이 이미 존재하는 경우 예외가 발생한다.")
+    @DisplayName("수정하려는 행사 참여 인원 이름이 이미 존재하는 경우 예외가 발생한다.")
     @Test
     void updateMembersTest5() {
         Event event1 = EVENT1;
@@ -287,7 +288,7 @@ class MemberServiceTest extends ServiceTestSupport {
                 .hasMessage("중복된 행사 참여 인원 이름이 존재합니다.");
     }
 
-    @DisplayName("참여자 간 서로의 이름으로 변경하려는 경우 예외가 발생한다.")
+    @DisplayName("참여자 간 서로의 이름으로 수정하려는 경우 예외가 발생한다.")
     @Test
     void updateMembersTest6() {
         Event event = EVENT1;
