@@ -82,47 +82,65 @@ export const requestDelete = ({headers = {}, ...args}: RequestProps) => {
   return fetcher({method: 'DELETE', headers, ...args});
 };
 
-const fetcher = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: FetcherProps) => {
-  const options = {
-    method,
+const prepareRequest = ({baseUrl = API_BASE_URL, method, endpoint, headers, body, queryParams}: RequestProps) => {
+  let url = `${baseUrl}${endpoint}`;
+
+  if (queryParams) url += `?${objectToQueryString(queryParams)}`;
+
+  const requestInit: RequestInitWithMethod = {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       ...headers,
     },
+    method,
     body: body ? JSON.stringify(body) : null,
   };
 
-  let url = `${baseUrl}${endpoint}`;
-
-  if (queryParams) url += `?${objectToQueryString(queryParams)}`;
-
-  return errorHandler({url, options, body: JSON.stringify(body)});
+  return {url, requestInit};
 };
 
-const errorHandler = async ({url, options, body}: ErrorHandlerProps) => {
+const executeRequest = async ({url, requestInit, errorHandlingStrategy}: WithErrorHandlingStrategy<FetchType>) => {
   try {
-    const response: Response = await fetch(url, options);
+    const response: Response = await fetch(url, requestInit);
 
     if (!response.ok) {
-      const serverErrorInfo: ErrorInfo = await response.json();
-
-      throw new FetchError({
-        status: response.status,
-        requestBody: body,
-        endpoint: response.url,
-        errorInfo: serverErrorInfo,
-        name: serverErrorInfo.errorCode,
-        message: serverErrorInfo.message || '',
-        method: options.method,
+      throw await createError({
+        response,
+        body: requestInit.body ? JSON.stringify(requestInit.body) : null,
+        requestInit,
+        errorHandlingStrategy,
       });
     }
 
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      throw error; // 그대로 FetchError || Error 인스턴스를 던집니다.
+      throw error; // 그대로 RequestError 또는 Error 인스턴스를 던집니다.
     }
+
+    throw error;
+  }
+};
+
+const request = async (props: WithErrorHandlingStrategy<RequestProps>) => {
+  const {url, requestInit} = prepareRequest(props);
+  return executeRequest({url, requestInit, errorHandlingStrategy: props.errorHandlingStrategy});
+};
+
+type CreateError = {
+  response: Response;
+  body: Body;
+  requestInit: RequestInitWithMethod;
+};
+
+const createError = async ({
+  response,
+  body,
+  requestInit,
+  errorHandlingStrategy,
+}: WithErrorHandlingStrategy<CreateError>) => {
+  const {errorCode, message}: ErrorInfo = await response.json();
 
     throw new Error(UNKNOWN_ERROR);
   }
