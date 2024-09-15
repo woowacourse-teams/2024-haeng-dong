@@ -31,7 +31,7 @@ public class MemberService {
     private final EventRepository eventRepository;
     private final BillRepository billRepository;
 
-    public MembersSaveAppResponse saveAllMembers(String token, MembersSaveAppRequest request) {
+    public MembersSaveAppResponse saveMembers(String token, MembersSaveAppRequest request) {
         Event event = getEvent(token);
         List<String> memberNames = request.members().stream()
                 .map(MemberSaveAppRequest::name)
@@ -60,11 +60,12 @@ public class MemberService {
 
     private void validateMemberSave(List<String> memberNames, Event event) {
         if (memberNames.size() != Set.copyOf(memberNames).size()) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE,
+                    "중복된 이름이 존재합니다. 입력된 이름: " + memberNames);
         }
         if (memberRepository.findAllByEvent(event).stream()
                 .anyMatch(member -> memberNames.contains(member.getName()))) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_ALREADY_EXIST);
         }
     }
 
