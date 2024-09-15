@@ -14,6 +14,7 @@ import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.domain.action.Bill;
+import server.haengdong.domain.action.BillDetailRepository;
 import server.haengdong.domain.action.BillRepository;
 import server.haengdong.domain.action.Member;
 import server.haengdong.domain.action.MemberRepository;
@@ -30,6 +31,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final EventRepository eventRepository;
     private final BillRepository billRepository;
+    private final BillDetailRepository billDetailRepository;
 
     public MembersSaveAppResponse saveMembers(String token, MembersSaveAppRequest request) {
         Event event = getEvent(token);
@@ -136,16 +138,19 @@ public class MemberService {
 
     @Transactional
     public void deleteMember(String token, Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND));
+        memberRepository.findById(memberId)
+                .ifPresent(member -> deleteMember(token, member));
+    }
+
+    private void deleteMember(String token, Member member) {
         Event event = member.getEvent();
         if (event.isTokenMismatch(token)) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND);
+            return;
         }
 
         billRepository.findByEvent(event).stream()
                 .filter(bill -> bill.containMember(member))
-                .forEach(bill -> bill.removeMember(member));
+                .forEach(bill -> billDetailRepository.delete(bill.removeMemberBillDetail(member)));
 
         memberRepository.delete(member);
     }

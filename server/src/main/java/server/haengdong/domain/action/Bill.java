@@ -111,7 +111,7 @@ public class Bill {
         return results;
     }
 
-    public void removeMember(Member member) {
+    public BillDetail removeMemberBillDetail(Member member) {
         BillDetail foundBillDetail = billDetails.stream()
                 .filter(billDetail -> billDetail.isMember(member))
                 .findFirst()
@@ -119,6 +119,8 @@ public class Bill {
 
         billDetails.remove(foundBillDetail);
         resetBillDetails();
+
+        return foundBillDetail;
     }
 
     public void update(String title, Long price) {
