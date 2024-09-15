@@ -57,8 +57,10 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void saveMembersTest() {
         Event event = EVENT1;
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
+        String memberName1 = "웨디";
+        String memberName2 = "쿠키";
+        Member member1 = new Member(event, memberName1);
+        Member member2 = new Member(event, memberName2);
         eventRepository.save(event);
         MembersSaveAppRequest request = new MembersSaveAppRequest(
                 List.of(
@@ -69,14 +71,18 @@ class MemberServiceTest extends ServiceTestSupport {
 
         MembersSaveAppResponse response = memberService.saveMembers(event.getToken(), request);
 
-        Member savedMember1 = memberRepository.findByEventAndName(event, member1.getName()).get();
-        Member savedMember2 = memberRepository.findByEventAndName(event, member2.getName()).get();
-        assertThat(response.members())
-                .extracting(MemberSaveAppResponse::id, MemberSaveAppResponse::name)
-                .containsExactlyInAnyOrder(
-                        Tuple.tuple(savedMember1.getId(), savedMember1.getName()),
-                        Tuple.tuple(savedMember2.getId(), savedMember2.getName())
-                );
+        List<Member> savedMembers = memberRepository.findAll();
+        assertAll(
+                () -> assertThat(savedMembers)
+                        .extracting(Member::getName)
+                        .containsExactlyInAnyOrder(memberName1, memberName2),
+                () -> assertThat(response.members())
+                        .extracting(MemberSaveAppResponse::id, MemberSaveAppResponse::name)
+                        .containsExactlyInAnyOrder(
+                                Tuple.tuple(response.members().get(0).id(), memberName1),
+                                Tuple.tuple(response.members().get(1).id(), memberName2)
+                        )
+        );
     }
 
     @DisplayName("행사에 존재하는 참여자를 추가하는 경우 예외가 발생한다.")
