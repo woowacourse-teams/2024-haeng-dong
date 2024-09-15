@@ -135,7 +135,7 @@ class MemberServiceTest extends ServiceTestSupport {
         assertThat(memberRepository.findById(member.getId())).isEmpty();
     }
 
-    @DisplayName("존재하지 않는 행사 참여 인원일 경우 삭제하지 않는다.")
+    @DisplayName("다른 이벤트의 참여 인원을 삭제하는 경우 예외가 발생한다.")
     @Test
     void deleteMemberTest1() {
         Event event1 = EVENT1;
@@ -144,8 +144,9 @@ class MemberServiceTest extends ServiceTestSupport {
         eventRepository.saveAll(List.of(event1, event2));
         memberRepository.save(member);
 
-        memberService.deleteMember(event1.getToken(), member.getId());
-
+        assertThatThrownBy(() -> memberService.deleteMember(event1.getToken(), member.getId()))
+                .isInstanceOf(HaengdongException.class);
+        
         assertThat(memberRepository.findById(member.getId())).isNotEmpty();
     }
 
