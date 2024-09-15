@@ -16,4 +16,6 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             where bd.bill.id = :billId
             """)
     List<BillDetail> findAllByBillId(Long billId);
+
+    void deleteAllByMember(Member member);
 }

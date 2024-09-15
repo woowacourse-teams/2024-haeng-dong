@@ -163,9 +163,11 @@ public class MemberService {
             return;
         }
 
+        billDetailRepository.deleteAllByMember(member);
+
         billRepository.findByEvent(event).stream()
                 .filter(bill -> bill.containMember(member))
-                .forEach(bill -> billDetailRepository.delete(bill.removeMemberBillDetail(member)));
+                .forEach(bill -> bill.removeMemberBillDetail(member));
 
         memberRepository.delete(member);
     }
