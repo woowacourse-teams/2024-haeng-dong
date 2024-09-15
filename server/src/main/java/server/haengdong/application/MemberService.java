@@ -88,7 +88,11 @@ public class MemberService {
         List<Member> updatedMembers = request.members().stream()
                 .map(memberRequest -> memberRequest.toMember(event))
                 .toList();
-        updateMembers(event, updatedMembers);
+        List<Member> eventMembers = memberRepository.findAllByEvent(event);
+
+        validateUpdatedMembersExist(eventMembers, updatedMembers);
+        validateUpdatedNamesUnique(eventMembers, updatedMembers);
+        memberRepository.saveAll(updatedMembers);
     }
 
     private Event getEvent(String token) {
@@ -119,14 +123,6 @@ public class MemberService {
         if (members.size() != memberIds.size()) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
         }
-    }
-
-    private void updateMembers(Event event, List<Member> updatedMembers) {
-        List<Member> eventMembers = memberRepository.findAllByEvent(event);
-
-        validateUpdatedMembersExist(eventMembers, updatedMembers);
-        validateUpdatedNamesUnique(eventMembers, updatedMembers);
-        memberRepository.saveAll(updatedMembers);
     }
 
     private void validateUpdatedMembersExist(List<Member> eventMembers, List<Member> updatedMembers) {
