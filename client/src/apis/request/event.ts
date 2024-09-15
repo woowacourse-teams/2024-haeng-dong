@@ -1,3 +1,5 @@
+import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
+
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestGet, requestPostWithResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
@@ -25,8 +27,9 @@ type ResponseGetEventName = {
   eventName: string;
 };
 
-export const requestGetEventName = async ({eventId}: WithEventId) => {
+export const requestGetEventName = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
   return requestGet<ResponseGetEventName>({
     endpoint: `${TEMP_PREFIX}/${eventId}`,
+    ...props,
   });
 };

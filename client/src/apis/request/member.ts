@@ -1,5 +1,7 @@
 import type {MemberType} from 'types/serviceType';
 
+import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
+
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestDelete, requestGet, requestPut, requestPostWithoutResponse} from '@apis/fetcher';
@@ -36,9 +38,10 @@ type ResponseGetAllMemberList = {
   memberNames: string[];
 };
 
-export const requestGetAllMemberList = async ({eventId}: WithEventId) => {
+export const requestGetAllMemberList = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
   return requestGet<ResponseGetAllMemberList>({
     endpoint: `${TEMP_PREFIX}/${eventId}/members`,
+    ...props,
   });
 };
 
@@ -76,9 +79,10 @@ export type ResponseGetCurrentInMemberList = {
   memberNames: string[];
 };
 
-export const requestGetCurrentInMemberList = async ({eventId}: WithEventId) => {
+export const requestGetCurrentInMemberList = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
   return await requestGet<ResponseGetCurrentInMemberList>({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/members/current`,
+    ...props,
   });
 };

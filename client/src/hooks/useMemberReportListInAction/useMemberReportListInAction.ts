@@ -6,7 +6,7 @@ import useRequestGetMemberReportListInAction from '@hooks/queries/useRequestGetM
 import useRequestPutMemberReportListInAction from '@hooks/queries/useRequestPutMemberReportListInAction';
 
 const useMemberReportListInAction = (actionId: number, totalPrice: number, onClose: () => void) => {
-  const {memberReportListInActionFromServer, queryResult} = useRequestGetMemberReportListInAction(actionId);
+  const {memberReportListInActionFromServer, queryResult} = useRequestGetMemberReportListInAction({actionId});
   const {putMemberReportListInAction} = useRequestPutMemberReportListInAction(actionId);
 
   const [memberReportListInAction, setMemberReportListInAction] = useState<MemberReportInAction[]>(

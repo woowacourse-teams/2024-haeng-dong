@@ -2,6 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useEffect} from 'react';
 
 import {requestGetStepList} from '@apis/request/stepList';
+import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
@@ -9,13 +10,13 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
-const useRequestGetStepList = () => {
+const useRequestGetStepList = ({...props}: WithErrorHandlingStrategy | null = {}) => {
   const eventId = getEventIdByUrl();
   const {updateTotalExpenseAmount} = useTotalExpenseAmountStore();
 
   const queryResult = useQuery({
     queryKey: [QUERY_KEYS.stepList],
-    queryFn: () => requestGetStepList({eventId}),
+    queryFn: () => requestGetStepList({eventId, ...props}),
   });
 
   useEffect(() => {

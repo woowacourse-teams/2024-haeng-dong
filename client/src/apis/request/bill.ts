@@ -1,5 +1,7 @@
 import type {Bill, MemberReportInAction} from 'types/serviceType';
 
+import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
+
 import {BASE_URL} from '@apis/baseUrl';
 import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestDelete, requestGet, requestPostWithoutResponse, requestPut} from '@apis/fetcher';
@@ -45,10 +47,15 @@ export const requestPutBillAction = async ({eventId, actionId, title, price}: Wi
 
 export type MemberReportList = {members: MemberReportInAction[]};
 
-export const requestGetMemberReportListInAction = async ({eventId, actionId}: WithEventId<RequestBillAction>) => {
+export const requestGetMemberReportListInAction = async ({
+  eventId,
+  actionId,
+  ...props
+}: WithEventId<WithErrorHandlingStrategy<RequestBillAction>>) => {
   return requestGet<MemberReportList>({
     baseUrl: BASE_URL.HD,
     endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}/fixed`,
+    ...props,
   });
 };
 
