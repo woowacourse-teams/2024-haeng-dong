@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 
 import {useToast} from '@hooks/useToast/useToast';
 
-const NetworkCatcher = () => {
+const NetworkStateCatcher = () => {
   const {showToast, closeToast} = useToast();
 
   const handleNetworkOnline = () => {
@@ -39,4 +39,4 @@ const NetworkCatcher = () => {
   return null;
 };
 
-export default NetworkCatcher;
+export default NetworkStateCatcher;
