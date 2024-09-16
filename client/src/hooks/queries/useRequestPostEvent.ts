@@ -7,10 +7,10 @@ interface PostEventMutationProps {
   password: string;
 }
 
-const usePostEvent = () => {
+const useRequestPostEvent = () => {
   return useMutation({
     mutationFn: ({eventName, password}: PostEventMutationProps) => requestPostNewEvent({eventName, password}),
   });
 };
 
-export default usePostEvent;
+export default useRequestPostEvent;
