@@ -7,6 +7,7 @@ import {
   fixedButtonContainerStyle,
   fixedButtonStyle,
   buttonContainerStyle,
+  cancleButtonStyle,
 } from '@HDcomponents/FixedButton/FixedButton.style';
 import {FixedButtonProps} from '@HDcomponents/FixedButton/FixedButton.type';
 import IconButton from '@HDcomponents/IconButton/IconButton';
@@ -14,7 +15,7 @@ import Icon from '@HDcomponents/Icon/Icon';
 import {useTheme} from '@theme/HDesignProvider';
 
 export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElement, FixedButtonProps>(function Button(
-  {variants = 'primary', onDeleteClick, disabled, children, ...htmlProps}: FixedButtonProps,
+  {variants = 'primary', onDeleteClick, onBackClick, disabled, children, ...htmlProps}: FixedButtonProps,
   ref,
 ) {
   const {theme} = useTheme();
@@ -25,6 +26,16 @@ export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElem
           <IconButton type="button" size="large" variants="destructive" onClick={onDeleteClick}>
             <Icon iconType="trash" />
           </IconButton>
+        )}
+        {onBackClick && (
+          <button
+            css={cancleButtonStyle(theme)}
+            ref={ref}
+            disabled={variants === 'loading' ? true : disabled}
+            {...htmlProps}
+          >
+            이전으로
+          </button>
         )}
         <button
           css={fixedButtonStyle({variants, theme})}
