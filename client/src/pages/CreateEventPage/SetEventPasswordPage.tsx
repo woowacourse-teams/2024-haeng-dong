@@ -12,7 +12,7 @@ const SetEventPasswordPage = () => {
     useSetEventPasswordPage();
 
   const handleGoNextStep = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'enter') {
+    if (event.key === 'Enter') {
       onSuccess();
     }
   };
@@ -36,12 +36,12 @@ const SetEventPasswordPage = () => {
         </Top>
         <form onSubmit={submitPassword}>
           <LabelInput
-            labelText="1234"
+            labelText="비밀번호"
             errorText={errorMessage}
             value={password}
             type="text"
             maxLength={RULE.maxEventPasswordLength}
-            placeholder="비밀번호"
+            placeholder="1234"
             onChange={handleChange}
             isError={!!errorMessage}
             autoFocus

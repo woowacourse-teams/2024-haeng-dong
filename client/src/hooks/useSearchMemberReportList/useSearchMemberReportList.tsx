@@ -1,4 +1,4 @@
-import useRequestGetMemberReportList from '@hooks/queries/useRequestGetMemberReportList';
+import useRequestGetMemberReportList from '@hooks/queries/useRequestGetMemberReport';
 
 type UseSearchMemberReportListParams = {
   name: string;
@@ -6,7 +6,7 @@ type UseSearchMemberReportListParams = {
 
 const useSearchMemberReportList = ({name}: UseSearchMemberReportListParams) => {
   const {data} = useRequestGetMemberReportList();
-  const memberReportList = data ?? [];
+  const memberReportList = data?.reports ?? [];
 
   return {
     memberReportSearchList: memberReportList.filter(memberReport => memberReport.name.includes(name)),

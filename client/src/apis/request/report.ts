@@ -1,4 +1,4 @@
-import type {Report, Reports} from 'types/serviceType';
+import type {Reports} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {USER_API_PREFIX} from '@apis/endpointPrefix';

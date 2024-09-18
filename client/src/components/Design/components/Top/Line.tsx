@@ -24,7 +24,6 @@ export default function Line({text, emphasize = []}: Props) {
       `}
     >
       {elements.map(text => {
-        console.log(text);
         return (
           <Text size="subTitle" textColor={emphasize.includes(text) ? 'black' : 'gray'} style={{whiteSpace: 'pre'}}>
             {`${text}`}

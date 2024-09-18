@@ -6,7 +6,7 @@ import validateEventPassword from '@utils/validate/validateEventPassword';
 import {ROUTER_URLS} from '@constants/routerUrls';
 import RULE from '@constants/rule';
 
-import usePostEvent from './queries/useRequestPostEvent';
+import useRequestPostEvent from './queries/useRequestPostEvent';
 
 const useSetEventPasswordPage = () => {
   const [eventName, setEventName] = useState('');
@@ -15,7 +15,7 @@ const useSetEventPasswordPage = () => {
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const {mutate: postEvent, isPending: isPostEventPending} = usePostEvent();
+  const {mutate: postEvent, isPending: isPostEventPending} = useRequestPostEvent();
 
   useEffect(() => {
     if (!location.state) {

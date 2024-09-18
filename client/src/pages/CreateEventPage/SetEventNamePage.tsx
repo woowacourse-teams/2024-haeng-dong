@@ -23,7 +23,7 @@ const SetEventNamePage = () => {
   };
 
   const handleGoNextStep = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'enter') {
+    if (event.key === 'Enter') {
       onSuccessSubmint();
     }
   };

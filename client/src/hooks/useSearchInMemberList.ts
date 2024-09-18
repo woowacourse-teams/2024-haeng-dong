@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import useRequestGetCurrentInMemberList from './queries/useRequestGetCurrentInMemberList';
+import useRequestGetCurrentInMemberList from './queries/useRequestGetCurrentMember';
 
 export type ReturnUseSearchInMemberList = {
   currentInputIndex: number;
@@ -15,7 +15,7 @@ const useSearchInMemberList = (handleChange: (index: number, value: string) => v
 
   // 서버에서 가져온 전체 리스트
   const {data} = useRequestGetCurrentInMemberList();
-  const currentInMemberList = data?.memberNames ?? [];
+  const currentInMemberList = data?.members ?? [];
 
   // 검색된 리스트 (따로 둔 이유는 검색 후 클릭했을 때 리스트를 비워주어야하기 때문)
   const [filteredInMemberList, setFilteredInMemberList] = useState<Array<string>>([]);
@@ -24,7 +24,7 @@ const useSearchInMemberList = (handleChange: (index: number, value: string) => v
     if (keyword.trim() === '') return [];
 
     return currentInMemberList
-      .filter(member => member.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1)
+      .filter(member => member.name.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) > -1)
       .slice(0, 3);
   };
 
@@ -35,7 +35,7 @@ const useSearchInMemberList = (handleChange: (index: number, value: string) => v
 
   const searchCurrentInMember = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
-    setFilteredInMemberList(filterMatchItems(value));
+    setFilteredInMemberList(filterMatchItems(value).map(member => member.name));
   };
 
   const handleCurrentInputIndex = (inputIndex: number) => {
