@@ -1,84 +1,68 @@
-import type {MemberType} from 'types/serviceType';
+import type {AllMembers, Members} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestDelete, requestGet, requestPut, requestPostWithoutResponse} from '@apis/fetcher';
-import {WithEventId} from '@apis/withEventId.type';
+import {requestDelete, requestGet, requestPut, requestPostWithResponse} from '@apis/fetcher';
+import {WithEventId} from '@apis/withId.type';
 
-type RequestPostMemberList = {
-  memberNameList: string[];
-  type: MemberType;
-};
+interface PostMember {
+  name: string;
+}
 
-export const requestPostMemberList = async ({eventId, type, memberNameList}: WithEventId<RequestPostMemberList>) => {
-  await requestPostWithoutResponse({
+export interface RequestPostMember {
+  members: PostMember[];
+}
+
+export const requestPostMember = async ({eventId, members: newMembers}: WithEventId<RequestPostMember>) => {
+  return await requestPostWithResponse<Members>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/member-actions`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/members`,
     body: {
-      members: memberNameList,
-      status: type,
+      members: newMembers,
     },
   });
 };
 
-type RequestDeleteMemberAction = {
-  actionId: number;
-};
+export interface RequestDeleteMember {
+  memberId: number;
+}
 
-export const requestDeleteMemberAction = async ({eventId, actionId}: WithEventId<RequestDeleteMemberAction>) => {
+export const requestDeleteMember = async ({eventId, memberId}: WithEventId<RequestDeleteMember>) => {
   await requestDelete({
     baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/member-actions/${actionId}`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/members/${memberId}`,
   });
 };
 
-type ResponseGetAllMemberList = {
-  memberNames: string[];
-};
+interface PutMember {
+  id: number;
+  name: string;
+  isDeposited: boolean;
+}
 
-export const requestGetAllMemberList = async ({eventId}: WithEventId) => {
-  return requestGet<ResponseGetAllMemberList>({
-    endpoint: `${USER_API_PREFIX}/${eventId}/members`,
-  });
-};
+export interface RequestPutMember {
+  members: PutMember[];
+}
 
-export type MemberChange = {
-  before: string;
-  after: string;
-};
-
-type RequestPutAllMemberList = {
-  members: MemberChange[];
-};
-
-export const requestPutAllMemberList = async ({eventId, members}: WithEventId<RequestPutAllMemberList>) => {
+export const requestPutMember = async ({eventId, members}: WithEventId<RequestPutMember>) => {
   await requestPut({
     baseUrl: BASE_URL.HD,
-    endpoint: `${ADMIN_API_PREFIX}/${eventId}/members/nameChange`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/members`,
     body: {
-      members,
+      members: members,
     },
   });
 };
 
-type RequestDeleteAllMemberList = {
-  memberName: string;
-};
-
-export const requestDeleteAllMemberList = async ({eventId, memberName}: WithEventId<RequestDeleteAllMemberList>) => {
-  await requestDelete({
+export const requestGetCurrentMember = async ({eventId}: WithEventId) => {
+  return await requestGet<Members>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${ADMIN_API_PREFIX}/${eventId}/members/${memberName}`,
+    endpoint: `${USER_API_PREFIX}/${eventId}/members/current`,
   });
 };
 
-export type ResponseGetCurrentInMemberList = {
-  memberNames: string[];
-};
-
-export const requestGetCurrentInMemberList = async ({eventId}: WithEventId) => {
-  return await requestGet<ResponseGetCurrentInMemberList>({
-    baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/members/current`,
+export const requestGetAllMember = async ({eventId}: WithEventId) => {
+  return await requestGet<AllMembers>({
+    endpoint: `${USER_API_PREFIX}/${eventId}/members`,
   });
 };

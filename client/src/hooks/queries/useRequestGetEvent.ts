@@ -1,18 +1,18 @@
 import {useQuery} from '@tanstack/react-query';
 
-import {requestGetEventName} from '@apis/request/event';
+import {requestGetEvent} from '@apis/request/event';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
-const useRequestGetEventName = () => {
+const useRequestGetEvent = () => {
   const eventId = getEventIdByUrl();
 
   return useQuery({
     queryKey: [QUERY_KEYS.eventName],
-    queryFn: () => requestGetEventName({eventId}),
+    queryFn: () => requestGetEvent({eventId}),
   });
 };
 
-export default useRequestGetEventName;
+export default useRequestGetEvent;

@@ -1,19 +1,13 @@
-import type {MemberReport} from 'types/serviceType';
+import type {Report, Reports} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet} from '@apis/fetcher';
-import {WithEventId} from '@apis/withEventId.type';
+import {WithEventId} from '@apis/withId.type';
 
-type ResponseGetMemberReportList = {
-  reports: MemberReport[];
-};
-
-export const requestGetMemberReportList = async ({eventId}: WithEventId) => {
-  const {reports} = await requestGet<ResponseGetMemberReportList>({
+export const requestGetMemberReport = async ({eventId}: WithEventId) => {
+  return await requestGet<Reports>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/actions/reports`,
+    endpoint: `${USER_API_PREFIX}/${eventId}/reports`,
   });
-
-  return reports;
 };

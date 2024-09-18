@@ -1,10 +1,10 @@
 const QUERY_KEYS = {
   stepList: 'stepList',
   eventName: 'eventName',
-  allMemberList: 'allMemberList',
-  currentInMember: 'currentInMember',
-  memberReport: 'memberReport',
-  memberReportInAction: 'memberReportInAction',
+  allMember: 'allMember',
+  currentMember: 'currentMember',
+  report: 'report',
+  billDetail: 'billDetail',
 };
 
 export default QUERY_KEYS;

@@ -1,11 +1,7 @@
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestPostWithoutResponse} from '@apis/fetcher';
-import {WithEventId} from '@apis/withEventId.type';
-
-export type RequestToken = {
-  password: string;
-};
+import {WithEventId} from '@apis/withId.type';
 
 export const requestPostAuthentication = async ({eventId}: WithEventId) => {
   await requestPostWithoutResponse({
@@ -14,7 +10,11 @@ export const requestPostAuthentication = async ({eventId}: WithEventId) => {
   });
 };
 
-export const requestPostToken = async ({eventId, password}: WithEventId<RequestToken>) => {
+export interface RequestPostToken {
+  password: string;
+}
+
+export const requestPostToken = async ({eventId, password}: WithEventId<RequestPostToken>) => {
   await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `${USER_API_PREFIX}/${eventId}/login`,
