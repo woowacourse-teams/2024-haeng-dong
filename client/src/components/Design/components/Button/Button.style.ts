@@ -23,7 +23,7 @@ const getButtonDefaultStyle = (theme: Theme) =>
     whiteSpace: 'nowrap',
 
     '&:disabled': {
-      backgroundColor: theme.colors.tertiary,
+      backgroundColor: theme.colors.grayContainer,
       color: theme.colors.onPrimary,
       cursor: 'default',
     },

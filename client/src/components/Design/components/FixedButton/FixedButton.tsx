@@ -28,12 +28,7 @@ export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElem
           </IconButton>
         )}
         {onBackClick && (
-          <button
-            css={cancleButtonStyle(theme)}
-            ref={ref}
-            disabled={variants === 'loading' ? true : disabled}
-            {...htmlProps}
-          >
+          <button css={cancleButtonStyle(theme)} ref={ref} onClick={onBackClick}>
             이전으로
           </button>
         )}

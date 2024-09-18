@@ -75,8 +75,11 @@ export const cancleButtonStyle = (theme: Theme) =>
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
 
+    backgroundColor: theme.colors.tertiary,
+    color: theme.colors.onTertiary,
+
     '&:disabled': {
-      backgroundColor: theme.colors.tertiary,
+      backgroundColor: theme.colors.grayContainer,
       color: theme.colors.onPrimary,
       cursor: 'default',
     },
@@ -98,11 +101,8 @@ const getFixedButtonDefaultStyle = (theme: Theme) =>
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
 
-    backgroundColor: theme.colors.tertiary,
-    color: theme.colors.onTertiary,
-
     '&:disabled': {
-      backgroundColor: theme.colors.tertiary,
+      backgroundColor: theme.colors.grayContainer,
       color: theme.colors.onPrimary,
       cursor: 'default',
     },
