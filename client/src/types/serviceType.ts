@@ -99,7 +99,7 @@ export interface Bill {
   isFixed: boolean;
 }
 
-interface BillDetail {
+export interface BillDetail {
   id: number;
   memberName: string;
   price: string;
@@ -117,12 +117,12 @@ export interface Members {
   members: Member[];
 }
 
-export interface MemberWithFixed extends Member {
-  fixed: boolean;
+export interface MemberWithDeposited extends Member {
+  isDeposited: boolean;
 }
 
 export interface AllMembers {
-  members: MemberWithFixed[];
+  members: MemberWithDeposited[];
 }
 export interface EventId {
   eventId: string;
@@ -131,7 +131,7 @@ export interface EventId {
 export interface Event {
   eventName: string;
   bankName: string;
-  account: string;
+  accountNumber: string;
 }
 
 export interface Report {
