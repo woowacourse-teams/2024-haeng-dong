@@ -10,13 +10,13 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    isCheck: {
+    isDeposited: {
       description: '',
       control: {type: 'boolean'},
     },
   },
   args: {
-    isCheck: false,
+    isDeposited: false,
   },
 } satisfies Meta<typeof DepositCheck>;
 

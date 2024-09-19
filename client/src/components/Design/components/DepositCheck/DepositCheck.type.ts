@@ -1,9 +1,9 @@
 export interface DepositCheckStyleProps {
-  isCheck: boolean;
+  isDeposited: boolean;
 }
 
 export interface DepositCheckCustomProps {
-  isCheck: boolean;
+  isDeposited: boolean;
 }
 
 export type DepositCheckOptionProps = DepositCheckStyleProps & DepositCheckCustomProps;
