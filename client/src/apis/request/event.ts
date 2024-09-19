@@ -1,5 +1,7 @@
+import {EventOutline} from 'types/serviceType';
+
 import {TEMP_PREFIX} from '@apis/tempPrefix';
-import {requestGet, requestPostWithResponse} from '@apis/fetcher';
+import {requestGet, requestPatch, requestPostWithResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withEventId.type';
 
 export type RequestPostNewEvent = {
@@ -21,12 +23,21 @@ export const requestPostNewEvent = async ({eventName, password}: RequestPostNewE
   });
 };
 
-type ResponseGetEventName = {
-  eventName: string;
+export const requestGetEventOutline = async ({eventId}: WithEventId) => {
+  return requestGet<EventOutline>({
+    endpoint: `${TEMP_PREFIX}/${eventId}`,
+  });
 };
 
-export const requestGetEventName = async ({eventId}: WithEventId) => {
-  return requestGet<ResponseGetEventName>({
+export type RequestPatchEventOutline = WithEventId & {
+  eventOutline: Partial<EventOutline>;
+};
+
+export const requestPatchEventOutline = async ({eventId, eventOutline}: RequestPatchEventOutline) => {
+  return requestPatch({
     endpoint: `${TEMP_PREFIX}/${eventId}`,
+    body: {
+      ...eventOutline,
+    },
   });
 };
