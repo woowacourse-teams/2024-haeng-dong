@@ -8,7 +8,8 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import server.haengdong.application.AuthService;
@@ -29,9 +30,10 @@ class AdminInterceptorTest {
     }
 
     @DisplayName("쿠키의 JWT 에서 eventToken 과 uri 의 eventToken 이 일치하면 관리자이다.")
-    @Test
-    void validateToken1() {
-        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/admin/events/12345");
+    @ParameterizedTest
+    @ValueSource(strings = {"/api/admin/events/12345", "/api/admin/events/12345/bills"})
+    void validateToken1(String uri) {
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", uri);
         MockHttpServletResponse response = new MockHttpServletResponse();
         when(authService.findEventIdByToken(any())).thenReturn("12345");
 
@@ -41,9 +43,10 @@ class AdminInterceptorTest {
     }
 
     @DisplayName("쿠키의 JWT 에서 eventToken 과 uri 의 eventToken 이 일치하지 않으면 거절당한다.")
-    @Test
-    void validateToken2() {
-        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/admin/events/12345");
+    @ParameterizedTest
+    @ValueSource(strings = {"/api/admin/events/12345", "/api/admin/events/12345/bills"})
+    void validateToken2(String uri) {
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", uri);
         MockHttpServletResponse response = new MockHttpServletResponse();
         when(authService.findEventIdByToken(any())).thenReturn("125");
 
