@@ -1,29 +1,29 @@
-import type {MemberReportInAction} from 'types/serviceType';
+import type {BillDetail} from 'types/serviceType';
 
 import {useEffect, useState} from 'react';
 
-import validateMemberReportInAction from '@utils/validate/validateMemberReportInAction';
+import validateBillDetails from '@utils/validate/validateBillDetails';
 
-type MemberReportInput = MemberReportInAction & {
+type BillDetailInput = BillDetail & {
   index: number;
 };
 
-type UseMemberReportProps = {
-  data: MemberReportInAction[];
-  addAdjustedMember: (memberReport: MemberReportInAction) => void;
+type UseBillDetailInput = {
+  data: BillDetail[];
+  addAdjustedMember: (billDetails: BillDetail) => void;
   getOnlyOneNotAdjustedRemainMemberIndex: () => number | null;
   getIsSamePriceStateAndServerState: () => boolean;
   totalPrice: number;
 };
 
-const useMemberReportInput = ({
+const useBillDetailInput = ({
   data,
   addAdjustedMember,
   totalPrice,
   getOnlyOneNotAdjustedRemainMemberIndex,
   getIsSamePriceStateAndServerState,
-}: UseMemberReportProps) => {
-  const [inputList, setInputList] = useState<MemberReportInput[]>(data.map((item, index) => ({...item, index})));
+}: UseBillDetailInput) => {
+  const [inputList, setInputList] = useState<BillDetailInput[]>(data.map((item, index) => ({...item, index})));
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
 
   const [canEditList, setCanEditList] = useState<boolean[]>([]);
@@ -35,26 +35,27 @@ const useMemberReportInput = ({
   };
 
   const validateAndAddAdjustedMember = (price: string, index: number) => {
-    const {isValid} = validateMemberReportInAction(price, totalPrice);
+    const {isValid} = validateBillDetails(price, totalPrice);
 
     if (isValid) {
       const newInputList = [...inputList];
       newInputList[index].price = Number(price);
       setInputList(newInputList);
 
-      const memberReportData: MemberReportInAction = {
-        name: newInputList[index].name,
+      const reportData: BillDetail = {
+        ...newInputList[index],
+        memberName: newInputList[index].memberName,
         price: newInputList[index].price,
         isFixed: newInputList[index].isFixed,
       };
-      addAdjustedMember(memberReportData);
+      addAdjustedMember(reportData);
     }
   };
 
   // 서버와 값이 같지 않고 input price의 상태가 모두 valid하다면 can submit true
   useEffect(() => {
     const isSamePriceState = getIsSamePriceStateAndServerState();
-    const isAllValid = inputList.every(input => validateMemberReportInAction(String(input.price), totalPrice));
+    const isAllValid = inputList.every(input => validateBillDetails(String(input.price), totalPrice));
 
     setCanSubmit(!isSamePriceState && isAllValid);
   }, [inputList]);
@@ -86,4 +87,4 @@ const useMemberReportInput = ({
   };
 };
 
-export default useMemberReportInput;
+export default useBillDetailInput;
