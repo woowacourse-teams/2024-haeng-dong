@@ -4,13 +4,13 @@ import validateEventPassword from '@utils/validate/validateEventPassword';
 
 import RULE from '@constants/rule';
 
-import useRequestPostLogin from './queries/useRequestPostLogin';
+import useRequestPostLogin from './queries/auth/useRequestPostLogin';
 
 const useEventLogin = () => {
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
-  const {mutate: postLogin} = useRequestPostLogin();
+  const {postLogin} = useRequestPostLogin();
 
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

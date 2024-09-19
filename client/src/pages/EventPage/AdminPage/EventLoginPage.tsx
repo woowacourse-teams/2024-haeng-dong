@@ -1,6 +1,6 @@
 import useEventLogin from '@hooks/useEventLogin';
 
-import {FixedButton, LabelInput, Title} from '@HDesign/index';
+import {FixedButton, LabelInput} from '@HDesign/index';
 
 import RULE from '@constants/rule';
 import Top from '@components/Design/components/Top/Top';

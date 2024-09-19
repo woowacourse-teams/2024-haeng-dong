@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
-import StepList from '@components/StepList/StepList';
-import useRequestPostAuthenticate from '@hooks/queries/useRequestPostAuthentication';
+import StepList from '@components/StepList/Steps';
+import useRequestPostAuthenticate from '@hooks/queries/auth/useRequestPostAuthentication';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
@@ -11,9 +11,8 @@ import {Title, Button} from '@HDesign/index';
 import {EventPageContextProps} from '../EventPageLayout';
 
 import {receiptStyle} from './AdminPage.style';
-import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
-import {ROUTER_URLS} from '@constants/routerUrls';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+import useRequestGetSteps from '@hooks/queries/step/useRequestGetSteps';
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -22,17 +21,17 @@ const AdminPage = () => {
 
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
-  const {data: stepList} = useRequestGetStepList();
-  const {mutate: postAuthentication} = useRequestPostAuthenticate();
+  const {steps} = useRequestGetSteps();
+  const {postAuthenticate} = useRequestPostAuthenticate();
 
   useEffect(() => {
-    postAuthentication();
-  }, [postAuthentication]);
+    postAuthenticate();
+  }, [postAuthenticate]);
 
   return (
     <section css={receiptStyle}>
       <Title title={eventName} amount={totalExpenseAmount} />
-      <StepList data={stepList ?? []} />
+      <StepList data={steps ?? []} />
       <Button size="medium" onClick={() => navigate(`/event/${eventId}/addBill`)} style={{width: '100%'}}>
         지출내역 추가하기
       </Button>

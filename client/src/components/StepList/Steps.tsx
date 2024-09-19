@@ -1,5 +1,3 @@
-import useRequestGetStepList from '@hooks/queries/useRequestGetStepList';
-
 import {Flex, Text} from '@HDesign/index';
 
 import Step from './Step';
@@ -9,7 +7,7 @@ interface Props {
   data: StepType[];
 }
 
-const StepList = ({data}: Props) => {
+const Steps = ({data}: Props) => {
   return (
     <Flex flexDirection="column" gap="0.5rem">
       {data.length > 0 ? (
@@ -25,4 +23,4 @@ const StepList = ({data}: Props) => {
   );
 };
 
-export default StepList;
+export default Steps;

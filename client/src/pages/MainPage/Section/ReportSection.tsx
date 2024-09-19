@@ -4,7 +4,7 @@ import MemberReportMockup from '@assets/image/memberReportMockup.svg';
 
 import {Text} from '@HDesign/index';
 
-const MemberReportSection = () => {
+const ReportSection = () => {
   return (
     <div
       css={css({
@@ -29,4 +29,4 @@ const MemberReportSection = () => {
   );
 };
 
-export default MemberReportSection;
+export default ReportSection;

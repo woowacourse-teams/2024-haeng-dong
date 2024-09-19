@@ -4,7 +4,7 @@ import ChipButton from '@components/Design/components/ChipButton/ChipButton';
 import Top from '@components/Design/components/Top/Top';
 import NumberKeyboard from '@components/Design/NumberKeyboard/NumberKeyboard';
 import {css} from '@emotion/react';
-import useRequestGetCurrentMember from '@hooks/queries/useRequestGetCurrentMember';
+import useRequestGetCurrentMembers from '@hooks/queries/member/useRequestGetCurrentMembers';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
@@ -17,8 +17,7 @@ interface BillInfo {
 }
 
 const AddBillFunnel = () => {
-  const {data} = useRequestGetCurrentMember();
-  const currentMember = data?.members;
+  const {currentMembers} = useRequestGetCurrentMembers();
   const [step, setStep] = useState<BillStep>('price');
   const [billInfo, setBillInfo] = useState<BillInfo>({
     price: '',
@@ -30,8 +29,8 @@ const AddBillFunnel = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    currentMember && setBillInfo(prev => ({...prev, members: currentMember.map(member => member.name)}));
-  }, [currentMember]);
+    currentMembers && setBillInfo(prev => ({...prev, members: currentMembers.map(member => member.name)}));
+  }, [currentMembers]);
 
   const handleNumberKeyboardChange = (value: string) => {
     setBillInfo(prev => ({...prev, price: value || prev.price}));

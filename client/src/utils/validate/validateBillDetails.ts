@@ -3,7 +3,7 @@ import RULE from '@constants/rule';
 
 import {ValidateResult} from './type';
 
-const validateMemberReportInAction = (price: string, totalPrice: number): ValidateResult => {
+const validateBillDetails = (price: string, totalPrice: number): ValidateResult => {
   let errorMessage = null;
   const numberTypePrice = Number(price);
 
@@ -30,4 +30,4 @@ const validateMemberReportInAction = (price: string, totalPrice: number): Valida
   return {isValid: false, errorMessage: errorMessage || ERROR_MESSAGE.invalidInput};
 };
 
-export default validateMemberReportInAction;
+export default validateBillDetails;
