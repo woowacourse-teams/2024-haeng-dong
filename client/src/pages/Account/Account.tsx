@@ -26,7 +26,7 @@ const Account = () => {
         <LabelInput
           labelText="은행"
           placeholder="은행을 선택해주세요"
-          value={bankName}
+          value={bankName ?? ''}
           errorText={null}
           autoFocus={false}
           readOnly
@@ -36,7 +36,7 @@ const Account = () => {
           labelText="계좌번호"
           placeholder="030302-04-191806"
           errorText={null}
-          value={accountNumber}
+          value={accountNumber ?? ''}
           onChange={handleAccount}
           autoFocus={false}
         />
