@@ -9,22 +9,21 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import server.haengdong.application.AuthService;
-import server.haengdong.application.BillActionDetailService;
-import server.haengdong.application.BillActionService;
+import server.haengdong.application.BillService;
 import server.haengdong.application.EventService;
-import server.haengdong.application.MemberActionService;
-import server.haengdong.presentation.admin.AdminBillActionController;
+import server.haengdong.application.MemberService;
+import server.haengdong.presentation.admin.AdminBillController;
 import server.haengdong.presentation.admin.AdminEventController;
-import server.haengdong.presentation.admin.AdminMemberActionController;
+import server.haengdong.presentation.admin.AdminMemberController;
 
 @WebMvcTest(
         controllers = {
                 AdminEventController.class,
-                AdminBillActionController.class,
-                AdminMemberActionController.class,
+                AdminBillController.class,
+                AdminMemberController.class,
                 EventController.class,
-                MemberActionController.class,
-                BillActionDetailController.class
+                MemberController.class,
+                BillController.class
         },
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {WebMvcConfigurer.class})}
 )
@@ -43,11 +42,8 @@ public abstract class ControllerTestSupport {
     protected AuthService authService;
 
     @MockBean
-    protected MemberActionService memberActionService;
+    protected MemberService memberService;
 
     @MockBean
-    protected BillActionService billActionService;
-
-    @MockBean
-    protected BillActionDetailService billActionDetailService;
+    protected BillService billService;
 }

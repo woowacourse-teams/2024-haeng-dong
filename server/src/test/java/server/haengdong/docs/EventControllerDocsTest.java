@@ -2,7 +2,6 @@ package server.haengdong.docs;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
@@ -33,18 +32,15 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
-import server.haengdong.application.response.ActionAppResponse;
-import server.haengdong.application.response.ActionAppResponse.ActionType;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
-import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.EventController;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 
-public class EventControllerDocsTest extends RestDocsSupport {
+class EventControllerDocsTest extends RestDocsSupport {
 
     private final EventService eventService = mock(EventService.class);
     private final AuthService authService = mock(AuthService.class);
@@ -61,7 +57,7 @@ public class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void findEventTest() throws Exception {
         String eventId = "망쵸토큰";
-        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식");
+        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", "토스 12312455");
         given(eventService.findEvent(eventId)).willReturn(eventDetailAppResponse);
 
         mockMvc.perform(get("/api/events/{eventId}", eventId))
@@ -76,170 +72,8 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 responseFields(
-                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
-                                )
-                        )
-                );
-    }
-
-    @DisplayName("행사에 참여한 전체 인원을 중복 없이 조회한다.")
-    @Test
-    void findAllMembersTest() throws Exception {
-        MembersAppResponse memberAppResponse = new MembersAppResponse(List.of("토다리", "쿠키"));
-        given(eventService.findAllMembers(anyString())).willReturn(memberAppResponse);
-
-        mockMvc.perform(get("/api/events/{eventId}/members", "TOKEN"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.memberNames").isArray())
-                .andExpect(jsonPath("$.memberNames[0]").value("토다리"))
-                .andExpect(jsonPath("$.memberNames[1]").value("쿠키"))
-                .andDo(
-                        document("findAllEventMember",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
-                                ),
-                                responseFields(
-                                        fieldWithPath("memberNames").type(JsonFieldType.ARRAY)
-                                                .description("행사 참여자 목록")
-                                )
-                        )
-                );
-    }
-
-    @DisplayName("행사 전체 액션 이력 조회")
-    @Test
-    void findActions() throws Exception {
-        String token = "TOKEN";
-        List<ActionAppResponse> actionAppResponses = List.of(
-                new ActionAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
-                new ActionAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
-                new ActionAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
-                new ActionAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
-        );
-        given(eventService.findActions(token)).willReturn(actionAppResponses);
-
-        mockMvc.perform(get("/api/events/{eventId}/actions", token)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.steps[0].type").value(equalTo("IN")))
-                .andExpect(jsonPath("$.steps[0].stepName").value(equalTo("0차")))
-                .andExpect(jsonPath("$.steps[0].members[0]").value(equalTo("망쵸")))
-                .andExpect(jsonPath("$.steps[0].actions[0].actionId").value(equalTo(1)))
-                .andExpect(jsonPath("$.steps[0].actions[0].name").value(equalTo("망쵸")))
-                .andExpect(jsonPath("$.steps[0].actions[0].price").value(equalTo(null)))
-                .andExpect(jsonPath("$.steps[0].actions[0].sequence").value(equalTo(1)))
-
-                .andExpect(jsonPath("$.steps[1].type").value(equalTo("BILL")))
-                .andExpect(jsonPath("$.steps[1].stepName").value(equalTo("1차")))
-                .andExpect(jsonPath("$.steps[1].members[0]").value(equalTo("망쵸")))
-                .andExpect(jsonPath("$.steps[1].actions[0].actionId").value(equalTo(2)))
-                .andExpect(jsonPath("$.steps[1].actions[0].name").value(equalTo("족발")))
-                .andExpect(jsonPath("$.steps[1].actions[0].price").value(equalTo(100)))
-                .andExpect(jsonPath("$.steps[1].actions[0].sequence").value(equalTo(2)))
-
-                .andExpect(jsonPath("$.steps[1].actions[1].actionId").value(equalTo(3)))
-                .andExpect(jsonPath("$.steps[1].actions[1].name").value(equalTo("인생네컷")))
-                .andExpect(jsonPath("$.steps[1].actions[1].price").value(equalTo(1000)))
-                .andExpect(jsonPath("$.steps[1].actions[1].sequence").value(equalTo(3)))
-
-                .andExpect(jsonPath("$.steps[2].type").value(equalTo("OUT")))
-                .andExpect(jsonPath("$.steps[2].stepName").value(equalTo("1차")))
-                .andExpect(jsonPath("$.steps[2].actions[0].actionId").value(equalTo(4)))
-                .andExpect(jsonPath("$.steps[2].actions[0].name").value(equalTo("망쵸")))
-                .andExpect(jsonPath("$.steps[2].actions[0].price").value(equalTo(null)))
-                .andExpect(jsonPath("$.steps[2].actions[0].sequence").value(equalTo(4)))
-
-                .andDo(
-                        document("findActions",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
-                                ),
-                                responseFields(
-                                        fieldWithPath("steps[].stepName").type(JsonFieldType.STRING)
-                                                .description("스탭 이름"),
-                                        fieldWithPath("steps[].type").type(JsonFieldType.STRING)
-                                                .description("액션 유형 [BILL, IN, OUT]"),
-                                        fieldWithPath("steps[].members").type(JsonFieldType.ARRAY)
-                                                .description("해당 step에 참여한 참여자 목록"),
-                                        fieldWithPath("steps[].actions[].actionId").type(JsonFieldType.NUMBER)
-                                                .description("액션 ID"),
-                                        fieldWithPath("steps[].actions[].name").type(JsonFieldType.STRING)
-                                                .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
-                                        fieldWithPath("steps[].actions[].price").type(JsonFieldType.NUMBER).optional()
-                                                .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
-                                        fieldWithPath("steps[].actions[].sequence").type(JsonFieldType.NUMBER)
-                                                .description("액션 순서"),
-                                        fieldWithPath("steps[].actions[].isFixed").type(JsonFieldType.BOOLEAN)
-                                                .description("지출 내역의 멤버별 고정 지출 금액 생성 여부")
-                                )
-                        )
-                );
-    }
-
-    @DisplayName("행사 전체 액션 이력 조회 v2")
-    @Test
-    void findActions2() throws Exception {
-        String token = "TOKEN";
-        List<ActionAppResponse> actionAppResponses = List.of(
-                new ActionAppResponse(1L, "망쵸", null, 1L, ActionType.IN),
-                new ActionAppResponse(2L, "족발", 100L, 2L, ActionType.BILL),
-                new ActionAppResponse(3L, "인생네컷", 1000L, 3L, ActionType.BILL),
-                new ActionAppResponse(4L, "망쵸", null, 4L, ActionType.OUT)
-        );
-        given(eventService.findActions(token)).willReturn(actionAppResponses);
-
-        mockMvc.perform(get("/api/events/{eventId}/actions/v2", token)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.actions[0].actionId").value(equalTo(1)))
-                .andExpect(jsonPath("$.actions[0].name").value(equalTo("망쵸")))
-                .andExpect(jsonPath("$.actions[0].price").value(equalTo(null)))
-                .andExpect(jsonPath("$.actions[0].sequence").value(equalTo(1)))
-                .andExpect(jsonPath("$.actions[0].type").value(equalTo("IN")))
-
-                .andExpect(jsonPath("$.actions[1].actionId").value(equalTo(2)))
-                .andExpect(jsonPath("$.actions[1].name").value(equalTo("족발")))
-                .andExpect(jsonPath("$.actions[1].price").value(equalTo(100)))
-                .andExpect(jsonPath("$.actions[1].sequence").value(equalTo(2)))
-                .andExpect(jsonPath("$.actions[1].type").value(equalTo("BILL")))
-
-                .andExpect(jsonPath("$.actions[2].actionId").value(equalTo(3)))
-                .andExpect(jsonPath("$.actions[2].name").value(equalTo("인생네컷")))
-                .andExpect(jsonPath("$.actions[2].price").value(equalTo(1000)))
-                .andExpect(jsonPath("$.actions[2].sequence").value(equalTo(3)))
-                .andExpect(jsonPath("$.actions[2].type").value(equalTo("BILL")))
-
-                .andExpect(jsonPath("$.actions[3].actionId").value(equalTo(4)))
-                .andExpect(jsonPath("$.actions[3].name").value(equalTo("망쵸")))
-                .andExpect(jsonPath("$.actions[3].price").value(equalTo(null)))
-                .andExpect(jsonPath("$.actions[3].sequence").value(equalTo(4)))
-                .andExpect(jsonPath("$.actions[3].type").value(equalTo("OUT")))
-
-                .andDo(
-                        document("findActions",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
-                                ),
-                                responseFields(
-                                        fieldWithPath("actions[].actionId").type(JsonFieldType.NUMBER)
-                                                .description("액션 ID"),
-                                        fieldWithPath("actions[].name").type(JsonFieldType.STRING)
-                                                .description("참여자 액션일 경우 참여자 이름, 지출 액션일 경우 지출 내역 이름"),
-                                        fieldWithPath("actions[].price").type(JsonFieldType.NUMBER).optional()
-                                                .description("참여자 액션일 경우 null, 지출 액션일 경우 지출 금액"),
-                                        fieldWithPath("actions[].sequence").type(JsonFieldType.NUMBER)
-                                                .description("액션 순서"),
-                                        fieldWithPath("actions[].type").type(JsonFieldType.STRING)
-                                                .description("액션 타입")
+                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름"),
+                                        fieldWithPath("account").type(JsonFieldType.STRING).description("행사 계좌")
                                 )
                         )
                 );
@@ -249,7 +83,9 @@ public class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void getMemberBillReports() throws Exception {
         List<MemberBillReportAppResponse> memberBillReportAppResponses = List.of(
-                new MemberBillReportAppResponse("소하", 20_000L), new MemberBillReportAppResponse("토다리", 200_000L));
+                new MemberBillReportAppResponse(1L, "소하", false, 20_000L),
+                new MemberBillReportAppResponse(2L, "토다리", false, 200_000L)
+        );
 
         given(eventService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);
 
@@ -257,9 +93,13 @@ public class EventControllerDocsTest extends RestDocsSupport {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].name").value(equalTo("소하")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].memberId").value(equalTo(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].memberName").value(equalTo("소하")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].isDeposited").value(equalTo(false)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].price").value(equalTo(20_000)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].name").value(equalTo("토다리")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].memberId").value(equalTo(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].memberName").value(equalTo("토다리")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].isDeposited").value(equalTo(false)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].price").value(equalTo(200_000)))
                 .andDo(
                         document("getMemberBillReports",
@@ -270,7 +110,11 @@ public class EventControllerDocsTest extends RestDocsSupport {
                                 ),
                                 responseFields(
                                         fieldWithPath("reports").type(JsonFieldType.ARRAY).description("전체 정산 현황 목록"),
-                                        fieldWithPath("reports[0].name").type(JsonFieldType.STRING)
+                                        fieldWithPath("reports[0].memberId").type(JsonFieldType.NUMBER)
+                                                .description("참여자 ID"),
+                                        fieldWithPath("reports[0].memberName").type(JsonFieldType.STRING)
+                                                .description("참여자 이름"),
+                                        fieldWithPath("reports[0].isDeposited").type(JsonFieldType.BOOLEAN)
                                                 .description("참여자 이름"),
                                         fieldWithPath("reports[0].price").type(JsonFieldType.NUMBER)
                                                 .description("참여자 정산 금액")

@@ -2,10 +2,9 @@ package server.haengdong.presentation;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -20,7 +19,6 @@ import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
-import server.haengdong.application.response.MembersAppResponse;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 
@@ -31,7 +29,7 @@ class EventControllerTest extends ControllerTestSupport {
     @Test
     void findEventTest() throws Exception {
         String eventId = "망쵸토큰";
-        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식");
+        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", "토스 1231245");
         given(eventService.findEvent(eventId)).willReturn(eventDetailAppResponse);
 
         mockMvc.perform(get("/api/events/{eventId}", eventId))
@@ -40,25 +38,13 @@ class EventControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.eventName").value("행동대장 회식"));
     }
 
-    @DisplayName("행사에 참여한 전체 인원을 중복 없이 조회한다.")
-    @Test
-    void findAllMembersTest() throws Exception {
-        MembersAppResponse memberAppResponse = new MembersAppResponse(List.of("토다리", "쿠키"));
-        given(eventService.findAllMembers(anyString())).willReturn(memberAppResponse);
-
-        mockMvc.perform(get("/api/events/{eventId}/members", "TOKEN"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.memberNames").isArray())
-                .andExpect(jsonPath("$.memberNames[0]").value("토다리"))
-                .andExpect(jsonPath("$.memberNames[1]").value("쿠키"));
-    }
-
     @DisplayName("참여자별 정산 현황을 조회한다.")
     @Test
     void getMemberBillReports() throws Exception {
         List<MemberBillReportAppResponse> memberBillReportAppResponses = List.of(
-                new MemberBillReportAppResponse("소하", 20_000L), new MemberBillReportAppResponse("토다리", 200_000L));
+                new MemberBillReportAppResponse(1L, "소하", false, 20_000L),
+                new MemberBillReportAppResponse(2L, "토다리", false, 200_000L)
+        );
 
         given(eventService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);
 
@@ -66,9 +52,13 @@ class EventControllerTest extends ControllerTestSupport {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].name").value(equalTo("소하")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].memberId").value(equalTo(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].memberName").value(equalTo("소하")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].isDeposited").value(equalTo(false)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].price").value(equalTo(20_000)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].name").value(equalTo("토다리")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].memberId").value(equalTo(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].memberName").value(equalTo("토다리")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].isDeposited").value(equalTo(false)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].price").value(equalTo(200_000)));
     }
 

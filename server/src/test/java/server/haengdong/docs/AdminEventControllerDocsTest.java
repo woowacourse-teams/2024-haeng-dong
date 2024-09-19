@@ -4,8 +4,8 @@ import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -17,17 +17,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static server.haengdong.support.fixture.Fixture.EVENT_COOKIE;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import server.haengdong.application.EventService;
 import server.haengdong.presentation.admin.AdminEventController;
-import server.haengdong.presentation.request.MemberNameUpdateRequest;
-import server.haengdong.presentation.request.MemberNamesUpdateRequest;
+import server.haengdong.presentation.request.EventUpdateRequest;
 
-public class AdminEventControllerDocsTest extends RestDocsSupport {
+class AdminEventControllerDocsTest extends RestDocsSupport {
 
     private final EventService eventService = mock(EventService.class);
 
@@ -59,40 +57,38 @@ public class AdminEventControllerDocsTest extends RestDocsSupport {
                 );
     }
 
-    @DisplayName("행사 참여 인원의 이름을 수정한다.")
+    @DisplayName("행사 정보를 업데이트한다.")
     @Test
-    void updateMember() throws Exception {
+    void updateEventTest() throws Exception {
         String token = "TOKEN";
-        MemberNamesUpdateRequest memberNameUpdateRequest = new MemberNamesUpdateRequest(List.of(
-                new MemberNameUpdateRequest("토다링", "토쟁이"),
-                new MemberNameUpdateRequest("감자", "고구마")
-        ));
+        EventUpdateRequest eventUpdateRequest = new EventUpdateRequest("행동대장 비대위", "행대뱅크", "12345678");
 
-        String requestBody = objectMapper.writeValueAsString(memberNameUpdateRequest);
+        String requestBody = objectMapper.writeValueAsString(eventUpdateRequest);
 
-        mockMvc.perform(put("/api/admin/events/{eventId}/members/nameChange", token)
-                        .cookie(EVENT_COOKIE)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+        mockMvc.perform(patch("/api/admin/events/{eventId}", token)
+                                .cookie(EVENT_COOKIE)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("updateEventMemberName",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("eventId").description("행사 ID")
-                                ),
-                                requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰")
-                                ),
-                                requestFields(
-                                        fieldWithPath("members").type(JsonFieldType.ARRAY).description("수정할 참여자 목록"),
-                                        fieldWithPath("members[].before").type(JsonFieldType.STRING)
-                                                .description("수정 전 참여자 이름"),
-                                        fieldWithPath("members[].after").type(JsonFieldType.STRING)
-                                                .description("수정 후 참여자 이름")
-                                )
+                        document("updateEvent",
+                                 preprocessRequest(prettyPrint()),
+                                 preprocessResponse(prettyPrint()),
+                                 pathParameters(
+                                         parameterWithName("eventId").description("행사 ID")
+                                 ),
+                                 requestCookies(
+                                         cookieWithName("eventToken").description("행사 관리자 토큰")
+                                 ),
+                                 requestFields(
+                                        fieldWithPath("eventName").type(JsonFieldType.STRING)
+                                                .description("수정할 이벤트 이름").optional(),
+                                        fieldWithPath("bankName").type(JsonFieldType.STRING)
+                                                .description("은행 이름").optional(),
+                                        fieldWithPath("accountNumber").type(JsonFieldType.STRING)
+                                                .description("계좌 번호").optional()
+                                 )
                         )
                 );
     }

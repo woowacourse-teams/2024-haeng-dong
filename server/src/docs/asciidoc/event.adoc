@@ -68,7 +68,7 @@ operation::getEvent[snippets="path-parameters,http-request,response-body,respons
 
 === 행사 전체 참여자 목록 조회
 
-operation::findAllEventMember[snippets="path-parameters,http-request,response-body,response-fields,http-response,response-fields"]
+operation::findAllMembers[snippets="path-parameters,http-request,response-body,response-fields,http-response,response-fields"]
 
 ==== [.red]#Exceptions#
 
@@ -82,9 +82,9 @@ operation::findAllEventMember[snippets="path-parameters,http-request,response-bo
 ]
 ----
 
-=== 행사 전체 액션 이력 조회
+=== 행사 전체 지출 이력 조회
 
-operation::findActions[snippets="path-parameters,http-request,http-response,response-fields"]
+operation::findBills[snippets="path-parameters,http-request,http-response,response-fields"]
 
 ==== [.red]#Exceptions#
 
@@ -98,9 +98,9 @@ operation::findActions[snippets="path-parameters,http-request,http-response,resp
 ]
 ----
 
-=== 행사 참여자 이름 변경
+=== 행사 참여자 정보 변경
 
-operation::updateEventMemberName[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
+operation::updateMembers[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
 ==== [.red]#Exceptions#
 
 [source,json,options="nowrap"]
@@ -146,9 +146,9 @@ operation::updateEventMemberName[snippets="path-parameters,http-request,request-
 ]
 ----
 
-=== 행사 참여자 삭제 (특정 참여자의 모든 참여자 액션 삭제)
+=== 행사 참여자 삭제
 
-operation::deleteAllMemberActionByName[snippets="path-parameters,http-request,http-response,request-cookies"]
+operation::deleteMember[snippets="path-parameters,http-request,http-response,request-cookies"]
 ==== [.red]#Exceptions#
 
 [source,json,options="nowrap"]
