@@ -11,13 +11,18 @@ const useRequestDeleteBill = () => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const {mutate, ...rest} = useMutation({
     mutationFn: ({billId}: WithBillId) => requestDeleteBill({eventId, billId}),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.stepList]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.report]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
     },
   });
+
+  return {
+    deleteBill: mutate,
+    ...rest,
+  };
 };
 
 export default useRequestDeleteBill;

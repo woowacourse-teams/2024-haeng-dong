@@ -11,12 +11,14 @@ const useRequestPostLogin = () => {
   const eventId = getEventIdByUrl();
   const navigate = useNavigate();
 
-  return useMutation({
+  const {mutate, ...rest} = useMutation({
     mutationFn: ({password}: RequestPostToken) => requestPostToken({eventId, password}),
     onSuccess: () => {
       navigate(`${ROUTER_URLS.event}/${eventId}/admin`);
     },
   });
+
+  return {postLogin: mutate, ...rest};
 };
 
 export default useRequestPostLogin;

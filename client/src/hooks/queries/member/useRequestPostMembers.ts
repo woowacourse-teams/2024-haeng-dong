@@ -1,17 +1,17 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-import {RequestPostMember, requestPostMember} from '@apis/request/member';
+import {RequestPostMembers, requestPostMembers} from '@apis/request/member';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
-const useRequestPostMember = () => {
+const useRequestPostMembers = () => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: ({members}: RequestPostMember) => requestPostMember({eventId, members}),
+  const {mutate, ...rest} = useMutation({
+    mutationFn: ({members}: RequestPostMembers) => requestPostMembers({eventId, members}),
     // TODO: (@todari) :  낙관적 업데이트 적고 있었어용
     // onMutate: async ({type, memberName}) => {
     //   await queryClient.cancelQueries({queryKey: [QUERY_KEYS.step]});
@@ -20,11 +20,13 @@ const useRequestPostMember = () => {
     //   });
     // },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMember]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.stepList]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.report]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
     },
   });
+
+  return {postMember: mutate, ...rest};
 };
 
-export default useRequestPostMember;
+export default useRequestPostMembers;

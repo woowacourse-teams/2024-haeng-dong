@@ -9,10 +9,17 @@ import QUERY_KEYS from '@constants/queryKeys';
 const useRequestGetEvent = () => {
   const eventId = getEventIdByUrl();
 
-  return useQuery({
+  const {data, ...rest} = useQuery({
     queryKey: [QUERY_KEYS.eventName],
     queryFn: () => requestGetEvent({eventId}),
   });
+
+  return {
+    eventName: data?.eventName ?? '',
+    bankName: data?.bankName,
+    accountName: data?.accountNumber,
+    ...rest,
+  };
 };
 
 export default useRequestGetEvent;

@@ -9,11 +9,11 @@ interface PostMember {
   name: string;
 }
 
-export interface RequestPostMember {
+export interface RequestPostMembers {
   members: PostMember[];
 }
 
-export const requestPostMember = async ({eventId, members: newMembers}: WithEventId<RequestPostMember>) => {
+export const requestPostMembers = async ({eventId, members: newMembers}: WithEventId<RequestPostMembers>) => {
   return await requestPostWithResponse<Members>({
     baseUrl: BASE_URL.HD,
     endpoint: `${ADMIN_API_PREFIX}/${eventId}/members`,
@@ -40,11 +40,11 @@ interface PutMember {
   isDeposited: boolean;
 }
 
-export interface RequestPutMember {
+export interface RequestPutMembers {
   members: PutMember[];
 }
 
-export const requestPutMember = async ({eventId, members}: WithEventId<RequestPutMember>) => {
+export const requestPutMembers = async ({eventId, members}: WithEventId<RequestPutMembers>) => {
   await requestPut({
     baseUrl: BASE_URL.HD,
     endpoint: `${ADMIN_API_PREFIX}/${eventId}/members`,
@@ -54,14 +54,14 @@ export const requestPutMember = async ({eventId, members}: WithEventId<RequestPu
   });
 };
 
-export const requestGetCurrentMember = async ({eventId}: WithEventId) => {
+export const requestGetCurrentMembers = async ({eventId}: WithEventId) => {
   return await requestGet<Members>({
     baseUrl: BASE_URL.HD,
     endpoint: `${USER_API_PREFIX}/${eventId}/members/current`,
   });
 };
 
-export const requestGetAllMember = async ({eventId}: WithEventId) => {
+export const requestGetAllMembers = async ({eventId}: WithEventId) => {
   return await requestGet<AllMembers>({
     endpoint: `${USER_API_PREFIX}/${eventId}/members`,
   });

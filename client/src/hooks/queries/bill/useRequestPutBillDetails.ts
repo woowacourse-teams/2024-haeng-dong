@@ -3,20 +3,20 @@ import {useMutation, useQueryClient} from '@tanstack/react-query';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
-import {RequestPutBillDetail, requestPutBillDetail} from '@apis/request/bill';
+import {RequestPutBillDetails, requestPutBillDetails} from '@apis/request/bill';
 import {WithBillId} from '@apis/withId.type';
 
-const useRequestPutBillDetail = (actionId: number) => {
+const useRequestPutBillDetails = (billId: number) => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: ({billId, billDetails}: WithBillId<RequestPutBillDetail>) =>
-      requestPutBillDetail({eventId, billId, billDetails}),
+  const {mutate, ...rest} = useMutation({
+    mutationFn: ({billId, billDetails}: WithBillId<RequestPutBillDetails>) =>
+      requestPutBillDetails({eventId, billId, billDetails}),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.stepList]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.report]});
-      queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetail, actionId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
+      queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails, billId]});
     },
     // onMutate: async (newMembers: MemberReportInAction[]) => {
     //   await queryClient.cancelQueries({queryKey: [QUERY_KEYS.memberReportInAction, actionId]});
@@ -39,6 +39,8 @@ const useRequestPutBillDetail = (actionId: number) => {
     //   }
     // },
   });
+
+  return {putBillDetails: mutate, ...rest};
 };
 
-export default useRequestPutBillDetail;
+export default useRequestPutBillDetails;

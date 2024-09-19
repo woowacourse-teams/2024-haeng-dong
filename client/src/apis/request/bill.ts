@@ -43,7 +43,7 @@ export const requestPutBill = async ({eventId, billId, title, price}: WithEventI
   });
 };
 
-export const requestGetBillDetail = async ({eventId, billId}: WithEventId<WithBillId>) => {
+export const requestGetBillDetails = async ({eventId, billId}: WithEventId<WithBillId>) => {
   return requestGet<BillDetails>({
     baseUrl: BASE_URL.HD,
     endpoint: `${USER_API_PREFIX}/${eventId}/bills/${billId}/fixed`,
@@ -56,15 +56,15 @@ interface PutBillDetail {
   isFixed: boolean;
 }
 
-export interface RequestPutBillDetail {
+export interface RequestPutBillDetails {
   billDetails: PutBillDetail[];
 }
 
-export const requestPutBillDetail = async ({
+export const requestPutBillDetails = async ({
   eventId,
   billId,
   billDetails,
-}: WithEventId<WithBillId<RequestPutBillDetail>>) => {
+}: WithEventId<WithBillId<RequestPutBillDetails>>) => {
   await requestPut({
     baseUrl: BASE_URL.HD,
     endpoint: `${ADMIN_API_PREFIX}/${eventId}/bills/${billId}/fixed`,

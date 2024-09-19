@@ -10,13 +10,18 @@ const useRequestPostBill = () => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const {mutate, ...rest} = useMutation({
     mutationFn: ({title, price, members}: RequestPostBill) => requestPostBill({eventId, title, price, members}),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.stepList]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.report]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
     },
   });
+
+  return {
+    postBill: mutate,
+    ...rest,
+  };
 };
 
 export default useRequestPostBill;

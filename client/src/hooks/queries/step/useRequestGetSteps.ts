@@ -1,21 +1,20 @@
 import {useQuery} from '@tanstack/react-query';
 import {useEffect} from 'react';
 
-import {requestGetStepList} from '@apis/request/stepList';
-
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
+import {requestGetSteps} from '@apis/request/step';
 
-const useRequestGetStepList = () => {
+const useRequestGetSteps = () => {
   const eventId = getEventIdByUrl();
   const {updateTotalExpenseAmount} = useTotalExpenseAmountStore();
 
   const queryResult = useQuery({
-    queryKey: [QUERY_KEYS.stepList],
-    queryFn: () => requestGetStepList({eventId}),
+    queryKey: [QUERY_KEYS.steps],
+    queryFn: () => requestGetSteps({eventId}),
   });
 
   useEffect(() => {
@@ -24,7 +23,10 @@ const useRequestGetStepList = () => {
     }
   }, [queryResult.data, queryResult.isSuccess, updateTotalExpenseAmount]);
 
-  return queryResult;
+  return {
+    steps: queryResult.data ?? [],
+    ...queryResult,
+  };
 };
 
-export default useRequestGetStepList;
+export default useRequestGetSteps;
