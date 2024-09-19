@@ -4,6 +4,7 @@ import {reportHandlers} from './handlers/reportHandlers';
 import {stepListHandler} from './handlers/stepListHandler';
 import {testHandler} from './handlers/testHandlers';
 import {memberReportInActionHandler} from './handlers/memberReportInActionHandlers';
+import {eventOutlineHandler} from './handlers/eventOutlineHandler';
 
 export const handlers = [
   ...authHandler,
@@ -12,4 +13,5 @@ export const handlers = [
   ...stepListHandler,
   ...reportHandlers,
   ...memberReportInActionHandler,
+  ...eventOutlineHandler,
 ];
