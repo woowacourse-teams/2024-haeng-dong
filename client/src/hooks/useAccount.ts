@@ -16,10 +16,6 @@ const useAccount = ({bankName, accountNumber}: UseAccountProps) => {
     setAccountNumber(accountNumber);
   }, [bankName, accountNumber]);
 
-  useEffect(() => {
-    console.log(bankName, accountNumber);
-  }, [bankName, accountNumber]);
-
   const {patchEventOutline} = useRequestPatchEventOutline();
 
   const selectBank = (name: string) => {
@@ -34,11 +30,11 @@ const useAccount = ({bankName, accountNumber}: UseAccountProps) => {
     const changedField: Partial<EventOutline> = {};
 
     if (typeof bankName !== 'undefined' && bankName !== bankNameState) {
-      changedField.bankName = bankName;
+      changedField.bankName = bankNameState;
     }
 
     if (typeof accountNumber !== 'undefined' && accountNumber !== accountNumberState) {
-      changedField.accountNumber = accountNumber;
+      changedField.accountNumber = accountNumberState;
     }
 
     return changedField;
@@ -49,8 +45,11 @@ const useAccount = ({bankName, accountNumber}: UseAccountProps) => {
   };
 
   useEffect(() => {
-    setCanSubmit(typeof bankName !== 'undefined' && typeof accountNumber !== 'undefined');
-  }, [bankName, accountNumber]);
+    const existEmptyField = typeof bankName === 'undefined' && typeof accountNumber === 'undefined';
+    const isChanged = bankName !== bankNameState || accountNumber !== accountNumberState;
+
+    setCanSubmit(!existEmptyField && isChanged);
+  }, [bankName, accountNumber, bankNameState, accountNumberState]);
 
   return {
     bankName: bankNameState,
