@@ -78,3 +78,9 @@ export type InputPair = Omit<Bill, 'price'> & {
 };
 
 export type BillInputType = 'title' | 'price';
+
+export type EventOutline = {
+  eventName: string;
+  bankName?: string;
+  accountNumber?: string;
+};

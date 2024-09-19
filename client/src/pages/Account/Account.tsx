@@ -1,14 +1,20 @@
 import {useState} from 'react';
 
 import BankSelectModal from '@components/Modal/BankSelectModal/BankSelectModal';
+import useRequestGetEventOutline from '@hooks/queries/useRequestGetEventOutline';
 
 import useAccount from '@hooks/useAccount';
 
 import {Back, Button, LabelInput, MainLayout, Title, TopNav} from '@components/Design';
 
+import getEventIdByUrl from '@utils/getEventIdByUrl';
+
 const Account = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const {bank, account, canSubmit, selectBank, handleAccount, enrollAccount} = useAccount();
+
+  const eventId = getEventIdByUrl();
+  const serverState = useRequestGetEventOutline({eventId});
+  const {bankName, accountNumber, canSubmit, selectBank, handleAccount, enrollAccount} = useAccount(serverState);
 
   return (
     <MainLayout backgroundColor="white">
@@ -20,7 +26,7 @@ const Account = () => {
         <LabelInput
           labelText="은행"
           placeholder="은행을 선택해주세요"
-          value={bank}
+          value={bankName}
           errorText={null}
           autoFocus={false}
           readOnly
@@ -30,7 +36,7 @@ const Account = () => {
           labelText="계좌번호"
           placeholder="030302-04-191806"
           errorText={null}
-          value={account}
+          value={accountNumber}
           onChange={handleAccount}
           autoFocus={false}
         />

@@ -1,35 +1,27 @@
-import {Outlet, useMatch} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import {useToast} from '@hooks/useToast/useToast';
-import useRequestGetEventName from '@hooks/queries/useRequestGetEventName';
+import {EventOutline} from 'types/serviceType';
 
 import useNavSwitch from '@hooks/useNavSwitch';
+import useEventPageLayout from '@hooks/useEventPageLayout';
 
 import {MainLayout, TopNav, Switch, Button} from '@HDesign/index';
 
-import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
-
-export type EventPageContextProps = {
+export type EventPageContextProps = EventOutline & {
   isAdmin: boolean;
-  eventName: string;
 };
 
 const EventPageLayout = () => {
   const {nav, paths, onChange} = useNavSwitch();
-  const {data} = useRequestGetEventName();
-  const eventName = data?.eventName ?? '';
-  const eventId = getEventIdByUrl();
-
-  const isAdmin = useMatch(ROUTER_URLS.eventManage) !== null;
-  const isLoginPage = useMatch(ROUTER_URLS.eventLogin) !== null;
+  const {eventId, isAdmin, isLoginPage, eventOutline} = useEventPageLayout();
 
   const outletContext: EventPageContextProps = {
     isAdmin,
-    eventName,
+    ...eventOutline,
   };
 
   const {showToast} = useToast();
@@ -41,7 +33,7 @@ const EventPageLayout = () => {
         <Switch value={nav} values={paths} onChange={onChange} />
         {!isLoginPage && (
           <CopyToClipboard
-            text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\n${url}`}
+            text={`[행동대장]\n"${eventOutline.eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\n${url}`}
             onCopy={() =>
               showToast({
                 showingTime: 3000,
