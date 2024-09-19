@@ -12,7 +12,7 @@ export const depositToggleStyle = ({theme, isDeposit}: DepositToggleStylePropsWi
     cursor: 'pointer',
     width: '4rem',
 
-    p: {
+    '.deposit-text': {
       display: 'flex',
       justifyContent: 'center',
       borderRadius: '0.5rem',
