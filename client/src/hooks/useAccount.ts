@@ -6,10 +6,19 @@ import useRequestPatchEventOutline from './queries/useRequestPatchEventOutline';
 
 type UseAccountProps = Omit<EventOutline, 'eventName'>;
 
-const useAccount = (serverState: UseAccountProps) => {
-  const [bankName, setBankName] = useState(serverState.bankName);
-  const [accountNumber, setAccountNumber] = useState(serverState.accountNumber);
+const useAccount = ({bankName, accountNumber}: UseAccountProps) => {
+  const [bankNameState, setBankName] = useState(bankName);
+  const [accountNumberState, setAccountNumber] = useState(accountNumber);
   const [canSubmit, setCanSubmit] = useState(false);
+
+  useEffect(() => {
+    setBankName(bankName);
+    setAccountNumber(accountNumber);
+  }, [bankName, accountNumber]);
+
+  useEffect(() => {
+    console.log(bankName, accountNumber);
+  }, [bankName, accountNumber]);
 
   const {patchEventOutline} = useRequestPatchEventOutline();
 
@@ -24,11 +33,11 @@ const useAccount = (serverState: UseAccountProps) => {
   const getChangedField = () => {
     const changedField: Partial<EventOutline> = {};
 
-    if (bankName !== null && bankName !== serverState.bankName) {
+    if (typeof bankName !== 'undefined' && bankName !== bankNameState) {
       changedField.bankName = bankName;
     }
 
-    if (accountNumber !== null && accountNumber !== serverState.accountNumber) {
+    if (typeof accountNumber !== 'undefined' && accountNumber !== accountNumberState) {
       changedField.accountNumber = accountNumber;
     }
 
@@ -44,8 +53,8 @@ const useAccount = (serverState: UseAccountProps) => {
   }, [bankName, accountNumber]);
 
   return {
-    bankName,
-    accountNumber,
+    bankName: bankNameState,
+    accountNumber: accountNumberState,
     canSubmit,
     selectBank,
     handleAccount,
