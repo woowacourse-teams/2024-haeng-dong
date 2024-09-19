@@ -51,7 +51,7 @@ public class AdminBillController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/api/admin/events/{eventId}/bills/{billId}/fixed")
+    @PutMapping("/api/admin/events/{eventId}/bills/{billId}/details")
     public ResponseEntity<Void> updateBillDetails(
             @PathVariable("eventId") String token,
             @PathVariable("billId") Long billId,

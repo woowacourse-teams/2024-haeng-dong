@@ -67,7 +67,7 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
                         requestFields(
                                 fieldWithPath("title").description("생성할 지출 제목"),
                                 fieldWithPath("price").description("생성할 지출 금액"),
-                                fieldWithPath("members").description("생성할 지출의 참여인원")
+                                fieldWithPath("memberIds").description("생성할 지출의 참여인원 ID 리스트")
                         )
                 ));
     }
@@ -115,7 +115,7 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
 
         String json = objectMapper.writeValueAsString(request);
 
-        mockMvc.perform(put("/api/admin/events/{eventId}/bills/{billId}/fixed", "TOKEN", 1L)
+        mockMvc.perform(put("/api/admin/events/{eventId}/bills/{billId}/details", "TOKEN", 1L)
                         .cookie(EVENT_COOKIE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))

@@ -93,7 +93,7 @@ class BillControllerDocsTest extends RestDocsSupport {
                 List.of(new BillDetailAppResponse(1L, "토다리", 1000L, false)));
         given(billService.findBillDetails(anyString(), anyLong())).willReturn(appResponse);
 
-        mockMvc.perform(get("/api/events/{eventId}/bills/{billId}/fixed", "TOKEN", 1L))
+        mockMvc.perform(get("/api/events/{eventId}/bills/{billId}/details", "TOKEN", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
                 .andExpect(jsonPath("$.members[0].id").value(1L))

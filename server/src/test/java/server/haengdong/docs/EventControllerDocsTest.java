@@ -94,11 +94,11 @@ class EventControllerDocsTest extends RestDocsSupport {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].memberId").value(equalTo(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].name").value(equalTo("소하")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].memberName").value(equalTo("소하")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].isDeposited").value(equalTo(false)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[0].price").value(equalTo(20_000)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].memberId").value(equalTo(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].name").value(equalTo("토다리")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].memberName").value(equalTo("토다리")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].isDeposited").value(equalTo(false)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reports[1].price").value(equalTo(200_000)))
                 .andDo(
@@ -112,7 +112,7 @@ class EventControllerDocsTest extends RestDocsSupport {
                                         fieldWithPath("reports").type(JsonFieldType.ARRAY).description("전체 정산 현황 목록"),
                                         fieldWithPath("reports[0].memberId").type(JsonFieldType.NUMBER)
                                                 .description("참여자 ID"),
-                                        fieldWithPath("reports[0].name").type(JsonFieldType.STRING)
+                                        fieldWithPath("reports[0].memberName").type(JsonFieldType.STRING)
                                                 .description("참여자 이름"),
                                         fieldWithPath("reports[0].isDeposited").type(JsonFieldType.BOOLEAN)
                                                 .description("참여자 이름"),

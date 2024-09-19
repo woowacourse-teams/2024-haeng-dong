@@ -23,7 +23,7 @@ public class BillController {
         return ResponseEntity.ok(stepsResponse);
     }
 
-    @GetMapping("/api/events/{eventId}/bills/{billId}/fixed")
+    @GetMapping("/api/events/{eventId}/bills/{billId}/details")
     public ResponseEntity<BillDetailsResponse> findBillDetails(
             @PathVariable("eventId") String token,
             @PathVariable("billId") Long billId
