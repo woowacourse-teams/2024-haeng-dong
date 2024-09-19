@@ -20,10 +20,6 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: 'cookie',
-        element: <Account />,
-      },
-      {
         index: true,
         path: ROUTER_URLS.main,
         element: <MainPage />,
@@ -51,6 +47,10 @@ const router = createBrowserRouter([
             element: <EventLoginPage />,
           },
         ],
+      },
+      {
+        path: ROUTER_URLS.eventAccount,
+        element: <Account />,
       },
       {
         path: '*',
