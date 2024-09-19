@@ -43,21 +43,21 @@ public class AdminBillController {
     @PutMapping("/api/admin/events/{eventId}/bills/{billId}")
     public ResponseEntity<Void> updateBill(
             @PathVariable("eventId") String token,
-            @PathVariable("billId") Long actionId,
+            @PathVariable("billId") Long billId,
             @Valid @RequestBody BillUpdateRequest request
     ) {
-        billService.updateBill(token, actionId, request.toAppResponse());
+        billService.updateBill(token, billId, request.toAppResponse());
 
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/api/admin/events/{eventId}/bills/{billId}/fixed")
+    @PutMapping("/api/admin/events/{eventId}/bills/{billId}/details")
     public ResponseEntity<Void> updateBillDetails(
             @PathVariable("eventId") String token,
-            @PathVariable("billId") Long actionId,
+            @PathVariable("billId") Long billId,
             @Valid @RequestBody BillDetailsUpdateRequest request
     ) {
-        billService.updateBillDetails(token, actionId, request.toAppRequest());
+        billService.updateBillDetails(token, billId, request.toAppRequest());
 
         return ResponseEntity.ok().build();
     }

@@ -26,12 +26,12 @@ import server.haengdong.application.response.BillDetailAppResponse;
 import server.haengdong.application.response.BillDetailsAppResponse;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.StepAppResponse;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.member.Member;
 import server.haengdong.presentation.BillController;
 import server.haengdong.support.fixture.Fixture;
 
-public class BillControllerDocsTest extends RestDocsSupport {
+class BillControllerDocsTest extends RestDocsSupport {
 
     private final BillService billService = mock(BillService.class);
 
@@ -93,14 +93,14 @@ public class BillControllerDocsTest extends RestDocsSupport {
                 List.of(new BillDetailAppResponse(1L, "토다리", 1000L, false)));
         given(billService.findBillDetails(anyString(), anyLong())).willReturn(appResponse);
 
-        mockMvc.perform(get("/api/events/{eventId}/bills/{billId}/fixed", "TOKEN", 1L))
+        mockMvc.perform(get("/api/events/{eventId}/bills/{billId}/details", "TOKEN", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
                 .andExpect(jsonPath("$.members[0].id").value(1L))
                 .andExpect(jsonPath("$.members[0].memberName").value("토다리"))
                 .andExpect(jsonPath("$.members[0].price").value(1000L))
                 .andExpect(jsonPath("$.members[0].isFixed").value(false))
-                .andDo(document("findBillActionDetails",
+                .andDo(document("findBillDetails",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(

@@ -1,6 +1,6 @@
 package server.haengdong.application.response;
 
-import server.haengdong.domain.action.Bill;
+import server.haengdong.domain.bill.Bill;
 
 public record BillAppResponse(
         Long id,

@@ -1,4 +1,4 @@
-package server.haengdong.domain.action;
+package server.haengdong.domain.bill;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import server.haengdong.domain.event.Event;
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Long> {
 
-    List<Bill> findByEvent(Event event);
+    List<Bill> findAllByEvent(Event event);
 
     Optional<Bill> findFirstByEventOrderByIdDesc(Event event);
 }

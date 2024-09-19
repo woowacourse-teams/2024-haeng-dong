@@ -1,8 +1,8 @@
 package server.haengdong.exception;
 
 import lombok.Getter;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.member.Member;
 import server.haengdong.domain.event.Bank;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.Password;
@@ -39,6 +39,8 @@ public enum HaengdongErrorCode {
     BILL_PRICE_INVALID(String.format("지출 금액은 %,d 이하의 자연수여야 합니다.", Bill.MAX_PRICE)),
     BILL_DETAIL_NOT_FOUND("존재하지 않는 참여자 지출입니다."),
     BILL_PRICE_NOT_MATCHED("지출 총액이 일치하지 않습니다."),
+
+    DIFFERENT_STEP_MEMBERS("회원 목록이 일치하지 않습니다."),
 
     /* Authentication */
 

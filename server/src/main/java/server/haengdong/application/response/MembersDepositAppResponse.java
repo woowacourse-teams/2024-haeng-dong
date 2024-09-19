@@ -1,7 +1,7 @@
 package server.haengdong.application.response;
 
 import java.util.List;
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.member.Member;
 
 public record MembersDepositAppResponse(
         List<MemberDepositAppResponse> members

@@ -14,11 +14,11 @@ import server.haengdong.application.request.MembersUpdateAppRequest;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.BillDetailRepository;
-import server.haengdong.domain.action.BillRepository;
-import server.haengdong.domain.action.Member;
-import server.haengdong.domain.action.MemberRepository;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.bill.BillDetailRepository;
+import server.haengdong.domain.bill.BillRepository;
+import server.haengdong.domain.member.Member;
+import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -162,7 +162,7 @@ public class MemberService {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND);
         }
 
-        billRepository.findByEvent(event).stream()
+        billRepository.findAllByEvent(event).stream()
                 .filter(bill -> bill.containMember(member))
                 .forEach(bill -> bill.removeMemberBillDetail(member));
         billDetailRepository.deleteAllByMember(member);

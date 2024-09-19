@@ -15,10 +15,10 @@ public record BillSaveRequest(
         Long price,
 
         @NotEmpty
-        List<Long> members
+        List<Long> memberIds
 ) {
 
     public BillAppRequest toAppRequest() {
-        return new BillAppRequest(title, price, members);
+        return new BillAppRequest(title, price, memberIds);
     }
 }

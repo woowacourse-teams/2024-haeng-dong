@@ -107,7 +107,7 @@ class AdminBillControllerTest extends ControllerTestSupport {
 
         String json = objectMapper.writeValueAsString(request);
 
-        mockMvc.perform(put("/api/admin/events/{eventId}/bills/{billId}/fixed", "TOKEN", 1L)
+        mockMvc.perform(put("/api/admin/events/{eventId}/bills/{billId}/details", "TOKEN", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andDo(print())

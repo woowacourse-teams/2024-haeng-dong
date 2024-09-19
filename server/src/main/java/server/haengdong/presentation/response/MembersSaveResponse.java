@@ -1,7 +1,6 @@
 package server.haengdong.presentation.response;
 
 import java.util.List;
-import server.haengdong.application.response.MemberSaveAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
 
 public record MembersSaveResponse(

@@ -27,7 +27,7 @@ import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.presentation.MemberController;
 
-public class MemberControllerDocsTest extends RestDocsSupport {
+class MemberControllerDocsTest extends RestDocsSupport {
 
     private final MemberService memberService = mock(MemberService.class);
 

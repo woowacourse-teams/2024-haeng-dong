@@ -1,4 +1,4 @@
-package server.haengdong.domain.action;
+package server.haengdong.domain.bill;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.domain.member.Member;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -54,15 +55,7 @@ public class BillDetail {
         return this.id.equals(id);
     }
 
-    public boolean isMemberId(Long memberId) {
-        return member.isId(memberId);
-    }
-
     public boolean isMember(Member member) {
         return this.member.equals(member);
-    }
-
-    public void setBill(Bill bill) {
-        this.bill = bill;
     }
 }

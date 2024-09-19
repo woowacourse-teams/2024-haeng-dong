@@ -1,4 +1,4 @@
-package server.haengdong.domain.action;
+package server.haengdong.domain.member;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.event.Event;
 import server.haengdong.support.fixture.Fixture;
 
 class MemberBillReportTest {
 
-    @DisplayName("액션 목록으로 참가자 정산 리포트를 생성한다.")
+    @DisplayName("지출 목록으로 참가자 정산 리포트를 생성한다.")
     @Test
     void createByBills() {
         Event event = Fixture.EVENT1;

@@ -2,7 +2,7 @@
 
 === 지출 상세 조회
 
-operation::findBillActionDetailsTest[snippets="path-parameters,http-request,http-response,request-cookies"]
+operation::findBillDetails[snippets="path-parameters,http-request,http-response,request-cookies"]
 
 ==== [.red]#Exceptions#
 
@@ -14,11 +14,11 @@ operation::findBillActionDetailsTest[snippets="path-parameters,http-request,http
     "message": "존재하지 않는 행사입니다."
   },
   {
-    "code": "BILL_ACTION_NOT_FOUND",
+    "code": "BILL_NOT_FOUND",
     "message": "존재하지 않는 지출 액션입니다."
   },
   {
-    "code": "BILL_ACTION_DETAIL_NOT_FOUND",
+    "code": "BILL_DETAIL_NOT_FOUND",
     "message": "존재하지 않는 참여자 지출입니다."
   },
   {
@@ -42,7 +42,7 @@ operation::findBillActionDetailsTest[snippets="path-parameters,http-request,http
 
 === 지출 상세 수정
 
-operation::updateBillActionDetailsTest[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
+operation::updateBillDetails[snippets="path-parameters,http-request,request-body,request-fields,http-response,request-cookies"]
 
 ==== [.red]#Exceptions#
 
@@ -62,15 +62,15 @@ operation::updateBillActionDetailsTest[snippets="path-parameters,http-request,re
     "message": "존재하지 않는 행사입니다."
   },
   {
-    "code": "BILL_ACTION_NOT_FOUND",
+    "code": "BILL_NOT_FOUND",
     "message": "존재하지 않는 지출 액션입니다."
   },
   {
-    "code": "BILL_ACTION_DETAIL_NOT_FOUND",
+    "code": "BILL_DETAIL_NOT_FOUND",
     "message": "존재하지 않는 참여자 지출입니다."
   },
   {
-    "code": "BILL_ACTION_PRICE_NOT_MATCHED",
+    "code": "BILL_PRICE_NOT_MATCHED",
     "message": "지출 총액이 일치하지 않습니다."
   },
   {

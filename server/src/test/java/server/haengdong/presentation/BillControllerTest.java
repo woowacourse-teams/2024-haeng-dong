@@ -16,11 +16,11 @@ import server.haengdong.application.response.BillDetailAppResponse;
 import server.haengdong.application.response.BillDetailsAppResponse;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.StepAppResponse;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.member.Member;
 import server.haengdong.support.fixture.Fixture;
 
-public class BillControllerTest extends ControllerTestSupport {
+class BillControllerTest extends ControllerTestSupport {
 
     @DisplayName("전체 지출 내역을 조회한다.")
     @Test
@@ -55,7 +55,7 @@ public class BillControllerTest extends ControllerTestSupport {
                 List.of(new BillDetailAppResponse(1L, "토다리", 1000L, false)));
         given(billService.findBillDetails(anyString(), anyLong())).willReturn(appResponse);
 
-        mockMvc.perform(get("/api/events/{eventId}/bills/{billId}/fixed", "TOKEN", 1L))
+        mockMvc.perform(get("/api/events/{eventId}/bills/{billId}/details", "TOKEN", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
                 .andExpect(jsonPath("$.members[0].id").value(1L))

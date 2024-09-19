@@ -1,4 +1,4 @@
-package server.haengdong.domain.action;
+package server.haengdong.domain.bill;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.domain.member.Member;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
@@ -111,7 +112,7 @@ public class Bill {
         return results;
     }
 
-    public BillDetail removeMemberBillDetail(Member member) {
+    public void removeMemberBillDetail(Member member) {
         BillDetail foundBillDetail = billDetails.stream()
                 .filter(billDetail -> billDetail.isMember(member))
                 .findFirst()
@@ -119,8 +120,6 @@ public class Bill {
 
         billDetails.remove(foundBillDetail);
         resetBillDetails();
-
-        return foundBillDetail;
     }
 
     public void update(String title, Long price) {
@@ -131,26 +130,11 @@ public class Bill {
         resetBillDetails();
     }
 
-    public void addDetail(BillDetail billDetail) {
-        this.billDetails.add(billDetail);
-        billDetail.setBill(this);
-    }
-
     public boolean containMember(Member member) {
         return billDetails.stream()
                 .anyMatch(billDetail -> billDetail.isMember(member));
     }
 
-    public boolean isFixed() {
-        return billDetails.stream()
-                .anyMatch(BillDetail::isFixed);
-    }
-
-    public boolean isSamePrice(Long price) {
-        return this.price.equals(price);
-    }
-
-    // TODO : 테스트 필요
     public boolean isSameMembers(Bill other) {
         Set<Member> members = Set.copyOf(this.getMembers());
         Set<Member> otherMembers = Set.copyOf(other.getMembers());
@@ -158,12 +142,13 @@ public class Bill {
         return members.equals(otherMembers);
     }
 
-    public Long findPriceByMember(Member member) {
+    public boolean isSamePrice(Long price) {
+        return this.price.equals(price);
+    }
+
+    public boolean isFixed() {
         return billDetails.stream()
-                .filter(billDetail -> billDetail.isMember(member))
-                .map(BillDetail::getPrice)
-                .findFirst()
-                .orElseGet(() -> DEFAULT_PRICE);
+                .anyMatch(BillDetail::isFixed);
     }
 
     public List<Member> getMembers() {

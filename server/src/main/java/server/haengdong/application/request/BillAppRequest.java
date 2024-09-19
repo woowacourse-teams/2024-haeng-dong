@@ -1,8 +1,8 @@
 package server.haengdong.application.request;
 
 import java.util.List;
-import server.haengdong.domain.action.Bill;
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.member.Member;
 import server.haengdong.domain.event.Event;
 
 public record BillAppRequest(

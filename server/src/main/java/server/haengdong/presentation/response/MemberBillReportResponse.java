@@ -4,7 +4,7 @@ import server.haengdong.application.response.MemberBillReportAppResponse;
 
 public record MemberBillReportResponse(
         Long memberId,
-        String name,
+        String memberName,
         boolean isDeposited,
         Long price
 ) {

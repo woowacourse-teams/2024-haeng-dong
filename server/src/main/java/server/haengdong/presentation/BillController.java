@@ -1,6 +1,5 @@
 package server.haengdong.presentation;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.BillService;
 import server.haengdong.application.response.BillDetailsAppResponse;
-import server.haengdong.application.response.LastBillMemberAppResponse;
 import server.haengdong.presentation.response.BillDetailsResponse;
-import server.haengdong.presentation.response.CurrentMembersResponse;
 import server.haengdong.presentation.response.StepsResponse;
 
 @RequiredArgsConstructor
@@ -26,7 +23,7 @@ public class BillController {
         return ResponseEntity.ok(stepsResponse);
     }
 
-    @GetMapping("/api/events/{eventId}/bills/{billId}/fixed")
+    @GetMapping("/api/events/{eventId}/bills/{billId}/details")
     public ResponseEntity<BillDetailsResponse> findBillDetails(
             @PathVariable("eventId") String token,
             @PathVariable("billId") Long billId

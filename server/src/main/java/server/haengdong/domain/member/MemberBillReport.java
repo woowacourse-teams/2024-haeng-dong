@@ -1,10 +1,12 @@
-package server.haengdong.domain.action;
+package server.haengdong.domain.member;
 
 import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
+import server.haengdong.domain.bill.Bill;
+import server.haengdong.domain.bill.BillDetail;
 
 @Getter
 public class MemberBillReport {

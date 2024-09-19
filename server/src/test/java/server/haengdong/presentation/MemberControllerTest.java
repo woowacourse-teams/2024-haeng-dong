@@ -18,7 +18,7 @@ import org.springframework.http.MediaType;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
-import server.haengdong.domain.action.Member;
+import server.haengdong.domain.member.Member;
 
 class MemberControllerTest extends ControllerTestSupport {
 
