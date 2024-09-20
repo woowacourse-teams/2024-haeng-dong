@@ -5,7 +5,7 @@ import MainSection from './Section/MainSection';
 import DescriptionSection from './Section/DescriptionSection';
 import AddBillSection from './Section/AddBillSection';
 import AddMemberSection from './Section/AddMemberSection';
-import MemberReportSection from './Section/MemberReportSection';
+import ReportSection from './Section/ReportSection';
 
 const MainPage = () => {
   return (
@@ -15,7 +15,7 @@ const MainPage = () => {
       <DescriptionSection />
       <AddBillSection />
       <AddMemberSection />
-      <MemberReportSection />
+      <ReportSection />
     </MainLayout>
   );
 };
