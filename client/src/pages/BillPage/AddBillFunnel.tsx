@@ -1,4 +1,4 @@
-import NumberKeyboard from '@components/Design/NumberKeyboard/NumberKeyboard';
+import NumberKeyboard from '@components/Design/components/NumberKeyboard/NumberKeyboard';
 import {css} from '@emotion/react';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
