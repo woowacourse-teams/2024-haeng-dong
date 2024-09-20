@@ -1,6 +1,9 @@
 import {http, HttpResponse} from 'msw';
+
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+
 import {PASSWORD_LENGTH} from '@constants/password';
+
 import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 
 export const authHandler = [

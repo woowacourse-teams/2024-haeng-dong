@@ -1,5 +1,7 @@
 import {http, HttpResponse} from 'msw';
+
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
+
 import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 import {reportData} from '@mocks/sharedState';
 

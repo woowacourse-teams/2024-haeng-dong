@@ -1,6 +1,6 @@
-import {ColorKeys} from '@components/Design/token/colors';
 import {css} from '@emotion/react';
 
+import {ColorKeys} from '@components/Design/token/colors';
 import {Theme} from '@theme/theme.type';
 
 interface ChipStyleProps {

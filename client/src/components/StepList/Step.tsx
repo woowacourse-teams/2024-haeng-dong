@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import {Text} from '@components/Design';
 import Amount from '@components/Design/components/Amount/Amount';
 import ChipGroup from '@components/Design/components/ChipGroup/ChipGroup';
 import ListItem from '@components/Design/components/ListItem/ListItem';
 import {Step as StepType} from 'types/serviceType';
+
+import {Text} from '@components/Design';
 
 interface Prop {
   step: StepType;

@@ -4,6 +4,7 @@ import Text from '@HDcomponents/Text/Text';
 import {amountContainerStyle, titleContainerStyle, titleStyle} from '@HDcomponents/Title/Title.style';
 import {TitleProps} from '@HDcomponents/Title/Title.type';
 import {useTheme} from '@theme/HDesignProvider';
+
 import Icon from '../Icon/Icon';
 import Amount from '../Amount/Amount';
 

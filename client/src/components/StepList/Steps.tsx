@@ -1,7 +1,8 @@
+import {Step as StepType} from 'types/serviceType';
+
 import {Flex, Text} from '@HDesign/index';
 
 import Step from './Step';
-import {Step as StepType} from 'types/serviceType';
 
 interface Props {
   data: StepType[];

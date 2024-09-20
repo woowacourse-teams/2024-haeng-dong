@@ -1,9 +1,10 @@
+import Top from '@components/Design/components/Top/Top';
+
 import useEventLogin from '@hooks/useEventLogin';
 
 import {FixedButton, LabelInput} from '@HDesign/index';
 
 import RULE from '@constants/rule';
-import Top from '@components/Design/components/Top/Top';
 
 const EventLoginPage = () => {
   const {password, errorMessage, handleChange, canSubmit, submitPassword} = useEventLogin();

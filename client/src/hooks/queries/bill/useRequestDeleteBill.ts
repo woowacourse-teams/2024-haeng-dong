@@ -2,10 +2,11 @@ import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {requestDeleteBill} from '@apis/request/bill';
 
+import {WithBillId} from '@apis/withId.type';
+
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
-import {WithBillId} from '@apis/withId.type';
 
 const useRequestDeleteBill = () => {
   const eventId = getEventIdByUrl();

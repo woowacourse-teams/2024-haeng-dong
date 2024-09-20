@@ -1,5 +1,6 @@
-import {Theme} from '@components/Design/theme/theme.type';
 import {css} from '@emotion/react';
+
+import {Theme} from '@components/Design/theme/theme.type';
 
 export const listItemStyle = (theme: Theme) =>
   css({

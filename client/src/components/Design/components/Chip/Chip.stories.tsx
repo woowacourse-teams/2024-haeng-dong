@@ -2,6 +2,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import Chip from '@HDcomponents/Chip/Chip';
+
 import Text from '../Text/Text';
 import Amount from '../Amount/Amount';
 

@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
 import {ColorKeys} from '@components/Design/token/colors';
-import {chipStyle} from './Chip.style';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
+
 import Text from '../Text/Text';
+
+import {chipStyle} from './Chip.style';
 
 interface Props {
   color: ColorKeys;

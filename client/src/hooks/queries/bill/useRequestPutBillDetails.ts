@@ -1,10 +1,12 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
+import {RequestPutBillDetails, requestPutBillDetails} from '@apis/request/bill';
+
+import {WithBillId} from '@apis/withId.type';
+
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
-import {RequestPutBillDetails, requestPutBillDetails} from '@apis/request/bill';
-import {WithBillId} from '@apis/withId.type';
 
 const useRequestPutBillDetails = (billId: number) => {
   const eventId = getEventIdByUrl();

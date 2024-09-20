@@ -1,6 +1,9 @@
 import {http, HttpResponse, PathParams} from 'msw';
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+
 import {AllMembers, Members} from 'types/serviceType';
+
+import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+
 import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 import {memberData} from '@mocks/sharedState';
 

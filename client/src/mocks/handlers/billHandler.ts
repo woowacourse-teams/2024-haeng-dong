@@ -1,7 +1,10 @@
-import {MOCK_API_PREFIX} from './../mockEndpointPrefix';
 import {http, HttpResponse, PathParams} from 'msw';
+
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+
 import {billData, billDetailsData} from '@mocks/sharedState';
+
+import {MOCK_API_PREFIX} from './../mockEndpointPrefix';
 
 interface BillDetailsData {
   [key: string]: {billDetails: {id: number; memberName: string; price: string}[]};

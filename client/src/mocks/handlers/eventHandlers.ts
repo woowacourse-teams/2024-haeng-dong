@@ -1,6 +1,9 @@
 import {http, HttpResponse} from 'msw';
-import {USER_API_PREFIX} from '@apis/endpointPrefix';
+
 import {Event, EventId} from 'types/serviceType';
+
+import {USER_API_PREFIX} from '@apis/endpointPrefix';
+
 import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 import {eventData} from '@mocks/sharedState';

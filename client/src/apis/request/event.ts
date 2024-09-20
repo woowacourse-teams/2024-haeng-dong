@@ -1,7 +1,8 @@
+import {Event, EventId} from 'types/serviceType';
+
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestPostWithResponse, requestPut} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
-import {Event, EventId} from 'types/serviceType';
 
 export interface RequestPostEvent {
   eventName: string;

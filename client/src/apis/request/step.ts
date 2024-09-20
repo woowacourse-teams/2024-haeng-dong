@@ -1,8 +1,9 @@
+import {Steps} from 'types/serviceType';
+
 import {BASE_URL} from '@apis/baseUrl';
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
-import {Steps} from 'types/serviceType';
 
 export const requestGetSteps = async ({eventId}: WithEventId) => {
   const {steps} = await requestGet<Steps>({

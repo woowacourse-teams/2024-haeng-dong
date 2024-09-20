@@ -1,12 +1,13 @@
 import {useNavigate} from 'react-router-dom';
 import {css} from '@emotion/react';
 
+import Top from '@components/Design/components/Top/Top';
+
 import useSetEventNamePage from '@hooks/useSetEventNamePage';
 
 import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back, Flex} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
-import Top from '@components/Design/components/Top/Top';
 
 const SetEventNamePage = () => {
   const navigate = useNavigate();

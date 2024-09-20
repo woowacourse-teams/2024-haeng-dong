@@ -2,6 +2,7 @@ import {Outlet, useMatch} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import {useToast} from '@hooks/useToast/useToast';
+import useRequestGetEvent from '@hooks/queries/event/useRequestGetEvent';
 
 import useNavSwitch from '@hooks/useNavSwitch';
 
@@ -11,7 +12,6 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
-import useRequestGetEvent from '@hooks/queries/event/useRequestGetEvent';
 
 export type EventPageContextProps = {
   isAdmin: boolean;

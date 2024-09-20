@@ -1,12 +1,13 @@
 import {useQuery} from '@tanstack/react-query';
 import {useEffect} from 'react';
 
+import {requestGetSteps} from '@apis/request/step';
+
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
-import {requestGetSteps} from '@apis/request/step';
 
 const useRequestGetSteps = () => {
   const eventId = getEventIdByUrl();
