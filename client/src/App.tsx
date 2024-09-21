@@ -9,6 +9,8 @@ import KakaoInitializer from '@components/KakaoInitializer/KakaoInitializer';
 
 import {HDesignProvider} from '@HDesign/index';
 
+import NetworkStateCatcher from '@utils/NetworkStateCatcher';
+
 import {GlobalStyle} from './GlobalStyle';
 import UnhandledErrorBoundary from './UnhandledErrorBoundary';
 
@@ -21,6 +23,7 @@ const App: React.FC = () => {
           <ErrorCatcher>
             <QueryClientBoundary>
               <ReactQueryDevtools initialIsOpen={false} />
+              <NetworkStateCatcher />
               <KakaoInitializer>
                 <Outlet />
               </KakaoInitializer>

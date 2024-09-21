@@ -10,6 +10,7 @@ const DEFAULT_TIME = 3000;
 
 interface ToastContextProps {
   showToast: (args: ShowToast) => void;
+  closeToast: () => void;
 }
 
 type ShowToast = ToastProps & {
@@ -39,7 +40,7 @@ export const ToastProvider = ({children}: React.PropsWithChildren) => {
   }, [currentToast]);
 
   return (
-    <ToastContext.Provider value={{showToast}}>
+    <ToastContext.Provider value={{showToast, closeToast}}>
       {currentToast && <Toast onClose={closeToast} {...currentToast} />}
       {children}
     </ToastContext.Provider>
