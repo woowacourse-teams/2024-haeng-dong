@@ -41,8 +41,8 @@ const useAccount = () => {
     return changedField;
   };
 
-  const enrollAccount = () => {
-    patchEventOutline(getChangedField());
+  const enrollAccount = async () => {
+    await patchEventOutline(getChangedField());
   };
 
   useEffect(() => {
