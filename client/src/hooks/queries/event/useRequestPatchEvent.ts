@@ -16,7 +16,7 @@ const useRequestPatchEventOutline = () => {
     mutationFn: (eventOutline: Partial<EventOutline>) => requestPatchEventOutline({eventId, eventOutline}),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.eventOutline],
+        queryKey: [QUERY_KEYS.event],
       });
     },
   });

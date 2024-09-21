@@ -10,14 +10,14 @@ const useRequestGetEvent = () => {
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({
-    queryKey: [QUERY_KEYS.eventName],
+    queryKey: [QUERY_KEYS.event],
     queryFn: () => requestGetEvent({eventId}),
   });
 
   return {
     eventName: data?.eventName ?? '',
     bankName: data?.bankName,
-    accountName: data?.accountNumber,
+    accountNumber: data?.accountNumber,
     ...rest,
   };
 };
