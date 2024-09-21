@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 
-import {BillStep, MemberStep} from 'types/serviceType';
+import {Step as StepType} from 'types/serviceType';
 
 import {getTotalExpenseAmount} from '@utils/caculateExpense';
 
@@ -9,10 +9,10 @@ type State = {
 };
 
 type Action = {
-  updateTotalExpenseAmount: (stepList: (MemberStep | BillStep)[]) => void;
+  updateTotalExpenseAmount: (steps: StepType[]) => void;
 };
 
 export const useTotalExpenseAmountStore = create<State & Action>(set => ({
   totalExpenseAmount: 0,
-  updateTotalExpenseAmount: stepList => set({totalExpenseAmount: getTotalExpenseAmount(stepList)}),
+  updateTotalExpenseAmount: (steps: StepType[]) => set({totalExpenseAmount: getTotalExpenseAmount(steps)}),
 }));

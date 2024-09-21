@@ -8,6 +8,7 @@ export interface FixedButtonStyleProps {
 
 export interface ButtonCustomProps {
   onDeleteClick?: () => void;
+  onBackClick?: () => void;
 }
 
 export type FixedButtonOptionProps = FixedButtonStyleProps & ButtonCustomProps;

@@ -2,18 +2,26 @@ import {css} from '@emotion/react';
 
 import {Theme} from '@theme/theme.type';
 
-export const titleContainerStyle = (theme: Theme) =>
+export const titleStyle = (theme: Theme) =>
   css({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     gap: '0.5rem',
     backgroundColor: theme.colors.white,
-    padding: '1rem',
+    padding: '0.5rem',
+    borderRadius: '0.75rem',
   });
 
-export const priceContainerStyle = css({
+export const titleContainerStyle = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  paddingLeft: '0.5rem',
+});
+
+export const amountContainerStyle = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'end',
+  paddingInline: '0.5rem',
 });

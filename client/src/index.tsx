@@ -5,11 +5,6 @@ import * as Sentry from '@sentry/react';
 
 import router from './router';
 
-// async function enableMocking() {
-//   const {worker} = await import('./mocks/browser');
-//   return worker.start();
-// }
-
 Sentry.init({
   dsn: 'https://81685591a3234c689be8c48959b04c88@o4507739935997952.ingest.us.sentry.io/4507739943272448',
   integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
@@ -23,6 +18,11 @@ Sentry.init({
 });
 
 // MSW 모킹을 사용하려면 아래 주석을 해제하고 save해주세요.
+// async function enableMocking() {
+//   const {worker} = await import('./mocks/browser');
+//   return worker.start();
+// }
+
 // enableMocking().then(() => {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

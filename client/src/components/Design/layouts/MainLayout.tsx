@@ -15,7 +15,7 @@ export function MainLayout({backgroundColor, children}: MainLayoutProps) {
       justifyContent="flexStart"
       flexDirection="column"
       padding="1rem 0 0 0"
-      gap="1rem"
+      gap="0.5rem"
       width="100%"
       height="100%"
       minHeight="100vh"
