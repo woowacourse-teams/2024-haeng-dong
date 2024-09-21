@@ -25,7 +25,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
   useImperativeHandle(ref, () => inputRef.current!);
 
   return (
-    <div css={inputBoxStyle(theme, inputType, hasFocus, isError)}>
+    <div css={inputBoxStyle(theme, hasFocus, isError)}>
       <input
         css={inputStyle(theme)}
         ref={inputRef}
@@ -38,9 +38,14 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
         autoFocus={autoFocus}
         {...htmlProps}
       />
-      {value && hasFocus && (
+      {inputType === 'input' && value && hasFocus && (
         <IconButton tabIndex={-1} variants="none" onMouseDown={handleClickDelete}>
           <Icon iconType="inputDelete" />
+        </IconButton>
+      )}
+      {inputType === 'search' && (
+        <IconButton tabIndex={-1} variants="none">
+          <Icon iconType="search" />
         </IconButton>
       )}
     </div>
