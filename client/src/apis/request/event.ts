@@ -1,31 +1,44 @@
-import {EventOutline} from 'types/serviceType';
+import {Event, EventId, EventOutline} from 'types/serviceType';
 
-import {TEMP_PREFIX} from '@apis/tempPrefix';
-import {requestGet, requestPatch, requestPostWithResponse} from '@apis/fetcher';
-import {WithEventId} from '@apis/withEventId.type';
+import {USER_API_PREFIX} from '@apis/endpointPrefix';
+import {requestGet, requestPatch, requestPostWithResponse, requestPut} from '@apis/fetcher';
+import {WithEventId} from '@apis/withId.type';
 
-export type RequestPostNewEvent = {
+export interface RequestPostEvent {
   eventName: string;
   password: string;
-};
+}
 
-export type ResponsePostNewEvent = {
-  eventId: string;
-};
-
-export const requestPostNewEvent = async ({eventName, password}: RequestPostNewEvent) => {
-  return await requestPostWithResponse<ResponsePostNewEvent>({
-    endpoint: TEMP_PREFIX,
+export const requestPostEvent = async ({eventName, password}: RequestPostEvent) => {
+  return await requestPostWithResponse<EventId>({
+    endpoint: USER_API_PREFIX,
     body: {
-      eventName: eventName,
-      password: password,
+      eventName,
+      password,
     },
   });
 };
 
-export const requestGetEventOutline = async ({eventId}: WithEventId) => {
-  return requestGet<EventOutline>({
-    endpoint: `${TEMP_PREFIX}/${eventId}`,
+export const requestGetEvent = async ({eventId}: WithEventId) => {
+  return await requestGet<Event>({
+    endpoint: `${USER_API_PREFIX}/${eventId}`,
+  });
+};
+
+export interface RequestPutEvent {
+  eventName?: string;
+  bankName?: string;
+  accountNumber?: string;
+}
+
+export const requestPutEvent = async ({eventId, eventName, bankName, accountNumber}: WithEventId<RequestPutEvent>) => {
+  return await requestPut({
+    endpoint: `${USER_API_PREFIX}/${eventId}`,
+    body: {
+      eventName,
+      bankName,
+      accountNumber,
+    },
   });
 };
 
@@ -35,7 +48,7 @@ export type RequestPatchEventOutline = WithEventId & {
 
 export const requestPatchEventOutline = async ({eventId, eventOutline}: RequestPatchEventOutline) => {
   return requestPatch({
-    endpoint: `${TEMP_PREFIX}/${eventId}`,
+    endpoint: `${USER_API_PREFIX}/${eventId}`,
     body: {
       ...eventOutline,
     },
