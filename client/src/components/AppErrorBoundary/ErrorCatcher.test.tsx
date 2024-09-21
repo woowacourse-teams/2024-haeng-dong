@@ -3,7 +3,7 @@ import {act, ReactNode} from 'react';
 import {MemoryRouter} from 'react-router-dom';
 
 import FetchError from '@errors/FetchError';
-import {ToastProvider} from '@hooks/useToast/ToastProvider';
+import ToastContainer from '@components/Toast/ToastContainer';
 
 import {useAppErrorStore} from '@store/appErrorStore';
 
@@ -24,11 +24,10 @@ const setup = (ui: ReactNode) =>
   render(
     <HDesignProvider>
       <UnhandledErrorBoundary>
-        <ToastProvider>
-          <ErrorCatcher>
-            <MemoryRouter>{ui}</MemoryRouter>
-          </ErrorCatcher>
-        </ToastProvider>
+        <ToastContainer />
+        <ErrorCatcher>
+          <MemoryRouter>{ui}</MemoryRouter>
+        </ErrorCatcher>
       </UnhandledErrorBoundary>
     </HDesignProvider>,
   );
