@@ -5,6 +5,7 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import {ToastProvider} from '@hooks/useToast/ToastProvider';
 import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
 import ErrorCatcher from '@components/AppErrorBoundary/ErrorCatcher';
+import KakaoInitializer from '@components/KakaoInitializer/KakaoInitializer';
 
 import {HDesignProvider} from '@HDesign/index';
 
@@ -23,7 +24,9 @@ const App: React.FC = () => {
             <QueryClientBoundary>
               <ReactQueryDevtools initialIsOpen={false} />
               <NetworkStateCatcher />
-              <Outlet />
+              <KakaoInitializer>
+                <Outlet />
+              </KakaoInitializer>
             </QueryClientBoundary>
           </ErrorCatcher>
         </ToastProvider>

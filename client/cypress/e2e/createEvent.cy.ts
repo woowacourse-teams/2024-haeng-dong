@@ -1,6 +1,7 @@
 import CONSTANTS from '../constants/constants';
 beforeEach(() => {
   cy.blockSentry();
+  cy.blockKakao();
 });
 
 describe('Flow: 랜딩 페이지에서부터 이벤트를 생성 완료하는 flow', () => {
