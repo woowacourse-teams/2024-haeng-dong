@@ -53,7 +53,8 @@ public class Event {
     private void validateName(String name) {
         int nameLength = name.trim().length();
         if (nameLength < MIN_NAME_LENGTH || MAX_NAME_LENGTH < nameLength) {
-            throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_LENGTH_INVALID);
+            throw new HaengdongException(
+                    HaengdongErrorCode.EVENT_NAME_LENGTH_INVALID, MIN_NAME_LENGTH, MAX_NAME_LENGTH);
         }
         if (isBlankContinuous(name)) {
             throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_CONSECUTIVE_SPACES);
@@ -90,7 +91,8 @@ public class Event {
     private void validateAccountNumber(String accountNumber) {
         int accountLength = accountNumber.trim().length();
         if (accountLength < MIN_ACCOUNT_NUMBER_LENGTH || MAX_ACCOUNT_NUMBER_LENGTH < accountLength) {
-            throw new HaengdongException(HaengdongErrorCode.ACCOUNT_LENGTH_INVALID);
+            throw new HaengdongException(
+                    HaengdongErrorCode.ACCOUNT_LENGTH_INVALID, MIN_ACCOUNT_NUMBER_LENGTH, MAX_ACCOUNT_NUMBER_LENGTH);
         }
     }
 }

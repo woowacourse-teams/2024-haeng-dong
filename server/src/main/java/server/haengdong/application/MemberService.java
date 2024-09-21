@@ -63,8 +63,7 @@ public class MemberService {
 
     private void validateMemberSave(List<String> memberNames, Event event) {
         if (memberNamesDuplicated(memberNames)) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE,
-                    "중복된 이름이 존재합니다. 입력된 이름: " + memberNames);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE, memberNames);
         }
         if (memberRepository.findAllByEvent(event).stream()
                 .anyMatch(member -> memberNames.contains(member.getName()))) {

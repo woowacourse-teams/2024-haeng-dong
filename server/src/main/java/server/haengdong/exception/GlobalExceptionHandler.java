@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> haengdongException(HttpServletRequest req, HaengdongException e) {
         log.warn(LOG_FORMAT, req.getMethod(), req.getRequestURI(), getRequestBody(req), e.getMessage(), e);
         return ResponseEntity.badRequest()
-                .body(ErrorResponse.of(e.getErrorCode()));
+                .body(ErrorResponse.of(e.getErrorCode(), e.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.event.Event;
+import server.haengdong.domain.bill.MemberBillReport;
 import server.haengdong.support.fixture.Fixture;
 
 class MemberBillReportTest {

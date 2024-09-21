@@ -31,7 +31,7 @@ public class Password {
     private void validatePassword(String password) {
         Matcher matcher = PASSWORD_PATTERN.matcher(password);
         if (!matcher.matches()) {
-            throw new HaengdongException(HaengdongErrorCode.EVENT_PASSWORD_FORMAT_INVALID);
+            throw new HaengdongException(HaengdongErrorCode.EVENT_PASSWORD_FORMAT_INVALID, PASSWORD_LENGTH);
         }
     }
 

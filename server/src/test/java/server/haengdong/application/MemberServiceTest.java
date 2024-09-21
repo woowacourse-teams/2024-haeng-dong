@@ -119,7 +119,7 @@ class MemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> memberService.saveMembers(event.getToken(), request))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessageContaining("중복된 이름이 존재합니다. 입력된 이름: [토다리, 토다리]");
+                .hasMessageContaining("중복된 행사 참여 인원 이름이 존재합니다.");
     }
 
     @DisplayName("행사 참여 인원을 삭제한다.")

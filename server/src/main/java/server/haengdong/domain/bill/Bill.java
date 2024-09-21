@@ -63,13 +63,13 @@ public class Bill {
     private void validateTitle(String title) {
         int titleLength = title.trim().length();
         if (titleLength < MIN_TITLE_LENGTH || titleLength > MAX_TITLE_LENGTH) {
-            throw new HaengdongException(HaengdongErrorCode.BILL_TITLE_INVALID);
+            throw new HaengdongException(HaengdongErrorCode.BILL_TITLE_INVALID, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH);
         }
     }
 
     private void validatePrice(Long price) {
         if (price < MIN_PRICE || price > MAX_PRICE) {
-            throw new HaengdongException(HaengdongErrorCode.BILL_PRICE_INVALID);
+            throw new HaengdongException(HaengdongErrorCode.BILL_PRICE_INVALID, MAX_PRICE);
         }
     }
 
