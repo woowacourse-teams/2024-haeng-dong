@@ -12,12 +12,12 @@ import {HDesignProvider} from '@HDesign/index';
 import NetworkStateCatcher from '@utils/NetworkStateCatcher';
 
 import {GlobalStyle} from './GlobalStyle';
-import UnhandledErrorBoundary from './UnhandledErrorBoundary';
+import UnPredictableErrorBoundary from './UnPredictableErrorBoundary';
 
 const App: React.FC = () => {
   return (
     <HDesignProvider>
-      <UnhandledErrorBoundary>
+      <UnPredictableErrorBoundary>
         <Global styles={GlobalStyle} />
         <ToastProvider>
           <ErrorCatcher>
@@ -30,7 +30,7 @@ const App: React.FC = () => {
             </QueryClientBoundary>
           </ErrorCatcher>
         </ToastProvider>
-      </UnhandledErrorBoundary>
+      </UnPredictableErrorBoundary>
     </HDesignProvider>
   );
 };
