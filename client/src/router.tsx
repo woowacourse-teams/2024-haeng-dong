@@ -4,7 +4,7 @@ import {AdminPage} from '@pages/EventPage/AdminPage';
 import {HomePage} from '@pages/EventPage/HomePage';
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
-import Account from '@pages/Account/Account';
+import Account from '@pages/AccountPage/Account';
 import AddBillFunnel from '@pages/BillPage/AddBillFunnel';
 
 import {CompleteCreateEventPage, SetEventNamePage, SetEventPasswordPage} from '@pages/CreateEventPage';
