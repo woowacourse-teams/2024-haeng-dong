@@ -44,6 +44,7 @@ export const ERROR_MESSAGE = {
   purchaseTitle: '지출 이름은 30자 이하의 한글, 영어, 숫자만 가능해요',
   preventEmpty: '값은 비어있을 수 없어요',
   invalidInput: '올바르지 않은 입력이에요.',
+  emptyBank: '계좌번호가 입력되지 않아서\n토스 송금 기능을 사용할 수 없어요',
 };
 
 export const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
