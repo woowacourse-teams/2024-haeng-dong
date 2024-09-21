@@ -2,7 +2,6 @@ import {useNavigate} from 'react-router-dom';
 import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
-import toast from '@hooks/useToast/toast';
 
 import useSetEventNamePage from '@hooks/useSetEventNamePage';
 
@@ -47,15 +46,6 @@ const SetEventNamePage = () => {
           <Top.Line text="정산을 시작하려는" />
           <Top.Line text="행사의 이름은 무엇인가요?" emphasize={['행사의 이름']} />
         </Top>
-        <button
-          onClick={() =>
-            toast.confirm('안녕', {
-              isAutoClosed: false,
-            })
-          }
-        >
-          xhtmxm
-        </button>
 
         <form onSubmit={submitEventName}>
           <LabelInput
