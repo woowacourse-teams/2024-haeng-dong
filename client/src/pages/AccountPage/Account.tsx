@@ -9,12 +9,19 @@ import {Back, FixedButton, Flex, FunnelLayout, LabelInput, MainLayout, Top, TopN
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
+import {ROUTER_URLS} from '@constants/routerUrls';
+
 const Account = () => {
+  const eventToken = getEventIdByUrl();
   const navigate = useNavigate();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const eventId = getEventIdByUrl();
   const {bankName, accountNumber, canSubmit, selectBank, handleAccount, enrollAccount} = useAccount();
+
+  const enrollAccountAndNavigateAdmin = async () => {
+    await enrollAccount();
+    navigate(`${ROUTER_URLS.event}/${eventToken}/admin`);
+  };
 
   return (
     <MainLayout backgroundColor="white">
@@ -30,7 +37,7 @@ const Account = () => {
           <LabelInput
             labelText="은행"
             placeholder="은행을 선택해주세요"
-            value={bankName}
+            value={bankName ?? ''}
             errorText={null}
             autoFocus={false}
             isAlwaysOnLabel
@@ -42,7 +49,7 @@ const Account = () => {
             labelText="계좌번호"
             placeholder="030302-04-191806"
             errorText={null}
-            value={accountNumber}
+            value={accountNumber ?? ''}
             onChange={handleAccount}
             autoFocus={false}
             isAlwaysOnLabel
@@ -57,7 +64,7 @@ const Account = () => {
           )}
         </Flex>
       </FunnelLayout>
-      <FixedButton disabled={!canSubmit} onClick={enrollAccount} onBackClick={() => navigate(-1)}>
+      <FixedButton disabled={!canSubmit} onClick={enrollAccountAndNavigateAdmin} onBackClick={() => navigate(-1)}>
         확인
       </FixedButton>
     </MainLayout>
