@@ -62,19 +62,6 @@ export interface Report {
   price: number;
 }
 
-export type InputPair = Omit<Bill, 'price'> & {
-  price: string;
-  index: number;
-};
-
-export type BillInputType = 'title' | 'price';
-
-export type EventOutline = {
-  eventName: string;
-  bankName?: string;
-  accountNumber?: string;
-};
-
 export interface Reports {
   reports: Report[];
 }

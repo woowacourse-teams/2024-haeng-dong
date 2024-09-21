@@ -1,8 +1,9 @@
+import type {Event} from 'types/serviceType';
+
 import {Outlet} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import {useToast} from '@hooks/useToast/useToast';
-import {EventOutline} from 'types/serviceType';
 
 import useNavSwitch from '@hooks/useNavSwitch';
 import useEventPageLayout from '@hooks/useEventPageLayout';
@@ -11,7 +12,7 @@ import {MainLayout, TopNav, Switch, Button} from '@HDesign/index';
 
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
 
-export type EventPageContextProps = EventOutline & {
+export type EventPageContextProps = Event & {
   isAdmin: boolean;
 };
 

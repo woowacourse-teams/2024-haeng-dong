@@ -1,4 +1,4 @@
-import type {EventOutline} from 'types/serviceType';
+import type {Event} from 'types/serviceType';
 
 import {useEffect, useState} from 'react';
 
@@ -28,13 +28,13 @@ const useAccount = () => {
   };
 
   const getChangedField = () => {
-    const changedField: Partial<EventOutline> = {};
+    const changedField: Partial<Event> = {};
 
-    if (typeof bankName !== 'undefined' && bankName !== bankNameState) {
+    if (bankName.trim() !== '' && bankName !== bankNameState) {
       changedField.bankName = bankNameState;
     }
 
-    if (typeof accountNumber !== 'undefined' && accountNumber !== accountNumberState) {
+    if (accountNumber.trim() !== '' && accountNumber !== accountNumberState) {
       changedField.accountNumber = accountNumberState;
     }
 
@@ -46,7 +46,7 @@ const useAccount = () => {
   };
 
   useEffect(() => {
-    const existEmptyField = typeof bankName === 'undefined' && typeof accountNumber === 'undefined';
+    const existEmptyField = bankName.trim() === '' && accountNumber.trim() === '';
     const isChanged = bankName !== bankNameState || accountNumber !== accountNumberState;
 
     setCanSubmit(!existEmptyField && isChanged);

@@ -16,8 +16,8 @@ const useRequestGetEvent = () => {
 
   return {
     eventName: data?.eventName ?? '',
-    bankName: data?.bankName,
-    accountNumber: data?.accountNumber,
+    bankName: data?.bankName ?? '',
+    accountNumber: data?.accountNumber ?? '',
     ...rest,
   };
 };

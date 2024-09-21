@@ -1,4 +1,4 @@
-import {Event, EventId, EventOutline} from 'types/serviceType';
+import {Event, EventId} from 'types/serviceType';
 
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestPatch, requestPostWithResponse, requestPut} from '@apis/fetcher';
@@ -42,11 +42,11 @@ export const requestPutEvent = async ({eventId, eventName, bankName, accountNumb
   });
 };
 
-export type RequestPatchEventOutline = WithEventId & {
-  eventOutline: Partial<EventOutline>;
+export type RequestPatchEvent = WithEventId & {
+  eventOutline: Partial<Event>;
 };
 
-export const requestPatchEventOutline = async ({eventId, eventOutline}: RequestPatchEventOutline) => {
+export const requestPatchEvent = async ({eventId, eventOutline}: RequestPatchEvent) => {
   return requestPatch({
     endpoint: `${USER_API_PREFIX}/${eventId}`,
     body: {
