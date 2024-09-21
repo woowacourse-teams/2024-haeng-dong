@@ -50,12 +50,12 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: ROUTER_URLS.eventAccount,
-        element: <Account />,
-      },
-      {
         path: ROUTER_URLS.addBill,
         element: <AddBillFunnel />,
+      },
+      {
+        path: ROUTER_URLS.eventUpdate,
+        element: <Account />,
       },
       {
         path: '*',

@@ -6,7 +6,7 @@ export const ROUTER_URLS = {
   event: '/event', // TODO: (@weadie) baseurl을 어떻게 관리할 것인가?
   eventLogin: '/event/:eventId/login',
   eventManage: '/event/:eventId/admin',
-  eventAccount: '/event/:eventId/account',
   home: '/event/:eventId/home',
   addBill: 'event/:eventId/addBill',
+  eventUpdate: 'event/:eventId/update',
 };
