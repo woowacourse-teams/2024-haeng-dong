@@ -10,7 +10,10 @@ export type IconType =
   | 'confirm'
   | 'trash'
   | 'check'
-  | 'x';
+  | 'x'
+  | 'toss'
+  | 'meatballs';
+
 export type IconColor = ColorKeys;
 
 export interface IconStyleProps {

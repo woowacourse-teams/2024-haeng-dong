@@ -14,6 +14,8 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   trash: 'white',
   check: 'primary',
   x: 'gray',
+  toss: 'white',
+  meatballs: 'black',
 };
 
 export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {

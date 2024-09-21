@@ -59,6 +59,32 @@ export const fixedButtonStyle = (props: Required<FixedButtonStyleProps>) => {
   return [getFixedButtonDefaultStyle(props.theme), getFixedButtonVariantsStyle(props.variants, props.theme)];
 };
 
+export const cancleButtonStyle = (theme: Theme) =>
+  css({
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '1rem 1.5rem',
+    borderRadius: '1rem',
+    width: '100%',
+
+    fontFamily: 'Pretendard',
+    fontSize: '1.25rem',
+    fontWeight: '700',
+    lineHeight: '1',
+
+    transition: '0.2s',
+    transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
+
+    backgroundColor: theme.colors.tertiary,
+    color: theme.colors.onTertiary,
+
+    '&:disabled': {
+      backgroundColor: theme.colors.grayContainer,
+      color: theme.colors.onPrimary,
+      cursor: 'default',
+    },
+  });
+
 const getFixedButtonDefaultStyle = (theme: Theme) =>
   css({
     display: 'flex',
@@ -76,7 +102,7 @@ const getFixedButtonDefaultStyle = (theme: Theme) =>
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
 
     '&:disabled': {
-      backgroundColor: theme.colors.tertiary,
+      backgroundColor: theme.colors.grayContainer,
       color: theme.colors.onPrimary,
       cursor: 'default',
     },

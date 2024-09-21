@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import Toss from '@assets/image/Toss_Symbol_Primary.png';
 import InputDelete from '@assets/image/inputDelete.svg';
 import Buljusa from '@assets/image/buljusa.svg';
 import Error from '@assets/image/error.svg';
@@ -9,6 +10,7 @@ import Search from '@assets/image/search.svg';
 import RightChevron from '@assets/image/rightChevron.svg';
 import Check from '@assets/image/check.svg';
 import X from '@assets/image/x.svg';
+import Meatballs from '@assets/image/meatballs.svg';
 import {IconProps} from '@HDcomponents/Icon/Icon.type';
 import {useTheme} from '@theme/HDesignProvider';
 
@@ -24,6 +26,8 @@ const ICON = {
   trash: <Trash />,
   check: <Check />,
   x: <X />,
+  toss: <img src={Toss} width="24" height="24" alt="toss icon" />,
+  meatballs: <Meatballs />,
 };
 
 export const Icon: React.FC<IconProps> = ({iconColor, iconType, ...htmlProps}: IconProps) => {
