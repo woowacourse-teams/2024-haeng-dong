@@ -12,7 +12,7 @@ const useRequestGetEvent = ({...props}: WithErrorHandlingStrategy | null = {}) =
 
   const {data, ...rest} = useQuery({
     queryKey: [QUERY_KEYS.event],
-    queryFn: () => requestGetEvent({eventId}),
+    queryFn: () => requestGetEvent({eventId, ...props}),
   });
 
   return {
