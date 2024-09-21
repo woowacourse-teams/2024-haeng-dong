@@ -24,12 +24,9 @@ const Reports = () => {
   }));
 
   return (
-    <Flex flexDirection="column" gap="0.5rem" paddingInline="0.5rem">
+    <Flex flexDirection="column" gap="0.5rem">
       {reports.length > 0 ? (
-        <>
-          <Input inputType="search" value={name} onChange={changeName} placeholder="참여자 이름" />
-          {matchedReports.length !== 0 && <ExpenseList expenseList={expenseListProp} />}
-        </>
+        <ExpenseList name={name} onSearch={changeName} placeholder="이름 검색" expenseList={expenseListProp} />
       ) : (
         <Flex width="100%" justifyContent="center">
           <Text size="body" textColor="gray" style={{paddingTop: '1rem'}}>
