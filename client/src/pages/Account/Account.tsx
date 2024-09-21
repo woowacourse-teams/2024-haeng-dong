@@ -15,7 +15,7 @@ const Account = () => {
       <TopNav>
         <Back />
       </TopNav>
-      <Title title="계좌번호" description="행사에 사용한 계좌번호를 입력해주세요." />
+      {/* <Title title="계좌번호" description="행사에 사용한 계좌번호를 입력해주세요." /> */}
       <fieldset>
         <LabelInput
           labelText="은행"
