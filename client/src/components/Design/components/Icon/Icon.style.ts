@@ -1,6 +1,5 @@
 import {css} from '@emotion/react';
 
-import {Theme} from '@theme/theme.type';
 import {ColorKeys} from '@token/colors';
 
 import {IconColor, IconStylePropsWithTheme, IconType} from './Icon.type';
@@ -13,6 +12,8 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   confirm: 'complete',
   error: 'warn',
   trash: 'white',
+  check: 'primary',
+  x: 'gray',
 };
 
 export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {
