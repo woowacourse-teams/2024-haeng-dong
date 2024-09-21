@@ -9,6 +9,7 @@ import useShareEvent from '@hooks/useShareEvent';
 import {Button} from '@components/Design';
 
 import isMobileDevice from '@utils/isMobileDevice';
+import getDeletedLastPath from '@utils/getDeletedLastPath';
 
 type ShareEventButtonProps = {
   eventOutline: Event;
@@ -32,7 +33,10 @@ const ShareEventButton = ({eventOutline}: ShareEventButtonProps) => {
         position: 'bottom',
         bottom: '8rem',
       });
-      navigate(`${location.pathname}/edit`);
+
+      const navigatePath = `${getDeletedLastPath(location.pathname)}/admin/edit`;
+
+      navigate(navigatePath);
       return;
     }
 
