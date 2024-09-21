@@ -29,10 +29,10 @@ import server.haengdong.exception.HaengdongException;
 @Entity
 public class Bill {
 
-    public static final int MIN_TITLE_LENGTH = 1;
-    public static final int MAX_TITLE_LENGTH = 30;
-    public static final long MIN_PRICE = 1L;
-    public static final long MAX_PRICE = 10_000_000L;
+    private static final int MIN_TITLE_LENGTH = 1;
+    private static final int MAX_TITLE_LENGTH = 30;
+    private static final long MIN_PRICE = 1L;
+    private static final long MAX_PRICE = 10_000_000L;
     private static final long DEFAULT_PRICE = 0L;
 
     @Id

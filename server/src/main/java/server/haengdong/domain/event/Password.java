@@ -17,7 +17,7 @@ import server.haengdong.exception.HaengdongException;
 @Embeddable
 public class Password {
 
-    public static final int PASSWORD_LENGTH = 4;
+    private static final int PASSWORD_LENGTH = 4;
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(String.format("^\\d{%d}$", PASSWORD_LENGTH));
     private static final String HASH_ALGORITHM = "SHA-256";
 

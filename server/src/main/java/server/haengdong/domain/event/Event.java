@@ -18,10 +18,10 @@ import server.haengdong.exception.HaengdongException;
 @Entity
 public class Event {
 
-    public static final int MIN_NAME_LENGTH = 1;
-    public static final int MAX_NAME_LENGTH = 20;
-    public static final int MIN_ACCOUNT_NUMBER_LENGTH = 8;
-    public static final int MAX_ACCOUNT_NUMBER_LENGTH = 30;
+    private static final int MIN_NAME_LENGTH = 1;
+    private static final int MAX_NAME_LENGTH = 20;
+    private static final int MIN_ACCOUNT_NUMBER_LENGTH = 8;
+    private static final int MAX_ACCOUNT_NUMBER_LENGTH = 30;
     private static final String SPACES = "  ";
 
     @Id
