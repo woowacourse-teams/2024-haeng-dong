@@ -1,11 +1,10 @@
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
 
-import useRequestGetEventName from './queries/useRequestGetEventName';
+import useRequestGetEvent from './queries/event/useRequestGetEvent';
 
 const useShareEvent = (isMobile: boolean) => {
-  const {data} = useRequestGetEventName();
-  const eventName = data?.eventName ?? '';
+  const {eventName} = useRequestGetEvent();
 
   const eventId = getEventIdByUrl();
   const url = getEventPageUrlByEnvironment(eventId, 'home');
