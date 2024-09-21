@@ -13,6 +13,10 @@ const meta = {
     },
   },
   args: {
+    name: '소하',
+    onSearch: () => console.log('쿠키'),
+    placeholder: '안녕',
+
     expenseList: [
       {name: '소하', price: 2000, clipboardText: '토스은행 2000원', onBankButtonClick: () => console.log('소하')},
       {name: '토다리', price: 2000, clipboardText: '토스은행 2000원', onBankButtonClick: () => console.log('토다리')},
