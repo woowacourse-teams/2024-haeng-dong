@@ -2,11 +2,12 @@ import type {EventOutline} from 'types/serviceType';
 
 import {useEffect, useState} from 'react';
 
-import useRequestPatchEventOutline from './queries/useRequestPatchEventOutline';
+import useRequestPatchEvent from './queries/event/useRequestPatchEvent';
+import useRequestGetEvent from './queries/event/useRequestGetEvent';
 
-type UseAccountProps = Omit<EventOutline, 'eventName'>;
+const useAccount = () => {
+  const {bankName, accountNumber} = useRequestGetEvent();
 
-const useAccount = ({bankName, accountNumber}: UseAccountProps) => {
   const [bankNameState, setBankName] = useState(bankName);
   const [accountNumberState, setAccountNumber] = useState(accountNumber);
   const [canSubmit, setCanSubmit] = useState(false);
@@ -16,7 +17,7 @@ const useAccount = ({bankName, accountNumber}: UseAccountProps) => {
     setAccountNumber(accountNumber);
   }, [bankName, accountNumber]);
 
-  const {patchEventOutline} = useRequestPatchEventOutline();
+  const {patchEventOutline} = useRequestPatchEvent();
 
   const selectBank = (name: string) => {
     setBankName(name);
