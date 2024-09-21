@@ -1,10 +1,6 @@
 import * as Sentry from '@sentry/react';
 
-import {ErrorInfo} from '@components/AppErrorBoundary/ErrorCatcher';
-
-import {UNKNOWN_ERROR} from '@constants/errorMessage';
-
-import FetchError from '../errors/FetchError';
+import RequestError from '../errors/RequestError';
 
 /**
  * level은 아래와 같은 용도에 맞게 지정해줍니다.
@@ -21,44 +17,34 @@ type SentryLevel = 'fatal' | 'error' | 'warning' | 'info' | 'debug' | 'log';
 type SendLogToSentry = {
   level?: SentryLevel;
   error: Error;
-  errorInfo: ErrorInfo;
 };
 
-const sendLogToSentry = ({level = 'error', error, errorInfo}: SendLogToSentry) => {
+const sendLogToSentry = ({level = 'error', error}: SendLogToSentry) => {
   Sentry.withScope(scope => {
-    const {errorCode, message} = errorInfo;
     scope.setLevel(level);
-
     scope.setTag('environment', process.env.NODE_ENV);
-
-    if (error instanceof FetchError) {
+    if (error instanceof RequestError) {
+      const {errorCode, message} = error;
       scope.setTags({
         endpoint: error.endpoint,
         url: window.location.href,
-        errorCode,
         errorMessage: message,
         status: error.status,
-        // requestBody: JSON.stringify(error.requestBody),
+        errorCode,
+        requestBody: JSON.stringify(error.requestBody),
         method: error.method,
       });
-
-      Sentry.captureMessage(`${errorCode}`);
-    } else if (error instanceof Error) {
-      scope.setTags({
-        url: window.location.href,
-        errorCode,
-        errorMessage: message,
-      });
-
       Sentry.captureMessage(`${errorCode}`);
     } else {
+      const {name, message} = error;
+
       scope.setTags({
         url: window.location.href,
-        errorCode,
-        message: UNKNOWN_ERROR,
-        name: UNKNOWN_ERROR,
+        name,
+        message,
       });
-      Sentry.captureMessage(`${errorCode}`);
+
+      Sentry.captureMessage(`${name}`);
     }
   });
 };

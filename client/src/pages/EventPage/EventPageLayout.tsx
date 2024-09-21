@@ -1,17 +1,10 @@
-import {Outlet, useMatch} from 'react-router-dom';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import {Outlet} from 'react-router-dom';
 
-import useRequestGetEvent from '@hooks/queries/event/useRequestGetEvent';
-import toast from '@hooks/useToast/toast';
+import useEventPageLayout from '@hooks/useEventPageLayout';
 
-import useNavSwitch from '@hooks/useNavSwitch';
+import {ShareEventButton} from '@components/ShareEventButton';
 
-import {MainLayout, TopNav, Switch, Button} from '@HDesign/index';
-
-import getEventIdByUrl from '@utils/getEventIdByUrl';
-import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
-
-import {ROUTER_URLS} from '@constants/routerUrls';
+import {MainLayout, TopNav, Switch} from '@HDesign/index';
 
 export type EventPageContextProps = {
   isAdmin: boolean;
@@ -19,39 +12,19 @@ export type EventPageContextProps = {
 };
 
 const EventPageLayout = () => {
-  const {nav, paths, onChange} = useNavSwitch();
-  const {eventName} = useRequestGetEvent();
-  const eventId = getEventIdByUrl();
-
-  const isAdmin = useMatch(ROUTER_URLS.eventManage) !== null;
-  const isLoginPage = useMatch(ROUTER_URLS.eventLogin) !== null;
+  const {navProps, isAdmin, isLoginPage, eventName} = useEventPageLayout();
+  const {nav, paths, onChange} = navProps;
 
   const outletContext: EventPageContextProps = {
     isAdmin,
     eventName,
   };
 
-  const url = getEventPageUrlByEnvironment(eventId, 'home');
-
   return (
     <MainLayout backgroundColor="gray">
       <TopNav>
         <Switch value={nav} values={paths} onChange={onChange} />
-        {!isLoginPage && (
-          <CopyToClipboard
-            text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\n${url}`}
-            onCopy={() =>
-              toast.confirm('링크가 복사되었어요 :) \n참여자들에게 링크를 공유해 주세요!', {
-                showingTime: 3000,
-                position: 'bottom',
-              })
-            }
-          >
-            <Button size="small" variants="secondary">
-              정산 초대하기
-            </Button>
-          </CopyToClipboard>
-        )}
+        {!isLoginPage && <ShareEventButton />}
       </TopNav>
       <Outlet context={outletContext} />
     </MainLayout>

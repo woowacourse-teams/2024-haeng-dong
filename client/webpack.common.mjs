@@ -46,6 +46,10 @@ export default {
           },
         ],
       },
+      {
+        test: /\.png$/i,
+        loader: 'file-loader',
+      },
     ],
   },
   plugins: [

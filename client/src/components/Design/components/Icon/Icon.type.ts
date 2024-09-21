@@ -1,4 +1,3 @@
-import {Meatballs} from '@assets/image/meatballs.svg';
 import {Theme} from '@theme/theme.type';
 import {ColorKeys} from '@token/colors';
 
@@ -10,7 +9,11 @@ export type IconType =
   | 'error'
   | 'confirm'
   | 'trash'
+  | 'check'
+  | 'x'
+  | 'toss'
   | 'meatballs';
+
 export type IconColor = ColorKeys;
 
 export interface IconStyleProps {

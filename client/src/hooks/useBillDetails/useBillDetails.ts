@@ -6,7 +6,7 @@ import useRequestGetBillDetails from '@hooks/queries/bill/useRequestGetBillDetai
 import useRequestPutBillDetails from '@hooks/queries/bill/useRequestPutBillDetails';
 
 const useBillDetails = (billId: number, totalPrice: number, onClose: () => void) => {
-  const {reportFromServer, isSuccess} = useRequestGetBillDetails(billId);
+  const {reportFromServer, isSuccess} = useRequestGetBillDetails({billId});
   const {putBillDetails} = useRequestPutBillDetails(billId);
 
   const [billDetails, setBillDetails] = useState<BillDetail[]>(reportFromServer);

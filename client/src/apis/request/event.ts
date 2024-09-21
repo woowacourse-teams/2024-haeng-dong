@@ -1,4 +1,5 @@
 import {Event, EventId} from 'types/serviceType';
+import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestPostWithResponse, requestPut} from '@apis/fetcher';
@@ -19,9 +20,10 @@ export const requestPostEvent = async ({eventName, password}: RequestPostEvent) 
   });
 };
 
-export const requestGetEvent = async ({eventId}: WithEventId) => {
+export const requestGetEvent = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
   return await requestGet<Event>({
     endpoint: `${USER_API_PREFIX}/${eventId}`,
+    ...props,
   });
 };
 

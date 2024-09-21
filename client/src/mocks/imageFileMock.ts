@@ -1,7 +1,7 @@
 module.exports = {
   process() {
     return {
-      code: 'module.exports = "svg-mock";',
+      code: 'module.exports = "imageFileMock";',
     };
   },
 };

@@ -12,12 +12,23 @@ const Reports = () => {
     setName(target.value);
   };
 
+  const onBankButtonClick = () => {
+    const url = 'supertoss://';
+    window.location.href = url;
+  };
+
+  const expenseListProp = matchedReports.map(member => ({
+    ...member,
+    clipboardText: `계좌번호 받아와야 함 ${member.price}원`,
+    onBankButtonClick,
+  }));
+
   return (
     <Flex flexDirection="column" gap="0.5rem" paddingInline="0.5rem">
       {reports.length > 0 ? (
         <>
           <Input inputType="search" value={name} onChange={changeName} placeholder="참여자 이름" />
-          {matchedReports.length !== 0 && <ExpenseList expenseList={matchedReports} />}
+          {matchedReports.length !== 0 && <ExpenseList expenseList={expenseListProp} />}
         </>
       ) : (
         <Flex width="100%" justifyContent="center">
