@@ -75,7 +75,7 @@ operation::updateBill[snippets="path-parameters,http-request,request-body,reques
    },
    {
       "code":"BILL_NOT_FOUND",
-      "message":"존재하지 않는 지출 액션입니다."
+      "message":"존재하지 않는 지출입니다."
    },
    {
       "code":"TOKEN_NOT_FOUND",
