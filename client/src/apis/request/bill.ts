@@ -1,76 +1,80 @@
-import type {Bill, MemberReportInAction} from 'types/serviceType';
+import type {BillDetails} from 'types/serviceType';
 
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {BASE_URL} from '@apis/baseUrl';
-import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestDelete, requestGet, requestPostWithoutResponse, requestPut} from '@apis/fetcher';
-import {WithEventId} from '@apis/withEventId.type';
+import {WithBillId, WithEventId} from '@apis/withId.type';
 
-type RequestPostBillList = {
-  billList: Bill[];
-};
+export interface RequestPostBill {
+  title: string;
+  price: number;
+  members: number[];
+}
 
-export const requestPostBillList = async ({eventId, billList}: WithEventId<RequestPostBillList>) => {
+export const requestPostBill = async ({eventId, title, price, members}: WithEventId<RequestPostBill>) => {
   await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions`,
-    body: {
-      actions: billList,
-    },
-  });
-};
-
-type RequestBillAction = {
-  actionId: number;
-};
-
-export const requestDeleteBillAction = async ({eventId, actionId}: WithEventId<RequestBillAction>) => {
-  await requestDelete({
-    baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}`,
-  });
-};
-
-type RequestPutBillAction = Bill & RequestBillAction;
-
-export const requestPutBillAction = async ({eventId, actionId, title, price}: WithEventId<RequestPutBillAction>) => {
-  await requestPut({
-    baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/bills`,
     body: {
       title,
       price,
+      members,
     },
   });
 };
 
-export type MemberReportList = {members: MemberReportInAction[]};
-
-export const requestGetMemberReportListInAction = async ({
-  eventId,
-  actionId,
-  ...props
-}: WithEventId<WithErrorHandlingStrategy<RequestBillAction>>) => {
-  return requestGet<MemberReportList>({
+export const requestDeleteBill = async ({eventId, billId}: WithEventId<WithBillId>) => {
+  await requestDelete({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}/fixed`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/bills/${billId}`,
+  });
+};
+
+export interface RequestPutBill {
+  title: string;
+  price: number;
+}
+
+export const requestPutBill = async ({eventId, billId, title, price}: WithEventId<WithBillId<RequestPutBill>>) => {
+  await requestPut({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/bills/${billId}`,
+    body: {title, price},
+  });
+};
+
+export const requestGetBillDetails = async ({
+  eventId,
+  billId,
+  ...props
+}: WithEventId<WithErrorHandlingStrategy<WithBillId>>) => {
+  return requestGet<BillDetails>({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${USER_API_PREFIX}/${eventId}/bills/${billId}/fixed`,
     ...props,
   });
 };
 
-type RequestPutMemberReportList = RequestBillAction & MemberReportList;
+interface PutBillDetail {
+  id: number;
+  price: number;
+  isFixed: boolean;
+}
 
-export const requestPutMemberReportListInAction = async ({
+export interface RequestPutBillDetails {
+  billDetails: PutBillDetail[];
+}
+
+export const requestPutBillDetails = async ({
   eventId,
-  actionId,
-  members,
-}: WithEventId<RequestPutMemberReportList>) => {
-  return requestPut({
+  billId,
+  billDetails,
+}: WithEventId<WithBillId<RequestPutBillDetails>>) => {
+  await requestPut({
     baseUrl: BASE_URL.HD,
-    endpoint: `${TEMP_PREFIX}/${eventId}/bill-actions/${actionId}/fixed`,
-    body: {
-      members,
-    },
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/bills/${billId}/fixed`,
+    body: {billDetails},
   });
 };
