@@ -1,6 +1,6 @@
-import {http, HttpResponse} from 'msw';
+import type {EventId} from 'types/serviceType';
 
-import {Event, EventId} from 'types/serviceType';
+import {http, HttpResponse} from 'msw';
 
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
 

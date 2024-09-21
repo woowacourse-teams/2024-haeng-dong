@@ -13,6 +13,7 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   confirm: 'complete',
   error: 'warn',
   trash: 'white',
+  toss: 'white',
   meatballs: 'black',
 };
 

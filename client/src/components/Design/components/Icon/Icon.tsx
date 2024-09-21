@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import Toss from '@assets/image/Toss_Symbol_Primary.png';
 import InputDelete from '@assets/image/inputDelete.svg';
 import Buljusa from '@assets/image/buljusa.svg';
 import Error from '@assets/image/error.svg';
@@ -21,6 +22,7 @@ const ICON = {
   error: <Error />,
   confirm: <Confirm />,
   trash: <Trash />,
+  toss: <img src={Toss} width="24" height="24" alt="toss icon" />,
   meatballs: <Meatballs />,
 };
 

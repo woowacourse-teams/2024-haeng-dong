@@ -1,6 +1,7 @@
 import {MainLayout} from './layouts/MainLayout';
 import {ContentLayout} from './layouts/ContentLayout';
 import {HDesignProvider, useTheme} from './theme/HDesignProvider';
+import BankSelect from './components/BankSelect/BankSelect';
 import BottomSheet from './components/BottomSheet/BottomSheet';
 import Button from './components/Button/Button';
 import DragHandleItem from './components/DragHandleItem/DragHandleItem';
@@ -26,6 +27,7 @@ import Back from './components/TopNav/Back';
 import TopNav from './components/TopNav/TopNav';
 
 export {
+  BankSelect,
   BottomSheet,
   Button,
   DragHandleItem,
