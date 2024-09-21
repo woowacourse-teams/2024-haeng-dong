@@ -1,12 +1,13 @@
 import {useQuery} from '@tanstack/react-query';
 
 import {requestGetEvent} from '@apis/request/event';
+import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
-const useRequestGetEvent = () => {
+const useRequestGetEvent = ({...props}: WithErrorHandlingStrategy | null = {}) => {
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({

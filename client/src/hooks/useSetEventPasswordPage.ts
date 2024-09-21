@@ -61,4 +61,5 @@ const useSetEventPasswordPage = () => {
 
   return {submitPassword, errorMessage, password, handleChange, onSuccess, canSubmit, isPostEventPending};
 };
+
 export default useSetEventPasswordPage;
