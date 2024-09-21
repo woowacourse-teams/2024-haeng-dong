@@ -8,6 +8,8 @@ import Confirm from '@assets/image/confirm.svg';
 import Trash from '@assets/image/trash.svg';
 import Search from '@assets/image/search.svg';
 import RightChevron from '@assets/image/rightChevron.svg';
+import Check from '@assets/image/check.svg';
+import X from '@assets/image/x.svg';
 import Meatballs from '@assets/image/meatballs.svg';
 import {IconProps} from '@HDcomponents/Icon/Icon.type';
 import {useTheme} from '@theme/HDesignProvider';
@@ -22,6 +24,8 @@ const ICON = {
   error: <Error />,
   confirm: <Confirm />,
   trash: <Trash />,
+  check: <Check />,
+  x: <X />,
   toss: <img src={Toss} width="24" height="24" alt="toss icon" />,
   meatballs: <Meatballs />,
 };
