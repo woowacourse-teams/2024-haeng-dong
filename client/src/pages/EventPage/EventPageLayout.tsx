@@ -1,8 +1,8 @@
 import {Outlet, useMatch} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import {useToast} from '@hooks/useToast/useToast';
 import useRequestGetEvent from '@hooks/queries/event/useRequestGetEvent';
+import toast from '@hooks/useToast/toast';
 
 import useNavSwitch from '@hooks/useNavSwitch';
 
@@ -31,7 +31,6 @@ const EventPageLayout = () => {
     eventName,
   };
 
-  const {showToast} = useToast();
   const url = getEventPageUrlByEnvironment(eventId, 'home');
 
   return (
@@ -42,12 +41,9 @@ const EventPageLayout = () => {
           <CopyToClipboard
             text={`[행동대장]\n"${eventName}"에 대한 정산을 시작할게요:)\n아래 링크에 접속해서 정산 내역을 확인해 주세요!\n${url}`}
             onCopy={() =>
-              showToast({
+              toast.confirm('링크가 복사되었어요 :) \n참여자들에게 링크를 공유해 주세요!', {
                 showingTime: 3000,
-                message: '링크가 복사되었어요 :) \n참여자들에게 링크를 공유해 주세요!',
-                type: 'confirm',
                 position: 'bottom',
-                bottom: '8rem',
               })
             }
           >

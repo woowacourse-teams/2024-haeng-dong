@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 
 import FetchError from '@errors/FetchError';
-import {useToast} from '@hooks/useToast/useToast';
+import toast from '@hooks/useToast/toast';
 
 import {useAppErrorStore} from '@store/appErrorStore';
 
@@ -35,7 +35,6 @@ const isUnhandledError = (errorInfo: ErrorInfo) => {
 
 const ErrorCatcher = ({children}: React.PropsWithChildren) => {
   const {appError} = useAppErrorStore();
-  const {showToast} = useToast();
 
   useEffect(() => {
     if (appError) {
@@ -43,12 +42,9 @@ const ErrorCatcher = ({children}: React.PropsWithChildren) => {
       captureError(appError, errorInfo);
 
       if (!isUnhandledError(errorInfo)) {
-        showToast({
+        toast.error(SERVER_ERROR_MESSAGES[errorInfo.errorCode], {
           showingTime: 3000,
-          message: SERVER_ERROR_MESSAGES[errorInfo.errorCode],
-          type: 'error',
           position: 'bottom',
-          bottom: '8rem',
         });
       } else {
         throw appError;
