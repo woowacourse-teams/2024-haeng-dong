@@ -9,5 +9,4 @@ export const ROUTER_URLS = {
   home: '/event/:eventId/home',
   addBill: 'event/:eventId/addBill',
   eventUpdate: 'event/:eventId/update',
-  update: 'update',
 };

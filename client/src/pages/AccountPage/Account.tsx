@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import BankSelectModal from '@components/Modal/BankSelectModal/BankSelectModal';
 
@@ -7,20 +7,19 @@ import useAccount from '@hooks/useAccount';
 
 import {Back, FixedButton, Flex, FunnelLayout, LabelInput, MainLayout, Top, TopNav} from '@components/Design';
 
-import getEventIdByUrl from '@utils/getEventIdByUrl';
-
-import {ROUTER_URLS} from '@constants/routerUrls';
+import getReplacedLastPath from '@utils/getReplacedLastPath';
 
 const Account = () => {
-  const eventToken = getEventIdByUrl();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const {bankName, accountNumber, canSubmit, selectBank, handleAccount, enrollAccount} = useAccount();
 
   const enrollAccountAndNavigateAdmin = async () => {
     await enrollAccount();
-    navigate(`${ROUTER_URLS.event}/${eventToken}/admin`);
+    navigate(getReplacedLastPath(location.pathname, 'admin'));
   };
 
   return (

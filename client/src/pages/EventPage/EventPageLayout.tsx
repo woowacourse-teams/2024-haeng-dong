@@ -36,7 +36,7 @@ const EventPageLayout = () => {
 
   const induceBankInfoBeforeShare = () => {
     if (eventOutline.bankName === '' || eventOutline.accountNumber === '') {
-      navigate(getReplacedLastPath(location.pathname, ROUTER_URLS.update));
+      navigate(getReplacedLastPath(location.pathname, 'update'));
     }
   };
 
