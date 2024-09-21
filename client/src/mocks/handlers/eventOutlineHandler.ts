@@ -2,12 +2,12 @@ import {http, HttpResponse} from 'msw';
 
 import {EventOutline} from 'types/serviceType';
 
-import {MSW_TEMP_PRIFIX} from '@mocks/serverConstants';
+import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 
 import eventOutline from '../eventOutline.json';
 
 export const eventOutlineHandler = [
-  http.get<any, EventOutline, any, `${typeof MSW_TEMP_PRIFIX}/:eventId`>(`${MSW_TEMP_PRIFIX}/:eventId`, () => {
+  http.get<any, EventOutline, any, `${typeof MOCK_API_PREFIX}/:eventId`>(`${MOCK_API_PREFIX}/:eventId`, () => {
     return HttpResponse.json(eventOutline);
   }),
 ];
