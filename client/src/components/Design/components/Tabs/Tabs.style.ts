@@ -1,53 +1,60 @@
 import {css} from '@emotion/react';
 
-import {Theme} from '@theme/theme.type';
+import {WithTheme} from '@components/Design/type/withTheme';
 
-export const tabListStyle = (theme: Theme) =>
+export const tabListStyle = ({theme}: WithTheme) =>
   css({
     position: 'relative',
 
+    height: '3rem',
+    marginBottom: '0.5rem',
+
+    borderRadius: '0.75rem',
     backgroundColor: theme.colors.white,
 
     cursor: 'pointer',
 
     WebkitTapHighlightColor: 'transparent',
-
-    '&::after': {
-      position: 'absolute',
-      left: 0,
-      bottom: 0,
-      zIndex: 1,
-
-      width: '100%',
-      height: '0.0625rem',
-
-      backgroundColor: theme.colors.gray,
-
-      content: '""',
-    },
   });
 
 export const tabItemStyle = css({
   flex: 1,
 
-  textAlign: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  height: '100%',
 });
 
-export const tabTextStyle = (theme: Theme, selected: boolean) =>
+type WithSelected = WithTheme & {
+  selected: boolean;
+};
+
+type IndicatorType = WithTheme & {
+  tabWidth: number;
+  activeTabIndex: number;
+};
+
+export const tabTextStyle = ({theme, selected}: WithSelected) =>
   css({
     color: selected ? theme.colors.onTertiary : theme.colors.gray,
+
+    zIndex: theme.zIndex.visible,
   });
 
-export const indicatorStyle = (theme: Theme, leftPosition: string, tabLength: number) =>
+export const indicatorStyle = ({theme, tabWidth, activeTabIndex}: IndicatorType) =>
   css({
     position: 'absolute',
-    left: leftPosition,
-    bottom: 0,
-    zIndex: 2,
+    bottom: '0.5rem',
+    left: '0.5rem',
+    width: `${tabWidth}px`,
+    height: 'calc(100% - 1rem)',
 
-    width: `calc(100% / ${tabLength})`,
-    height: '0.125rem',
+    borderRadius: '0.625rem',
+    backgroundColor: theme.colors.tertiary,
 
-    backgroundColor: theme.colors.onSecondary,
-    transition: 'left 0.3s',
+    transform: `translateX(${tabWidth * activeTabIndex}px)`,
+    transition: 'transform 0.3s ease',
+    zIndex: theme.zIndex.normal,
   });
