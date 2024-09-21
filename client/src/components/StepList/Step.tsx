@@ -1,51 +1,34 @@
-import type {BillStep, MemberStep} from 'types/serviceType';
+/** @jsxImportSource @emotion/react */
+import Amount from '@components/Design/components/Amount/Amount';
+import ChipGroup from '@components/Design/components/ChipGroup/ChipGroup';
+import ListItem from '@components/Design/components/ListItem/ListItem';
+import {Step as StepType} from 'types/serviceType';
 
-import {useEffect, useState} from 'react';
+import {Text} from '@components/Design';
 
-import BillStepItem from './BillStepItem';
-import MemberStepItem from './MemberStepItem';
-
-interface StepProps {
-  step: BillStep | MemberStep;
-  isAddEditableItem: boolean;
-  lastBillItemIndex: number;
-  lastItemIndex: number;
-  index: number;
-  setIsAddEditableItem: React.Dispatch<React.SetStateAction<boolean>>;
+interface Prop {
+  step: StepType;
 }
 
-const Step = ({step, isAddEditableItem, lastBillItemIndex, lastItemIndex, setIsAddEditableItem, index}: StepProps) => {
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState<boolean>(false);
-  const [isLastBillItem, setIsLastBillItem] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (index === lastBillItemIndex && lastBillItemIndex === lastItemIndex) {
-      // index를 사용하여 마지막 BillStep인지 확인
-      setIsLastBillItem(true);
-    } else {
-      setIsLastBillItem(false);
-    }
-  }, [index, lastBillItemIndex]);
-
-  if (step.actions && step.type === 'BILL') {
-    return (
-      <BillStepItem
-        index={index}
-        step={step as BillStep}
-        isOpenBottomSheet={isOpenBottomSheet}
-        setIsOpenBottomSheet={setIsOpenBottomSheet}
-        isAddEditableItem={isAddEditableItem}
-        setIsAddEditableItem={setIsAddEditableItem}
-        isLastBillItem={isLastBillItem}
-      />
-    );
-  } else if (step.actions && (step.type === 'IN' || step.type === 'OUT')) {
-    return (
-      <MemberStepItem step={step} isOpenBottomSheet={isOpenBottomSheet} setIsOpenBottomSheet={setIsOpenBottomSheet} />
-    );
-  } else {
-    return <></>;
-  }
+const Step = ({step}: Prop) => {
+  return (
+    <ListItem>
+      <ListItem.Row>
+        <ChipGroup color="gray" texts={step.members.map(member => member.name)} />
+        <Text size="caption" textColor="gray">
+          {step.members.length}명
+        </Text>
+      </ListItem.Row>
+      {step.bills.map(bill => {
+        return (
+          <ListItem.Row>
+            <Text size="bodyBold">{bill.title}</Text>
+            <Amount amount={bill.price} />
+          </ListItem.Row>
+        );
+      })}
+    </ListItem>
+  );
 };
 
 export default Step;

@@ -1,80 +1,67 @@
-export type MemberType = 'IN' | 'OUT';
+// *******************************************************************
+// ******************** UX 개선 이후 변경된 부분들 24.09.19 ****************
+// *******************************************************************
 
-export type InOutType = '늦참' | '탈주';
+export interface Steps {
+  steps: Step[];
+}
 
-export type MemberReport = {
-  name: string;
-  price: number;
-};
+export interface Step {
+  bills: Bill[];
+  members: Member[];
+}
 
-export type MemberReportInAction = MemberReport & {
-  isFixed: boolean;
-};
-
-export type Bill = {
+export interface Bill {
+  id: number;
   title: string;
   price: number;
-};
-
-type StepBase = {
-  members: string[];
-};
-
-export type MemberStep = StepBase & {
-  type: MemberType;
-  stepName: null;
-  actions: MemberAction[];
-};
-
-export type BillStep = StepBase & {
-  type: 'BILL';
-  stepName: string;
-  actions: BillAction[];
-};
-
-// (@weadie) 준 데이터 형식에서 steps를 빼내 flat하게 사용중. 일관성있게 하는게 좋긴 하나 사용시 번거로움이 있을 거라고 판단.
-export type StepList = {
-  steps: (MemberStep | BillStep)[];
-};
-
-export type Action = {
-  actionId: number;
-  name: string;
-  price: number | null;
-  sequence: number;
   isFixed: boolean;
-};
+}
 
-export type BillAction = Omit<Action, 'price'> & {
+export interface BillDetail {
+  id: number;
+  memberName: string;
   price: number;
-};
+  isFixed: boolean;
+}
 
-export type MemberAction = Omit<Action, 'price'> & {
-  price: null;
-};
+export interface BillDetails {
+  billDetails: BillDetail[];
+}
 
-export type Member = {
+export interface Member {
+  id: number;
   name: string;
-  status: MemberType;
-};
+}
 
-export type ActionType = 'IN' | 'OUT' | 'BILL';
+export interface Members {
+  members: Member[];
+}
 
-// export type StepList = {
-//   actions: Action[];
-// };
+export interface MemberWithDeposited extends Member {
+  isDeposited: boolean;
+}
 
-export type ConvertedAction = {
-  actionId: number;
+export interface AllMembers {
+  members: MemberWithDeposited[];
+}
+export interface EventId {
+  eventId: string;
+}
+
+export interface Event {
+  eventName: string;
+  bankName: string;
+  accountNumber: string;
+}
+
+export interface Report {
+  memberId: number;
   name: string;
-  price: string | null;
-  sequence: number;
-  type: ActionType;
-};
+  isDeposited: boolean;
+  price: number;
+}
 
-export type InputPair = Omit<Bill, 'price'> & {
-  price: string;
-  index: number;
-};
-
-export type BillInputType = 'title' | 'price';
+export interface Reports {
+  reports: Report[];
+}
