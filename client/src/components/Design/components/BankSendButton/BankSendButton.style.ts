@@ -4,9 +4,20 @@ import {Theme} from '@components/Design/theme/theme.type';
 
 export const bankButtonStyle = (theme: Theme) =>
   css({
-    padding: '0.125rem 0.34375rem',
+    width: '3.25rem',
+    height: '1.5rem',
 
     backgroundColor: theme.colors.tertiary,
+
+    borderRadius: '0.5rem',
+  });
+
+export const isFinishStyle = (theme: Theme) =>
+  css({
+    width: '3.25rem',
+    height: '1.5rem',
+
+    backgroundColor: theme.colors.grayContainer,
 
     borderRadius: '0.5rem',
   });
