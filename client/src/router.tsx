@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         element: <AddBillFunnel />,
       },
       {
-        path: ROUTER_URLS.eventUpdate,
+        path: ROUTER_URLS.eventEdit,
         element: <Account />,
       },
       {

@@ -7,7 +7,7 @@ import useAccount from '@hooks/useAccount';
 
 import {Back, FixedButton, Flex, FunnelLayout, LabelInput, MainLayout, Top, TopNav} from '@components/Design';
 
-import getReplacedLastPath from '@utils/getReplacedLastPath';
+import getDeletedLastPath from '@utils/getDeletedLastPath';
 
 const Account = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Account = () => {
 
   const enrollAccountAndNavigateAdmin = async () => {
     await enrollAccount();
-    navigate(getReplacedLastPath(location.pathname, 'admin'));
+    navigate(getDeletedLastPath(location.pathname));
   };
 
   return (

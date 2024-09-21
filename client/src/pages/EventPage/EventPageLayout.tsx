@@ -11,7 +11,7 @@ import useEventPageLayout from '@hooks/useEventPageLayout';
 import {MainLayout, TopNav, Switch, Button} from '@HDesign/index';
 
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
-import getReplacedLastPath from '@utils/getReplacedLastPath';
+import getReplacedLastPath from '@utils/getDeletedLastPath';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -36,7 +36,7 @@ const EventPageLayout = () => {
 
   const induceBankInfoBeforeShare = () => {
     if (eventOutline.bankName === '' || eventOutline.accountNumber === '') {
-      navigate(getReplacedLastPath(location.pathname, 'update'));
+      navigate(`${location.pathname}/edit`);
     }
   };
 
