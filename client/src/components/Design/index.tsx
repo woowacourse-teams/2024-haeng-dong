@@ -16,7 +16,6 @@ import Input from './components/Input/Input';
 import LabelInput from './components/LabelInput/LabelInput';
 import ListButton from './components/ListButton/ListButton';
 import LabelGroupInput from './components/LabelGroupInput/LabelGroupInput';
-import Search from './components/Search/Search';
 import Switch from './components/Switch/Switch';
 import Tab from './components/Tabs/Tab';
 import Tabs from './components/Tabs/Tabs';
@@ -42,7 +41,6 @@ export {
   LabelInput,
   ListButton,
   LabelGroupInput,
-  Search,
   Switch,
   Tab,
   Tabs,
