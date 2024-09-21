@@ -1,6 +1,6 @@
 import {Event, EventId} from 'types/serviceType';
 
-import {USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestPatch, requestPostWithResponse, requestPut} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
@@ -25,30 +25,13 @@ export const requestGetEvent = async ({eventId}: WithEventId) => {
   });
 };
 
-export interface RequestPutEvent {
-  eventName?: string;
-  bankName?: string;
-  accountNumber?: string;
-}
-
-export const requestPutEvent = async ({eventId, eventName, bankName, accountNumber}: WithEventId<RequestPutEvent>) => {
-  return await requestPut({
-    endpoint: `${USER_API_PREFIX}/${eventId}`,
-    body: {
-      eventName,
-      bankName,
-      accountNumber,
-    },
-  });
-};
-
 export type RequestPatchEvent = WithEventId & {
   eventOutline: Partial<Event>;
 };
 
 export const requestPatchEvent = async ({eventId, eventOutline}: RequestPatchEvent) => {
   return requestPatch({
-    endpoint: `${USER_API_PREFIX}/${eventId}`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
     body: {
       ...eventOutline,
     },
