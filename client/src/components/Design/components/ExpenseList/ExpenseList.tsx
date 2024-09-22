@@ -9,10 +9,11 @@ import IconButton from '../IconButton/IconButton';
 import Flex from '../Flex/Flex';
 import Input from '../Input/Input';
 import Amount from '../Amount/Amount';
+import DepositCheck from '../DepositCheck/DepositCheck';
 
 import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';
 
-function ExpenseItem({name, price, onBankButtonClick, clipboardText, ...divProps}: ExpenseItemProps) {
+function ExpenseItem({name, price, isDeposited, onBankButtonClick, clipboardText, ...divProps}: ExpenseItemProps) {
   return (
     <Flex
       justifyContent="spaceBetween"
@@ -22,9 +23,12 @@ function ExpenseItem({name, price, onBankButtonClick, clipboardText, ...divProps
       paddingInline="0.5rem"
       {...divProps}
     >
-      <Text size="bodyBold" color="onTertiary">
-        {name}
-      </Text>
+      <Flex gap="0.5rem" alignItems="center">
+        <DepositCheck isDeposited={isDeposited} />
+        <Text size="bodyBold" color="onTertiary">
+          {name}
+        </Text>
+      </Flex>
       <Flex alignItems="center" gap="0.5rem">
         <Amount amount={price} />
         {isMobileDevice() ? (
@@ -52,8 +56,7 @@ function ExpenseList({name, onSearch, placeholder, expenseList = []}: ExpenseLis
       otherStyle={{borderRadius: '1rem'}}
     >
       <Input inputType="search" value={name} onChange={onSearch} placeholder={placeholder} />
-      {expenseList.length !== 0 &&
-        expenseList.map((expense, index: number) => <ExpenseItem key={expense.name + index} {...expense} />)}
+      {expenseList.length !== 0 && expenseList.map(expense => <ExpenseItem key={expense.memberId} {...expense} />)}
     </Flex>
   );
 }

@@ -1,9 +1,9 @@
-export interface ExpenseItemCustomProps {
-  name: string;
-  price: number;
+import {Report} from 'types/serviceType';
+
+export type ExpenseItemCustomProps = Report & {
   onBankButtonClick: () => void;
   clipboardText: string;
-}
+};
 
 export type ExpenseItemProps = React.ComponentProps<'div'> & ExpenseItemCustomProps;
 
