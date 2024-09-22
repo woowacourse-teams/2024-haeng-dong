@@ -18,15 +18,15 @@ Sentry.init({
 });
 
 // MSW 모킹을 사용하려면 아래 주석을 해제하고 save해주세요.
-// async function enableMocking() {
-//   const {worker} = await import('./mocks/browser');
-//   return worker.start();
-// }
+async function enableMocking() {
+  const {worker} = await import('./mocks/browser');
+  return worker.start();
+}
 
-// enableMocking().then(() => {
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
-);
-// });
+enableMocking().then(() => {
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>,
+  );
+});

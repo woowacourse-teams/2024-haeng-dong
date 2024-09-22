@@ -9,6 +9,10 @@ import ChipButton from '@components/Design/components/ChipButton/ChipButton';
 import AmountInput from '@components/AmountInput/AmountInput';
 
 import {Back, FixedButton, Flex, LabelInput, MainLayout, Text, TopNav} from '@components/Design';
+import REGEXP from '@constants/regExp';
+import useRequestPostBill from '@hooks/queries/bill/useRequestPostBill';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
+import useRequestPostMembers from '@hooks/queries/member/useRequestPostMembers';
 
 type BillStep = 'title' | 'price' | 'members';
 
@@ -28,7 +32,17 @@ const AddBillFunnel = () => {
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [nameInput, setNameInput] = useState('');
+  const [isMemberChanged, setIsMemberChanged] = useState(false);
   const navigate = useNavigate();
+
+  const eventId = getEventIdByUrl();
+  const {
+    postMembers,
+    responseMemberIds,
+    isSuccess: isSuccessPostMembers,
+    isPending: isPendingPostMembers,
+  } = useRequestPostMembers();
+  const {postBill, isSuccess: isSuccessPostBill, isPending: isPendingPostBill} = useRequestPostBill();
 
   useEffect(() => {
     currentMembers && setBillInfo(prev => ({...prev, members: currentMembers.map(member => member.name)}));
@@ -38,28 +52,59 @@ const AddBillFunnel = () => {
     setBillInfo(prev => ({...prev, price: value || prev.price}));
   };
 
-  const handleTitleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setBillInfo(prev => ({...prev, title: event.target.value}));
+  const onTitleInputChange = (value: string) => {
+    if (REGEXP.billTitle.test(value)) {
+      setBillInfo(prev => ({...prev, title: value}));
+    }
   };
+
+  const handleTitleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.length > 12) {
+      setErrorMessage('지출내역은 12자까지 입력 가능해요');
+      onTitleInputChange(billInfo.title.slice(0, 12));
+    } else {
+      setErrorMessage('');
+      onTitleInputChange(event.target.value);
+    }
+  };
+
+  const canSubmitTitleInput = billInfo.title && !errorMessage;
 
   const handleTitleInputEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.nativeEvent.isComposing) {
       return;
     }
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && canSubmitTitleInput) {
       event.preventDefault();
       setStep('members');
     }
   };
 
-  const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => setNameInput(event.target.value);
+  const onNameInputChange = (value: string) => {
+    if (REGEXP.memberName.test(value)) {
+      setNameInput(value);
+    }
+  };
+
+  const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.length > 4) {
+      setErrorMessage('이름은 4자까지 입력 가능해요');
+      onNameInputChange(nameInput.slice(0, 4));
+    } else {
+      setErrorMessage('');
+      onNameInputChange(event.target.value);
+    }
+  };
+
+  const canAddMembers = nameInput && !errorMessage;
+
+  const canSubmitMembers = billInfo.members.length !== 0;
 
   const handleNameInputEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.nativeEvent.isComposing) {
       return;
     }
-    if (event.key === 'Enter') {
-      console.log(nameInput);
+    if (event.key === 'Enter' && canAddMembers) {
       event.preventDefault();
       if (!billInfo.members.includes(nameInput)) {
         setBillInfo(prev => ({...prev, members: [...prev.members, nameInput]}));
@@ -79,6 +124,31 @@ const AddBillFunnel = () => {
   const setStepMembers = () => {
     setStep('members');
   };
+
+  const handlePostBill = async () => {
+    const newMembers = billInfo.members.filter(
+      member => !currentMembers.map(currentMember => currentMember.name).includes(member),
+    );
+    if (newMembers) {
+      setIsMemberChanged(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccessPostMembers && responseMemberIds) {
+      postBill({
+        title: billInfo.title,
+        price: Number(billInfo.price.replace(',', '')),
+        members: responseMemberIds.members.map(member => member.id),
+      });
+    }
+  }, [isSuccessPostMembers, responseMemberIds]);
+
+  useEffect(() => {
+    if (isSuccessPostBill) {
+      navigate(`/event/${eventId}/admin`);
+    }
+  }, [isSuccessPostBill]);
 
   const priceStep = () => (
     <>
@@ -130,14 +200,14 @@ const AddBillFunnel = () => {
           errorText={errorMessage ?? ''}
           value={billInfo.title}
           type="text"
-          placeholder="행동대장 포차"
+          placeholder="ex) 행동대장 포차"
           onChange={handleTitleInputChange}
           isError={!!errorMessage}
           autoFocus
           onKeyDown={handleTitleInputEnter}
         />
       </div>
-      <FixedButton disabled={!billInfo.title} onClick={setStepMembers} onBackClick={setStepPrice}>
+      <FixedButton disabled={!canSubmitTitleInput} onClick={setStepMembers} onBackClick={setStepPrice}>
         다음으로
       </FixedButton>
     </>
@@ -162,7 +232,7 @@ const AddBillFunnel = () => {
           errorText={errorMessage ?? ''}
           value={nameInput}
           type="text"
-          placeholder="박행댕"
+          placeholder="ex) 박행댕"
           onChange={handleNameInputChange}
           isError={!!errorMessage}
           autoFocus
@@ -199,7 +269,12 @@ const AddBillFunnel = () => {
           </div>
         </div>
       </div>
-      <FixedButton disabled={!billInfo.title} onClick={setStepMembers} onBackClick={setStepTitle}>
+      <FixedButton
+        variants={isPendingPostBill || isPendingPostMembers ? 'loading' : 'primary'}
+        disabled={!canSubmitMembers}
+        onClick={handlePostBill}
+        onBackClick={setStepTitle}
+      >
         추가완료
       </FixedButton>
     </>

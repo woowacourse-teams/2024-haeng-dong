@@ -10,23 +10,17 @@ const useRequestPostMembers = () => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  const {mutate, ...rest} = useMutation({
+  const {mutate, data, ...rest} = useMutation({
     mutationFn: ({members}: RequestPostMembers) => requestPostMembers({eventId, members}),
-    // TODO: (@todari) :  낙관적 업데이트 적고 있었어용
-    // onMutate: async ({type, memberName}) => {
-    //   await queryClient.cancelQueries({queryKey: [QUERY_KEYS.step]});
-    //   const previousStep = queryClient.getQueryData([QUERY_KEYS.step]);
-    //   queryClient.setQueryData([QUERY_KEYS.step], (prev: (MemberStep | BillStep)[]) => prev && {
-    //   });
-    // },
-    onSuccess: () => {
+    onSuccess: responseData => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
+      return responseData;
     },
   });
 
-  return {postMember: mutate, ...rest};
+  return {postMembers: mutate, responseMemberIds: data, ...rest};
 };
 
 export default useRequestPostMembers;
