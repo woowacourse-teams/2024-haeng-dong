@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {useSearchReports} from '@hooks/useSearchReports';
 
-import {ExpenseList, Flex, Input, Text} from '@HDesign/index';
+import {ExpenseList, Flex, Text} from '@HDesign/index';
 
 const Reports = () => {
   const [name, setName] = useState('');
