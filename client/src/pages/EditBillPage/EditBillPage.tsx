@@ -35,9 +35,13 @@ const EditBillPage = () => {
 
   const [keyboardTargetId, setKeyboardTargetId] = useState<null | number>(null);
 
-  const {putBillAsync, isSuccess: isSuccessPutBill} = useRequestPutBill();
+  const {putBillAsync, isSuccess: isSuccessPutBill, isPending: isPendingPutBill} = useRequestPutBill();
   const {deleteBill, isSuccess: isSuccessDeleteBill} = useRequestDeleteBill();
-  const {putBillDetails, isSuccess: isSusseccPutBillDetails} = useRequestPutBillDetails({billId: bill.id});
+  const {
+    putBillDetails,
+    isSuccess: isSusseccPutBillDetails,
+    isPending: isPendingPutBillDetails,
+  } = useRequestPutBillDetails({billId: bill.id});
 
   const billDetailsRef = useRef<HTMLDivElement>(null);
 
@@ -158,6 +162,14 @@ const EditBillPage = () => {
     }
   }, [isSuccessDeleteBill, isSusseccPutBillDetails, isSuccessPutBill, isBillDetailsChanged]);
 
+  const isPendingUpdate = () => {
+    if (!isBillChanged) {
+      return isPendingPutBill;
+    }
+
+    return isPendingPutBill || isPendingPutBillDetails;
+  };
+
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
@@ -199,7 +211,12 @@ const EditBillPage = () => {
           content=" "
         />
       )}
-      <FixedButton disabled={!canSubmit} onClick={handleClickUpdate} onDeleteClick={handleClickDelete}>
+      <FixedButton
+        disabled={!canSubmit}
+        onClick={handleClickUpdate}
+        onDeleteClick={handleClickDelete}
+        variants={isPendingUpdate() ? 'loading' : 'primary'}
+      >
         수정완료
       </FixedButton>
       <NumberKeyboardBottomSheet
