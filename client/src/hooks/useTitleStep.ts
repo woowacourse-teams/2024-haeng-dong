@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {BillInfo} from '@pages/BillPage/AddBillFunnel';
+import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
 
 import REGEXP from '@constants/regExp';
 

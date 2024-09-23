@@ -1,6 +1,3 @@
-import {useEffect, useState} from 'react';
-
-import useRequestGetCurrentMembers from '@hooks/queries/member/useRequestGetCurrentMembers';
 import {Member} from 'types/serviceType';
 
 import useAddBillFunnel from '@hooks/useAddBillFunnel';
