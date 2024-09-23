@@ -1,13 +1,15 @@
 import {css} from '@emotion/react';
+
 import Top from '@components/Design/components/Top/Top';
 import ChipButton from '@components/Design/components/ChipButton/ChipButton';
 import {Member} from 'types/serviceType';
 
+import useMembersStep from '@hooks/useMembersStep';
+import {BillStep} from '@hooks/useAddBillFunnel';
+
 import {FixedButton, Flex, LabelInput, Text} from '@components/Design';
 
 import {BillInfo} from '../AddBillFunnel';
-import useMembersStep from '@hooks/useMembersStep';
-import {BillStep} from '@hooks/useAddBillFunnel';
 
 interface Props {
   billInfo: BillInfo;

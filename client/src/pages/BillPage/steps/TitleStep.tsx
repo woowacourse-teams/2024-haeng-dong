@@ -2,11 +2,12 @@ import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
 
+import useTitleStep from '@hooks/useTitleStep';
+import {BillStep} from '@hooks/useAddBillFunnel';
+
 import {FixedButton, LabelInput} from '@components/Design';
 
 import {BillInfo} from '../AddBillFunnel';
-import useTitleStep from '@hooks/useTitleStep';
-import {BillStep} from '@hooks/useAddBillFunnel';
 
 interface Props {
   billInfo: BillInfo;

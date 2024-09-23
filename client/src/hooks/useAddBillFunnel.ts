@@ -1,5 +1,6 @@
-import {BillInfo} from '@pages/BillPage/AddBillFunnel';
 import {useEffect, useState} from 'react';
+
+import {BillInfo} from '@pages/BillPage/AddBillFunnel';
 
 import useRequestGetCurrentMembers from './queries/member/useRequestGetCurrentMembers';
 

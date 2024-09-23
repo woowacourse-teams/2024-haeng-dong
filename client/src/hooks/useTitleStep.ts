@@ -1,6 +1,9 @@
-import REGEXP from '@constants/regExp';
-import {BillInfo} from '@pages/BillPage/AddBillFunnel';
 import {useState} from 'react';
+
+import {BillInfo} from '@pages/BillPage/AddBillFunnel';
+
+import REGEXP from '@constants/regExp';
+
 import {BillStep} from './useAddBillFunnel';
 
 interface Props {

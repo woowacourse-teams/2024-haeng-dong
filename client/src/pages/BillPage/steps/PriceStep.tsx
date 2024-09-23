@@ -5,11 +5,12 @@ import AmountInput from '@components/AmountInput/AmountInput';
 import NumberKeyboard from '@components/Design/components/NumberKeyboard/NumberKeyboard';
 import Top from '@components/Design/components/Top/Top';
 
+import usePriceStep from '@hooks/usePriceStep';
+import {BillStep} from '@hooks/useAddBillFunnel';
+
 import {FixedButton} from '@components/Design';
 
 import {BillInfo} from '../AddBillFunnel';
-import usePriceStep from '@hooks/usePriceStep';
-import {BillStep} from '@hooks/useAddBillFunnel';
 
 interface Props {
   billInfo: BillInfo;
