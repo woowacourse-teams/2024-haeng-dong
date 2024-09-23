@@ -1,13 +1,12 @@
 import {css} from '@emotion/react';
-import {useState} from 'react';
 
 import Top from '@components/Design/components/Top/Top';
 
 import {FixedButton, LabelInput} from '@components/Design';
 
-import REGEXP from '@constants/regExp';
-
-import {BillInfo, BillStep} from '../AddBillFunnel';
+import {BillInfo} from '../AddBillFunnel';
+import useTitleStep from '@hooks/useTitleStep';
+import {BillStep} from '@hooks/useAddBillFunnel';
 
 interface Props {
   billInfo: BillInfo;
@@ -16,43 +15,18 @@ interface Props {
 }
 
 export const TitleStep = ({billInfo, setBillInfo, setStep}: Props) => {
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const onTitleInputChange = (value: string) => {
-    if (REGEXP.billTitle.test(value)) {
-      setBillInfo(prev => ({...prev, title: value}));
-    }
-  };
-
-  const handleTitleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value.length > 12) {
-      setErrorMessage('지출내역은 12자까지 입력 가능해요');
-      onTitleInputChange(billInfo.title.slice(0, 12));
-    } else {
-      setErrorMessage('');
-      onTitleInputChange(event.target.value);
-    }
-  };
-
-  const canSubmitTitleInput = billInfo.title && !errorMessage;
-
-  const handleTitleInputEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.nativeEvent.isComposing) {
-      return;
-    }
-    if (event.key === 'Enter' && canSubmitTitleInput) {
-      event.preventDefault();
-      setStep('members');
-    }
-  };
-
-  const setStepPrice = () => {
-    setStep('price');
-  };
-
-  const setStepMembers = () => {
-    setStep('members');
-  };
+  const {
+    errorMessage,
+    handleTitleInputChange,
+    handleTitleInputEnter,
+    canSubmitTitleInput,
+    handlePrevStep,
+    handleNextStep,
+  } = useTitleStep({
+    billInfo,
+    setBillInfo,
+    setStep,
+  });
 
   return (
     <>
@@ -80,7 +54,7 @@ export const TitleStep = ({billInfo, setBillInfo, setStep}: Props) => {
           onKeyDown={handleTitleInputEnter}
         />
       </div>
-      <FixedButton disabled={!canSubmitTitleInput} onClick={setStepMembers} onBackClick={setStepPrice}>
+      <FixedButton disabled={!canSubmitTitleInput} onClick={handleNextStep} onBackClick={handlePrevStep}>
         다음으로
       </FixedButton>
     </>

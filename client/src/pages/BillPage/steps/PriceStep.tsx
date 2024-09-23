@@ -7,7 +7,9 @@ import Top from '@components/Design/components/Top/Top';
 
 import {FixedButton} from '@components/Design';
 
-import {BillInfo, BillStep} from '../AddBillFunnel';
+import {BillInfo} from '../AddBillFunnel';
+import usePriceStep from '@hooks/usePriceStep';
+import {BillStep} from '@hooks/useAddBillFunnel';
 
 interface Props {
   billInfo: BillInfo;
@@ -17,14 +19,7 @@ interface Props {
 
 const PriceStep = ({billInfo, setBillInfo, setStep}: Props) => {
   const navigate = useNavigate();
-
-  const handleNumberKeyboardChange = (value: string) => {
-    setBillInfo(prev => ({...prev, price: value || prev.price}));
-  };
-
-  const setStepTitle = () => {
-    setStep('title');
-  };
+  const {handleNumberKeyboardChange, handleNextStep} = usePriceStep({setBillInfo, setStep});
 
   return (
     <>
@@ -51,7 +46,7 @@ const PriceStep = ({billInfo, setBillInfo, setStep}: Props) => {
       >
         <NumberKeyboard type="amount" maxNumber={10000000} onChange={handleNumberKeyboardChange} />
       </div>
-      <FixedButton disabled={!billInfo.price} onClick={setStepTitle} onBackClick={() => navigate(-1)}>
+      <FixedButton disabled={!billInfo.price} onClick={handleNextStep} onBackClick={() => navigate(-1)}>
         다음으로
       </FixedButton>
     </>

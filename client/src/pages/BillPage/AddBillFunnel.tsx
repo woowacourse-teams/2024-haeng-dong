@@ -8,8 +8,7 @@ import {Back, MainLayout, TopNav} from '@components/Design';
 import PriceStep from './steps/PriceStep';
 import {TitleStep} from './steps/TitleStep';
 import MembersStep from './steps/MembersStep';
-
-export type BillStep = 'title' | 'price' | 'members';
+import useAddBillFunnel from '@hooks/useAddBillFunnel';
 
 export interface BillInfo {
   price: string;
@@ -18,17 +17,7 @@ export interface BillInfo {
 }
 
 const AddBillFunnel = () => {
-  const {currentMembers} = useRequestGetCurrentMembers();
-  const [step, setStep] = useState<BillStep>('price');
-  const [billInfo, setBillInfo] = useState<BillInfo>({
-    price: '',
-    title: '',
-    members: [],
-  });
-
-  useEffect(() => {
-    currentMembers && setBillInfo(prev => ({...prev, members: currentMembers}));
-  }, [currentMembers]);
+  const {step, setStep, billInfo, setBillInfo, currentMembers} = useAddBillFunnel();
 
   return (
     <MainLayout backgroundColor="white">
@@ -38,7 +27,7 @@ const AddBillFunnel = () => {
       {step === 'price' && <PriceStep billInfo={billInfo} setBillInfo={setBillInfo} setStep={setStep} />}
       {step === 'title' && <TitleStep billInfo={billInfo} setBillInfo={setBillInfo} setStep={setStep} />}
       {step === 'members' && (
-        <MembersStep billInfo={billInfo} setBillInfo={setBillInfo} setStep={setStep} currentMembers={currentMembers} />
+        <MembersStep billInfo={billInfo} setBillInfo={setBillInfo} currentMembers={currentMembers} setStep={setStep} />
       )}
     </MainLayout>
   );
