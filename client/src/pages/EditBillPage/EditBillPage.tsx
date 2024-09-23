@@ -134,7 +134,7 @@ const EditBillPage = () => {
 
   const isBillChanged = bill.title !== newBill.title || bill.price !== newBill.price;
   const isBillDetailsChanged = JSON.stringify(billDetails) !== JSON.stringify(newBillDetails);
-  const canSubmit = isBillChanged || isBillDetailsChanged;
+  const canSubmit = newBill.price !== 0 && (isBillChanged || isBillDetailsChanged);
 
   const handleClickDelete = () => {
     deleteBill({billId: bill.id});
