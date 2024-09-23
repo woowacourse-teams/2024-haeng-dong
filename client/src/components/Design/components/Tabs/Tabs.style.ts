@@ -55,6 +55,9 @@ export const indicatorStyle = ({theme, tabWidth, activeTabIndex}: IndicatorType)
     backgroundColor: theme.colors.tertiary,
 
     transform: `translateX(${(tabWidth + 8) * activeTabIndex}px)`,
-    transition: 'transform 0.3s ease',
+
+    transition: '0.2s',
+    transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
+
     zIndex: theme.zIndex.normal,
   });
