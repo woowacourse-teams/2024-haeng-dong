@@ -7,7 +7,7 @@ import useRequestPutBillDetails from '@hooks/queries/bill/useRequestPutBillDetai
 
 const useBillDetails = (billId: number, totalPrice: number, onClose: () => void) => {
   const {billDetails: billDetailsFromServer, isSuccess} = useRequestGetBillDetails({billId});
-  const {putBillDetails} = useRequestPutBillDetails(billId);
+  const {putBillDetails} = useRequestPutBillDetails({billId});
 
   const [billDetails, setBillDetails] = useState<BillDetail[]>(billDetailsFromServer);
 

@@ -20,7 +20,7 @@ const useRequestPutBill = () => {
     },
   });
 
-  return {pulBill: mutate, ...rest};
+  return {putBill: mutate, ...rest};
 };
 
 export default useRequestPutBill;
