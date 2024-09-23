@@ -15,6 +15,7 @@ export const depositToggleStyle = ({theme, isDeposit}: WithTheme<DepositToggleSt
     cursor: 'pointer',
     alignItems: 'center',
     width: '4.75rem',
+    height: '1.4375rem',
 
     '.deposit-text': {
       display: 'flex',
