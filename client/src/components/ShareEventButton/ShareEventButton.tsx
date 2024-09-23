@@ -15,7 +15,7 @@ const ShareEventButton = () => {
   const {shareText, onShareButtonClick} = useShareEvent(isMobile);
 
   return isMobile ? (
-    <Button size="small" variants="secondary" onClick={onShareButtonClick}>
+    <Button size="small" variants="tertiary" onClick={onShareButtonClick}>
       카카오톡으로 정산 초대하기
     </Button>
   ) : (
@@ -31,7 +31,7 @@ const ShareEventButton = () => {
         })
       }
     >
-      <Button size="small" variants="secondary" onClick={onShareButtonClick}>
+      <Button size="small" variants="tertiary" onClick={onShareButtonClick}>
         정산 초대하기
       </Button>
     </CopyToClipboard>
