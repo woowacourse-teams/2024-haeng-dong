@@ -6,8 +6,8 @@ import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
 import Account from '@pages/Account/Account';
 import AddBillFunnel from '@pages/BillPage/AddBillFunnel';
+import CreateEventFunnel from '@pages/CreateEventPage/CreateEventFunnel';
 
-import {CompleteCreateEventPage, SetEventNamePage, SetEventPasswordPage} from '@pages/CreateEventPage';
 import {MainPage} from '@pages/MainPage';
 import {EventPage} from '@pages/EventPage';
 
@@ -30,16 +30,9 @@ const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: ROUTER_URLS.eventCreateName,
-        element: <SetEventNamePage />,
-      },
-      {
-        path: ROUTER_URLS.eventCreatePassword,
-        element: <SetEventPasswordPage />,
-      },
-      {
-        path: ROUTER_URLS.eventCreateComplete,
-        element: <CompleteCreateEventPage />,
+        path: ROUTER_URLS.createEvent,
+
+        element: <CreateEventFunnel />,
       },
       {
         path: ROUTER_URLS.event,
