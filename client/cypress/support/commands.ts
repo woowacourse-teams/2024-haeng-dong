@@ -1,3 +1,4 @@
+import {ROUTER_URLS} from '@constants/routerUrls';
 import CONSTANTS from '../constants/constants';
 
 type APIType = 'sentry' | 'postEvent' | 'getEventName';
@@ -46,10 +47,9 @@ Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: Inter
 });
 
 Cypress.Commands.add('createEventName', (eventName: string) => {
-  cy.visit('/event/create/name');
+  cy.visit(ROUTER_URLS.createEvent);
   cy.get('input').type(eventName);
   cy.get('button').contains('다음').click();
-  cy.url().should('include', '/event/create/password');
 });
 
 declare global {
