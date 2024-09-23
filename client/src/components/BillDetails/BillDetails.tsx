@@ -1,9 +1,7 @@
-import {Icon, Text} from '@components/Design';
-import Amount from '@components/Design/components/Amount/Amount';
+import {Text} from '@components/Design';
 import EditableAmount from '@components/Design/components/Amount/EditableAmount';
-import ListItem from '@components/Design/components/ListItem/ListItem';
 import {css} from '@emotion/react';
-import {useState} from 'react';
+import {forwardRef} from 'react';
 import {BillDetail} from 'types/serviceType';
 
 interface Props {
@@ -12,9 +10,10 @@ interface Props {
   activatedId: number;
 }
 
-const BillDetails = ({billDetails, onClickInput, activatedId}: Props) => {
+const BillDetails = forwardRef<HTMLDivElement, Props>(({billDetails, onClickInput, activatedId}, ref) => {
   return (
     <div
+      ref={ref}
       css={css`
         display: flex;
         flex-direction: column;
@@ -24,6 +23,8 @@ const BillDetails = ({billDetails, onClickInput, activatedId}: Props) => {
     >
       {billDetails.map(billDetail => (
         <div
+          key={billDetail.id}
+          data-id={billDetail.id}
           css={css`
             display: flex;
             justify-content: space-between;
@@ -44,6 +45,6 @@ const BillDetails = ({billDetails, onClickInput, activatedId}: Props) => {
       ))}
     </div>
   );
-};
+});
 
 export default BillDetails;
