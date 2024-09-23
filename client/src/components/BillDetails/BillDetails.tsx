@@ -1,14 +1,18 @@
 import {Icon, Text} from '@components/Design';
 import Amount from '@components/Design/components/Amount/Amount';
+import EditableAmount from '@components/Design/components/Amount/EditableAmount';
 import ListItem from '@components/Design/components/ListItem/ListItem';
 import {css} from '@emotion/react';
+import {useState} from 'react';
 import {BillDetail} from 'types/serviceType';
 
 interface Props {
   billDetails: BillDetail[];
+  onClickInput: (id: number) => void;
+  activatedId: number;
 }
 
-const BillDetails = ({billDetails}: Props) => {
+const BillDetails = ({billDetails, onClickInput, activatedId}: Props) => {
   return (
     <div
       css={css`
@@ -28,15 +32,14 @@ const BillDetails = ({billDetails}: Props) => {
           `}
         >
           <Text>{billDetail.memberName}</Text>
-          <div
-            css={css`
-              display: flex;
-              gap: 0.5rem;
-            `}
-          >
-            <Amount amount={billDetail.price} />
-            <Icon iconType="editPencil" />
-          </div>
+
+          <EditableAmount
+            value={billDetail.price.toLocaleString('ko-kr')}
+            onChange={() => {}}
+            onClick={() => onClickInput(billDetail.id)}
+            isFixed={billDetail.isFixed}
+            activated={activatedId === billDetail.id}
+          />
         </div>
       ))}
     </div>
