@@ -35,25 +35,31 @@ const getHoverAndActiveBackground = (color: string) =>
     },
   });
 
-export const deleteButtonStyle = (theme: Theme) => [
+export const deleteButtonStyle = (theme: Theme) =>
   css({
     display: 'flex',
     justifyContent: 'center',
-    padding: '0.875rem 1rem',
-    borderRadius: '1.25rem',
-    backgroundColor: theme.colors.error,
-    color: theme.colors.white,
+    padding: '1rem 1.5rem',
+    borderRadius: '1rem',
+    width: '100%',
 
     fontFamily: 'Pretendard',
-    fontSize: '1rem',
+    fontSize: '1.25rem',
     fontWeight: '700',
     lineHeight: '1',
 
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
-  }),
-  getHoverAndActiveBackground(theme.colors.error),
-];
+
+    backgroundColor: theme.colors.tertiary,
+    color: theme.colors.error,
+
+    '&:disabled': {
+      backgroundColor: theme.colors.grayContainer,
+      color: theme.colors.onPrimary,
+      cursor: 'default',
+    },
+  });
 
 export const fixedButtonStyle = (props: Required<FixedButtonStyleProps>) => {
   return [getFixedButtonDefaultStyle(props.theme), getFixedButtonVariantsStyle(props.variants, props.theme)];

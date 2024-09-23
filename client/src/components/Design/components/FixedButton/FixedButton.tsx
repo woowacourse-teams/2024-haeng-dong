@@ -8,6 +8,7 @@ import {
   fixedButtonStyle,
   buttonContainerStyle,
   cancleButtonStyle,
+  deleteButtonStyle,
 } from '@HDcomponents/FixedButton/FixedButton.style';
 import {FixedButtonProps} from '@HDcomponents/FixedButton/FixedButton.type';
 import IconButton from '@HDcomponents/IconButton/IconButton';
@@ -23,9 +24,9 @@ export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElem
     <div css={fixedButtonContainerStyle(theme)}>
       <div css={buttonContainerStyle}>
         {onDeleteClick && (
-          <IconButton type="button" size="large" variants="destructive" onClick={onDeleteClick}>
-            <Icon iconType="trash" />
-          </IconButton>
+          <button css={deleteButtonStyle(theme)} ref={ref} onClick={onDeleteClick}>
+            삭제하기
+          </button>
         )}
         {onBackClick && (
           <button css={cancleButtonStyle(theme)} ref={ref} onClick={onBackClick}>
