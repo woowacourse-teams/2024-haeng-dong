@@ -79,7 +79,11 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const handlePostBill = async () => {
     if (billInfo.members.map(({id}) => id).includes(-1)) {
       postMembers({
-        members: billInfo.members.filter(member => member.id === -1),
+        members: billInfo.members
+          .filter(({id}) => id === -1)
+          .map(({name}) => ({
+            name,
+          })),
       });
     } else {
       postBill({
