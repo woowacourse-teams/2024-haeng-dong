@@ -14,6 +14,7 @@ export const depositToggleStyle = ({theme, isDeposit}: WithTheme<DepositToggleSt
     backgroundColor: theme.colors.tertiary,
     cursor: 'pointer',
     alignItems: 'center',
+    width: '4.75rem',
 
     '.deposit-text': {
       display: 'flex',
@@ -22,18 +23,20 @@ export const depositToggleStyle = ({theme, isDeposit}: WithTheme<DepositToggleSt
       padding: '0 0.25rem',
       zIndex: '10',
       height: '15px',
+      width: '34px',
+      paddingTop: '0.05rem',
     },
 
     '.toggle-background': {
       position: 'fixed',
-      width: isDeposit ? '30px' : '38px',
-      height: '17px',
+      width: '34px',
+      height: '15px',
       borderRadius: '0.5rem',
       backgroundColor: theme.colors.white,
 
       transition: '0.2s',
       transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
 
-      transform: !isDeposit ? 'translateX(0.9rem)' : 'translateX(-1.2rem)',
+      transform: !isDeposit ? 'translateX(1.07rem)' : 'translateX(-1.06rem)',
     },
   });
