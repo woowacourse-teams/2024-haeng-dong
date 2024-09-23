@@ -14,7 +14,7 @@ import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberBillReport;
+import server.haengdong.domain.bill.MemberBillReport;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;

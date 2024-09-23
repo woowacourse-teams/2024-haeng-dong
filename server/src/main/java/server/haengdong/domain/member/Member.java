@@ -24,8 +24,8 @@ import server.haengdong.exception.HaengdongException;
 @Entity
 public class Member {
 
-    public static final int MIN_NAME_LENGTH = 1;
-    public static final int MAX_NAME_LENGTH = 8;
+    private static final int MIN_NAME_LENGTH = 1;
+    private static final int MAX_NAME_LENGTH = 8;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +56,7 @@ public class Member {
     private void validateName(String name) {
         int nameLength = name.length();
         if (nameLength < MIN_NAME_LENGTH || nameLength > MAX_NAME_LENGTH) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID, MIN_NAME_LENGTH, MAX_NAME_LENGTH);
         }
     }
 

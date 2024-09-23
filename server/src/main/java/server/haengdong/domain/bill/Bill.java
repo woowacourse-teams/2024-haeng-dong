@@ -29,10 +29,10 @@ import server.haengdong.exception.HaengdongException;
 @Entity
 public class Bill {
 
-    public static final int MIN_TITLE_LENGTH = 1;
-    public static final int MAX_TITLE_LENGTH = 30;
-    public static final long MIN_PRICE = 1L;
-    public static final long MAX_PRICE = 10_000_000L;
+    private static final int MIN_TITLE_LENGTH = 1;
+    private static final int MAX_TITLE_LENGTH = 30;
+    private static final long MIN_PRICE = 1L;
+    private static final long MAX_PRICE = 10_000_000L;
     private static final long DEFAULT_PRICE = 0L;
 
     @Id
@@ -63,13 +63,13 @@ public class Bill {
     private void validateTitle(String title) {
         int titleLength = title.trim().length();
         if (titleLength < MIN_TITLE_LENGTH || titleLength > MAX_TITLE_LENGTH) {
-            throw new HaengdongException(HaengdongErrorCode.BILL_TITLE_INVALID);
+            throw new HaengdongException(HaengdongErrorCode.BILL_TITLE_INVALID, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH);
         }
     }
 
     private void validatePrice(Long price) {
         if (price < MIN_PRICE || price > MAX_PRICE) {
-            throw new HaengdongException(HaengdongErrorCode.BILL_PRICE_INVALID);
+            throw new HaengdongException(HaengdongErrorCode.BILL_PRICE_INVALID, MAX_PRICE);
         }
     }
 

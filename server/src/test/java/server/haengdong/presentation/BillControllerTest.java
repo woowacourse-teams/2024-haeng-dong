@@ -50,7 +50,7 @@ class BillControllerTest extends ControllerTestSupport {
 
     @DisplayName("참여자별 지출 금액을 조회한다.")
     @Test
-    void findBillActionDetails() throws Exception {
+    void findBillDetails() throws Exception {
         BillDetailsAppResponse appResponse = new BillDetailsAppResponse(
                 List.of(new BillDetailAppResponse(1L, "토다리", 1000L, false)));
         given(billService.findBillDetails(anyString(), anyLong())).willReturn(appResponse);

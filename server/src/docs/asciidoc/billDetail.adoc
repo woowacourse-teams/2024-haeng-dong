@@ -15,7 +15,7 @@ operation::findBillDetails[snippets="path-parameters,http-request,http-response,
   },
   {
     "code": "BILL_NOT_FOUND",
-    "message": "존재하지 않는 지출 액션입니다."
+    "message": "존재하지 않는 지출입니다."
   },
   {
     "code": "BILL_DETAIL_NOT_FOUND",
@@ -63,7 +63,7 @@ operation::updateBillDetails[snippets="path-parameters,http-request,request-body
   },
   {
     "code": "BILL_NOT_FOUND",
-    "message": "존재하지 않는 지출 액션입니다."
+    "message": "존재하지 않는 지출 입니다."
   },
   {
     "code": "BILL_DETAIL_NOT_FOUND",

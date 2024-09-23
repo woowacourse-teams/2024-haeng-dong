@@ -6,14 +6,14 @@ import lombok.Getter;
 public class HaengdongException extends RuntimeException {
 
     private final HaengdongErrorCode errorCode;
-    private final String message;
 
     public HaengdongException(HaengdongErrorCode errorCode) {
-        this(errorCode, errorCode.getMessage());
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
     }
 
-    public HaengdongException(HaengdongErrorCode errorCode, String message) {
+    public HaengdongException(HaengdongErrorCode errorCode, Object... args) {
+        super(String.format(errorCode.getMessage(), args));
         this.errorCode = errorCode;
-        this.message = message;
     }
 }

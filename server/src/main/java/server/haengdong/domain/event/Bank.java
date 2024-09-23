@@ -40,10 +40,10 @@ public enum Bank {
         Arrays.stream(Bank.values())
                 .filter(bank -> bank.name.equals(bankName))
                 .findFirst()
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BANK_NAME_INVALID));
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BANK_NAME_INVALID, getSupportedBanks()));
     }
 
-    public static String getSupportedBanks() {
+    private static String getSupportedBanks() {
         return Arrays.stream(Bank.values())
                 .map(Bank::getName)
                 .reduce((bank1, bank2) -> bank1 + ", " + bank2)
