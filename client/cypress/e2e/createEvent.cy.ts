@@ -1,3 +1,4 @@
+import {ROUTER_URLS} from '@constants/routerUrls';
 import CONSTANTS from '../constants/constants';
 beforeEach(() => {
   cy.blockSentry();
@@ -8,12 +9,12 @@ describe('Flow: 랜딩 페이지에서부터 이벤트를 생성 완료하는 fl
   it('랜딩페이지에서 "행사 생성하기" 버튼을 눌러 행사 이름 입력 페이지로 이동해야 한다.', () => {
     cy.visit('/');
     cy.get('header').find('button').click();
-    cy.url().should('include', '/event/create');
+    cy.url().should('include', ROUTER_URLS.createEvent);
   });
 
   context('행사 이름 입력 페이지', () => {
     beforeEach(() => {
-      cy.visit('/event/create/name');
+      cy.visit(ROUTER_URLS.createEvent);
     });
 
     it('행사 이름 입력 페이지에서 input이 포커싱 되어 있고, "다음" 버튼이 비활성화 되어 있어야 한다.', () => {
