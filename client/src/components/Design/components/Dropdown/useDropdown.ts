@@ -4,7 +4,6 @@ const useDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const meetBallsRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLElement>(null);
-  const dropdownComponentRef = useRef<HTMLDivElement>(null);
 
   const openDropdown = () => {
     setIsOpen(true);
@@ -34,7 +33,6 @@ const useDropdown = () => {
     openDropdown,
     meetBallsRef,
     dropdownRef,
-    dropdownComponentRef,
   };
 };
 

@@ -24,6 +24,8 @@ import TextButton from './components/TextButton/TextButton';
 import Title from './components/Title/Title';
 import Back from './components/TopNav/Back';
 import TopNav from './components/TopNav/TopNav';
+import Dropdown from './components/Dropdown/Dropdown';
+import DropdownButton from './components/Dropdown/DropdownButton';
 
 export {
   BankSelect,
@@ -53,4 +55,6 @@ export {
   ContentLayout,
   HDesignProvider,
   useTheme,
+  Dropdown,
+  DropdownButton,
 };

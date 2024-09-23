@@ -9,7 +9,16 @@ const meta = {
   title: 'Components/Dropdown',
   component: Dropdown,
   tags: ['autodocs'],
-  parameters: {},
+  parameters: {
+    layout: 'centered',
+  },
+  decorators: [
+    Story => (
+      <div style={{height: '420px'}}>
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     children: [
       <DropdownButton text="전체 참여자 관리" onClick={() => alert('전체 참여자 관리 클릭')} />,

@@ -9,7 +9,13 @@ export const dropdownStyle: FlexProps = {
   gap: '0.25rem',
   backgroundColor: 'white',
 
-  otherStyle: {borderRadius: '0.75rem', boxShadow: '2px 4px 16px 0 rgba(0, 0, 0, 0.08)'},
+  otherStyle: {
+    position: 'absolute',
+    top: '2rem',
+    right: '-1rem',
+    borderRadius: '0.75rem',
+    boxShadow: '2px 4px 16px 0 rgba(0, 0, 0, 0.08)',
+  },
 };
 
 export const dropdownButtonStyle = css({
