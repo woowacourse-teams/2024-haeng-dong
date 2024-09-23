@@ -9,8 +9,10 @@ export type IconType =
   | 'error'
   | 'confirm'
   | 'trash'
+  | 'trashMini'
   | 'check'
   | 'x'
+  | 'pencilMini'
   | 'toss'
   | 'meatballs';
 

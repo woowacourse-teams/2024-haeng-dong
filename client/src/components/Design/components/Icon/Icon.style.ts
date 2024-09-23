@@ -12,8 +12,10 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   confirm: 'complete',
   error: 'warn',
   trash: 'white',
+  trashMini: 'onTertiary',
   check: 'primary',
   x: 'gray',
+  pencilMini: 'gray',
   toss: 'white',
   meatballs: 'black',
 };
