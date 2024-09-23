@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react';
 
-import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import TYPOGRAPHY from '@components/Design/token/typography';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
@@ -20,7 +19,6 @@ export default function EditableLine({value, onChange}: Props) {
 
   useEffect(() => {
     if (spanRef.current) {
-      console.log(width);
       setWidth(spanRef.current.getBoundingClientRect().width);
     }
   }, [value]);
@@ -38,7 +36,7 @@ export default function EditableLine({value, onChange}: Props) {
             TYPOGRAPHY.subTitle,
             css`
               color: ${theme.colors.black};
-              width: ${spanRef.current?.getBoundingClientRect().width}px;
+              width: ${width}px;
 
               ::placeholder {
                 color: ${theme.colors.gray};
