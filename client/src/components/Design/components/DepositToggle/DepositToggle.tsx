@@ -7,7 +7,7 @@ import Text from '../Text/Text';
 import {DepositToggleProps} from './DepositToggle.type';
 import {depositToggleStyle} from './DepositToggle.style';
 
-export const DepositToggle: React.FC<DepositToggleProps> = ({isDeposit = false, onToggle}: DepositToggleProps) => {
+const DepositToggle: React.FC<DepositToggleProps> = ({isDeposit = false, onToggle}: DepositToggleProps) => {
   const {theme} = useTheme();
 
   return (
@@ -22,3 +22,5 @@ export const DepositToggle: React.FC<DepositToggleProps> = ({isDeposit = false, 
     </div>
   );
 };
+
+export default DepositToggle;

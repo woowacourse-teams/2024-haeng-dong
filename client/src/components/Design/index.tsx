@@ -25,6 +25,10 @@ import TextButton from './components/TextButton/TextButton';
 import Title from './components/Title/Title';
 import Back from './components/TopNav/Back';
 import TopNav from './components/TopNav/TopNav';
+import DepositCheck from './components/DepositCheck/DepositCheck';
+import DepositToggle from './components/DepositToggle/DepositToggle';
+import Amount from './components/Amount/Amount';
+import Top from './components/Top/Top';
 
 export {
   BankSelect,
@@ -55,4 +59,8 @@ export {
   ContentLayout,
   HDesignProvider,
   useTheme,
+  DepositCheck,
+  DepositToggle,
+  Amount,
+  Top,
 };
