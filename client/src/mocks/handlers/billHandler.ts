@@ -20,7 +20,7 @@ export const billHandler = [
   http.get(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/bills/:billId/fixed`, ({params}) => {
     const {billId} = params;
     const billDetails = (billDetailsData as unknown as BillDetailsData)[billId as keyof BillDetailsData];
-    return HttpResponse.json({billDetails});
+    return HttpResponse.json(billDetails);
   }),
 
   // POST /api/eventId/bills
