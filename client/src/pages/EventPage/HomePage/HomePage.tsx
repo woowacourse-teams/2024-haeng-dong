@@ -13,7 +13,7 @@ import {Tab, Tabs, Title} from '@HDesign/index';
 import {receiptStyle} from './HomePage.style';
 
 const HomePage = () => {
-  const {eventName} = useOutletContext<EventPageContextProps>();
+  const {isAdmin, eventName} = useOutletContext<EventPageContextProps>();
   const {steps} = useRequestGetSteps();
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
@@ -22,7 +22,7 @@ const HomePage = () => {
       <Title title={eventName} amount={totalExpenseAmount} />
       <Tabs>
         <Tab label="참여자 별 정산" content={<Reports />} />
-        <Tab label="전체 지출 내역" content={<StepList data={steps ?? []} />} />
+        <Tab label="전체 지출 내역" content={<StepList data={steps ?? []} isAdmin={isAdmin} />} />
       </Tabs>
     </div>
   );

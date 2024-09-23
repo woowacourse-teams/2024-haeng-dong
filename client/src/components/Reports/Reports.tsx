@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 
+import BillEmptyFallback from '@pages/EventPage/EventPageFallback/BillEmptyFallback';
+
 import {useSearchReports} from '@hooks/useSearchReports';
 
-import {ExpenseList, Flex, Text} from '@HDesign/index';
+import {ExpenseList, Flex} from '@HDesign/index';
 
 const Reports = () => {
   const [name, setName] = useState('');
@@ -23,17 +25,13 @@ const Reports = () => {
     onBankButtonClick,
   }));
 
+  if (reports.length <= 0) {
+    return <BillEmptyFallback />;
+  }
+
   return (
     <Flex flexDirection="column" gap="0.5rem">
-      {reports.length > 0 ? (
-        <ExpenseList name={name} onSearch={changeName} placeholder="이름 검색" expenseList={expenseListProp} />
-      ) : (
-        <Flex width="100%" justifyContent="center">
-          <Text size="body" textColor="gray" style={{paddingTop: '1rem'}}>
-            지금은 참여자가 한 명도 없어요. :(
-          </Text>
-        </Flex>
-      )}
+      <ExpenseList name={name} onSearch={changeName} placeholder="이름 검색" expenseList={expenseListProp} />
     </Flex>
   );
 };

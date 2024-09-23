@@ -18,7 +18,7 @@ import {receiptStyle} from './AdminPage.style';
 const AdminPage = () => {
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
-  const {eventName} = useOutletContext<EventPageContextProps>();
+  const {isAdmin, eventName} = useOutletContext<EventPageContextProps>();
 
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
@@ -32,7 +32,7 @@ const AdminPage = () => {
   return (
     <section css={receiptStyle}>
       <Title title={eventName} amount={totalExpenseAmount} />
-      <StepList data={steps ?? []} />
+      <StepList data={steps ?? []} isAdmin={isAdmin} />
       <Button size="medium" onClick={() => navigate(`/event/${eventId}/addBill`)} style={{width: '100%'}}>
         지출내역 추가하기
       </Button>
