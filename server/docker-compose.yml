@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql-master:
+    image: mysql:8
+    container_name: mysql-master
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: haengdong  # 데이터베이스 이름
+      MYSQL_USER: replication_user
+      MYSQL_PASSWORD: your_password
+    ports:
+      - "3306:3306"  # 호스트의 3306 포트를 컨테이너의 3306 포트에 매핑
+    volumes:
+      - master_data:/var/lib/mysql
+    command: --server-id=1 --log-bin=mysql-bin
+
+  mysql-slave:
+    image: mysql:8
+    container_name: mysql-slave
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3307:3306"  # 호스트의 3307 포트를 컨테이너의 3306 포트에 매핑
+    volumes:
+      - slave_data:/var/lib/mysql
+    command: --server-id=2
+
+volumes:
+  master_data:
+  slave_data:
