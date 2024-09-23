@@ -33,7 +33,7 @@ const AdminPage = () => {
     <section css={receiptStyle}>
       <Title title={eventName} amount={totalExpenseAmount} />
       <StepList data={steps ?? []} />
-      <Button size="medium" onClick={() => navigate(`/event/${eventId}/addBill`)} style={{width: '100%'}}>
+      <Button size="medium" onClick={() => navigate(`/event/${eventId}/add-bill`)} style={{width: '100%'}}>
         지출내역 추가하기
       </Button>
     </section>
