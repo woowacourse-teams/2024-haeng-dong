@@ -6,10 +6,10 @@ import useRequestGetBillDetails from '@hooks/queries/bill/useRequestGetBillDetai
 import useRequestPutBillDetails from '@hooks/queries/bill/useRequestPutBillDetails';
 
 const useBillDetails = (billId: number, totalPrice: number, onClose: () => void) => {
-  const {reportFromServer, isSuccess} = useRequestGetBillDetails({billId});
+  const {billDetails: billDetailsFromServer, isSuccess} = useRequestGetBillDetails({billId});
   const {putBillDetails} = useRequestPutBillDetails(billId);
 
-  const [billDetails, setBillDetails] = useState<BillDetail[]>(reportFromServer);
+  const [billDetails, setBillDetails] = useState<BillDetail[]>(billDetailsFromServer);
 
   // isFixed를 모두 풀고 계산값으로 모두 처리하는 기능
   const reCalculatePriceByTotalPriceChange = () => {
@@ -30,18 +30,18 @@ const useBillDetails = (billId: number, totalPrice: number, onClose: () => void)
 
   // 총 금액이 변동됐을 때 (서버에서 온 값과 다를 때) 재계산 실행
   useEffect(() => {
-    const totalPriceFromServer = reportFromServer.reduce((acc, cur) => acc + cur.price, 0);
+    const totalPriceFromServer = billDetailsFromServer.reduce((acc, cur) => acc + cur.price, 0);
 
     if (totalPriceFromServer !== totalPrice && totalPriceFromServer !== 0) {
       reCalculatePriceByTotalPriceChange();
     }
-  }, [totalPrice, reportFromServer]);
+  }, [totalPrice, billDetailsFromServer]);
 
   useEffect(() => {
     if (isSuccess) {
-      setBillDetails(reportFromServer);
+      setBillDetails(billDetailsFromServer);
     }
-  }, [reportFromServer, isSuccess]);
+  }, [billDetailsFromServer, isSuccess]);
 
   const isExistAdjustedPrice = () => {
     return billDetails.some(member => member.isFixed === true);
@@ -128,7 +128,7 @@ const useBillDetails = (billId: number, totalPrice: number, onClose: () => void)
   };
 
   const getIsSamePriceStateAndServerState = () => {
-    const serverStatePriceList = reportFromServer.map(({price}) => price);
+    const serverStatePriceList = billDetailsFromServer.map(({price}) => price);
     const clientStatePriceList = billDetails.map(({price}) => price);
 
     let isSame = true;
