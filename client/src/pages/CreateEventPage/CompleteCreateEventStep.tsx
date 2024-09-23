@@ -8,12 +8,12 @@ import {FixedButton, MainLayout, Title, TopNav} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-const CompleteCreateEventPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+type CompleteCreateEventStepProps = {
+  eventToken: string;
+};
 
-  const params = new URLSearchParams(location.search);
-  const eventId = params.get('eventId');
+const CompleteCreateEventStep = ({eventToken}: CompleteCreateEventStepProps) => {
+  const navigate = useNavigate();
 
   return (
     <MainLayout backgroundColor="white">
@@ -32,9 +32,9 @@ const CompleteCreateEventPage = () => {
         </Top>
         <RunningDog />
       </div>
-      <FixedButton onClick={() => navigate(`${ROUTER_URLS.event}/${eventId}/admin`)}>관리 페이지로 이동</FixedButton>
+      <FixedButton onClick={() => navigate(`${ROUTER_URLS.event}/${eventToken}/admin`)}>관리 페이지로 이동</FixedButton>
     </MainLayout>
   );
 };
 
-export default CompleteCreateEventPage;
+export default CompleteCreateEventStep;
