@@ -40,6 +40,9 @@ const useFunnel = ({defaultStep, stepList}: UseFunnel) => {
   const Funnel = ({children}: FunnelProps) => {
     const targetStep = children.find(curStep => curStep.props.name === step);
 
+    if (!targetStep)
+      throw new Error(`현재 ${step} 단계에 보여줄 컴포넌트가 존재하지 않습니다. Step 컴포넌트를 호출해 사용해주세요.`);
+
     return <>{targetStep}</>;
   };
 
