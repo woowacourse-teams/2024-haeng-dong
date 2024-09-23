@@ -29,6 +29,11 @@ const AdminPage = () => {
     postAuthenticate();
   }, [postAuthenticate]);
 
+  const navigateAccountInputPage = () => {
+    // TODO:(@cookie) 569 브랜치가 머지된 후에 작업 가능합니다.
+    navigate('/');
+  };
+
   return (
     <section css={receiptStyle}>
       <Title
