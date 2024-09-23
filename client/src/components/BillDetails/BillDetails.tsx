@@ -32,7 +32,7 @@ const BillDetails = forwardRef<HTMLDivElement, Props>(({billDetails, onClickInpu
             padding-block: 0.5rem;
           `}
         >
-          <Text>{billDetail.memberName}</Text>
+          <Text size="bodyBold">{billDetail.memberName}</Text>
 
           <EditableAmount
             value={billDetail.price.toLocaleString('ko-kr')}
