@@ -36,6 +36,7 @@ const CreateEventFunnel = () => {
         <Step name="eventName">
           <SetEventNameStep moveToNextStep={moveToNextStep} {...eventNameProps} />
         </Step>
+
         <Step name="eventPassword">
           <SetEventPasswordStep
             moveToNextStep={moveToNextStep}
@@ -43,6 +44,7 @@ const CreateEventFunnel = () => {
             setEventToken={setEventToken}
           />
         </Step>
+
         <Step name="complete">
           <CompleteCreateEventStep eventToken={eventToken} />
         </Step>
