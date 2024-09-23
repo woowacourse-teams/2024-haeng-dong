@@ -11,16 +11,18 @@ export type KeyboardType = 'number' | 'string' | 'amount';
 interface Props {
   type: KeyboardType;
   maxNumber: number;
+  initialValue?: string;
   onChange: (value: string) => void;
 }
 
-export default function NumberKeyboard({type, maxNumber, onChange}: Props) {
+export default function NumberKeyboard({type, maxNumber, initialValue, onChange}: Props) {
   const {theme} = useTheme();
   const amountKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '<-'];
   const numberKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '<-'];
 
   const {onClickKeypad, onClickDelete, onClickDeleteAll, onClickAddAmount} = useNumberKeyboard({
     type,
+    initialValue,
     maxNumber,
     onChange,
   });

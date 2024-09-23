@@ -45,7 +45,12 @@ const PriceStep = ({billInfo, setBillInfo, setStep}: Props) => {
           bottom: 6.25rem;
         `}
       >
-        <NumberKeyboard type="amount" maxNumber={10000000} onChange={handleNumberKeyboardChange} />
+        <NumberKeyboard
+          type="amount"
+          maxNumber={10000000}
+          initialValue={billInfo.price}
+          onChange={handleNumberKeyboardChange}
+        />
       </div>
       <FixedButton disabled={!billInfo.price} onClick={handleNextStep} onBackClick={() => navigate(-1)}>
         다음으로

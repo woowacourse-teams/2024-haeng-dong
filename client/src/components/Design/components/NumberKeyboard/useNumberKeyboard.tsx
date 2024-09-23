@@ -5,11 +5,12 @@ import {KeyboardType} from './NumberKeyboard';
 interface Props {
   type: KeyboardType;
   maxNumber?: number;
+  initialValue?: string;
   onChange: (value: string) => void;
 }
 
-const useNumberKeyboard = ({type, maxNumber, onChange}: Props) => {
-  const [value, setValue] = useState('');
+const useNumberKeyboard = ({type, maxNumber, initialValue, onChange}: Props) => {
+  const [value, setValue] = useState(initialValue ?? '');
 
   const onClickKeypad = (inputValue: string) => {
     const newValue = (value + inputValue).replace(/,/g, '');
