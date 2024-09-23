@@ -14,6 +14,7 @@ import {EventPage} from '@pages/EventPage';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
+import EditBillPage from '@pages/EditBillPage/EditBillPage';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.addBill,
         element: <AddBillFunnel />,
+      },
+      {
+        path: ROUTER_URLS.editBill,
+        element: <EditBillPage />,
       },
       {
         path: '*',
