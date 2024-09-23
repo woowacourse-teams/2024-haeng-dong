@@ -23,12 +23,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const [errorMessage, setErrorMessage] = useState('');
   const [nameInput, setNameInput] = useState('');
 
-  const {
-    postMembers,
-    responseMemberIds,
-    isSuccess: isSuccessPostMembers,
-    isPending: isPendingPostMembers,
-  } = useRequestPostMembers();
+  const {postMembersAsync, isPending: isPendingPostMembers} = useRequestPostMembers();
 
   const {postBill, isSuccess: isSuccessPostBill, isPending: isPendingPostBill} = useRequestPostBill();
   const navigate = useNavigate();
@@ -78,12 +73,19 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
 
   const handlePostBill = async () => {
     if (billInfo.members.map(({id}) => id).includes(-1)) {
-      postMembers({
+      const newMembers = await postMembersAsync({
         members: billInfo.members
           .filter(({id}) => id === -1)
           .map(({name}) => ({
             name,
           })),
+      });
+      postBill({
+        title: billInfo.title,
+        price: Number(billInfo.price.replace(',', '')),
+        members: billInfo.members.map(member =>
+          member.id === -1 ? newMembers.members.find(m => m.name === member.name)?.id || member.id : member.id,
+        ),
       });
     } else {
       postBill({
@@ -93,18 +95,6 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
       });
     }
   };
-
-  useEffect(() => {
-    if (isSuccessPostMembers && responseMemberIds) {
-      postBill({
-        title: billInfo.title,
-        price: Number(billInfo.price.replace(',', '')),
-        members: billInfo.members.map(member =>
-          member.id === -1 ? responseMemberIds.members.find(m => m.name === member.name)?.id || member.id : member.id,
-        ),
-      });
-    }
-  }, [isSuccessPostMembers, responseMemberIds]);
 
   useEffect(() => {
     if (isSuccessPostBill) {
