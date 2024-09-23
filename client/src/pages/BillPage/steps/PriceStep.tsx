@@ -1,9 +1,12 @@
-import AmountInput from '@components/AmountInput/AmountInput';
-import {FixedButton} from '@components/Design';
-import NumberKeyboard from '@components/Design/components/NumberKeyboard/NumberKeyboard';
-import Top from '@components/Design/components/Top/Top';
 import {css} from '@emotion/react';
 import {useNavigate} from 'react-router-dom';
+
+import AmountInput from '@components/AmountInput/AmountInput';
+import NumberKeyboard from '@components/Design/components/NumberKeyboard/NumberKeyboard';
+import Top from '@components/Design/components/Top/Top';
+
+import {FixedButton} from '@components/Design';
+
 import {BillInfo, BillStep} from '../AddBillFunnel';
 
 interface Props {

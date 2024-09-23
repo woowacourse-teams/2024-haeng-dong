@@ -1,9 +1,13 @@
-import {FixedButton, LabelInput} from '@components/Design';
-import Top from '@components/Design/components/Top/Top';
 import {css} from '@emotion/react';
-import {BillInfo, BillStep} from '../AddBillFunnel';
-import REGEXP from '@constants/regExp';
 import {useState} from 'react';
+
+import Top from '@components/Design/components/Top/Top';
+
+import {FixedButton, LabelInput} from '@components/Design';
+
+import REGEXP from '@constants/regExp';
+
+import {BillInfo, BillStep} from '../AddBillFunnel';
 
 interface Props {
   billInfo: BillInfo;
