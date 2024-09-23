@@ -17,10 +17,10 @@ import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillDetailRepository;
 import server.haengdong.domain.bill.BillRepository;
-import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.domain.member.Member;
+import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
@@ -34,6 +34,7 @@ public class MemberService {
     private final BillRepository billRepository;
     private final BillDetailRepository billDetailRepository;
 
+    @Transactional
     public MembersSaveAppResponse saveMembers(String token, MembersSaveAppRequest request) {
         Event event = getEvent(token);
         List<String> memberNames = request.members().stream()
