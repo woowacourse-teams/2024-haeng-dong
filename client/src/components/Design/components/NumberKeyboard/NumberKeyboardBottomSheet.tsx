@@ -14,7 +14,7 @@ const NumberKeyboardBottomSheet = ({isOpened, onClose, ...props}: Props) => {
   return createPortal(
     <div
       css={css`
-        position: absolute;
+        position: fixed;
         padding-bottom: 6.25rem;
         width: 100%;
         max-width: 768px;
@@ -24,7 +24,7 @@ const NumberKeyboardBottomSheet = ({isOpened, onClose, ...props}: Props) => {
         bottom: 0;
         background-color: ${theme.colors.white};
 
-        transform: ${isOpened ? 'translate3d(0, 0, 0)' : 'translate3d(0, 100vh, 0)'};
+        transform: ${isOpened ? 'translate3d(0, 0, 0)' : 'translate3d(0, 100%, 0)'};
         transition: 0.2s ease-in-out;
       `}
     >
