@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react';
 import Flex from '../Flex/Flex';
 import Text from '../Text/Text';
 
@@ -8,12 +9,18 @@ interface Props {
 
 const Amount = ({amount}: Props) => {
   return (
-    <Flex alignItems="center" gap="0.25rem">
+    <div
+      css={css`
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      `}
+    >
       <Text>{amount ? amount.toLocaleString('ko-kr') : 0}</Text>
       <Text size="tiny" textColor="gray">
         원
       </Text>
-    </Flex>
+    </div>
   );
 };
 
