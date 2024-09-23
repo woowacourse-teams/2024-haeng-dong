@@ -7,7 +7,7 @@ import {Back, MainLayout, TopNav} from '@components/Design';
 
 import SetEventNameStep from './SetEventNameStep';
 import SetEventPasswordStep from './SetEventPasswordStep';
-import CompleteCreateEventPage from './CompleteCreateEventPage';
+import CompleteCreateEventStep from './CompleteCreateEventStep';
 
 type CreateEventStep = 'eventName' | 'eventPassword' | 'complete';
 const STEP_SEQUENCE: CreateEventStep[] = ['eventName', 'eventPassword', 'complete'];
@@ -44,7 +44,7 @@ const CreateEventFunnel = () => {
           />
         </Step>
         <Step name="complete">
-          <CompleteCreateEventPage eventToken={eventToken} />
+          <CompleteCreateEventStep eventToken={eventToken} />
         </Step>
       </Funnel>
     </MainLayout>
