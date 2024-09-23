@@ -13,7 +13,12 @@ const Dropdown = ({children}: DropdownProps) => {
   const isDropdownOpen = isOpen && meetBallsRef.current;
 
   return (
-    <IconButton ref={meetBallsRef} variants="none" onClick={openDropdown} style={{position: 'relative'}}>
+    <IconButton
+      ref={meetBallsRef}
+      variants="none"
+      onClick={openDropdown}
+      style={{position: 'relative', WebkitTapHighlightColor: 'transparent'}}
+    >
       <Icon iconType="meatballs" />
       {isDropdownOpen && (
         <section ref={dropdownRef}>
