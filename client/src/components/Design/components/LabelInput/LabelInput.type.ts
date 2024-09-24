@@ -1,4 +1,7 @@
-export interface LabelInputStyleProps {}
+export interface LabelInputStyleProps {
+  isAlwaysOnLabel?: boolean;
+  isAlwaysOnInputBorder?: boolean;
+}
 
 export interface LabelInputCustomProps {
   labelText: string;
@@ -7,6 +10,6 @@ export interface LabelInputCustomProps {
   autoFocus: boolean;
 }
 
-export type LabelInputOptionProps = LabelInputCustomProps & LabelInputCustomProps;
+export type LabelInputOptionProps = LabelInputCustomProps & LabelInputStyleProps;
 
 export type LabelInputProps = React.ComponentProps<'input'> & LabelInputOptionProps;
