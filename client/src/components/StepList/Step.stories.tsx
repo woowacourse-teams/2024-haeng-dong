@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
 
-import Step from './Step';
 import {MemoryRouter} from 'react-router-dom';
+
+import Step from './Step';
 
 const meta = {
   title: 'Components/Step',
