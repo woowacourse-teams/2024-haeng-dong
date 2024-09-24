@@ -16,23 +16,30 @@ const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
   const tabRef = useRef<HTMLLIElement>(null);
 
   const isActive = (index: number) => activeTabIndex === index;
-  const tabItemCount = children.length;
 
-  const calculateTabWidth = () => {
-    if (tabRef.current) {
-      setTabWidth(tabRef.current.offsetWidth);
+  const setTabWidthResizeObserveCallback = (entries: ResizeObserverEntry[]) => {
+    for (let entry of entries) {
+      if (entry.target === tabRef.current) {
+        setTabWidth(entry.contentRect.width);
+      }
     }
   };
 
   useEffect(() => {
-    calculateTabWidth();
+    const tabCurrent = tabRef.current;
 
-    window.addEventListener('resize', calculateTabWidth);
+    if (tabCurrent) {
+      const resizeObserver = new ResizeObserver(setTabWidthResizeObserveCallback);
+      resizeObserver.observe(tabCurrent);
 
-    return () => {
-      window.removeEventListener('resize', calculateTabWidth);
-    };
-  }, [tabItemCount]);
+      return () => {
+        resizeObserver.unobserve(tabCurrent);
+      };
+    }
+
+    // useEffect 경고문구 제거를 위해 return 추가 (Not all code paths return a value.)
+    return;
+  }, [tabRef]);
 
   return (
     <Flex flexDirection="column" {...tabsContainerStyle}>
@@ -62,7 +69,7 @@ const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
             </li>
           ))}
         </Flex>
-        <div css={indicatorStyle({theme, tabWidth, activeTabIndex})} />
+        {tabRef.current && <div css={indicatorStyle({theme, tabWidth, activeTabIndex})} />}
       </ul>
       <section
         role="tabpanel"
