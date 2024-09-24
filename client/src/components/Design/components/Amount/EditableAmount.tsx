@@ -3,7 +3,6 @@ import TYPOGRAPHY from '@components/Design/token/typography';
 import {css} from '@emotion/react';
 import {useEffect, useRef, useState} from 'react';
 import Icon from '../Icon/Icon';
-import Flex from '../Flex/Flex';
 import Text from '../Text/Text';
 
 interface Props {
