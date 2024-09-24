@@ -53,21 +53,14 @@ const EventMemberManage = () => {
               );
             })
           )}
-          {/* {reports.map(member => {
-            return (
-              <EventMember
-                key={member.memberId}
-                member={member}
-                changeMemberName={changeMemberName}
-                handleDeleteMember={handleDeleteMember}
-                toggleDepositStatus={toggleDepositStatus}
-              />
-            );
-          })} */}
         </div>
-        <FixedButton disabled={!isCanRequest} onClick={updateMembersOnServer}>
-          수정완료
-        </FixedButton>
+        {reports.length === 0 ? (
+          <></>
+        ) : (
+          <FixedButton disabled={!isCanRequest} onClick={updateMembersOnServer} style={{zIndex: '100'}}>
+            수정완료
+          </FixedButton>
+        )}
       </section>
     </MainLayout>
   );

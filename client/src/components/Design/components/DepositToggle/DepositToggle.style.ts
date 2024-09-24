@@ -29,7 +29,7 @@ export const depositToggleStyle = ({theme, isDeposit}: WithTheme<DepositToggleSt
     },
 
     '.toggle-background': {
-      position: 'fixed',
+      position: 'absolute',
       width: '34px',
       height: '15px',
       borderRadius: '0.5rem',

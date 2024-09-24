@@ -6,7 +6,6 @@ import TYPOGRAPHY from '@components/Design/token/typography';
 export const eventMemberMangeStyle = () =>
   css({
     padding: '0 1rem',
-    height: '100vh',
   });
 
 export const memberList = () =>
@@ -17,6 +16,7 @@ export const memberList = () =>
     padding: '0 0.5rem',
     marginTop: '1rem',
     height: 'inherit',
+    marginBottom: '100px',
   });
 
 export const noneReports = () =>
@@ -26,7 +26,6 @@ export const noneReports = () =>
     alignItems: 'center',
     justifyContent: 'center',
     height: 'inherit',
-    marginBottom: '390px',
   });
 
 export const eventMember = () =>
