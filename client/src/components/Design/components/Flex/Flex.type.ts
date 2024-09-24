@@ -17,4 +17,6 @@ export interface FlexProps {
   backgroundColor?: FlexBackgroundColor;
   theme?: Theme;
   minHeight?: string;
+
+  otherStyle?: React.CSSProperties;
 }

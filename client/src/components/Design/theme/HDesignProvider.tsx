@@ -5,6 +5,7 @@ import {Theme} from '@theme/theme.type';
 import {GlobalStyle} from '@theme/GlobalStyle';
 import {COLORS} from '@token/colors';
 import {TYPOGRAPHY} from '@token/typography';
+import {ZINDEX} from '@token/zIndex';
 
 interface ThemeContextProps {
   theme: Theme;
@@ -13,6 +14,7 @@ interface ThemeContextProps {
 const defaultTheme: Theme = {
   colors: COLORS,
   typography: TYPOGRAPHY,
+  zIndex: ZINDEX,
 };
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);

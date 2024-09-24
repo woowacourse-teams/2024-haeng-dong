@@ -39,7 +39,7 @@ const ShareEventButton = ({eventOutline}: ShareEventButtonProps) => {
   };
 
   return isMobile ? (
-    <Button size="small" variants="secondary" onClick={induceBankInfoBeforeShare}>
+    <Button size="small" variants="tertiary" onClick={induceBankInfoBeforeShare}>
       카카오톡으로 정산 초대하기
     </Button>
   ) : (
@@ -52,7 +52,7 @@ const ShareEventButton = ({eventOutline}: ShareEventButtonProps) => {
         })
       }
     >
-      <Button size="small" variants="secondary" onClick={induceBankInfoBeforeShare}>
+      <Button size="small" variants="tertiary" onClick={induceBankInfoBeforeShare}>
         정산 초대하기
       </Button>
     </CopyToClipboard>

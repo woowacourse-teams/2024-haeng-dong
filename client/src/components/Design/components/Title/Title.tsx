@@ -4,16 +4,15 @@ import {amountContainerStyle, titleContainerStyle, titleStyle} from '@HDcomponen
 import {TitleProps} from '@HDcomponents/Title/Title.type';
 import {useTheme} from '@theme/HDesignProvider';
 
-import Icon from '../Icon/Icon';
 import Amount from '../Amount/Amount';
 
-export const Title: React.FC<TitleProps> = ({title, amount}: TitleProps) => {
+export const Title: React.FC<TitleProps> = ({title, amount, dropdown}: TitleProps) => {
   const {theme} = useTheme();
   return (
     <div css={titleStyle(theme)}>
       <div css={titleContainerStyle}>
         <Text size="subTitle">{title}</Text>
-        <Icon iconType="meatballs" />
+        {dropdown}
       </div>
       <div css={amountContainerStyle}>
         <Text textColor="gray" size="caption">

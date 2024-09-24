@@ -1,25 +1,25 @@
 import {Step as StepType} from 'types/serviceType';
+import BillEmptyFallback from '@pages/EventPage/EventPageFallback/BillEmptyFallback';
 
-import {Flex, Text} from '@HDesign/index';
+import {Flex} from '@HDesign/index';
 
 import Step from './Step';
 
 interface Props {
   data: StepType[];
+  isAdmin: boolean;
 }
 
-const Steps = ({data}: Props) => {
+const Steps = ({data, isAdmin}: Props) => {
+  if (data.length <= 0 && !isAdmin) {
+    return <BillEmptyFallback />;
+  }
+
   return (
     <Flex flexDirection="column" gap="0.5rem">
-      {data.length > 0 ? (
-        data.map(step => <Step step={step} />)
-      ) : (
-        <Flex width="100%" justifyContent="center">
-          <Text size="body" textColor="gray" style={{paddingTop: '1rem'}}>
-            지금은 지출 내역이 없어요. :(
-          </Text>
-        </Flex>
-      )}
+      {data.map((step, index) => (
+        <Step key={index} step={step} />
+      ))}
     </Flex>
   );
 };

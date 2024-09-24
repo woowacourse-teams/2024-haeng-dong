@@ -17,7 +17,6 @@ export const flexStyle = ({
   minHeight,
   backgroundColor,
   theme,
-  ...rest
 }: FlexProps) =>
   css({
     display: 'flex',
@@ -32,7 +31,6 @@ export const flexStyle = ({
     width,
     height,
     minHeight,
-    ...rest,
 
     backgroundColor: (() => {
       switch (backgroundColor) {

@@ -40,7 +40,6 @@ const useReportsPage = () => {
 
   return {
     isEmpty,
-    matchedReports,
     expenseListProp,
     name,
     changeName,

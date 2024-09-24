@@ -17,7 +17,6 @@ import Input from './components/Input/Input';
 import LabelInput from './components/LabelInput/LabelInput';
 import ListButton from './components/ListButton/ListButton';
 import LabelGroupInput from './components/LabelGroupInput/LabelGroupInput';
-import Search from './components/Search/Search';
 import Switch from './components/Switch/Switch';
 import Top from './components/Top/Top';
 import Tab from './components/Tabs/Tab';
@@ -27,6 +26,8 @@ import TextButton from './components/TextButton/TextButton';
 import Title from './components/Title/Title';
 import Back from './components/TopNav/Back';
 import TopNav from './components/TopNav/TopNav';
+import Dropdown from './components/Dropdown/Dropdown';
+import DropdownButton from './components/Dropdown/DropdownButton';
 
 export {
   BankSelect,
@@ -44,7 +45,6 @@ export {
   LabelInput,
   ListButton,
   LabelGroupInput,
-  Search,
   Switch,
   Top,
   Tab,
@@ -59,4 +59,6 @@ export {
   ContentLayout,
   HDesignProvider,
   useTheme,
+  Dropdown,
+  DropdownButton,
 };
