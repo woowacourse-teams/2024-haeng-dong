@@ -20,11 +20,11 @@ const useSetEventPasswordStep = () => {
     eventName,
     setEventToken,
   }: {
-    event?: React.FormEvent<HTMLFormElement>;
+    event: React.FormEvent<HTMLFormElement>;
     eventName: string;
     setEventToken: (eventToken: string) => void;
   }) => {
-    if (event) event.preventDefault();
+    event.preventDefault();
 
     await postEvent(eventName, setEventToken);
   };
