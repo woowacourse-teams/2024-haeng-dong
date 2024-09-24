@@ -25,7 +25,7 @@ const BankSendButton = ({
 
   return isDeposited ? (
     <button css={isDepositedStyle(theme)} disabled {...buttonProps}>
-      <Flex justifyContent="center" alignItems="center" gap="0.125rem">
+      <Flex justifyContent="center" alignItems="center">
         <Text size="tiny" textColor="black">
           송금완료
         </Text>
