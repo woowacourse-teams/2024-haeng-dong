@@ -34,6 +34,29 @@ const EditBillPage = () => {
   const [newBillDetails, setNewBillDetails] = useState<BillDetail[]>([]);
 
   const [keyboardTargetId, setKeyboardTargetId] = useState<null | number>(null);
+  const [maxEditableDetailPrice, setMaxEditableDetailPrice] = useState(0);
+
+  useEffect(() => {
+    if (keyboardTargetId === 0) {
+      setMaxEditableDetailPrice(10000000);
+      return;
+    }
+
+    const totalFixedPrice = newBillDetails.reduce(
+      (sum, detail) => (detail.isFixed && detail.id !== keyboardTargetId ? sum + detail.price : sum),
+      0,
+    );
+    const targetBillDetail = newBillDetails.find(({id}) => id === keyboardTargetId);
+    if (targetBillDetail?.isFixed) {
+      setMaxEditableDetailPrice(newBill.price - totalFixedPrice - targetBillDetail.price);
+      return;
+    }
+    setMaxEditableDetailPrice(newBill.price - totalFixedPrice);
+  }, [newBill.price, billDetails, keyboardTargetId]);
+
+  useEffect(() => {
+    console.log(maxEditableDetailPrice);
+  }, [maxEditableDetailPrice]);
 
   const {putBillAsync, isSuccess: isSuccessPutBill, isPending: isPendingPutBill} = useRequestPutBill();
   const {deleteBill, isSuccess: isSuccessDeleteBill} = useRequestDeleteBill();
@@ -221,7 +244,7 @@ const EditBillPage = () => {
       </FixedButton>
       <NumberKeyboardBottomSheet
         type="amount"
-        maxNumber={keyboardTargetId === 0 ? 100000000 : newBill.price}
+        maxNumber={maxEditableDetailPrice}
         initialValue={
           newBillDetails.find(({id}) => id === keyboardTargetId)?.price.toLocaleString('ko-kr') ??
           newBill.price.toLocaleString('ko-kr')
