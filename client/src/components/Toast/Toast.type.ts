@@ -1,22 +1,15 @@
-export type ToastPosition = 'bottom' | 'top';
+import {ToastMessage, ToastOptions} from 'types/toastType';
+
 export type ToastType = 'error' | 'confirm' | 'none';
 
-export interface ToastStyleProps {
-  bottom?: string;
-  top?: string;
-}
-
-export interface ToastOptionProps {
-  position?: ToastPosition;
+export type ToastOptionProps = ToastOptions & {
   type?: ToastType;
-  onUndo?: () => void;
-  isClickToClose?: boolean;
   onClose?: () => void;
-  showingTime?: number;
-}
+  onUndo?: () => void;
+};
 
-export interface ToastRequiredProps {
-  message: string;
-}
+export type ToastRequiredProps = {
+  message: ToastMessage;
+};
 
-export type ToastProps = React.ComponentProps<'div'> & ToastStyleProps & ToastOptionProps & ToastRequiredProps;
+export type ToastProps = React.ComponentProps<'div'> & ToastOptionProps & ToastRequiredProps;

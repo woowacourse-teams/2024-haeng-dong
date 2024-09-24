@@ -24,9 +24,9 @@ const ICON = {
   error: <Error />,
   confirm: <Confirm />,
   trash: <Trash />,
+  toss: <img src={Toss} width="16" height="16" alt="toss icon" />,
   check: <Check />,
   x: <X />,
-  toss: <img src={Toss} width="24" height="24" alt="toss icon" />,
   meatballs: <Meatballs />,
 };
 
