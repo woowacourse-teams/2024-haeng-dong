@@ -46,11 +46,11 @@ const useAccount = () => {
   };
 
   useEffect(() => {
-    const existEmptyField = bankName.trim() === '' && accountNumber.trim() === '';
+    const existEmptyField = bankNameState.trim() === '' || accountNumberState.trim() === '';
     const isChanged = bankName !== bankNameState || accountNumber !== accountNumberState;
 
     setCanSubmit(!existEmptyField && isChanged);
-  }, [bankName, accountNumber, bankNameState, accountNumberState]);
+  }, [bankNameState, accountNumberState]);
 
   return {
     bankName: bankNameState,
