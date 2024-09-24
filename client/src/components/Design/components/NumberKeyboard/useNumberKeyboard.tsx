@@ -41,7 +41,8 @@ const useNumberKeyboard = ({type, maxNumber, initialValue, onChange}: Props) => 
     if (type === 'string') {
       setValue(value);
     } else {
-      const limitedValue = maxNumber && Number(value) > maxNumber ? `${maxNumber}` : value;
+      const limitedValue = maxNumber !== 0 ? (maxNumber && Number(value) > maxNumber ? `${maxNumber}` : value) : 0;
+
       if (Number(limitedValue) === 0) {
         setValue('');
       } else {
