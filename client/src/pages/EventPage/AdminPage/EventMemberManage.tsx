@@ -3,10 +3,21 @@ import {Report} from 'types/serviceType';
 
 import useEventMember from '@hooks/useEventMember';
 
-import {Back, MainLayout, TopNav, Top, Amount, DepositToggle, Icon, IconButton, FixedButton} from '@components/Design';
+import {
+  Back,
+  MainLayout,
+  TopNav,
+  Top,
+  Amount,
+  DepositToggle,
+  Icon,
+  IconButton,
+  FixedButton,
+  Text,
+} from '@components/Design';
 import {useTheme} from '@components/Design';
 
-import {eventMemberMangeStyle, memberList, eventMember, memberEditInput} from './EventMemberManage.style';
+import {eventMemberMangeStyle, memberList, eventMember, memberEditInput, noneReports} from './EventMemberManage.style';
 
 const EventMemberManage = () => {
   const {reports, isCanRequest, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =
@@ -22,7 +33,27 @@ const EventMemberManage = () => {
           <Top.Line text="전체 참여자 관리" emphasize={['전체 참여자 관리']}></Top.Line>
         </Top>
         <div css={memberList}>
-          {reports.map(member => {
+          {reports.length === 0 ? (
+            <div css={noneReports}>
+              <Text size="bodyBold">참여자가 존재하지 않아요!</Text>
+              <Text size="body" textColor="gray">
+                지출내역을 추가하면 참여자가 생성돼요.
+              </Text>
+            </div>
+          ) : (
+            reports.map(member => {
+              return (
+                <EventMember
+                  key={member.memberId}
+                  member={member}
+                  changeMemberName={changeMemberName}
+                  handleDeleteMember={handleDeleteMember}
+                  toggleDepositStatus={toggleDepositStatus}
+                />
+              );
+            })
+          )}
+          {/* {reports.map(member => {
             return (
               <EventMember
                 key={member.memberId}
@@ -32,7 +63,7 @@ const EventMemberManage = () => {
                 toggleDepositStatus={toggleDepositStatus}
               />
             );
-          })}
+          })} */}
         </div>
         <FixedButton disabled={!isCanRequest} onClick={updateMembersOnServer}>
           수정완료
