@@ -12,7 +12,7 @@ const useRequestPutBill = () => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  const {mutate, ...rest} = useMutation({
+  const {mutate, mutateAsync, ...rest} = useMutation({
     mutationFn: ({billId, title, price}: WithBillId<RequestPutBill>) => requestPutBill({eventId, billId, title, price}),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
@@ -20,7 +20,7 @@ const useRequestPutBill = () => {
     },
   });
 
-  return {pulBill: mutate, ...rest};
+  return {putBill: mutate, putBillAsync: mutateAsync, ...rest};
 };
 
 export default useRequestPutBill;

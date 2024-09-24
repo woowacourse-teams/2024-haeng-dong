@@ -8,14 +8,14 @@ import useNumberKeyboard from './useNumberKeyboard';
 
 export type KeyboardType = 'number' | 'string' | 'amount';
 
-interface Props {
+export interface NumberKeyboardProps {
   type: KeyboardType;
   maxNumber: number;
   initialValue?: string;
   onChange: (value: string) => void;
 }
 
-export default function NumberKeyboard({type, maxNumber, initialValue, onChange}: Props) {
+export default function NumberKeyboard({type, maxNumber, initialValue, onChange}: NumberKeyboardProps) {
   const {theme} = useTheme();
   const amountKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '<-'];
   const numberKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '<-'];
@@ -35,6 +35,8 @@ export default function NumberKeyboard({type, maxNumber, initialValue, onChange}
         grid-template-rows: ${type === 'amount' ? 'auto' : null} repeat(4, 1fr);
         padding: 1rem;
         gap: 1rem;
+        width: 100%;
+        max-width: 768px;
         background-color: ${theme.colors.white};
       `}
     >

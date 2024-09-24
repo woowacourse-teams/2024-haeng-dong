@@ -8,7 +8,7 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
-const useRequestPutBillDetails = (billId: number) => {
+const useRequestPutBillDetails = ({billId}: WithBillId) => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 

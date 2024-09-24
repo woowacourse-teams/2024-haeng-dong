@@ -1,10 +1,11 @@
 import {createBrowserRouter} from 'react-router-dom';
 
-import AddBillFunnel from '@pages/AddBillFunnel/AddBillFunnel';
 import {AdminPage} from '@pages/EventPage/AdminPage';
 import {HomePage} from '@pages/EventPage/HomePage';
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
+import AddBillFunnel from '@pages/AddBillFunnel/AddBillFunnel';
+import EditBillPage from '@pages/EditBillPage/EditBillPage';
 import CreateEventFunnel from '@pages/CreateEventPage/CreateEventFunnel';
 import Account from '@pages/AccountPage/Account';
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.addBill,
         element: <AddBillFunnel />,
+      },
+      {
+        path: ROUTER_URLS.editBill,
+        element: <EditBillPage />,
       },
       {
         path: ROUTER_URLS.eventEdit,

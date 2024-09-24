@@ -6,5 +6,6 @@ export const ROUTER_URLS = {
   eventManage: '/event/:eventId/admin',
   home: '/event/:eventId/home',
   addBill: '/event/:eventId/add-bill',
+  editBill: '/event/:eventId/edit-bill',
   eventEdit: 'event/:eventId/admin/edit',
 };

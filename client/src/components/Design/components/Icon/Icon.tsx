@@ -11,6 +11,7 @@ import RightChevron from '@assets/image/rightChevron.svg';
 import Check from '@assets/image/check.svg';
 import X from '@assets/image/x.svg';
 import Meatballs from '@assets/image/meatballs.svg';
+import EditPencil from '@assets/image/editPencil.svg';
 import {IconProps} from '@HDcomponents/Icon/Icon.type';
 import {useTheme} from '@theme/HDesignProvider';
 
@@ -28,6 +29,7 @@ const ICON = {
   check: <Check />,
   x: <X />,
   meatballs: <Meatballs />,
+  editPencil: <EditPencil />,
 };
 
 export const Icon: React.FC<IconProps> = ({iconColor, iconType, ...htmlProps}: IconProps) => {

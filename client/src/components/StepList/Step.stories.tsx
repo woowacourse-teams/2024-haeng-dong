@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
 
+import {MemoryRouter} from 'react-router-dom';
+
 import Step from './Step';
 
 const meta = {
@@ -52,9 +54,11 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {
   render: ({...args}) => {
     return (
-      <div style={{width: '400px'}}>
-        <Step {...args} />
-      </div>
+      <MemoryRouter>
+        <div style={{width: '400px'}}>
+          <Step {...args} />
+        </div>
+      </MemoryRouter>
     );
   },
 };

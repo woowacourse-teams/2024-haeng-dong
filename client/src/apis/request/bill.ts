@@ -57,7 +57,7 @@ export const requestGetBillDetails = async ({
   });
 };
 
-interface PutBillDetail {
+export interface PutBillDetail {
   id: number;
   price: number;
   isFixed: boolean;
