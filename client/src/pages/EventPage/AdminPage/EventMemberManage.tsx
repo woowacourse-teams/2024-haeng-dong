@@ -9,7 +9,7 @@ import {useTheme} from '@components/Design';
 import {eventMemberMangeStyle, memberList, eventMember, memberEditInput} from './EventMemberManage.style';
 
 const EventMemberManage = () => {
-  const {reports, changeMemberName} = useEventMember();
+  const {reports, changeMemberName, handleDeleteMember} = useEventMember();
 
   return (
     <MainLayout backgroundColor="white">
@@ -22,7 +22,14 @@ const EventMemberManage = () => {
         </Top>
         <div css={memberList}>
           {reports.map(member => {
-            return <EventMember key={member.memberId} member={member} changeMemberName={changeMemberName} />;
+            return (
+              <EventMember
+                key={member.memberId}
+                member={member}
+                changeMemberName={changeMemberName}
+                handleDeleteMember={handleDeleteMember}
+              />
+            );
           })}
         </div>
       </section>
@@ -33,9 +40,10 @@ const EventMemberManage = () => {
 interface EventMemberProps {
   member: Report;
   changeMemberName: (memberId: number, newName: string) => void;
+  handleDeleteMember: (memberId: number) => void;
 }
 
-const EventMember = ({member, changeMemberName}: EventMemberProps) => {
+const EventMember = ({member, changeMemberName, handleDeleteMember}: EventMemberProps) => {
   const {theme} = useTheme();
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +58,12 @@ const EventMember = ({member, changeMemberName}: EventMemberProps) => {
       </div>
       <Amount amount={member.price} />
       <DepositToggle isDeposit={member.isDeposited} onToggle={() => {}} />
-      <IconButton size="small" variants="tertiary" css={{width: '23px', height: '23px', borderRadius: '0.375rem'}}>
+      <IconButton
+        size="small"
+        variants="tertiary"
+        css={{width: '23px', height: '23px', borderRadius: '0.375rem'}}
+        onClick={() => handleDeleteMember(member.memberId)}
+      >
         <Icon iconType="trashMini" />
       </IconButton>
     </div>

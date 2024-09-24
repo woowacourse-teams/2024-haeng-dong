@@ -9,6 +9,7 @@ import useRequestGetReports from './queries/report/useRequestGetReports';
 interface ReturnUseEventMember {
   reports: Report[];
   changeMemberName: (memberId: number, newName: string) => void;
+  handleDeleteMember: (memberId: number) => void;
 }
 
 const useEventMember = (): ReturnUseEventMember => {
@@ -17,6 +18,7 @@ const useEventMember = (): ReturnUseEventMember => {
   const {putMember} = useRequestPutMembers();
 
   const [reports, setReports] = useState(initialReports);
+  const [deleteMembers, setDeleteMembers] = useState<number[]>([]);
 
   useEffect(() => {
     setReports(initialReports);
@@ -33,12 +35,22 @@ const useEventMember = (): ReturnUseEventMember => {
     });
   };
 
+  const handleDeleteMember = (memberId: number) => {
+    setDeleteMembers(prev => [memberId, ...prev]);
+  };
+
   const handleClickPutMembers = () => {
     // TODO: (@soha) PUT 요청 실행 전, Delete요청 실행
+    if (deleteMembers.length > 0) {
+      for (const id of deleteMembers) {
+        return deleteMember({memberId: id});
+      }
+    }
+
     // TODO: (@soha) 초기의 reports와 현재 reports가 변경된 사항이 존재한다면 PUT 요청 실행
   };
 
-  return {reports, changeMemberName};
+  return {reports, changeMemberName, handleDeleteMember};
 };
 
 export default useEventMember;
