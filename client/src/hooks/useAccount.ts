@@ -30,11 +30,11 @@ const useAccount = () => {
   const getChangedField = () => {
     const changedField: Partial<Event> = {};
 
-    if (bankName.trim() !== '' && bankName !== bankNameState) {
+    if (bankNameState.trim() !== '' && bankName !== bankNameState) {
       changedField.bankName = bankNameState;
     }
 
-    if (accountNumber.trim() !== '' && accountNumber !== accountNumberState) {
+    if (accountNumberState.trim() !== '' && accountNumber !== accountNumberState) {
       changedField.accountNumber = accountNumberState;
     }
 
