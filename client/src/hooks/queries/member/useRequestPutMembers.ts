@@ -10,7 +10,7 @@ const useRequestPutMembers = () => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  const {mutate, ...rest} = useMutation({
+  const {mutateAsync, ...rest} = useMutation({
     mutationFn: ({members}: RequestPutMembers) => requestPutMembers({eventId, members}),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
@@ -20,7 +20,7 @@ const useRequestPutMembers = () => {
     },
   });
 
-  return {putMember: mutate, ...rest};
+  return {putMember: mutateAsync, ...rest};
 };
 
 export default useRequestPutMembers;
