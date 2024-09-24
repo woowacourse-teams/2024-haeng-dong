@@ -22,10 +22,10 @@ import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillDetail;
 import server.haengdong.domain.bill.BillDetailRepository;
 import server.haengdong.domain.bill.BillRepository;
-import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.domain.member.Member;
+import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.fixture.Fixture;
 
@@ -51,25 +51,67 @@ class BillServiceTest extends ServiceTestSupport {
     void findSteps() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        Member member = new Member(event, "토다리");
-        memberRepository.save(member);
-        Bill bill = Bill.create(event, "행동대장 회식", 100000L, List.of(member));
-        billRepository.save(bill);
+        Member member1 = new Member(event, "토다리");
+        Member member2 = new Member(event, "쿠키");
+        Member member3 = new Member(event, "소하");
+        Member member4 = new Member(event, "웨디");
+        memberRepository.saveAll(List.of(member1, member2, member3, member4));
+        Bill bill1 = Bill.create(event, "행동대장 회식1", 100000L, List.of(member1, member2, member3));
+        Bill bill2 = Bill.create(event, "행동대장 회식2", 200000L, List.of(member1, member2, member3, member4));
+        Bill bill3 = Bill.create(event, "행동대장 회식3", 300000L, List.of(member1, member2, member3, member4));
+        Bill bill4 = Bill.create(event, "행동대장 회식4", 400000L, List.of(member2, member3, member4));
+        billRepository.saveAll(List.of(bill1, bill2, bill3, bill4));
 
         List<StepAppResponse> steps = billService.findSteps(event.getToken());
+
+        assertThat(steps).hasSize(3);
 
         assertThat(steps.get(0).bills()).hasSize(1)
                 .extracting(BillAppResponse::id, BillAppResponse::title, BillAppResponse::price,
                         BillAppResponse::isFixed)
                 .containsExactlyInAnyOrder(
-                        tuple(bill.getId(), bill.getTitle(), bill.getPrice(), bill.isFixed())
+                        tuple(bill1.getId(), bill1.getTitle(), bill1.getPrice(), bill1.isFixed())
                 );
 
-        assertThat(steps.get(0).members()).hasSize(1)
+        assertThat(steps.get(0).members()).hasSize(3)
                 .extracting(MemberAppResponse::id, MemberAppResponse::name)
                 .containsExactlyInAnyOrder(
-                        tuple(member.getId(), member.getName())
+                        tuple(member1.getId(), member1.getName()),
+                        tuple(member2.getId(), member2.getName()),
+                        tuple(member3.getId(), member3.getName())
                 );
+
+        assertThat(steps.get(1).bills()).hasSize(2)
+                .extracting(BillAppResponse::id, BillAppResponse::title, BillAppResponse::price,
+                        BillAppResponse::isFixed)
+                .containsExactlyInAnyOrder(
+                        tuple(bill2.getId(), bill2.getTitle(), bill2.getPrice(), bill2.isFixed()),
+                        tuple(bill3.getId(), bill3.getTitle(), bill3.getPrice(), bill3.isFixed())
+                );
+
+        assertThat(steps.get(1).members()).hasSize(4)
+                .extracting(MemberAppResponse::id, MemberAppResponse::name)
+                .containsExactlyInAnyOrder(
+                        tuple(member1.getId(), member1.getName()),
+                        tuple(member2.getId(), member2.getName()),
+                        tuple(member3.getId(), member3.getName()),
+                        tuple(member4.getId(), member4.getName())
+                );
+
+        assertThat(steps.get(2).bills()).hasSize(1)
+                .extracting(BillAppResponse::id, BillAppResponse::title, BillAppResponse::price,
+                        BillAppResponse::isFixed)
+                .containsExactlyInAnyOrder(
+                        tuple(bill4.getId(), bill4.getTitle(), bill4.getPrice(), bill4.isFixed())
+                );
+
+        assertThat(steps.get(2).members()).hasSize(3)
+                .extracting(MemberAppResponse::id, MemberAppResponse::name)
+                .containsExactlyInAnyOrder(
+                        tuple(member2.getId(), member2.getName()),
+                        tuple(member3.getId(), member3.getName()),
+                        tuple(member4.getId(), member4.getName())
+                        );
     }
 
     @DisplayName("지출 내역을 생성한다.")
@@ -109,7 +151,9 @@ class BillServiceTest extends ServiceTestSupport {
 
         billService.saveBill(event.getToken(), request);
 
-        List<BillDetail> billDetails = billDetailRepository.findAllByBillId(1L);
+        List<Bill> bills = billRepository.findAllByEvent(event);
+
+        List<BillDetail> billDetails = bills.get(0).getBillDetails();
 
         assertThat(billDetails)
                 .hasSize(2)
@@ -195,8 +239,8 @@ class BillServiceTest extends ServiceTestSupport {
 
         billService.updateBill(event.getToken(), bill.getId(), request);
 
-        Bill updatedBill = billRepository.findById(bill.getId()).get();
-        List<BillDetail> billDetails = billDetailRepository.findAllByBill(updatedBill);
+        Bill updatedBill = billRepository.findAllByEvent(event).get(0);
+        List<BillDetail> billDetails = updatedBill.getBillDetails();
 
         assertThat(billDetails).hasSize(4)
                 .extracting(BillDetail::getPrice)
@@ -272,7 +316,8 @@ class BillServiceTest extends ServiceTestSupport {
 
         billService.updateBillDetails(event1.getToken(), bill.getId(), request);
 
-        List<BillDetail> foundBillDetails = billDetailRepository.findAllByBill(bill);
+        Bill foundBill = billRepository.findAllByEvent(event1).get(0);
+        List<BillDetail> foundBillDetails = foundBill.getBillDetails();
 
         assertThat(foundBillDetails).hasSize(2)
                 .extracting(BillDetail::getId, BillDetail::getPrice)

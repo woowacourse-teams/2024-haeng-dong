@@ -1,6 +1,5 @@
 package server.haengdong.domain.bill;
 
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,15 +9,6 @@ import server.haengdong.domain.member.Member;
 
 @Repository
 public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
-
-    List<BillDetail> findAllByBill(Bill bill);
-
-    @Query("""
-            select bd from BillDetail bd
-            join fetch bd.member
-            where bd.bill.id = :billId
-            """)
-    List<BillDetail> findAllByBillId(Long billId);
 
     @Modifying
     @Query("delete from BillDetail bd where bd.member = :member")
