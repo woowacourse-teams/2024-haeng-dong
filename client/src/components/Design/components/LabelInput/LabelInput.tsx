@@ -13,7 +13,14 @@ import {useLabelInput} from './useLabelInput';
 import {LabelInputProps} from './LabelInput.type';
 
 const LabelInput: React.FC<LabelInputProps> = forwardRef<HTMLInputElement, LabelInputProps>(function LabelInput(
-  {labelText, errorText, isError, ...htmlProps}: LabelInputProps,
+  {
+    labelText,
+    errorText,
+    isError,
+    isAlwaysOnLabel = false,
+    isAlwaysOnInputBorder = false,
+    ...htmlProps
+  }: LabelInputProps,
   ref,
 ) {
   useImperativeHandle(ref, () => inputRef.current!);
@@ -25,7 +32,7 @@ const LabelInput: React.FC<LabelInputProps> = forwardRef<HTMLInputElement, Label
   return (
     <Flex flexDirection="column" gap="0.375rem">
       <Flex justifyContent="spaceBetween" paddingInline="0.5rem" margin="0 0 0.375rem 0">
-        <Text size="caption" css={labelTextStyle(theme, hasFocus, !!htmlProps.value)}>
+        <Text size="caption" css={labelTextStyle(theme, hasFocus, !!htmlProps.value, isAlwaysOnLabel)}>
           {labelText}
         </Text>
         {errorText && (
@@ -35,7 +42,13 @@ const LabelInput: React.FC<LabelInputProps> = forwardRef<HTMLInputElement, Label
         )}
       </Flex>
       <Flex flexDirection="column" gap="0.5rem">
-        <Input ref={inputRef} isError={isError} placeholder={labelText} {...htmlProps} />
+        <Input
+          ref={inputRef}
+          isError={isError}
+          placeholder={labelText}
+          isAlwaysOnBorder={isAlwaysOnInputBorder}
+          {...htmlProps}
+        />
       </Flex>
     </Flex>
   );

@@ -10,17 +10,17 @@ import {WithBillId, WithEventId} from '@apis/withId.type';
 export interface RequestPostBill {
   title: string;
   price: number;
-  members: number[];
+  memberIds: number[];
 }
 
-export const requestPostBill = async ({eventId, title, price, members}: WithEventId<RequestPostBill>) => {
+export const requestPostBill = async ({eventId, title, price, memberIds}: WithEventId<RequestPostBill>) => {
   await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `${ADMIN_API_PREFIX}/${eventId}/bills`,
     body: {
       title,
       price,
-      members,
+      memberIds,
     },
   });
 };
@@ -57,7 +57,7 @@ export const requestGetBillDetails = async ({
   });
 };
 
-interface PutBillDetail {
+export interface PutBillDetail {
   id: number;
   price: number;
   isFixed: boolean;

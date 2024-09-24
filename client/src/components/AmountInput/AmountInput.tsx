@@ -1,13 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react';
 
-import {Text} from '@components/Design';
+import {Text, useTheme} from '@components/Design';
 
 interface Props {
   value: string;
+  onClick?: () => void;
+  underlined?: boolean;
+  activated?: boolean;
 }
 
-const AmountInput = ({value}: Props) => {
+const AmountInput = ({value, onClick, underlined, activated}: Props) => {
+  const {theme} = useTheme();
   return (
     <div
       css={css`
@@ -16,10 +20,16 @@ const AmountInput = ({value}: Props) => {
         justify-content: end;
         align-items: end;
         gap: 0.5rem;
+        transition: 0.2s ease-in-out;
+        ${underlined &&
+        css`
+          border-bottom: 1px solid ${activated ? theme.colors.primary : theme.colors.gray};
+        `}
       `}
+      onClick={onClick}
     >
-      <Text size="head" textColor={value ? 'black' : 'gray'}>
-        {value ? value : '0'}
+      <Text size="head" textColor={value !== '0' ? 'black' : 'gray'}>
+        {value}
       </Text>
       <Text
         textColor="gray"

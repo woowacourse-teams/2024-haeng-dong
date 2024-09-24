@@ -13,16 +13,43 @@ const meta = {
     },
   },
   args: {
+    memberName: '소하',
+    onSearch: () => console.log('쿠키'),
+    placeholder: '안녕',
+
     expenseList: [
-      {memberName: '소하', price: 2000, clipboardText: '토스은행 2000원', onBankButtonClick: () => console.log('소하')},
       {
+        memberId: 1,
+        memberName: '소하',
+        price: 2000,
+        isDeposited: true,
+        clipboardText: '토스은행 2000원',
+        onBankButtonClick: () => console.log('소하'),
+      },
+      {
+        memberId: 2,
         memberName: '토다리',
         price: 2000,
+        isDeposited: false,
         clipboardText: '토스은행 2000원',
         onBankButtonClick: () => console.log('토다리'),
       },
-      {memberName: '웨디', price: 1080, clipboardText: '토스은행 1080원', onBankButtonClick: () => console.log('웨디')},
-      {memberName: '쿠키', price: 3020, clipboardText: '토스은행 3020원', onBankButtonClick: () => console.log('쿠키')},
+      {
+        memberId: 3,
+        memberName: '웨디',
+        price: 1080,
+        isDeposited: true,
+        clipboardText: '토스은행 1080원',
+        onBankButtonClick: () => console.log('웨디'),
+      },
+      {
+        memberId: 4,
+        memberName: '쿠키',
+        price: 3020,
+        isDeposited: false,
+        clipboardText: '토스은행 3020원',
+        onBankButtonClick: () => console.log('쿠키'),
+      },
     ],
   },
 } satisfies Meta<typeof ExpenseList>;

@@ -18,7 +18,7 @@ const Nav = () => {
           <Text size="subTitle">행동대장</Text>
         </div>
       </Flex>
-      <Button size="medium" variants="tertiary" onClick={() => navigate(ROUTER_URLS.eventCreateName)}>
+      <Button size="medium" variants="tertiary" onClick={() => navigate(ROUTER_URLS.createEvent)}>
         정산 시작하기
       </Button>
     </header>

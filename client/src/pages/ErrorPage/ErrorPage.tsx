@@ -1,9 +1,13 @@
-import {MainLayout, Title} from '@HDesign/index';
+import Top from '@components/Design/components/Top/Top';
+
+import {MainLayout} from '@HDesign/index';
 
 const ErrorPage = () => {
   return (
     <MainLayout>
-      <Title title="알 수 없는 오류입니다." />
+      <Top>
+        <Top.Line text="알 수 없는 오류입니다." emphasize={['알 수 없는 오류입니다.']} />
+      </Top>
     </MainLayout>
   );
 };

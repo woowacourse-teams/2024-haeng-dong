@@ -20,7 +20,7 @@ export const billHandler = [
   http.get(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/bills/:billId/fixed`, ({params}) => {
     const {billId} = params;
     const billDetails = (billDetailsData as unknown as BillDetailsData)[billId as keyof BillDetailsData];
-    return HttpResponse.json({billDetails});
+    return HttpResponse.json(billDetails);
   }),
 
   // POST /api/eventId/bills
@@ -31,13 +31,23 @@ export const billHandler = [
         const {title, price, members} = await request.json();
         const newBill = {id: Date.now(), title, price, isFixed: false};
 
-        billData.steps[0].bills.push(newBill);
-        billData.steps[0].members = members.map(id => ({id, name: `Member ${id}`}));
+        const lastStep = billData.steps[billData.steps.length - 1];
+        const isSameMembers = JSON.stringify(lastStep.members.map(m => m.id).sort()) === JSON.stringify(members.sort());
+
+        if (isSameMembers) {
+          lastStep.bills.push(newBill);
+        } else {
+          billData.steps.push({
+            bills: [newBill],
+            members: members.map(id => ({id, name: `Member ${id}`})),
+          });
+        }
 
         (billDetailsData as unknown as BillDetailsData)[newBill.id.toString()] = {
           billDetails: members.map((id, index) => ({
             id,
-            memberName: `Member ${id}`,
+            memberName:
+              billData.steps.flatMap(step => step.members).find(member => member.id === id)?.name || `Member ${id}`,
             price: (Math.floor(price / members.length) + (index < price % members.length ? 1 : 0)).toString(),
           })),
         };

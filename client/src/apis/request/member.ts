@@ -7,7 +7,7 @@ import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestDelete, requestGet, requestPut, requestPostWithResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
-interface PostMember {
+export interface PostMember {
   name: string;
 }
 

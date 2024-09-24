@@ -1,7 +1,7 @@
 export let eventData = {
-  eventName: 'MSW 야유회',
+  eventName: '행동대장 야유회',
   bankName: '',
-  accountNumber: '',
+  accountNumber: '000000-01-121212',
 };
 
 export let memberData = {
@@ -9,6 +9,10 @@ export let memberData = {
     {id: 1, name: '망쵸', isDeposited: false},
     {id: 2, name: '백호', isDeposited: true},
     {id: 3, name: '감자', isDeposited: true},
+    {id: 4, name: '이상', isDeposited: false},
+    {id: 5, name: '소하', isDeposited: false},
+    {id: 6, name: '웨디', isDeposited: false},
+    {id: 7, name: '쿠키', isDeposited: false},
   ],
 };
 
@@ -32,6 +36,18 @@ export let billData = {
         {id: 3, name: '감자'},
       ],
     },
+    {
+      bills: [{id: 4, title: '뽕쟁이족', price: 70000, isFixed: false}],
+      members: [
+        {id: 1, name: '망쵸'},
+        {id: 2, name: '백호'},
+        {id: 3, name: '감자'},
+        {id: 4, name: '이상'},
+        {id: 5, name: '소하'},
+        {id: 6, name: '웨디'},
+        {id: 7, name: '쿠키'},
+      ],
+    },
   ],
 };
 
@@ -42,11 +58,13 @@ export let billDetailsData = {
         id: 1,
         memberName: '망쵸',
         price: 5000,
+        isFixed: false,
       },
       {
         id: 2,
         memberName: '백호',
         price: 5000,
+        isFixed: false,
       },
     ],
   },
@@ -56,11 +74,13 @@ export let billDetailsData = {
         id: 1,
         memberName: '망쵸',
         price: 10000,
+        isFixed: false,
       },
       {
         id: 2,
         memberName: '백호',
         price: 10000,
+        isFixed: false,
       },
     ],
   },
@@ -70,17 +90,31 @@ export let billDetailsData = {
         id: 1,
         memberName: '망쵸',
         price: 5000,
+        isFixed: false,
       },
       {
         id: 2,
         memberName: '백호',
         price: 10000,
+        isFixed: true,
       },
       {
         id: 2,
         memberName: '감자',
         price: 5000,
+        isFixed: false,
       },
+    ],
+  },
+  '4': {
+    billDetails: [
+      {id: 1, memberName: '망쵸', price: 10000, isFixed: false},
+      {id: 2, memberName: '백호', price: 10000, isFixed: false},
+      {id: 3, memberName: '감자', price: 10000, isFixed: false},
+      {id: 4, memberName: '이상', price: 10000, isFixed: false},
+      {id: 5, memberName: '소하', price: 10000, isFixed: false},
+      {id: 6, memberName: '웨디', price: 10000, isFixed: false},
+      {id: 7, memberName: '쿠키', price: 10000, isFixed: false},
     ],
   },
 };

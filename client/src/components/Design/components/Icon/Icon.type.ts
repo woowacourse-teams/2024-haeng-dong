@@ -14,7 +14,8 @@ export type IconType =
   | 'x'
   | 'pencilMini'
   | 'toss'
-  | 'meatballs';
+  | 'meatballs'
+  | 'editPencil';
 
 export type IconColor = ColorKeys;
 
