@@ -16,7 +16,6 @@ export interface NumberKeyboardProps {
 }
 
 export default function NumberKeyboard({type, maxNumber, initialValue, onChange}: NumberKeyboardProps) {
-
   const {theme} = useTheme();
   const amountKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '<-'];
   const numberKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '<-'];
