@@ -37,6 +37,9 @@ export const memberEditInput = (theme: Theme) =>
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottom: `1px solid ${theme.colors.tertiary}`,
-    // marginRight: '3.375rem',
     ...TYPOGRAPHY.bodyBold,
+
+    '&:has(input:focus)': {
+      borderBottom: `1px solid ${theme.colors.primary}`,
+    },
   });
