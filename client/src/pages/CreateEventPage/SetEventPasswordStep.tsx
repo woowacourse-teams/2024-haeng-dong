@@ -18,13 +18,7 @@ const SetEventPasswordStep = ({eventName, moveToNextStep, setEventToken}: SetEve
   const {submitDataForPostEvent, errorMessage, password, handleChange, isPostEventPending, canSubmit} =
     useSetEventPasswordStep();
 
-  const submitOnEnter = async (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      submit();
-    }
-  };
-
-  const submit = async (event?: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     await submitDataForPostEvent({event, eventName, setEventToken});
 
     moveToNextStep();
@@ -54,10 +48,9 @@ const SetEventPasswordStep = ({eventName, moveToNextStep, setEventToken}: SetEve
           onChange={handleChange}
           isError={!!errorMessage}
           autoFocus
-          onKeyDown={submitOnEnter}
         />
         {/* 가상 키패드 적용 예정 */}
-        <FixedButton variants={isPostEventPending ? 'loading' : 'primary'} disabled={!canSubmit}>
+        <FixedButton type="submit" variants={isPostEventPending ? 'loading' : 'primary'} disabled={!canSubmit}>
           행동 개시!
         </FixedButton>
       </form>
