@@ -29,7 +29,7 @@ class EventControllerTest extends ControllerTestSupport {
     @Test
     void findEventTest() throws Exception {
         String eventId = "망쵸토큰";
-        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", "토스 1231245");
+        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", "토스뱅크", "1231245");
         given(eventService.findEvent(eventId)).willReturn(eventDetailAppResponse);
 
         mockMvc.perform(get("/api/events/{eventId}", eventId))

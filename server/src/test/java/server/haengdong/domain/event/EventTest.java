@@ -3,6 +3,7 @@ package server.haengdong.domain.event;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -81,7 +82,10 @@ class EventTest {
 
         event.changeAccount("토스뱅크", "12345678");
 
-        assertThat(event.getAccount()).isEqualTo("토스뱅크 12345678");
+        assertAll(
+                () -> assertThat(event.getBankName()).isEqualTo("토스뱅크"),
+                () -> assertThat(event.getAccountNumber()).isEqualTo("12345678")
+        );
     }
 
     @DisplayName("계좌 정보에 은행 이름과 계좌 번호가 모두 포함되지 않으면 예외가 발생한다.")
@@ -131,5 +135,31 @@ class EventTest {
 
         assertThatThrownBy(() -> event.changeAccount("토스뱅크", accountNumber))
                 .isInstanceOf(HaengdongException.class);
+    }
+
+    @DisplayName("계좌 정보를 조회한다.")
+    @Test
+    void getBankNameTest() {
+        Event event = new Event("이름", "1234", "TEST_TOKEN");
+
+        event.changeAccount("토스뱅크", "12345678");
+
+        assertAll(
+                () -> assertThat(event.getBankName()).isEqualTo("토스뱅크"),
+                () -> assertThat(event.getAccountNumber()).isEqualTo("12345678")
+        );
+    }
+
+    @DisplayName("계좌 번호에 공백이 있어도 계좌 정보를 정상적으로 조회한다.")
+    @Test
+    void getBankNameTest1() {
+        Event event = new Event("이름", "1234", "TEST_TOKEN");
+
+        event.changeAccount("토스뱅크", "1234 5678 9012");
+
+        assertAll(
+                () -> assertThat(event.getBankName()).isEqualTo("토스뱅크"),
+                () -> assertThat(event.getAccountNumber()).isEqualTo("1234 5678 9012")
+        );
     }
 }

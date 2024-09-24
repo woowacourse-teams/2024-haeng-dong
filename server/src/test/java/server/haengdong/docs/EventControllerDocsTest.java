@@ -57,7 +57,7 @@ class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void findEventTest() throws Exception {
         String eventId = "망쵸토큰";
-        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", "토스 12312455");
+        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", "토스뱅크", "12312455");
         given(eventService.findEvent(eventId)).willReturn(eventDetailAppResponse);
 
         mockMvc.perform(get("/api/events/{eventId}", eventId))
@@ -73,7 +73,8 @@ class EventControllerDocsTest extends RestDocsSupport {
                                 ),
                                 responseFields(
                                         fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름"),
-                                        fieldWithPath("account").type(JsonFieldType.STRING).description("행사 계좌")
+                                        fieldWithPath("bankName").type(JsonFieldType.STRING).description("토스뱅크"),
+                                        fieldWithPath("accountNumber").type(JsonFieldType.STRING).description("12312455")
                                 )
                         )
                 );

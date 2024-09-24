@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.Arrays;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -92,7 +93,23 @@ public class Event {
         int accountLength = accountNumber.trim().length();
         if (accountLength < MIN_ACCOUNT_NUMBER_LENGTH || MAX_ACCOUNT_NUMBER_LENGTH < accountLength) {
             throw new HaengdongException(
-                    HaengdongErrorCode.ACCOUNT_LENGTH_INVALID, MIN_ACCOUNT_NUMBER_LENGTH, MAX_ACCOUNT_NUMBER_LENGTH);
+                HaengdongErrorCode.ACCOUNT_LENGTH_INVALID, MIN_ACCOUNT_NUMBER_LENGTH, MAX_ACCOUNT_NUMBER_LENGTH);
         }
+    }
+
+    public String getBankName() {
+        String[] bankNameAndAccountNumber = account.split(" ");
+        if (bankNameAndAccountNumber.length > 0) {
+            return bankNameAndAccountNumber[0];
+        }
+        return "";
+    }
+
+    public String getAccountNumber() {
+        String[] bankNameAndAccountNumber = account.split(" ");
+        if (bankNameAndAccountNumber.length > 1) {
+            return String.join(" ", Arrays.copyOfRange(bankNameAndAccountNumber, 1, bankNameAndAccountNumber.length));
+        }
+        return "";
     }
 }
