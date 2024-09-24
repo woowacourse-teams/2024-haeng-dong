@@ -57,7 +57,7 @@ export interface Event {
 
 export interface Report {
   memberId: number;
-  name: string;
+  memberName: string;
   isDeposited: boolean;
   price: number;
 }

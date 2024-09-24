@@ -89,19 +89,19 @@ export let reportData = {
   reports: [
     {
       memberId: 1,
-      name: '망쵸',
+      memberName: '망쵸',
       price: 20000,
       isDeposited: false,
     },
     {
       memberId: 2,
-      name: '백호',
+      memberName: '백호',
       price: 25000,
       isDeposited: true,
     },
     {
       memberId: 3,
-      name: '감자',
+      memberName: '감자',
       price: 5000,
       isDeposited: true,
     },

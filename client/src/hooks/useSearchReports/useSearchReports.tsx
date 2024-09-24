@@ -8,7 +8,7 @@ const useSearchReports = ({name}: UseSearchReportsParams) => {
   const {reports} = useRequestGetReports();
 
   return {
-    matchedReports: reports.filter(memberReport => memberReport.name.includes(name)),
+    matchedReports: reports.filter(memberReport => memberReport.memberName.includes(name)),
     reports,
   };
 };

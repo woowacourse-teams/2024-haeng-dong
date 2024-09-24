@@ -1,5 +1,5 @@
 export interface ExpenseItemCustomProps {
-  name: string;
+  memberName: string;
   price: number;
   onBankButtonClick: () => void;
   clipboardText: string;
