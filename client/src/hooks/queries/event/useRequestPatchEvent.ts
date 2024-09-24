@@ -13,7 +13,7 @@ const useRequestPatchEventOutline = () => {
 
   const queryClient = useQueryClient();
 
-  const {mutateAsync} = useMutation({
+  const {mutateAsync, ...rest} = useMutation({
     mutationFn: (eventOutline: Partial<Event>) => requestPatchEvent({eventId, eventOutline}),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -24,6 +24,7 @@ const useRequestPatchEventOutline = () => {
 
   return {
     patchEventOutline: mutateAsync,
+    ...rest,
   };
 };
 
