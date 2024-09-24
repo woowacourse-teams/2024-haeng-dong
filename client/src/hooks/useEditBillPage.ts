@@ -3,9 +3,9 @@ import {useLocation} from 'react-router-dom';
 import {Bill} from 'types/serviceType';
 
 import useRequestGetBillDetails from './queries/bill/useRequestGetBillDetails';
-import useBillState from './useEditBillState';
 import useEditBillActions from './useEditBillActions';
 import useEditBillKeyboardAction from './useEditBillKeyboardAction';
+import useEditBillState from './useEditBillState';
 
 const useEditBillPage = () => {
   const location = useLocation();
@@ -13,9 +13,8 @@ const useEditBillPage = () => {
   const bill: Bill = location.state.bill;
   const {billDetails} = useRequestGetBillDetails({billId: Number(bill.id)});
 
-  const {newBill, newBillDetails, handleChangeBillPrice, handleChangeBillTitle, handleChangeBillDetails} = useBillState(
-    {bill, billDetails},
-  );
+  const {newBill, newBillDetails, handleChangeBillPrice, handleChangeBillTitle, handleChangeBillDetails} =
+    useEditBillState({bill, billDetails});
   const {handleClickDelete, handleClickUpdate, isPendingUpdate, canSubmit} = useEditBillActions({
     bill,
     billDetails,

@@ -15,7 +15,7 @@ interface HandleChangeBillDetailsProps {
   keyboardTargetId: number;
 }
 
-const useBillState = ({bill, billDetails}: Props) => {
+const useEditBillState = ({bill, billDetails}: Props) => {
   const [newBill, setNewBill] = useState<RequestPutBill>({
     title: bill.title,
     price: bill.price,
@@ -87,4 +87,4 @@ const useBillState = ({bill, billDetails}: Props) => {
   return {newBill, newBillDetails, handleChangeBillPrice, handleChangeBillTitle, handleChangeBillDetails};
 };
 
-export default useBillState;
+export default useEditBillState;
