@@ -40,7 +40,7 @@ const MainSection = () => {
         <Text css={animateWithDelay(1)} style={{textAlign: 'center'}} size="title">{`행동대장을 통해
         간편하게 정산하세요
         `}</Text>
-        <Button css={animateWithDelay(2)} size="large" onClick={() => navigate(ROUTER_URLS.eventCreateName)}>
+        <Button css={animateWithDelay(2)} size="large" onClick={() => navigate(ROUTER_URLS.createEvent)}>
           정산 시작하기
         </Button>
       </div>
