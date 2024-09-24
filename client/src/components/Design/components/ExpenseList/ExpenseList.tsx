@@ -32,7 +32,11 @@ function ExpenseItem({name, price, isDeposited, onBankButtonClick, clipboardText
       <Flex alignItems="center" gap="0.5rem">
         <Amount amount={price} />
         {isMobileDevice() ? (
-          <BankSendButton clipboardText={clipboardText} onBankButtonClick={onBankButtonClick} />
+          <BankSendButton
+            clipboardText={clipboardText}
+            onBankButtonClick={onBankButtonClick}
+            isDeposited={price <= 0}
+          />
         ) : (
           <IconButton variants="none" size="small">
             <Icon iconType="rightChevron" />

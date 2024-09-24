@@ -2,8 +2,8 @@ import {render, screen, waitFor} from '@testing-library/react';
 import {act, ReactNode} from 'react';
 import {MemoryRouter} from 'react-router-dom';
 
+import ToastContainer from '@components/Toast/ToastContainer';
 import RequestError from '@errors/RequestError';
-import {ToastProvider} from '@hooks/useToast/ToastProvider';
 
 import {useAppErrorStore} from '@store/appErrorStore';
 
@@ -24,11 +24,10 @@ const setup = (ui: ReactNode) =>
   render(
     <HDesignProvider>
       <UnPredictableErrorBoundary>
-        <ToastProvider>
-          <ErrorCatcher>
-            <MemoryRouter>{ui}</MemoryRouter>
-          </ErrorCatcher>
-        </ToastProvider>
+        <ToastContainer />
+        <ErrorCatcher>
+          <MemoryRouter>{ui}</MemoryRouter>
+        </ErrorCatcher>
       </UnPredictableErrorBoundary>
     </HDesignProvider>,
   );

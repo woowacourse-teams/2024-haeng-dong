@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import Flex from '@HDcomponents/Flex/Flex';
 import Text from '@HDcomponents/Text/Text';
 import {amountContainerStyle, titleContainerStyle, titleStyle} from '@HDcomponents/Title/Title.style';
 import {TitleProps} from '@HDcomponents/Title/Title.type';

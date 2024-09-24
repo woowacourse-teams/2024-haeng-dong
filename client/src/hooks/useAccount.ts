@@ -1,29 +1,60 @@
+import type {Event} from 'types/serviceType';
+
 import {useEffect, useState} from 'react';
 
+import useRequestPatchEvent from './queries/event/useRequestPatchEvent';
+import useRequestGetEvent from './queries/event/useRequestGetEvent';
+
 const useAccount = () => {
-  const [bank, setBank] = useState('');
-  const [account, setAccount] = useState('');
+  const {bankName, accountNumber} = useRequestGetEvent();
+
+  const [bankNameState, setBankName] = useState(bankName);
+  const [accountNumberState, setAccountNumber] = useState(accountNumber);
   const [canSubmit, setCanSubmit] = useState(false);
 
+  useEffect(() => {
+    setBankName(bankName);
+    setAccountNumber(accountNumber);
+  }, [bankName, accountNumber]);
+
+  const {patchEventOutline} = useRequestPatchEvent();
+
   const selectBank = (name: string) => {
-    setBank(name);
+    setBankName(name);
   };
 
   const handleAccount = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAccount(event.target.value);
+    setAccountNumber(event.target.value);
   };
 
-  const enrollAccount = () => {
-    console.log('bank', bank, 'account', account);
+  const getChangedField = () => {
+    const changedField: Partial<Event> = {};
+
+    if (bankName.trim() !== '' && bankName !== bankNameState) {
+      changedField.bankName = bankNameState;
+    }
+
+    if (accountNumber.trim() !== '' && accountNumber !== accountNumberState) {
+      changedField.accountNumber = accountNumberState;
+    }
+
+    return changedField;
+  };
+
+  const enrollAccount = async () => {
+    await patchEventOutline(getChangedField());
   };
 
   useEffect(() => {
-    setCanSubmit(bank !== '' && account !== '');
-  }, [bank, account]);
+    const existEmptyField = bankName.trim() === '' && accountNumber.trim() === '';
+    const isChanged = bankName !== bankNameState || accountNumber !== accountNumberState;
+
+    setCanSubmit(!existEmptyField && isChanged);
+  }, [bankName, accountNumber, bankNameState, accountNumberState]);
 
   return {
-    bank,
-    account,
+    bankName: bankNameState,
+    accountNumber: accountNumberState,
     canSubmit,
     selectBank,
     handleAccount,

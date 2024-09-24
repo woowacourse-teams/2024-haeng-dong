@@ -1,6 +1,6 @@
 const QUERY_KEYS = {
   steps: 'steps',
-  eventName: 'eventName',
+  event: 'event',
   allMembers: 'allMembers',
   currentMembers: 'currentMembers',
   reports: 'reports',

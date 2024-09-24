@@ -1,8 +1,8 @@
 import {Event, EventId} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
-import {USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestPostWithResponse, requestPut} from '@apis/fetcher';
+import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {requestGet, requestPatch, requestPostWithResponse, requestPut} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
 export interface RequestPostEvent {
@@ -27,19 +27,15 @@ export const requestGetEvent = async ({eventId, ...props}: WithEventId<WithError
   });
 };
 
-export interface RequestPutEvent {
-  eventName?: string;
-  bankName?: string;
-  accountNumber?: string;
-}
+export type RequestPatchEvent = WithEventId & {
+  eventOutline: Partial<Event>;
+};
 
-export const requestPutEvent = async ({eventId, eventName, bankName, accountNumber}: WithEventId<RequestPutEvent>) => {
-  return await requestPut({
-    endpoint: `${USER_API_PREFIX}/${eventId}`,
+export const requestPatchEvent = async ({eventId, eventOutline}: RequestPatchEvent) => {
+  return requestPatch({
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
     body: {
-      eventName,
-      bankName,
-      accountNumber,
+      ...eventOutline,
     },
   });
 };

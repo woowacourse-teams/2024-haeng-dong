@@ -10,6 +10,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 const MainSection = () => {
   const navigate = useNavigate();
+
   return (
     <div
       css={css({

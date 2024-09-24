@@ -4,10 +4,9 @@ import Top from '@components/Design/components/Top/Top';
 
 import useSetEventPasswordPage from '@hooks/useSetEventPasswordPage';
 
-import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back} from '@HDesign/index';
+import {FixedButton, MainLayout, LabelInput, TopNav, Back} from '@HDesign/index';
 
 import RULE from '@constants/rule';
-import {PASSWORD_LENGTH} from '@constants/password';
 
 const SetEventPasswordPage = () => {
   const {submitPassword, onSuccess, errorMessage, password, handleChange, canSubmit, isPostEventPending} =
