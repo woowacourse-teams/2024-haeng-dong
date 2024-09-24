@@ -13,8 +13,6 @@ const useEditBillPage = () => {
   const bill: Bill = location.state.bill;
   const {members: billDetails} = useRequestGetBillDetails({billId: bill.id});
 
-  console.log(billDetails);
-
   const {newBill, newBillDetails, handleChangeBillPrice, handleChangeBillTitle, handleChangeBillDetails} =
     useEditBillState({bill, billDetails});
   const {handleClickDelete, handleClickUpdate, isPendingUpdate, canSubmit} = useEditBillActions({
