@@ -42,13 +42,16 @@ const useEventMember = (): ReturnUseEventMember => {
       setIsCanRequest(changedMembers.length > 0 || deleteMembers.length > 0);
     }
 
+    // memberName 유효성 검사 (0글자)
+    const hasEmptyName = changedMembers.some(member => member.name.trim().length === 0);
+    if (hasEmptyName) setIsCanRequest(false);
+
     setFilteredChangedMembers(changedMembers);
   }, [reports, changedMembers, deleteMembers]);
 
   const changeMemberName = (memberId: number, newName: string) => {
     // 유효성 검사 (4글자)
     if (!validateMemberName(newName).isValid) {
-      setIsCanRequest(false);
       return;
     }
 
