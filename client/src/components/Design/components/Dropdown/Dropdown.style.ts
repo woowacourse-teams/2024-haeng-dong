@@ -1,11 +1,14 @@
 import {css} from '@emotion/react';
 
+import {Theme} from '@components/Design/theme/theme.type';
+
 import {FlexProps} from '../Flex/Flex.type';
 
 export const dropdownStyle: FlexProps = {
   flexDirection: 'column',
   width: '12.5rem',
-  padding: '0.5rem 1rem',
+  padding: '0.5rem',
+  paddingInline: '0.5rem',
   gap: '0.25rem',
   backgroundColor: 'white',
 
@@ -18,8 +21,13 @@ export const dropdownStyle: FlexProps = {
   },
 };
 
-export const dropdownButtonStyle = css({
-  width: '100%',
-  height: '2rem',
-  padding: '0.25rem 1rem',
-});
+export const dropdownButtonStyle = (theme: Theme) =>
+  css({
+    height: '2rem',
+    padding: '0.25rem 0.5rem',
+
+    ':hover': {
+      borderRadius: '0.625rem',
+      backgroundColor: theme.colors.grayContainer,
+    },
+  });

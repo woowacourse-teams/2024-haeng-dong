@@ -1,13 +1,16 @@
 /** @jsxImportSource @emotion/react */
 
+import {useTheme} from '@components/Design/theme/HDesignProvider';
+
 import Text from '../Text/Text';
 
 import {dropdownButtonStyle} from './Dropdown.style';
 import {DropdownButtonProps} from './Dropdown.type';
 
 const DropdownButton = ({text, ...buttonProps}: DropdownButtonProps) => {
+  const {theme} = useTheme();
   return (
-    <button css={dropdownButtonStyle} {...buttonProps}>
+    <button css={dropdownButtonStyle(theme)} {...buttonProps}>
       <Text size="body" color="black">
         {text}
       </Text>
