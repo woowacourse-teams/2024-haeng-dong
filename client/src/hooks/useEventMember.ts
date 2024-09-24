@@ -104,10 +104,6 @@ const useEventMember = (): ReturnUseEventMember => {
       }
     }
 
-    console.log('reports:', reports);
-    console.log('changedMembers:', changedMembers);
-    console.log('filteredChangedMembers: ', filteredChangedMembers);
-
     // 변경된 값(filteredChangedMembers)이 존재한다면 PUT 요청 실행
     if (filteredChangedMembers.length > 0) {
       putMember({members: filteredChangedMembers});

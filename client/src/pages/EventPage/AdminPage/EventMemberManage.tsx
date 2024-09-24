@@ -12,8 +12,6 @@ const EventMemberManage = () => {
   const {reports, isCanRequest, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =
     useEventMember();
 
-  console.log('isCanRequest: ', isCanRequest);
-
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
