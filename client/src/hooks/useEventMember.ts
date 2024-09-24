@@ -21,7 +21,7 @@ const useEventMember = (): ReturnUseEventMember => {
   const {deleteMember} = useRequestDeleteMember();
   const {putMember} = useRequestPutMembers();
 
-  const [reports, setReports] = useState(initialReports);
+  const [reports, setReports] = useState<Report[]>(initialReports);
   const [deleteMembers, setDeleteMembers] = useState<number[]>([]);
   const [changedMembers, setChangedMembers] = useState<MemberWithDeposited[]>([]);
   const [isCanRequest, setIsCanRequest] = useState<boolean>(false);
@@ -34,11 +34,16 @@ const useEventMember = (): ReturnUseEventMember => {
   useEffect(() => {
     const changedMembers = getChangedMembers();
 
-    if (changedMembers.length === 0) {
+    // 중복된 이름이 존재할 경우 isCanRequest를 false로 변경
+    if (hasDuplicateMemberName()) {
       setIsCanRequest(false);
+    } else {
+      // 변경된 사항이 존재하거나 삭제한 member가 존재한다면 isCanRequest를 true로 변경
+      setIsCanRequest(changedMembers.length > 0 || deleteMembers.length > 0);
     }
+
     setFilteredChangedMembers(changedMembers);
-  }, [reports]);
+  }, [reports, changedMembers, deleteMembers]);
 
   const changeMemberName = (memberId: number, newName: string) => {
     // 유효성 검사 (4글자)
@@ -46,8 +51,6 @@ const useEventMember = (): ReturnUseEventMember => {
       setIsCanRequest(false);
       return;
     }
-    // 유효성 검사 (중복 이름)
-    // const isExistingMemberName = reports.some(member => member.memberName === newName);
 
     setReports(prevReports =>
       prevReports.map(report => (report.memberId === memberId ? {...report, memberName: newName} : report)),
@@ -93,7 +96,27 @@ const useEventMember = (): ReturnUseEventMember => {
     setChangedMembers(prev => prev.filter(member => member.id !== memberId));
   };
 
+  const updateMembersOnServer = () => {
+    // 삭제할 member(deleteMembers)가 존재한다면 Delete 요청 실행
+    if (deleteMembers.length > 0) {
+      for (const id of deleteMembers) {
+        deleteMember({memberId: id});
+      }
+    }
+
+    console.log('reports:', reports);
+    console.log('changedMembers:', changedMembers);
+    console.log('filteredChangedMembers: ', filteredChangedMembers);
+
+    // 변경된 값(filteredChangedMembers)이 존재한다면 PUT 요청 실행
+    if (filteredChangedMembers.length > 0) {
+      putMember({members: filteredChangedMembers});
+    }
+  };
+
   const getChangedMembers = () => {
+    // 초기 상태에서 변경된 값이 존재하는 것만 filtering하여 return 한다.
+
     // 초기 상태에서 memberId를 키로 갖는 맵 생성
     const initialReportsMap = new Map(initialReports.map(report => [report.memberId, report]));
 
@@ -110,23 +133,17 @@ const useEventMember = (): ReturnUseEventMember => {
     return filteredChangedMembers;
   };
 
-  const updateMembersOnServer = () => {
-    // 삭제할 member(deleteMembers)가 존재한다면 Delete 요청 실행
-    // if (deleteMembers.length > 0) {
-    //   for (const id of deleteMembers) {
-    //     deleteMember({memberId: id});
-    //   }
-    // }
+  const hasDuplicateMemberName = (): boolean => {
+    const nameCount: {[key: string]: number} = {};
 
-    const filteredChangedMembers = getChangedMembers();
-    console.log('reports:', reports);
-    console.log('changedMembers:', changedMembers);
-    console.log('filteredChangedMembers: ', filteredChangedMembers);
+    for (const member of reports) {
+      if (nameCount[member.memberName]) {
+        return true; // 중복된 이름이 존재하면 즉시 true 반환
+      }
+      nameCount[member.memberName] = 1;
+    }
 
-    // 변경된 값(filteredChangedMembers)이 존재한다면 PUT 요청 실행
-    // if (filteredChangedMembers.length > 0) {
-    //   putMember({members: filteredChangedMembers});
-    // }
+    return false; // 중복된 이름이 없으면 false 반환
   };
 
   return {reports, isCanRequest, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};

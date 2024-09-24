@@ -9,7 +9,10 @@ import {useTheme} from '@components/Design';
 import {eventMemberMangeStyle, memberList, eventMember, memberEditInput} from './EventMemberManage.style';
 
 const EventMemberManage = () => {
-  const {reports, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} = useEventMember();
+  const {reports, isCanRequest, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =
+    useEventMember();
+
+  console.log('isCanRequest: ', isCanRequest);
 
   return (
     <MainLayout backgroundColor="white">
@@ -33,7 +36,9 @@ const EventMemberManage = () => {
             );
           })}
         </div>
-        <FixedButton onClick={updateMembersOnServer}>수정완료</FixedButton>
+        <FixedButton disabled={!isCanRequest} onClick={updateMembersOnServer}>
+          수정완료
+        </FixedButton>
       </section>
     </MainLayout>
   );
@@ -59,6 +64,7 @@ const EventMember = ({member, changeMemberName, handleDeleteMember, toggleDeposi
         <input type="text" value={member.memberName} onChange={e => handleChangeName(e)} />
         <Icon iconType="pencilMini" />
       </div>
+      {/* <div style={{display: 'flex', flexDirection: 'row', gap: '0.5rem', maxWidth: '5.125rem'}}> */}
       <Amount amount={member.price} />
       <DepositToggle isDeposit={member.isDeposited} onToggle={() => toggleDepositStatus(member.memberId)} />
       <IconButton
@@ -69,6 +75,7 @@ const EventMember = ({member, changeMemberName, handleDeleteMember, toggleDeposi
       >
         <Icon iconType="trashMini" />
       </IconButton>
+      {/* </div> */}
     </div>
   );
 };
