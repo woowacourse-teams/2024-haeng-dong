@@ -24,6 +24,7 @@ export const eventMember = () =>
     gap: '0.5rem',
     padding: '0.5rem 0',
     width: 'inherit',
+    justifyContent: 'space-between',
   });
 
 export const memberEditInput = (theme: Theme) =>
@@ -31,11 +32,11 @@ export const memberEditInput = (theme: Theme) =>
     input: {
       width: '100%',
     },
+    width: '6.125rem',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottom: `1px solid ${theme.colors.tertiary}`,
-    width: '100%',
-    marginRight: '3.375rem',
+    // marginRight: '3.375rem',
     ...TYPOGRAPHY.bodyBold,
   });

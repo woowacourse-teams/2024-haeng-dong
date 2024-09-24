@@ -62,18 +62,18 @@ const EventMember = ({member, changeMemberName, handleDeleteMember, toggleDeposi
         <input type="text" value={member.memberName} onChange={e => handleChangeName(e)} />
         <Icon iconType="pencilMini" />
       </div>
-      {/* <div style={{display: 'flex', flexDirection: 'row', gap: '0.5rem', maxWidth: '5.125rem'}}> */}
-      <Amount amount={member.price} />
-      <DepositToggle isDeposit={member.isDeposited} onToggle={() => toggleDepositStatus(member.memberId)} />
-      <IconButton
-        size="small"
-        variants="tertiary"
-        css={{width: '23px', height: '23px', borderRadius: '0.375rem'}}
-        onClick={() => handleDeleteMember(member.memberId)}
-      >
-        <Icon iconType="trashMini" />
-      </IconButton>
-      {/* </div> */}
+      <div style={{display: 'flex', flexDirection: 'row', gap: '0.5rem'}}>
+        <Amount amount={member.price} />
+        <DepositToggle isDeposit={member.isDeposited} onToggle={() => toggleDepositStatus(member.memberId)} />
+        <IconButton
+          size="small"
+          variants="tertiary"
+          css={{width: '23px', height: '23px', borderRadius: '0.375rem'}}
+          onClick={() => handleDeleteMember(member.memberId)}
+        >
+          <Icon iconType="trashMini" />
+        </IconButton>
+      </div>
     </div>
   );
 };
