@@ -1,40 +1,22 @@
-#spring:
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    url: jdbc:h2:mem:database
-#    username: sa
-#    password:
-
 spring:
   datasource:
-    replication:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      username: root
-      password: root_password
-      write:
-        name: write
-        url: jdbc:mysql://localhost:3306/haengdong  # 마스터 컨테이너의 포트
-      reads:
-        - name: read1
-          url: jdbc:mysql://localhost:3307/haengdong  # 슬레이브 컨테이너의 포트
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:database
+    username: sa
+    password:
 
-  #        - name: read2
-  #          url: database-project.cluster-ro-cqsc6pyqhwww.ap-northeast-2.rds.amazonaws.com:3306/heangdong
-
-  #  h2:
-  #    console:
-  #      enabled: true
-  #      path: /h2-console
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
   jpa:
     hibernate:
       ddl-auto: create
-    #      dialect: org.hibernate.dialect.MySQLDialect  # MySQLDialect 사용
     properties:
       hibernate:
         format_sql: true
         jdbc.time_zone: Asia/Seoul
-        dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
 
 cors:
