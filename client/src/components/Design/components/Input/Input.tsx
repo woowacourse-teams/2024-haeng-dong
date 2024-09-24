@@ -9,7 +9,18 @@ import Icon from '@HDcomponents/Icon/Icon';
 import {useTheme} from '@theme/HDesignProvider';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
-  {value: propsValue, onChange, onFocus, onBlur, inputType, isError, placeholder, autoFocus, ...htmlProps}: InputProps,
+  {
+    value: propsValue,
+    onChange,
+    onFocus,
+    onBlur,
+    inputType,
+    isError,
+    placeholder,
+    autoFocus,
+    isAlwaysOnBorder = false,
+    ...htmlProps
+  }: InputProps,
   ref,
 ) {
   const {theme} = useTheme();
@@ -25,7 +36,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
   useImperativeHandle(ref, () => inputRef.current!);
 
   return (
-    <div css={inputBoxStyle(theme, inputType, hasFocus, isError)}>
+    <div css={inputBoxStyle(theme, hasFocus, isError, isAlwaysOnBorder)}>
       <input
         css={inputStyle(theme)}
         ref={inputRef}
@@ -38,9 +49,14 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
         autoFocus={autoFocus}
         {...htmlProps}
       />
-      {value && hasFocus && (
+      {inputType === 'input' && value && hasFocus && (
         <IconButton tabIndex={-1} variants="none" onMouseDown={handleClickDelete}>
           <Icon iconType="inputDelete" />
+        </IconButton>
+      )}
+      {inputType === 'search' && (
+        <IconButton tabIndex={-1} variants="none">
+          <Icon iconType="search" />
         </IconButton>
       )}
     </div>

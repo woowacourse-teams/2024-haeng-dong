@@ -11,14 +11,14 @@ const useRequestGetEvent = ({...props}: WithErrorHandlingStrategy | null = {}) =
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({
-    queryKey: [QUERY_KEYS.eventName],
+    queryKey: [QUERY_KEYS.event],
     queryFn: () => requestGetEvent({eventId, ...props}),
   });
 
   return {
     eventName: data?.eventName ?? '',
-    bankName: data?.bankName,
-    accountName: data?.accountNumber,
+    bankName: data?.bankName ?? '',
+    accountNumber: data?.accountNumber ?? '',
     ...rest,
   };
 };

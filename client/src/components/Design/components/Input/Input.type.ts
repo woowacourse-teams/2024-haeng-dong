@@ -2,6 +2,7 @@ import {Theme} from '@theme/theme.type';
 
 export interface InputStyleProps {
   theme?: Theme;
+  isAlwaysOnBorder?: boolean;
 }
 
 export type InputType = 'input' | 'search';

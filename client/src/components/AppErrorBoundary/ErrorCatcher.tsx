@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 
-import {useToast} from '@hooks/useToast/useToast';
+import toast from '@hooks/useToast/toast';
 
 import {useAppErrorStore} from '@store/appErrorStore';
 
@@ -17,21 +17,16 @@ const isPredictableError = (error: Error) => {
 
 const ErrorCatcher = ({children}: React.PropsWithChildren) => {
   const {appError: error} = useAppErrorStore();
-  const {showToast} = useToast();
 
   useEffect(() => {
     if (!error) return;
 
     captureError(error);
 
-    console.log(isRequestError(error));
-    console.log(isPredictableError(error));
     if (!isRequestError(error) || !isPredictableError(error)) throw error;
 
-    showToast({
+    toast.error(SERVER_ERROR_MESSAGES[error.errorCode], {
       showingTime: 3000,
-      message: SERVER_ERROR_MESSAGES[error.errorCode],
-      type: 'error',
       position: 'bottom',
       bottom: '8rem',
     });

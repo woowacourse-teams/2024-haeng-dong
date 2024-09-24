@@ -2,7 +2,7 @@ import type {EventId} from 'types/serviceType';
 
 import {http, HttpResponse} from 'msw';
 
-import {USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 
 import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
@@ -50,9 +50,9 @@ export const eventHandler = [
     return HttpResponse.json(eventData);
   }),
 
-  // PUT /api/events/:eventId (requestPutEvent)
-  http.put<any, {eventName?: string; bankName?: string; accountNumber?: string}>(
-    `${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId`,
+  // PATCH /api/admin/events/:eventId (requestPatchEvent)
+  http.patch<any, {eventName?: string; bankName?: string; accountNumber?: string}>(
+    `${MOCK_API_PREFIX}${ADMIN_API_PREFIX}/:eventId`,
     async ({request}) => {
       const updates = await request.json();
 

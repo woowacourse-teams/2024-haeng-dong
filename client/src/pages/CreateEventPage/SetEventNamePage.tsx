@@ -5,7 +5,7 @@ import Top from '@components/Design/components/Top/Top';
 
 import useSetEventNamePage from '@hooks/useSetEventNamePage';
 
-import {FixedButton, MainLayout, LabelInput, Title, TopNav, Back, Flex} from '@HDesign/index';
+import {FixedButton, MainLayout, LabelInput, TopNav, Back} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -46,6 +46,7 @@ const SetEventNamePage = () => {
           <Top.Line text="정산을 시작하려는" />
           <Top.Line text="행사의 이름은 무엇인가요?" emphasize={['행사의 이름']} />
         </Top>
+
         <form onSubmit={submitEventName}>
           <LabelInput
             labelText="행사 이름"
