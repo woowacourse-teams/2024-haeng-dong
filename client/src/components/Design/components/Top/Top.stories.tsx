@@ -19,7 +19,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  render: ({...args}) => {
+  render: () => {
     return (
       <Top>
         <Top.Line text="정산을 시작하려는" />
