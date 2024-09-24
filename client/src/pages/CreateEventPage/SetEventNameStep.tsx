@@ -17,10 +17,10 @@ const SetEventNameStep = ({
   handleEventNameChange,
   canSubmit,
 }: SetEventNamePageProps) => {
-  const moveToNextStepOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      moveToNextStep();
-    }
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    moveToNextStep();
   };
 
   return (
@@ -36,7 +36,7 @@ const SetEventNameStep = ({
         <Top.Line text="정산을 시작하려는" />
         <Top.Line text="행사의 이름은 무엇인가요?" emphasize={['행사의 이름']} />
       </Top>
-      <form onSubmit={moveToNextStep}>
+      <form onSubmit={onSubmit}>
         <LabelInput
           labelText="행사 이름"
           errorText={errorMessage ?? ''}
@@ -46,7 +46,6 @@ const SetEventNameStep = ({
           onChange={handleEventNameChange}
           isError={!!errorMessage}
           autoFocus
-          onKeyDown={moveToNextStepOnEnter}
         ></LabelInput>
         <FixedButton disabled={!canSubmit}>다음</FixedButton>
       </form>
