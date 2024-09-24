@@ -19,7 +19,6 @@ export const inputBoxStyle = (
       padding: '0.75rem 1rem',
       borderRadius: '1rem',
       backgroundColor: theme.colors.lightGrayContainer,
-
       boxSizing: 'border-box',
       boxShadow: getBorderStyle(isFocus, theme, isError),
     },
