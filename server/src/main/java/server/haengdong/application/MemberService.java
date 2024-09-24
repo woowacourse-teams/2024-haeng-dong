@@ -1,9 +1,12 @@
 package server.haengdong.application;
 
+
+import static java.util.stream.Collectors.toMap;
+
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,25 +132,34 @@ public class MemberService {
     }
 
     private void validateUpdatedMembersExist(List<Member> eventMembers, List<Member> updatedMembers) {
+        if (updatedMembers.size() != eventMembers.size()) {
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_UPDATE_MISMATCH);
+        }
         Set<Member> members = new HashSet<>(eventMembers);
 
         if (!members.containsAll(updatedMembers)) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_UPDATE_MISMATCH);
         }
     }
 
     private void validateUpdatedNamesUnique(List<Member> eventMembers, List<Member> updatedMembers) {
-        Set<String> eventMemberNames = eventMembers.stream()
-                .map(Member::getName)
-                .collect(Collectors.toSet());
+        Map<Long, String> eventMemberNames = eventMembers.stream()
+                .collect(toMap(Member::getId, Member::getName));
+        Set<String> existNames = new HashSet<>(eventMemberNames.values());
 
         boolean memberNameDuplicated = updatedMembers.stream()
+                .filter(updatedMember -> isMemberNameUpdated(eventMemberNames, updatedMember))
                 .map(Member::getName)
-                .anyMatch(eventMemberNames::contains);
+                .anyMatch(existNames::contains);
 
         if (memberNameDuplicated) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE);
         }
+    }
+
+    private boolean isMemberNameUpdated(Map<Long, String> eventMemberNames, Member updatedMember) {
+        String prevMemberName = eventMemberNames.get(updatedMember.getId());
+        return !updatedMember.hasName(prevMemberName);
     }
 
     @Transactional
