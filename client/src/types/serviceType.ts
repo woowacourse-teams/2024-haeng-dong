@@ -26,7 +26,7 @@ export interface BillDetail {
 }
 
 export interface BillDetails {
-  billDetails: BillDetail[];
+  members: BillDetail[];
 }
 
 export interface Member {
