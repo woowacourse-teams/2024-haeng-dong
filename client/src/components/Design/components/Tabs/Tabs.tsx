@@ -18,7 +18,7 @@ const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
   const isActive = (index: number) => activeTabIndex === index;
 
   const setTabWidthResizeObserveCallback = (entries: ResizeObserverEntry[]) => {
-    for (let entry of entries) {
+    for (const entry of entries) {
       if (entry.target === tabRef.current) {
         setTabWidth(entry.contentRect.width);
       }
@@ -69,7 +69,7 @@ const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
             </li>
           ))}
         </Flex>
-        {tabRef.current && <div css={indicatorStyle({theme, tabWidth, activeTabIndex})} />}
+        {tabRef.current && tabWidth !== 0 && <div css={indicatorStyle({theme, tabWidth, activeTabIndex})} />}
       </ul>
       <section
         role="tabpanel"
