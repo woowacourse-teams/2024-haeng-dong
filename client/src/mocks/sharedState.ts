@@ -1,6 +1,6 @@
 export let eventData = {
   eventName: '행동대장 야유회',
-  bankName: 'KB국민은행',
+  bankName: '',
   accountNumber: '000000-01-121212',
 };
 

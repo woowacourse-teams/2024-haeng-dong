@@ -1,5 +1,7 @@
 import type {BillDetails} from 'types/serviceType';
 
+import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
+
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestDelete, requestGet, requestPostWithoutResponse, requestPut} from '@apis/fetcher';
@@ -43,10 +45,15 @@ export const requestPutBill = async ({eventId, billId, title, price}: WithEventI
   });
 };
 
-export const requestGetBillDetails = async ({eventId, billId}: WithEventId<WithBillId>) => {
+export const requestGetBillDetails = async ({
+  eventId,
+  billId,
+  ...props
+}: WithEventId<WithErrorHandlingStrategy<WithBillId>>) => {
   return requestGet<BillDetails>({
     baseUrl: BASE_URL.HD,
     endpoint: `${USER_API_PREFIX}/${eventId}/bills/${billId}/fixed`,
+    ...props,
   });
 };
 

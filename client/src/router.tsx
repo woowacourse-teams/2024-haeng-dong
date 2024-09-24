@@ -21,6 +21,10 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
+        path: 'cookie',
+        element: <Account />,
+      },
+      {
         index: true,
         path: ROUTER_URLS.main,
         element: <MainPage />,
