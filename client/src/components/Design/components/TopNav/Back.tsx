@@ -1,14 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import TextButton from '@HDcomponents/TextButton/TextButton';
 
-function Back() {
+type BackProps = {
+  onClick?: () => void;
+};
+
+function Back({onClick}: BackProps) {
   const navigate = useNavigate();
 
   return (
-    <TextButton onClick={() => navigate(-1)} textSize="bodyBold" textColor="gray">
+    <TextButton onClick={() => (onClick ? onClick() : navigate(-1))} textSize="bodyBold" textColor="gray">
       뒤로가기
     </TextButton>
   );

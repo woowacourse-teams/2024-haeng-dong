@@ -1,4 +1,5 @@
 import {MainLayout} from './layouts/MainLayout';
+import FunnelLayout from './layouts/FunnelLayout';
 import {ContentLayout} from './layouts/ContentLayout';
 import {HDesignProvider, useTheme} from './theme/HDesignProvider';
 import BankSelect from './components/BankSelect/BankSelect';
@@ -16,8 +17,8 @@ import Input from './components/Input/Input';
 import LabelInput from './components/LabelInput/LabelInput';
 import ListButton from './components/ListButton/ListButton';
 import LabelGroupInput from './components/LabelGroupInput/LabelGroupInput';
-import Search from './components/Search/Search';
 import Switch from './components/Switch/Switch';
+import Top from './components/Top/Top';
 import Tab from './components/Tabs/Tab';
 import Tabs from './components/Tabs/Tabs';
 import Text from './components/Text/Text';
@@ -25,6 +26,8 @@ import TextButton from './components/TextButton/TextButton';
 import Title from './components/Title/Title';
 import Back from './components/TopNav/Back';
 import TopNav from './components/TopNav/TopNav';
+import Dropdown from './components/Dropdown/Dropdown';
+import DropdownButton from './components/Dropdown/DropdownButton';
 
 export {
   BankSelect,
@@ -42,8 +45,8 @@ export {
   LabelInput,
   ListButton,
   LabelGroupInput,
-  Search,
   Switch,
+  Top,
   Tab,
   Tabs,
   Text,
@@ -52,7 +55,10 @@ export {
   TopNav,
   Back,
   MainLayout,
+  FunnelLayout,
   ContentLayout,
   HDesignProvider,
   useTheme,
+  Dropdown,
+  DropdownButton,
 };

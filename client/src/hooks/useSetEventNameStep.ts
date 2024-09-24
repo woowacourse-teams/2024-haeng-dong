@@ -2,7 +2,9 @@ import {useState} from 'react';
 
 import validateEventName from '@utils/validate/validateEventName';
 
-const useSetEventNamePage = () => {
+export type UseSetEventNameStepReturnType = ReturnType<typeof useSetEventNameStep>;
+
+const useSetEventNameStep = () => {
   const [eventName, setEventName] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
@@ -29,4 +31,4 @@ const useSetEventNamePage = () => {
   };
 };
 
-export default useSetEventNamePage;
+export default useSetEventNameStep;

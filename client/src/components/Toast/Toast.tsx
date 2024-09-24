@@ -17,8 +17,9 @@ const ANIMATION_TIME = 500;
 const Toast = ({
   type = 'confirm',
   top = '0px',
-  bottom = '0px',
-  isClickToClose = true,
+  bottom = '6rem',
+  isCloseOnClick = true,
+  isAutoClosed = true,
   position = 'bottom',
   showingTime = 3000,
   message,
@@ -29,7 +30,16 @@ const Toast = ({
   const [isVisible, setIsVisible] = useState(true);
   const styleProps = {position, top, bottom};
 
-  useEffect(() => {
+  const handleClickToClose = () => {
+    if (!isCloseOnClick || !onClose) return;
+
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+    }, ANIMATION_TIME); // fadeOut 애니메이션 시간과 동일하게 설정
+  };
+
+  const handleAutoClose = () => {
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(() => {
@@ -40,16 +50,11 @@ const Toast = ({
     return () => {
       clearTimeout(timer);
     };
-  }, [onClose]);
-
-  const handleClickToClose = () => {
-    if (!isClickToClose || !onClose) return;
-
-    setIsVisible(false);
-    setTimeout(() => {
-      onClose();
-    }, ANIMATION_TIME); // fadeOut 애니메이션 시간과 동일하게 설정
   };
+
+  useEffect(() => {
+    if (isAutoClosed) handleAutoClose();
+  }, []);
 
   return createPortal(
     <div css={toastMarginStyle({...styleProps})} {...htmlProps} onClick={handleClickToClose} id="toast">

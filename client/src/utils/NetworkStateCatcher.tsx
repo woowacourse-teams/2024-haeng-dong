@@ -1,20 +1,17 @@
 import {useEffect} from 'react';
 
 import {useToast} from '@hooks/useToast/useToast';
+import toast from '@hooks/useToast/toast';
 
 const NetworkStateCatcher = () => {
-  const {showToast, closeToast} = useToast();
-
   const handleNetworkOnline = () => {
-    closeToast();
+    // closeToast();
   };
 
   const handleNetworkOffline = () => {
     // TODO: (@weadie) 토스트 높이는 z-index 이슈가 해결되면 반영할 예정입니다.
-    showToast({
-      message: '네트워크 연결 상태를 확인해주세요.',
-      isAlwaysOn: true,
-      type: 'error',
+    toast.error('네트워크 연결 상태를 확인해주세요.', {
+      isAutoClosed: false,
       position: 'bottom',
       bottom: '6rem',
     });

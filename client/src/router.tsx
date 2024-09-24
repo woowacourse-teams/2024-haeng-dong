@@ -1,14 +1,15 @@
 import {createBrowserRouter} from 'react-router-dom';
 
+import AddBillFunnel from '@pages/AddBillFunnel/AddBillFunnel';
 import {AdminPage} from '@pages/EventPage/AdminPage';
 import {HomePage} from '@pages/EventPage/HomePage';
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
-import Account from '@pages/Account/Account';
-import AddBillFunnel from '@pages/BillPage/AddBillFunnel';
+import AddBillFunnel from '@pages/AddBillFunnel/AddBillFunnel';
 import EditBillPage from '@pages/EditBillPage/EditBillPage';
+import CreateEventFunnel from '@pages/CreateEventPage/CreateEventFunnel';
+import Account from '@pages/AccountPage/Account';
 
-import {CompleteCreateEventPage, SetEventNamePage, SetEventPasswordPage} from '@pages/CreateEventPage';
 import {MainPage} from '@pages/MainPage';
 import {EventPage} from '@pages/EventPage';
 
@@ -22,25 +23,14 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: 'cookie',
-        element: <Account />,
-      },
-      {
         index: true,
         path: ROUTER_URLS.main,
         element: <MainPage />,
       },
       {
-        path: ROUTER_URLS.eventCreateName,
-        element: <SetEventNamePage />,
-      },
-      {
-        path: ROUTER_URLS.eventCreatePassword,
-        element: <SetEventPasswordPage />,
-      },
-      {
-        path: ROUTER_URLS.eventCreateComplete,
-        element: <CompleteCreateEventPage />,
+        path: ROUTER_URLS.createEvent,
+
+        element: <CreateEventFunnel />,
       },
       {
         path: ROUTER_URLS.event,
@@ -61,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.editBill,
         element: <EditBillPage />,
+      },
+      {
+        path: ROUTER_URLS.eventEdit,
+        element: <Account />,
       },
       {
         path: '*',
