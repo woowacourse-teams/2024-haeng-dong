@@ -24,6 +24,8 @@ public class Event {
     private static final int MIN_ACCOUNT_NUMBER_LENGTH = 8;
     private static final int MAX_ACCOUNT_NUMBER_LENGTH = 30;
     private static final String SPACES = "  ";
+    private static final String EMPTY_STRING = "";
+    private static final String ACCOUNT_DELIMITER = " ";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,14 +50,14 @@ public class Event {
         this.name = name;
         this.password = new Password(password);
         this.token = token;
-        this.account = "";
+        this.account = EMPTY_STRING;
     }
 
     private void validateName(String name) {
         int nameLength = name.trim().length();
         if (nameLength < MIN_NAME_LENGTH || MAX_NAME_LENGTH < nameLength) {
             throw new HaengdongException(
-                    HaengdongErrorCode.EVENT_NAME_LENGTH_INVALID, MIN_NAME_LENGTH, MAX_NAME_LENGTH);
+                HaengdongErrorCode.EVENT_NAME_LENGTH_INVALID, MIN_NAME_LENGTH, MAX_NAME_LENGTH);
         }
         if (isBlankContinuous(name)) {
             throw new HaengdongException(HaengdongErrorCode.EVENT_NAME_CONSECUTIVE_SPACES);
@@ -82,7 +84,7 @@ public class Event {
     public void changeAccount(String bankName, String accountNumber) {
         validateBankName(bankName);
         validateAccountNumber(accountNumber);
-        this.account = bankName + " " + accountNumber;
+        this.account = bankName + ACCOUNT_DELIMITER + accountNumber;
     }
 
     private void validateBankName(String bankName) {
@@ -98,18 +100,18 @@ public class Event {
     }
 
     public String getBankName() {
-        String[] bankNameAndAccountNumber = account.split(" ");
-        if (bankNameAndAccountNumber.length > 0) {
-            return bankNameAndAccountNumber[0];
+        String[] accountParts = account.split(ACCOUNT_DELIMITER);
+        if (accountParts.length > 0) {
+            return accountParts[0];
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String getAccountNumber() {
-        String[] bankNameAndAccountNumber = account.split(" ");
-        if (bankNameAndAccountNumber.length > 1) {
-            return String.join(" ", Arrays.copyOfRange(bankNameAndAccountNumber, 1, bankNameAndAccountNumber.length));
+        String[] accountParts = account.split(ACCOUNT_DELIMITER);
+        if (accountParts.length > 1) {
+            return String.join(ACCOUNT_DELIMITER, Arrays.copyOfRange(accountParts, 1, accountParts.length));
         }
-        return "";
+        return EMPTY_STRING;
     }
 }
