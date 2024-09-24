@@ -12,7 +12,7 @@ export const bankButtonStyle = (theme: Theme) =>
     borderRadius: '0.5rem',
   });
 
-export const isFinishStyle = (theme: Theme) =>
+export const isDepositedStyle = (theme: Theme) =>
   css({
     width: '3.25rem',
     height: '1.5rem',

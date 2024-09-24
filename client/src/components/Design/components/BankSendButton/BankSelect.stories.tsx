@@ -11,7 +11,7 @@ const meta = {
     // layout: 'centered',
   },
   argTypes: {
-    isFinish: {
+    isDeposited: {
       description: '',
       control: {type: 'boolean'},
     },

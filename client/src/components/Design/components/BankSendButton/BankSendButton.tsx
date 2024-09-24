@@ -7,19 +7,24 @@ import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
 import Flex from '../Flex/Flex';
 
-import {bankButtonStyle, isFinishStyle} from './BankSendButton.style';
+import {bankButtonStyle, isDepositedStyle} from './BankSendButton.style';
 
 type BankSendButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   clipboardText: string;
   onBankButtonClick: () => void;
-  isFinish?: boolean;
+  isDeposited?: boolean;
 };
 
-const BankSendButton = ({clipboardText, onBankButtonClick, isFinish = false, ...buttonProps}: BankSendButtonProps) => {
+const BankSendButton = ({
+  clipboardText,
+  onBankButtonClick,
+  isDeposited = false,
+  ...buttonProps
+}: BankSendButtonProps) => {
   const {theme} = useTheme();
 
-  return isFinish ? (
-    <button css={isFinishStyle(theme)} disabled {...buttonProps}>
+  return isDeposited ? (
+    <button css={isDepositedStyle(theme)} disabled {...buttonProps}>
       <Flex justifyContent="center" alignItems="center" gap="0.125rem">
         <Text size="tiny" textColor="black">
           송금완료

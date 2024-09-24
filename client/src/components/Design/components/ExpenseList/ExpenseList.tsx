@@ -22,7 +22,11 @@ function ExpenseItem({name, price, onBankButtonClick, clipboardText, ...divProps
       <Flex alignItems="center" gap="0.5rem">
         <Text>{price.toLocaleString('ko-kr')}원</Text>
         {isMobileDevice() ? (
-          <BankSendButton clipboardText={clipboardText} onBankButtonClick={onBankButtonClick} isFinish={price <= 0} />
+          <BankSendButton
+            clipboardText={clipboardText}
+            onBankButtonClick={onBankButtonClick}
+            isDeposited={price <= 0}
+          />
         ) : (
           <IconButton variants="none" size="small">
             <Icon iconType="rightChevron" />
