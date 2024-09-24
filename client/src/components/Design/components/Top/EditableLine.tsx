@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react';
+import {useEffect, useRef, useState} from 'react';
 
-import Icon from '../Icon/Icon';
 import TYPOGRAPHY from '@components/Design/token/typography';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
-import {useEffect, useRef, useState} from 'react';
+
+import Icon from '../Icon/Icon';
 
 interface Props {
   value: string;

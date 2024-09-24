@@ -1,8 +1,10 @@
-import {Text} from '@components/Design';
-import EditableAmount from '@components/Design/components/Amount/EditableAmount';
 import {css} from '@emotion/react';
 import {forwardRef} from 'react';
+
+import EditableAmount from '@components/Design/components/Amount/EditableAmount';
 import {BillDetail} from 'types/serviceType';
+
+import {Text} from '@components/Design';
 
 interface Props {
   billDetails: BillDetail[];

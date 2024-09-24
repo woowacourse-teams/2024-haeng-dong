@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
+import {useNavigate} from 'react-router-dom';
+
 import Amount from '@components/Design/components/Amount/Amount';
 import ChipGroup from '@components/Design/components/ChipGroup/ChipGroup';
 import ListItem from '@components/Design/components/ListItem/ListItem';
 import {Bill, Step as StepType} from 'types/serviceType';
 
 import {Text} from '@components/Design';
-import {useNavigate} from 'react-router-dom';
+
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 interface Prop {

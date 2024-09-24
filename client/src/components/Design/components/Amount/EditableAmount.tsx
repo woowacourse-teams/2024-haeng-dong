@@ -1,7 +1,9 @@
-import {useTheme} from '@components/Design/theme/HDesignProvider';
-import TYPOGRAPHY from '@components/Design/token/typography';
 import {css} from '@emotion/react';
 import {useEffect, useRef, useState} from 'react';
+
+import {useTheme} from '@components/Design/theme/HDesignProvider';
+import TYPOGRAPHY from '@components/Design/token/typography';
+
 import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
 

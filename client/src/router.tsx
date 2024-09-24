@@ -6,6 +6,7 @@ import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
 import Account from '@pages/Account/Account';
 import AddBillFunnel from '@pages/BillPage/AddBillFunnel';
+import EditBillPage from '@pages/EditBillPage/EditBillPage';
 
 import {CompleteCreateEventPage, SetEventNamePage, SetEventPasswordPage} from '@pages/CreateEventPage';
 import {MainPage} from '@pages/MainPage';
@@ -14,7 +15,6 @@ import {EventPage} from '@pages/EventPage';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
-import EditBillPage from '@pages/EditBillPage/EditBillPage';
 
 const router = createBrowserRouter([
   {
