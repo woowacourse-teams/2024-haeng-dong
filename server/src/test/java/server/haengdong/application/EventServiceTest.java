@@ -76,7 +76,8 @@ class EventServiceTest extends ServiceTestSupport {
         Event updateEvent = eventRepository.findByToken(event.getToken()).get();
         assertAll(
                 () -> assertThat(updateEvent.getName()).isEqualTo("새로운 행사 이름"),
-                () -> assertThat(updateEvent.getAccount()).isEqualTo("토스뱅크 12345678")
+                () -> assertThat(updateEvent.getBankName()).isEqualTo("토스뱅크"),
+                () -> assertThat(updateEvent.getAccountNumber()).isEqualTo("12345678")
         );
     }
 
@@ -92,7 +93,8 @@ class EventServiceTest extends ServiceTestSupport {
         Event updateEvent = eventRepository.findByToken(event.getToken()).get();
         assertAll(
                 () -> assertThat(updateEvent.getName()).isEqualTo("행동대장 비대위"),
-                () -> assertThat(updateEvent.getAccount()).isEqualTo("토스뱅크 12345678")
+                () -> assertThat(updateEvent.getBankName()).isEqualTo("토스뱅크"),
+                () -> assertThat(updateEvent.getAccountNumber()).isEqualTo("12345678")
         );
     }
 
@@ -108,7 +110,8 @@ class EventServiceTest extends ServiceTestSupport {
         Event updateEvent = eventRepository.findByToken(event.getToken()).get();
         assertAll(
                 () -> assertThat(updateEvent.getName()).isEqualTo("행동대장 정상 영업"),
-                () -> assertThat(updateEvent.getAccount()).isEqualTo("")
+                () -> assertThat(updateEvent.getBankName()).isEqualTo(""),
+                () -> assertThat(updateEvent.getAccountNumber()).isEqualTo("")
         );
     }
 
@@ -124,7 +127,8 @@ class EventServiceTest extends ServiceTestSupport {
         Event updateEvent = eventRepository.findByToken(event.getToken()).get();
         assertAll(
                 () -> assertThat(updateEvent.getName()).isEqualTo("행동대장 비대위"),
-                () -> assertThat(updateEvent.getAccount()).isEqualTo("")
+                () -> assertThat(updateEvent.getBankName()).isEqualTo(""),
+                () -> assertThat(updateEvent.getAccountNumber()).isEqualTo("")
         );
     }
 
