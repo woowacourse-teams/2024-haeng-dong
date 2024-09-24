@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 
 import {Reports, Report, AllMembers, MemberWithDeposited} from 'types/serviceType';
+import validateMemberName from '@utils/validate/validateMemberName';
 
 import useRequestDeleteMember from './queries/member/useRequestDeleteMember';
 import useRequestPutMembers from './queries/member/useRequestPutMembers';
@@ -8,6 +9,7 @@ import useRequestGetReports from './queries/report/useRequestGetReports';
 
 interface ReturnUseEventMember {
   reports: Report[];
+  isCanRequest: boolean;
   changeMemberName: (memberId: number, newName: string) => void;
   toggleDepositStatus: (memberId: number) => void;
   handleDeleteMember: (memberId: number) => void;
@@ -22,13 +24,31 @@ const useEventMember = (): ReturnUseEventMember => {
   const [reports, setReports] = useState(initialReports);
   const [deleteMembers, setDeleteMembers] = useState<number[]>([]);
   const [changedMembers, setChangedMembers] = useState<MemberWithDeposited[]>([]);
+  const [isCanRequest, setIsCanRequest] = useState<boolean>(false);
+  const [filteredChangedMembers, setFilteredChangedMembers] = useState<MemberWithDeposited[]>([]);
 
   useEffect(() => {
     setReports(initialReports);
   }, [initialReports]);
 
+  useEffect(() => {
+    const changedMembers = getChangedMembers();
+
+    if (changedMembers.length === 0) {
+      setIsCanRequest(false);
+    }
+    setFilteredChangedMembers(changedMembers);
+  }, [reports]);
+
   const changeMemberName = (memberId: number, newName: string) => {
-    // TODO: (@soha) 유효성 검사 추가 (4글자, 중복 이름)
+    // 유효성 검사 (4글자)
+    if (!validateMemberName(newName).isValid) {
+      setIsCanRequest(false);
+      return;
+    }
+    // 유효성 검사 (중복 이름)
+    // const isExistingMemberName = reports.some(member => member.memberName === newName);
+
     setReports(prevReports =>
       prevReports.map(report => (report.memberId === memberId ? {...report, memberName: newName} : report)),
     );
@@ -42,6 +62,8 @@ const useEventMember = (): ReturnUseEventMember => {
       }
       return [...prev, {id: memberId, name: newName, isDeposited}];
     });
+
+    setIsCanRequest(true);
   };
 
   const toggleDepositStatus = (memberId: number) => {
@@ -61,6 +83,8 @@ const useEventMember = (): ReturnUseEventMember => {
       }
       return [...prev, {id: memberId, name, isDeposited: newIsDeposited}];
     });
+
+    setIsCanRequest(true);
   };
 
   const handleDeleteMember = (memberId: number) => {
@@ -69,14 +93,7 @@ const useEventMember = (): ReturnUseEventMember => {
     setChangedMembers(prev => prev.filter(member => member.id !== memberId));
   };
 
-  const updateMembersOnServer = () => {
-    // 삭제할 member(deleteMembers)가 존재한다면 Delete 요청 실행
-    // if (deleteMembers.length > 0) {
-    //   for (const id of deleteMembers) {
-    //     deleteMember({memberId: id});
-    //   }
-    // }
-
+  const getChangedMembers = () => {
     // 초기 상태에서 memberId를 키로 갖는 맵 생성
     const initialReportsMap = new Map(initialReports.map(report => [report.memberId, report]));
 
@@ -90,6 +107,18 @@ const useEventMember = (): ReturnUseEventMember => {
       );
     });
 
+    return filteredChangedMembers;
+  };
+
+  const updateMembersOnServer = () => {
+    // 삭제할 member(deleteMembers)가 존재한다면 Delete 요청 실행
+    // if (deleteMembers.length > 0) {
+    //   for (const id of deleteMembers) {
+    //     deleteMember({memberId: id});
+    //   }
+    // }
+
+    const filteredChangedMembers = getChangedMembers();
     console.log('reports:', reports);
     console.log('changedMembers:', changedMembers);
     console.log('filteredChangedMembers: ', filteredChangedMembers);
@@ -100,7 +129,7 @@ const useEventMember = (): ReturnUseEventMember => {
     // }
   };
 
-  return {reports, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
+  return {reports, isCanRequest, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
 };
 
 export default useEventMember;
