@@ -24,9 +24,14 @@ export default function Line({text, emphasize = []}: Props) {
         display: flex;
       `}
     >
-      {elements.map(text => {
+      {elements.map((text, index) => {
         return (
-          <Text size="subTitle" textColor={emphasize.includes(text) ? 'black' : 'gray'} style={{whiteSpace: 'pre'}}>
+          <Text
+            key={`${text}-${index}`}
+            size="subTitle"
+            textColor={emphasize.includes(text) ? 'black' : 'gray'}
+            style={{whiteSpace: 'pre'}}
+          >
             {`${text}`}
           </Text>
         );

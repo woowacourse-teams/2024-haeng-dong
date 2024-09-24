@@ -10,7 +10,12 @@ const meta = {
   parameters: {
     // layout: 'centered',
   },
-  argTypes: {},
+  argTypes: {
+    isDeposited: {
+      description: '',
+      control: {type: 'boolean'},
+    },
+  },
   args: {
     clipboardText: '토스뱅크 010100-10-123123',
     onBankButtonClick: () => console.log('안녕'),
