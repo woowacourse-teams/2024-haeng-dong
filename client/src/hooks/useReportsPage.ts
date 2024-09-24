@@ -6,11 +6,9 @@ import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 import {ERROR_MESSAGE} from '@constants/errorMessage';
 
 import {useSearchReports} from './useSearchReports';
-import {useToast} from './useToast/useToast';
+import toast from './useToast/toast';
 
 const useReportsPage = () => {
-  const {showToast} = useToast();
-
   const [name, setName] = useState('');
   const {bankName, accountNumber} = useOutletContext<EventPageContextProps>();
   const {matchedReports, reports} = useSearchReports({name});
@@ -21,12 +19,9 @@ const useReportsPage = () => {
 
   const onBankButtonClick = () => {
     if (bankName.trim() === '' || accountNumber.trim() === '') {
-      showToast({
+      toast.error(ERROR_MESSAGE.emptyBank, {
         showingTime: 3000,
-        message: ERROR_MESSAGE.emptyBank,
-        type: 'error',
         position: 'bottom',
-        bottom: '8rem',
       });
       return;
     }
