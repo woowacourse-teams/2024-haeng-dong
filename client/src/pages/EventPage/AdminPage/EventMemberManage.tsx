@@ -9,7 +9,7 @@ import {useTheme} from '@components/Design';
 import {eventMemberMangeStyle, memberList, eventMember, memberEditInput} from './EventMemberManage.style';
 
 const EventMemberManage = () => {
-  const {reports, changeMemberName, handleDeleteMember} = useEventMember();
+  const {reports, changeMemberName, handleDeleteMember, handleClickPutMembers, toggleDepositStatus} = useEventMember();
 
   return (
     <MainLayout backgroundColor="white">
@@ -28,6 +28,7 @@ const EventMemberManage = () => {
                 member={member}
                 changeMemberName={changeMemberName}
                 handleDeleteMember={handleDeleteMember}
+                toggleDepositStatus={toggleDepositStatus}
               />
             );
           })}
@@ -41,9 +42,10 @@ interface EventMemberProps {
   member: Report;
   changeMemberName: (memberId: number, newName: string) => void;
   handleDeleteMember: (memberId: number) => void;
+  toggleDepositStatus: (memberId: number) => void;
 }
 
-const EventMember = ({member, changeMemberName, handleDeleteMember}: EventMemberProps) => {
+const EventMember = ({member, changeMemberName, handleDeleteMember, toggleDepositStatus}: EventMemberProps) => {
   const {theme} = useTheme();
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +59,7 @@ const EventMember = ({member, changeMemberName, handleDeleteMember}: EventMember
         <Icon iconType="pencilMini" />
       </div>
       <Amount amount={member.price} />
-      <DepositToggle isDeposit={member.isDeposited} onToggle={() => {}} />
+      <DepositToggle isDeposit={member.isDeposited} onToggle={() => toggleDepositStatus(member.memberId)} />
       <IconButton
         size="small"
         variants="tertiary"
