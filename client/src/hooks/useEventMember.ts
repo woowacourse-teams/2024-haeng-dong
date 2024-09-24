@@ -11,7 +11,7 @@ interface ReturnUseEventMember {
   changeMemberName: (memberId: number, newName: string) => void;
   toggleDepositStatus: (memberId: number) => void;
   handleDeleteMember: (memberId: number) => void;
-  handleClickPutMembers: () => void;
+  updateMembersOnServer: () => void;
 }
 
 const useEventMember = (): ReturnUseEventMember => {
@@ -69,26 +69,38 @@ const useEventMember = (): ReturnUseEventMember => {
     setChangedMembers(prev => prev.filter(member => member.id !== memberId));
   };
 
-  const handleClickPutMembers = () => {
+  const updateMembersOnServer = () => {
     // 삭제할 member(deleteMembers)가 존재한다면 Delete 요청 실행
-    if (deleteMembers.length > 0) {
-      for (const id of deleteMembers) {
-        return deleteMember({memberId: id});
-      }
-    }
+    // if (deleteMembers.length > 0) {
+    //   for (const id of deleteMembers) {
+    //     deleteMember({memberId: id});
+    //   }
+    // }
 
-    // TODO: (@soha) 초기의 값과 변경된 값이 동일하다면 해당 변경사항은 폐기
+    // 초기 상태에서 memberId를 키로 갖는 맵 생성
+    const initialReportsMap = new Map(initialReports.map(report => [report.memberId, report]));
 
-    // 변경된 값(changedMembers)이 존재한다면 PUT 요청 실행
-    if (changedMembers.length > 0) {
-      putMember({members: changedMembers});
-    }
+    // 변경된 값(changedMembers)에서 초기 상태와 동일한 값을 삭제
+    const filteredChangedMembers = changedMembers.filter(changedMember => {
+      const initialMember = initialReportsMap.get(changedMember.id);
+      return (
+        !initialMember ||
+        initialMember.memberName !== changedMember.name ||
+        initialMember.isDeposited !== changedMember.isDeposited
+      );
+    });
+
+    console.log('reports:', reports);
+    console.log('changedMembers:', changedMembers);
+    console.log('filteredChangedMembers: ', filteredChangedMembers);
+
+    // 변경된 값(filteredChangedMembers)이 존재한다면 PUT 요청 실행
+    // if (filteredChangedMembers.length > 0) {
+    //   putMember({members: filteredChangedMembers});
+    // }
   };
 
-  console.log('reports:', reports);
-  console.log('changedMembers:', changedMembers);
-
-  return {reports, changeMemberName, handleDeleteMember, handleClickPutMembers, toggleDepositStatus};
+  return {reports, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
 };
 
 export default useEventMember;

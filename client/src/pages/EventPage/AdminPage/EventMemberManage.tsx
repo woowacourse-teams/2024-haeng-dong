@@ -3,13 +3,13 @@ import {Report} from 'types/serviceType';
 
 import useEventMember from '@hooks/useEventMember';
 
-import {Back, MainLayout, TopNav, Top, Amount, DepositToggle, Icon, IconButton} from '@components/Design';
+import {Back, MainLayout, TopNav, Top, Amount, DepositToggle, Icon, IconButton, FixedButton} from '@components/Design';
 import {useTheme} from '@components/Design';
 
 import {eventMemberMangeStyle, memberList, eventMember, memberEditInput} from './EventMemberManage.style';
 
 const EventMemberManage = () => {
-  const {reports, changeMemberName, handleDeleteMember, handleClickPutMembers, toggleDepositStatus} = useEventMember();
+  const {reports, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} = useEventMember();
 
   return (
     <MainLayout backgroundColor="white">
@@ -33,6 +33,7 @@ const EventMemberManage = () => {
             );
           })}
         </div>
+        <FixedButton onClick={updateMembersOnServer}>수정완료</FixedButton>
       </section>
     </MainLayout>
   );
