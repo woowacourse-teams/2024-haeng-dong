@@ -5,7 +5,7 @@ import useReportsPage from '@hooks/useReportsPage';
 import {ExpenseList, Flex} from '@HDesign/index';
 
 const Reports = () => {
-  const {isEmpty, expenseListProp, name, changeName} = useReportsPage();
+  const {isEmpty, expenseListProp, memberName, changeName} = useReportsPage();
 
   if (isEmpty) {
     return <BillEmptyFallback />;
@@ -13,7 +13,12 @@ const Reports = () => {
 
   return (
     <Flex flexDirection="column" gap="0.5rem">
-      <ExpenseList name={name} onSearch={changeName} placeholder="이름 검색" expenseList={expenseListProp} />
+      <ExpenseList
+        memberName={memberName}
+        onSearch={changeName}
+        placeholder="이름 검색"
+        expenseList={expenseListProp}
+      />
     </Flex>
   );
 };
