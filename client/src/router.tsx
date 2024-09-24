@@ -5,8 +5,9 @@ import {HomePage} from '@pages/EventPage/HomePage';
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
 import AddBillFunnel from '@pages/AddBillFunnel/AddBillFunnel';
-import EditBillPage from '@pages/EditBillPage/EditBillPage';
 import CreateEventFunnel from '@pages/CreateEventPage/CreateEventFunnel';
+import EventMemberManage from '@pages/EventPage/AdminPage/EventMemberManage';
+import EditBillPage from '@pages/EditBillPage/EditBillPage';
 import Account from '@pages/AccountPage/Account';
 
 import {MainPage} from '@pages/MainPage';
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.addBill,
         element: <AddBillFunnel />,
+      },
+      {
+        path: ROUTER_URLS.member,
+        element: <EventMemberManage />,
       },
       {
         path: ROUTER_URLS.editBill,

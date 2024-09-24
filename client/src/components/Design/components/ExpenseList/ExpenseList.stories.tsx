@@ -13,14 +13,14 @@ const meta = {
     },
   },
   args: {
-    name: '소하',
+    memberName: '소하',
     onSearch: () => console.log('쿠키'),
     placeholder: '안녕',
 
     expenseList: [
       {
         memberId: 1,
-        name: '소하',
+        memberName: '소하',
         price: 2000,
         isDeposited: true,
         clipboardText: '토스은행 2000원',
@@ -28,7 +28,7 @@ const meta = {
       },
       {
         memberId: 2,
-        name: '토다리',
+        memberName: '토다리',
         price: 2000,
         isDeposited: false,
         clipboardText: '토스은행 2000원',
@@ -36,7 +36,7 @@ const meta = {
       },
       {
         memberId: 3,
-        name: '웨디',
+        memberName: '웨디',
         price: 1080,
         isDeposited: true,
         clipboardText: '토스은행 1080원',
@@ -44,7 +44,7 @@ const meta = {
       },
       {
         memberId: 4,
-        name: '쿠키',
+        memberName: '쿠키',
         price: 3020,
         isDeposited: false,
         clipboardText: '토스은행 3020원',

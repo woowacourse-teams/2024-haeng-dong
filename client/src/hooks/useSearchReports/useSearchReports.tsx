@@ -1,14 +1,14 @@
 import useRequestGetReports from '@hooks/queries/report/useRequestGetReports';
 
 type UseSearchReportsParams = {
-  name: string;
+  memberName: string;
 };
 
-const useSearchReports = ({name}: UseSearchReportsParams) => {
+const useSearchReports = ({memberName}: UseSearchReportsParams) => {
   const {reports} = useRequestGetReports();
 
   return {
-    matchedReports: reports.filter(memberReport => memberReport.name.includes(name)),
+    matchedReports: reports.filter(memberReport => memberReport.memberName.includes(memberName)),
     reports,
   };
 };

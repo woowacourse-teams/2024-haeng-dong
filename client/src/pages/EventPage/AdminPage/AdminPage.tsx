@@ -30,8 +30,11 @@ const AdminPage = () => {
   }, [postAuthenticate]);
 
   const navigateAccountInputPage = () => {
-    // TODO:(@cookie) 569 브랜치가 머지된 후에 작업 가능합니다.
-    navigate('/');
+    navigate(`/event/${eventId}/admin/edit`);
+  };
+
+  const navigateEventMemberManage = () => {
+    navigate(`/event/${eventId}/admin/member`);
   };
 
   return (
@@ -41,13 +44,13 @@ const AdminPage = () => {
         amount={totalExpenseAmount}
         dropdown={
           <Dropdown>
-            <DropdownButton text="전체 참여자 관리" />
-            <DropdownButton text="계좌번호 입력하기" />
+            <DropdownButton text="전체 참여자 관리" onClick={navigateEventMemberManage} />
+            <DropdownButton text="계좌번호 입력하기" onClick={navigateAccountInputPage} />
           </Dropdown>
         }
       />
       <StepList data={steps ?? []} isAdmin={isAdmin} />
-      <Button size="medium" onClick={() => navigate(`/event/${eventId}/addBill`)} style={{width: '100%'}}>
+      <Button size="medium" onClick={() => navigate(`/event/${eventId}/add-bill`)} style={{width: '100%'}}>
         지출내역 추가하기
       </Button>
     </section>

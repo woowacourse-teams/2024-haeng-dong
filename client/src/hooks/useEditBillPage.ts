@@ -11,7 +11,7 @@ const useEditBillPage = () => {
   const location = useLocation();
 
   const bill: Bill = location.state.bill;
-  const {billDetails} = useRequestGetBillDetails({billId: Number(bill.id)});
+  const {members: billDetails} = useRequestGetBillDetails({billId: bill.id});
 
   const {newBill, newBillDetails, handleChangeBillPrice, handleChangeBillTitle, handleChangeBillDetails} =
     useEditBillState({bill, billDetails});

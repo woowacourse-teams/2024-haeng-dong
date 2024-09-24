@@ -9,12 +9,12 @@ import {useSearchReports} from './useSearchReports';
 import toast from './useToast/toast';
 
 const useReportsPage = () => {
-  const [name, setName] = useState('');
+  const [memberName, setMemberName] = useState('');
   const {bankName, accountNumber} = useOutletContext<EventPageContextProps>();
-  const {matchedReports, reports} = useSearchReports({name});
+  const {matchedReports, reports} = useSearchReports({memberName});
 
   const changeName = ({target}: React.ChangeEvent<HTMLInputElement>) => {
-    setName(target.value);
+    setMemberName(target.value);
   };
 
   const onBankButtonClick = () => {
@@ -41,7 +41,7 @@ const useReportsPage = () => {
   return {
     isEmpty,
     expenseListProp,
-    name,
+    memberName,
     changeName,
   };
 };

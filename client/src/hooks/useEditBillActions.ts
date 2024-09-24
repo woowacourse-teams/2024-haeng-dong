@@ -55,7 +55,7 @@ const useEditBillActions = ({bill, billDetails, newBill, newBillDetails}: Props)
 
   useEffect(() => {
     if (isSuccessDeleteBill || isSusseccPutBillDetails || (isSuccessPutBill && !isBillDetailsChanged)) {
-      navigate(`/events/${eventId}/admin`);
+      navigate(`/event/${eventId}/admin`);
     }
   }, [isSuccessDeleteBill, isSusseccPutBillDetails, isSuccessPutBill, isBillDetailsChanged]);
 

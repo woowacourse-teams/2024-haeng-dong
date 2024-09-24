@@ -8,7 +8,7 @@ export type ExpenseItemCustomProps = Report & {
 export type ExpenseItemProps = React.ComponentProps<'div'> & ExpenseItemCustomProps;
 
 export type ExpenseListProps = {
-  name: string;
+  memberName: string;
   onSearch: ({target}: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   expenseList: ExpenseItemProps[];

@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 
 import {useEffect, useState} from 'react';
 
-import {DepositToggle} from './DepositToggle';
+import DepositToggle from './DepositToggle';
 
 const meta = {
   title: 'Components/DepositToggle',

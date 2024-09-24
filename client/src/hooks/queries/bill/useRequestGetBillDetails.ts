@@ -20,7 +20,7 @@ const useRequestGetBillDetails = ({billId, ...props}: WithErrorHandlingStrategy<
   });
 
   return {
-    billDetails: data?.billDetails ?? [],
+    members: data?.members ?? [],
     ...rest,
   };
 };

@@ -7,31 +7,37 @@ import {DepositToggleStyleProps} from './DepositToggle.type';
 export const depositToggleStyle = ({theme, isDeposit}: WithTheme<DepositToggleStyleProps>) =>
   css({
     display: `flex`,
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'center',
     padding: '0.25rem',
     borderRadius: '0.75rem',
     backgroundColor: theme.colors.tertiary,
     cursor: 'pointer',
-    width: '4rem',
+    alignItems: 'center',
+    width: '4.75rem',
+    height: '1.4375rem',
 
     '.deposit-text': {
       display: 'flex',
       justifyContent: 'center',
       borderRadius: '0.5rem',
-      padding: ' 0.125rem 0 0 0',
+      padding: '0 0.25rem',
       zIndex: '10',
+      height: '15px',
+      width: '34px',
+      paddingTop: '0.05rem',
     },
 
     '.toggle-background': {
-      position: 'fixed',
-      width: '56px',
-      height: '20px',
+      position: 'absolute',
+      width: '34px',
+      height: '15px',
       borderRadius: '0.5rem',
       backgroundColor: theme.colors.white,
 
       transition: '0.2s',
       transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
 
-      transform: !isDeposit ? 'translateY(1.25rem)' : '',
+      transform: !isDeposit ? 'translateX(1.07rem)' : 'translateX(-1.06rem)',
     },
   });

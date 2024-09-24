@@ -52,7 +52,7 @@ export const requestGetBillDetails = async ({
 }: WithEventId<WithErrorHandlingStrategy<WithBillId>>) => {
   return requestGet<BillDetails>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/bills/${billId}/fixed`,
+    endpoint: `${USER_API_PREFIX}/${eventId}/bills/${billId}/details`,
     ...props,
   });
 };
@@ -74,7 +74,7 @@ export const requestPutBillDetails = async ({
 }: WithEventId<WithBillId<RequestPutBillDetails>>) => {
   await requestPut({
     baseUrl: BASE_URL.HD,
-    endpoint: `${ADMIN_API_PREFIX}/${eventId}/bills/${billId}/fixed`,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/bills/${billId}/details`,
     body: {billDetails},
   });
 };

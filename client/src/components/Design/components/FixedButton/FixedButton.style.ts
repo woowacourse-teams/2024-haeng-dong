@@ -14,6 +14,7 @@ export const fixedButtonContainerStyle = (theme: Theme) =>
     margin: '0 auto',
     backgroundColor: theme.colors.white,
     boxSizing: 'border-box',
+    zIndex: '10',
   });
 
 export const buttonContainerStyle = css({

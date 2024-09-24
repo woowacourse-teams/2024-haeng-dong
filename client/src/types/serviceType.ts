@@ -26,7 +26,7 @@ export interface BillDetail {
 }
 
 export interface BillDetails {
-  billDetails: BillDetail[];
+  members: BillDetail[];
 }
 
 export interface Member {
@@ -57,7 +57,7 @@ export interface Event {
 
 export interface Report {
   memberId: number;
-  name: string;
+  memberName: string;
   isDeposited: boolean;
   price: number;
 }

@@ -6,10 +6,12 @@ import Buljusa from '@assets/image/buljusa.svg';
 import Error from '@assets/image/error.svg';
 import Confirm from '@assets/image/confirm.svg';
 import Trash from '@assets/image/trash.svg';
+import TrashMini from '@assets/image/trash_mini.svg';
 import Search from '@assets/image/search.svg';
 import RightChevron from '@assets/image/rightChevron.svg';
 import Check from '@assets/image/check.svg';
 import X from '@assets/image/x.svg';
+import PencilMini from '@assets/image/pencil_mini.svg';
 import Meatballs from '@assets/image/meatballs.svg';
 import EditPencil from '@assets/image/editPencil.svg';
 import {IconProps} from '@HDcomponents/Icon/Icon.type';
@@ -25,9 +27,11 @@ const ICON = {
   error: <Error />,
   confirm: <Confirm />,
   trash: <Trash />,
-  toss: <img src={Toss} width="16" height="16" alt="toss icon" />,
+  trashMini: <TrashMini />,
   check: <Check />,
   x: <X />,
+  pencilMini: <PencilMini />,
+  toss: <img src={Toss} width="16" height="16" alt="toss icon" />,
   meatballs: <Meatballs />,
   editPencil: <EditPencil />,
 };
