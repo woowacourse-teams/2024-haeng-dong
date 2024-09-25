@@ -290,7 +290,7 @@ class MemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> memberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage("업데이트 요청된 참여자 정보와 기존 행사 참여자 정보가 일치하지 않습니다.");
+                .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
     }
 
     @DisplayName("수정하려는 행사 참여 인원 이름이 이미 존재하는 경우 예외가 발생한다.")
@@ -309,7 +309,7 @@ class MemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> memberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage("업데이트 요청된 참여자 정보와 기존 행사 참여자 정보가 일치하지 않습니다.");
+                .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
     }
 
     @DisplayName("참여자 간 서로의 이름으로 수정하려는 경우 예외가 발생한다.")
