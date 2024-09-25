@@ -5,7 +5,7 @@ import BankSelectModal from '@components/Modal/BankSelectModal/BankSelectModal';
 
 import useAccount from '@hooks/useAccount';
 
-import {Back, FixedButton, Flex, FunnelLayout, LabelInput, MainLayout, Top, TopNav} from '@components/Design';
+import {FixedButton, Flex, FunnelLayout, LabelInput, MainLayout, Top, TopNav} from '@components/Design';
 
 import getDeletedLastPath from '@utils/getDeletedLastPath';
 
@@ -25,7 +25,7 @@ const Account = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
-        <Back />
+        <TopNav.Element displayName="뒤로가기" routePath="-1" />
       </TopNav>
       <FunnelLayout>
         <Top>

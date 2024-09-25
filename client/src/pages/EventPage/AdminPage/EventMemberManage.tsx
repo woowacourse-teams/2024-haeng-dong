@@ -3,18 +3,7 @@ import {Report} from 'types/serviceType';
 
 import useEventMember from '@hooks/useEventMember';
 
-import {
-  Back,
-  MainLayout,
-  TopNav,
-  Top,
-  Amount,
-  DepositToggle,
-  Icon,
-  IconButton,
-  FixedButton,
-  Text,
-} from '@components/Design';
+import {MainLayout, TopNav, Top, Amount, DepositToggle, Icon, IconButton, FixedButton, Text} from '@components/Design';
 import {useTheme} from '@components/Design';
 
 import {eventMemberMangeStyle, memberList, eventMember, memberEditInput, noneReports} from './EventMemberManage.style';
@@ -26,7 +15,7 @@ const EventMemberManage = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
-        <Back />
+        <TopNav.Element displayName="뒤로가기" routePath="-1" />
       </TopNav>
       <section css={eventMemberMangeStyle}>
         <Top>

@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import useFunnel from '@hooks/useFunnel';
 import useCreateEventData from '@hooks/useCreateEventData';
 
-import {Back, MainLayout, TopNav} from '@components/Design';
+import {MainLayout, TopNav} from '@components/Design';
 
 import SetEventNameStep from './SetEventNameStep';
 import SetEventPasswordStep from './SetEventPasswordStep';
@@ -31,7 +31,11 @@ const CreateEventFunnel = () => {
 
   return (
     <MainLayout backgroundColor="white">
-      <TopNav>{step !== STEP_SEQUENCE[STEP_SEQUENCE.length - 1] && <Back onClick={handleBack} />}</TopNav>
+      <TopNav>
+        {step !== STEP_SEQUENCE[STEP_SEQUENCE.length - 1] && (
+          <TopNav.Element displayName="뒤로가기" routePath="" onHandleRouteInFunnel={handleBack} />
+        )}
+      </TopNav>
       <Funnel>
         <Step name="eventName">
           <SetEventNameStep moveToNextStep={moveToNextStep} {...eventNameProps} />

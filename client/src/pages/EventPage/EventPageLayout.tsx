@@ -2,21 +2,18 @@ import type {Event} from 'types/serviceType';
 
 import {Outlet} from 'react-router-dom';
 
-import Switch from '@components/Switch/Switch';
-
 import useEventPageLayout from '@hooks/useEventPageLayout';
 
 import {ShareEventButton} from '@components/ShareEventButton';
 
-import {MainLayout, TopNav} from '@HDesign/index';
+import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
 };
 
 const EventPageLayout = () => {
-  const {navProps, isAdmin, isLoginPage, eventOutline} = useEventPageLayout();
-  const {nav, paths, onChange} = navProps;
+  const {isAdmin, isLoginPage, eventOutline} = useEventPageLayout();
 
   const outletContext: EventPageContextProps = {
     isAdmin,
@@ -25,10 +22,18 @@ const EventPageLayout = () => {
 
   return (
     <MainLayout backgroundColor="gray">
-      <TopNav>
-        <Switch value={nav} values={paths} onChange={onChange} />
+      <Flex justifyContent="spaceBetween" alignItems="center" margin="0 1rem">
+        <TopNav>
+          <TopNav.Element routePath="-1">
+            <IconButton variants="none">
+              <Icon iconType="heundeut" />
+            </IconButton>
+          </TopNav.Element>
+          <TopNav.Element displayName="홈" routePath="/home" />
+          <TopNav.Element displayName="관리" routePath="/admin" />
+        </TopNav>
         {!isLoginPage && <ShareEventButton eventOutline={eventOutline} />}
-      </TopNav>
+      </Flex>
       <Outlet context={outletContext} />
     </MainLayout>
   );
