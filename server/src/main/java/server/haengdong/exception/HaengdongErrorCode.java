@@ -19,7 +19,7 @@ public enum HaengdongErrorCode {
     MEMBER_NOT_FOUND("존재하지 않는 참여자입니다."),
     MEMBER_ALREADY_EXIST("현재 참여하고 있는 인원이 존재합니다."),
     MEMBER_NAME_CHANGE_DUPLICATE("중복된 참여 인원 이름 변경 요청이 존재합니다."),
-    MEMBER_UPDATE_MISMATCH("업데이트 요청된 참여자 정보와 기존 행사 참여자 정보가 일치하지 않습니다."),
+    MEMBER_UPDATE_MISMATCH("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다."),
 
     BILL_NOT_FOUND("존재하지 않는 지출입니다."),
     BILL_TITLE_INVALID("앞뒤 공백을 제거한 지출 내역 제목은 %d ~ %d자여야 합니다."),
