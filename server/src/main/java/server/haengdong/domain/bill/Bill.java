@@ -33,7 +33,6 @@ public class Bill {
     private static final int MAX_TITLE_LENGTH = 30;
     private static final long MIN_PRICE = 1L;
     private static final long MAX_PRICE = 10_000_000L;
-    private static final long DEFAULT_PRICE = 0L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
