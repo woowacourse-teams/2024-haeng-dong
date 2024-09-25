@@ -17,9 +17,9 @@ import {
 } from '@components/Design';
 import {useTheme} from '@components/Design';
 
-import {eventMemberMangeStyle, memberList, eventMember, memberEditInput, noneReports} from './EventMemberManage.style';
+import {eventMemberStyle, memberList, eventMember, memberEditInput, noneReports} from './EventMember.style';
 
-const EventMemberManage = () => {
+const EventMember = () => {
   const {reports, isCanSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =
     useEventMember();
 
@@ -28,7 +28,7 @@ const EventMemberManage = () => {
       <TopNav>
         <Back />
       </TopNav>
-      <section css={eventMemberMangeStyle}>
+      <section css={eventMemberStyle}>
         <Top>
           <Top.Line text="전체 참여자 관리" emphasize={['전체 참여자 관리']}></Top.Line>
         </Top>
@@ -43,7 +43,7 @@ const EventMemberManage = () => {
           ) : (
             reports.map(member => {
               return (
-                <EventMember
+                <Member
                   key={member.memberId}
                   member={member}
                   changeMemberName={changeMemberName}
@@ -66,14 +66,14 @@ const EventMemberManage = () => {
   );
 };
 
-interface EventMemberProps {
+interface MemberProps {
   member: Report;
   changeMemberName: (memberId: number, newName: string) => void;
   handleDeleteMember: (memberId: number) => void;
   toggleDepositStatus: (memberId: number) => void;
 }
 
-const EventMember = ({member, changeMemberName, handleDeleteMember, toggleDepositStatus}: EventMemberProps) => {
+const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStatus}: MemberProps) => {
   const {theme} = useTheme();
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,4 +102,4 @@ const EventMember = ({member, changeMemberName, handleDeleteMember, toggleDeposi
   );
 };
 
-export default EventMemberManage;
+export default EventMember;
