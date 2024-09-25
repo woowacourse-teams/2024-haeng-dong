@@ -14,14 +14,14 @@ public class AwsConfig {
     @Bean
     public S3Client s3Client() {
         return S3Client.builder()
-                .region(Region.AP_NORTHEAST_2) // 사용하려는 AWS 리전으로 변경하세요
+                .region(Region.AP_NORTHEAST_2)
                 .build();
     }
 
     @Bean
     public S3AsyncClient s3AsyncClient() {
         return S3AsyncClient.builder()
-                .region(Region.AP_NORTHEAST_2) // 사용하려는 AWS 리전으로 변경하세요
+                .region(Region.AP_NORTHEAST_2)
                 .build();
     }
 

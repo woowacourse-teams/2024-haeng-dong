@@ -20,7 +20,7 @@ public class S3UploadService {
                 .bucket(bucketName)
                 .key(key)
                 .contentLength(contentLength) // contentLength 추가
-                .contentType("image/webp")
+                .contentType("image/png")
                 .build();
 
         s3.putObject(putObjectRequest, RequestBody.fromInputStream(inputStream, contentLength));

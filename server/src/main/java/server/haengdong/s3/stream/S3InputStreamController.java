@@ -18,12 +18,14 @@ public class S3InputStreamController {
         this.s3InputStreamUploadService = s3InputStreamUploadService;
     }
 
-    @PostMapping("/upload-by-stream")
+    @PostMapping("/stream")
     public String uploadFileByStream(HttpServletRequest request) {
         try {
             // 클라이언트에서 받은 파일 데이터를 InputStream으로 읽어오기
             InputStream inputStream = request.getInputStream();
             long contentLength = request.getContentLengthLong();
+
+            String directoryPath = "haeng-dong/s3-upload-test/"; // 원하는 디렉토리 경로
 
             // 파일명을 헤더에서 받거나 직접 지정
             String fileName = request.getHeader("file-name");
@@ -31,8 +33,10 @@ public class S3InputStreamController {
                 fileName = "default-file-name";
             }
 
+            String key = directoryPath + fileName;
+
             // S3에 파일 업로드
-            s3InputStreamUploadService.uploadImageToS3("techcourse-project-2024", fileName, inputStream, contentLength);
+            s3InputStreamUploadService.uploadImageToS3("techcourse-project-2024", key, inputStream, contentLength);
 
             return "업로드 완료";
         } catch (IOException e) {

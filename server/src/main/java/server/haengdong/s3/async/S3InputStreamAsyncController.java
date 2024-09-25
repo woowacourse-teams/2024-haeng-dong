@@ -20,17 +20,21 @@ public class S3InputStreamAsyncController {
         this.s3InputStreamAsyncUploadService = s3InputStreamAsyncUploadService;
     }
 
-    @PostMapping("/stream/async")
+    @PostMapping("/stream-async")
     public CompletableFuture<ResponseEntity<String>> uploadFileByStream(HttpServletRequest request) {
         try {
             InputStream inputStream = request.getInputStream();
             long contentLength = request.getContentLengthLong();
+            String directoryPath = "haeng-dong/s3-upload-test/"; // 원하는 디렉토리 경로
+
             String fileName = request.getHeader("file-name");
             if (fileName == null || fileName.isEmpty()) {
                 fileName = "default-file-name";
             }
 
-            return s3InputStreamAsyncUploadService.uploadFile(inputStream, fileName, contentLength)
+            String dir = directoryPath + fileName;
+
+            return s3InputStreamAsyncUploadService.uploadFile("techcourse-project-2024", dir, inputStream, contentLength)
                     .thenApply(key -> new ResponseEntity<>("File uploaded successfully: " + key, HttpStatus.OK))
                     .exceptionally(e -> new ResponseEntity<>("File upload failed: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
         } catch (IOException e) {

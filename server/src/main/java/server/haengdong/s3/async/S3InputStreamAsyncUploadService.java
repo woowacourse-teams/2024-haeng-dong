@@ -19,10 +19,12 @@ public class S3InputStreamAsyncUploadService {
         this.executorService = executorService;
     }
 
-    public CompletableFuture<String> uploadFile(InputStream inputStream, String key, long contentLength) {
+    public CompletableFuture<String> uploadFile(String bucketName, String key, InputStream inputStream, long contentLength) {
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket("your-bucket-name")
+                .bucket(bucketName)
                 .key(key)
+                .contentLength(contentLength) // contentLength 추가
+                .contentType("image/png")
                 .build();
 
         AsyncRequestBody requestBody = AsyncRequestBody.fromInputStream(inputStream, contentLength, executorService);

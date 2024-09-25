@@ -19,6 +19,11 @@ spring:
         jdbc.time_zone: Asia/Seoul
     show-sql: true
 
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 1GB
+
 cors:
   max-age: 3600
   allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
