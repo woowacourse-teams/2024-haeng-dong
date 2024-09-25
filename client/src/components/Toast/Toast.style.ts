@@ -25,13 +25,14 @@ const fadeOutWithTransformY = keyframes`
   }
 `;
 
-export const toastMarginStyle = ({position, bottom, top}: ToastOptions) =>
+export const toastMarginStyle = ({position, bottom, top, theme}: ToastOptions) =>
   css({
     position: 'absolute',
     bottom: position === 'bottom' ? `${bottom}` : 'auto',
     top: position === 'top' ? `${top}` : 'auto',
     left: '50%',
     transform: 'translate(-50%)',
+    zIndex: theme?.zIndex.toast,
 
     width: '100%',
     maxWidth: '48rem',

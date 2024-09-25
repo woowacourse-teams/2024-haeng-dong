@@ -1,3 +1,5 @@
+import {Theme} from '@components/Design/theme/theme.type';
+
 export type ToastPosition = 'bottom' | 'top';
 
 export type ToastOptions = {
@@ -7,6 +9,7 @@ export type ToastOptions = {
   position?: ToastPosition;
   bottom?: string;
   top?: string;
+  theme?: Theme;
 };
 
 export type ToastMessage = string;

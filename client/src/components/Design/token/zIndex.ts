@@ -11,6 +11,7 @@ const DEPOSIT_TOGGLE_INDICATOR_MOVING_ANIMATION = BASE + ABOVE;
 const NUMBER_KEYBOARD_BOTTOM_SHEET = FIXED_BUTTON + ABOVE;
 const BOTTOM_SHEET_DIMMED_LAYER = NUMBER_KEYBOARD_BOTTOM_SHEET + ABOVE;
 const BOTTOM_SHEET_CONTAINER = BOTTOM_SHEET_DIMMED_LAYER + ABOVE;
+const TOAST = BOTTOM_SHEET_CONTAINER + ABOVE;
 
 export const ZINDEX = {
   bottomSheetDimmedLayer: BOTTOM_SHEET_DIMMED_LAYER,
@@ -21,6 +22,7 @@ export const ZINDEX = {
   navBackgroundColor: NAV_BACKGROUND_COLOR,
   tabIndicator: TAB_INDICATOR,
   tabText: TAB_TEXT,
+  toast: TOAST,
 } as const;
 
 type ZIndexKeys =
@@ -31,6 +33,7 @@ type ZIndexKeys =
   | 'fixedButton'
   | 'navBackgroundColor'
   | 'tabText'
-  | 'tabIndicator';
+  | 'tabIndicator'
+  | 'toast';
 
 export type ZIndexTokens = Record<ZIndexKeys, number>;
