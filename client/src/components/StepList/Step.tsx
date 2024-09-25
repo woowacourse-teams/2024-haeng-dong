@@ -9,6 +9,7 @@ import {Bill, Step as StepType} from 'types/serviceType';
 import {Text} from '@components/Design';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+import {css} from '@emotion/react';
 
 interface Prop {
   step: StepType;
@@ -25,7 +26,17 @@ const Step = ({step}: Prop) => {
     <ListItem>
       <ListItem.Row>
         <ChipGroup color="gray" texts={step.members.map(member => member.name)} />
-        <Text size="caption" textColor="gray">
+
+        <Text
+          size="caption"
+          textColor="gray"
+          css={css`
+            flex-shrink: 0;
+            width: 2rem;
+            text-align: end;
+            margin-left: 0.5rem;
+          `}
+        >
           {step.members.length}명
         </Text>
       </ListItem.Row>
