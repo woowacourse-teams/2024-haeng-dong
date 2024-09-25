@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import TextButton from '../TextButton/TextButton';
+import TextButton from '../Design/components/TextButton/TextButton';
 
 import {switchContainerStyle} from './Switch.style';
 import {SwitchProps} from './Switch.type';
