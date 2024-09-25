@@ -4,12 +4,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.s3.multipart.S3UploadService;
 
 @RestController
-@RequestMapping("/api/s3")
 public class S3InputStreamController {
 
     private final S3UploadService s3InputStreamUploadService;
@@ -18,7 +16,7 @@ public class S3InputStreamController {
         this.s3InputStreamUploadService = s3InputStreamUploadService;
     }
 
-    @PostMapping("/stream")
+    @PostMapping("/api/s3/stream")
     public String uploadFileByStream(HttpServletRequest request) {
         try {
             // 클라이언트에서 받은 파일 데이터를 InputStream으로 읽어오기

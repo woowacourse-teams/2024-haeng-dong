@@ -7,11 +7,9 @@ import java.util.concurrent.CompletableFuture;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/s3")
 public class S3InputStreamAsyncController {
 
     private final S3InputStreamAsyncUploadService s3InputStreamAsyncUploadService;
@@ -20,7 +18,7 @@ public class S3InputStreamAsyncController {
         this.s3InputStreamAsyncUploadService = s3InputStreamAsyncUploadService;
     }
 
-    @PostMapping("/stream-async")
+    @PostMapping("/api/s3/stream-async")
     public CompletableFuture<ResponseEntity<String>> uploadFileByStream(HttpServletRequest request) {
         try {
             InputStream inputStream = request.getInputStream();

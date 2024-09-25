@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>S3 Multipart Upload</title>
+    <!-- Include Axios from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h1>S3 Multipart Upload</h1>
+<input type="file" id="fileInput" multiple> <!-- 'multiple' attribute allows multiple file selection -->
+<button id="uploadStreamButton">Stream Upload</button>
+<button id="uploadMultipartFilesButton">Multipart File Upload</button>
+<button id="uploadAwsMultiPartButton">AWS MultiPart Upload</button>
+
+<script>
+    // Replace this with your actual API endpoint
+    const API_ENDPOINT = 'https://dev.api.haengdong.pro/api/s3';
+
+    // Event listener for AWS MultiPart Upload Button
+    document.getElementById('uploadAwsMultiPartButton').addEventListener('click', () => {
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length === 0) {
+            alert('Please select at least one file.');
+            return;
+        }
+        const files = fileInput.files;
+        uploadMultipleFilesAwsMultiPart(files); // Upload multiple files in parallel
+    });
+
+    // Event listener for Stream Upload Button
+    document.getElementById('uploadStreamButton').addEventListener('click', () => {
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length === 0) {
+            alert('Please select at least one file.');
+            return;
+        }
+        const files = fileInput.files;
+        uploadFilesViaStream(files); // Upload files via Stream in parallel
+    });
+
+    // Event listener for Multipart File Upload Button
+    document.getElementById('uploadMultipartFilesButton').addEventListener('click', () => {
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length === 0) {
+            alert('Please select at least one file.');
+            return;
+        }
+        const files = fileInput.files;
+        uploadMultipleFiles(files); // Upload files via Multipart in parallel
+    });
+
+    // AWS MultiPart 방식
+    async function uploadMultipleFilesAwsMultiPart(files) {
+        try {
+            const startTime = performance.now();
+
+            // Create an array of promises for each file to be uploaded in parallel
+            const uploadPromises = Array.from(files).map(file => awsMultiPart(file));
+
+            // Wait for all files to upload in parallel
+            const results = await Promise.all(uploadPromises);
+
+            const endTime = performance.now();
+            console.log(`AWS Multi Part Upload Execution time for all files: ${(endTime - startTime).toFixed(2)} ms`);
+            console.log('AWS Multi Part upload responses:', results);
+            alert('All files uploaded successfully via AWS Multi Part');
+        } catch (error) {
+            console.error('Error during AWS Multi Part uploads:', error);
+            alert('AWS Multi Part uploads failed');
+        }
+    }
+
+    // AWS MultiPart 방식 (단일 파일 업로드 처리)
+    async function awsMultiPart(file) {
+        try {
+            const fileName = file.name;
+            const fileSize = file.size;
+            const PART_SIZE = 5 * 1024 * 1024; // 5MB
+            const partCount = Math.ceil(fileSize / PART_SIZE);
+
+            // Start multipart upload
+            const startData = await startMultipartUpload(fileName, partCount);
+            const { uploadId, presignedUrls } = startData;
+
+            // Upload parts in parallel
+            const uploadPromises = presignedUrls.map((presignedUrl, partNumber) => {
+                const start = partNumber * PART_SIZE;
+                const end = Math.min(start + PART_SIZE, fileSize);
+                const blobPart = file.slice(start, end);
+                console.log(`Uploading part ${partNumber + 1}/${presignedUrls.length} for file: ${fileName}`);
+                return uploadPart(presignedUrl, blobPart); // Upload each part asynchronously
+            });
+
+            // Wait for all parts to upload
+            const eTags = await Promise.all(uploadPromises);
+
+            // Clean up ETags (remove any quotes)
+            const cleanETags = eTags.map(eTag => eTag.replace(/"/g, ''));
+
+            // Complete multipart upload after all parts have been uploaded
+            await completeMultipartUpload(fileName, uploadId, cleanETags);
+
+            console.log(`Multipart upload completed for file: ${fileName}`);
+            return `Upload completed for ${fileName}`;
+        } catch (error) {
+            console.error(`Error during multipart upload for file: ${file.name}`, error);
+            throw error;
+        }
+    }
+
+    async function startMultipartUpload(fileName, partCount) {
+        const params = new URLSearchParams();
+        params.append('fileName', fileName);
+        params.append('partCount', partCount);
+
+        const response = await axios.post(`${API_ENDPOINT}/free/start`, null, { params });
+        return response.data; // Contains 'uploadId' and 'presignedUrls'
+    }
+
+    async function uploadPart(presignedUrl, blobPart) {
+        const response = await axios.put(presignedUrl, blobPart, {
+            headers: {
+                'Content-Type': 'application/octet-stream',
+            },
+        });
+        const eTag = response.headers.etag;
+        return eTag;
+    }
+
+    async function completeMultipartUpload(fileName, uploadId, eTags) {
+        const params = new URLSearchParams();
+        params.append('fileName', fileName);
+        params.append('uploadId', uploadId);
+
+        const response = await axios.post(`${API_ENDPOINT}/free/complete`, eTags, {
+            params,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    }
+
+    // Stream 방식
+    // Function to upload multiple files via stream, each file in parallel
+    async function uploadFilesViaStream(files) {
+        try {
+            const startTime = performance.now();
+
+            // Create an array of promises for each file to be uploaded in parallel
+            const uploadPromises = Array.from(files).map(file => {
+                const fileName = file.name;
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const headers = {
+                    'file-name': fileName,
+                    'Content-Type': file.type || 'application/octet-stream',
+                };
+
+                // Send stream upload request for each file
+                return axios.post(`${API_ENDPOINT}/stream`, file, { headers });
+            });
+
+            // Wait for all file uploads to complete
+            const responses = await Promise.all(uploadPromises);
+
+            const endTime = performance.now(); // End timing
+            console.log(`Stream Upload Execution time for all files: ${(endTime - startTime).toFixed(2)} ms`);
+            console.log('Stream upload responses:', responses);
+            alert('All files uploaded successfully via stream');
+        } catch (error) {
+            console.error('Error during stream uploads:', error);
+            alert('Stream uploads failed');
+        }
+    }
+
+    // MultiPart 방식
+    // Function to upload multiple files via the /api/multipart-files endpoint
+    async function uploadMultipleFiles(files) {
+        try {
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append('uploadFiles', files[i]); // Multiple files appended with the same key
+            }
+
+            const startTime = performance.now();
+            const response = await axios.post(`${API_ENDPOINT}/multipart-files`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            const endTime = performance.now(); // End timing
+
+            console.log(`Multipart File Upload Execution time: ${(endTime - startTime).toFixed(2)} ms`);
+            console.log('Multipart file upload response:', response.data);
+            alert('Multipart file upload completed successfully');
+        } catch (error) {
+            console.error('Error during multipart file upload:', error);
+            alert('Multipart file upload failed');
+        }
+    }
+</script>
+</body>
+</html>

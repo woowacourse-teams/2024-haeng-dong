@@ -17,10 +17,9 @@ public class FileUploadController {
         this.s3UploadService = s3UploadService;
     }
 
-    @PostMapping("/api/multipart-files")
+    @PostMapping("/api/s3/multipart-files")
     public String uploadMultipleFiles(
             @RequestPart("uploadFiles") List<MultipartFile> multipartFiles) {
-
         String directoryPath = "haeng-dong/s3-upload-test/"; // 원하는 디렉토리 경로
 
         for (MultipartFile file : multipartFiles) {
