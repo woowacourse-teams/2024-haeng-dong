@@ -31,16 +31,8 @@ const useEventMember = (): ReturnUseEventMember => {
   const isCanSubmit = useMemo(() => {
     // 중복되는 이름이 존재하는지 확인
     const hasDuplicateMemberName = (): boolean => {
-      const nameCount: {[key: string]: number} = {};
-
-      for (const member of reports) {
-        if (nameCount[member.memberName]) {
-          return true;
-        }
-        nameCount[member.memberName] = 1;
-      }
-
-      return false;
+      const nameSet = new Set(reports.map(member => member.memberName));
+      return nameSet.size !== reports.length;
     };
 
     if (hasDuplicateMemberName()) {
