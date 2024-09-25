@@ -6,7 +6,7 @@ import {reactRouterParameters, withRouter} from 'storybook-addon-react-router-v6
 
 import TopNav from '@HDcomponents/TopNav/TopNav';
 
-import Switch from '../Switch/Switch';
+import Switch from '../../../Switch/Switch';
 
 import Back from './Back';
 
