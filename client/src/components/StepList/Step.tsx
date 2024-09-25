@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {useNavigate} from 'react-router-dom';
+import {css} from '@emotion/react';
 
 import Amount from '@components/Design/components/Amount/Amount';
 import ChipGroup from '@components/Design/components/ChipGroup/ChipGroup';
@@ -9,7 +10,6 @@ import {Bill, Step as StepType} from 'types/serviceType';
 import {Text} from '@components/Design';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
-import {css} from '@emotion/react';
 
 interface Prop {
   step: StepType;
