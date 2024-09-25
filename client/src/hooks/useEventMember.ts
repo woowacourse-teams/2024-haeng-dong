@@ -3,6 +3,7 @@ import {useEffect, useState, useCallback, useMemo} from 'react';
 import {Report} from 'types/serviceType';
 import validateMemberName from '@utils/validate/validateMemberName';
 
+import toast from './useToast/toast';
 import useRequestDeleteMember from './queries/member/useRequestDeleteMember';
 import useRequestPutMembers from './queries/member/useRequestPutMembers';
 import useRequestGetReports from './queries/report/useRequestGetReports';
@@ -116,6 +117,8 @@ const useEventMember = (): ReturnUseEventMember => {
     if (changedMembers.length > 0) {
       await putMember({members: changedMembers});
     }
+
+    toast.confirm('수정이 완료되었어요 :)');
   }, [deleteMembers, reports, initialReports, deleteMember, putMember]);
 
   return {reports, isCanSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
