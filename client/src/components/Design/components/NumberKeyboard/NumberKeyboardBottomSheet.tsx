@@ -1,21 +1,26 @@
 import {css} from '@emotion/react';
 import {createPortal} from 'react-dom';
+import {useEffect, useRef} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import FixedButton from '../FixedButton/FixedButton';
 
 import NumberKeyboard, {NumberKeyboardProps} from './NumberKeyboard';
+import useNumberKeyboardBottomSheet from './useNumberKeyboardBottomSheet';
 
 interface Props extends NumberKeyboardProps {
-  isOpened?: boolean;
+  isOpened: boolean;
   onClose: () => void;
 }
 
 const NumberKeyboardBottomSheet = ({isOpened, onClose, ...props}: Props) => {
   const {theme} = useTheme();
+  const {bottomSheetRef} = useNumberKeyboardBottomSheet({isOpened});
+
   return createPortal(
     <div
+      ref={bottomSheetRef}
       css={css`
         position: fixed;
         padding-bottom: 6.25rem;
@@ -26,6 +31,8 @@ const NumberKeyboardBottomSheet = ({isOpened, onClose, ...props}: Props) => {
         gap: 1rem;
         bottom: 0;
         background-color: ${theme.colors.white};
+        z-index: 20;
+        touch-action: none;
 
         transform: ${isOpened ? 'translate3d(0, 0, 0)' : 'translate3d(0, 100%, 0)'};
         transition: 0.2s ease-in-out;
