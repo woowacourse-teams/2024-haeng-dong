@@ -1,0 +1,42 @@
+package server.haengdong.s3.async;
+
+import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.CompletableFuture;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/s3")
+public class S3InputStreamAsyncController {
+
+    private final S3InputStreamAsyncUploadService s3InputStreamAsyncUploadService;
+
+    public S3InputStreamAsyncController(S3InputStreamAsyncUploadService s3InputStreamAsyncUploadService) {
+        this.s3InputStreamAsyncUploadService = s3InputStreamAsyncUploadService;
+    }
+
+    @PostMapping("/stream/async")
+    public CompletableFuture<ResponseEntity<String>> uploadFileByStream(HttpServletRequest request) {
+        try {
+            InputStream inputStream = request.getInputStream();
+            long contentLength = request.getContentLengthLong();
+            String fileName = request.getHeader("file-name");
+            if (fileName == null || fileName.isEmpty()) {
+                fileName = "default-file-name";
+            }
+
+            return s3InputStreamAsyncUploadService.uploadFile(inputStream, fileName, contentLength)
+                    .thenApply(key -> new ResponseEntity<>("File uploaded successfully: " + key, HttpStatus.OK))
+                    .exceptionally(e -> new ResponseEntity<>("File upload failed: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+        } catch (IOException e) {
+            CompletableFuture<ResponseEntity<String>> future = new CompletableFuture<>();
+            future.complete(new ResponseEntity<>("File upload failed: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+            return future;
+        }
+    }
+}
