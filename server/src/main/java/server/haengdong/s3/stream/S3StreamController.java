@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.s3.multipart.S3UploadService;
 
 @RestController
-public class S3InputStreamController {
+public class S3StreamController {
 
     private final S3UploadService s3InputStreamUploadService;
 
-    public S3InputStreamController(S3UploadService s3InputStreamUploadService) {
+    public S3StreamController(S3UploadService s3InputStreamUploadService) {
         this.s3InputStreamUploadService = s3InputStreamUploadService;
     }
 

@@ -1,4 +1,4 @@
-package server.haengdong.s3.freesigned;
+package server.haengdong.s3.awsmultipart;
 
 import java.net.URL;
 import java.time.Duration;
@@ -16,12 +16,12 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedUploadPartRequest;
 
 @Service
-public class S3UploadFreeService {
+public class S3AWSMultipartService {
 
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
 
-    public S3UploadFreeService(S3Client s3Client, S3Presigner s3Presigner) {
+    public S3AWSMultipartService(S3Client s3Client, S3Presigner s3Presigner) {
         this.s3Client = s3Client;
         this.s3Presigner = s3Presigner;
     }
