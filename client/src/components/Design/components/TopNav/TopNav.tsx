@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-
 import NavElement from './NavElement';
 import {topNavStyle} from './TopNav.style';
 
