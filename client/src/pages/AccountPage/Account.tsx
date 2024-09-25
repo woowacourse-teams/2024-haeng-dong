@@ -15,7 +15,16 @@ const Account = () => {
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const {bankName, accountNumber, canSubmit, selectBank, handleAccount, enrollAccount} = useAccount();
+  const {
+    bankName,
+    accountNumber,
+    accountNumberErrorMessage,
+    canSubmit,
+    selectBank,
+    handleAccount,
+    handleAccountOnPaste,
+    enrollAccount,
+  } = useAccount();
 
   const enrollAccountAndNavigateAdmin = async () => {
     await enrollAccount();
@@ -40,19 +49,19 @@ const Account = () => {
             errorText={null}
             autoFocus={false}
             isAlwaysOnLabel
-            isAlwaysOnInputBorder
             readOnly
             onClick={() => setIsBottomSheetOpen(true)}
           />
           <LabelInput
             labelText="계좌번호"
-            placeholder="030302-04-191806"
-            errorText={null}
+            placeholder="ex) 030302-04-191806"
+            errorText={accountNumberErrorMessage}
+            isError={accountNumberErrorMessage !== null}
             value={accountNumber ?? ''}
             onChange={handleAccount}
+            onPaste={handleAccountOnPaste}
             autoFocus={false}
             isAlwaysOnLabel
-            isAlwaysOnInputBorder
           />
           {isBottomSheetOpen && (
             <BankSelectModal
