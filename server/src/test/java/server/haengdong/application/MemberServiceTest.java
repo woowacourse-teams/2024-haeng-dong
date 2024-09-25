@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static server.haengdong.support.fixture.Fixture.BILL1;
 import static server.haengdong.support.fixture.Fixture.EVENT1;
@@ -30,10 +31,10 @@ import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillDetail;
 import server.haengdong.domain.bill.BillDetailRepository;
 import server.haengdong.domain.bill.BillRepository;
-import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.domain.member.Member;
+import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.exception.HaengdongException;
 
 class MemberServiceTest extends ServiceTestSupport {
@@ -146,7 +147,7 @@ class MemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> memberService.deleteMember(event1.getToken(), member.getId()))
                 .isInstanceOf(HaengdongException.class);
-        
+
         assertThat(memberRepository.findById(member.getId())).isNotEmpty();
     }
 
@@ -190,9 +191,9 @@ class MemberServiceTest extends ServiceTestSupport {
                 .orElseThrow();
     }
 
-    @DisplayName("멤버 정보를 수정한다.")
+    @DisplayName("멤버 이름 정보를 수정한다.")
     @Test
-    void updateMembersTest() {
+    void updateMembersNameTest() {
         Event event = EVENT1;
         Member member = MEMBER1;
         eventRepository.save(event);
@@ -209,6 +210,28 @@ class MemberServiceTest extends ServiceTestSupport {
         assertAll(
                 () -> assertThat(updatedMember.getName()).isEqualTo("수정된이름"),
                 () -> assertTrue(updatedMember.isDeposited())
+        );
+    }
+
+    @DisplayName("멤버 정보를 수정한다.")
+    @Test
+    void updateMembersIsDepositedTest() {
+        Event event = EVENT1;
+        Member member = MEMBER1;
+        eventRepository.save(event);
+        memberRepository.save(member);
+        MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
+                List.of(
+                        new MemberUpdateAppRequest(member.getId(), member.getName(), false)
+                )
+        );
+
+        memberService.updateMembers(event.getToken(), membersUpdateAppRequest);
+
+        Member updatedMember = memberRepository.findById(member.getId()).orElseThrow();
+        assertAll(
+                () -> assertThat(updatedMember.getName()).isEqualTo(member.getName()),
+                () -> assertFalse(updatedMember.isDeposited())
         );
     }
 
@@ -267,7 +290,7 @@ class MemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> memberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage("존재하지 않는 참여자입니다.");
+                .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
     }
 
     @DisplayName("수정하려는 행사 참여 인원 이름이 이미 존재하는 경우 예외가 발생한다.")
@@ -286,7 +309,7 @@ class MemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> memberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage("중복된 행사 참여 인원 이름이 존재합니다.");
+                .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
     }
 
     @DisplayName("참여자 간 서로의 이름으로 수정하려는 경우 예외가 발생한다.")

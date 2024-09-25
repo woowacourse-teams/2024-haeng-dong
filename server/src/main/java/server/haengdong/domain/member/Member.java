@@ -56,8 +56,13 @@ public class Member {
     private void validateName(String name) {
         int nameLength = name.length();
         if (nameLength < MIN_NAME_LENGTH || nameLength > MAX_NAME_LENGTH) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID, MIN_NAME_LENGTH, MAX_NAME_LENGTH);
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID, MIN_NAME_LENGTH,
+                    MAX_NAME_LENGTH);
         }
+    }
+
+    public boolean hasName(String name) {
+        return this.name.equals(name);
     }
 
     @Override
