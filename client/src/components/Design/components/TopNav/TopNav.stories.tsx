@@ -6,10 +6,6 @@ import {reactRouterParameters, withRouter} from 'storybook-addon-react-router-v6
 
 import TopNav from '@HDcomponents/TopNav/TopNav';
 
-import Switch from '../../../Switch/Switch';
-
-import Back from './Back';
-
 const meta = {
   title: 'Components/TopNav',
   component: TopNav,
@@ -26,21 +22,8 @@ const meta = {
     }),
     // layout: 'centered',
   },
-  argTypes: {
-    children: {
-      description: '',
-      control: {type: 'select'},
-      options: ['Back', 'Switch', 'Any'],
-      mapping: {
-        Back: <Back />,
-        Switch: <Switch values={['홈', '관리']} value="홈" onChange={value => console.log(value)} />,
-        Any: <div />,
-      },
-    },
-  },
-  args: {
-    children: 'Back',
-  },
+  argTypes: {},
+  args: {},
 } satisfies Meta<typeof TopNav>;
 
 export default meta;
