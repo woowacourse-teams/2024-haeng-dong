@@ -15,7 +15,7 @@ const EventMemberManage = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
-        <TopNav.Element displayName="뒤로가기" routePath="-1" />
+        <TopNav.Element displayName="뒤로가기" noEmphasis routePath="-1" />
       </TopNav>
       <section css={eventMemberMangeStyle}>
         <Top>

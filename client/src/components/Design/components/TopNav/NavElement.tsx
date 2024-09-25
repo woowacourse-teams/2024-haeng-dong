@@ -5,14 +5,9 @@ import getDeletedLastPath from '@utils/getDeletedLastPath';
 import TextButton from '../TextButton/TextButton';
 
 import {navElementStyle} from './NavElememt.style';
+import {NavElementProps} from './NavElement.type';
 
-type NavElementProps = React.PropsWithChildren & {
-  displayName?: string;
-  routePath: string;
-  onHandleRouteInFunnel?: () => void;
-};
-
-const NavElement = ({displayName, routePath, onHandleRouteInFunnel, children}: NavElementProps) => {
+const NavElement = ({displayName, routePath, onHandleRouteInFunnel, noEmphasis = false, children}: NavElementProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const matchPath = location.pathname.includes(routePath);
@@ -36,12 +31,18 @@ const NavElement = ({displayName, routePath, onHandleRouteInFunnel, children}: N
     }
   };
 
+  const getTextColor = () => {
+    if (noEmphasis) return 'gray';
+
+    return matchPath ? 'onTertiary' : 'gray';
+  };
+
   return (
     <li css={navElementStyle} onClick={handleNavigation}>
       {children ? (
         children
       ) : (
-        <TextButton textColor={matchPath ? 'onTertiary' : 'gray'} textSize="bodyBold">
+        <TextButton textColor={getTextColor()} textSize="bodyBold">
           {displayName}
         </TextButton>
       )}

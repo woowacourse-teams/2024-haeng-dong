@@ -33,7 +33,7 @@ const CreateEventFunnel = () => {
     <MainLayout backgroundColor="white">
       <TopNav>
         {step !== STEP_SEQUENCE[STEP_SEQUENCE.length - 1] && (
-          <TopNav.Element displayName="뒤로가기" routePath="" onHandleRouteInFunnel={handleBack} />
+          <TopNav.Element displayName="뒤로가기" noEmphasis routePath="" onHandleRouteInFunnel={handleBack} />
         )}
       </TopNav>
       <Funnel>
