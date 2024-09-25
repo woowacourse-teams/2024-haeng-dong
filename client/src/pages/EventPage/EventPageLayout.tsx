@@ -2,11 +2,13 @@ import type {Event} from 'types/serviceType';
 
 import {Outlet} from 'react-router-dom';
 
+import Switch from '@components/Switch/Switch';
+
 import useEventPageLayout from '@hooks/useEventPageLayout';
 
 import {ShareEventButton} from '@components/ShareEventButton';
 
-import {MainLayout, TopNav, Switch} from '@HDesign/index';
+import {MainLayout, TopNav} from '@HDesign/index';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
