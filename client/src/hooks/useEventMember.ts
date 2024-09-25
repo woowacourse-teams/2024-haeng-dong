@@ -91,12 +91,12 @@ const useEventMember = (): ReturnUseEventMember => {
     setReports(prevReports => prevReports.filter(report => report.memberId !== memberId));
   }, []);
 
-  const updateMembersOnServer = useCallback(() => {
+  const updateMembersOnServer = useCallback(async () => {
     // DELETE 요청 선행
     // deleteMembers에 값이 하나라도 전재하면 반복문을 통해 DELETE api 요청
     if (deleteMembers.length > 0) {
       for (const id of deleteMembers) {
-        deleteMember({memberId: id});
+        await deleteMember({memberId: id});
       }
     }
 
@@ -122,7 +122,7 @@ const useEventMember = (): ReturnUseEventMember => {
 
     // 변경된 사항이 존재한다면 해당 reports만을 PUT api 요청
     if (changedMembers.length > 0) {
-      putMember({members: changedMembers});
+      await putMember({members: changedMembers});
     }
   }, [deleteMembers, reports, initialReports, deleteMember, putMember]);
 
