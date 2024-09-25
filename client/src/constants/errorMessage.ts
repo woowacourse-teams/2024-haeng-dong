@@ -12,7 +12,7 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
   // 멤버 관련 에러 코드
   MEMBER_NAME_LENGTH_INVALID: `멤버 이름은 한글 ${RULE.maxEventNameLength}자까지, 영어 ${RULE.maxEventNameLength * 2}자까지 입력 가능해요.`,
 
-  MEMBER_NAME_CHANGE_DUPLICATED: '요청 본문에 중복된 이름이 존재해요. \n(ex. [이상, 이상, 감자, 백호])',
+  MEMBER_NAME_CHANGE_DUPLICATE: '요청 본문에 중복된 이름이 존재해요. \n(ex. [이상, 이상, 감자, 백호])',
   MEMBER_NAME_DUPLICATE: '요청 본문에 중복된 이름이 존재해요. \n(ex. [이상, 이상, 감자, 백호])',
   MEMBER_ALREADY_EXIST: '이미 행사에 참여중인 인원이에요. \n겹치지 않도록 다른 이름을 사용해주세요.',
 
