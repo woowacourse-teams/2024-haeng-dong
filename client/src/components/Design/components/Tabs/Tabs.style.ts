@@ -40,7 +40,7 @@ export const tabTextStyle = ({theme, selected}: WithSelected) =>
   css({
     color: selected ? theme.colors.onTertiary : theme.colors.gray,
 
-    zIndex: theme.zIndex.visible,
+    zIndex: theme.zIndex.tabText,
   });
 
 export const indicatorStyle = ({theme, tabWidth, activeTabIndex}: IndicatorType) =>
@@ -59,5 +59,5 @@ export const indicatorStyle = ({theme, tabWidth, activeTabIndex}: IndicatorType)
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
 
-    zIndex: theme.zIndex.normal,
+    zIndex: theme.zIndex.tabIndicator,
   });

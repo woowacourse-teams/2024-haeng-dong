@@ -22,7 +22,7 @@ export const depositToggleStyle = ({theme, isDeposit}: WithTheme<DepositToggleSt
       justifyContent: 'center',
       borderRadius: '0.5rem',
       padding: '0 0.25rem',
-      zIndex: '10',
+      zIndex: theme.zIndex.depositToggleMovingAnimation,
       height: '15px',
       width: '34px',
       paddingTop: '0.05rem',
