@@ -20,7 +20,7 @@ import {useTheme} from '@components/Design';
 import {eventMemberMangeStyle, memberList, eventMember, memberEditInput, noneReports} from './EventMemberManage.style';
 
 const EventMemberManage = () => {
-  const {reports, isCanRequest, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =
+  const {reports, isCanSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =
     useEventMember();
 
   return (
@@ -57,7 +57,7 @@ const EventMemberManage = () => {
         {reports.length === 0 ? (
           <></>
         ) : (
-          <FixedButton disabled={!isCanRequest} onClick={updateMembersOnServer} style={{zIndex: '100'}}>
+          <FixedButton disabled={!isCanSubmit} onClick={updateMembersOnServer} style={{zIndex: '100'}}>
             수정완료
           </FixedButton>
         )}
