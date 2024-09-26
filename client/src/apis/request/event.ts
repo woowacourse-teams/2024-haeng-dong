@@ -1,41 +1,32 @@
-import {Event, EventId} from 'types/serviceType';
-import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
+import {TEMP_PREFIX} from '@apis/tempPrefix';
+import {requestGet, requestPostWithResponse} from '@apis/fetcher';
+import {WithEventId} from '@apis/withEventId.type';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestPatch, requestPostWithResponse, requestPut} from '@apis/fetcher';
-import {WithEventId} from '@apis/withId.type';
-
-export interface RequestPostEvent {
+export type RequestPostNewEvent = {
   eventName: string;
-  password: string;
-}
+  password: number;
+};
 
-export const requestPostEvent = async ({eventName, password}: RequestPostEvent) => {
-  return await requestPostWithResponse<EventId>({
-    endpoint: USER_API_PREFIX,
+export type ResponsePostNewEvent = {
+  eventId: string;
+};
+
+export const requestPostNewEvent = async ({eventName, password}: RequestPostNewEvent) => {
+  return await requestPostWithResponse<ResponsePostNewEvent>({
+    endpoint: TEMP_PREFIX,
     body: {
-      eventName,
-      password,
+      eventName: eventName,
+      password: password,
     },
   });
 };
 
-export const requestGetEvent = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
-  return await requestGet<Event>({
-    endpoint: `${USER_API_PREFIX}/${eventId}`,
-    ...props,
-  });
+type ResponseGetEventName = {
+  eventName: string;
 };
 
-export type RequestPatchEvent = WithEventId & {
-  eventOutline: Partial<Event>;
-};
-
-export const requestPatchEvent = async ({eventId, eventOutline}: RequestPatchEvent) => {
-  return requestPatch({
-    endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
-    body: {
-      ...eventOutline,
-    },
+export const requestGetEventName = async ({eventId}: WithEventId) => {
+  return requestGet<ResponseGetEventName>({
+    endpoint: `${TEMP_PREFIX}/${eventId}`,
   });
 };

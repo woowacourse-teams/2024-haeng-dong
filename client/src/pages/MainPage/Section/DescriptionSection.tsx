@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
-
-import {Text, useTheme} from '@HDesign/index';
+import {Text} from 'haengdong-design';
+import {useTheme} from 'haengdong-design/dist/theme/HDesignProvider';
 
 const DescriptionSection = () => {
   const {theme} = useTheme();

@@ -1,13 +1,13 @@
-import {http, HttpResponse} from 'msw';
+import {HttpResponse, http} from 'msw';
 
-import {USER_API_PREFIX} from '@apis/endpointPrefix';
+import {TEMP_PREFIX} from '@apis/tempPrefix';
 
-import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
-import {reportData} from '@mocks/sharedState';
+import reportListJson from '../reportList.json';
 
 export const reportHandlers = [
-  // GET /api/eventId/reports (requestGetMemberReport)
-  http.get(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/reports`, () => {
-    return HttpResponse.json(reportData);
+  http.get(`${TEMP_PREFIX}/:eventId/actions/reports`, () => {
+    return HttpResponse.json({
+      reports: reportListJson,
+    });
   }),
 ];

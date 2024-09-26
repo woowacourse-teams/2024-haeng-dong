@@ -1,36 +1,60 @@
 import {useEffect} from 'react';
 
-import toast from '@hooks/useToast/toast';
+import FetchError from '@errors/FetchError';
+import {useToast} from '@hooks/useToast/useToast';
 
 import {useAppErrorStore} from '@store/appErrorStore';
 
 import {captureError} from '@utils/captureError';
-import isRequestError from '@utils/isRequestError';
 
-import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
+import {SERVER_ERROR_MESSAGES, UNKNOWN_ERROR} from '@constants/errorMessage';
 
-const isPredictableError = (error: Error) => {
-  if (isRequestError(error)) if (error.errorCode === 'INTERNAL_SERVER_ERROR') return false;
+export type ErrorInfo = {
+  errorCode: string;
+  message: string;
+};
 
-  return SERVER_ERROR_MESSAGES[error.name] !== undefined;
+const convertAppErrorToErrorInfo = (appError: Error) => {
+  if (appError instanceof Error) {
+    const errorInfo =
+      appError instanceof FetchError ? appError.errorInfo : {errorCode: appError.name, message: appError.message};
+
+    return errorInfo;
+  } else {
+    const errorInfo = {errorCode: UNKNOWN_ERROR, message: JSON.stringify(appError)};
+
+    return errorInfo;
+  }
+};
+
+const isUnhandledError = (errorInfo: ErrorInfo) => {
+  if (errorInfo.errorCode === 'INTERNAL_SERVER_ERROR') return true;
+
+  return SERVER_ERROR_MESSAGES[errorInfo.errorCode] === undefined;
 };
 
 const ErrorCatcher = ({children}: React.PropsWithChildren) => {
-  const {appError: error} = useAppErrorStore();
+  const {appError} = useAppErrorStore();
+  const {showToast} = useToast();
 
   useEffect(() => {
-    if (!error) return;
+    if (appError) {
+      const errorInfo = convertAppErrorToErrorInfo(appError);
+      captureError(appError, errorInfo);
 
-    captureError(error);
-
-    if (!isRequestError(error) || !isPredictableError(error)) throw error;
-
-    toast.error(SERVER_ERROR_MESSAGES[error.errorCode], {
-      showingTime: 3000,
-      position: 'bottom',
-      bottom: '8rem',
-    });
-  }, [error]);
+      if (!isUnhandledError(errorInfo)) {
+        showToast({
+          showingTime: 3000,
+          message: SERVER_ERROR_MESSAGES[errorInfo.errorCode],
+          type: 'error',
+          position: 'bottom',
+          bottom: '8rem',
+        });
+      } else {
+        throw appError;
+      }
+    }
+  }, [appError]);
 
   return children;
 };

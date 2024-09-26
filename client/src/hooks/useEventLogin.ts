@@ -4,18 +4,18 @@ import validateEventPassword from '@utils/validate/validateEventPassword';
 
 import RULE from '@constants/rule';
 
-import useRequestPostLogin from './queries/auth/useRequestPostLogin';
+import useRequestPostLogin from './queries/useRequestPostLogin';
 
 const useEventLogin = () => {
-  const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
-  const {postLogin} = useRequestPostLogin();
+  const {mutate: postLogin} = useRequestPostLogin();
 
   const submitPassword = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    postLogin({password: String(password).padStart(4, '0')}, {onError: () => setErrorMessage('비밀번호가 틀렸어요')});
+    postLogin({password}, {onError: () => setErrorMessage('비밀번호가 틀렸어요')});
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

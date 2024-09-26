@@ -1,16 +1,19 @@
-import type {Reports} from 'types/serviceType';
-
-import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
+import type {MemberReport} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
-import {USER_API_PREFIX} from '@apis/endpointPrefix';
+import {TEMP_PREFIX} from '@apis/tempPrefix';
 import {requestGet} from '@apis/fetcher';
-import {WithEventId} from '@apis/withId.type';
+import {WithEventId} from '@apis/withEventId.type';
 
-export const requestGetReports = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
-  return await requestGet<Reports>({
+type ResponseGetMemberReportList = {
+  reports: MemberReport[];
+};
+
+export const requestGetMemberReportList = async ({eventId}: WithEventId) => {
+  const {reports} = await requestGet<ResponseGetMemberReportList>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/reports`,
-    ...props,
+    endpoint: `${TEMP_PREFIX}/${eventId}/actions/reports`,
   });
+
+  return reports;
 };

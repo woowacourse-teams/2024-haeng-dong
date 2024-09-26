@@ -1,17 +1,16 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import {act, ReactNode} from 'react';
 import {MemoryRouter} from 'react-router-dom';
+import {HDesignProvider} from 'haengdong-design';
 
-import ToastContainer from '@components/Toast/ToastContainer';
-import RequestError from '@errors/RequestError';
+import FetchError from '@errors/FetchError';
+import {ToastProvider} from '@hooks/useToast/ToastProvider';
 
 import {useAppErrorStore} from '@store/appErrorStore';
 
-import {HDesignProvider} from '@HDesign/index';
-
 import {SERVER_ERROR_MESSAGES} from '@constants/errorMessage';
 
-import UnPredictableErrorBoundary from '../../UnPredictableErrorBoundary';
+import UnhandledErrorBoundary from '../../UnhandledErrorBoundary';
 
 import ErrorCatcher from './ErrorCatcher';
 
@@ -23,12 +22,13 @@ const TestComponent = ({triggerError}: {triggerError: () => void}) => {
 const setup = (ui: ReactNode) =>
   render(
     <HDesignProvider>
-      <UnPredictableErrorBoundary>
-        <ToastContainer />
-        <ErrorCatcher>
-          <MemoryRouter>{ui}</MemoryRouter>
-        </ErrorCatcher>
-      </UnPredictableErrorBoundary>
+      <UnhandledErrorBoundary>
+        <ToastProvider>
+          <ErrorCatcher>
+            <MemoryRouter>{ui}</MemoryRouter>
+          </ErrorCatcher>
+        </ToastProvider>
+      </UnhandledErrorBoundary>
     </HDesignProvider>,
   );
 
@@ -38,16 +38,16 @@ describe('ErrorCatcher', () => {
     useNavigate: jest.fn(),
   }));
 
-  it('예측 가능한 에러인 경우 토스트가 표시된다.', async () => {
-    const predictableErrorCode = 'EVENT_NOT_FOUND';
-    const error = new RequestError({
-      message: '서버의 에러메세지',
-      name: predictableErrorCode,
+  it('핸들링 가능한 에러인 경우 토스트가 표시된다.', async () => {
+    const errorCode = 'EVENT_NOT_FOUND';
+    const error = new FetchError({
+      errorInfo: {errorCode, message: '서버의 에러메세지'},
+      name: errorCode,
+      message: '에러메세지',
       status: 200,
       endpoint: '',
       method: 'GET',
       requestBody: '',
-      errorCode: predictableErrorCode,
     });
 
     const {updateAppError} = useAppErrorStore.getState();
@@ -58,7 +58,7 @@ describe('ErrorCatcher', () => {
       screen.getByText('Trigger Error').click();
     });
 
-    const errorMessage = SERVER_ERROR_MESSAGES[predictableErrorCode];
+    const errorMessage = SERVER_ERROR_MESSAGES[errorCode];
 
     await waitFor(() => {
       expect(screen.getByText(errorMessage)).toBeInTheDocument();
@@ -66,15 +66,15 @@ describe('ErrorCatcher', () => {
   });
 
   it('핸들링 불가능한 에러인 경우 에러 바운더리가 표시된다.', async () => {
-    const unPredictableErrorCode = '모르겠는 에러';
-    const error = new RequestError({
-      message: '모르겠는 에러메세지',
-      name: unPredictableErrorCode,
+    const errorCode = '모르겠는 에러';
+    const error = new FetchError({
+      errorInfo: {errorCode, message: '모르겠는 에러메세지'},
+      name: errorCode,
+      message: '에러메세지',
       status: 400,
       endpoint: '',
       method: 'GET',
       requestBody: '',
-      errorCode: unPredictableErrorCode,
     });
 
     const {updateAppError} = useAppErrorStore.getState();

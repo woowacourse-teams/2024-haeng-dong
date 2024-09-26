@@ -1,4 +1,3 @@
-import {ROUTER_URLS} from '@constants/routerUrls';
 import CONSTANTS from '../constants/constants';
 
 type APIType = 'sentry' | 'postEvent' | 'getEventName';
@@ -22,13 +21,6 @@ Cypress.Commands.add('blockSentry', () => {
   cy.intercept('POST', /.*sentry.io\/api.*/, {statusCode: 200}).as('sentry');
 });
 
-Cypress.Commands.add('blockKakao', () => {
-  cy.intercept('GET', 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js', {
-    statusCode: 200,
-    body: '',
-  }).as('blockKakao');
-});
-
 Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: InterceptAPIProps) => {
   if (type === 'postEvent')
     cy.intercept(POST_EVENT, {
@@ -47,16 +39,16 @@ Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: Inter
 });
 
 Cypress.Commands.add('createEventName', (eventName: string) => {
-  cy.visit(ROUTER_URLS.createEvent);
+  cy.visit('/event/create/name');
   cy.get('input').type(eventName);
   cy.get('button').contains('다음').click();
+  cy.url().should('include', '/event/create/password');
 });
 
 declare global {
   namespace Cypress {
     interface Chainable {
       blockSentry(): Chainable<void>;
-      blockKakao(): Chainable<void>;
       interceptAPI(props: InterceptAPIProps): Chainable<void>;
       createEventName(eventName: string): Chainable<void>;
     }

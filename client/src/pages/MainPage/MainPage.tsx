@@ -1,11 +1,11 @@
-import {Flex, MainLayout} from '@HDesign/index';
+import {MainLayout} from 'haengdong-design';
 
 import Nav from './Nav/Nav';
 import MainSection from './Section/MainSection';
 import DescriptionSection from './Section/DescriptionSection';
 import AddBillSection from './Section/AddBillSection';
 import AddMemberSection from './Section/AddMemberSection';
-import ReportSection from './Section/ReportSection';
+import MemberReportSection from './Section/MemberReportSection';
 
 const MainPage = () => {
   return (
@@ -15,7 +15,7 @@ const MainPage = () => {
       <DescriptionSection />
       <AddBillSection />
       <AddMemberSection />
-      <ReportSection />
+      <MemberReportSection />
     </MainLayout>
   );
 };

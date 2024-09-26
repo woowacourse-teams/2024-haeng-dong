@@ -1,17 +1,14 @@
 import {css, keyframes} from '@emotion/react';
+import {Button, Text} from 'haengdong-design';
 import {useNavigate} from 'react-router-dom';
 
+import {StandingDog} from '@components/Common/Logo';
 import ChevronDown from '@assets/image/chevronDownLarge.svg';
-
-import {StandingDog} from '@components/Logo';
-
-import {Button, Text} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const MainSection = () => {
   const navigate = useNavigate();
-
   return (
     <div
       css={css({
@@ -41,7 +38,7 @@ const MainSection = () => {
         <Text css={animateWithDelay(1)} style={{textAlign: 'center'}} size="title">{`행동대장을 통해
         간편하게 정산하세요
         `}</Text>
-        <Button css={animateWithDelay(2)} size="large" onClick={() => navigate(ROUTER_URLS.createEvent)}>
+        <Button css={animateWithDelay(2)} size="large" onClick={() => navigate(ROUTER_URLS.eventCreateName)}>
           정산 시작하기
         </Button>
       </div>

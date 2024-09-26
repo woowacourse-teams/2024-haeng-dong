@@ -1,28 +1,23 @@
-import type {EventPageContextProps} from '../EventPageLayout';
-
+import {Tab, Tabs, Title} from 'haengdong-design';
 import {useOutletContext} from 'react-router-dom';
 
-import StepList from '@components/StepList/Steps';
-import useRequestGetSteps from '@hooks/queries/step/useRequestGetSteps';
-import Reports from '@components/Reports/Reports';
+import MemberReportList from '@components/MemberReportList/MemberReportList';
+import StepList from '@components/StepList/StepList';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
-import {Tab, Tabs, Title} from '@HDesign/index';
-
-import {receiptStyle} from './HomePage.style';
+import {EventPageContextProps} from '../EventPageLayout';
 
 const HomePage = () => {
-  const {isAdmin, eventName} = useOutletContext<EventPageContextProps>();
-  const {steps} = useRequestGetSteps();
+  const {eventName} = useOutletContext<EventPageContextProps>();
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
   return (
-    <div css={receiptStyle}>
-      <Title title={eventName} amount={totalExpenseAmount} />
-      <Tabs>
-        <Tab label="참여자 별 정산" content={<Reports />} />
-        <Tab label="전체 지출 내역" content={<StepList data={steps ?? []} isAdmin={isAdmin} />} />
+    <div style={{paddingBottom: '2rem'}}>
+      <Title title={eventName} price={totalExpenseAmount} />
+      <Tabs tabsContainerStyle={{gap: '1rem'}}>
+        <Tab label="전체 지출 내역" content={<StepList />} />
+        <Tab label="참여자 별 내역" content={<MemberReportList />} />
       </Tabs>
     </div>
   );
