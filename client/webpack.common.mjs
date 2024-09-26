@@ -3,7 +3,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import {ModifySourcePlugin, ConcatOperation} from 'modify-source-webpack-plugin';
 import {fileURLToPath} from 'url';
-import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,7 +47,7 @@ export default {
         ],
       },
       {
-        test: /\.png$/i,
+        test: /\.(png|webp)$/,
         loader: 'file-loader',
       },
     ],
@@ -68,9 +67,5 @@ export default {
         },
       ],
     }),
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'static',
-    //   generateStatsFile: true,
-    // }),
   ],
 };
