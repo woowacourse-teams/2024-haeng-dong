@@ -88,7 +88,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
       });
       postBill({
         title: billInfo.title,
-        price: Number(billInfo.price.replace(',', '')),
+        price: Number(billInfo.price.replace(/,/g, '')),
         memberIds: billInfo.members.map(member =>
           member.id === -1 ? newMembers.members.find(m => m.name === member.name)?.id || member.id : member.id,
         ),
@@ -96,7 +96,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
     } else {
       postBill({
         title: billInfo.title,
-        price: Number(billInfo.price.replace(',', '')),
+        price: Number(billInfo.price.replace(/,/g, '')),
         memberIds: billInfo.members.map(({id}) => id),
       });
     }
