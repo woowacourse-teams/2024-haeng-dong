@@ -29,7 +29,6 @@ import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillDetail;
-import server.haengdong.domain.bill.BillDetailRepository;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
@@ -50,9 +49,6 @@ class MemberServiceTest extends ServiceTestSupport {
 
     @Autowired
     private BillRepository billRepository;
-
-    @Autowired
-    private BillDetailRepository billDetailRepository;
 
     @DisplayName("행사에 참여자를 추가한다.")
     @Test
@@ -171,12 +167,15 @@ class MemberServiceTest extends ServiceTestSupport {
         billRepository.save(bill);
 
         memberService.deleteMember(event1.getToken(), member1.getId());
+        Bill bill1 = billRepository.findAllByEvent(event1).get(0);
+        List<BillDetail> bill1Details = bill1.getBillDetails();
 
         assertAll(
                 () -> assertThat(memberRepository.findById(member1.getId())).isEmpty(),
-                () -> assertThat(billDetailRepository.findById(billDetail1.getId())).isEmpty(),
+                () -> assertThat(bill1Details).doesNotContain(billDetail1),
                 () -> {
-                    BillDetail foundDetail = billDetailRepository.findById(billDetail2.getId()).orElseThrow();
+                    BillDetail foundDetail = bill1Details.stream()
+                            .filter(billDetail -> billDetail.isSameId(billDetail2.getId())).findFirst().get();
                     assertThat(foundDetail.getPrice()).isEqualTo(10000L);
                     assertThat(foundDetail.isFixed()).isEqualTo(false);
                 }

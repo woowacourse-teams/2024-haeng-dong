@@ -13,7 +13,6 @@ import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.domain.bill.Bill;
-import server.haengdong.domain.bill.BillDetailRepository;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
@@ -31,7 +30,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final EventRepository eventRepository;
     private final BillRepository billRepository;
-    private final BillDetailRepository billDetailRepository;
 
     @Transactional
     public MembersSaveAppResponse saveMembers(String token, MembersSaveAppRequest request) {
@@ -109,7 +107,7 @@ public class MemberService {
         billRepository.findAllByEvent(event).stream()
                 .filter(bill -> bill.containMember(member))
                 .forEach(bill -> bill.removeMemberBillDetail(member));
-        billDetailRepository.deleteAllByMember(member);
+        billRepository.flush();
         memberRepository.delete(member);
     }
 

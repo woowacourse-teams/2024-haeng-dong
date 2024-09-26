@@ -20,7 +20,6 @@ import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.StepAppResponse;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillDetail;
-import server.haengdong.domain.bill.BillDetailRepository;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
@@ -39,9 +38,6 @@ class BillServiceTest extends ServiceTestSupport {
 
     @Autowired
     private BillRepository billRepository;
-
-    @Autowired
-    private BillDetailRepository billDetailRepository;
 
     @Autowired
     private MemberRepository memberRepository;
