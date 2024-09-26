@@ -57,16 +57,19 @@ const useEventMember = (): ReturnUseEventMember => {
     return hasChanges || deleteMembers.length > 0;
   }, [reports, initialReports, deleteMembers]);
 
-  const changeMemberName = useCallback((memberId: number, newName: string) => {
-    // 유효성 검사 (4자 이하)
-    if (!validateMemberName(newName).isValid) {
-      return;
-    }
+  const changeMemberName = useCallback(
+    (memberId: number, newName: string) => {
+      // 유효성 검사 (4자 이하)
+      if (!validateMemberName(newName).isValid) {
+        return;
+      }
 
-    setReports(prevReports =>
-      prevReports.map(report => (report.memberId === memberId ? {...report, memberName: newName} : report)),
-    );
-  }, []);
+      setReports(prevReports =>
+        prevReports.map(report => (report.memberId === memberId ? {...report, memberName: newName} : report)),
+      );
+    },
+    [setReports, validateMemberName],
+  );
 
   const toggleDepositStatus = useCallback((memberId: number) => {
     setReports(prevReports =>
