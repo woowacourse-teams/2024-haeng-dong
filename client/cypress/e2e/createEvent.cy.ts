@@ -8,9 +8,9 @@ beforeEach(() => {
 });
 
 describe('Flow: 랜딩 페이지에서부터 이벤트를 생성 완료하는 flow', () => {
-  it('랜딩페이지에서 "행사 생성하기" 버튼을 눌러 행사 이름 입력 페이지로 이동해야 한다.', () => {
+  it('랜딩페이지에서 "정산 시작하기" 버튼을 눌러 행사 이름 입력 페이지로 이동해야 한다.', () => {
     cy.visit('/');
-    cy.get('header').find('button').click();
+    cy.get('button').contains('정산 시작하기').click();
     cy.url().should('include', ROUTER_URLS.createEvent);
   });
 
