@@ -16,15 +16,7 @@ const validateMemberName = (name: string): ValidateResult => {
     return true;
   };
 
-  const validateEmpty = () => {
-    if (!name.trim().length) {
-      errorMessage = ERROR_MESSAGE.preventEmpty;
-      return false;
-    }
-    return true;
-  };
-
-  if (validateOnlyString() && validateLength() && validateEmpty()) {
+  if (validateOnlyString() && validateLength()) {
     return {isValid: true, errorMessage: null};
   }
 

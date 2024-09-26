@@ -1,7 +1,8 @@
 import {css} from '@emotion/react';
-import {Text} from 'haengdong-design';
 
 import AddBillMockup from '@assets/image/addBillMockup.svg';
+
+import {Text} from '@HDesign/index';
 
 const AddBillSection = () => {
   return (

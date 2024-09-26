@@ -1,12 +1,6 @@
 import {css, keyframes} from '@emotion/react';
 
-import {ToastPosition} from './Toast.type';
-
-type ToastMarginStyle = {
-  position?: ToastPosition;
-  bottom?: string;
-  top?: string;
-};
+import {ToastOptions} from 'types/toastType';
 
 // 애니메이션 키프레임 정의
 const fadeInWithTransformY = keyframes`
@@ -31,13 +25,14 @@ const fadeOutWithTransformY = keyframes`
   }
 `;
 
-export const toastMarginStyle = ({position, bottom, top}: ToastMarginStyle) =>
+export const toastMarginStyle = ({position, bottom, top, theme}: ToastOptions) =>
   css({
     position: 'absolute',
     bottom: position === 'bottom' ? `${bottom}` : 'auto',
     top: position === 'top' ? `${top}` : 'auto',
     left: '50%',
     transform: 'translate(-50%)',
+    zIndex: theme?.zIndex.toast,
 
     width: '100%',
     maxWidth: '48rem',
