@@ -75,7 +75,6 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
         return;
       }
     }
-    console.log(event.nativeEvent.isComposing);
   };
 
   const handlePostBill = async () => {
@@ -108,10 +107,6 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
       navigate(`/event/${eventId}/admin`);
     }
   }, [isSuccessPostBill]);
-
-  useEffect(() => {
-    console.log(nameInput);
-  }, [nameInput]);
 
   const handlePrevStep = () => {
     setStep('title');
