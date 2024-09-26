@@ -20,7 +20,7 @@ const useRequestPutMembers = () => {
     },
   });
 
-  return {putMember: mutateAsync, ...rest};
+  return {putAsyncMember: mutateAsync, ...rest};
 };
 
 export default useRequestPutMembers;

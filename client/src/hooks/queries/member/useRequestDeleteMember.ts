@@ -20,7 +20,7 @@ const useRequestDeleteMember = () => {
     },
   });
 
-  return {deleteMember: mutateAsync, ...rest};
+  return {deleteAsyncMember: mutateAsync, ...rest};
 };
 
 export default useRequestDeleteMember;

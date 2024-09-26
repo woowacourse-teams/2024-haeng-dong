@@ -18,8 +18,8 @@ interface ReturnUseEventMember {
 
 const useEventMember = (): ReturnUseEventMember => {
   const {reports: initialReports} = useRequestGetReports();
-  const {deleteMember} = useRequestDeleteMember();
-  const {putMember} = useRequestPutMembers();
+  const {deleteAsyncMember} = useRequestDeleteMember();
+  const {putAsyncMember} = useRequestPutMembers();
 
   const [reports, setReports] = useState<Report[]>(initialReports);
   const [deleteMembers, setDeleteMembers] = useState<number[]>([]);
@@ -103,13 +103,13 @@ const useEventMember = (): ReturnUseEventMember => {
     // 삭제할 member(deleteMembers)가 존재한다면 Delete 요청 실행
     if (deleteMembers.length > 0) {
       for (const id of deleteMembers) {
-        deleteMember({memberId: id});
+        deleteAsyncMember({memberId: id});
       }
     }
 
     // 변경된 값(filteredChangedMembers)이 존재한다면 PUT 요청 실행
     if (filteredChangedMembers.length > 0) {
-      putMember({members: filteredChangedMembers});
+      putAsyncMember({members: filteredChangedMembers});
     }
   };
 
