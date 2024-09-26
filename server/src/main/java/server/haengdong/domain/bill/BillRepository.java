@@ -1,11 +1,11 @@
 package server.haengdong.domain.bill;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import server.haengdong.domain.event.Event;
+import server.haengdong.domain.member.Member;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Long> {
@@ -20,13 +20,14 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
     List<Bill> findAllByEvent(Event event);
 
     @Query("""
-            select b
-            from Bill b
-            join fetch b.billDetails bd
-            join fetch bd.member
-            where b.event = :event
-            order by b.id desc
-            limit 1
+            select bd.member
+            from BillDetail bd
+            where bd.bill = (select b
+                                from Bill b
+                                where b.event = :event
+                                order by bd.bill.id desc
+                                limit 1)
+            
             """)
-    Optional<Bill> findFirstByEventOrderByIdDesc(Event event);
+    List<Member> findCurrentMembers(Event event);
 }

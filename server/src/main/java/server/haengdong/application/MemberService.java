@@ -67,10 +67,11 @@ public class MemberService {
     public List<MemberAppResponse> getCurrentMembers(String token) {
         Event event = getEvent(token);
 
-        return billRepository.findFirstByEventOrderByIdDesc(event)
-                .map(Bill::getMembers)
-                .orElseGet(() -> memberRepository.findAllByEvent(event))
-                .stream()
+        List<Member> currentMembers = billRepository.findCurrentMembers(event);
+        if (currentMembers.isEmpty()) {
+            currentMembers = memberRepository.findAllByEvent(event);
+        }
+        return currentMembers.stream()
                 .map(MemberAppResponse::of)
                 .toList();
     }
