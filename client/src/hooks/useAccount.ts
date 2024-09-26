@@ -81,7 +81,7 @@ const useAccount = () => {
 
     setCanSubmit(!existEmptyField && isChanged && accountNumberErrorMessage === null);
   }, [bankName, accountNumber, bankNameState, accountNumberState, accountNumberErrorMessage]);
-  
+
   return {
     bankName: bankNameState,
     accountNumber: accountNumberState,
