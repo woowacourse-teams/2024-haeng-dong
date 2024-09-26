@@ -30,11 +30,11 @@ const useAccount = () => {
   const getChangedField = () => {
     const changedField: Partial<Event> = {};
 
-    if (bankName.trim() !== '' && bankName !== bankNameState) {
+    if (bankNameState.trim() !== '' && bankName !== bankNameState) {
       changedField.bankName = bankNameState;
     }
 
-    if (accountNumber.trim() !== '' && accountNumber !== accountNumberState) {
+    if (accountNumberState.trim() !== '' && accountNumber !== accountNumberState) {
       changedField.accountNumber = accountNumberState;
     }
 
@@ -46,11 +46,11 @@ const useAccount = () => {
   };
 
   useEffect(() => {
-    const existEmptyField = bankName.trim() === '' && accountNumber.trim() === '';
+    const existEmptyField = bankNameState.trim() === '' || accountNumberState.trim() === '';
     const isChanged = bankName !== bankNameState || accountNumber !== accountNumberState;
 
     setCanSubmit(!existEmptyField && isChanged);
-  }, [bankName, accountNumber, bankNameState, accountNumberState]);
+  }, [bankNameState, accountNumberState]);
 
   return {
     bankName: bankNameState,
