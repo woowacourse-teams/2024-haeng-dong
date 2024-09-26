@@ -10,7 +10,7 @@ import useRequestGetReports from './queries/report/useRequestGetReports';
 
 interface ReturnUseEventMember {
   reports: Report[];
-  isCanSubmit: boolean;
+  canSubmit: boolean;
   changeMemberName: (memberId: number, newName: string) => void;
   toggleDepositStatus: (memberId: number) => void;
   handleDeleteMember: (memberId: number) => void;
@@ -29,7 +29,7 @@ const useEventMember = (): ReturnUseEventMember => {
     setReports(initialReports);
   }, [initialReports]);
 
-  const isCanSubmit = useMemo(() => {
+  const canSubmit = useMemo(() => {
     // 중복되는 이름이 존재하는지 확인
     const hasDuplicateMemberName = (): boolean => {
       const nameSet = new Set(reports.map(member => member.memberName));
@@ -108,7 +108,7 @@ const useEventMember = (): ReturnUseEventMember => {
     toast.confirm('수정이 완료되었어요 :)');
   }, [deleteMembers, reports, initialReports, deleteMember, putMember]);
 
-  return {reports, isCanSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
+  return {reports, canSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
 };
 
 export default useEventMember;
