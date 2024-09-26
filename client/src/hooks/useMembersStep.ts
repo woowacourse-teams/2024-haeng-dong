@@ -12,6 +12,7 @@ import REGEXP from '@constants/regExp';
 import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
 import {BillStep} from './useAddBillFunnel';
+import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
 
 interface Props {
   billInfo: BillInfo;
@@ -26,6 +27,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const inputRef = useRef<HTMLInputElement>(null);
   const hiddenRef = useRef<HTMLInputElement>(null);
 
+  const {members: allMembers} = useRequestGetAllMembers();
   const {postMembersAsync, isPending: isPendingPostMembers} = useRequestPostMembers();
 
   const {postBill, isSuccess: isSuccessPostBill, isPending: isPendingPostBill} = useRequestPostBill();
@@ -53,7 +55,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const canSubmitMembers = billInfo.members.length !== 0;
 
   const setBillInfoMemberWithId = (name: string) => {
-    const existingMember = currentMembers.find(currentMember => currentMember.name === name);
+    const existingMember = allMembers.find(currentMember => currentMember.name === name);
     if (existingMember) {
       setBillInfo(prev => ({...prev, members: [...prev.members, {id: existingMember.id, name: name}]}));
     } else {
