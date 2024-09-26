@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import React, {forwardRef} from 'react';
-import Lottie from 'lottie-react';
 
-import loadingAnimation from '@assets/image/loadingAnimation.json';
 import {useTheme} from '@theme/HDesignProvider';
+
+import Lottie from '../Lottie/Lottie';
 
 import {ButtonProps, ButtonSize} from './Button.type';
 import {buttonStyle} from './Button.style';
@@ -34,12 +34,7 @@ export const Button: React.FC<ButtonProps> = forwardRef<HTMLButtonElement, Butto
       disabled={variants === 'loading' ? true : disabled}
       {...htmlProps}
     >
-      {variants === 'loading' ? (
-        // <Lottie animationData={loadingAnimation} loop={true} style={animationSize(size)} />
-        <div>아아</div>
-      ) : (
-        children
-      )}
+      {variants === 'loading' ? <Lottie /> : children}
     </button>
   );
 });
