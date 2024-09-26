@@ -1,11 +1,7 @@
 import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
-
-import validateEventName from '@utils/validate/validateEventName';
 
 import useFunnel from '@hooks/useFunnel';
 import useCreateEventData from '@hooks/useCreateEventData';
-import useSetEventNameStep from '@hooks/useSetEventNameStep';
 
 import {Back, MainLayout, TopNav, LabelInput} from '@components/Design';
 
