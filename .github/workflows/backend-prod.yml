@@ -54,9 +54,9 @@ jobs:
           docker buildx build --platform linux/arm64 -t \
           	${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }} --push .
 
-  deploy-prod-1:
+  deploy:
     needs: build
-    runs-on: [ self-hosted, backend-prod-1 ]
+    runs-on: [ self-hosted, backend-prod ]
     steps:
       - name: Docker remove
         run: |
@@ -71,25 +71,4 @@ jobs:
         run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
       - name: Docker run
-        run: sudo docker run -d -p 80:8080 -e SPRING_PROFILES_ACTIVE=prod -v log-volume:/app/logs --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_DEV }}
-
-  deploy-prod-2:
-    needs: build
-    runs-on: [ self-hosted, backend-prod-2 ]
-    steps:
-      - name: Docker remove
-        run: |
-          CONTAINER_IDS=$(sudo docker ps -qa)
-          if [ -n "$CONTAINER_IDS" ]; then
-            sudo docker rm -f $CONTAINER_IDS
-          else
-            echo "No running containers found."
-          fi
-
-      - name: Docker Image pull
-        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
-
-      - name: Docker run
-        run: sudo docker run -d -p 80:8080 -e SPRING_PROFILES_ACTIVE=prod -v log-volume:/app/logs --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_DEV }}
-      
-
+        run: sudo docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod -v log-volume:/app/logs --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
