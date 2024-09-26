@@ -18,7 +18,7 @@ const Steps = ({data, isAdmin}: Props) => {
   return (
     <Flex flexDirection="column" gap="0.5rem">
       {data.map((step, index) => (
-        <Step key={index} step={step} />
+        <Step key={index} step={step} isAdmin={isAdmin} />
       ))}
     </Flex>
   );

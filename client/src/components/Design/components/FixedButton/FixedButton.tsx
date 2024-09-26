@@ -40,7 +40,7 @@ export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElem
           {...htmlProps}
         >
           {variants === 'loading' ? (
-            <Lottie animationData={loadingAnimation} loop={true} style={{width: 240, height: 20}} />
+            <Lottie animationData={loadingAnimation} loop={true} style={{height: '1.25rem'}} />
           ) : (
             children
           )}

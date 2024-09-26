@@ -19,8 +19,8 @@ interface ReturnUseEventMember {
 
 const useEventMember = (): ReturnUseEventMember => {
   const {reports: initialReports} = useRequestGetReports();
-  const {deleteMember} = useRequestDeleteMember();
-  const {putMember} = useRequestPutMembers();
+  const {deleteAsyncMember} = useRequestDeleteMember();
+  const {putAsyncMember} = useRequestPutMembers();
 
   const [reports, setReports] = useState<Report[]>(initialReports);
   const [deleteMembers, setDeleteMembers] = useState<number[]>([]);
@@ -58,24 +58,30 @@ const useEventMember = (): ReturnUseEventMember => {
     return hasChanges || deleteMembers.length > 0;
   }, [reports, initialReports, deleteMembers]);
 
-  const changeMemberName = useCallback((memberId: number, newName: string) => {
-    // 유효성 검사 (4자 이하)
-    if (!validateMemberName(newName).isValid) {
-      return;
-    }
+  const changeMemberName = useCallback(
+    (memberId: number, newName: string) => {
+      // 유효성 검사 (4자 이하)
+      if (!validateMemberName(newName).isValid) {
+        return;
+      }
 
-    setReports(prevReports =>
-      prevReports.map(report => (report.memberId === memberId ? {...report, memberName: newName} : report)),
-    );
-  }, []);
+      setReports(prevReports =>
+        prevReports.map(report => (report.memberId === memberId ? {...report, memberName: newName} : report)),
+      );
+    },
+    [setReports, validateMemberName],
+  );
 
-  const toggleDepositStatus = useCallback((memberId: number) => {
-    setReports(prevReports =>
-      prevReports.map(report =>
-        report.memberId === memberId ? {...report, isDeposited: !report.isDeposited} : report,
-      ),
-    );
-  }, []);
+  const toggleDepositStatus = useCallback(
+    (memberId: number) => {
+      setReports(prevReports =>
+        prevReports.map(report =>
+          report.memberId === memberId ? {...report, isDeposited: !report.isDeposited} : report,
+        ),
+      );
+    },
+    [setReports],
+  );
 
   // 삭제할 member를 따로 deleteMembers 상태에서 id만 저장
   const handleDeleteMember = useCallback((memberId: number) => {
@@ -89,24 +95,21 @@ const useEventMember = (): ReturnUseEventMember => {
     // deleteMembers에 값이 하나라도 전재하면 반복문을 통해 DELETE api 요청
     if (deleteMembers.length > 0) {
       for (const id of deleteMembers) {
-        await deleteMember({memberId: id});
+        deleteAsyncMember({memberId: id});
       }
     }
 
-    // DELETE 요청이 선행 된 후, PUT 요청 진행
+    // 변경된 값(filteredChangedMembers)이 존재한다면 PUT 요청 실행
     if (reports.length > 0) {
-      await putMember({
+      putAsyncMember({
         members: reports.map(report => ({
-          // server로 요청할 때, price는 제외해야 하기 때문에 map 진행
           id: report.memberId,
           name: report.memberName,
           isDeposited: report.isDeposited,
         })),
       });
     }
-
-    toast.confirm('수정이 완료되었어요 :)');
-  }, [deleteMembers, reports, initialReports, deleteMember, putMember]);
+  }, [deleteMembers, reports, initialReports, deleteAsyncMember, putAsyncMember]);
 
   return {reports, canSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
 };
