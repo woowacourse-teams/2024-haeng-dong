@@ -4,11 +4,9 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-import useNavSwitch from './useNavSwitch';
 import useRequestGetEvent from './queries/event/useRequestGetEvent';
 
 const useEventPageLayout = () => {
-  const navProps = useNavSwitch();
   const eventId = getEventIdByUrl();
   const {eventName, bankName, accountNumber} = useRequestGetEvent();
 
@@ -23,7 +21,6 @@ const useEventPageLayout = () => {
 
   return {
     eventId,
-    navProps,
     isAdmin,
     isLoginPage,
     eventOutline,

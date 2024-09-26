@@ -6,7 +6,7 @@ import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
 import AddBillFunnel from '@pages/AddBillFunnel/AddBillFunnel';
 import CreateEventFunnel from '@pages/CreateEventPage/CreateEventFunnel';
-import EventMemberManage from '@pages/EventPage/AdminPage/EventMemberManage';
+import EventMember from '@pages/EventPage/AdminPage/EventMember';
 import EditBillPage from '@pages/EditBillPage/EditBillPage';
 import Account from '@pages/AccountPage/Account';
 
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTER_URLS.member,
-        element: <EventMemberManage />,
+        element: <EventMember />,
       },
       {
         path: ROUTER_URLS.editBill,

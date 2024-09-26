@@ -2,7 +2,7 @@ import {Member} from 'types/serviceType';
 
 import useAddBillFunnel from '@hooks/useAddBillFunnel';
 
-import {Back, MainLayout, TopNav} from '@components/Design';
+import {MainLayout, TopNav} from '@components/Design';
 
 import PriceStep from './steps/PriceStep';
 import {TitleStep} from './steps/TitleStep';
@@ -20,7 +20,7 @@ const AddBillFunnel = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
-        <Back />
+        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
       </TopNav>
       {step === 'price' && <PriceStep billInfo={billInfo} setBillInfo={setBillInfo} setStep={setStep} />}
       {step === 'title' && <TitleStep billInfo={billInfo} setBillInfo={setBillInfo} setStep={setStep} />}

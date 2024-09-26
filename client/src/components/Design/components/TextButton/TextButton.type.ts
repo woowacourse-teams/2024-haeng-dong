@@ -1,6 +1,6 @@
 import {TextSize} from '../Text/Text.type';
 
-export type TextColor = 'black' | 'gray';
+export type TextColor = 'black' | 'gray' | 'onTertiary';
 
 export interface TextButtonStyleProps {
   textColor: TextColor;

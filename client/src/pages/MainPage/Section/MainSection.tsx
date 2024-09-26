@@ -1,8 +1,9 @@
 import {css, keyframes} from '@emotion/react';
 import {useNavigate} from 'react-router-dom';
 
-import {StandingDog} from '@components/Common/Logo';
 import ChevronDown from '@assets/image/chevronDownLarge.svg';
+
+import {StandingDog} from '@components/Logo';
 
 import {Button, Text} from '@HDesign/index';
 

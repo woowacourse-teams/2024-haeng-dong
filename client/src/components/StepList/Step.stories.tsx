@@ -16,6 +16,10 @@ const meta = {
     step: {
       description: '',
     },
+    isAdmin: {
+      description: '',
+      control: {type: 'boolean'},
+    },
   },
   args: {
     step: {
@@ -44,6 +48,7 @@ const meta = {
         },
       ],
     },
+    isAdmin: false,
   },
 } satisfies Meta<typeof Step>;
 
