@@ -1,0 +1,60 @@
+import {css, keyframes} from '@emotion/react';
+
+import {ToastOptions} from 'types/toastType';
+
+// 애니메이션 키프레임 정의
+const fadeInWithTransformY = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const fadeOutWithTransformY = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+`;
+
+export const toastMarginStyle = ({position, bottom, top, theme}: ToastOptions) =>
+  css({
+    position: 'absolute',
+    bottom: position === 'bottom' ? `${bottom}` : 'auto',
+    top: position === 'top' ? `${top}` : 'auto',
+    left: '50%',
+    transform: 'translate(-50%)',
+    zIndex: theme?.zIndex.toast,
+
+    width: '100%',
+    maxWidth: '48rem',
+    paddingInline: '1rem',
+  });
+
+export const toastStyle = (isVisible: boolean) =>
+  css({
+    width: '100%',
+    padding: '0.625rem 1rem',
+
+    backgroundColor: 'gray',
+    boxShadow: '0 0.5rem 0.75rem rgba(0, 0, 0, 0.16);',
+
+    borderRadius: '1.25rem',
+
+    // 애니메이션 추가
+    animation: `${isVisible ? fadeInWithTransformY : fadeOutWithTransformY} 0.5s forwards`,
+  });
+
+export const textStyle = css({
+  width: '100%',
+  color: 'white',
+  whiteSpace: 'pre-line',
+});

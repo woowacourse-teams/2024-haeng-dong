@@ -1,0 +1,91 @@
+name: frontend-pull-request
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main, fe-dev]
+    paths:
+      - "client/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./client
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.15.1"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run test
+        run: npm run test
+
+      - name: Cypress test
+        run: npm run dev &
+        env:
+          CI: true
+
+      - name: Wait for the server to start
+        run: sleep 3
+
+      - name: Run Cypress tests
+        run: npm run cypress-run
+
+  chromatic:
+    name: Run Chromatic
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./client
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.15.1"
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-v1
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        id: publish_chromatic
+        with:
+          workingDir: client
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
