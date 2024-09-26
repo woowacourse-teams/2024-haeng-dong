@@ -14,8 +14,8 @@ public enum HaengdongErrorCode {
     BANK_NAME_INVALID("지원하지 않는 은행입니다. 지원하는 은행 목록: %s"),
     ACCOUNT_LENGTH_INVALID("계좌번호는 %d자 이상 %d자 이하만 입력 가능합니다."),
 
-    MEMBER_NAME_LENGTH_INVALID("멤버 이름은 %d자 이상 %d자 이하만 입력 가능합니다."),
-    MEMBER_NAME_DUPLICATE("중복된 행사 참여 인원 이름이 존재합니다."),
+    MEMBER_NAME_LENGTH_INVALID("참여자 이름은 %d자 이상 %d자 이하만 입력 가능합니다."),
+    MEMBER_NAME_DUPLICATE("행사에 중복된 참여자 이름이 존재합니다."),
     MEMBER_NOT_FOUND("존재하지 않는 참여자입니다."),
     MEMBER_ALREADY_EXIST("현재 참여하고 있는 인원이 존재합니다."),
     MEMBER_NAME_CHANGE_DUPLICATE("중복된 참여 인원 이름 변경 요청이 존재합니다."),
@@ -27,14 +27,13 @@ public enum HaengdongErrorCode {
     BILL_DETAIL_NOT_FOUND("존재하지 않는 참여자 지출입니다."),
     BILL_PRICE_NOT_MATCHED("지출 총액이 일치하지 않습니다."),
 
-    DIFFERENT_STEP_MEMBERS("회원 목록이 일치하지 않습니다."),
+    DIFFERENT_STEP_MEMBERS("참여자 목록이 일치하지 않습니다."),
 
     /* Authentication */
 
     PASSWORD_INVALID("비밀번호가 일치하지 않습니다."),
 
     TOKEN_NOT_FOUND("토큰이 존재하지 않습니다."),
-    TOKEN_EXPIRED("만료된 토큰입니다."),
     TOKEN_INVALID("유효하지 않은 토큰입니다."),
 
     FORBIDDEN("접근할 수 없는 행사입니다."),

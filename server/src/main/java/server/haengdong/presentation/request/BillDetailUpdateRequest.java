@@ -11,7 +11,6 @@ public record BillDetailUpdateRequest(
         @NotNull(message = "지출 금액은 공백일 수 없습니다.")
         Long price,
 
-        @NotNull(message = "지출 금액은 공백일 수 없습니다.")
         boolean isFixed
 ) {
     public BillDetailUpdateAppRequest toAppRequest() {
