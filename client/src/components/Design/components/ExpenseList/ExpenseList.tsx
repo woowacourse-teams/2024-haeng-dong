@@ -42,7 +42,7 @@ function ExpenseItem({
           <BankSendButton
             clipboardText={clipboardText}
             onBankButtonClick={onBankButtonClick}
-            isDeposited={price <= 0}
+            isDeposited={price <= 0 || isDeposited}
           />
         ) : (
           <IconButton variants="none" size="small">
