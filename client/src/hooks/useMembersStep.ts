@@ -1,8 +1,8 @@
-import {useEffect, useState} from 'react';
+import {RefObject, useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
-import {Member} from 'types/serviceType';
+import {Member, AllMembers} from 'types/serviceType';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
@@ -11,6 +11,7 @@ import REGEXP from '@constants/regExp';
 import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
 import {BillStep} from './useAddBillFunnel';
+import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
 
 interface Props {
   billInfo: BillInfo;
@@ -22,7 +23,9 @@ interface Props {
 const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [nameInput, setNameInput] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  const {members: allMembers} = useRequestGetAllMembers();
   const {postMembersAsync, isPending: isPendingPostMembers} = useRequestPostMembers();
 
   const {postBill, isSuccess: isSuccessPostBill, isPending: isPendingPostBill} = useRequestPostBill();
@@ -50,7 +53,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const canSubmitMembers = billInfo.members.length !== 0;
 
   const setBillInfoMemberWithId = (name: string) => {
-    const existingMember = currentMembers.find(currentMember => currentMember.name === name);
+    const existingMember = allMembers.find(currentMember => currentMember.name === name);
     if (existingMember) {
       setBillInfo(prev => ({...prev, members: [...prev.members, {id: existingMember.id, name: name}]}));
     } else {
@@ -59,15 +62,16 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   };
 
   const handleNameInputEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.nativeEvent.isComposing) {
-      return;
-    }
     if (event.key === 'Enter' && canAddMembers) {
       event.preventDefault();
       if (!billInfo.members.map(({name}) => name).includes(nameInput)) {
         setBillInfoMemberWithId(nameInput);
       }
       setNameInput('');
+      if (inputRef.current) {
+        inputRef.current.blur();
+        setTimeout(() => inputRef.current?.focus(), 0);
+      }
     }
   };
 
@@ -102,6 +106,10 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
     }
   }, [isSuccessPostBill]);
 
+  useEffect(() => {
+    console.log(nameInput);
+  }, [nameInput]);
+
   const handlePrevStep = () => {
     setStep('title');
   };
@@ -109,6 +117,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   return {
     errorMessage,
     nameInput,
+    inputRef,
     handleNameInputChange,
     handleNameInputEnter,
     isPendingPostBill,

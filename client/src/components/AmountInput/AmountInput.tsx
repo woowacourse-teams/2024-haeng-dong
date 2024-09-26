@@ -28,8 +28,8 @@ const AmountInput = ({value, onClick, underlined, activated}: Props) => {
       `}
       onClick={onClick}
     >
-      <Text size="head" textColor={value !== '0' ? 'black' : 'gray'}>
-        {value}
+      <Text size="head" textColor={value !== '' && value !== '0' ? 'black' : 'gray'}>
+        {value === '' ? '0' : value}
       </Text>
       <Text
         textColor="gray"

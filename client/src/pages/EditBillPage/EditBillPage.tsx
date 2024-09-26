@@ -7,7 +7,7 @@ import Top from '@components/Design/components/Top/Top';
 
 import useEditBillPage from '@hooks/useEditBillPage';
 
-import {Back, FixedButton, Flex, MainLayout, TopNav} from '@components/Design';
+import {FixedButton, Flex, MainLayout, TopNav} from '@components/Design';
 
 const EditBillPage = () => {
   const {
@@ -31,7 +31,7 @@ const EditBillPage = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
-        <Back />
+        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
       </TopNav>
       <div
         css={css`

@@ -1,10 +1,11 @@
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {css} from '@emotion/react';
 
-import {RunningDog} from '@components/Common/Logo';
 import Top from '@components/Design/components/Top/Top';
 
-import {FixedButton, MainLayout, Title, TopNav} from '@HDesign/index';
+import {RunningDog} from '@components/Logo';
+
+import {FixedButton} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
