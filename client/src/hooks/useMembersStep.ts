@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
-import {Member} from 'types/serviceType';
+import {Member, AllMembers} from 'types/serviceType';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
@@ -11,6 +11,7 @@ import REGEXP from '@constants/regExp';
 import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
 import {BillStep} from './useAddBillFunnel';
+import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
 
 interface Props {
   billInfo: BillInfo;
@@ -23,6 +24,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const [errorMessage, setErrorMessage] = useState('');
   const [nameInput, setNameInput] = useState('');
 
+  const {members: allMembers} = useRequestGetAllMembers();
   const {postMembersAsync, isPending: isPendingPostMembers} = useRequestPostMembers();
 
   const {postBill, isSuccess: isSuccessPostBill, isPending: isPendingPostBill} = useRequestPostBill();
@@ -50,7 +52,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const canSubmitMembers = billInfo.members.length !== 0;
 
   const setBillInfoMemberWithId = (name: string) => {
-    const existingMember = currentMembers.find(currentMember => currentMember.name === name);
+    const existingMember = allMembers.find(currentMember => currentMember.name === name);
     if (existingMember) {
       setBillInfo(prev => ({...prev, members: [...prev.members, {id: existingMember.id, name: name}]}));
     } else {
