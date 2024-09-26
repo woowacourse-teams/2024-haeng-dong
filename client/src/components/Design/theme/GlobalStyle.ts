@@ -1,6 +1,9 @@
 import {css} from '@emotion/react';
 
+// reset css -> index css
 export const GlobalStyle = css`
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
   *:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
     all: unset;
     display: revert;
@@ -119,5 +122,27 @@ export const GlobalStyle = css`
 
   button {
     cursor: pointer;
+  }
+
+  body {
+    font-family:
+      'Pretendard',
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    max-width: 768px;
+    margin: 0 auto;
   }
 `;
