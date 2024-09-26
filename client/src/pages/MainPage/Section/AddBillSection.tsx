@@ -22,7 +22,7 @@ const AddBillSection = () => {
           실시간으로 기록해 놓을 수 있어요`}
         </Text>
       </div>
-      <img src="https://haengdong.pro/assets/addBillMockup.svg" />
+      <img src={`${process.env.IMAGE_URL}/addBillMockup.svg`} />
     </div>
   );
 };

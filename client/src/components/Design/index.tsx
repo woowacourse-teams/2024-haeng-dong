@@ -1,6 +1,5 @@
 import {MainLayout} from './layouts/MainLayout';
 import FunnelLayout from './layouts/FunnelLayout';
-import {ContentLayout} from './layouts/ContentLayout';
 import {HDesignProvider, useTheme} from './theme/HDesignProvider';
 import BankSelect from './components/BankSelect/BankSelect';
 import BottomSheet from './components/BottomSheet/BottomSheet';
@@ -61,4 +60,5 @@ export {
   Amount,
   Dropdown,
   DropdownButton,
+  useTheme,
 };

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import useTheme from '@components/Design/theme/useTheme';
+import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import {listItemStyle} from './ListItem.style';
 import Row from './Row';

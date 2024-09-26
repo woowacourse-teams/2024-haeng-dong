@@ -8,7 +8,7 @@ interface MainLayoutProps extends PropsWithChildren {
   backgroundColor?: MainLayoutBackground;
 }
 
-export default function MainLayout({backgroundColor, children}: MainLayoutProps) {
+export function MainLayout({backgroundColor, children}: MainLayoutProps) {
   return (
     <Flex
       backgroundColor={backgroundColor}

@@ -3,7 +3,7 @@ import {css} from '@emotion/react';
 import {useEffect, useRef, useState} from 'react';
 
 import TYPOGRAPHY from '@components/Design/token/typography';
-import useTheme from '@components/Design/theme/useTheme';
+import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Icon from '../Icon/Icon';
 
