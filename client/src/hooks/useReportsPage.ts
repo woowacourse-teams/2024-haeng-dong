@@ -3,6 +3,8 @@ import {useOutletContext} from 'react-router-dom';
 
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
+import {isAndroid, isIOS} from '@utils/detectDevice';
+
 import {ERROR_MESSAGE} from '@constants/errorMessage';
 
 import {useSearchReports} from './useSearchReports';
@@ -26,8 +28,17 @@ const useReportsPage = () => {
       return;
     }
 
-    const url = 'supertoss://';
-    window.location.href = url;
+    if (isAndroid()) {
+      const url = 'supertoss://';
+      window.location.href = url;
+      return;
+    }
+
+    if (isIOS()) {
+      const url = 'supertoss://send';
+      window.location.href = url;
+      return;
+    }
   };
 
   const expenseListProp = matchedReports.map(member => ({
