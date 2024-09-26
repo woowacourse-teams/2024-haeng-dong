@@ -1,3 +1,5 @@
+import {css} from '@emotion/react';
+
 import Top from '@components/Design/components/Top/Top';
 
 import useEventLogin from '@hooks/useEventLogin';
@@ -5,7 +7,6 @@ import useEventLogin from '@hooks/useEventLogin';
 import {FixedButton, LabelInput} from '@HDesign/index';
 
 import RULE from '@constants/rule';
-import {css} from '@emotion/react';
 
 const EventLoginPage = () => {
   const {password, errorMessage, handleChange, canSubmit, submitPassword} = useEventLogin();
