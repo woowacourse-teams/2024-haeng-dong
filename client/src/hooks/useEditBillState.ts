@@ -60,6 +60,11 @@ const useEditBillState = ({bill, billDetails}: Props) => {
   };
 
   const handleChangeBillDetails = ({value, keyboardTargetId}: HandleChangeBillDetailsProps) => {
+    if (
+      !newBillDetails.find(({id}) => id === keyboardTargetId)?.isFixed &&
+      newBillDetails.filter(({isFixed}) => isFixed === false).length === 1
+    )
+      return;
     if (Number(value.replace(/,/g, '')) === newBillDetails.find(({id}) => id === keyboardTargetId)?.price) return;
     setNewBillDetails(prev => {
       const updatedDetails = prev.map(detail =>
