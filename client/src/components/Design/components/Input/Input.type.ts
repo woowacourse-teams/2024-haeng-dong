@@ -2,14 +2,16 @@ import {Theme} from '@theme/theme.type';
 
 export interface InputStyleProps {
   theme?: Theme;
-  isAlwaysOnBorder?: boolean;
+  isError?: boolean;
 }
 
 export type InputType = 'input' | 'search';
 
 export interface InputCustomProps {
   inputType?: InputType;
-  isError?: boolean;
+  labelText?: string;
+  errorText?: string | null;
+  onDelete?: () => void;
 }
 
 export type InputOptionProps = InputStyleProps & InputCustomProps;

@@ -5,7 +5,7 @@ import Top from '@components/Design/components/Top/Top';
 import useTitleStep from '@hooks/useTitleStep';
 import {BillStep} from '@hooks/useAddBillFunnel';
 
-import {FixedButton, LabelInput} from '@components/Design';
+import {FixedButton, Input} from '@components/Design';
 
 import {BillInfo} from '../AddBillFunnel';
 
@@ -43,7 +43,7 @@ export const TitleStep = ({billInfo, setBillInfo, setStep}: Props) => {
           <Top.Line text={`${billInfo.price}원을`} />
           <Top.Line text="어떤 곳에서 사용했나요??" emphasize={['어떤 곳']} />
         </Top>
-        <LabelInput
+        <Input
           labelText="결제 내용"
           errorText={errorMessage ?? ''}
           value={billInfo.title}
