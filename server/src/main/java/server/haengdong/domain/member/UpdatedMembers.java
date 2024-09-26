@@ -12,9 +12,15 @@ public class UpdatedMembers {
     private final Set<Member> members;
 
     public UpdatedMembers(List<Member> members) {
-        validateNameUnique(members);
         validateMemberUnique(members);
+        validateNameUnique(members);
         this.members = new HashSet<>(members);
+    }
+
+    private void validateMemberUnique(List<Member> members) {
+        if (members.size() != Set.copyOf(members).size()) {
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
+        }
     }
 
     private void validateNameUnique(List<Member> members) {
@@ -22,12 +28,6 @@ public class UpdatedMembers {
                 .map(Member::getName)
                 .collect(Collectors.toSet());
         if (members.size() != uniqueNames.size()) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
-        }
-    }
-
-    private void validateMemberUnique(List<Member> members) {
-        if (members.size() != Set.copyOf(members).size()) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
         }
     }
