@@ -15,6 +15,7 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
+        default_batch_fetch_size: 30
         format_sql: true
         jdbc.time_zone: Asia/Seoul
     show-sql: true

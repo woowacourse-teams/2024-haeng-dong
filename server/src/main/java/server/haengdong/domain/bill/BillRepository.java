@@ -19,14 +19,5 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             """)
     List<Bill> findAllByEvent(Event event);
 
-    @Query("""
-            select b
-            from Bill b
-            join fetch b.billDetails bd
-            join fetch bd.member
-            where b.event = :event
-            order by b.id desc
-            limit 1
-            """)
     Optional<Bill> findFirstByEventOrderByIdDesc(Event event);
 }
