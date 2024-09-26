@@ -10,7 +10,7 @@ export const display = (visible: boolean) =>
 export const dimmedLayerStyle = (theme: Theme, isOpened: boolean) =>
   css({
     position: 'fixed',
-    zIndex: '30',
+    zIndex: theme.zIndex.bottomSheetDimmedLayer,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -31,7 +31,7 @@ export const bottomSheetContainerStyle = (theme: Theme, isOpened: boolean, isDra
     flexDirection: 'column',
     alignItems: 'center',
     gap: '1.5rem',
-    zIndex: '50',
+    zIndex: theme.zIndex.bottomSheetContainer,
     inset: 'auto 0 0 50%',
     maxWidth: '768px',
     width: '100%',

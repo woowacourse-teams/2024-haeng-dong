@@ -1,6 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 
 import Heundeut from '@assets/image/heundeut.svg';
+import {useTheme} from '@theme/HDesignProvider';
 
 import {Button, Flex, Text} from '@HDesign/index';
 
@@ -9,9 +10,10 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 import {logoStyle, navStyle} from './Nav.style';
 
 const Nav = () => {
+  const {theme} = useTheme();
   const navigate = useNavigate();
   return (
-    <header css={navStyle}>
+    <header css={navStyle(theme)}>
       <Flex gap="0.5rem">
         <Heundeut />
         <div css={logoStyle}>
