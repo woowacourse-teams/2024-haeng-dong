@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import Text from '@HDcomponents/Text/Text';
 
-import isMobileDevice from '@utils/isMobileDevice';
+import {isMobileDevice} from '@utils/detectDevice';
 
 import BankSendButton from '../BankSendButton/BankSendButton';
 import Icon from '../Icon/Icon';

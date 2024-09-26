@@ -8,7 +8,7 @@ import useShareEvent from '@hooks/useShareEvent';
 
 import {Button} from '@components/Design';
 
-import isMobileDevice from '@utils/isMobileDevice';
+import {isMobileDevice} from '@utils/detectDevice';
 import getDeletedLastPath from '@utils/getDeletedLastPath';
 
 type ShareEventButtonProps = {
