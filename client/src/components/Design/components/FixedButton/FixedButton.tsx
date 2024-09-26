@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {forwardRef} from 'react';
-import Lottie from 'lottie-react';
 
-import loadingAnimation from '@assets/image/loadingAnimation.json';
 import {
   fixedButtonContainerStyle,
   fixedButtonStyle,
@@ -11,15 +9,22 @@ import {
   deleteButtonStyle,
 } from '@HDcomponents/FixedButton/FixedButton.style';
 import {FixedButtonProps} from '@HDcomponents/FixedButton/FixedButton.type';
-import IconButton from '@HDcomponents/IconButton/IconButton';
-import Icon from '@HDcomponents/Icon/Icon';
 import {useTheme} from '@theme/HDesignProvider';
+
+import Lottie from '../Lottie/Lottie';
 
 export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElement, FixedButtonProps>(function Button(
   {variants = 'primary', onDeleteClick, onBackClick, disabled, children, ...htmlProps}: FixedButtonProps,
   ref,
 ) {
   const {theme} = useTheme();
+
+  const imageStyle = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain', // 이미지가 왜곡되지 않게 비율을 유지하며 버튼 크기에 맞춤
+  };
+
   return (
     <div css={fixedButtonContainerStyle(theme)}>
       <div css={buttonContainerStyle}>
@@ -39,11 +44,7 @@ export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElem
           disabled={variants === 'loading' ? true : disabled}
           {...htmlProps}
         >
-          {variants === 'loading' ? (
-            <Lottie animationData={loadingAnimation} loop={true} style={{height: '1.25rem'}} />
-          ) : (
-            children
-          )}
+          {variants === 'loading' ? <Lottie /> : children}
         </button>
       </div>
     </div>

@@ -14,7 +14,6 @@ import X from '@assets/image/x.svg';
 import PencilMini from '@assets/image/pencil_mini.svg';
 import Meatballs from '@assets/image/meatballs.svg';
 import EditPencil from '@assets/image/editPencil.svg';
-import Heundeut from '@assets/image/heundeut.svg';
 import {IconProps} from '@HDcomponents/Icon/Icon.type';
 import {useTheme} from '@theme/HDesignProvider';
 
@@ -35,7 +34,7 @@ const ICON = {
   toss: <img src={Toss} width="16" height="16" alt="toss icon" />,
   meatballs: <Meatballs />,
   editPencil: <EditPencil />,
-  heundeut: <Heundeut />,
+  heundeut: <img src={`${process.env.IMAGE_URL}/heundeut.svg`} />,
 };
 
 export const Icon: React.FC<IconProps> = ({iconColor, iconType, ...htmlProps}: IconProps) => {

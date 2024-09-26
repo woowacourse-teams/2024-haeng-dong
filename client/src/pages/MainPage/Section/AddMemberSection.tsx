@@ -1,9 +1,7 @@
 import {css} from '@emotion/react';
 
-import AddMemberMockup from '@assets/image/addMemberMockup.svg';
-
-import {Text} from '@HDesign/index';
-import {useTheme} from '@HDesign/index';
+import {useTheme} from '@components/Design/theme/HDesignProvider';
+import Text from '@HDesign/components/Text/Text';
 
 const AddMemberSection = () => {
   const {theme} = useTheme();
@@ -26,7 +24,7 @@ const AddMemberSection = () => {
           행동대장이 알아서 차수를 나눠줘요`}
         </Text>
       </div>
-      <AddMemberMockup />
+      <img src={`${process.env.IMAGE_URL}/addMemberMockup.svg`} />
     </div>
   );
 };

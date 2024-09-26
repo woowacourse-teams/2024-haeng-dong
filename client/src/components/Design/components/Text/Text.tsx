@@ -11,7 +11,7 @@ const Text: React.FC<TextProps> = ({size = 'body', textColor = 'black', children
   const {theme} = useTheme();
   return (
     <p css={getSizeStyling({size, textColor, theme})} {...attributes}>
-      {children}
+      {children === '' ? '\u00A0' : children}
     </p>
   );
 };

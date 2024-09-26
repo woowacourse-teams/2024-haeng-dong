@@ -1,11 +1,9 @@
-import RunningDog from '@assets/image/runningDog.svg';
-
 import {logoStyle} from './Logo.style';
 
 const RunningDogLogo = () => {
   return (
     <div css={logoStyle}>
-      <RunningDog />
+      <img src={`${process.env.IMAGE_URL}/runningDog.svg`} />
     </div>
   );
 };

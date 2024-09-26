@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react';
 
-import {Button, useTheme} from '@components/Design';
+import {useTheme} from '@components/Design/theme/HDesignProvider';
+
+import {Button} from '@components/Design';
 
 import {Keypad} from './Keypad';
 import useNumberKeyboard from './useNumberKeyboard';

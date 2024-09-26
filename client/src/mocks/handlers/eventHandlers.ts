@@ -4,6 +4,8 @@ import {http, HttpResponse} from 'msw';
 
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 
+import RULE from '@constants/rule';
+
 import {VALID_EVENT_NAME_LENGTH_IN_SERVER} from '@mocks/serverConstants';
 import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 import {eventData} from '@mocks/sharedState';
@@ -20,7 +22,7 @@ export const eventHandler = [
       return HttpResponse.json(
         {
           errorCode: 'EVENT_NAME_LENGTH_INVALID',
-          message: '행사 이름은 2자 이상 30자 이하만 입력 가능합니다.',
+          message: `행사 이름은 2자 이상 ${RULE.maxEventNameLength}자 이하만 입력 가능합니다.`,
         },
         {status: 400},
       );
@@ -30,7 +32,7 @@ export const eventHandler = [
       return HttpResponse.json(
         {
           errorCode: 'EVENT_PASSWORD_FORMAT_INVALID',
-          message: '비밀번호는 4자리 숫자만 가능합니다.',
+          message: `비밀번호는 ${RULE.maxEventPasswordLength}자리 숫자만 가능합니다.`,
         },
         {status: 400},
       );

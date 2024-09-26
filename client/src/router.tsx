@@ -1,26 +1,32 @@
 import {createBrowserRouter} from 'react-router-dom';
+import {lazy, Suspense} from 'react';
 
-import {AdminPage} from '@pages/EventPage/AdminPage';
-import {HomePage} from '@pages/EventPage/HomePage';
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
-import AddBillFunnel from '@pages/AddBillFunnel/AddBillFunnel';
-import CreateEventFunnel from '@pages/CreateEventPage/CreateEventFunnel';
-import EventMember from '@pages/EventPage/AdminPage/EventMember';
-import EditBillPage from '@pages/EditBillPage/EditBillPage';
-import Account from '@pages/AccountPage/Account';
 
-import {MainPage} from '@pages/MainPage';
 import {EventPage} from '@pages/EventPage';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
 
+const MainPage = lazy(() => import('@pages/MainPage/MainPage'));
+const HomePage = lazy(() => import('@pages/EventPage/HomePage/HomePage'));
+const CreateEventFunnel = lazy(() => import('@pages/CreateEventPage/CreateEventFunnel'));
+const AdminPage = lazy(() => import('@pages/EventPage/AdminPage/AdminPage'));
+const AddBillFunnel = lazy(() => import('@pages/AddBillFunnel/AddBillFunnel'));
+const EventMember = lazy(() => import('@pages/EventPage/AdminPage/EventMember'));
+const EditBillPage = lazy(() => import('@pages/EditBillPage/EditBillPage'));
+const Account = lazy(() => import('@pages/AccountPage/Account'));
+
 const router = createBrowserRouter([
   {
     path: '',
-    element: <App />,
+    element: (
+      <Suspense>
+        <App />
+      </Suspense>
+    ),
     children: [
       {
         index: true,

@@ -47,7 +47,7 @@ export default {
         ],
       },
       {
-        test: /\.png$/i,
+        test: /\.(png|webp)$/,
         loader: 'file-loader',
       },
     ],

@@ -107,3 +107,5 @@ export const COLORS: ColorTokens = {
   warn: PRIMITIVE_COLORS.yellow[400],
   complete: PRIMITIVE_COLORS.green[300],
 };
+
+export const PRIMARY_COLORS = PRIMITIVE_COLORS.purple;

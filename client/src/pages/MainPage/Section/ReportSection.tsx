@@ -1,8 +1,6 @@
 import {css} from '@emotion/react';
 
-import MemberReportMockup from '@assets/image/memberReportMockup.svg';
-
-import {Text} from '@HDesign/index';
+import Text from '@components/Design/components/Text/Text';
 
 const ReportSection = () => {
   return (
@@ -24,7 +22,7 @@ const ReportSection = () => {
           금액은 자동으로 계산돼요`}
         </Text>
       </div>
-      <MemberReportMockup />
+      <img src={`${process.env.IMAGE_URL}/memberReportMockup.svg`} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 
-import {useTheme} from '@theme/HDesignProvider';
+import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import {Button, Flex, Text, Icon, TopNav, IconButton} from '@HDesign/index';
 
