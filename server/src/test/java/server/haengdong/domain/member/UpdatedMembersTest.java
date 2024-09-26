@@ -93,7 +93,7 @@ class UpdatedMembersTest {
 
         assertThatThrownBy(() -> updatedMembers.validateUpdateAble(members))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage("중복된 행사 참여 인원 이름이 존재합니다.");
+                .hasMessage("행사에 중복된 참여자 이름이 존재합니다.");
     }
 
     @DisplayName("이벤트의 참여자들 전체를 업데이트 검증한다.")
