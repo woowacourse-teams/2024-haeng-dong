@@ -46,7 +46,7 @@ const EventMember = () => {
         {reports.length === 0 ? (
           <></>
         ) : (
-          <FixedButton disabled={!canSubmit} onClick={updateMembersOnServer} style={{zIndex: '100'}}>
+          <FixedButton disabled={!canSubmit} onClick={updateMembersOnServer}>
             수정완료
           </FixedButton>
         )}
