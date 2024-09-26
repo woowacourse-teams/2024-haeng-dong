@@ -5,13 +5,13 @@ import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
 import {Member} from 'types/serviceType';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+import {isIOS} from '@utils/detectDevice';
 
 import REGEXP from '@constants/regExp';
 
 import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
 import {BillStep} from './useAddBillFunnel';
-import {isIOS} from '@utils/detectDevice';
 
 interface Props {
   billInfo: BillInfo;

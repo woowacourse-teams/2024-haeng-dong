@@ -1,4 +1,5 @@
 import {css} from '@emotion/react';
+import {useRef} from 'react';
 
 import Top from '@components/Design/components/Top/Top';
 import ChipButton from '@components/Design/components/ChipButton/ChipButton';
@@ -9,9 +10,9 @@ import {BillStep} from '@hooks/useAddBillFunnel';
 
 import {FixedButton, Flex, Input, Text} from '@components/Design';
 
-import {BillInfo} from '../AddBillFunnel';
-import {useRef} from 'react';
 import {isIOS} from '@utils/detectDevice';
+
+import {BillInfo} from '../AddBillFunnel';
 
 interface Props {
   billInfo: BillInfo;
