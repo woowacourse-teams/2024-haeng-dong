@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import {useTheme} from '@components/Design/theme/HDesignProvider';
+import useTheme from '@components/Design/theme/useTheme';
 
 import Icon from '../Icon/Icon';
 import Text from '../Text/Text';

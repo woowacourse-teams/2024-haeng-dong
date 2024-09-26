@@ -35,7 +35,8 @@ export const Button: React.FC<ButtonProps> = forwardRef<HTMLButtonElement, Butto
       {...htmlProps}
     >
       {variants === 'loading' ? (
-        <Lottie animationData={loadingAnimation} loop={true} style={animationSize(size)} />
+        // <Lottie animationData={loadingAnimation} loop={true} style={animationSize(size)} />
+        <div>아아</div>
       ) : (
         children
       )}

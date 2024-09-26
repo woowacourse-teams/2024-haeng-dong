@@ -1,6 +1,7 @@
 import {css} from '@emotion/react';
 
-import {Text, useTheme} from '@HDesign/index';
+import Text from '@HDesign/components/Text/Text';
+import useTheme from '@components/Design/theme/useTheme';
 
 const DescriptionSection = () => {
   const {theme} = useTheme();

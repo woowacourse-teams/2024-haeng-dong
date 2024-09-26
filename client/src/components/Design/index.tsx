@@ -31,6 +31,9 @@ import Dropdown from './components/Dropdown/Dropdown';
 import DropdownButton from './components/Dropdown/DropdownButton';
 
 export {
+  HDesignProvider,
+  MainLayout,
+  FunnelLayout,
   BankSelect,
   BottomSheet,
   Button,
@@ -53,11 +56,6 @@ export {
   TextButton,
   Title,
   TopNav,
-  MainLayout,
-  FunnelLayout,
-  ContentLayout,
-  HDesignProvider,
-  useTheme,
   DepositCheck,
   DepositToggle,
   Amount,

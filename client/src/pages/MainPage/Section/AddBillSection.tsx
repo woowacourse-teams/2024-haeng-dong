@@ -1,8 +1,6 @@
 import {css} from '@emotion/react';
 
-import AddBillMockup from '@assets/image/addBillMockup.svg';
-
-import {Text} from '@HDesign/index';
+import Text from '@components/Design/components/Text/Text';
 
 const AddBillSection = () => {
   return (
@@ -24,7 +22,7 @@ const AddBillSection = () => {
           실시간으로 기록해 놓을 수 있어요`}
         </Text>
       </div>
-      <AddBillMockup />
+      <img src="https://haengdong.pro/assets/addBillMockup.svg" />
     </div>
   );
 };

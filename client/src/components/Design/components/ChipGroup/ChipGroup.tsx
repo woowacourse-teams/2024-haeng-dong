@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import {ColorKeys} from '@components/Design/token/colors';
-import {useTheme} from '@components/Design/theme/HDesignProvider';
+import useTheme from '@components/Design/theme/useTheme';
 
 import {chipStyle} from '../Chip/Chip.style';
 import Text from '../Text/Text';

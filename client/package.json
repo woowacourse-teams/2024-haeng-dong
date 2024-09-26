@@ -71,6 +71,7 @@
     "prettier": "3.3.2",
     "storybook": "^8.2.2",
     "storybook-addon-react-router-v6": "^2.0.15",
+    "terser-webpack-plugin": "^5.3.10",
     "ts-jest": "^29.2.4",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
@@ -78,6 +79,7 @@
     "typescript-eslint": "^7.16.0",
     "undici": "^5.28.4",
     "webpack": "^5.93.0",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4",
     "webpack-merge": "^6.0.1"

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import {useTheme} from '@components/Design/theme/HDesignProvider';
+import useTheme from '@components/Design/theme/useTheme';
 
 import Text from '../Text/Text';
 

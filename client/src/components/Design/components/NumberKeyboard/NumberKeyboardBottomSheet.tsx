@@ -2,7 +2,7 @@ import {css} from '@emotion/react';
 import {createPortal} from 'react-dom';
 import {useEffect, useRef} from 'react';
 
-import {useTheme} from '@components/Design/theme/HDesignProvider';
+import useTheme from '@components/Design/theme/useTheme';
 
 import FixedButton from '../FixedButton/FixedButton';
 

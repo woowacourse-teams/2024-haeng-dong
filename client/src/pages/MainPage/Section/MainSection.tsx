@@ -2,10 +2,8 @@ import {css, keyframes} from '@emotion/react';
 import {useNavigate} from 'react-router-dom';
 
 import ChevronDown from '@assets/image/chevronDownLarge.svg';
-
-import {StandingDog} from '@components/Logo';
-
-import {Button, Text} from '@HDesign/index';
+import Button from '@HDesign/components/Button/Button';
+import Text from '@HDesign/components/Text/Text';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -36,7 +34,7 @@ const MainSection = () => {
         })}
       >
         <div css={animateWithDelay(0)}>
-          <StandingDog />
+          <img src={`${process.env.IMAGE_URL}/standingDog.svg`} />
         </div>
         <Text css={animateWithDelay(1)} style={{textAlign: 'center'}} size="title">{`행동대장을 통해
         간편하게 정산하세요
