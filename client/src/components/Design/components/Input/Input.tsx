@@ -14,7 +14,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
     onChange,
     onFocus,
     onBlur,
-    inputType,
+    inputType = 'input',
     isError,
     placeholder,
     autoFocus,
