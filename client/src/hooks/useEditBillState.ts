@@ -59,12 +59,12 @@ const useEditBillState = ({bill, billDetails}: Props) => {
     );
   };
 
+  const isLastUnfixedMember = (keyboardTargetId: number) =>
+    !newBillDetails.find(({id}) => id === keyboardTargetId)?.isFixed &&
+    newBillDetails.filter(({isFixed}) => isFixed === false).length === 1;
+
   const handleChangeBillDetails = ({value, keyboardTargetId}: HandleChangeBillDetailsProps) => {
-    if (
-      !newBillDetails.find(({id}) => id === keyboardTargetId)?.isFixed &&
-      newBillDetails.filter(({isFixed}) => isFixed === false).length === 1
-    )
-      return;
+    if (isLastUnfixedMember(keyboardTargetId)) return;
     if (Number(value.replace(/,/g, '')) === newBillDetails.find(({id}) => id === keyboardTargetId)?.price) return;
     setNewBillDetails(prev => {
       const updatedDetails = prev.map(detail =>
