@@ -3,13 +3,14 @@ import {useEffect, useState, useCallback, useMemo} from 'react';
 import {Report} from 'types/serviceType';
 import validateMemberName from '@utils/validate/validateMemberName';
 
+import toast from './useToast/toast';
 import useRequestDeleteMember from './queries/member/useRequestDeleteMember';
 import useRequestPutMembers from './queries/member/useRequestPutMembers';
 import useRequestGetReports from './queries/report/useRequestGetReports';
 
 interface ReturnUseEventMember {
   reports: Report[];
-  isCanSubmit: boolean;
+  canSubmit: boolean;
   changeMemberName: (memberId: number, newName: string) => void;
   toggleDepositStatus: (memberId: number) => void;
   handleDeleteMember: (memberId: number) => void;
@@ -28,7 +29,7 @@ const useEventMember = (): ReturnUseEventMember => {
     setReports(initialReports);
   }, [initialReports]);
 
-  const isCanSubmit = useMemo(() => {
+  const canSubmit = useMemo(() => {
     // 중복되는 이름이 존재하는지 확인
     const hasDuplicateMemberName = (): boolean => {
       const nameSet = new Set(reports.map(member => member.memberName));
@@ -71,13 +72,16 @@ const useEventMember = (): ReturnUseEventMember => {
     [setReports, validateMemberName],
   );
 
-  const toggleDepositStatus = useCallback((memberId: number) => {
-    setReports(prevReports =>
-      prevReports.map(report =>
-        report.memberId === memberId ? {...report, isDeposited: !report.isDeposited} : report,
-      ),
-    );
-  }, []);
+  const toggleDepositStatus = useCallback(
+    (memberId: number) => {
+      setReports(prevReports =>
+        prevReports.map(report =>
+          report.memberId === memberId ? {...report, isDeposited: !report.isDeposited} : report,
+        ),
+      );
+    },
+    [setReports],
+  );
 
   // 삭제할 member를 따로 deleteMembers 상태에서 id만 저장
   const handleDeleteMember = useCallback((memberId: number) => {
@@ -107,7 +111,7 @@ const useEventMember = (): ReturnUseEventMember => {
     }
   }, [deleteMembers, reports, initialReports, deleteAsyncMember, putAsyncMember]);
 
-  return {reports, isCanSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
+  return {reports, canSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
 };
 
 export default useEventMember;
