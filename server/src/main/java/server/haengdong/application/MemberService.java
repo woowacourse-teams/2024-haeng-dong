@@ -1,17 +1,12 @@
 package server.haengdong.application;
 
 
-import static java.util.stream.Collectors.toMap;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.MemberSaveAppRequest;
-import server.haengdong.application.request.MemberUpdateAppRequest;
 import server.haengdong.application.request.MembersSaveAppRequest;
 import server.haengdong.application.request.MembersUpdateAppRequest;
 import server.haengdong.application.response.MemberAppResponse;
@@ -22,6 +17,7 @@ import server.haengdong.domain.bill.BillDetailRepository;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.domain.member.Members;
 import server.haengdong.domain.member.Member;
 import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -54,6 +50,16 @@ public class MemberService {
         return MembersSaveAppResponse.of(savedMembers);
     }
 
+    private void validateMemberSave(List<String> memberNames, Event event) {
+        if (memberNames.size() != Set.copyOf(memberNames).size()) {
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE, memberNames);
+        }
+        if (memberRepository.findAllByEvent(event).stream()
+                .anyMatch(member -> memberNames.contains(member.getName()))) {
+            throw new HaengdongException(HaengdongErrorCode.MEMBER_ALREADY_EXIST);
+        }
+    }
+
     public List<MemberAppResponse> getCurrentMembers(String token) {
         Event event = getEvent(token);
 
@@ -63,16 +69,6 @@ public class MemberService {
                 .stream()
                 .map(MemberAppResponse::of)
                 .toList();
-    }
-
-    private void validateMemberSave(List<String> memberNames, Event event) {
-        if (memberNamesDuplicated(memberNames)) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE, memberNames);
-        }
-        if (memberRepository.findAllByEvent(event).stream()
-                .anyMatch(member -> memberNames.contains(member.getName()))) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_ALREADY_EXIST);
-        }
     }
 
     public MembersDepositAppResponse findAllMembers(String token) {
@@ -86,80 +82,11 @@ public class MemberService {
     @Transactional
     public void updateMembers(String token, MembersUpdateAppRequest request) {
         Event event = getEvent(token);
-        validateMemberUpdate(request);
+        Members requestMembers = new Members(request.toMembers(event));
+        Members members = new Members(memberRepository.findAllByEvent(event));
 
-        List<Member> updatedMembers = request.members().stream()
-                .map(memberRequest -> memberRequest.toMember(event))
-                .toList();
-        List<Member> eventMembers = memberRepository.findAllByEvent(event);
-
-        validateUpdatedMembersExist(eventMembers, updatedMembers);
-        validateUpdatedNamesUnique(eventMembers, updatedMembers);
-        memberRepository.saveAll(updatedMembers);
-    }
-
-    private Event getEvent(String token) {
-        return eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
-    }
-
-    private void validateMemberUpdate(MembersUpdateAppRequest request) {
-        validateChangedNameUnique(request.members());
-        validateMemberUnique(request.members());
-    }
-
-    private void validateChangedNameUnique(List<MemberUpdateAppRequest> members) {
-        List<String> memberNames = members.stream()
-                .map(MemberUpdateAppRequest::name)
-                .toList();
-        if (memberNamesDuplicated(memberNames)) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
-        }
-    }
-
-    private boolean memberNamesDuplicated(List<String> memberNames) {
-        return memberNames.size() != Set.copyOf(memberNames).size();
-    }
-
-    private void validateMemberUnique(List<MemberUpdateAppRequest> members) {
-        List<Long> memberIds = members.stream()
-                .map(MemberUpdateAppRequest::id)
-                .distinct()
-                .toList();
-        if (members.size() != memberIds.size()) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
-        }
-    }
-
-    private void validateUpdatedMembersExist(List<Member> eventMembers, List<Member> updatedMembers) {
-        if (updatedMembers.size() != eventMembers.size()) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_UPDATE_MISMATCH);
-        }
-        Set<Member> members = new HashSet<>(eventMembers);
-
-        if (!members.containsAll(updatedMembers)) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_UPDATE_MISMATCH);
-        }
-    }
-
-    private void validateUpdatedNamesUnique(List<Member> eventMembers, List<Member> updatedMembers) {
-        Map<Long, String> eventMemberNames = eventMembers.stream()
-                .collect(toMap(Member::getId, Member::getName));
-        Set<String> existNames = new HashSet<>(eventMemberNames.values());
-
-        boolean memberNameDuplicated = updatedMembers.stream()
-                .filter(updatedMember -> isMemberNameUpdated(eventMemberNames, updatedMember))
-                .map(Member::getName)
-                .anyMatch(existNames::contains);
-
-        if (memberNameDuplicated) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE);
-        }
-    }
-
-    private boolean isMemberNameUpdated(Map<Long, String> eventMemberNames, Member updatedMember) {
-        String prevMemberName = eventMemberNames.get(updatedMember.getId());
-        return !updatedMember.hasName(prevMemberName);
+        members.validateUpdateAble(requestMembers);
+        memberRepository.saveAll(requestMembers.getMembers());
     }
 
     @Transactional
@@ -179,5 +106,10 @@ public class MemberService {
                 .forEach(bill -> bill.removeMemberBillDetail(member));
         billDetailRepository.deleteAllByMember(member);
         memberRepository.delete(member);
+    }
+
+    private Event getEvent(String token) {
+        return eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
     }
 }
