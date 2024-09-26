@@ -22,7 +22,7 @@ const EventPageLayout = () => {
 
   return (
     <MainLayout backgroundColor="gray">
-      <Flex justifyContent="spaceBetween" alignItems="center" margin="0 1rem">
+      <Flex justifyContent="spaceBetween" alignItems="center">
         <TopNav>
           <TopNav.Item routePath="/">
             <IconButton variants="none">

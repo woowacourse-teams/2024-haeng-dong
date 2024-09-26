@@ -10,7 +10,7 @@ const Nav = () => {
   const {theme} = useTheme();
   const navigate = useNavigate();
   return (
-    <Flex justifyContent="spaceBetween" alignItems="center" margin="0 1rem" height="37px">
+    <Flex justifyContent="spaceBetween" alignItems="center" height="37px">
       <TopNav>
         <TopNav.Item routePath="/">
           <IconButton variants="none">
@@ -21,7 +21,12 @@ const Nav = () => {
           <Text size="subTitle">행동대장</Text>
         </TopNav.Item>
       </TopNav>
-      <Button size="medium" variants="tertiary" onClick={() => navigate(ROUTER_URLS.createEvent)}>
+      <Button
+        size="medium"
+        variants="tertiary"
+        onClick={() => navigate(ROUTER_URLS.createEvent)}
+        style={{marginRight: '1rem'}}
+      >
         정산 시작하기
       </Button>
     </Flex>

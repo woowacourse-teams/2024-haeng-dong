@@ -8,7 +8,7 @@ type TopNavProps = React.PropsWithChildren & {
 
 const TopNav = ({children}: TopNavProps) => {
   return (
-    <nav>
+    <nav style={{margin: '0 1rem'}}>
       <ul css={topNavStyle}>{children}</ul>
     </nav>
   );
