@@ -362,10 +362,12 @@ class MemberServiceTest extends ServiceTestSupport {
         Member member1 = MEMBER1;
         Member member2 = MEMBER2;
         Member member3 = MEMBER3;
-        Bill bill = Bill.create(event, "title", 100000L, List.of(member1, member2, member3));
+        Bill bill1 = Bill.create(event, "title1", 100000L, List.of(member1));
+        Bill bill2 = Bill.create(event, "title2", 200000L, List.of(member1, member2, member3));
+        Bill bill3 = Bill.create(event, "title2", 200000L, List.of(member1, member2, member3));
         eventRepository.save(event);
         memberRepository.saveAll(List.of(member1, member2, member3));
-        billRepository.save(bill);
+        billRepository.saveAll(List.of(bill1, bill2, bill3));
 
         List<MemberAppResponse> currentMembers = memberService.getCurrentMembers(event.getToken());
 
