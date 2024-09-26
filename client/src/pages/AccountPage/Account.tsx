@@ -5,7 +5,7 @@ import BankSelectModal from '@components/Modal/BankSelectModal/BankSelectModal';
 
 import useAccount from '@hooks/useAccount';
 
-import {FixedButton, Flex, FunnelLayout, LabelInput, MainLayout, Top, TopNav} from '@components/Design';
+import {FixedButton, Flex, FunnelLayout, Input, MainLayout, Top, TopNav} from '@components/Design';
 
 import getDeletedLastPath from '@utils/getDeletedLastPath';
 
@@ -42,17 +42,16 @@ const Account = () => {
           <Top.Line text="어떤 계좌로 받을까요?" emphasize={['어떤 계좌']} />
         </Top>
         <Flex flexDirection="column" gap="1rem">
-          <LabelInput
+          <Input
             labelText="은행"
             placeholder="은행을 선택해주세요"
             value={bankName ?? ''}
             errorText={null}
             autoFocus={false}
-            isAlwaysOnLabel
             readOnly
             onClick={() => setIsBottomSheetOpen(true)}
           />
-          <LabelInput
+          <Input
             labelText="계좌번호"
             placeholder="ex) 030302-04-191806"
             errorText={accountNumberErrorMessage}
@@ -61,7 +60,6 @@ const Account = () => {
             onChange={handleAccount}
             onPaste={handleAccountOnPaste}
             autoFocus={false}
-            isAlwaysOnLabel
           />
           {isBottomSheetOpen && (
             <BankSelectModal

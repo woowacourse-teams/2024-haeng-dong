@@ -4,7 +4,7 @@ import Top from '@components/Design/components/Top/Top';
 
 import {UseSetEventNameStepReturnType} from '@hooks/useSetEventNameStep';
 
-import {FixedButton, Flex, LabelInput} from '@HDesign/index';
+import {FixedButton, Flex, Input} from '@HDesign/index';
 
 type SetEventNamePageProps = UseSetEventNameStepReturnType & {
   moveToNextStep: () => void;
@@ -37,7 +37,7 @@ const SetEventNameStep = ({
         <Top.Line text="행사의 이름은 무엇인가요?" emphasize={['행사의 이름']} />
       </Top>
       <form onSubmit={onSubmit}>
-        <LabelInput
+        <Input
           labelText="행사 이름"
           errorText={errorMessage ?? ''}
           value={eventName}

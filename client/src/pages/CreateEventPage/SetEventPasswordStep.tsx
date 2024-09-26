@@ -4,7 +4,7 @@ import Top from '@components/Design/components/Top/Top';
 
 import useSetEventPasswordStep, {UseSetEventPasswordStepReturnType} from '@hooks/useSetEventPasswordStep';
 
-import {FixedButton, LabelInput} from '@HDesign/index';
+import {FixedButton, Input} from '@HDesign/index';
 
 import RULE from '@constants/rule';
 
@@ -41,7 +41,7 @@ const SetEventPasswordStep = ({eventName, moveToNextStep, setEventToken}: SetEve
         <Top.Line text="비밀번호는 무엇으로 할까요?" emphasize={['비밀번호']} />
       </Top>
       <form onSubmit={submit}>
-        <LabelInput
+        <Input
           labelText="비밀번호"
           errorText={errorMessage}
           value={password}

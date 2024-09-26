@@ -5,6 +5,7 @@ import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
 import {Member} from 'types/serviceType';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+import {isIOS} from '@utils/detectDevice';
 
 import REGEXP from '@constants/regExp';
 
@@ -23,6 +24,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const [errorMessage, setErrorMessage] = useState('');
   const [nameInput, setNameInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const hiddenRef = useRef<HTMLInputElement>(null);
 
   const {postMembersAsync, isPending: isPendingPostMembers} = useRequestPostMembers();
 
@@ -59,21 +61,22 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
     }
   };
 
-  const handleNameInputEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && canAddMembers) {
-      if (!billInfo.members.map(({name}) => name).includes(nameInput)) {
-        setBillInfoMemberWithId(nameInput);
-      }
+  const addMembersFromInput = () => {
+    if (!billInfo.members.map(({name}) => name).includes(nameInput)) {
+      setBillInfoMemberWithId(nameInput);
       setNameInput('');
-      if (inputRef.current) {
-        inputRef.current.blur();
-        setTimeout(() => {
-          inputRef.current?.focus();
-        }, 0);
+      if (isIOS()) {
+        hiddenRef.current?.focus();
+        inputRef.current?.focus();
       }
-      if (event.nativeEvent.isComposing) {
-        return;
-      }
+    }
+  };
+
+  const handleNameInputEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.nativeEvent.isComposing) return;
+    if (event.key === 'Enter' && canAddMembers && inputRef.current) {
+      event.preventDefault();
+      addMembersFromInput();
     }
   };
 
@@ -116,6 +119,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
     errorMessage,
     nameInput,
     inputRef,
+    hiddenRef,
     handleNameInputChange,
     handleNameInputEnter,
     isPendingPostBill,

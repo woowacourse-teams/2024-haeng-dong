@@ -4,7 +4,7 @@ import Top from '@components/Design/components/Top/Top';
 
 import useEventLogin from '@hooks/useEventLogin';
 
-import {FixedButton, LabelInput} from '@HDesign/index';
+import {FixedButton, Input} from '@HDesign/index';
 
 import RULE from '@constants/rule';
 
@@ -28,7 +28,7 @@ const EventLoginPage = () => {
         <Top.Line text="숫자 비밀번호를 입력해 주세요." emphasize={['비밀번호']} />
       </Top>
       <form onSubmit={submitPassword}>
-        <LabelInput
+        <Input
           labelText="비밀번호"
           errorText={errorMessage}
           value={password}
@@ -38,7 +38,7 @@ const EventLoginPage = () => {
           onChange={e => handleChange(e)}
           isError={!!errorMessage}
           autoFocus
-        ></LabelInput>
+        ></Input>
         <FixedButton disabled={!canSubmit}>관리 페이지로</FixedButton>
       </form>
     </div>

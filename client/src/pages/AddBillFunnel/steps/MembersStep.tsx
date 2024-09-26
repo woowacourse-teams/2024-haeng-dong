@@ -1,4 +1,5 @@
 import {css} from '@emotion/react';
+import {useRef} from 'react';
 
 import Top from '@components/Design/components/Top/Top';
 import ChipButton from '@components/Design/components/ChipButton/ChipButton';
@@ -7,7 +8,9 @@ import {Member} from 'types/serviceType';
 import useMembersStep from '@hooks/useMembersStep';
 import {BillStep} from '@hooks/useAddBillFunnel';
 
-import {FixedButton, Flex, LabelInput, Text} from '@components/Design';
+import {FixedButton, Flex, Input, Text} from '@components/Design';
+
+import {isIOS} from '@utils/detectDevice';
 
 import {BillInfo} from '../AddBillFunnel';
 
@@ -23,6 +26,7 @@ const MembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) =>
     errorMessage,
     nameInput,
     inputRef,
+    hiddenRef,
     handleNameInputChange,
     handleNameInputEnter,
     isPendingPostBill,
@@ -46,7 +50,8 @@ const MembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) =>
           <Top.Line text={`${billInfo.title}에`} />
           <Top.Line text="참여한 사람은 누구인가요?" emphasize={['참여한 사람']} />
         </Top>
-        <LabelInput
+
+        <Input
           ref={inputRef}
           labelText="이름"
           errorText={errorMessage ?? ''}
@@ -89,6 +94,24 @@ const MembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) =>
           </div>
         </div>
       </div>
+      {isIOS() && (
+        <input
+          ref={hiddenRef}
+          css={css`
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            border: 0;
+            padding: 0;
+
+            white-space: nowrap;
+            clip-path: inset(100%);
+            clip: rect(0 0 0 0);
+            overflow: hidden;
+          `}
+        />
+      )}
       <FixedButton
         variants={isPendingPostBill || isPendingPostMembers ? 'loading' : 'primary'}
         disabled={!canSubmitMembers}
