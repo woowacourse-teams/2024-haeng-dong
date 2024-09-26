@@ -54,10 +54,14 @@ public class MemberService {
         if (memberNames.size() != Set.copyOf(memberNames).size()) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE, memberNames);
         }
-        if (memberRepository.findAllByEvent(event).stream()
-                .anyMatch(member -> memberNames.contains(member.getName()))) {
+        if (isDuplicatedMemberNames(memberNames, event)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_ALREADY_EXIST);
         }
+    }
+
+    private boolean isDuplicatedMemberNames(List<String> memberNames, Event event) {
+        return memberRepository.findAllByEvent(event).stream()
+                .anyMatch(member -> memberNames.contains(member.getName()));
     }
 
     public List<MemberAppResponse> getCurrentMembers(String token) {
