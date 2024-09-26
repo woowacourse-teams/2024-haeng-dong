@@ -6,6 +6,7 @@ const RULE = {
   maxMemberNameLength: 4,
   maxPrice: 10000000,
   maxBillNameLength: 30,
+  minAccountNumberLength: 8,
   maxAccountNumberLength: 30,
 };
 

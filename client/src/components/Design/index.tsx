@@ -17,14 +17,12 @@ import Input from './components/Input/Input';
 import LabelInput from './components/LabelInput/LabelInput';
 import ListButton from './components/ListButton/ListButton';
 import LabelGroupInput from './components/LabelGroupInput/LabelGroupInput';
-import Switch from './components/Switch/Switch';
 import Top from './components/Top/Top';
 import Tab from './components/Tabs/Tab';
 import Tabs from './components/Tabs/Tabs';
 import Text from './components/Text/Text';
 import TextButton from './components/TextButton/TextButton';
 import Title from './components/Title/Title';
-import Back from './components/TopNav/Back';
 import TopNav from './components/TopNav/TopNav';
 import DepositCheck from './components/DepositCheck/DepositCheck';
 import DepositToggle from './components/DepositToggle/DepositToggle';
@@ -48,7 +46,6 @@ export {
   LabelInput,
   ListButton,
   LabelGroupInput,
-  Switch,
   Top,
   Tab,
   Tabs,
@@ -56,7 +53,6 @@ export {
   TextButton,
   Title,
   TopNav,
-  Back,
   MainLayout,
   FunnelLayout,
   ContentLayout,

@@ -1,6 +1,7 @@
 import {createPortal} from 'react-dom';
 import {useState, useEffect} from 'react';
 
+import {useTheme} from '@HDesign/index';
 import {Button, Flex, Icon, Text} from '@HDesign/index';
 
 import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';
@@ -27,8 +28,9 @@ const Toast = ({
   onClose,
   ...htmlProps
 }: ToastProps) => {
+  const {theme} = useTheme();
   const [isVisible, setIsVisible] = useState(true);
-  const styleProps = {position, top, bottom};
+  const styleProps = {position, top, bottom, theme};
 
   const handleClickToClose = () => {
     if (!isCloseOnClick || !onClose) return;
