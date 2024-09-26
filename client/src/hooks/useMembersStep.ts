@@ -60,19 +60,16 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   };
 
   const handleNameInputEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && canAddMembers) {
+    if (event.key === 'Enter' && canAddMembers && inputRef.current) {
+      event.preventDefault();
       if (!billInfo.members.map(({name}) => name).includes(nameInput)) {
         setBillInfoMemberWithId(nameInput);
-      }
-      setNameInput('');
-      if (inputRef.current) {
+        setNameInput('');
+        inputRef.current.value = '';
         inputRef.current.blur();
         setTimeout(() => {
-          inputRef.current?.focus();
-        }, 0);
-      }
-      if (event.nativeEvent.isComposing) {
-        return;
+          if (inputRef.current) inputRef.current?.focus();
+        }, 10);
       }
     }
   };
