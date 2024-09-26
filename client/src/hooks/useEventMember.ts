@@ -3,6 +3,8 @@ import {useEffect, useState, useCallback, useMemo} from 'react';
 import {Report} from 'types/serviceType';
 import validateMemberName from '@utils/validate/validateMemberName';
 
+import MESSAGE from '@constants/message';
+
 import toast from './useToast/toast';
 import useRequestDeleteMember from './queries/member/useRequestDeleteMember';
 import useRequestPutMembers from './queries/member/useRequestPutMembers';
@@ -95,13 +97,13 @@ const useEventMember = (): ReturnUseEventMember => {
     // deleteMembers에 값이 하나라도 전재하면 반복문을 통해 DELETE api 요청
     if (deleteMembers.length > 0) {
       for (const id of deleteMembers) {
-        deleteAsyncMember({memberId: id});
+        await deleteAsyncMember({memberId: id});
       }
     }
 
     // 변경된 값(filteredChangedMembers)이 존재한다면 PUT 요청 실행
     if (reports.length > 0) {
-      putAsyncMember({
+      await putAsyncMember({
         members: reports.map(report => ({
           id: report.memberId,
           name: report.memberName,
@@ -109,6 +111,8 @@ const useEventMember = (): ReturnUseEventMember => {
         })),
       });
     }
+
+    toast.confirm(MESSAGE.confirmEditEventMember);
   }, [deleteMembers, reports, initialReports, deleteAsyncMember, putAsyncMember]);
 
   return {reports, canSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};

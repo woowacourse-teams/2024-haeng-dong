@@ -31,7 +31,7 @@ const NumberKeyboardBottomSheet = ({isOpened, onClose, ...props}: Props) => {
         gap: 1rem;
         bottom: 0;
         background-color: ${theme.colors.white};
-        z-index: 20;
+        z-index: ${theme.zIndex.numberKeyboardBottomSheet};
         touch-action: none;
 
         transform: ${isOpened ? 'translate3d(0, 0, 0)' : 'translate3d(0, 100%, 0)'};

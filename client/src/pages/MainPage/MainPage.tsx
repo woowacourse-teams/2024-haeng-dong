@@ -1,4 +1,4 @@
-import {MainLayout} from '@HDesign/index';
+import {Flex, MainLayout} from '@HDesign/index';
 
 import Nav from './Nav/Nav';
 import MainSection from './Section/MainSection';
