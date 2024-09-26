@@ -3,7 +3,7 @@ import {css} from '@emotion/react';
 import {Theme} from '@components/Design/theme/theme.type';
 import TYPOGRAPHY from '@components/Design/token/typography';
 
-export const eventMemberMangeStyle = () =>
+export const eventMemberStyle = () =>
   css({
     padding: '0 1rem',
   });
