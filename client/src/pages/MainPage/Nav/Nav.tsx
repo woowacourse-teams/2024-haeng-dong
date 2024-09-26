@@ -10,7 +10,7 @@ const Nav = () => {
   const {theme} = useTheme();
   const navigate = useNavigate();
   return (
-    <Flex justifyContent="spaceBetween" alignItems="center" height="37px">
+    <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '37px'}}>
       <TopNav>
         <TopNav.Item routePath="/">
           <IconButton variants="none">
@@ -29,7 +29,7 @@ const Nav = () => {
       >
         정산 시작하기
       </Button>
-    </Flex>
+    </header>
   );
 };
 
