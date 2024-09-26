@@ -12,14 +12,13 @@ import server.haengdong.application.request.MembersUpdateAppRequest;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
-import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillDetailRepository;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
-import server.haengdong.domain.member.Members;
 import server.haengdong.domain.member.Member;
 import server.haengdong.domain.member.MemberRepository;
+import server.haengdong.domain.member.UpdatedMembers;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
@@ -51,17 +50,18 @@ public class MemberService {
     }
 
     private void validateMemberSave(List<String> memberNames, Event event) {
-        if (memberNames.size() != Set.copyOf(memberNames).size()) {
+        Set<String> uniqueMemberNames = Set.copyOf(memberNames);
+        if (memberNames.size() != uniqueMemberNames.size()) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_DUPLICATE, memberNames);
         }
-        if (isDuplicatedMemberNames(memberNames, event)) {
+        if (isDuplicatedMemberNames(uniqueMemberNames, event)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_ALREADY_EXIST);
         }
     }
 
-    private boolean isDuplicatedMemberNames(List<String> memberNames, Event event) {
+    private boolean isDuplicatedMemberNames(Set<String> uniqueMemberNames, Event event) {
         return memberRepository.findAllByEvent(event).stream()
-                .anyMatch(member -> memberNames.contains(member.getName()));
+                .anyMatch(member -> uniqueMemberNames.contains(member.getName()));
     }
 
     public List<MemberAppResponse> getCurrentMembers(String token) {
@@ -86,11 +86,11 @@ public class MemberService {
     @Transactional
     public void updateMembers(String token, MembersUpdateAppRequest request) {
         Event event = getEvent(token);
-        Members requestMembers = new Members(request.toMembers(event));
-        Members members = new Members(memberRepository.findAllByEvent(event));
+        UpdatedMembers updatedMembers = new UpdatedMembers(request.toMembers(event));
+        List<Member> members = memberRepository.findAllByEvent(event);
 
-        members.validateUpdateAble(requestMembers);
-        memberRepository.saveAll(requestMembers.getMembers());
+        updatedMembers.validateUpdateAble(members);
+        memberRepository.saveAll(updatedMembers.getMembers());
     }
 
     @Transactional

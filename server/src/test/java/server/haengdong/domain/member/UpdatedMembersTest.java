@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongException;
 
-class MembersTest {
+class UpdatedMembersTest {
 
     @DisplayName("이벤트 이름들은 중복될 수 없다.")
     @Test
@@ -22,7 +22,7 @@ class MembersTest {
                 new Member(3L, event, "감자", false)
         );
 
-        assertThatThrownBy(() -> new Members(members))
+        assertThatThrownBy(() -> new UpdatedMembers(members))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("중복된 참여 인원 이름 변경 요청이 존재합니다.");
     }
@@ -36,7 +36,7 @@ class MembersTest {
         List<Member> members = List.of(member1, member2, member2);
 
 
-        assertThatThrownBy(() -> new Members(members))
+        assertThatThrownBy(() -> new UpdatedMembers(members))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("중복된 참여 인원 이름 변경 요청이 존재합니다.");
     }
@@ -50,8 +50,8 @@ class MembersTest {
         Member member3 = new Member(3L, event, "당근", false);
         List<Member> members = List.of(member1, member2, member3);
 
-        Members eventMembers = new Members(members);
-        assertThat(eventMembers.getMembers()).hasSize(3)
+        UpdatedMembers eventUpdatedMembers = new UpdatedMembers(members);
+        assertThat(eventUpdatedMembers.getMembers()).hasSize(3)
                 .containsExactlyInAnyOrder(member1, member2, member3);
     }
 
@@ -63,14 +63,14 @@ class MembersTest {
         Member member2 = new Member(2L, event, "감자", false);
         Member member3 = new Member(3L, event, "당근", false);
         Member member4 = new Member(4L, event, "양파", false);
-        Members members = new Members(List.of(member1, member2, member3, member4));
+        List<Member> members = List.of(member1, member2, member3, member4);
 
         Member updateMember1 = new Member(1L, event, "토다리", false);
         Member updateMember2 = new Member(2L, event, "쿠키", false);
         Member updateMember3 = new Member(3L, event, "백호", false);
-        Members updatedMembers = new Members(List.of(updateMember1, updateMember2, updateMember3));
+        UpdatedMembers updatedMembers = new UpdatedMembers(List.of(updateMember1, updateMember2, updateMember3));
 
-        assertThatThrownBy(() -> members.validateUpdateAble(updatedMembers))
+        assertThatThrownBy(() -> updatedMembers.validateUpdateAble(members))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
     }
@@ -83,15 +83,15 @@ class MembersTest {
         Member member2 = new Member(2L, event, "감자", false);
         Member member3 = new Member(3L, event, "당근", false);
         Member member4 = new Member(4L, event, "양파", false);
-        Members members = new Members(List.of(member1, member2, member3, member4));
+        List<Member> members = List.of(member1, member2, member3, member4);
 
         Member updateMember1 = new Member(1L, event, "토다리", false);
         Member updateMember2 = new Member(2L, event, "쿠키", false);
         Member updateMember3 = new Member(3L, event, "백호", false);
         Member updateMember4 = new Member(4L, event, "감자", false);
-        Members updatedMembers = new Members(List.of(updateMember1, updateMember2, updateMember3, updateMember4));
+        UpdatedMembers updatedMembers = new UpdatedMembers(List.of(updateMember1, updateMember2, updateMember3, updateMember4));
 
-        assertThatThrownBy(() -> members.validateUpdateAble(updatedMembers))
+        assertThatThrownBy(() -> updatedMembers.validateUpdateAble(members))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("중복된 행사 참여 인원 이름이 존재합니다.");
     }
@@ -104,15 +104,15 @@ class MembersTest {
         Member member2 = new Member(2L, event, "감자", false);
         Member member3 = new Member(3L, event, "당근", false);
         Member member4 = new Member(4L, event, "양파", false);
-        Members members = new Members(List.of(member1, member2, member3, member4));
+        List<Member> members = List.of(member1, member2, member3, member4);
 
         Member updateMember1 = new Member(1L, event, "토다리", false);
         Member updateMember2 = new Member(2L, event, "쿠키", false);
         Member updateMember3 = new Member(3L, event, "백호", false);
         Member updateMember4 = new Member(4L, event, "망쵸", false);
-        Members updatedMembers = new Members(List.of(updateMember1, updateMember2, updateMember3, updateMember4));
+        UpdatedMembers updatedMembers = new UpdatedMembers(List.of(updateMember1, updateMember2, updateMember3, updateMember4));
 
-        assertThatCode(() -> members.validateUpdateAble(updatedMembers))
+        assertThatCode(() -> updatedMembers.validateUpdateAble(members))
                 .doesNotThrowAnyException();
     }
 }

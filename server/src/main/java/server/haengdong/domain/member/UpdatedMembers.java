@@ -6,11 +6,11 @@ import java.util.Set;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
-public class Members {
+public class UpdatedMembers {
 
     private final Set<Member> members;
 
-    public Members(List<Member> members) {
+    public UpdatedMembers(List<Member> members) {
         validateNameUnique(members);
         validateMemberUnique(members);
         this.members = new HashSet<>(members);
@@ -31,19 +31,20 @@ public class Members {
         }
     }
 
-    public void validateUpdateAble(Members requestMembers) {
-        validateUpdatedMembersExist(requestMembers);
-        validateUpdatedNamesUnique(requestMembers);
+    public void validateUpdateAble(List<Member> members) {
+        Set<Member> uniqueMembers = Set.copyOf(members);
+        validateUpdatedMembersExist(uniqueMembers);
+        validateUpdatedNamesUnique(uniqueMembers);
     }
 
-    private void validateUpdatedMembersExist(Members requestMembers) {
-        if (!this.members.equals(requestMembers.members)) {
+    private void validateUpdatedMembersExist(Set<Member> members) {
+        if (!this.members.equals(members)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_UPDATE_MISMATCH);
         }
     }
 
-    private void validateUpdatedNamesUnique(Members requestMembers) {
-        boolean duplicated = requestMembers.members.stream()
+    private void validateUpdatedNamesUnique(Set<Member> members) {
+        boolean duplicated = members.stream()
                 .anyMatch(this::isMemberNameUpdated);
 
         if (duplicated) {
