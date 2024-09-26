@@ -34,7 +34,10 @@ const SetEventPasswordStep = ({eventName, moveToNextStep, setEventToken}: SetEve
       `}
     >
       <Top>
-        <Top.Line text="관리에 필요한 네자리 숫자" emphasize={['네자리 숫자']} />
+        <Top.Line
+          text={`관리에 필요한 ${RULE.maxEventPasswordLength}자리 숫자`}
+          emphasize={[`${RULE.maxEventPasswordLength}자리 숫자`]}
+        />
         <Top.Line text="비밀번호는 무엇으로 할까요?" emphasize={['비밀번호']} />
       </Top>
       <form onSubmit={submit}>

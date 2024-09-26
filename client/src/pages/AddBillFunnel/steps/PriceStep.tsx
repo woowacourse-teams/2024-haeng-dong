@@ -10,6 +10,8 @@ import {BillStep} from '@hooks/useAddBillFunnel';
 
 import {FixedButton} from '@components/Design';
 
+import RULE from '@constants/rule';
+
 import {BillInfo} from '../AddBillFunnel';
 
 interface Props {
@@ -47,7 +49,7 @@ const PriceStep = ({billInfo, setBillInfo, setStep}: Props) => {
       >
         <NumberKeyboard
           type="amount"
-          maxNumber={10000000}
+          maxNumber={RULE.maxPrice}
           initialValue={billInfo.price}
           onChange={handleNumberKeyboardChange}
         />

@@ -13,7 +13,7 @@ const EventLoginPage = () => {
     <>
       <Top>
         <Top.Line text="행사 생성 시 설정한" />
-        <Top.Line text="네자리 숫자 비밀번호를 입력해 주세요." />
+        <Top.Line text={`${RULE.maxEventPasswordLength}자리 숫자 비밀번호를 입력해 주세요.`} />
       </Top>
       <form onSubmit={submitPassword} style={{padding: '0 1rem'}}>
         <LabelInput

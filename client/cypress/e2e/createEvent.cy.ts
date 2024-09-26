@@ -1,5 +1,6 @@
 import {ROUTER_URLS} from '@constants/routerUrls';
 import CONSTANTS from '../constants/constants';
+import RULE from '@constants/rule';
 
 beforeEach(() => {
   cy.blockSentry();
@@ -55,7 +56,7 @@ describe('Flow: 랜딩 페이지에서부터 이벤트를 생성 완료하는 fl
       cy.get('input').should('have.value', '');
     });
 
-    it('행사 비밀번호에 4자리 이상 입력을 할 경우 처음 네 자리만 입력되어야 한다.', () => {
+    it(`행사 비밀번호에 ${RULE.maxEventPasswordLength}자리 이상 입력을 할 경우 처음 ${RULE.maxEventPasswordLength}자리만 입력되어야 한다.`, () => {
       cy.get('input').type('12345');
       cy.get('input').should('have.value', CONSTANTS.eventPassword);
     });
