@@ -32,7 +32,7 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
 
   // 로그인 관련 에러 코드
   TOKEN_NOT_FOUND: '로그인이 필요한 서비스에요.',
-  TOKEN_EXPIRED: '로그인이 만료되었어요.',
+  TOKEN_EXPIRED: '로그인이 만료되었어요. 다시 로그인해주세요.',
   TOKEN_INVALID: '비밀번호를 올바르게 입력해주세요.',
   FORBIDDEN: '접근할 수 없는 행사에요.',
 
