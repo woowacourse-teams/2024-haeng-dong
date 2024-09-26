@@ -46,7 +46,7 @@ const SetEventNameStep = ({
           onChange={handleEventNameChange}
           isError={!!errorMessage}
           autoFocus
-        ></LabelInput>
+        />
         <FixedButton disabled={!canSubmit}>다음</FixedButton>
       </form>
     </div>
