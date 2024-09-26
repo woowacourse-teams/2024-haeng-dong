@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {RefObject, useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
@@ -22,6 +22,7 @@ interface Props {
 const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [nameInput, setNameInput] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {postMembersAsync, isPending: isPendingPostMembers} = useRequestPostMembers();
 
@@ -59,15 +60,16 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   };
 
   const handleNameInputEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.nativeEvent.isComposing) {
-      return;
-    }
     if (event.key === 'Enter' && canAddMembers) {
       event.preventDefault();
       if (!billInfo.members.map(({name}) => name).includes(nameInput)) {
         setBillInfoMemberWithId(nameInput);
       }
       setNameInput('');
+      if (inputRef.current) {
+        inputRef.current.blur();
+        setTimeout(() => inputRef.current?.focus(), 0);
+      }
     }
   };
 
@@ -102,6 +104,10 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
     }
   }, [isSuccessPostBill]);
 
+  useEffect(() => {
+    console.log(nameInput);
+  }, [nameInput]);
+
   const handlePrevStep = () => {
     setStep('title');
   };
@@ -109,6 +115,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   return {
     errorMessage,
     nameInput,
+    inputRef,
     handleNameInputChange,
     handleNameInputEnter,
     isPendingPostBill,
