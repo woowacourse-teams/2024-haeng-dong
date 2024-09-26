@@ -31,7 +31,7 @@ public class UpdatedMembers {
         }
     }
 
-    public void validateUpdateAble(List<Member> originMembers) {
+    public void validateUpdatable(List<Member> originMembers) {
         Set<Member> uniqueMembers = Set.copyOf(originMembers);
         validateUpdatedMembersExist(uniqueMembers);
         validateUpdatedNamesUnique(uniqueMembers);

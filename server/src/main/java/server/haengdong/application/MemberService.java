@@ -90,7 +90,7 @@ public class MemberService {
         UpdatedMembers updatedMembers = new UpdatedMembers(request.toMembers(event));
         List<Member> originMembers = memberRepository.findAllByEvent(event);
 
-        updatedMembers.validateUpdateAble(originMembers);
+        updatedMembers.validateUpdatable(originMembers);
         memberRepository.saveAll(updatedMembers.getMembers());
     }
 

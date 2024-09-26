@@ -70,7 +70,7 @@ class UpdatedMembersTest {
         Member updateMember3 = new Member(3L, event, "백호", false);
         UpdatedMembers updatedMembers = new UpdatedMembers(List.of(updateMember1, updateMember2, updateMember3));
 
-        assertThatThrownBy(() -> updatedMembers.validateUpdateAble(members))
+        assertThatThrownBy(() -> updatedMembers.validateUpdatable(members))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
     }
@@ -91,14 +91,14 @@ class UpdatedMembersTest {
         Member updateMember4 = new Member(4L, event, "감자", false);
         UpdatedMembers updatedMembers = new UpdatedMembers(List.of(updateMember1, updateMember2, updateMember3, updateMember4));
 
-        assertThatThrownBy(() -> updatedMembers.validateUpdateAble(members))
+        assertThatThrownBy(() -> updatedMembers.validateUpdatable(members))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("행사에 중복된 참여자 이름이 존재합니다.");
     }
 
     @DisplayName("이벤트의 참여자들 전체를 업데이트 검증한다.")
     @Test
-    void validateUpdateAble() {
+    void validateUpdatable() {
         Event event = new Event("행동대장 회식", "1234", "1231415jaksdf");
         Member member1 = new Member(1L, event, "고구마", false);
         Member member2 = new Member(2L, event, "감자", false);
@@ -112,7 +112,7 @@ class UpdatedMembersTest {
         Member updateMember4 = new Member(4L, event, "망쵸", false);
         UpdatedMembers updatedMembers = new UpdatedMembers(List.of(updateMember1, updateMember2, updateMember3, updateMember4));
 
-        assertThatCode(() -> updatedMembers.validateUpdateAble(members))
+        assertThatCode(() -> updatedMembers.validateUpdatable(members))
                 .doesNotThrowAnyException();
     }
 }
