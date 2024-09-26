@@ -120,7 +120,7 @@ class MemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> memberService.saveMembers(event.getToken(), request))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessageContaining("중복된 행사 참여 인원 이름이 존재합니다.");
+                .hasMessageContaining("행사에 중복된 참여자 이름이 존재합니다.");
     }
 
     @DisplayName("행사 참여 인원을 삭제한다.")
@@ -329,7 +329,7 @@ class MemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> memberService.updateMembers(event.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage("중복된 행사 참여 인원 이름이 존재합니다.");
+                .hasMessage("행사에 중복된 참여자 이름이 존재합니다.");
     }
 
     @DisplayName("행사에 참여한 전체 인원을 조회한다.")
