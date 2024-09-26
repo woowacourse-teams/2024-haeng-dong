@@ -22,6 +22,7 @@ const MembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) =>
   const {
     errorMessage,
     nameInput,
+    inputRef,
     handleNameInputChange,
     handleNameInputEnter,
     isPendingPostBill,
@@ -46,6 +47,7 @@ const MembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) =>
           <Top.Line text="참여한 사람은 누구인가요?" emphasize={['참여한 사람']} />
         </Top>
         <LabelInput
+          ref={inputRef}
           labelText="이름"
           errorText={errorMessage ?? ''}
           value={nameInput}
