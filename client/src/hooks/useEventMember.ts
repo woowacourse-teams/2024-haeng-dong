@@ -18,8 +18,8 @@ interface ReturnUseEventMember {
 
 const useEventMember = (): ReturnUseEventMember => {
   const {reports: initialReports} = useRequestGetReports();
-  const {deleteMember} = useRequestDeleteMember();
-  const {putMember} = useRequestPutMembers();
+  const {deleteAsyncMember} = useRequestDeleteMember();
+  const {putAsyncMember} = useRequestPutMembers();
 
   const [reports, setReports] = useState<Report[]>(initialReports);
   const [deleteMembers, setDeleteMembers] = useState<number[]>([]);
@@ -91,35 +91,21 @@ const useEventMember = (): ReturnUseEventMember => {
     // deleteMembers에 값이 하나라도 전재하면 반복문을 통해 DELETE api 요청
     if (deleteMembers.length > 0) {
       for (const id of deleteMembers) {
-        await deleteMember({memberId: id});
+        deleteAsyncMember({memberId: id});
       }
     }
 
-    // DELETE 요청이 선행 된 후, PUT 요청 진행
-    // 초기 reports와 비교하여 달라진 member 데이터만을 filter
-    const changedMembers = reports
-      .filter(report => {
-        // 각 report와 동일한 초기 report 데이터를 찾기
-        const initialReport = initialReports.find(initial => initial.memberId === report.memberId);
-
-        // 초기 데이터와 비교했을 때, 변경사항이 발생한 것만을 filter
-        return (
-          initialReport &&
-          (initialReport.memberName !== report.memberName || initialReport.isDeposited !== report.isDeposited)
-        );
-      })
-      .map(report => ({
-        // server로 요청할 때, price는 제외해야 하기 때문에 map 진행
-        id: report.memberId,
-        name: report.memberName,
-        isDeposited: report.isDeposited,
-      }));
-
-    // 변경된 사항이 존재한다면 해당 reports만을 PUT api 요청
-    if (changedMembers.length > 0) {
-      await putMember({members: changedMembers});
+    // 변경된 값(filteredChangedMembers)이 존재한다면 PUT 요청 실행
+    if (reports.length > 0) {
+      putAsyncMember({
+        members: reports.map(report => ({
+          id: report.memberId,
+          name: report.memberName,
+          isDeposited: report.isDeposited,
+        })),
+      });
     }
-  }, [deleteMembers, reports, initialReports, deleteMember, putMember]);
+  }, [deleteMembers, reports, initialReports, deleteAsyncMember, putAsyncMember]);
 
   return {reports, isCanSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus};
 };

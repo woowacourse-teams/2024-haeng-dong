@@ -10,7 +10,7 @@ const useRequestDeleteMember = () => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  const {mutate, ...rest} = useMutation({
+  const {mutateAsync, ...rest} = useMutation({
     mutationFn: ({memberId}: RequestDeleteMember) => requestDeleteMember({eventId, memberId}),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
@@ -20,7 +20,7 @@ const useRequestDeleteMember = () => {
     },
   });
 
-  return {deleteMember: mutate, ...rest};
+  return {deleteAsyncMember: mutateAsync, ...rest};
 };
 
 export default useRequestDeleteMember;
