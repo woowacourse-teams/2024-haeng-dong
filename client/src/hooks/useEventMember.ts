@@ -94,28 +94,15 @@ const useEventMember = (): ReturnUseEventMember => {
     }
 
     // DELETE 요청이 선행 된 후, PUT 요청 진행
-    // 초기 reports와 비교하여 달라진 member 데이터만을 filter
-    const changedMembers = reports
-      .filter(report => {
-        // 각 report와 동일한 초기 report 데이터를 찾기
-        const initialReport = initialReports.find(initial => initial.memberId === report.memberId);
-
-        // 초기 데이터와 비교했을 때, 변경사항이 발생한 것만을 filter
-        return (
-          initialReport &&
-          (initialReport.memberName !== report.memberName || initialReport.isDeposited !== report.isDeposited)
-        );
-      })
-      .map(report => ({
-        // server로 요청할 때, price는 제외해야 하기 때문에 map 진행
-        id: report.memberId,
-        name: report.memberName,
-        isDeposited: report.isDeposited,
-      }));
-
-    // 변경된 사항이 존재한다면 해당 reports만을 PUT api 요청
-    if (changedMembers.length > 0) {
-      await putMember({members: changedMembers});
+    if (reports.length > 0) {
+      await putMember({
+        members: reports.map(report => ({
+          // server로 요청할 때, price는 제외해야 하기 때문에 map 진행
+          id: report.memberId,
+          name: report.memberName,
+          isDeposited: report.isDeposited,
+        })),
+      });
     }
 
     toast.confirm('수정이 완료되었어요 :)');
