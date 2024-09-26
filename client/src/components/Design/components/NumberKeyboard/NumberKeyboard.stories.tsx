@@ -5,6 +5,8 @@ import {useRef, useState} from 'react';
 
 import {Flex, Input} from '@components/Design';
 
+import RULE from '@constants/rule';
+
 import NumberKeyboard from './NumberKeyboard';
 
 const meta = {
@@ -19,7 +21,7 @@ const meta = {
   },
   args: {
     type: 'amount',
-    maxNumber: 10000000,
+    maxNumber: RULE.maxPrice,
     onChange: () => {},
   },
 } satisfies Meta<typeof NumberKeyboard>;

@@ -16,19 +16,20 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
   MEMBER_NAME_DUPLICATE: '요청 본문에 중복된 이름이 존재해요. \n(ex. [이상, 이상, 감자, 백호])',
   MEMBER_ALREADY_EXIST: '이미 행사에 참여중인 인원이에요. \n겹치지 않도록 다른 이름을 사용해주세요.',
 
-  MEMBER_ACTION_NOT_FOUND: '존재하지 않는 멤버 액션이에요.',
-  MEMBER_ACTION_STATUS_INVALID: '유효하지 않은 멤버 액션 상태에요.',
   MEMBER_NOT_EXIST: '현재 참여하고 있지 않은 인원이 존재해요',
   MEMBER_UPDATE_MISMATCH: '업데이트 요청된 참여자 정보와 기존 행사 참여자 정보가 일치하지 않아요.',
 
   // 지출 관련 에러 코드
-  BILL_ACTION_NOT_FOUND: '존재하지 않는 지출 액션이에요.',
-  BILL_ACTION_TITLE_INVALID: `지출 내역 이름은 1자 이상 ${RULE.maxBillNameLength} 이하여야 해요.`,
-  BILL_ACTION_PRICE_INVALID: `지출 금액은 ${RULE.maxPrice.toLocaleString('ko-KR')} 이하의 자연수여야 해요.`,
+  BILL_NOT_FOUND: '존재하지 않는 지출 액션이에요.',
+  BILL_TITLE_INVALID: `지출 내역 이름은 1자 이상 ${RULE.maxBillNameLength} 이하여야 해요.`,
+  BILL_PRICE_INVALID: `지출 금액은 ${RULE.maxPrice.toLocaleString('ko-KR')} 이하의 자연수여야 해요.`,
+  BILL_DETAIL_NOT_FOUND: '존재하지 않는 참여자 지출입니다.',
+  BILL_PRICE_NOT_MATCHED: '지출 총액이 일치하지 않아요.',
+  DIFFERENT_STEP_MEMBERS: '회원 목록이 일치하지 않아요.',
 
   // 계좌 관련 에러 코드
   BANK_NAME_INVALID: '지원하지 않는 은행이에요. 다른 은행을 입력해주세요.',
-  ACCOUNT_LENGTH_INVALID: '계좌 번호는 8자 이상 30자 이하로 입력 가능해요.',
+  ACCOUNT_LENGTH_INVALID: `계좌 번호는 8자 이상 ${RULE.maxAccountNumberLength}자 이하로 입력 가능해요.`,
 
   // 로그인 관련 에러 코드
   TOKEN_NOT_FOUND: '로그인이 필요한 서비스에요.',
@@ -40,7 +41,6 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
   MESSAGE_NOT_READABLE: '읽을 수 없는 요청이에요.',
   NO_RESOURCE_REQUEST: '존재하지 않는 자원이에요.',
   REQUEST_METHOD_NOT_SUPPORTED: '지원하지 않는 요청 메서드에요.',
-  ACTION_NOT_FOUND: '존재하지 않는 액션이에요.',
   REQUEST_EMPTY: '요청 본문에 빈 값이 존재해요',
 
   // 예측할 수 없는 에러 코드

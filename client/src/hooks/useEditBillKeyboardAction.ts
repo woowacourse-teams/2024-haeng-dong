@@ -3,6 +3,8 @@ import {useRef, useState} from 'react';
 import {BillDetail} from 'types/serviceType';
 import {RequestPutBill} from '@apis/request/bill';
 
+import RULE from '@constants/rule';
+
 import useEditBillPageScroll from './useEditBillPageScroll';
 
 interface Props {
@@ -25,7 +27,7 @@ const useEditBillKeyboardAction = ({newBill, billDetails, newBillDetails}: Props
     (sum, detail) => (detail.isFixed && detail.id !== keyboardTargetId ? sum + detail.price : sum),
     0,
   );
-  const keyboardMaxPrice = keyboardTargetId === 0 ? 10000000 : Math.max(0, newBill.price - totalFixedPrice);
+  const keyboardMaxPrice = keyboardTargetId === 0 ? RULE.maxPrice : Math.max(0, newBill.price - totalFixedPrice);
   const keyboardInitialValue =
     newBillDetails.find(({id}) => id === keyboardTargetId)?.price.toLocaleString('ko-kr') ??
     newBill.price.toLocaleString('ko-kr');
