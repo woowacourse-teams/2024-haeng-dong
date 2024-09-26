@@ -13,14 +13,13 @@ const useSetEventNameStep = () => {
     const newValue = event.target.value;
     const validation = validateEventName(newValue);
 
-    setCanSubmit(newValue.length !== 0);
-    setErrorMessage(validation.errorMessage);
-
-    if (validation.isValid) {
-      setEventName(newValue);
+    if (!validation.isValid) {
+      setErrorMessage(validation.errorMessage);
     } else {
-      event.target.value = eventName;
+      setErrorMessage('');
+      setEventName(newValue);
     }
+    setCanSubmit(newValue.length !== 0);
   };
 
   return {

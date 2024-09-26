@@ -14,7 +14,7 @@ const STEP_SEQUENCE: CreateEventStep[] = ['eventName', 'eventPassword', 'complet
 
 const CreateEventFunnel = () => {
   const navigate = useNavigate();
-  const {moveToNextStep, moveToPrevStep, Step, Funnel, step} = useFunnel({
+  const {moveToNextStep, moveToPrevStep, Funnel, step} = useFunnel({
     defaultStep: 'eventName',
     stepList: STEP_SEQUENCE,
   });
@@ -36,22 +36,22 @@ const CreateEventFunnel = () => {
           <TopNav.Item displayName="뒤로가기" noEmphasis routePath="" onHandleRouteInFunnel={handleBack} />
         )}
       </TopNav>
-      <Funnel>
-        <Step name="eventName">
+      <Funnel step={step}>
+        <Funnel.Step name="eventName">
           <SetEventNameStep moveToNextStep={moveToNextStep} {...eventNameProps} />
-        </Step>
+        </Funnel.Step>
 
-        <Step name="eventPassword">
+        <Funnel.Step name="eventPassword">
           <SetEventPasswordStep
             moveToNextStep={moveToNextStep}
             eventName={eventNameProps.eventName}
             setEventToken={setEventToken}
           />
-        </Step>
+        </Funnel.Step>
 
-        <Step name="complete">
+        <Funnel.Step name="complete">
           <CompleteCreateEventStep eventToken={eventToken} />
-        </Step>
+        </Funnel.Step>
       </Funnel>
     </MainLayout>
   );
