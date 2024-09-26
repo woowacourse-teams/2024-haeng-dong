@@ -1,9 +1,13 @@
 import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
+
+import validateEventName from '@utils/validate/validateEventName';
 
 import useFunnel from '@hooks/useFunnel';
 import useCreateEventData from '@hooks/useCreateEventData';
+import useSetEventNameStep from '@hooks/useSetEventNameStep';
 
-import {Back, MainLayout, TopNav} from '@components/Design';
+import {Back, MainLayout, TopNav, LabelInput} from '@components/Design';
 
 import SetEventNameStep from './SetEventNameStep';
 import SetEventPasswordStep from './SetEventPasswordStep';
@@ -14,7 +18,7 @@ const STEP_SEQUENCE: CreateEventStep[] = ['eventName', 'eventPassword', 'complet
 
 const CreateEventFunnel = () => {
   const navigate = useNavigate();
-  const {moveToNextStep, moveToPrevStep, Step, Funnel, step} = useFunnel({
+  const {moveToNextStep, moveToPrevStep, Funnel, step} = useFunnel({
     defaultStep: 'eventName',
     stepList: STEP_SEQUENCE,
   });
@@ -32,22 +36,22 @@ const CreateEventFunnel = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>{step !== STEP_SEQUENCE[STEP_SEQUENCE.length - 1] && <Back onClick={handleBack} />}</TopNav>
-      <Funnel>
-        <Step name="eventName">
+      <Funnel step={step}>
+        <Funnel.Step name="eventName">
           <SetEventNameStep moveToNextStep={moveToNextStep} {...eventNameProps} />
-        </Step>
+        </Funnel.Step>
 
-        <Step name="eventPassword">
+        <Funnel.Step name="eventPassword">
           <SetEventPasswordStep
             moveToNextStep={moveToNextStep}
             eventName={eventNameProps.eventName}
             setEventToken={setEventToken}
           />
-        </Step>
+        </Funnel.Step>
 
-        <Step name="complete">
+        <Funnel.Step name="complete">
           <CompleteCreateEventStep eventToken={eventToken} />
-        </Step>
+        </Funnel.Step>
       </Funnel>
     </MainLayout>
   );
