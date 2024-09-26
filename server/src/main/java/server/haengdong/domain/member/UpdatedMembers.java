@@ -31,20 +31,20 @@ public class UpdatedMembers {
         }
     }
 
-    public void validateUpdateAble(List<Member> members) {
-        Set<Member> uniqueMembers = Set.copyOf(members);
+    public void validateUpdateAble(List<Member> originMembers) {
+        Set<Member> uniqueMembers = Set.copyOf(originMembers);
         validateUpdatedMembersExist(uniqueMembers);
         validateUpdatedNamesUnique(uniqueMembers);
     }
 
-    private void validateUpdatedMembersExist(Set<Member> members) {
-        if (!this.members.equals(members)) {
+    private void validateUpdatedMembersExist(Set<Member> originMembers) {
+        if (!this.members.equals(originMembers)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_UPDATE_MISMATCH);
         }
     }
 
-    private void validateUpdatedNamesUnique(Set<Member> members) {
-        boolean duplicated = members.stream()
+    private void validateUpdatedNamesUnique(Set<Member> originMembers) {
+        boolean duplicated = originMembers.stream()
                 .anyMatch(this::isMemberNameUpdated);
 
         if (duplicated) {
@@ -52,10 +52,10 @@ public class UpdatedMembers {
         }
     }
 
-    private boolean isMemberNameUpdated(Member updatedMember) {
+    private boolean isMemberNameUpdated(Member originMembers) {
         return this.members.stream()
-                .filter(member -> !member.getId().equals(updatedMember.getId()))
-                .anyMatch(member -> member.hasName(updatedMember.getName()));
+                .filter(member -> !member.getId().equals(originMembers.getId()))
+                .anyMatch(member -> member.hasName(originMembers.getName()));
     }
 
     public List<Member> getMembers() {

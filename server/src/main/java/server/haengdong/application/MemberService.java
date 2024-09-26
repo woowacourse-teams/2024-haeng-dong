@@ -88,9 +88,9 @@ public class MemberService {
     public void updateMembers(String token, MembersUpdateAppRequest request) {
         Event event = getEvent(token);
         UpdatedMembers updatedMembers = new UpdatedMembers(request.toMembers(event));
-        List<Member> members = memberRepository.findAllByEvent(event);
+        List<Member> originMembers = memberRepository.findAllByEvent(event);
 
-        updatedMembers.validateUpdateAble(members);
+        updatedMembers.validateUpdateAble(originMembers);
         memberRepository.saveAll(updatedMembers.getMembers());
     }
 
