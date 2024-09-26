@@ -31,7 +31,7 @@ const EditBillPage = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
-        <TopNav.Element displayName="뒤로가기" noEmphasis routePath="-1" />
+        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
       </TopNav>
       <div
         css={css`

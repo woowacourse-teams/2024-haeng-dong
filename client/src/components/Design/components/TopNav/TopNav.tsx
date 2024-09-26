@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import NavElement from './NavElement';
+import NavItem from './NavItem';
 import {topNavStyle} from './TopNav.style';
 
 type TopNavProps = React.PropsWithChildren & {
@@ -14,6 +14,6 @@ const TopNav = ({children}: TopNavProps) => {
   );
 };
 
-TopNav.Element = NavElement;
+TopNav.Item = NavItem;
 
 export default TopNav;

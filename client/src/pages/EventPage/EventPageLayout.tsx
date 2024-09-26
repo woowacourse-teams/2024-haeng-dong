@@ -24,13 +24,13 @@ const EventPageLayout = () => {
     <MainLayout backgroundColor="gray">
       <Flex justifyContent="spaceBetween" alignItems="center" margin="0 1rem 0 0">
         <TopNav>
-          <TopNav.Element routePath="/">
+          <TopNav.Item routePath="/">
             <IconButton variants="none">
               <Icon iconType="heundeut" />
             </IconButton>
-          </TopNav.Element>
-          <TopNav.Element displayName="홈" routePath="/home" />
-          <TopNav.Element displayName="관리" routePath="/admin" />
+          </TopNav.Item>
+          <TopNav.Item displayName="홈" routePath="/home" />
+          <TopNav.Item displayName="관리" routePath="/admin" />
         </TopNav>
         {!isLoginPage && <ShareEventButton eventOutline={eventOutline} />}
       </Flex>

@@ -1,14 +1,15 @@
 /** @jsxImportSource @emotion/react */
+import type {NavItemProps} from './NavItem.type';
+
 import {useLocation, useNavigate} from 'react-router-dom';
 
 import getDeletedLastPath from '@utils/getDeletedLastPath';
 
 import TextButton from '../TextButton/TextButton';
 
-import {navElementStyle} from './NavElememt.style';
-import {NavElementProps} from './NavElement.type';
+import {navItemStyle} from './NavItem.style';
 
-const NavElement = ({displayName, routePath, onHandleRouteInFunnel, noEmphasis = false, children}: NavElementProps) => {
+const NavItem = ({displayName, routePath, onHandleRouteInFunnel, noEmphasis = false, children}: NavItemProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const matchPath = location.pathname.includes(routePath);
@@ -39,7 +40,7 @@ const NavElement = ({displayName, routePath, onHandleRouteInFunnel, noEmphasis =
   };
 
   return (
-    <li css={navElementStyle} onClick={handleNavigation}>
+    <li css={navItemStyle} onClick={handleNavigation}>
       {children ? (
         children
       ) : (
@@ -51,4 +52,4 @@ const NavElement = ({displayName, routePath, onHandleRouteInFunnel, noEmphasis =
   );
 };
 
-export default NavElement;
+export default NavItem;
