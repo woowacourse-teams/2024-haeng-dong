@@ -12,13 +12,14 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 interface Prop {
   step: StepType;
+  isAdmin: boolean;
 }
 
-const Step = ({step}: Prop) => {
+const Step = ({step, isAdmin}: Prop) => {
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
   const handleClickStep = (bill: Bill) => {
-    navigate(`/event/${eventId}/edit-bill`, {state: {bill}});
+    if (isAdmin) navigate(`/event/${eventId}/edit-bill`, {state: {bill}});
   };
 
   return (
