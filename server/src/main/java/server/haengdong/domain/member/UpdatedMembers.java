@@ -3,6 +3,7 @@ package server.haengdong.domain.member;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
@@ -17,10 +18,10 @@ public class UpdatedMembers {
     }
 
     private void validateNameUnique(List<Member> members) {
-        List<String> memberNames = members.stream()
+        Set<String> uniqueNames = members.stream()
                 .map(Member::getName)
-                .toList();
-        if (memberNames.size() != Set.copyOf(memberNames).size()) {
+                .collect(Collectors.toSet());
+        if (members.size() != uniqueNames.size()) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_CHANGE_DUPLICATE);
         }
     }
