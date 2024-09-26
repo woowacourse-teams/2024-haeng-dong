@@ -19,6 +19,7 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   toss: 'white',
   meatballs: 'black',
   editPencil: 'gray',
+  heundeut: 'gray',
 };
 
 export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {
