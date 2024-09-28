@@ -17,7 +17,6 @@ const meta = {
     },
   },
   args: {
-    clipboardText: '토스뱅크 010100-10-123123',
     onBankButtonClick: () => console.log('안녕'),
   },
 } satisfies Meta<typeof BankSendButton>;
