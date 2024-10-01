@@ -1,12 +1,9 @@
 import {useQueries} from '@tanstack/react-query';
-import {useEffect} from 'react';
 
 import {requestGetEvent} from '@apis/request/event';
 import {requestGetReports} from '@apis/request/report';
 import {requestGetSteps} from '@apis/request/step';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
-
-import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
@@ -28,14 +25,6 @@ const EventLoader = ({children, ...props}: React.PropsWithChildren<WithErrorHand
       },
     ],
   });
-
-  const {updateTotalExpenseAmount} = useTotalExpenseAmountStore();
-
-  useEffect(() => {
-    if (queries[2].isSuccess && queries[2].data) {
-      updateTotalExpenseAmount(queries[2].data);
-    }
-  }, [queries[2].data, queries[2].isSuccess, updateTotalExpenseAmount]);
 
   const isLoading = queries.some(query => query.isLoading === true);
 
