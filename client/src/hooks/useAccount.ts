@@ -57,22 +57,8 @@ const useAccount = () => {
     setTimeout(() => setIsPasting(false), 0);
   };
 
-  const getChangedField = () => {
-    const changedField: Partial<Event> = {};
-
-    if (bankNameState.trim() !== '' && bankName !== bankNameState) {
-      changedField.bankName = bankNameState;
-    }
-
-    if (accountNumberState.trim() !== '' && accountNumber !== accountNumberState) {
-      changedField.accountNumber = accountNumberState;
-    }
-
-    return changedField;
-  };
-
   const enrollAccount = async () => {
-    await patchEventOutline(getChangedField());
+    await patchEventOutline({bankName: bankNameState, accountNumber: accountNumberState});
   };
 
   useEffect(() => {
