@@ -3,8 +3,6 @@ import {useOutletContext} from 'react-router-dom';
 
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
-import {isAndroid, isIOS} from '@utils/detectDevice';
-
 import {ERROR_MESSAGE} from '@constants/errorMessage';
 
 import {useSearchReports} from './useSearchReports';
@@ -19,7 +17,7 @@ const useReportsPage = () => {
     setMemberName(target.value);
   };
 
-  const onBankButtonClick = () => {
+  const onBankButtonClick = (amount: number) => {
     if (bankName.trim() === '' || accountNumber.trim() === '') {
       toast.error(ERROR_MESSAGE.emptyBank, {
         showingTime: 3000,
@@ -28,22 +26,12 @@ const useReportsPage = () => {
       return;
     }
 
-    if (isAndroid()) {
-      const url = 'supertoss://';
-      window.location.href = url;
-      return;
-    }
-
-    if (isIOS()) {
-      const url = 'supertoss://send';
-      window.location.href = url;
-      return;
-    }
+    const url = `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`;
+    window.location.href = url;
   };
 
   const expenseListProp = matchedReports.map(member => ({
     ...member,
-    clipboardText: `${bankName} ${accountNumber} ${member.price}원`,
     onBankButtonClick,
   }));
 

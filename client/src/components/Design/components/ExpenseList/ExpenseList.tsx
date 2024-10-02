@@ -13,14 +13,7 @@ import DepositCheck from '../DepositCheck/DepositCheck';
 
 import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';
 
-function ExpenseItem({
-  memberName,
-  price,
-  isDeposited,
-  onBankButtonClick,
-  clipboardText,
-  ...divProps
-}: ExpenseItemProps) {
+function ExpenseItem({memberName, price, isDeposited, onBankButtonClick, ...divProps}: ExpenseItemProps) {
   return (
     <Flex
       justifyContent="spaceBetween"
@@ -39,11 +32,7 @@ function ExpenseItem({
       <Flex alignItems="center" gap="0.5rem">
         <Amount amount={price} />
         {isMobileDevice() ? (
-          <BankSendButton
-            clipboardText={clipboardText}
-            onBankButtonClick={onBankButtonClick}
-            isDeposited={price <= 0 || isDeposited}
-          />
+          <BankSendButton onBankButtonClick={() => onBankButtonClick(price)} isDeposited={price <= 0 || isDeposited} />
         ) : (
           <IconButton variants="none" size="small">
             <Icon iconType="rightChevron" />

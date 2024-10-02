@@ -1,8 +1,7 @@
 import {Report} from 'types/serviceType';
 
 export type ExpenseItemCustomProps = Report & {
-  onBankButtonClick: () => void;
-  clipboardText: string;
+  onBankButtonClick: (amount: number) => void;
 };
 
 export type ExpenseItemProps = React.ComponentProps<'div'> & ExpenseItemCustomProps;
