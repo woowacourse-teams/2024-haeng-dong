@@ -3,6 +3,7 @@ import {lazy, Suspense} from 'react';
 
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
+import EventLoader from '@components/Loader/EventLoader';
 
 import {EventPage} from '@pages/EventPage';
 
@@ -40,9 +41,16 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTER_URLS.event,
-        element: <EventPage />,
+        element: (
+          <EventLoader>
+            <EventPage />
+          </EventLoader>
+        ),
         children: [
-          {path: ROUTER_URLS.eventManage, element: <AdminPage />},
+          {
+            path: ROUTER_URLS.eventManage,
+            element: <AdminPage />,
+          },
           {path: ROUTER_URLS.home, element: <HomePage />},
           {
             path: ROUTER_URLS.eventLogin,
