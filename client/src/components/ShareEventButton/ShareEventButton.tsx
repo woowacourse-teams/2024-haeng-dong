@@ -52,7 +52,7 @@ const ShareEventButton = ({eventOutline}: ShareEventButtonProps) => {
         })
       }
     >
-      <Button size="small" variants="tertiary" onClick={induceBankInfoBeforeShare}>
+      <Button size="small" variants="tertiary" onClick={induceBankInfoBeforeShare} style={{marginRight: '1rem'}}>
         정산 초대하기
       </Button>
     </CopyToClipboard>
