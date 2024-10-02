@@ -12,6 +12,11 @@ const QueryClientBoundary = ({children}: React.PropsWithChildren) => {
     defaultOptions: {
       queries: {
         throwOnError: true,
+
+        staleTime: 1000 * 60, // 1 minute
+        gcTime: 1000 * 60, // 1 minute
+
+        refetchOnWindowFocus: false, // window focus가 다시 일어났을 때 refetch하지 않음
       },
     },
     queryCache: new QueryCache({
