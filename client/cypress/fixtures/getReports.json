@@ -1,0 +1,46 @@
+{
+  "reports": [
+    {
+      "memberId": 1,
+      "memberName": "망쵸",
+      "isDeposited": true,
+      "price": 30000
+    },
+    {
+      "memberId": 2,
+      "memberName": "백호",
+      "isDeposited": true,
+      "price": 30000
+    },
+    {
+      "memberId": 3,
+      "memberName": "감자",
+      "isDeposited": false,
+      "price": 20000
+    },
+    {
+      "memberId": 4,
+      "memberName": "이상",
+      "isDeposited": false,
+      "price": 10000
+    },
+    {
+      "memberId": 5,
+      "memberName": "소하",
+      "isDeposited": false,
+      "price": 10000
+    },
+    {
+      "memberId": 4,
+      "memberName": "웨디",
+      "isDeposited": false,
+      "price": 10000
+    },
+    {
+      "memberId": 4,
+      "memberName": "쿠키",
+      "isDeposited": false,
+      "price": 10000
+    }
+  ]
+}

@@ -1,8 +1,7 @@
-const EVENT_PASSWORD_LENGTH = 4;
-
 const RULE = {
+  minEventNameLength: 1,
   maxEventNameLength: 30,
-  maxEventPasswordLength: EVENT_PASSWORD_LENGTH,
+  eventPasswordLength: 4,
   maxMemberNameLength: 4,
   maxPrice: 10000000,
   maxBillNameLength: 30,

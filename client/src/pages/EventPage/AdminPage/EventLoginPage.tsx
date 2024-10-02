@@ -22,8 +22,8 @@ const EventLoginPage = () => {
     >
       <Top>
         <Top.Line
-          text={`행사 생성 시 설정한 ${RULE.maxEventPasswordLength}자리`}
-          emphasize={[`${RULE.maxEventPasswordLength}자리`]}
+          text={`행사 생성 시 설정한 ${RULE.eventPasswordLength}자리`}
+          emphasize={[`${RULE.eventPasswordLength}자리`]}
         />
         <Top.Line text="숫자 비밀번호를 입력해 주세요." emphasize={['비밀번호']} />
       </Top>
@@ -33,7 +33,7 @@ const EventLoginPage = () => {
           errorText={errorMessage}
           value={password}
           type="secret"
-          maxLength={RULE.maxEventPasswordLength}
+          maxLength={RULE.eventPasswordLength}
           placeholder="비밀번호"
           onChange={e => handleChange(e)}
           isError={!!errorMessage}

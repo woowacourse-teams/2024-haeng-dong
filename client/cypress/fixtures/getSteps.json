@@ -1,0 +1,94 @@
+{
+  "steps": [
+    {
+      "bills": [
+        {
+          "id": 1,
+          "title": "커피",
+          "price": 10000,
+          "isFixed": false
+        },
+        {
+          "id": 2,
+          "title": "인생네컷",
+          "price": 20000,
+          "isFixed": false
+        }
+      ],
+      "members": [
+        {
+          "id": 1,
+          "name": "망쵸"
+        },
+        {
+          "id": 2,
+          "name": "백호"
+        }
+      ]
+    },
+    {
+      "bills": [
+        {
+          "id": 3,
+          "title": "맥주",
+          "price": 20000,
+          "isFixed": true
+        }
+      ],
+      "members": [
+        {
+          "id": 1,
+          "name": "망쵸"
+        },
+        {
+          "id": 2,
+          "name": "백호"
+        },
+        {
+          "id": 3,
+          "name": "감자"
+        }
+      ]
+    },
+    {
+      "bills": [
+        {
+          "id": 4,
+          "title": "뽕쟁이족",
+          "price": 70000,
+          "isFixed": false
+        }
+      ],
+      "members": [
+        {
+          "id": 1,
+          "name": "망쵸"
+        },
+        {
+          "id": 2,
+          "name": "백호"
+        },
+        {
+          "id": 3,
+          "name": "감자"
+        },
+        {
+          "id": 4,
+          "name": "이상"
+        },
+        {
+          "id": 5,
+          "name": "소하"
+        },
+        {
+          "id": 6,
+          "name": "웨디"
+        },
+        {
+          "id": 7,
+          "name": "쿠키"
+        }
+      ]
+    }
+  ]
+}

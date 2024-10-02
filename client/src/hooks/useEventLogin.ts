@@ -27,7 +27,7 @@ const useEventLogin = () => {
       setPassword(newValue);
     }
 
-    setCanSubmit(newValue.length === RULE.maxEventPasswordLength);
+    setCanSubmit(newValue.length === RULE.eventPasswordLength);
   };
 
   return {

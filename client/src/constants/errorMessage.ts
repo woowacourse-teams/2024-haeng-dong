@@ -6,7 +6,7 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
   // 행사 관련 에러 코드
   EVENT_NAME_LENGTH_INVALID: `행사 이름의 길이는 2자 이상 ${RULE.maxEventNameLength}자 이하만 가능해요.`,
   EVENT_NAME_CONSECUTIVE_SPACES: '행사 이름에는 공백 문자가 연속될 수 없어요.',
-  EVENT_PASSWORD_FORMAT_INVALID: `비밀번호는 ${RULE.maxEventPasswordLength}자리의 숫자만 가능해요.`,
+  EVENT_PASSWORD_FORMAT_INVALID: `비밀번호는 ${RULE.eventPasswordLength}자리의 숫자만 가능해요.`,
   EVENT_NOT_FOUND: '존재하지 않는 행사에요. 링크가 올바른지 확인해주세요.',
 
   // 멤버 관련 에러 코드

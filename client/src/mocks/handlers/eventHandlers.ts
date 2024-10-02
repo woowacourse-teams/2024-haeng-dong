@@ -32,7 +32,7 @@ export const eventHandler = [
       return HttpResponse.json(
         {
           errorCode: 'EVENT_PASSWORD_FORMAT_INVALID',
-          message: `비밀번호는 ${RULE.maxEventPasswordLength}자리 숫자만 가능합니다.`,
+          message: `비밀번호는 ${RULE.eventPasswordLength}자리 숫자만 가능합니다.`,
         },
         {status: 400},
       );

@@ -48,7 +48,7 @@ const useSetEventPasswordStep = () => {
     const newValue = event.target.value;
     const validation = validateEventPassword(newValue);
 
-    setCanSubmit(newValue.length === RULE.maxEventPasswordLength);
+    setCanSubmit(newValue.length === RULE.eventPasswordLength);
 
     if (validation.isValid) {
       setPassword(newValue);
