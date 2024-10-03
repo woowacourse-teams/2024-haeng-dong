@@ -13,8 +13,7 @@ export type EventPageContextProps = Event & {
 };
 
 const EventPageLayout = () => {
-  const {isAdmin, isLoginPage, eventOutline} = useEventPageLayout();
-
+  const {isAdmin, eventOutline} = useEventPageLayout();
   const outletContext: EventPageContextProps = {
     isAdmin,
     ...eventOutline,
@@ -32,7 +31,7 @@ const EventPageLayout = () => {
           <TopNav.Item displayName="홈" routePath="/home" />
           <TopNav.Item displayName="관리" routePath="/admin" />
         </TopNav>
-        {!isLoginPage && <ShareEventButton eventOutline={eventOutline} />}
+        <ShareEventButton eventPageOutletContext={outletContext} />
       </Flex>
       <Outlet context={outletContext} />
     </MainLayout>

@@ -2,7 +2,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import {useNavigate} from 'react-router-dom';
 
 import toast from '@hooks/useToast/toast';
-import {Event} from 'types/serviceType';
+import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
 import useShareEvent from '@hooks/useShareEvent';
 
@@ -12,26 +12,35 @@ import {isMobileDevice} from '@utils/detectDevice';
 import getDeletedLastPath from '@utils/getDeletedLastPath';
 
 type ShareEventButtonProps = {
-  eventOutline: Event;
+  eventPageOutletContext: EventPageContextProps;
 };
 
-const ShareEventButton = ({eventOutline}: ShareEventButtonProps) => {
-  const {eventName, bankName, accountNumber} = eventOutline;
+const ShareEventButton = ({eventPageOutletContext}: ShareEventButtonProps) => {
+  const {eventName, bankName, accountNumber, isAdmin} = eventPageOutletContext;
   const navigate = useNavigate();
 
   const isMobile = isMobileDevice();
   const {shareText, onShareButtonClick} = useShareEvent(eventName, isMobile);
 
+  const isReady = bankName !== '' && accountNumber !== '';
+
   const induceBankInfoBeforeShare = () => {
-    if (bankName === '' || accountNumber === '') {
-      toast.confirm('잠깐! 정산을 초대하기 전에\n계좌를 등록해주세요', {
+    if (!isReady && isAdmin) {
+      toast.error('잠깐! 정산을 초대하기 전에\n계좌를 등록해주세요', {
         showingTime: 3000,
         position: 'bottom',
       });
 
       const navigatePath = `${getDeletedLastPath(location.pathname)}/admin/edit`;
-
       navigate(navigatePath);
+      return;
+    }
+
+    if (!isReady && !isAdmin) {
+      toast.error('정산자가 계좌를 등록해야 초대 가능합니다.\n정산자에게 문의해주세요', {
+        showingTime: 3000,
+        position: 'bottom',
+      });
       return;
     }
 
