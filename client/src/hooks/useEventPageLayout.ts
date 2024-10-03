@@ -1,17 +1,13 @@
-import {useMatch} from 'react-router-dom';
+import {useAuthStore} from '@store/authStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
-
-import {ROUTER_URLS} from '@constants/routerUrls';
 
 import useRequestGetEvent from './queries/event/useRequestGetEvent';
 
 const useEventPageLayout = () => {
   const eventId = getEventIdByUrl();
   const {eventName, bankName, accountNumber} = useRequestGetEvent();
-
-  const isAdmin = useMatch(ROUTER_URLS.eventManage) !== null;
-  const isLoginPage = useMatch(ROUTER_URLS.eventLogin) !== null;
+  const {isAdmin} = useAuthStore();
 
   const eventOutline = {
     eventName,
@@ -22,7 +18,6 @@ const useEventPageLayout = () => {
   return {
     eventId,
     isAdmin,
-    isLoginPage,
     eventOutline,
   };
 };

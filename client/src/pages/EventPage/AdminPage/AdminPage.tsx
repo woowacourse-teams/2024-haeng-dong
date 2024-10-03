@@ -1,8 +1,6 @@
-import {useEffect} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import StepList from '@components/StepList/Steps';
-import useRequestPostAuthenticate from '@hooks/queries/auth/useRequestPostAuthentication';
 import useRequestGetSteps from '@hooks/queries/step/useRequestGetSteps';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
@@ -23,11 +21,6 @@ const AdminPage = () => {
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
   const {steps} = useRequestGetSteps();
-  const {postAuthenticate} = useRequestPostAuthenticate();
-
-  useEffect(() => {
-    postAuthenticate();
-  }, [postAuthenticate]);
 
   const navigateAccountInputPage = () => {
     navigate(`/event/${eventId}/admin/edit`);
