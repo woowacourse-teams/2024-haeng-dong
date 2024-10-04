@@ -23,7 +23,7 @@ const useReportsPage = () => {
 
   const onCopy = async (amount: number) => {
     await window.navigator.clipboard.writeText(`${amount.toLocaleString('ko-kr')}원`);
-    toast.confirm('금액이 복사되었습니다.');
+    toast.confirm('금액이 복사되었어요.');
   };
 
   const isEmpty = reports.length <= 0;
