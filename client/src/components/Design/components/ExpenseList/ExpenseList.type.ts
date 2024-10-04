@@ -1,10 +1,12 @@
 import {Report} from 'types/serviceType';
 
 export type ExpenseItemCustomProps = Report & {
-  onBankButtonClick: (amount: number) => void;
+  onSendButtonClick: (amount: number) => void;
+  onCopy: (amount: number) => Promise<void>;
+  canSendBank: boolean;
 };
 
-export type ExpenseItemProps = React.ComponentProps<'div'> & ExpenseItemCustomProps;
+export type ExpenseItemProps = Omit<React.ComponentProps<'div'>, 'onCopy'> & ExpenseItemCustomProps;
 
 export type ExpenseListProps = {
   memberName: string;

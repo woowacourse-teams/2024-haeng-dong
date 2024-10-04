@@ -1,19 +1,32 @@
 /** @jsxImportSource @emotion/react */
 import Text from '@HDcomponents/Text/Text';
 
-import {isMobileDevice} from '@utils/detectDevice';
-
-import BankSendButton from '../BankSendButton/BankSendButton';
-import Icon from '../Icon/Icon';
-import IconButton from '../IconButton/IconButton';
 import Flex from '../Flex/Flex';
 import Input from '../Input/Input';
 import Amount from '../Amount/Amount';
 import DepositCheck from '../DepositCheck/DepositCheck';
+import SendButton from '../SendButton/SendButton';
 
 import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';
 
-function ExpenseItem({memberName, price, isDeposited, onBankButtonClick, ...divProps}: ExpenseItemProps) {
+function ExpenseItem({
+  memberName,
+  price,
+  isDeposited,
+  canSendBank,
+  onSendButtonClick,
+  onCopy,
+  ...divProps
+}: ExpenseItemProps) {
+  const onClick = () => {
+    // 송금 가능하면 송금페이지, 아니라면 금액복사
+    if (canSendBank) {
+      onSendButtonClick(price);
+    } else {
+      onCopy(price);
+    }
+  };
+
   return (
     <Flex
       justifyContent="spaceBetween"
@@ -31,13 +44,7 @@ function ExpenseItem({memberName, price, isDeposited, onBankButtonClick, ...divP
       </Flex>
       <Flex alignItems="center" gap="0.5rem">
         <Amount amount={price} />
-        {isMobileDevice() ? (
-          <BankSendButton onBankButtonClick={() => onBankButtonClick(price)} isDeposited={price <= 0 || isDeposited} />
-        ) : (
-          <IconButton variants="none" size="small">
-            <Icon iconType="rightChevron" />
-          </IconButton>
-        )}
+        <SendButton onClick={onClick} isDeposited={price <= 0 || isDeposited} canSend={canSendBank} />
       </Flex>
     </Flex>
   );
