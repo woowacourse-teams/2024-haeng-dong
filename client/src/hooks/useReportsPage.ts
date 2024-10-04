@@ -3,8 +3,6 @@ import {useOutletContext} from 'react-router-dom';
 
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
-import {ERROR_MESSAGE} from '@constants/errorMessage';
-
 import {useSearchReports} from './useSearchReports';
 import toast from './useToast/toast';
 
@@ -17,25 +15,26 @@ const useReportsPage = () => {
     setMemberName(target.value);
   };
 
-  const onBankButtonClick = (amount: number) => {
-    if (bankName.trim() === '' || accountNumber.trim() === '') {
-      toast.error(ERROR_MESSAGE.emptyBank, {
-        showingTime: 3000,
-        position: 'bottom',
-      });
-      return;
-    }
-
+  // 여기서 분기처리 다 해야 함
+  const onSendButtonClick = (amount: number) => {
     const url = `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`;
     window.location.href = url;
   };
 
-  const expenseListProp = matchedReports.map(member => ({
-    ...member,
-    onBankButtonClick,
-  }));
+  const onCopy = async (amount: number) => {
+    await window.navigator.clipboard.writeText(`${amount.toLocaleString('ko-kr')}원`);
+    toast.confirm('금액이 복사되었습니다.');
+  };
 
   const isEmpty = reports.length <= 0;
+  const canSendBank = bankName !== '' && accountNumber !== '';
+
+  const expenseListProp = matchedReports.map(member => ({
+    ...member,
+    canSendBank,
+    onCopy,
+    onSendButtonClick,
+  }));
 
   return {
     isEmpty,
