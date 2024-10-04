@@ -9,7 +9,7 @@ const useEventPageLayout = () => {
   const {eventName, bankName, accountNumber} = useRequestGetEvent();
   const {isAdmin} = useAuthStore();
 
-  const eventOutline = {
+  const event = {
     eventName,
     bankName,
     accountNumber,
@@ -18,7 +18,7 @@ const useEventPageLayout = () => {
   return {
     eventId,
     isAdmin,
-    eventOutline,
+    event,
   };
 };
 
