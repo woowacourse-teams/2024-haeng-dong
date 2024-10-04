@@ -17,6 +17,7 @@ const meta = {
     },
   },
   args: {
+    isDeposited: false,
     canSend: true,
     onClick: () => console.log('안녕'),
   },
