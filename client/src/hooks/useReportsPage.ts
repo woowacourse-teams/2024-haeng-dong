@@ -1,24 +1,39 @@
 import {useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
+import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
 
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
+import getDeletedLastPath from '@utils/getDeletedLastPath';
+
 import {useSearchReports} from './useSearchReports';
 import toast from './useToast/toast';
+
+export type SendInfo = {
+  bankName: string;
+  accountNumber: string;
+  amount: number;
+};
 
 const useReportsPage = () => {
   const [memberName, setMemberName] = useState('');
   const {bankName, accountNumber} = useOutletContext<EventPageContextProps>();
   const {matchedReports, reports} = useSearchReports({memberName});
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const changeName = ({target}: React.ChangeEvent<HTMLInputElement>) => {
     setMemberName(target.value);
   };
 
-  // 여기서 분기처리 다 해야 함
-  const onSendButtonClick = (amount: number) => {
-    const url = `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`;
-    window.location.href = url;
+  const onSendButtonClick = (memberId: number, amount: number) => {
+    const sendInfo: SendInfo = {
+      bankName,
+      accountNumber,
+      amount,
+    };
+
+    navigate(`${getDeletedLastPath(location.pathname)}/${memberId}/send`, {state: sendInfo});
   };
 
   const onCopy = async (amount: number) => {
@@ -29,8 +44,8 @@ const useReportsPage = () => {
   const isEmpty = reports.length <= 0;
   const canSendBank = bankName !== '' && accountNumber !== '';
 
-  const expenseListProp = matchedReports.map(member => ({
-    ...member,
+  const expenseListProp = matchedReports.map(report => ({
+    ...report,
     canSendBank,
     onCopy,
     onSendButtonClick,
