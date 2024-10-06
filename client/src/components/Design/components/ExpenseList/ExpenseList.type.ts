@@ -1,7 +1,7 @@
 import {Report} from 'types/serviceType';
 
 export type ExpenseItemCustomProps = Report & {
-  onSendButtonClick: (amount: number) => void;
+  onSendButtonClick: (memberId: number, amount: number) => void;
   onCopy: (amount: number) => Promise<void>;
   canSendBank: boolean;
 };

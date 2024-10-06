@@ -24,7 +24,7 @@ const meta = {
         price: 2000,
         isDeposited: true,
         canSendBank: true,
-        onSendButtonClick: (amount: number) => console.log(amount),
+        onSendButtonClick: (memberId: number, amount: number) => console.log(amount),
         onCopy: async (amount: number) => console.log(amount),
       },
       {
@@ -33,7 +33,7 @@ const meta = {
         price: 2000,
         isDeposited: false,
         canSendBank: true,
-        onSendButtonClick: (amount: number) => console.log(amount),
+        onSendButtonClick: (memberId: number, amount: number) => console.log(amount),
         onCopy: async (amount: number) => console.log(amount),
       },
       {
@@ -42,7 +42,7 @@ const meta = {
         price: 1080,
         isDeposited: true,
         canSendBank: true,
-        onSendButtonClick: (amount: number) => console.log(amount),
+        onSendButtonClick: (memberId: number, amount: number) => console.log(amount),
         onCopy: async (amount: number) => console.log(amount),
       },
       {
@@ -51,7 +51,7 @@ const meta = {
         price: 3020,
         isDeposited: false,
         canSendBank: true,
-        onSendButtonClick: (amount: number) => console.log(amount),
+        onSendButtonClick: (memberId: number, amount: number) => console.log(amount),
         onCopy: async (amount: number) => console.log(amount),
       },
     ],

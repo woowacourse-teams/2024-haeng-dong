@@ -10,6 +10,7 @@ import SendButton from '../SendButton/SendButton';
 import {ExpenseItemProps, ExpenseListProps} from './ExpenseList.type';
 
 function ExpenseItem({
+  memberId,
   memberName,
   price,
   isDeposited,
@@ -21,7 +22,7 @@ function ExpenseItem({
   const onClick = () => {
     // 송금 가능하면 송금페이지, 아니라면 금액복사
     if (canSendBank) {
-      onSendButtonClick(price);
+      onSendButtonClick(memberId, price);
     } else {
       onCopy(price);
     }
