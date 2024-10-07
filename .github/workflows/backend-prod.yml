@@ -59,7 +59,7 @@ jobs:
     strategy:
       matrix:
         runner: [ prod-1, prod-2 ]
-    runs-on: [ self-hosted, ${{ matrix.runner }} ]
+    runs-on: [ self-hosted, '${{ matrix.runner }}' ]
     steps:
       - name: Docker remove
         run: |
