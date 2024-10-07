@@ -3,6 +3,7 @@ package server.haengdong.application;
 import java.util.List;
 import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.EventAppRequest;
@@ -31,12 +32,13 @@ import server.haengdong.exception.HaengdongException;
 @Service
 public class EventService {
 
-    private static final String CLOUD_FRONT_URL = "https://d2unln22cedgp9.cloudfront.net/";
-
     private final EventRepository eventRepository;
     private final EventTokenProvider eventTokenProvider;
     private final BillRepository billRepository;
     private final EventImageRepository eventImageRepository;
+
+    @Value("${image.base-url}")
+    private String baseUrl;
 
     @Transactional
     public EventAppResponse saveEvent(EventAppRequest request) {
@@ -116,7 +118,7 @@ public class EventService {
 
         return eventImageRepository.findAllByEvent(event)
                 .stream()
-                .map(image -> new EventImageAppResponse(CLOUD_FRONT_URL + image.getName()))
+                .map(image -> new EventImageAppResponse(baseUrl + image.getName()))
                 .toList();
     }
 }

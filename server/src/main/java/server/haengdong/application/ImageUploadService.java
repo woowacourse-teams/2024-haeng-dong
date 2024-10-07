@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import server.haengdong.application.response.ImageNameAppResponse;
@@ -21,8 +22,11 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 @Service
 public class ImageUploadService {
 
-    private static final String BUCKET_NAME = "techcourse-project-2024";
-    private static final String DIRECTORY_PATH = "haeng-dong/s3-upload-test/";
+    @Value("${image.bucket}")
+    private String bucketName;
+
+    @Value("${image.directory}")
+    private String directoryPath;
 
     private final S3Client s3Client;
 
@@ -43,11 +47,11 @@ public class ImageUploadService {
 
     private String uploadImageToStorage(InputStream inputStream, MultipartFile image) {
         String fileName = UUID.randomUUID() + image.getOriginalFilename();
-        String key = DIRECTORY_PATH + fileName;
+        String key = directoryPath + fileName;
         long contentLength = image.getSize();
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(BUCKET_NAME)
+                .bucket(bucketName)
                 .key(key)
                 .contentLength(contentLength)
                 .contentType(image.getContentType())
