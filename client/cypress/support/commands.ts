@@ -1,5 +1,6 @@
 import {ROUTER_URLS} from '@constants/routerUrls';
 import CONSTANTS from '../constants/constants';
+import {Step, Steps} from 'types/serviceType';
 
 type APIType = 'sentry' | 'postEvent' | 'getEvent' | 'getSteps' | 'getReports' | 'postAuth' | 'postLogin';
 
@@ -55,6 +56,18 @@ Cypress.Commands.add('blockKakao', () => {
   }).as('kakao');
 });
 
+Cypress.Commands.add('initSteps', () => {
+  Cypress.env('steps', {steps: []});
+});
+
+Cypress.Commands.add('setSteps', (data: Step) => {
+  Cypress.env('steps', (prev: {steps: Step[]}) => ({steps: [...prev.steps, data]}));
+});
+
+Cypress.Commands.add('useSteps', () => {
+  Cypress.env('steps');
+});
+
 Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: InterceptAPIProps) => {
   if (type === 'postEvent')
     cy.intercept(POST_EVENT, {
@@ -64,7 +77,8 @@ Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: Inter
         eventId: CONSTANTS.eventId,
       },
     }).as('postEvent');
-  if (type === 'getEvent')
+  if (type === 'getEvent') {
+    cy.initSteps();
     cy.intercept(GET_EVENT, {
       delay,
       statusCode,
@@ -74,17 +88,18 @@ Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: Inter
         accountNumber: '',
       },
     }).as('getEvent');
+  }
+
   if (type === 'getSteps')
     cy.intercept(GET_STEPS, {
       delay,
       statusCode,
-      fixture: 'getSteps.json',
+      body: Cypress.env('steps'),
     }).as('getSteps');
   if (type === 'getReports')
     cy.intercept(GET_REPORTS, {
       delay,
       statusCode,
-      fixture: 'getReports.json',
     }).as('getSteps');
   if (type === 'postAuth')
     cy.intercept(POST_AUTH, {
@@ -120,6 +135,9 @@ declare global {
       blockSentry(): Chainable<void>;
       blockKakao(): Chainable<void>;
       interceptAPI(props: InterceptAPIProps): Chainable<void>;
+      initSteps(): Chainable<void>;
+      setSteps(prop: Step): Chainable<void>;
+      useSteps(): Chainable<Steps>;
       createEventName(): Chainable<void>;
       createEventComplete(): Chainable<void>;
     }
