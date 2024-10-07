@@ -84,4 +84,9 @@ public class EventController {
                 .maxAge(cookieProperties.maxAge())
                 .build();
     }
+
+    @GetMapping("/api/events/{eventId}/images")
+    public ResponseEntity<EventImagesResponse> findAllImages() {
+
+    }
 }
