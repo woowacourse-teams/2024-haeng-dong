@@ -37,6 +37,10 @@ const AdminPage = () => {
     navigate(`/event/${eventId}/admin/member`);
   };
 
+  const navigateAddImages = () => {
+    navigate(`/event/${eventId}/admin/add-images`);
+  };
+
   return (
     <section css={receiptStyle}>
       <Title
@@ -46,11 +50,12 @@ const AdminPage = () => {
           <Dropdown>
             <DropdownButton text="전체 참여자 관리" onClick={navigateEventMemberManage} />
             <DropdownButton text="계좌번호 입력하기" onClick={navigateAccountInputPage} />
+            <DropdownButton text="사진 첨부하기" onClick={navigateAddImages} />
           </Dropdown>
         }
       />
       <StepList data={steps ?? []} isAdmin={isAdmin} />
-      <Button size="medium" onClick={() => navigate(`/event/${eventId}/add-bill`)} style={{width: '100%'}}>
+      <Button size="medium" onClick={() => navigate(`/event/${eventId}/admin/add-bill`)} style={{width: '100%'}}>
         지출내역 추가하기
       </Button>
     </section>
