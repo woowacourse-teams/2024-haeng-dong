@@ -53,7 +53,7 @@ function ExpenseList({memberName, onSearch, placeholder, expenseList = []}: Expe
       paddingInline="0.5rem"
       gap="0.5rem"
       height="100%"
-      otherStyle={{borderRadius: '1rem'}}
+      cssProp={{borderRadius: '1rem'}}
     >
       <Input inputType="search" value={memberName} onChange={onSearch} placeholder={placeholder} />
       {expenseList.length !== 0 && expenseList.map(expense => <ExpenseItem key={expense.memberId} {...expense} />)}
