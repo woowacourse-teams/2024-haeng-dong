@@ -5,6 +5,7 @@ import {Outlet} from 'react-router-dom';
 import useEventPageLayout from '@hooks/useEventPageLayout';
 
 import {ShareEventButton} from '@components/ShareEventButton';
+import {Footer} from '@components/Footer';
 
 import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
 
@@ -35,6 +36,7 @@ const EventPageLayout = () => {
         {!isLoginPage && <ShareEventButton eventOutline={eventOutline} />}
       </Flex>
       <Outlet context={outletContext} />
+      <Footer />
     </MainLayout>
   );
 };
