@@ -43,7 +43,7 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
   }, []);
 
   return (
-    <Flex flexDirection="column" gap="0.375rem">
+    <Flex flexDirection="column" gap="0.375rem" cssProp={{width: '100%'}}>
       {(labelText || errorText) && (
         <Flex justifyContent="spaceBetween" paddingInline="0.5rem" margin="0 0 0.375rem 0">
           {labelText && (
