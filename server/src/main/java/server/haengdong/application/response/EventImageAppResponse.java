@@ -1,6 +1,4 @@
-package server.haengdong.application;
-
-import java.util.List;
+package server.haengdong.application.response;
 
 public record EventImageAppResponse(
         String url

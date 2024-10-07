@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.AuthService;
+import server.haengdong.application.response.EventImageAppResponse;
 import server.haengdong.application.EventService;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
+import server.haengdong.presentation.response.EventImagesResponse;
 import server.haengdong.presentation.response.EventResponse;
 import server.haengdong.presentation.response.MemberBillReportsResponse;
 
@@ -86,7 +88,9 @@ public class EventController {
     }
 
     @GetMapping("/api/events/{eventId}/images")
-    public ResponseEntity<EventImagesResponse> findAllImages() {
+    public ResponseEntity<EventImagesResponse> findAllImages(@PathVariable("eventId") String token) {
+        List<EventImageAppResponse> images = eventService.findImages(token);
 
+        return ResponseEntity.ok(EventImagesResponse.of(images));
     }
 }

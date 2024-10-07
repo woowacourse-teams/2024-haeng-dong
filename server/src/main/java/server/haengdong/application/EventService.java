@@ -10,6 +10,7 @@ import server.haengdong.application.request.EventLoginAppRequest;
 import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
+import server.haengdong.application.response.EventImageAppResponse;
 import server.haengdong.application.response.ImageNameAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.bill.Bill;
