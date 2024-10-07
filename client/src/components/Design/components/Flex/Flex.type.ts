@@ -1,3 +1,5 @@
+import {CSSObject} from '@emotion/react';
+
 import {Theme} from '../../theme/theme.type';
 
 export type FlexDirectionType = 'row' | 'column' | 'rowReverse' | 'columnReverse';
@@ -18,5 +20,5 @@ export interface FlexProps {
   theme?: Theme;
   minHeight?: string;
 
-  otherStyle?: React.CSSProperties;
+  cssProp?: CSSObject;
 }
