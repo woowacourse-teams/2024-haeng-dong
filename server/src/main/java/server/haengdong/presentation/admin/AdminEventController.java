@@ -41,7 +41,7 @@ public class AdminEventController {
     }
 
     @PostMapping("/api/admin/events/{eventId}/images")
-    public void uploadMultipleFiles(
+    public void uploadImages(
             @PathVariable("eventId") String token,
             @RequestPart("images") List<MultipartFile> images
     ) {

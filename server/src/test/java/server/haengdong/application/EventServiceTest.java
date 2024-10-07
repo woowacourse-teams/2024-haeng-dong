@@ -10,14 +10,19 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
+import server.haengdong.application.response.EventImageAppResponse;
+import server.haengdong.application.response.ImageNameAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillRepository;
+import server.haengdong.domain.event.EventImage;
+import server.haengdong.domain.event.EventImageRepository;
 import server.haengdong.domain.member.Member;
 import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
@@ -39,8 +44,14 @@ class EventServiceTest extends ServiceTestSupport {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private EventImageRepository eventImageRepository;
+
     @MockBean
     private EventTokenProvider eventTokenProvider;
+
+    @Value("${image.base-url}")
+    private String baseUrl;
 
     @DisplayName("행사를 생성한다")
     @Test
@@ -160,6 +171,50 @@ class EventServiceTest extends ServiceTestSupport {
                         tuple("쿠키", 20_000L),
                         tuple("소하", 20_000L),
                         tuple("고구마", 20_000L)
+                );
+    }
+
+    @DisplayName("행사 이미지를 조회한다.")
+    @Test
+    void findAllImages() {
+        Event event = Fixture.EVENT1;
+        List<EventImage> eventImages = List.of(
+                new EventImage(event, "image1.jpg"),
+                new EventImage(event, "image2.jpg")
+        );
+        eventRepository.save(event);
+        eventImageRepository.saveAll(eventImages);
+
+        List<EventImageAppResponse> responses = eventService.findImages(event.getToken());
+
+        assertThat(responses)
+                .hasSize(2)
+                .extracting(EventImageAppResponse::url)
+                .containsExactlyInAnyOrder(
+                        baseUrl + "image1.jpg",
+                       baseUrl + "image2.jpg"
+                );
+    }
+
+    @DisplayName("행사 이미지를 저장한다.")
+    @Test
+    void saveImages() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        List<ImageNameAppResponse> imageNameAppResponses = List.of(
+                new ImageNameAppResponse("image1.jpg"),
+                new ImageNameAppResponse("image2.jpg")
+        );
+
+        eventService.saveImages(event.getToken(), imageNameAppResponses);
+
+        List<EventImage> savedEventImages = eventImageRepository.findAllByEvent(event);
+        assertThat(savedEventImages)
+                .hasSize(2)
+                .extracting(EventImage::getName)
+                .containsExactlyInAnyOrder(
+                        "image1.jpg",
+                        "image2.jpg"
                 );
     }
 }

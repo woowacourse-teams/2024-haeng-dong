@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -12,7 +13,9 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static server.haengdong.support.fixture.Fixture.EVENT_COOKIE;
@@ -20,6 +23,7 @@ import static server.haengdong.support.fixture.Fixture.EVENT_COOKIE;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import server.haengdong.application.EventService;
 import server.haengdong.application.ImageUploadService;
@@ -91,6 +95,37 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                         fieldWithPath("accountNumber").type(JsonFieldType.STRING)
                                                 .description("계좌 번호").optional()
                                  )
+                        )
+                );
+    }
+
+    @DisplayName("행사에 이미지를 업로드한다.")
+    @Test
+    void uploadImages() throws Exception {
+        String token = "TOKEN";
+        MockMultipartFile image1 = new MockMultipartFile("images", "image1.jpg", "image/jpeg", "이미지1".getBytes());
+        MockMultipartFile image2 = new MockMultipartFile("images", "image2.jpg", "image/jpeg", "이미지2".getBytes());
+
+        mockMvc.perform(multipart("/api/admin/events/{eventId}/images", token)
+                        .file(image1)
+                        .file(image2)
+                        .cookie(EVENT_COOKIE)
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("uploadImages",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                requestCookies(
+                                        cookieWithName("eventToken").description("행사 관리자 토큰")
+                                ),
+                                requestParts(
+                                        partWithName("images").description("행사 이미지")
+                                )
                         )
                 );
     }
