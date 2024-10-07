@@ -1,4 +1,4 @@
-package server.haengdong.presenation.admin;
+package server.haengdong.presentation.admin;
 
 import jakarta.validation.Valid;
 import java.util.List;
