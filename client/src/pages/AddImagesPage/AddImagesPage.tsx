@@ -32,12 +32,10 @@ const AddImagesPage = () => {
     const formData = new FormData();
 
     if (!files) return;
-    console.log(files, files.length);
+
     for (let i = 0; i < files.length; i++) {
       formData.append('images', files[i], files[i].name);
     }
-
-    console.log(formData.get('images'));
 
     postImages({formData});
   };
