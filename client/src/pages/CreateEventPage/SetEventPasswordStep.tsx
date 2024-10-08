@@ -2,11 +2,12 @@ import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
 
-import useSetEventPasswordStep, {UseSetEventPasswordStepReturnType} from '@hooks/useSetEventPasswordStep';
+import useSetEventPasswordStep from '@hooks/useSetEventPasswordStep';
 
 import {FixedButton, Input} from '@HDesign/index';
 
 import RULE from '@constants/rule';
+import useAmplitude from '@hooks/useAmplitude';
 
 type SetEventPasswordPageProps = {
   eventName: string;
@@ -17,10 +18,12 @@ type SetEventPasswordPageProps = {
 const SetEventPasswordStep = ({eventName, moveToNextStep, setEventToken}: SetEventPasswordPageProps) => {
   const {submitDataForPostEvent, errorMessage, password, handleChange, isPostEventPending, canSubmit} =
     useSetEventPasswordStep();
+  const {track} = useAmplitude();
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     await submitDataForPostEvent({event, eventName, setEventToken});
 
+    track('이벤트 생성 완료');
     moveToNextStep();
   };
 

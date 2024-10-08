@@ -6,6 +6,7 @@ const KakaoInitializer = ({children}: React.PropsWithChildren) => {
 
     if (!window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.KAKAO_JAVASCRIPT_KEY);
+      console.log('Kakao initialized');
     }
   }, []);
 

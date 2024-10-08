@@ -6,9 +6,17 @@ import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
+import useAmplitude from '@hooks/useAmplitude';
 
 const MainSection = () => {
   const navigate = useNavigate();
+
+  const {track} = useAmplitude();
+
+  const handleClick = () => {
+    track('정산 시작하기 버튼 클릭');
+    navigate(ROUTER_URLS.createEvent);
+  };
 
   return (
     <div
@@ -39,7 +47,7 @@ const MainSection = () => {
         <Text css={animateWithDelay(1)} style={{textAlign: 'center'}} size="title">{`행동대장을 통해
         간편하게 정산하세요
         `}</Text>
-        <Button css={animateWithDelay(2)} size="large" onClick={() => navigate(ROUTER_URLS.createEvent)}>
+        <Button id="startCreateEvent" css={animateWithDelay(2)} size="large" onClick={handleClick}>
           정산 시작하기
         </Button>
       </div>

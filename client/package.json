@@ -85,6 +85,8 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.11.7",
+    "@amplitude/analytics-node": "^1.3.6",
     "@emotion/react": "^11.11.4",
     "@sentry/react": "^8.25.0",
     "@tanstack/react-query": "^5.51.23",
@@ -93,6 +95,7 @@
     "react-dom": "^18.3.1",
     "react-error-boundary": "^4.0.13",
     "react-router-dom": "^6.24.1",
+    "stream-http": "^3.2.0",
     "zustand": "^4.5.5"
   },
   "engines": {

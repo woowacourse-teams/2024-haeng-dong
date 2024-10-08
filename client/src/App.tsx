@@ -6,6 +6,7 @@ import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoun
 import ErrorCatcher from '@components/AppErrorBoundary/ErrorCatcher';
 import ToastContainer from '@components/Toast/ToastContainer';
 import KakaoInitializer from '@components/KakaoInitializer/KakaoInitializer';
+import AmplitudeInitializer from '@components/AmplitudeInitializer/AmplitudeInitializer';
 
 import {HDesignProvider} from '@HDesign/index';
 
@@ -24,9 +25,11 @@ const App: React.FC = () => {
             <ReactQueryDevtools initialIsOpen={false} />
             <NetworkStateCatcher />
             <ToastContainer />
-            <KakaoInitializer>
-              <Outlet />
-            </KakaoInitializer>
+            <AmplitudeInitializer>
+              <KakaoInitializer>
+                <Outlet />
+              </KakaoInitializer>
+            </AmplitudeInitializer>
           </QueryClientBoundary>
         </ErrorCatcher>
       </UnPredictableErrorBoundary>
