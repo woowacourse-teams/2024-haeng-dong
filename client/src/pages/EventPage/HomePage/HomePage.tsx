@@ -8,9 +8,10 @@ import Reports from '@components/Reports/Reports';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
-import {Tab, Tabs, Title} from '@HDesign/index';
+import {Icon, Tab, Tabs, Title} from '@HDesign/index';
 
 import {receiptStyle} from './HomePage.style';
+import useRequestGetImages from '@hooks/queries/images/useRequestGetImages';
 
 const HomePage = () => {
   const {isAdmin, eventName} = useOutletContext<EventPageContextProps>();
@@ -19,7 +20,7 @@ const HomePage = () => {
 
   return (
     <div css={receiptStyle}>
-      <Title title={eventName} amount={totalExpenseAmount} />
+      <Title title={eventName} amount={totalExpenseAmount} icon={<Icon iconType="photoButton" />} />
       <Tabs>
         <Tab label="참여자 별 정산" content={<Reports />} />
         <Tab label="전체 지출 내역" content={<StepList data={steps ?? []} isAdmin={isAdmin} />} />
