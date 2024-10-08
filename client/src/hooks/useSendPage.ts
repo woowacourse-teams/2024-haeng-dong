@@ -11,6 +11,9 @@ const useSendPage = () => {
   const [sendMethod, setSendMethod] = useState<SendMethod>('토스');
   const state = useLocation().state as SendInfo;
 
+  const options: SendMethod[] = ['토스', '카카오페이', '복사하기'];
+  const defaultValue: SendMethod = '토스';
+
   const onSelect = (option: SendMethod) => {
     setSendMethod(option);
   };
@@ -69,14 +72,28 @@ const useSendPage = () => {
     카카오페이: onKakaoPayClick,
   };
 
-  return {
+  const topMessage = {
     accountText,
     amountText,
-    buttonOnClick,
+  };
+
+  const selectProps = {
+    options,
+    defaultValue,
     onSelect,
+  };
+
+  const selectResult = {
     sendMethod,
+    buttonOnClick,
     buttonText,
     sendMethodIntroduceText,
+  };
+
+  return {
+    topMessage,
+    selectProps,
+    selectResult,
   };
 };
 
