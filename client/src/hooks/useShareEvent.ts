@@ -15,6 +15,12 @@ const useShareEvent = ({eventName}: UserShareEventProps) => {
     url,
   };
 
+  const shareText = `${shareInfo.title}\n${shareInfo.text}\n${url}`;
+
+  const copyShare = async () => {
+    await window.navigator.clipboard.writeText(shareText);
+  };
+
   const kakaoShare = () => {
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
@@ -32,11 +38,9 @@ const useShareEvent = ({eventName}: UserShareEventProps) => {
     });
   };
 
-  const shareText = `${shareInfo.title}\n${shareInfo.text}\n${url}`;
-
   return {
-    shareText,
-    onShareButtonClick: kakaoShare,
+    kakaoShare,
+    copyShare,
   };
 };
 

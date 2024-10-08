@@ -24,7 +24,7 @@ const EventPageLayout = () => {
   };
 
   const isMobile = isMobileDevice();
-  const {shareText, onShareButtonClick} = useShareEvent({eventName: eventOutline.eventName});
+  const {kakaoShare, copyShare} = useShareEvent({eventName: eventOutline.eventName});
 
   return (
     <MainLayout backgroundColor="gray">
@@ -39,9 +39,9 @@ const EventPageLayout = () => {
           <TopNav.Item displayName="관리" routePath="/admin" />
         </TopNav>
         {isMobile ? (
-          <MobileShareEventButton text="카카오톡으로 초대하기" onClick={onShareButtonClick} />
+          <MobileShareEventButton copyShare={copyShare} kakaoShare={kakaoShare} />
         ) : (
-          <DesktopShareEventButton text="정산 초대하기" shareText={shareText} />
+          <DesktopShareEventButton onCopy={copyShare}>정산 초대하기</DesktopShareEventButton>
         )}
       </Flex>
       <Outlet context={outletContext} />
