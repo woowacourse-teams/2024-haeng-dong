@@ -4,6 +4,10 @@ spring:
     url: jdbc:h2:mem:database
     username: sa
     password:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 300MB
 
   h2:
     console:
@@ -36,6 +40,11 @@ cookie:
   path: /
   same-site: none
   max-age: 7D
+
+image:
+  bucket: techcourse-project-2024
+  directory: haeng-dong/s3-upload-test/
+  base-url: https://d2unln22cedgp9.cloudfront.net/
 
 management:
   endpoints:

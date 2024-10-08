@@ -7,6 +7,7 @@ public record MemberDepositAppResponse(
         String name,
         boolean isDeposited
 ) {
+
     public static MemberDepositAppResponse of(Member member) {
         return new MemberDepositAppResponse(member.getId(), member.getName(), member.isDeposited());
     }

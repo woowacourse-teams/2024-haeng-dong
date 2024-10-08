@@ -14,10 +14,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
+import server.haengdong.application.response.EventImageAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
@@ -96,6 +98,22 @@ class EventControllerTest extends ControllerTestSupport {
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(cookie().value("eventToken", "jwtToken"))
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("행사 이미지를 조회한다.")
+    @Test
+    void findAllImages() throws Exception {
+        String token = "TOKEN";
+        List<EventImageAppResponse> imageNameAppResponses = List.of(
+                new EventImageAppResponse(1L, "https://host.com/image1.jpg"),
+                new EventImageAppResponse(2L, "https://host.com/image2.jpg"),
+                new EventImageAppResponse(3L, "https://host.com/zeze.jpg")
+        );
+        given(eventService.findImages(token)).willReturn(imageNameAppResponses);
+
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/events/{eventId}/images", token))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 }

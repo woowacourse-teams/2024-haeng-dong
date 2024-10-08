@@ -34,6 +34,7 @@ import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
+import server.haengdong.application.response.EventImageAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.EventController;
@@ -188,6 +189,40 @@ class EventControllerDocsTest extends RestDocsSupport {
                                 ),
                                 responseCookies(
                                         cookieWithName("eventToken").description("행사 관리자용 토큰")
+                                )
+                        )
+                );
+    }
+
+
+    @DisplayName("행사 이미지를 조회한다.")
+    @Test
+    void findAllImages() throws Exception {
+        String token = "TOKEN";
+        List<EventImageAppResponse> imageNameAppResponses = List.of(
+                new EventImageAppResponse(1L, "https://host.com/image1.jpg"),
+                new EventImageAppResponse(2L, "https://host.com/image2.jpg"),
+                new EventImageAppResponse(3L, "https://host.com/zeze.jpg")
+        );
+        given(eventService.findImages(token)).willReturn(imageNameAppResponses);
+
+        mockMvc.perform(get("/api/events/{eventId}/images", token))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("findImages",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID")
+                                ),
+                                responseFields(
+                                        fieldWithPath("images").type(JsonFieldType.ARRAY)
+                                                .description("행사 이미지 목록"),
+                                        fieldWithPath("images[].id").type(JsonFieldType.NUMBER)
+                                                .description("이미지 id"),
+                                        fieldWithPath("images[].url").type(JsonFieldType.STRING)
+                                                .description("이미지 url")
                                 )
                         )
                 );

@@ -27,5 +27,10 @@ public class EventImage extends BaseEntity {
     private Event event;
 
     @Column(nullable = false)
-    private String url;
+    private String name;
+
+    public EventImage(Event event, String name) {
+        this.event = event;
+        this.name = name;
+    }
 }
