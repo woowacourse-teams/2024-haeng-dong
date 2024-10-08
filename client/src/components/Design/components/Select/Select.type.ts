@@ -5,8 +5,8 @@ export type SelectInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>,
   setHasFocus?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export type SelectProps = SelectInputProps & {
-  defaultValue?: string;
-  options: string[];
-  onSelect: (option: string) => void;
+export type SelectProps<T> = SelectInputProps & {
+  defaultValue?: T;
+  options: T[];
+  onSelect: (option: T) => void;
 };

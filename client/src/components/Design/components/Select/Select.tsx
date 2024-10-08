@@ -9,7 +9,13 @@ import useSelect from './useSelect';
 import {SelectProps} from './Select.type';
 import SelectInput from './SelectInput';
 
-const Select = ({labelText, placeholder, defaultValue, options, onSelect}: SelectProps) => {
+const Select = <T extends string | number | readonly string[]>({
+  labelText,
+  placeholder,
+  defaultValue,
+  options,
+  onSelect,
+}: SelectProps<T>) => {
   const {theme} = useTheme();
   const {selectRef, isOpen, value, handleSelect, setIsOpen} = useSelect({defaultValue, onSelect});
 

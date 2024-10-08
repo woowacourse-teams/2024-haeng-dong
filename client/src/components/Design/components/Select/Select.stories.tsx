@@ -3,7 +3,11 @@ import type {Meta, StoryObj} from '@storybook/react';
 
 import Select from './Select';
 
-const meta = {
+// Option 타입 정의
+type Option = '쿠키' | '토다리' | '웨디' | '소하';
+const options: Option[] = ['쿠키', '토다리', '웨디', '소하'];
+
+const meta: Meta<typeof Select<Option>> = {
   title: 'Components/Select',
   component: Select,
   tags: ['autodocs'],
@@ -20,13 +24,14 @@ const meta = {
   args: {
     labelText: '송금 방법 선택',
     placeholder: '송금 방법 선택',
-    options: ['쿠키', '토다리', '웨디', '소하'],
-    onSelect: (option: string) => console.log(option),
+    options: options,
+    onSelect: (option: Option) => console.log(option),
   },
-} satisfies Meta<typeof Select>;
+};
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+// Playground 스토리
 export const Playground: Story = {};
