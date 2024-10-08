@@ -11,9 +11,9 @@ export const requestPostImages = async ({eventId, formData}: WithEventId<Request
   return await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `${ADMIN_API_PREFIX}/${eventId}/images`,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+    // headers: {
+    //   'Content-Type': 'multipart/form-data',
+    // },
     body: formData,
   });
 };
