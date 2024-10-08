@@ -7,6 +7,7 @@ public record StepResponse(
         List<BillResponse> bills,
         List<MemberResponse> members
 ) {
+
     public static StepResponse of(StepAppResponse response) {
         List<BillResponse> bills = response.bills().stream()
                 .map(BillResponse::of)
@@ -16,7 +17,6 @@ public record StepResponse(
                 .map(MemberResponse::of)
                 .toList();
         return new StepResponse(bills, members);
-
     }
 }
 

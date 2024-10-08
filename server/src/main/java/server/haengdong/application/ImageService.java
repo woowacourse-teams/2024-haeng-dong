@@ -21,7 +21,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class ImageUploadService {
+public class ImageService {
 
     @Value("${image.bucket}")
     private String bucketName;
@@ -31,16 +31,15 @@ public class ImageUploadService {
 
     private final S3Client s3Client;
 
-    public List<ImageNameAppResponse> uploadImages(List<MultipartFile> images) {
+    public List<String> uploadImages(List<MultipartFile> images) {
         return images.stream()
                 .map(this::uploadImage)
                 .toList();
     }
 
-    private ImageNameAppResponse uploadImage(MultipartFile image) {
+    private String uploadImage(MultipartFile image) {
         try (InputStream inputStream = image.getInputStream()) {
-            String fileName = uploadImageToStorage(inputStream, image);
-            return new ImageNameAppResponse(fileName);
+            return uploadImageToStorage(inputStream, image);
         } catch (IOException e) {
             throw new HaengdongException(HaengdongErrorCode.IMAGE_UPLOAD_FAIL);
         }
@@ -60,5 +59,14 @@ public class ImageUploadService {
 
         s3Client.putObject(putObjectRequest, fromInputStream(inputStream, contentLength));
         return imageName;
+    }
+
+    public void deleteImage(String imageName) {
+        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(directoryPath + imageName)
+                .build();
+
+        s3Client.deleteObject(deleteObjectRequest);
     }
 }

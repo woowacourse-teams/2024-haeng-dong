@@ -6,6 +6,7 @@ import server.haengdong.application.response.MembersSaveAppResponse;
 public record MembersSaveResponse(
         List<MemberSaveResponse> members
 ) {
+
     public static MembersSaveResponse of(MembersSaveAppResponse response) {
         return new MembersSaveResponse(
                 response.members().stream()

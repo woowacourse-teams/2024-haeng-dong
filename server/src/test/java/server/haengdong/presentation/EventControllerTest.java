@@ -106,9 +106,9 @@ class EventControllerTest extends ControllerTestSupport {
     void findAllImages() throws Exception {
         String token = "TOKEN";
         List<EventImageAppResponse> imageNameAppResponses = List.of(
-                new EventImageAppResponse("https://host.com/image1.jpg"),
-                new EventImageAppResponse("https://host.com/image2.jpg"),
-                new EventImageAppResponse("https://host.com/zeze.jpg")
+                new EventImageAppResponse(1L, "https://host.com/image1.jpg"),
+                new EventImageAppResponse(2L, "https://host.com/image2.jpg"),
+                new EventImageAppResponse(3L, "https://host.com/zeze.jpg")
         );
         given(eventService.findImages(token)).willReturn(imageNameAppResponses);
 

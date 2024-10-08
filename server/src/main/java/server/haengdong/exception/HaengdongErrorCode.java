@@ -30,6 +30,8 @@ public enum HaengdongErrorCode {
 
     DIFFERENT_STEP_MEMBERS("참여자 목록이 일치하지 않습니다."),
 
+    IMAGE_NOT_FOUND("존재하지 않는 이미지 입니다."),
+
     /* Authentication */
 
     PASSWORD_INVALID("비밀번호가 일치하지 않습니다."),

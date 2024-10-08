@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.BillService;
 import server.haengdong.application.EventService;
-import server.haengdong.application.ImageUploadService;
+import server.haengdong.application.ImageService;
 import server.haengdong.application.MemberService;
 import server.haengdong.presentation.admin.AdminBillController;
 import server.haengdong.presentation.admin.AdminEventController;
@@ -49,5 +49,5 @@ public abstract class ControllerTestSupport {
     protected BillService billService;
 
     @MockBean
-    protected ImageUploadService imageUploadService;
+    protected ImageService imageUploadService;
 }

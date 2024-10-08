@@ -200,9 +200,9 @@ class EventControllerDocsTest extends RestDocsSupport {
     void findAllImages() throws Exception {
         String token = "TOKEN";
         List<EventImageAppResponse> imageNameAppResponses = List.of(
-                new EventImageAppResponse("https://host.com/image1.jpg"),
-                new EventImageAppResponse("https://host.com/image2.jpg"),
-                new EventImageAppResponse("https://host.com/zeze.jpg")
+                new EventImageAppResponse(1L, "https://host.com/image1.jpg"),
+                new EventImageAppResponse(2L, "https://host.com/image2.jpg"),
+                new EventImageAppResponse(3L, "https://host.com/zeze.jpg")
         );
         given(eventService.findImages(token)).willReturn(imageNameAppResponses);
 
@@ -217,8 +217,12 @@ class EventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 responseFields(
-                                        fieldWithPath("urls").type(JsonFieldType.ARRAY)
-                                                .description("행사 이미지 목록")
+                                        fieldWithPath("images").type(JsonFieldType.ARRAY)
+                                                .description("행사 이미지 목록"),
+                                        fieldWithPath("images[].id").type(JsonFieldType.NUMBER)
+                                                .description("이미지 id"),
+                                        fieldWithPath("images[].url").type(JsonFieldType.STRING)
+                                                .description("이미지 url")
                                 )
                         )
                 );

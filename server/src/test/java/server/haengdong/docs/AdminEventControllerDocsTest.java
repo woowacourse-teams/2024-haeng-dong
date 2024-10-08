@@ -7,6 +7,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -26,14 +27,14 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import server.haengdong.application.EventService;
-import server.haengdong.application.ImageUploadService;
+import server.haengdong.application.ImageService;
 import server.haengdong.presentation.admin.AdminEventController;
 import server.haengdong.presentation.request.EventUpdateRequest;
 
 class AdminEventControllerDocsTest extends RestDocsSupport {
 
     private final EventService eventService = mock(EventService.class);
-    private final ImageUploadService imageUploadService = mock(ImageUploadService.class);
+    private final ImageService imageUploadService = mock(ImageService.class);
 
     @Override
     protected Object initController() {
@@ -125,6 +126,30 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                 ),
                                 requestParts(
                                         partWithName("images").description("행사 이미지")
+                                )
+                        )
+                );
+    }
+
+    @DisplayName("행사 이미지를 삭제한다.")
+    @Test
+    void deleteImage() throws Exception {
+        String token = "TOKEN";
+
+        mockMvc.perform(delete("/api/admin/events/{eventId}/images/{imageId}", token, 1L)
+                        .cookie(EVENT_COOKIE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("deleteImage",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("eventId").description("행사 ID"),
+                                        parameterWithName("imageId").description("이미지 ID")
+                                ),
+                                requestCookies(
+                                        cookieWithName("eventToken").description("행사 관리자 토큰")
                                 )
                         )
                 );

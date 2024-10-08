@@ -12,7 +12,6 @@ import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.EventImageAppResponse;
-import server.haengdong.application.response.ImageNameAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillRepository;
@@ -103,11 +102,11 @@ public class EventService {
     }
 
     @Transactional
-    public void saveImages(String token, List<ImageNameAppResponse> imageNames) {
+    public void saveImages(String token, List<String> imageNames) {
         Event event = getEvent(token);
 
         List<EventImage> images = imageNames.stream()
-                .map(imageNameAppResponse -> imageNameAppResponse.toEventImage(event))
+                .map(imageName -> new EventImage(event, imageName))
                 .toList();
 
         eventImageRepository.saveAll(images);
@@ -118,8 +117,12 @@ public class EventService {
 
         return eventImageRepository.findAllByEvent(event)
                 .stream()
-                .map(image -> new EventImageAppResponse(baseUrl + image.getName()))
+                .map(image -> new EventImageAppResponse(image.getId(), createUrl(image)))
                 .toList();
+    }
+
+    private String createUrl(EventImage image) {
+        return baseUrl + image.getName();
     }
 
     @Transactional

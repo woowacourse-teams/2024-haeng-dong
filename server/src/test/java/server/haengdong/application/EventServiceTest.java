@@ -201,12 +201,9 @@ class EventServiceTest extends ServiceTestSupport {
     void saveImages() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        List<ImageNameAppResponse> imageNameAppResponses = List.of(
-                new ImageNameAppResponse("image1.jpg"),
-                new ImageNameAppResponse("image2.jpg")
-        );
+        List<String> imageNames = List.of("image1.jpg", "image2.jpg");
 
-        eventService.saveImages(event.getToken(), imageNameAppResponses);
+        eventService.saveImages(event.getToken(), imageNames);
 
         List<EventImage> savedEventImages = eventImageRepository.findAllByEvent(event);
         assertThat(savedEventImages)
@@ -216,5 +213,19 @@ class EventServiceTest extends ServiceTestSupport {
                         "image1.jpg",
                         "image2.jpg"
                 );
+    }
+
+    @DisplayName("행사 이미지를 삭제한다.")
+    @Test
+    void deleteImage() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        EventImage eventImage = new EventImage(event, "image1.jpg");
+        eventImageRepository.save(eventImage);
+
+        eventService.deleteImage(event.getToken(), eventImage.getId());
+
+        assertThat(eventImageRepository.findById(eventImage.getId()))
+                .isEmpty();
     }
 }

@@ -12,6 +12,7 @@ public record BillUpdateRequest(
         @NotNull(message = "지출 금액은 공백일 수 없습니다.")
         Long price
 ) {
+
     public BillUpdateAppRequest toAppResponse() {
         return new BillUpdateAppRequest(title, price);
     }
