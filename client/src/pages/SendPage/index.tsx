@@ -26,7 +26,7 @@ const SendPage = () => {
           options={['토스', '카카오페이', '복사하기']}
           onSelect={onSelect}
         />
-        <Text size="tiny" color="gray">
+        <Text size="body" textColor="gray">
           {sendMethodIntroduceText[sendMethod]}
         </Text>
         <FixedButton onBackClick={() => navigate(-1)} onClick={buttonOnClick[sendMethod]}>
