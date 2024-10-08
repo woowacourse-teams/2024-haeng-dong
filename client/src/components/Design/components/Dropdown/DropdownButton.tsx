@@ -7,10 +7,18 @@ import Text from '../Text/Text';
 import {dropdownButtonStyle} from './Dropdown.style';
 import {DropdownButtonProps} from './Dropdown.type';
 
-const DropdownButton = ({text, ...buttonProps}: DropdownButtonProps) => {
+const DropdownButton = ({text, onClick, ...buttonProps}: DropdownButtonProps) => {
   const {theme} = useTheme();
+
   return (
-    <button css={dropdownButtonStyle(theme)} {...buttonProps}>
+    <button
+      css={dropdownButtonStyle(theme)}
+      onClick={event => {
+        event.stopPropagation();
+        if (onClick) onClick(event);
+      }}
+      {...buttonProps}
+    >
       <Text size="body" color="black">
         {text}
       </Text>

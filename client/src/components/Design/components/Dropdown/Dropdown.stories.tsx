@@ -19,7 +19,15 @@ const meta = {
       </div>
     ),
   ],
+  argTypes: {
+    base: {
+      description: '',
+      control: {type: 'select'},
+      options: ['meatballs', 'button'],
+    },
+  },
   args: {
+    baseButtonText: '정산 초대하기',
     children: [
       <DropdownButton text="전체 참여자 관리" onClick={() => alert('전체 참여자 관리 클릭')} />,
       <DropdownButton text="계좌번호 입력하기" onClick={() => alert('계좌번호 입력하기 클릭')} />,

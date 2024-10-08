@@ -2,13 +2,13 @@ import {useRef, useState} from 'react';
 
 const useDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const meetBallsRef = useRef<HTMLButtonElement>(null);
+  const baseRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLElement>(null);
 
   return {
     isOpen,
     setIsOpen,
-    meetBallsRef,
+    baseRef,
     dropdownRef,
   };
 };

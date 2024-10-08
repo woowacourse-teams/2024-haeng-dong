@@ -1,39 +1,32 @@
 /** @jsxImportSource @emotion/react */
-import Icon from '../Icon/Icon';
-import IconButton from '../IconButton/IconButton';
-import Flex from '../Flex/Flex';
 import ClickOutsideDetector from '../ClickOutsideDetector';
 
 import useDropdown from './useDropdown';
 import {DropdownProps} from './Dropdown.type';
-import DropdownButton from './DropdownButton';
-import {dropdownStyle} from './Dropdown.style';
+import MeatballBase from './MeatballBase';
+import ButtonBase from './ButtonBase';
+import {dropdownBaseStyle} from './Dropdown.style';
 
-const Dropdown = ({base, children}: DropdownProps) => {
-  const {isOpen, setIsOpen, meetBallsRef, dropdownRef} = useDropdown();
-  const isDropdownOpen = isOpen && meetBallsRef.current;
+const Dropdown = ({base = 'meatballs', baseButtonText, children}: DropdownProps) => {
+  const {isOpen, setIsOpen, baseRef, dropdownRef} = useDropdown();
+  const isDropdownOpen = isOpen && !!baseRef.current;
 
   return (
-    <ClickOutsideDetector targetRef={meetBallsRef} onClickOutside={() => setIsOpen(false)}>
-      <IconButton
-        ref={meetBallsRef}
-        variants="none"
-        onClick={() => setIsOpen(true)}
-        style={{position: 'relative', WebkitTapHighlightColor: 'transparent'}}
-      >
-        <Icon iconType="meatballs" />
-        {isDropdownOpen && (
-          <ClickOutsideDetector targetRef={dropdownRef} onClickOutside={() => setIsOpen(false)}>
-            <section ref={dropdownRef}>
-              <Flex {...dropdownStyle}>
-                {children.map(button => (
-                  <DropdownButton {...button.props} />
-                ))}
-              </Flex>
-            </section>
-          </ClickOutsideDetector>
+    <ClickOutsideDetector targetRef={baseRef} onClickOutside={() => setIsOpen(false)}>
+      <div ref={baseRef} css={dropdownBaseStyle}>
+        {base === 'meatballs' && (
+          <MeatballBase isOpen={isDropdownOpen} setIsOpen={setIsOpen} dropdownRef={dropdownRef} children={children} />
         )}
-      </IconButton>
+        {base === 'button' && (
+          <ButtonBase
+            isOpen={isDropdownOpen}
+            setIsOpen={setIsOpen}
+            dropdownRef={dropdownRef}
+            children={children}
+            baseButtonText={baseButtonText}
+          />
+        )}
+      </div>
     </ClickOutsideDetector>
   );
 };
