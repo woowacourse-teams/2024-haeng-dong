@@ -1,4 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import {useTheme} from '@components/Design/theme/HDesignProvider';
+
 import Button from '../Button/Button';
 import Flex from '../Flex/Flex';
 
@@ -13,6 +15,8 @@ type ButtonBaseProps = DropdownProps & {
 };
 
 const ButtonBase = ({isOpen, setIsOpen, dropdownRef, baseButtonText, children}: ButtonBaseProps) => {
+  const {theme} = useTheme();
+
   return (
     <>
       <Button variants="tertiary" size="small" onClick={() => setIsOpen(true)}>
@@ -20,7 +24,7 @@ const ButtonBase = ({isOpen, setIsOpen, dropdownRef, baseButtonText, children}: 
       </Button>
       {isOpen && (
         <section ref={dropdownRef}>
-          <Flex {...dropdownButtonBaseStyle}>
+          <Flex {...dropdownButtonBaseStyle(theme)}>
             {children.map((button, index) => (
               <DropdownButton key={index} {...button.props} />
             ))}

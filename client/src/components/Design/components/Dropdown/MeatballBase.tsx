@@ -1,4 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import {useTheme} from '@components/Design/theme/HDesignProvider';
+
 import ClickOutsideDetector from '../ClickOutsideDetector';
 import Flex from '../Flex/Flex';
 import Icon from '../Icon/Icon';
@@ -15,6 +17,8 @@ type MeatballBaseProps = DropdownProps & {
 };
 
 const MeatballBase = ({isOpen, setIsOpen, dropdownRef, children}: MeatballBaseProps) => {
+  const {theme} = useTheme();
+
   return (
     <>
       <IconButton variants="none" onClick={() => setIsOpen(true)}>
@@ -22,7 +26,7 @@ const MeatballBase = ({isOpen, setIsOpen, dropdownRef, children}: MeatballBasePr
       </IconButton>
       {isOpen && (
         <section ref={dropdownRef}>
-          <Flex {...dropdownStyle}>
+          <Flex {...dropdownStyle(theme)}>
             {children.map((button, index) => (
               <DropdownButton key={index} {...button.props} />
             ))}
