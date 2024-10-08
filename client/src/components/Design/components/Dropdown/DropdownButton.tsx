@@ -7,7 +7,7 @@ import Text from '../Text/Text';
 import {dropdownButtonStyle} from './Dropdown.style';
 import {DropdownButtonProps} from './Dropdown.type';
 
-const DropdownButton = ({text, onClick, ...buttonProps}: DropdownButtonProps) => {
+const DropdownButton = ({text, onClick, setIsOpen, ...buttonProps}: DropdownButtonProps) => {
   const {theme} = useTheme();
 
   return (
@@ -16,6 +16,7 @@ const DropdownButton = ({text, onClick, ...buttonProps}: DropdownButtonProps) =>
       onClick={event => {
         event.stopPropagation();
         if (onClick) onClick(event);
+        if (setIsOpen) setIsOpen(false);
       }}
       {...buttonProps}
     >

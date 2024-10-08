@@ -4,7 +4,7 @@ import {useTheme} from '@components/Design/theme/HDesignProvider';
 import Button from '../Button/Button';
 import Flex from '../Flex/Flex';
 
-import {dropdownButtonBaseStyle, dropdownStyle} from './Dropdown.style';
+import {dropdownButtonBaseStyle} from './Dropdown.style';
 import {DropdownProps} from './Dropdown.type';
 import DropdownButton from './DropdownButton';
 
@@ -26,7 +26,7 @@ const ButtonBase = ({isOpen, setIsOpen, dropdownRef, baseButtonText, children}: 
         <section ref={dropdownRef}>
           <Flex {...dropdownButtonBaseStyle(theme)}>
             {children.map((button, index) => (
-              <DropdownButton key={index} {...button.props} />
+              <DropdownButton key={index} setIsOpen={setIsOpen} {...button.props} />
             ))}
           </Flex>
         </section>
