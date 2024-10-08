@@ -15,6 +15,7 @@ import server.haengdong.application.response.ImageNameAppResponse;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Slf4j
@@ -46,8 +47,8 @@ public class ImageUploadService {
     }
 
     private String uploadImageToStorage(InputStream inputStream, MultipartFile image) {
-        String fileName = UUID.randomUUID() + image.getOriginalFilename();
-        String key = directoryPath + fileName;
+        String imageName = UUID.randomUUID() + image.getOriginalFilename();
+        String key = directoryPath + imageName;
         long contentLength = image.getSize();
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
@@ -58,6 +59,6 @@ public class ImageUploadService {
                 .build();
 
         s3Client.putObject(putObjectRequest, fromInputStream(inputStream, contentLength));
-        return fileName;
+        return imageName;
     }
 }

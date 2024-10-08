@@ -29,7 +29,6 @@ public class AdminEventController {
     public ResponseEntity<Void> authenticate() {
         return ResponseEntity.ok().build();
     }
-
     @PatchMapping("/api/admin/events/{eventId}")
     public ResponseEntity<Void> updateEvent(
             @PathVariable("eventId") String token,
@@ -47,5 +46,16 @@ public class AdminEventController {
     ) {
         List<ImageNameAppResponse> imageNames = imageUploadService.uploadImages(images);
         eventService.saveImages(token, imageNames);
+    }
+
+    @DeleteMapping("/api/admin/events/{eventId}/images/{imageId}")
+    public ResponseEntity<Void> deleteImage(
+            @PathVariable("eventId") String token,
+            @PathVariable("imageId") Long imageId
+    ) {
+        String imageName = eventService.deleteImage(token, imageId);
+        imageUploadService.deleteImage(imageName);
+
+        return ResponseEntity.ok().build();
     }
 }

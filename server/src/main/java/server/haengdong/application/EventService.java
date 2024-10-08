@@ -121,4 +121,17 @@ public class EventService {
                 .map(image -> new EventImageAppResponse(baseUrl + image.getName()))
                 .toList();
     }
+
+    @Transactional
+    public String deleteImage(String token, Long imageId) {
+        EventImage eventImage = eventImageRepository.findById(imageId)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.IMAGE_NOT_FOUND));
+
+        Event event = eventImage.getEvent();
+        if (event.isTokenMismatch(token)) {
+            throw new AuthenticationException(HaengdongErrorCode.PASSWORD_INVALID);
+        }
+        eventImageRepository.delete(eventImage);
+        return eventImage.getName();
+    }
 }
