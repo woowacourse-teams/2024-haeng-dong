@@ -1,30 +1,49 @@
-import {Button, FixedButton, MainLayout, Top, TopNav} from '@components/Design';
-import Carousel from '@components/Design/components/Carousel/Carousel';
 import {css} from '@emotion/react';
-import useRequestPostImages from '@hooks/queries/images/useRequestPostImages';
 import {useEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+
+import Carousel from '@components/Design/components/Carousel/Carousel';
+import useRequestGetImages from '@hooks/queries/images/useRequestGetImages';
+import useRequestPostImages from '@hooks/queries/images/useRequestPostImages';
+
+import {Button, FixedButton, MainLayout, Top, TopNav} from '@components/Design';
+
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 const AddImagesPage = () => {
   const [files, setFiles] = useState<FileList | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const eventId = getEventIdByUrl();
 
-  const {postImages, isPending} = useRequestPostImages();
+  const {postImages, isPending, isSuccess} = useRequestPostImages();
+  const {images: prevImages} = useRequestGetImages();
 
   const handleChangeImages = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const dataTransfer = new DataTransfer();
 
-      // 기존 파일을 DataTransfer에 추가
       if (files) {
         Array.from(files).forEach(file => dataTransfer.items.add(file));
       }
 
-      // 새로운 파일을 DataTransfer에 추가
       Array.from(event.target.files).forEach(file => dataTransfer.items.add(file));
 
-      // 새로운 FileList로 업데이트
       setFiles(dataTransfer.files);
     }
+  };
+
+  const handleDeleteImage = (index: number) => {
+    const dataTransfer = new DataTransfer();
+
+    if (files) {
+      Array.from(files).forEach((file, idx) => {
+        if (idx === index) return;
+        dataTransfer.items.add(file);
+      });
+    }
+
+    setFiles(dataTransfer.files);
   };
 
   const canSubmit = files && files.length !== 0;
@@ -40,6 +59,19 @@ const AddImagesPage = () => {
 
     postImages({formData});
   };
+
+  useEffect(() => {
+    document.body.style.overflowX = 'hidden';
+
+    return () => {
+      document.body.style.overflowX = 'auto';
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isSuccess) return;
+    navigate(`/event/${eventId}/admin`);
+  }, [isSuccess]);
 
   return (
     <MainLayout backgroundColor="white">
@@ -70,13 +102,13 @@ const AddImagesPage = () => {
           사진 추가하기
         </Button>
       </div>
-      {/* <Carousel urls={files ? Array.from(files).map(file => URL.createObjectURL(file)) : []} /> */}
       <Carousel
-        urls={[
-          'https://wooteco-crew-wiki.s3.ap-northeast-2.amazonaws.com/%EC%BF%A0%ED%82%A4(6%EA%B8%B0)/image.png',
-          'https://wooteco-crew-wiki.s3.ap-northeast-2.amazonaws.com/%EC%BF%A0%ED%82%A4%286%EA%B8%B0%29/4tyq1x19rsn.jpg',
-          'https://img.danawa.com/images/descFiles/5/896/4895281_1_16376712347542321.gif',
-        ]}
+        urls={
+          files
+            ? [...prevImages.map(({url}) => url), ...Array.from(files).map(file => URL.createObjectURL(file))]
+            : prevImages.map(({url}) => url)
+        }
+        onClickDelete={handleDeleteImage}
       />
       <div
         css={css`
