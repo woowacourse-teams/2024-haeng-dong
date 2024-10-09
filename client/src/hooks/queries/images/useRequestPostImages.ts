@@ -1,9 +1,10 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
+import {requestPostImages, RequestPostImages} from '@apis/request/images';
+
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
-import {requestPostImages, RequestPostImages} from '@apis/request/images';
 
 const useRequestPostImages = () => {
   const eventId = getEventIdByUrl();
