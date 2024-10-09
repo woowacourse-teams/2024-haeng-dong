@@ -13,6 +13,7 @@ const Carousel = ({urls}: CarouselProps) => {
     <div
       css={css`
         /* overflow: hidden; */
+        display: flex;
         overflow-x: auto;
       `}
     >
@@ -21,7 +22,6 @@ const Carousel = ({urls}: CarouselProps) => {
           display: flex;
           gap: 1rem;
           margin-inline: 1rem;
-          // 현재 오른쪽 끝에 적용 안됨
         `}
       >
         {urls &&
@@ -32,9 +32,8 @@ const Carousel = ({urls}: CarouselProps) => {
                 justify-content: center;
                 align-items: center;
 
-                aspect-ratio: 3/4;
                 clip-path: inset(0 round 1rem);
-                background-color: ${theme.colors.lightGrayContainer};
+                background-color: ${theme.colors.grayContainer};
                 /* overflow: hidden; */
               `}
             >
@@ -43,7 +42,8 @@ const Carousel = ({urls}: CarouselProps) => {
                 src={url}
                 alt={`업로드된 이미지 ${index + 1}`}
                 css={css`
-                  width: calc(100vw - 4rem);
+                  width: ${urls.length === 1 ? `calc(100vw - 2rem)` : `calc(100vw - 4rem)`};
+                  aspect-ratio: 3/4;
                   object-fit: contain;
                 `}
               />
