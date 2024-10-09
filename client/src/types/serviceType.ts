@@ -65,3 +65,12 @@ export interface Report {
 export interface Reports {
   reports: Report[];
 }
+
+export interface Images {
+  images: Image[];
+}
+
+export interface Image {
+  id: number;
+  url: string;
+}
