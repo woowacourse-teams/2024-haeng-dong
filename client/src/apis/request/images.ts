@@ -1,8 +1,9 @@
+import {EventId, Images} from 'types/serviceType';
+
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
-import {EventId} from 'types/serviceType';
 
 export interface RequestPostImages {
   formData: FormData;
@@ -31,15 +32,9 @@ export const requestPostImages = async ({eventId, formData}: WithEventId<Request
   });
 };
 
-export interface RequestGetImages {
-  eventName: string;
-  password: string;
-}
-
-export const requestGetImages = async ({eventId, ...props}: WithEventId<RequestGetImages>) => {
-  return await requestGet<EventId>({
+export const requestGetImages = async ({eventId}: WithEventId) => {
+  return await requestGet<Images>({
     baseUrl: BASE_URL.HD,
     endpoint: `${USER_API_PREFIX}/${eventId}/images`,
-    ...props,
   });
 };

@@ -1,19 +1,20 @@
 import {useQuery} from '@tanstack/react-query';
 
+import {requestGetImages} from '@apis/request/images';
+
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
-import {RequestGetImages, requestGetImages} from '@apis/request/images';
 
-const useRequestGetImages = ({...props}: RequestGetImages) => {
+const useRequestGetImages = () => {
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({
     queryKey: [QUERY_KEYS.images],
-    queryFn: () => requestGetImages({eventId, ...props}),
+    queryFn: () => requestGetImages({eventId}),
   });
 
-  return {iamges: data?.eventId ?? [], ...rest};
+  return {images: data?.images ?? [], ...rest};
 };
 
 export default useRequestGetImages;
