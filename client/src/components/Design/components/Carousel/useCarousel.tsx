@@ -39,7 +39,7 @@ const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
   const handleClickDelete = (index: number) => {
     if (!onClickDelete) return;
     onClickDelete(index);
-    if (index === urls.length - 1) setCurrentIndex(prev => prev - 1);
+    if (urls.length !== 1 && index === urls.length - 1) setCurrentIndex(prev => prev - 1);
   };
 
   return {handleDragStart, handleDrag, handleDragEnd, theme, currentIndex, translateX, isDragging, handleClickDelete};

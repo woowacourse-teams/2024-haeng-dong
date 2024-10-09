@@ -8,27 +8,22 @@ export const carouselWrapperStyle = css`
   display: flex;
 `;
 
-export const imageCardContainerStyle = css`
-  display: flex;
-  gap: 1rem;
-  margin-inline: 2rem;
-`;
-
-interface ImageCardStyleProps {
-  theme: Theme;
+interface ImageCardContainerStyleProps {
   currentIndex: number;
   length: number;
   translateX: number;
   isDragging: boolean;
 }
 
-export const imageCardStyle = ({theme, currentIndex, length, translateX, isDragging}: ImageCardStyleProps) => css`
-  position: relative;
+export const imageCardContainerStyle = ({
+  currentIndex,
+  length,
+  translateX,
+  isDragging,
+}: ImageCardContainerStyleProps) => css`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  clip-path: inset(0 round 1rem);
-  background-color: ${theme.colors.gray};
+  gap: 1rem;
+  margin-inline: 2rem;
   transform: translateX(
     calc(
       (100vw - 3rem) * ${-currentIndex} +
@@ -37,6 +32,19 @@ export const imageCardStyle = ({theme, currentIndex, length, translateX, isDragg
   );
   transition: ${isDragging ? 'none' : '0.2s'};
   transition-timing-function: cubic-bezier(0.7, 0.62, 0.62, 1.16);
+`;
+
+interface ImageCardStyleProps {
+  theme: Theme;
+}
+
+export const imageCardStyle = ({theme}: ImageCardStyleProps) => css`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: inset(0 round 1rem);
+  background-color: ${theme.colors.gray};
 `;
 
 export const imageStyle = css`

@@ -12,7 +12,7 @@ const Carousel = ({urls, onClickDelete}: CarouselProps) => {
   return (
     <div css={carouselWrapperStyle}>
       <div
-        css={imageCardContainerStyle}
+        css={imageCardContainerStyle({currentIndex, length: urls.length, translateX, isDragging})}
         onMouseDown={handleDragStart}
         onMouseMove={handleDrag}
         onMouseUp={handleDragEnd}
@@ -22,13 +22,13 @@ const Carousel = ({urls, onClickDelete}: CarouselProps) => {
       >
         {urls &&
           urls.map((url, index) => (
-            <div key={index} css={imageCardStyle({theme, currentIndex, length: urls.length, translateX, isDragging})}>
+            <div key={index} css={imageCardStyle({theme})}>
               <img src={url} alt={`업로드된 이미지 ${index + 1}`} css={imageStyle} />
               {onClickDelete && <CarouselDeleteButton onClick={() => handleClickDelete(index)} />}
             </div>
           ))}
-        {urls.length !== 1 && <CarouselIndicator length={urls.length} currentIndex={currentIndex} />}
       </div>
+      {urls.length !== 1 && <CarouselIndicator length={urls.length} currentIndex={currentIndex} />}
     </div>
   );
 };
