@@ -1,11 +1,12 @@
-import {FixedButton, MainLayout, Top, TopNav} from '@components/Design';
+import {Button, FixedButton, MainLayout, Top, TopNav} from '@components/Design';
 import Carousel from '@components/Design/components/Carousel/Carousel';
 import {css} from '@emotion/react';
 import useRequestPostImages from '@hooks/queries/images/useRequestPostImages';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 const AddImagesPage = () => {
   const [files, setFiles] = useState<FileList | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {postImages, isPending} = useRequestPostImages();
 
@@ -57,16 +58,26 @@ const AddImagesPage = () => {
           <Top.Line text="행사와 관련된" />
           <Top.Line text="사진들을 첨부해 주세요" emphasize={['사진들']} />
         </Top>
-        <input type="file" accept="image/*" multiple onChange={handleChangeImages} />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleChangeImages}
+          style={{display: 'none'}}
+        />
+        <Button variants="primary" onClick={() => fileInputRef.current?.click()}>
+          사진 추가하기
+        </Button>
       </div>
-      <Carousel urls={files ? Array.from(files).map(file => URL.createObjectURL(file)) : []} />
-      {/* <Carousel
+      {/* <Carousel urls={files ? Array.from(files).map(file => URL.createObjectURL(file)) : []} /> */}
+      <Carousel
         urls={[
           'https://wooteco-crew-wiki.s3.ap-northeast-2.amazonaws.com/%EC%BF%A0%ED%82%A4(6%EA%B8%B0)/image.png',
           'https://wooteco-crew-wiki.s3.ap-northeast-2.amazonaws.com/%EC%BF%A0%ED%82%A4%286%EA%B8%B0%29/4tyq1x19rsn.jpg',
           'https://img.danawa.com/images/descFiles/5/896/4895281_1_16376712347542321.gif',
         ]}
-      /> */}
+      />
       <div
         css={css`
           height: 9.25rem;
