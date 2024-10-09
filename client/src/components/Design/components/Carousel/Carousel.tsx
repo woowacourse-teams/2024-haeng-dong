@@ -1,54 +1,33 @@
 /** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react';
 import {CarouselProps} from './Carousel.type';
-import {useTheme} from '@components/Design/theme/HDesignProvider';
-import {useRef, useState} from 'react';
+import CarouselIndicator from './CarouselIndicator';
+import CarouselDeleteButton from './CarouselDeleteButton';
+import {carouselWrapperStyle, imageCardContainerStyle, imageCardStyle, imageStyle} from './Carousel.style';
+import useCarousel from './useCarousel';
 
-const Carousel = ({urls}: CarouselProps) => {
-  const [touchStartX, setTouchStartX] = useState(0);
-  const [scrollX, setScrollX] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const {theme} = useTheme();
+const Carousel = ({urls, onClickDelete}: CarouselProps) => {
+  const {handleDragStart, handleDrag, handleDragEnd, theme, currentIndex, translateX, isDragging, handleClickDelete} =
+    useCarousel({urls, onClickDelete});
+
   return (
-    <div
-      css={css`
-        /* overflow: hidden; */
-        display: flex;
-        overflow-x: auto;
-      `}
-    >
+    <div css={carouselWrapperStyle}>
       <div
-        css={css`
-          display: flex;
-          gap: 1rem;
-          margin-inline: 1rem;
-        `}
+        css={imageCardContainerStyle}
+        onMouseDown={handleDragStart}
+        onMouseMove={handleDrag}
+        onMouseUp={handleDragEnd}
+        onTouchStart={handleDragStart}
+        onTouchMove={handleDrag}
+        onTouchEnd={handleDragEnd}
       >
         {urls &&
           urls.map((url, index) => (
-            <div
-              css={css`
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                clip-path: inset(0 round 1rem);
-                background-color: ${theme.colors.grayContainer};
-                /* overflow: hidden; */
-              `}
-            >
-              <img
-                key={index}
-                src={url}
-                alt={`업로드된 이미지 ${index + 1}`}
-                css={css`
-                  width: ${urls.length === 1 ? `calc(100vw - 2rem)` : `calc(100vw - 4rem)`};
-                  aspect-ratio: 3/4;
-                  object-fit: contain;
-                `}
-              />
+            <div key={index} css={imageCardStyle({theme, currentIndex, length: urls.length, translateX, isDragging})}>
+              <img src={url} alt={`업로드된 이미지 ${index + 1}`} css={imageStyle} />
+              {onClickDelete && <CarouselDeleteButton onClick={() => handleClickDelete(index)} />}
             </div>
           ))}
+        {urls.length !== 1 && <CarouselIndicator length={urls.length} currentIndex={currentIndex} />}
       </div>
     </div>
   );
