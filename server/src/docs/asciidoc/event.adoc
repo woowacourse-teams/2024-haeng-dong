@@ -237,7 +237,23 @@ operation::uploadImages[snippets="http-request,http-response"]
 
 === 행사 이미지 목록 조회
 
-operation::createEvent[snippets="http-request,request-body,request-fields,response-body,response-fields,http-response,response-cookies"]
+operation::findImages[snippets="http-request,response-body,response-fields,http-response"]
+
+==== [.red]#Exceptions#
+
+[source,json,options="nowrap"]
+----
+[
+   {
+      "code": "EVENT_NOT_FOUND",
+      "message": "존재하지 않는 행사입니다."
+   }
+]
+----
+
+=== 행사 이미지 삭제
+
+operation::deleteImage[snippets="http-request,http-response"]
 
 ==== [.red]#Exceptions#
 
