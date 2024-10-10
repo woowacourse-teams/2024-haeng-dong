@@ -43,9 +43,11 @@ const EventPageLayout = () => {
   };
 
   useEffect(() => {
+    console.log('mount');
     updateMetaTag('og:title', `행동대장이 "${eventSummary.eventName}"에 대한 정산을 요청했어요`);
 
     return () => {
+      console.log('unmount');
       updateMetaTag('og:title', '행동대장 - 쉽고 빠른 모임 정산 및 송금 서비스');
     };
   }, []);
