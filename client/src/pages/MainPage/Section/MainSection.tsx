@@ -5,16 +5,17 @@ import ChevronDown from '@assets/image/chevronDownLarge.svg';
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
 import useAmplitude from '@hooks/useAmplitude';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 const MainSection = () => {
   const navigate = useNavigate();
 
-  const {track} = useAmplitude();
+  const {trackStartCreateEvent} = useAmplitude();
 
   const handleClick = () => {
-    track('정산 시작하기 버튼 클릭');
+    trackStartCreateEvent();
     navigate(ROUTER_URLS.createEvent);
   };
 
