@@ -4,9 +4,11 @@ import {lazy, Suspense} from 'react';
 import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
 import EventLoader from '@components/Loader/EventLoader';
+import SendErrorPage from '@pages/ErrorPage/SendErrorPage';
 import AuthGate from '@pages/EventPage/AuthGate';
 
 import {EventPage} from '@pages/EventPage';
+import SendPage from '@pages/SendPage';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -74,6 +76,11 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.eventEdit,
         element: <Account />,
+      },
+      {
+        path: ROUTER_URLS.send,
+        element: <SendPage />,
+        errorElement: <SendErrorPage />,
       },
       {
         path: '*',
