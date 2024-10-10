@@ -6,6 +6,7 @@ public record MemberSaveResponse(
         Long id,
         String name
 ) {
+
     public static MemberSaveResponse of(MemberSaveAppResponse response) {
         return new MemberSaveResponse(response.id(), response.name());
     }

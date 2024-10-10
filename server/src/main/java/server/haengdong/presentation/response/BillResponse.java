@@ -8,6 +8,7 @@ public record BillResponse(
         Long price,
         boolean isFixed
 ) {
+
     public static BillResponse of(BillAppResponse response) {
         return new BillResponse(response.id(), response.title(), response.price(), response.isFixed());
     }

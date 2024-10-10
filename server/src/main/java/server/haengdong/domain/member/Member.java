@@ -14,6 +14,7 @@ import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.domain.BaseEntity;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
@@ -22,7 +23,7 @@ import server.haengdong.exception.HaengdongException;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"event_id", "name"})})
 @Entity
-public class Member {
+public class Member extends BaseEntity {
 
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 8;

@@ -6,8 +6,12 @@ import java.util.List;
 import server.haengdong.application.request.BillDetailsUpdateAppRequest;
 
 public record BillDetailsUpdateRequest(
-        @Valid @NotEmpty List<BillDetailUpdateRequest> billDetails
+
+        @Valid
+        @NotEmpty
+        List<BillDetailUpdateRequest> billDetails
 ) {
+
     public BillDetailsUpdateAppRequest toAppRequest() {
         return new BillDetailsUpdateAppRequest(billDetails.stream()
                 .map(BillDetailUpdateRequest::toAppRequest)

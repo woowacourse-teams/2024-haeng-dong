@@ -13,6 +13,7 @@ public record BillDetailUpdateRequest(
 
         boolean isFixed
 ) {
+
     public BillDetailUpdateAppRequest toAppRequest() {
         return new BillDetailUpdateAppRequest(this.id, this.price, this.isFixed);
     }

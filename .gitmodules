@@ -1,0 +1,3 @@
+[submodule "server/src/main/resources/config"]
+	path = server/src/main/resources/config
+	url = https://github.com/woowacourse-teams/2024-haeng-dong-config

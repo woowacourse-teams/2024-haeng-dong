@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import server.haengdong.domain.BaseEntity;
 import server.haengdong.domain.member.Member;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -27,7 +28,7 @@ import server.haengdong.exception.HaengdongException;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Bill {
+public class Bill extends BaseEntity {
 
     private static final int MIN_TITLE_LENGTH = 1;
     private static final int MAX_TITLE_LENGTH = 30;

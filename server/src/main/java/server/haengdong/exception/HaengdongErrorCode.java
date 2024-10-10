@@ -13,6 +13,7 @@ public enum HaengdongErrorCode {
     EVENT_PASSWORD_FORMAT_INVALID("비밀번호는 %d자리 숫자만 가능합니다."),
     BANK_NAME_INVALID("지원하지 않는 은행입니다. 지원하는 은행 목록: %s"),
     ACCOUNT_LENGTH_INVALID("계좌번호는 %d자 이상 %d자 이하만 입력 가능합니다."),
+    IMAGE_UPLOAD_FAIL("이미지 업로드에 실패했습니다."),
 
     MEMBER_NAME_LENGTH_INVALID("참여자 이름은 %d자 이상 %d자 이하만 입력 가능합니다."),
     MEMBER_NAME_DUPLICATE("행사에 중복된 참여자 이름이 존재합니다."),
@@ -28,6 +29,8 @@ public enum HaengdongErrorCode {
     BILL_PRICE_NOT_MATCHED("지출 총액이 일치하지 않습니다."),
 
     DIFFERENT_STEP_MEMBERS("참여자 목록이 일치하지 않습니다."),
+
+    IMAGE_NOT_FOUND("존재하지 않는 이미지 입니다."),
 
     /* Authentication */
 
