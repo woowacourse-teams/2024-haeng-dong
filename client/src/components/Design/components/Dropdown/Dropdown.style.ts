@@ -12,7 +12,7 @@ export const dropdownStyle: FlexProps = {
   gap: '0.25rem',
   backgroundColor: 'white',
 
-  otherStyle: {
+  cssProp: {
     position: 'absolute',
     top: '2rem',
     right: '-1rem',
