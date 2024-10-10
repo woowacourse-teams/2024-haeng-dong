@@ -1,6 +1,7 @@
 import type {Event} from 'types/serviceType';
 
 import {Outlet} from 'react-router-dom';
+import {useEffect} from 'react';
 
 import useEventPageLayout from '@hooks/useEventPageLayout';
 import useShareEvent from '@hooks/useShareEvent';
@@ -12,6 +13,7 @@ import {DesktopShareEventButton, MobileShareEventButton} from '@components/Share
 import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
 
 import {isMobileDevice} from '@utils/detectDevice';
+import {updateMetaTag} from '@utils/udpateMetaTag';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
@@ -39,6 +41,16 @@ const EventPageLayout = () => {
     trackShareEvent({...eventSummary, shareMethod: 'kakao'});
     kakaoShare();
   };
+
+  useEffect(() => {
+    console.log('mount');
+    updateMetaTag('og:title', `행동대장이 "${eventSummary.eventName}"에 대한 정산을 요청했어요`);
+
+    return () => {
+      console.log('unmount');
+      updateMetaTag('og:title', '행동대장 - 쉽고 빠른 모임 정산 및 송금 서비스');
+    };
+  }, []);
 
   return (
     <MainLayout backgroundColor="gray">
