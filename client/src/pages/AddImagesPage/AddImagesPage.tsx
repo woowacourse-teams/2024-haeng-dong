@@ -35,7 +35,7 @@ const AddImagesPage = () => {
           onChange={handleChangeImages}
           style={{display: 'none'}}
         />
-        <Button variants="primary" onClick={() => fileInputRef.current?.click()}>
+        <Button variants="tertiary" onClick={() => fileInputRef.current?.click()}>
           사진 추가하기
         </Button>
       </div>
