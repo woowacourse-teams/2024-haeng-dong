@@ -15,12 +15,14 @@ import {isMobileDevice} from '@utils/detectDevice';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
+  eventToken: string;
 };
 
 const EventPageLayout = () => {
-  const {isAdmin, event, eventSummary} = useEventPageLayout();
+  const {isAdmin, event, eventId, eventSummary} = useEventPageLayout();
   const outletContext: EventPageContextProps = {
     isAdmin,
+    eventToken: eventId,
     ...event,
   };
   const {trackShareEvent} = useAmplitude();

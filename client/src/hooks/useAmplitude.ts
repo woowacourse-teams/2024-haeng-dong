@@ -52,13 +52,13 @@ const useAmplitude = () => {
     });
   };
 
-  const trackAddBillStartTime = (eventUniqueData: EventUniqueData) => {
+  const trackAddBillStart = (eventUniqueData: EventUniqueData) => {
     track('지출내역 추가 시작', {
       ...eventUniqueData,
     });
   };
 
-  const trackAddBillEndTime = (eventUniqueData: EventUniqueData) => {
+  const trackAddBillEnd = (eventUniqueData: EventUniqueData) => {
     track('지출내역 추가 완료', {
       ...eventUniqueData,
     });
@@ -74,8 +74,8 @@ const useAmplitude = () => {
     trackStartCreateEvent,
     trackCompleteCreateEvent,
     trackShareEvent,
-    trackAddBillStartTime,
-    trackAddBillEndTime,
+    trackAddBillStart,
+    trackAddBillEnd,
     trackSendMoney,
   };
 };
