@@ -4,6 +4,7 @@ import StepList from '@components/StepList/Steps';
 import {Banner} from '@components/Design/components/Banner';
 
 import useAdminPage from '@hooks/useAdminPage';
+import useAmplitude from '@hooks/useAmplitude';
 
 import {Title, Button, Dropdown, DropdownButton} from '@HDesign/index';
 
@@ -11,6 +12,7 @@ import {receiptStyle} from './AdminPage.style';
 
 const AdminPage = () => {
   const navigate = useNavigate();
+  const {trackAddBillStart} = useAmplitude();
 
   const {eventId, isAdmin, eventName, totalExpenseAmount, isShowBanner, onDelete, steps} = useAdminPage();
 
@@ -27,6 +29,7 @@ const AdminPage = () => {
   };
 
   const navigateAddBill = () => {
+    trackAddBillStart({eventName, eventToken: eventId});
     navigate(`/event/${eventId}/admin/add-bill`);
   };
 

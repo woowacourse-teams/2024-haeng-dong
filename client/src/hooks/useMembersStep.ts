@@ -1,4 +1,4 @@
-import {RefObject, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
@@ -13,6 +13,8 @@ import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
 import {BillStep} from './useAddBillFunnel';
 import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
+import useAmplitude from './useAmplitude';
+import useRequestGetEvent from './queries/event/useRequestGetEvent';
 
 interface Props {
   billInfo: BillInfo;
@@ -27,12 +29,15 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const inputRef = useRef<HTMLInputElement>(null);
   const hiddenRef = useRef<HTMLInputElement>(null);
 
+  const {trackAddBillEnd} = useAmplitude();
+
   const {members: allMembers} = useRequestGetAllMembers();
   const {postMembersAsync, isPending: isPendingPostMembers} = useRequestPostMembers();
 
   const {postBill, isSuccess: isSuccessPostBill, isPending: isPendingPostBill} = useRequestPostBill();
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
+  const {eventName} = useRequestGetEvent();
 
   const onNameInputChange = (value: string) => {
     if (REGEXP.memberName.test(value)) {
@@ -111,6 +116,8 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
         memberIds: billInfo.members.map(({id}) => id),
       });
     }
+
+    trackAddBillEnd({eventName, eventToken: eventId});
   };
 
   useEffect(() => {

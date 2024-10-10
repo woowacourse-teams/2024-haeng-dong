@@ -85,6 +85,7 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.11.7",
     "@emotion/react": "^11.11.4",
     "@sentry/react": "^8.25.0",
     "@tanstack/react-query": "^5.51.23",

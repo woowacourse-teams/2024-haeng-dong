@@ -2,7 +2,7 @@ import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
 
-import useSetEventPasswordStep, {UseSetEventPasswordStepReturnType} from '@hooks/useSetEventPasswordStep';
+import useSetEventPasswordStep from '@hooks/useSetEventPasswordStep';
 
 import {FixedButton, Input} from '@HDesign/index';
 
