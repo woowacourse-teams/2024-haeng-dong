@@ -29,9 +29,11 @@ const HomePage = () => {
         title={eventName}
         amount={totalExpenseAmount}
         icon={
-          <button>
-            <Icon iconType="photoButton" onClick={() => navigate(`/event/${eventId}/images`)} />
-          </button>
+          images.length !== 0 && (
+            <button>
+              <Icon iconType="photoButton" onClick={() => navigate(`/event/${eventId}/images`)} />
+            </button>
+          )
         }
       />
       <Tabs>
