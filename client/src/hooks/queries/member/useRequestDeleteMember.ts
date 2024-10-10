@@ -15,6 +15,7 @@ const useRequestDeleteMember = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers]});
       queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
     },

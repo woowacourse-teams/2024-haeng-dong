@@ -15,6 +15,7 @@ const useRequestPostBill = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers]});
     },
   });
 
