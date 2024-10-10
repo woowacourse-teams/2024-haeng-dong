@@ -5,6 +5,7 @@ const QUERY_KEYS = {
   currentMembers: 'currentMembers',
   reports: 'reports',
   billDetails: 'billDetails',
+  images: 'images',
 };
 
 export default QUERY_KEYS;

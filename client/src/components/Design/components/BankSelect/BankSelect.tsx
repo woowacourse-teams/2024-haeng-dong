@@ -13,12 +13,12 @@ type BankSelectProps = {
 const BankSelect = ({onSelect}: BankSelectProps) => {
   return (
     <div css={bankSelectStyle}>
-      {BANKS.map(({name, iconPosition}) => (
+      {BANKS.map(({name, displayName, iconPosition}) => (
         <button onClick={() => onSelect(name)} key={name}>
           <Flex flexDirection="column" alignItems="center" gap="0.5rem" width="100%">
             <div css={iconStyle(iconPosition)} />
             <Text size="body" textColor="black" style={{textAlign: 'center'}}>
-              {name}
+              {displayName}
             </Text>
           </Flex>
         </button>

@@ -8,7 +8,7 @@ import {Member} from 'types/serviceType';
 import useMembersStep from '@hooks/useMembersStep';
 import {BillStep} from '@hooks/useAddBillFunnel';
 
-import {FixedButton, Flex, Input, Text} from '@components/Design';
+import {Button, FixedButton, Flex, Input, Text} from '@components/Design';
 
 import {isIOS} from '@utils/detectDevice';
 
@@ -29,6 +29,7 @@ const MembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) =>
     hiddenRef,
     handleNameInputChange,
     handleNameInputEnter,
+    handleNameInputComplete,
     isPendingPostBill,
     isPendingPostMembers,
     canSubmitMembers,
@@ -51,18 +52,24 @@ const MembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) =>
           <Top.Line text="참여한 사람은 누구인가요?" emphasize={['참여한 사람']} />
         </Top>
 
-        <Input
-          ref={inputRef}
-          labelText="이름"
-          errorText={errorMessage ?? ''}
-          value={nameInput}
-          type="text"
-          placeholder="ex) 박행댕"
-          onChange={handleNameInputChange}
-          isError={!!errorMessage}
-          autoFocus
-          onKeyDown={handleNameInputEnter}
-        />
+        <Flex flexDirection="row" alignItems="flexEnd" gap="0.5rem">
+          <Input
+            ref={inputRef}
+            labelText="이름"
+            errorText={errorMessage ?? ''}
+            value={nameInput}
+            type="text"
+            placeholder="ex) 박행댕"
+            onChange={handleNameInputChange}
+            isError={!!errorMessage}
+            autoFocus
+            onKeyDown={handleNameInputEnter}
+          />
+          <Button size="semiLarge" onClick={handleNameInputComplete}>
+            추가
+          </Button>
+        </Flex>
+
         <div
           css={css`
             display: flex;

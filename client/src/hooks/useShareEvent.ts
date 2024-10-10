@@ -1,22 +1,24 @@
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
 
-const useShareEvent = (eventName: string, isMobile: boolean) => {
+type UserShareEventProps = {
+  eventName: string;
+};
+
+const useShareEvent = ({eventName}: UserShareEventProps) => {
   const eventId = getEventIdByUrl();
   const url = getEventPageUrlByEnvironment(eventId, 'home');
 
   const shareInfo = {
-    title: `[행동대장]\n${eventName}에 대한 정산을 시작할게요:)`,
+    title: `행동대장이 ${eventName}에\n대한 정산을 요청했어요 :)`,
     text: '아래 링크에 접속해서 정산 내역을 확인해 주세요!',
     url,
   };
 
-  // 모바일이 아닌 기기는 단순 텍스트 복사
-  // 모바일 기기에서는 카카오톡 공유를 사용
-  const onShareButtonClick = () => {
-    if (!isMobile) return;
+  const shareText = `${shareInfo.title}\n${shareInfo.text}\n${url}`;
 
-    kakaoShare();
+  const copyShare = async () => {
+    await window.navigator.clipboard.writeText(shareText);
   };
 
   const kakaoShare = () => {
@@ -36,11 +38,9 @@ const useShareEvent = (eventName: string, isMobile: boolean) => {
     });
   };
 
-  const shareText = `${shareInfo.title}\n${shareInfo.text}\n${url}`;
-
   return {
-    shareText,
-    onShareButtonClick,
+    kakaoShare,
+    copyShare,
   };
 };
 

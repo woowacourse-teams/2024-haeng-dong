@@ -20,7 +20,7 @@ const Step = ({step, isAdmin}: Prop) => {
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
   const handleClickStep = (bill: Bill) => {
-    if (isAdmin) navigate(`/event/${eventId}/edit-bill`, {state: {bill}});
+    if (isAdmin) navigate(`/event/${eventId}/admin/edit-bill`, {state: {bill}});
   };
 
   return (

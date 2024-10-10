@@ -82,6 +82,12 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
     }
   };
 
+  const handleNameInputComplete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!canAddMembers || !inputRef.current) return;
+    event.preventDefault();
+    addMembersFromInput();
+  };
+
   const handlePostBill = async () => {
     if (billInfo.members.map(({id}) => id).includes(-1)) {
       const newMembers = await postMembersAsync({
@@ -124,6 +130,7 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
     hiddenRef,
     handleNameInputChange,
     handleNameInputEnter,
+    handleNameInputComplete,
     isPendingPostBill,
     isPendingPostMembers,
     canSubmitMembers,

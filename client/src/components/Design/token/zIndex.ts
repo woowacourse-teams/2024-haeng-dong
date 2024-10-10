@@ -12,6 +12,8 @@ const NUMBER_KEYBOARD_BOTTOM_SHEET = FIXED_BUTTON + ABOVE;
 const BOTTOM_SHEET_DIMMED_LAYER = NUMBER_KEYBOARD_BOTTOM_SHEET + ABOVE;
 const BOTTOM_SHEET_CONTAINER = BOTTOM_SHEET_DIMMED_LAYER + ABOVE;
 const TOAST = BOTTOM_SHEET_CONTAINER + ABOVE;
+const SELECT_OPTION = ABOVE;
+const DROPDOWN_LIST = BASE + ABOVE;
 
 export const ZINDEX = {
   bottomSheetDimmedLayer: BOTTOM_SHEET_DIMMED_LAYER,
@@ -23,6 +25,8 @@ export const ZINDEX = {
   tabIndicator: TAB_INDICATOR,
   tabText: TAB_TEXT,
   toast: TOAST,
+  selectOption: SELECT_OPTION,
+  dropdownList: DROPDOWN_LIST,
 } as const;
 
 type ZIndexKeys =
@@ -34,6 +38,8 @@ type ZIndexKeys =
   | 'navBackgroundColor'
   | 'tabText'
   | 'tabIndicator'
-  | 'toast';
+  | 'toast'
+  | 'selectOption'
+  | 'dropdownList';
 
 export type ZIndexTokens = Record<ZIndexKeys, number>;
