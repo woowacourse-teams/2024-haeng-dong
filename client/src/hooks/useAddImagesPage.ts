@@ -65,7 +65,7 @@ const useAddImagesPage = () => {
 
   const canSubmit = !!addedImages || isPrevImageDeleted;
 
-  const submitImages = () => {
+  const submitImages = async () => {
     const formData = new FormData();
 
     if (!addedImages) return;
@@ -74,7 +74,8 @@ const useAddImagesPage = () => {
       formData.append('images', addedImages[i], addedImages[i].name);
     }
 
-    postImages({formData});
+    await postImages({formData});
+    navigate(`/event/${eventId}/admin`);
   };
 
   useEffect(() => {
@@ -84,11 +85,6 @@ const useAddImagesPage = () => {
       document.body.style.overflowX = 'auto';
     };
   }, []);
-
-  useEffect(() => {
-    if (!isSuccessPostImage) return;
-    navigate(`/event/${eventId}/admin`);
-  }, [isSuccessPostImage]);
 
   return {fileInputRef, handleChangeImages, urls, handleDeleteImage, isPending, canSubmit, submitImages};
 };
