@@ -1,4 +1,6 @@
 /** @jsxImportSource @emotion/react */
+import {forwardRef} from 'react';
+
 import {StrictPropsWithChildren} from '@type/strictPropsWithChildren';
 
 import {useTheme} from '../../index';
@@ -6,10 +8,46 @@ import {useTheme} from '../../index';
 import {FlexProps} from './Flex.type';
 import {flexStyle} from './Flex.style';
 
-// TODO: (@weadie) 지정된 프롭 말고 다른 프롭도 가져올 수 있게 하자.
-function Flex({children, cssProp, ...props}: StrictPropsWithChildren<FlexProps>) {
+const Flex = forwardRef<HTMLDivElement, StrictPropsWithChildren<FlexProps>>(({children, cssProp, ...props}, ref) => {
   const {theme} = useTheme();
-  return <div css={[flexStyle({theme, ...props}), cssProp]}>{children}</div>;
-}
+
+  const {
+    justifyContent,
+    alignItems,
+    flexDirection,
+    gap,
+    padding,
+    paddingInline,
+    margin,
+    width,
+    height,
+    backgroundColor,
+    minHeight,
+    ...htmlProps
+  } = props;
+
+  return (
+    <div
+      ref={ref}
+      css={[flexStyle({
+        theme,
+        justifyContent,
+        alignItems,
+        flexDirection,
+        gap,
+        padding,
+        paddingInline,
+        margin,
+        width,
+        height,
+        backgroundColor,
+        minHeight,
+      }), cssProp]}
+      {...htmlProps}
+    >
+      {children}
+    </div>
+  );
+});
 
 export default Flex;

@@ -1,21 +1,18 @@
 import {useMutation} from '@tanstack/react-query';
-import {useNavigate} from 'react-router-dom';
 
 import {RequestPostToken, requestPostToken} from '@apis/request/auth';
 
-import getEventIdByUrl from '@utils/getEventIdByUrl';
+import {useAuthStore} from '@store/authStore';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 const useRequestPostLogin = () => {
   const eventId = getEventIdByUrl();
-  const navigate = useNavigate();
+  const {updateAuth} = useAuthStore();
 
   const {mutate, ...rest} = useMutation({
     mutationFn: ({password}: RequestPostToken) => requestPostToken({eventId, password}),
-    onSuccess: () => {
-      navigate(`${ROUTER_URLS.event}/${eventId}/admin`);
-    },
+    onSuccess: () => updateAuth(true),
   });
 
   return {postLogin: mutate, ...rest};

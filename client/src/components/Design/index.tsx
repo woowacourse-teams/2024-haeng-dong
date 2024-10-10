@@ -26,6 +26,7 @@ import DepositToggle from './components/DepositToggle/DepositToggle';
 import Amount from './components/Amount/Amount';
 import Dropdown from './components/Dropdown/Dropdown';
 import DropdownButton from './components/Dropdown/DropdownButton';
+import {Select} from './components/Select';
 
 export {
   HDesignProvider,
@@ -57,4 +58,5 @@ export {
   Dropdown,
   DropdownButton,
   useTheme,
+  Select,
 };
