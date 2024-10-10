@@ -4,6 +4,7 @@ import {Outlet} from 'react-router-dom';
 
 import useEventPageLayout from '@hooks/useEventPageLayout';
 import useShareEvent from '@hooks/useShareEvent';
+import useAmplitude from '@hooks/useAmplitude';
 
 import {Footer} from '@components/Footer';
 import {DesktopShareEventButton, MobileShareEventButton} from '@components/ShareEventButton';
@@ -17,14 +18,25 @@ export type EventPageContextProps = Event & {
 };
 
 const EventPageLayout = () => {
-  const {isAdmin, event} = useEventPageLayout();
+  const {isAdmin, event, eventSummary} = useEventPageLayout();
   const outletContext: EventPageContextProps = {
     isAdmin,
     ...event,
   };
+  const {trackShareEvent} = useAmplitude();
 
   const isMobile = isMobileDevice();
   const {kakaoShare, copyShare} = useShareEvent({eventName: event.eventName});
+
+  const trackLinkShare = async () => {
+    trackShareEvent({...eventSummary, shareMethod: 'link'});
+    await copyShare();
+  };
+
+  const trackKakaoShare = () => {
+    trackShareEvent({...eventSummary, shareMethod: 'kakao'});
+    kakaoShare();
+  };
 
   return (
     <MainLayout backgroundColor="gray">
@@ -39,9 +51,9 @@ const EventPageLayout = () => {
           <TopNav.Item displayName="관리" routePath="/admin" />
         </TopNav>
         {isMobile ? (
-          <MobileShareEventButton copyShare={copyShare} kakaoShare={kakaoShare} />
+          <MobileShareEventButton copyShare={trackLinkShare} kakaoShare={trackKakaoShare} />
         ) : (
-          <DesktopShareEventButton onCopy={copyShare}>정산 초대하기</DesktopShareEventButton>
+          <DesktopShareEventButton onCopy={trackLinkShare}>정산 초대하기</DesktopShareEventButton>
         )}
       </Flex>
       <Outlet context={outletContext} />

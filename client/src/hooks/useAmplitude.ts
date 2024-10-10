@@ -9,7 +9,7 @@ type EventUniqueData = {
 
 type ShareMethod = 'link' | 'kakao';
 
-type EventSummary = EventUniqueData & {
+export type EventSummary = EventUniqueData & {
   totalExpenseAmount: number; // 총 지출금액
   allMembersCount: number; // 행사에 참여한 총 인원
   billsCount: number; // 총 지출내역 수
@@ -46,7 +46,7 @@ const useAmplitude = () => {
     });
   };
 
-  const trackShareEventByAdmin = (eventSummary: EventSummary) => {
+  const trackShareEvent = (eventSummary: EventSummary) => {
     track('이벤트 초대 클릭', {
       ...eventSummary,
     });
@@ -73,7 +73,7 @@ const useAmplitude = () => {
   return {
     trackStartCreateEvent,
     trackCompleteCreateEvent,
-    trackShareEventByAdmin,
+    trackShareEvent,
     trackAddBillStartTime,
     trackAddBillEndTime,
     trackSendMoney,
