@@ -8,8 +8,7 @@ import {useTheme} from '../../index';
 import {FlexProps} from './Flex.type';
 import {flexStyle} from './Flex.style';
 
-// TODO: (@weadie) 지정된 프롭 말고 다른 프롭도 가져올 수 있게 하자.
-const Flex = forwardRef<HTMLDivElement, StrictPropsWithChildren<FlexProps>>(({children, otherStyle, ...props}, ref) => {
+const Flex = forwardRef<HTMLDivElement, StrictPropsWithChildren<FlexProps>>(({children, cssProp, ...props}, ref) => {
   const {theme} = useTheme();
 
   const {
@@ -30,21 +29,23 @@ const Flex = forwardRef<HTMLDivElement, StrictPropsWithChildren<FlexProps>>(({ch
   return (
     <div
       ref={ref}
-      css={flexStyle({
-        theme,
-        justifyContent,
-        alignItems,
-        flexDirection,
-        gap,
-        padding,
-        paddingInline,
-        margin,
-        width,
-        height,
-        backgroundColor,
-        minHeight,
-      })}
-      style={{...otherStyle}}
+      css={[
+        flexStyle({
+          theme,
+          justifyContent,
+          alignItems,
+          flexDirection,
+          gap,
+          padding,
+          paddingInline,
+          margin,
+          width,
+          height,
+          backgroundColor,
+          minHeight,
+        }),
+        cssProp,
+      ]}
       {...htmlProps}
     >
       {children}

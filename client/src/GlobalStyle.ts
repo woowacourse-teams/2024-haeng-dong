@@ -145,4 +145,10 @@ export const GlobalStyle = css`
     max-width: 768px;
     margin: 0 auto;
   }
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 `;

@@ -5,6 +5,7 @@ import {Outlet} from 'react-router-dom';
 import useEventPageLayout from '@hooks/useEventPageLayout';
 import useShareEvent from '@hooks/useShareEvent';
 
+import {Footer} from '@components/Footer';
 import {DesktopShareEventButton, MobileShareEventButton} from '@components/ShareEventButton';
 
 import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
@@ -16,15 +17,14 @@ export type EventPageContextProps = Event & {
 };
 
 const EventPageLayout = () => {
-  const {isAdmin, eventOutline} = useEventPageLayout();
-
+  const {isAdmin, event} = useEventPageLayout();
   const outletContext: EventPageContextProps = {
     isAdmin,
-    ...eventOutline,
+    ...event,
   };
 
   const isMobile = isMobileDevice();
-  const {kakaoShare, copyShare} = useShareEvent({eventName: eventOutline.eventName});
+  const {kakaoShare, copyShare} = useShareEvent({eventName: event.eventName});
 
   return (
     <MainLayout backgroundColor="gray">
@@ -45,6 +45,7 @@ const EventPageLayout = () => {
         )}
       </Flex>
       <Outlet context={outletContext} />
+      <Footer />
     </MainLayout>
   );
 };

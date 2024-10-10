@@ -19,7 +19,7 @@ export const dropdownStyle = (theme: Theme): FlexProps => {
     gap: '0.25rem',
     backgroundColor: 'white',
 
-    otherStyle: {
+    cssProp: {
       position: 'absolute',
       top: '2rem',
       right: '-1rem',
@@ -39,7 +39,7 @@ export const dropdownButtonBaseStyle = (theme: Theme): FlexProps => {
     gap: '0.25rem',
     backgroundColor: 'white',
 
-    otherStyle: {
+    cssProp: {
       position: 'absolute',
       top: '2.5rem',
       right: '-0.5rem',

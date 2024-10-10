@@ -8,11 +8,6 @@ import {TOAST_EVENT} from './toastEventManager.type';
 
 const DEFAULT_TIME = 3000;
 
-type Toast = {
-  message: ToastMessage;
-  options: ToastOptions;
-};
-
 export const useToast = () => {
   const [currentToast, setCurrentToast] = useState<ToastArgs | null>(null);
 

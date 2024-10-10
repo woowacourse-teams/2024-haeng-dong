@@ -16,7 +16,7 @@ const Banner = ({title, description, buttonText, onDelete, ...buttonProps}: Bann
       padding="0.5rem"
       paddingInline="0.5rem"
       backgroundColor="white"
-      otherStyle={{borderRadius: '0.75rem'}}
+      cssProp={{borderRadius: '0.75rem'}}
     >
       <Flex gap="0.5rem">
         <IconButton variants="none" onClick={onDelete} style={{display: 'flex', alignItems: 'flex-start'}}>
