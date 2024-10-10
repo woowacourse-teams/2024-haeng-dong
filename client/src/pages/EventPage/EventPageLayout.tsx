@@ -5,6 +5,7 @@ import {Outlet} from 'react-router-dom';
 import useEventPageLayout from '@hooks/useEventPageLayout';
 import useShareEvent from '@hooks/useShareEvent';
 
+import {Footer} from '@components/Footer';
 import {DesktopShareEventButton, MobileShareEventButton} from '@components/ShareEventButton';
 
 import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
@@ -45,6 +46,7 @@ const EventPageLayout = () => {
         )}
       </Flex>
       <Outlet context={outletContext} />
+      <Footer />
     </MainLayout>
   );
 };
