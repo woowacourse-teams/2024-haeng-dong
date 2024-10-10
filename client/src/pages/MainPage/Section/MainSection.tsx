@@ -5,14 +5,14 @@ import ChevronDown from '@assets/image/chevronDownLarge.svg';
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
-import useAmplitude from '@hooks/useAmplitude';
-
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-const MainSection = () => {
-  const navigate = useNavigate();
+type MainSectionProps = {
+  trackStartCreateEvent: () => void;
+};
 
-  const {trackStartCreateEvent} = useAmplitude();
+const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
+  const navigate = useNavigate();
 
   const handleClick = () => {
     trackStartCreateEvent();

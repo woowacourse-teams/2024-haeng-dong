@@ -1,3 +1,5 @@
+import useAmplitude from '@hooks/useAmplitude';
+
 import {MainLayout} from '@HDesign/index';
 
 import Nav from './Nav/Nav';
@@ -8,10 +10,12 @@ import AddMemberSection from './Section/AddMemberSection';
 import ReportSection from './Section/ReportSection';
 
 const MainPage = () => {
+  const {trackStartCreateEvent} = useAmplitude();
+
   return (
     <MainLayout>
-      <Nav />
-      <MainSection />
+      <Nav trackStartCreateEvent={trackStartCreateEvent} />
+      <MainSection trackStartCreateEvent={trackStartCreateEvent} />
       <DescriptionSection />
       <AddBillSection />
       <AddMemberSection />
