@@ -1,41 +1,55 @@
 import {useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
+import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
 
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
-import {ERROR_MESSAGE} from '@constants/errorMessage';
+import getDeletedLastPath from '@utils/getDeletedLastPath';
 
 import {useSearchReports} from './useSearchReports';
 import toast from './useToast/toast';
+
+export type SendInfo = {
+  bankName: string;
+  accountNumber: string;
+  amount: number;
+};
 
 const useReportsPage = () => {
   const [memberName, setMemberName] = useState('');
   const {bankName, accountNumber} = useOutletContext<EventPageContextProps>();
   const {matchedReports, reports} = useSearchReports({memberName});
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const changeName = ({target}: React.ChangeEvent<HTMLInputElement>) => {
     setMemberName(target.value);
   };
 
-  const onBankButtonClick = (amount: number) => {
-    if (bankName.trim() === '' || accountNumber.trim() === '') {
-      toast.error(ERROR_MESSAGE.emptyBank, {
-        showingTime: 3000,
-        position: 'bottom',
-      });
-      return;
-    }
+  const onSendButtonClick = (memberId: number, amount: number) => {
+    const sendInfo: SendInfo = {
+      bankName,
+      accountNumber,
+      amount,
+    };
 
-    const url = `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`;
-    window.location.href = url;
+    navigate(`${getDeletedLastPath(location.pathname)}/${memberId}/send`, {state: sendInfo});
   };
 
-  const expenseListProp = matchedReports.map(member => ({
-    ...member,
-    onBankButtonClick,
-  }));
+  const onCopy = async (amount: number) => {
+    await window.navigator.clipboard.writeText(`${amount.toLocaleString('ko-kr')}원`);
+    toast.confirm('금액이 복사되었어요.');
+  };
 
   const isEmpty = reports.length <= 0;
+  const canSendBank = bankName !== '' && accountNumber !== '';
+
+  const expenseListProp = matchedReports.map(report => ({
+    ...report,
+    canSendBank,
+    onCopy,
+    onSendButtonClick,
+  }));
 
   return {
     isEmpty,

@@ -78,7 +78,7 @@ const useShareEvent = ({event, isMobile}: UserShareEventProps) => {
 
   return {
     shareText,
-    onShareButtonClick,
+    onShareButtonClick: kakaoShare,
   };
 };
 
