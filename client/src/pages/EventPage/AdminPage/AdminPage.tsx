@@ -24,6 +24,7 @@ const AdminPage = () => {
 
   const navigateAddImages = () => {
     navigate(`/event/${eventId}/admin/add-images`);
+  };
 
   const navigateAddBill = () => {
     navigate(`/event/${eventId}/admin/add-bill`);
