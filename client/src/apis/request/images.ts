@@ -2,7 +2,7 @@ import {EventId, Images} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet} from '@apis/fetcher';
+import {requestDelete, requestGet, requestPostWithoutResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
 export interface RequestPostImages {
@@ -36,5 +36,16 @@ export const requestGetImages = async ({eventId}: WithEventId) => {
   return await requestGet<Images>({
     baseUrl: BASE_URL.HD,
     endpoint: `${USER_API_PREFIX}/${eventId}/images`,
+  });
+};
+
+export interface RequestDeleteImage {
+  imageId: number;
+}
+
+export const requestDeleteImage = async ({eventId, imageId}: WithEventId<RequestDeleteImage>) => {
+  return await requestDelete({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${ADMIN_API_PREFIX}/${eventId}/images/${imageId}`,
   });
 };
