@@ -12,9 +12,8 @@ const useRequestPostImages = () => {
 
   const {mutate, ...rest} = useMutation({
     mutationFn: ({formData}: RequestPostImages) => requestPostImages({eventId, formData}),
-    onSuccess: responseData => {
+    onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.images]});
-      return responseData;
     },
   });
 

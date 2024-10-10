@@ -22,7 +22,7 @@ const Carousel = ({urls, onClickDelete}: CarouselProps) => {
       >
         {urls &&
           urls.map((url, index) => (
-            <div key={index} css={imageCardStyle({theme})}>
+            <div key={url} css={imageCardStyle({theme})}>
               <img src={url} alt={`업로드된 이미지 ${index + 1}`} css={imageStyle} />
               {onClickDelete && <CarouselDeleteButton onClick={() => handleClickDelete(index)} />}
             </div>
