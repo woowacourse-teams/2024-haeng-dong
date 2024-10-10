@@ -35,15 +35,7 @@ const ImagesPage = () => {
           <Top.Line text="사진들을 확인하세요" emphasize={['사진들']} />
         </Top>
       </div>
-      {/* <Carousel urls={images.map(({url}) => url)} /> */}
-      <Carousel
-        urls={[
-          'https://newjeans.kr/imgs/howsweet/photo/NJ_HowSweet_46.jpg',
-          'https://newjeans.kr/imgs/bubblegum/photo/NJ_BubbleGum_10.jpg',
-          'https://newjeans.kr/imgs/bubblegum/photo/NJ_BubbleGum_17.jpg',
-          'https://newjeans.kr/imgs/howsweet/photo/NJ_HowSweet_20.jpg',
-        ]}
-      />
+      <Carousel urls={images.map(({url}) => url)} />
       <div
         css={css`
           height: 9.25rem;
