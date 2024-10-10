@@ -16,15 +16,15 @@ export type EventPageContextProps = Event & {
 };
 
 const EventPageLayout = () => {
-  const {isAdmin, eventOutline} = useEventPageLayout();
-
+  const {isAdmin, event} = useEventPageLayout();
   const outletContext: EventPageContextProps = {
     isAdmin,
-    ...eventOutline,
+    ...event,
   };
 
   const isMobile = isMobileDevice();
-  const {shareText, onShareButtonClick} = useShareEvent({eventName: eventOutline.eventName});
+
+  const {shareText, onShareButtonClick} = useShareEvent({event, isMobile});
 
   return (
     <MainLayout backgroundColor="gray">
@@ -41,7 +41,7 @@ const EventPageLayout = () => {
         {isMobile ? (
           <MobileShareEventButton text="카카오톡으로 초대하기" onClick={onShareButtonClick} />
         ) : (
-          <DesktopShareEventButton text="정산 초대하기" shareText={shareText} />
+          <DesktopShareEventButton text="정산 초대하기" shareText={shareText} onClick={onShareButtonClick} />
         )}
       </Flex>
       <Outlet context={outletContext} />

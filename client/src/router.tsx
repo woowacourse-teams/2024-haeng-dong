@@ -5,6 +5,7 @@ import ErrorPage from '@pages/ErrorPage/ErrorPage';
 import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
 import EventLoader from '@components/Loader/EventLoader';
 import SendErrorPage from '@pages/ErrorPage/SendErrorPage';
+import AuthGate from '@pages/EventPage/AuthGate';
 
 import {EventPage} from '@pages/EventPage';
 import SendPage from '@pages/SendPage';
@@ -51,13 +52,13 @@ const router = createBrowserRouter([
         children: [
           {
             path: ROUTER_URLS.eventManage,
-            element: <AdminPage />,
+            element: (
+              <AuthGate fallback={<EventLoginPage />}>
+                <AdminPage />
+              </AuthGate>
+            ),
           },
           {path: ROUTER_URLS.home, element: <HomePage />},
-          {
-            path: ROUTER_URLS.eventLogin,
-            element: <EventLoginPage />,
-          },
         ],
       },
       {

@@ -1,13 +1,26 @@
+import {useNavigate} from 'react-router-dom';
+
+import {Event} from 'types/serviceType';
+
+import {useAuthStore} from '@store/authStore';
+
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
+import getDeletedLastPath from '@utils/getDeletedLastPath';
+
+import toast from './useToast/toast';
 
 type UserShareEventProps = {
-  eventName: string;
+  event: Event;
+  isMobile: boolean;
 };
 
-const useShareEvent = ({eventName}: UserShareEventProps) => {
+const useShareEvent = ({event, isMobile}: UserShareEventProps) => {
+  const {eventName, bankName, accountNumber} = event;
   const eventId = getEventIdByUrl();
   const url = getEventPageUrlByEnvironment(eventId, 'home');
+  const navigate = useNavigate();
+  const {isAdmin} = useAuthStore();
 
   const shareInfo = {
     title: `[행동대장]\n${eventName}에 대한 정산을 시작할게요:)`,
@@ -33,6 +46,35 @@ const useShareEvent = ({eventName}: UserShareEventProps) => {
   };
 
   const shareText = `${shareInfo.title}\n${shareInfo.text}\n${url}`;
+
+  const onShareButtonClick = () => {
+    const isReady = bankName !== '' && accountNumber !== '';
+
+    // induceBankInfoBeforeShare
+    if (!isReady && isAdmin) {
+      toast.error('잠깐! 정산을 초대하기 전에\n계좌를 등록해주세요', {
+        showingTime: 3000,
+        position: 'bottom',
+      });
+
+      const navigatePath = `${getDeletedLastPath(location.pathname)}/admin/edit`;
+      navigate(navigatePath);
+      return;
+    }
+
+    if (!isReady && !isAdmin) {
+      toast.error('정산자가 계좌를 등록해야 초대 가능합니다.\n정산자에게 문의해주세요', {
+        showingTime: 3000,
+        position: 'bottom',
+      });
+      return;
+    }
+
+    // 모바일이 아닌 기기는 단순 텍스트 복사
+    // 모바일 기기에서는 카카오톡 공유를 사용
+    if (!isMobile) return;
+    kakaoShare();
+  };
 
   return {
     shareText,
