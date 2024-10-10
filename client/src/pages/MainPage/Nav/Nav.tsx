@@ -1,14 +1,21 @@
 import {useNavigate} from 'react-router-dom';
 
-import {useTheme} from '@components/Design/theme/HDesignProvider';
-
-import {Button, Flex, Text, Icon, TopNav, IconButton} from '@HDesign/index';
+import {Button, Text, Icon, TopNav, IconButton} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-const Nav = () => {
-  const {theme} = useTheme();
+type NavProps = {
+  trackStartCreateEvent: () => void;
+};
+
+const Nav = ({trackStartCreateEvent}: NavProps) => {
   const navigate = useNavigate();
+
+  const StartCreateEvent = () => {
+    trackStartCreateEvent();
+    navigate(ROUTER_URLS.createEvent);
+  };
+
   return (
     <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '37px'}}>
       <TopNav>
@@ -21,12 +28,7 @@ const Nav = () => {
           <Text size="subTitle">행동대장</Text>
         </TopNav.Item>
       </TopNav>
-      <Button
-        size="medium"
-        variants="tertiary"
-        onClick={() => navigate(ROUTER_URLS.createEvent)}
-        style={{marginRight: '1rem'}}
-      >
+      <Button size="medium" variants="tertiary" onClick={StartCreateEvent} style={{marginRight: '1rem'}}>
         정산 시작하기
       </Button>
     </header>

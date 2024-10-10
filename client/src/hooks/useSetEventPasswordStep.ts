@@ -1,11 +1,11 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
 
 import RULE from '@constants/rule';
 
 import useRequestPostEvent from './queries/event/useRequestPostEvent';
+import useAmplitude from './useAmplitude';
 
 export type UseSetEventPasswordStepReturnType = ReturnType<typeof useSetEventPasswordStep>;
 
@@ -14,6 +14,8 @@ const useSetEventPasswordStep = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
   const {postEvent: requestPostEvent, isPostEventPending} = useRequestPostEvent();
+
+  const {trackCompleteCreateEvent} = useAmplitude();
 
   const submitDataForPostEvent = async ({
     event,
@@ -38,6 +40,7 @@ const useSetEventPasswordStep = () => {
       {eventName, password: getPasswordWithPad()},
       {
         onSuccess: ({eventId}) => {
+          trackCompleteCreateEvent({eventName, eventToken: eventId});
           updateEventToken(eventId);
         },
       },
