@@ -68,7 +68,6 @@ export const deleteButtonStyle = css`
 
 export const indicatorContainerStyle = css`
   position: absolute;
-  z-index: 10;
   left: 50%;
   bottom: 1rem;
   transform: translateX(-50%);
