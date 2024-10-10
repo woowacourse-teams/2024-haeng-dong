@@ -12,6 +12,7 @@ import {DesktopShareEventButton, MobileShareEventButton} from '@components/Share
 import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
 
 import {isMobileDevice} from '@utils/detectDevice';
+import {updateMetaTag} from '@utils/udpateMetaTag';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
@@ -39,6 +40,8 @@ const EventPageLayout = () => {
     trackShareEvent({...eventSummary, shareMethod: 'kakao'});
     kakaoShare();
   };
+
+  updateMetaTag('og:title', `행동대장이 "${eventSummary.eventName}"에 대한 정산을 요청했어요`);
 
   return (
     <MainLayout backgroundColor="gray">
