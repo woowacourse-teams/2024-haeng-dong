@@ -2,8 +2,11 @@ import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {RequestPostEvent, requestPostEvent} from '@apis/request/event';
 
+import QUERY_KEYS from '@constants/queryKeys';
+
 const useRequestPostEvent = () => {
   const queryClient = useQueryClient();
+
   const {mutate, mutateAsync, ...rest} = useMutation({
     mutationFn: ({eventName, password}: RequestPostEvent) => requestPostEvent({eventName, password}),
     onSuccess: () => {

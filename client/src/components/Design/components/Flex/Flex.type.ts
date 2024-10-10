@@ -21,5 +21,4 @@ export type FlexProps = React.HTMLAttributes<HTMLDivElement> & {
   minHeight?: string;
 
   cssProp?: CSSObject;
-}
-
+};

@@ -22,8 +22,12 @@ const AdminPage = () => {
     navigate(`/event/${eventId}/admin/member`);
   };
 
+  const navigateAddImages = () => {
+    navigate(`/event/${eventId}/admin/add-images`);
+  };
+
   const navigateAddBill = () => {
-    navigate(`/event/${eventId}/add-bill`);
+    navigate(`/event/${eventId}/admin/add-bill`);
   };
 
   return (
@@ -35,6 +39,7 @@ const AdminPage = () => {
           <Dropdown>
             <DropdownButton text="전체 참여자 관리" onClick={navigateEventMemberManage} />
             <DropdownButton text="계좌번호 입력하기" onClick={navigateAccountInputPage} />
+            <DropdownButton text="사진 첨부하기" onClick={navigateAddImages} />
           </Dropdown>
         }
       />
