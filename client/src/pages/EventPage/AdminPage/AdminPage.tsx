@@ -1,37 +1,18 @@
-import {useEffect, useState} from 'react';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import StepList from '@components/StepList/Steps';
-import useRequestPostAuthenticate from '@hooks/queries/auth/useRequestPostAuthentication';
-import useRequestGetSteps from '@hooks/queries/step/useRequestGetSteps';
 import {Banner} from '@components/Design/components/Banner';
 
-import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
+import useAdminPage from '@hooks/useAdminPage';
 
 import {Title, Button, Dropdown, DropdownButton} from '@HDesign/index';
-
-import getEventIdByUrl from '@utils/getEventIdByUrl';
-import SessionStorage from '@utils/SessionStorage';
-
-import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
-
-import {EventPageContextProps} from '../EventPageLayout';
 
 import {receiptStyle} from './AdminPage.style';
 
 const AdminPage = () => {
   const navigate = useNavigate();
-  const eventId = getEventIdByUrl();
-  const {isAdmin, eventName, bankName, accountNumber} = useOutletContext<EventPageContextProps>();
 
-  const {totalExpenseAmount} = useTotalExpenseAmountStore();
-
-  const {steps} = useRequestGetSteps();
-  const {postAuthenticate} = useRequestPostAuthenticate();
-
-  useEffect(() => {
-    postAuthenticate();
-  }, [postAuthenticate]);
+  const {eventId, isAdmin, eventName, totalExpenseAmount, isShowBanner, onDelete, steps} = useAdminPage();
 
   const navigateAccountInputPage = () => {
     navigate(`/event/${eventId}/admin/edit`);
@@ -41,19 +22,8 @@ const AdminPage = () => {
     navigate(`/event/${eventId}/admin/member`);
   };
 
-  // session storage에 배너를 지웠는지 관리
-  const storageValue = SessionStorage.get<boolean>(SESSION_STORAGE_KEYS.closeAccountBanner);
-  const isClosed = storageValue !== null && storageValue === true;
-
-  const [isShowBanner, setIsShowBanner] = useState<boolean>((bankName === '' || accountNumber === '') && !isClosed);
-
-  useEffect(() => {
-    setIsShowBanner((bankName === '' || accountNumber === '') && !isClosed);
-  }, [bankName, accountNumber, isShowBanner]);
-
-  const onDelete = () => {
-    setIsShowBanner(false);
-    SessionStorage.set<boolean>(SESSION_STORAGE_KEYS.closeAccountBanner, true);
+  const navigateAddBill = () => {
+    navigate(`/event/${eventId}/add-bill`);
   };
 
   return (
@@ -78,7 +48,7 @@ const AdminPage = () => {
         />
       )}
       {steps.length > 0 && <StepList data={steps ?? []} isAdmin={isAdmin} />}
-      <Button size="medium" onClick={() => navigate(`/event/${eventId}/add-bill`)} style={{width: '100%'}}>
+      <Button size="medium" onClick={navigateAddBill} style={{width: '100%'}}>
         지출내역 추가하기
       </Button>
     </section>
