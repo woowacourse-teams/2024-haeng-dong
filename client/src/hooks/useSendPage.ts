@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 
 import {SendInfo} from './useReportsPage';
 import toast from './useToast/toast';
+import useAmplitude from './useAmplitude';
 
 export type SendMethod = '복사하기' | '토스' | '카카오페이';
 export type OnSend = () => void | Promise<void>;
@@ -10,6 +11,8 @@ export type OnSend = () => void | Promise<void>;
 const useSendPage = () => {
   const [sendMethod, setSendMethod] = useState<SendMethod>('토스');
   const state = useLocation().state as SendInfo;
+
+  const {trackSendMoney} = useAmplitude();
 
   const options: SendMethod[] = ['토스', '카카오페이', '복사하기'];
   const defaultValue: SendMethod = '토스';
@@ -24,7 +27,7 @@ const useSendPage = () => {
     }
   }, [state]);
 
-  const {bankName, accountNumber, amount} = state;
+  const {bankName, accountNumber, amount, eventName, eventToken} = state;
 
   const format = (accountNumber: string) => {
     if (accountNumber.length > 9) {
@@ -40,16 +43,22 @@ const useSendPage = () => {
 
   const onCopy = async () => {
     await window.navigator.clipboard.writeText(copyText);
+
+    trackSendMoney({eventName, eventToken, amount, sendMethod: 'clipboard'});
     toast.confirm('금액이 복사되었어요.');
   };
 
   const onTossClick = () => {
+    trackSendMoney({eventName, eventToken, amount, sendMethod: 'toss'});
+
     const tossUrl = `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`;
     window.location.href = tossUrl;
   };
 
   const onKakaoPayClick = async () => {
     await window.navigator.clipboard.writeText(copyText);
+    trackSendMoney({eventName, eventToken, amount, sendMethod: 'kakaopay'});
+
     const kakaoPayUrl = 'kakaotalk://kakaopay/home';
     window.location.href = kakaoPayUrl;
   };

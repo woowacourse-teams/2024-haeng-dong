@@ -12,11 +12,13 @@ export type SendInfo = {
   bankName: string;
   accountNumber: string;
   amount: number;
+  eventName: string;
+  eventToken: string;
 };
 
 const useReportsPage = () => {
   const [memberName, setMemberName] = useState('');
-  const {bankName, accountNumber} = useOutletContext<EventPageContextProps>();
+  const {eventName, eventToken, bankName, accountNumber} = useOutletContext<EventPageContextProps>();
   const {matchedReports, reports} = useSearchReports({memberName});
 
   const location = useLocation();
@@ -31,6 +33,8 @@ const useReportsPage = () => {
       bankName,
       accountNumber,
       amount,
+      eventName,
+      eventToken,
     };
 
     navigate(`${getDeletedLastPath(location.pathname)}/${memberId}/send`, {state: sendInfo});
