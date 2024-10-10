@@ -21,7 +21,7 @@ type RequestInitWithMethod = Omit<RequestInit, 'method'> & {method: Method};
 
 type HeadersType = [string, string][] | Record<string, string> | Headers;
 
-export type Body = BodyInit | object | null;
+export type Body = BodyInit | object | null; //init안에 FormDATA있음.
 
 type RequestProps = {
   baseUrl?: string;
@@ -30,6 +30,12 @@ type RequestProps = {
   body?: Body;
   queryParams?: ObjectQueryParams;
   method: Method;
+};
+
+type CreateRequestInitProps = {
+  body?: Body;
+  method: Method;
+  headers?: HeadersType;
 };
 
 type RequestMethodProps = Omit<RequestProps, 'method'>;
@@ -85,17 +91,26 @@ const prepareRequest = ({baseUrl = API_BASE_URL, method, endpoint, headers, body
 
   if (queryParams) url += `?${objectToQueryString(queryParams)}`;
 
-  const requestInit: RequestInitWithMethod = {
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
-    method,
-    body: body ? JSON.stringify(body) : null,
-  };
+  const requestInit = createRequestInit({method, headers, body});
 
   return {url, requestInit};
+};
+
+const createRequestInit = ({method, headers, body}: CreateRequestInitProps) => {
+  const requestInit: RequestInitWithMethod = {
+    credentials: 'include',
+    method,
+  };
+
+  if (body instanceof FormData) {
+    return {...requestInit, body};
+  } else {
+    return {
+      ...requestInit,
+      headers: {...headers, 'Content-Type': 'application/json'},
+      body: body ? JSON.stringify(body) : null,
+    };
+  }
 };
 
 const executeRequest = async ({url, requestInit, errorHandlingStrategy}: WithErrorHandlingStrategy<FetchType>) => {
@@ -114,7 +129,7 @@ const executeRequest = async ({url, requestInit, errorHandlingStrategy}: WithErr
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      throw error; // 그대로 RequestError 또는 Error 인스턴스를 던집니다.
+      throw error;
     }
 
     throw error;

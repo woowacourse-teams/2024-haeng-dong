@@ -16,7 +16,7 @@ const useAddImagesPage = () => {
   const [images, setImages] = useState<Array<LoadedImage | AddedImage>>([]);
   const [isPrevImageDeleted, setIsPrevImageDeleted] = useState(false);
   const addedImages = images.filter(image => image instanceof File);
-  const {images: prevImages} = useRequestGetImages();
+  const {images: prevImages, isSuccess} = useRequestGetImages();
   const urls = images.map(image => {
     if (image instanceof File) {
       return URL.createObjectURL(image);
@@ -29,15 +29,22 @@ const useAddImagesPage = () => {
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
 
-  const {postImages, isPending, isSuccess: isSuccessPostImage} = useRequestPostImages();
+  const {postImages, isPending} = useRequestPostImages();
   const {deleteImage} = useRequestDeleteImage();
 
   useEffect(() => {
-    if (!prevImages) return;
+    if (!isSuccess) return;
     setImages([...prevImages]);
-  }, [prevImages]);
+  }, [prevImages, isSuccess]);
+
+  useEffect(() => {
+    console.log(images);
+  }, [images]);
 
   const handleChangeImages = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //TODO: (@Todari): 현재 A 이미지 추가 -> A 이미지 x 버튼 눌러 취소 -> 다시 A 이미지 추가 시 업로드 되지 않음
+    //                 event.target.files가 변경되지 않기 때문에 onChange에 넣은
+    //                 handleChangeImages가 실행되지 않아 일어나는 문제로 추정
     if (event.target.files) {
       const dataTransfer = new DataTransfer();
 
@@ -57,24 +64,26 @@ const useAddImagesPage = () => {
       deleteImage({
         imageId: images[index].id,
       });
-      setIsPrevImageDeleted(false);
+      setIsPrevImageDeleted(true);
     } else {
       setImages(prev => prev.filter((_, idx) => idx !== index));
     }
   };
 
-  const canSubmit = !!addedImages || isPrevImageDeleted;
+  const canSubmit = addedImages.length !== 0 || isPrevImageDeleted;
 
-  const submitImages = () => {
-    const formData = new FormData();
+  const submitImages = async () => {
+    if (addedImages.length !== 0) {
+      const formData = new FormData();
 
-    if (!addedImages) return;
+      for (let i = 0; i < addedImages.length; i++) {
+        formData.append('images', addedImages[i], addedImages[i].name);
+      }
 
-    for (let i = 0; i < addedImages.length; i++) {
-      formData.append('images', addedImages[i], addedImages[i].name);
+      await postImages({formData});
     }
 
-    postImages({formData});
+    navigate(`/event/${eventId}/admin`);
   };
 
   useEffect(() => {
@@ -84,11 +93,6 @@ const useAddImagesPage = () => {
       document.body.style.overflowX = 'auto';
     };
   }, []);
-
-  useEffect(() => {
-    if (!isSuccessPostImage) return;
-    navigate(`/event/${eventId}/admin`);
-  }, [isSuccessPostImage]);
 
   return {fileInputRef, handleChangeImages, urls, handleDeleteImage, isPending, canSubmit, submitImages};
 };
