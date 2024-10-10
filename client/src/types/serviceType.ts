@@ -67,10 +67,10 @@ export interface Reports {
 }
 
 export interface Images {
-  images: Image[];
+  images: ImageFile[];
 }
 
-export interface Image {
+export interface ImageFile {
   id: number;
   url: string;
 }
