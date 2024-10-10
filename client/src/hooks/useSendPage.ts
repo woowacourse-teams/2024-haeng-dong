@@ -1,6 +1,8 @@
 import {useLocation} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 
+import {isMobileDevice} from '@utils/detectDevice';
+
 import {SendInfo} from './useReportsPage';
 import toast from './useToast/toast';
 import useAmplitude from './useAmplitude';
@@ -9,13 +11,14 @@ export type SendMethod = '복사하기' | '토스' | '카카오페이';
 export type OnSend = () => void | Promise<void>;
 
 const useSendPage = () => {
-  const [sendMethod, setSendMethod] = useState<SendMethod>('토스');
+  const isMobile = isMobileDevice();
+  const options: SendMethod[] = isMobile ? ['토스', '카카오페이', '복사하기'] : ['복사하기'];
+  const defaultValue: SendMethod = isMobile ? '토스' : '복사하기';
+
+  const [sendMethod, setSendMethod] = useState<SendMethod>(defaultValue);
   const state = useLocation().state as SendInfo;
 
   const {trackSendMoney} = useAmplitude();
-
-  const options: SendMethod[] = ['토스', '카카오페이', '복사하기'];
-  const defaultValue: SendMethod = '토스';
 
   const onSelect = (option: SendMethod) => {
     setSendMethod(option);

@@ -9,7 +9,7 @@ const useSelect = <T extends string | number | readonly string[]>({defaultValue,
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(defaultValue);
 
-  const selectRef = useRef<HTMLUListElement>(null);
+  const selectRef = useRef<HTMLFieldSetElement>(null);
 
   const handleSelect = (option: T) => {
     setValue(option);
