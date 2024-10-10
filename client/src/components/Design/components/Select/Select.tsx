@@ -21,7 +21,7 @@ const Select = <T extends string | number | readonly string[]>({
 
   return (
     <ClickOutsideDetector targetRef={selectRef} onClickOutside={() => setIsOpen(false)}>
-      <fieldset css={selectStyle}>
+      <fieldset ref={selectRef} css={selectStyle}>
         <SelectInput
           labelText={labelText}
           placeholder={placeholder ?? ''}
@@ -31,7 +31,7 @@ const Select = <T extends string | number | readonly string[]>({
           setHasFocus={setIsOpen}
         />
         {options.length > 0 && (
-          <ul ref={selectRef} css={optionListStyle(theme, isOpen)}>
+          <ul css={optionListStyle(theme, isOpen)}>
             <Flex flexDirection="column" gap="0.5rem">
               {options.map((option, index) => (
                 <li key={`${option}-${index}`}>
