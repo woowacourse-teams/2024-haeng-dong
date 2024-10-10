@@ -22,6 +22,8 @@ const AddBillFunnel = lazy(() => import('@pages/AddBillFunnel/AddBillFunnel'));
 const EventMember = lazy(() => import('@pages/EventPage/AdminPage/EventMember'));
 const EditBillPage = lazy(() => import('@pages/EditBillPage/EditBillPage'));
 const Account = lazy(() => import('@pages/AccountPage/Account'));
+const ImagesPage = lazy(() => import('@pages/ImagesPage/ImagesPage'));
+const AddImagesPage = lazy(() => import('@pages/AddImagesPage/AddImagesPage'));
 
 const router = createBrowserRouter([
   {
@@ -76,6 +78,14 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.eventEdit,
         element: <Account />,
+      },
+      {
+        path: ROUTER_URLS.images,
+        element: <ImagesPage />,
+      },
+      {
+        path: ROUTER_URLS.addImages,
+        element: <AddImagesPage />,
       },
       {
         path: ROUTER_URLS.send,

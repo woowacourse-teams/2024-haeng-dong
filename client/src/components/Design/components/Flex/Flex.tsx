@@ -29,20 +29,23 @@ const Flex = forwardRef<HTMLDivElement, StrictPropsWithChildren<FlexProps>>(({ch
   return (
     <div
       ref={ref}
-      css={[flexStyle({
-        theme,
-        justifyContent,
-        alignItems,
-        flexDirection,
-        gap,
-        padding,
-        paddingInline,
-        margin,
-        width,
-        height,
-        backgroundColor,
-        minHeight,
-      }), cssProp]}
+      css={[
+        flexStyle({
+          theme,
+          justifyContent,
+          alignItems,
+          flexDirection,
+          gap,
+          padding,
+          paddingInline,
+          margin,
+          width,
+          height,
+          backgroundColor,
+          minHeight,
+        }),
+        cssProp,
+      ]}
       {...htmlProps}
     >
       {children}
