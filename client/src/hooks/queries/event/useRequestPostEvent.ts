@@ -6,17 +6,11 @@ import QUERY_KEYS from '@constants/queryKeys';
 
 const useRequestPostEvent = () => {
   const queryClient = useQueryClient();
-
+  
   const {mutate, mutateAsync, ...rest} = useMutation({
     mutationFn: ({eventName, password}: RequestPostEvent) => requestPostEvent({eventName, password}),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.event]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.billDetails]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.images]});
+      queryClient.removeQueries();
     },
   });
 

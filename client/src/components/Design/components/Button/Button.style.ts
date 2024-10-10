@@ -17,6 +17,7 @@ const getButtonDefaultStyle = (theme: Theme) =>
   css({
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
     lineHeight: '1',
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',
@@ -56,6 +57,14 @@ const getButtonSizeStyle = (size: ButtonSize) => {
       fontFamily: 'Pretendard',
       fontSize: '1rem',
       fontWeight: '700',
+    }),
+    semiLarge: css({
+      padding: '0.75rem 1rem',
+      borderRadius: '1rem',
+      fontFamily: 'Pretendard',
+      fontSize: '1rem',
+      fontWeight: '700',
+      height: '3rem',
     }),
     large: css({
       padding: '1rem 1.5rem',

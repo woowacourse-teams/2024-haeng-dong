@@ -2,7 +2,6 @@ export const ROUTER_URLS = {
   main: '/',
   createEvent: '/event/create',
   event: '/event',
-  eventLogin: '/event/:eventId/login',
   eventManage: '/event/:eventId/admin',
   home: '/event/:eventId/home',
   member: '/event/:eventId/admin/member',
@@ -11,4 +10,5 @@ export const ROUTER_URLS = {
   eventEdit: 'event/:eventId/admin/edit',
   images: '/event/:eventId/images',
   addImages: '/event/:eventId/admin/add-images',
+  send: 'event/:eventId/:memberId/send',
 };

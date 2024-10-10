@@ -1,10 +1,12 @@
+import {CSSObject} from '@emotion/react';
+
 import {Theme} from '../../theme/theme.type';
 
 export type FlexDirectionType = 'row' | 'column' | 'rowReverse' | 'columnReverse';
 export type FlexDirectionStrictType = 'row' | 'column' | 'row-reverse' | 'column-reverse';
 export type FlexBackgroundColor = 'gray' | 'white' | 'lightGray';
 
-export interface FlexProps {
+export type FlexProps = React.HTMLAttributes<HTMLDivElement> & {
   justifyContent?: 'flexStart' | 'center' | 'flexEnd' | 'spaceBetween' | 'spaceAround' | 'spaceEvenly';
   alignItems?: 'flexStart' | 'center' | 'flexEnd' | 'stretch' | 'baseline';
   flexDirection?: FlexDirectionType;
@@ -18,5 +20,6 @@ export interface FlexProps {
   theme?: Theme;
   minHeight?: string;
 
-  otherStyle?: React.CSSProperties;
+  cssProp?: CSSObject;
 }
+
