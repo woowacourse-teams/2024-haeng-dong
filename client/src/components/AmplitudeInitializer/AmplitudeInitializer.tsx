@@ -1,4 +1,5 @@
 import {useEffect} from 'react';
+
 import {useAmplitudeStore} from '@store/amplitudeStore';
 
 const AmplitudeInitializer = ({children}: React.PropsWithChildren) => {

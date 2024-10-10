@@ -1,7 +1,7 @@
 import * as amplitude from '@amplitude/analytics-browser';
-import {Amplitude} from 'types/amplitude';
-
 import {create} from 'zustand';
+
+import {Amplitude} from 'types/amplitude';
 
 type State = {
   amplitude: Amplitude;
