@@ -1,19 +1,27 @@
 import {useAmplitudeStore} from '@store/amplitudeStore';
 
+import detectBrowser from '@utils/detectBrowser';
+
 type EventUniqueData = {
   eventName: string;
   eventToken: string;
 };
+
+type ShareMethod = 'link' | 'kakao';
 
 type EventSummary = EventUniqueData & {
   totalExpenseAmount: number; // 총 지출금액
   allMembersCount: number; // 행사에 참여한 총 인원
   billsCount: number; // 총 지출내역 수
   isAdmin: boolean; // 관리자 여부
+  shareMethod: ShareMethod; // 공유 방법
 };
 
-type AddBillDwellTimeInEvent = EventUniqueData & {
-  dwellTime: number;
+type SendMethod = 'clipboard' | 'toss' | 'kakaopay';
+
+type SendMoneyData = EventUniqueData & {
+  sendMethod: SendMethod;
+  amount: number;
 };
 
 const useAmplitude = () => {
@@ -23,6 +31,7 @@ const useAmplitude = () => {
   const track = (eventName: string, eventProps: Record<string, any> = {}) => {
     amplitude.track(eventName, {
       domain: domainEnv,
+      browser: detectBrowser(),
       ...eventProps,
     });
   };
@@ -31,10 +40,9 @@ const useAmplitude = () => {
     track('정산 시작하기 버튼 클릭');
   };
 
-  const trackCompleteCreateEvent = ({eventName, eventToken}: EventUniqueData) => {
+  const trackCompleteCreateEvent = (eventUniqueData: EventUniqueData) => {
     track('이벤트 생성 완료', {
-      eventName,
-      eventToken,
+      ...eventUniqueData,
     });
   };
 
@@ -44,13 +52,32 @@ const useAmplitude = () => {
     });
   };
 
-  const trackAddBillDwellTime = (data: AddBillDwellTimeInEvent) => {
-    track('지출내역 추가 시작부터 완료까지 체류시간', {
-      ...data,
+  const trackAddBillStartTime = (eventUniqueData: EventUniqueData) => {
+    track('지출내역 추가 시작', {
+      ...eventUniqueData,
     });
   };
 
-  return {trackStartCreateEvent, trackCompleteCreateEvent, trackShareEventByAdmin, trackAddBillDwellTime};
+  const trackAddBillEndTime = (eventUniqueData: EventUniqueData) => {
+    track('지출내역 추가 완료', {
+      ...eventUniqueData,
+    });
+  };
+
+  const trackSendMoney = (sendMoneyData: SendMoneyData) => {
+    track('송금 버튼 클릭', {
+      ...sendMoneyData,
+    });
+  };
+
+  return {
+    trackStartCreateEvent,
+    trackCompleteCreateEvent,
+    trackShareEventByAdmin,
+    trackAddBillStartTime,
+    trackAddBillEndTime,
+    trackSendMoney,
+  };
 };
 
 export default useAmplitude;
