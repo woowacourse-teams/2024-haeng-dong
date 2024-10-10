@@ -1,35 +1,33 @@
 /** @jsxImportSource @emotion/react */
-import Icon from '../Icon/Icon';
-import IconButton from '../IconButton/IconButton';
-import Flex from '../Flex/Flex';
+import ClickOutsideDetector from '../ClickOutsideDetector';
 
 import useDropdown from './useDropdown';
 import {DropdownProps} from './Dropdown.type';
-import DropdownButton from './DropdownButton';
-import {dropdownStyle} from './Dropdown.style';
+import MeatballBase from './MeatballBase';
+import ButtonBase from './ButtonBase';
+import {dropdownBaseStyle} from './Dropdown.style';
 
-const Dropdown = ({children}: DropdownProps) => {
-  const {isOpen, openDropdown, meetBallsRef, dropdownRef} = useDropdown();
-  const isDropdownOpen = isOpen && meetBallsRef.current;
+const Dropdown = ({base = 'meatballs', baseButtonText, children}: DropdownProps) => {
+  const {isOpen, setIsOpen, baseRef, dropdownRef} = useDropdown();
+  const isDropdownOpen = isOpen && !!baseRef.current;
 
   return (
-    <IconButton
-      ref={meetBallsRef}
-      variants="none"
-      onClick={openDropdown}
-      style={{position: 'relative', WebkitTapHighlightColor: 'transparent'}}
-    >
-      <Icon iconType="meatballs" />
-      {isDropdownOpen && (
-        <section ref={dropdownRef}>
-          <Flex {...dropdownStyle}>
-            {children.map(button => (
-              <DropdownButton {...button.props} />
-            ))}
-          </Flex>
-        </section>
-      )}
-    </IconButton>
+    <ClickOutsideDetector targetRef={baseRef} onClickOutside={() => setIsOpen(false)}>
+      <div ref={baseRef} css={dropdownBaseStyle}>
+        {base === 'meatballs' && (
+          <MeatballBase isOpen={isDropdownOpen} setIsOpen={setIsOpen} dropdownRef={dropdownRef} children={children} />
+        )}
+        {base === 'button' && (
+          <ButtonBase
+            isOpen={isDropdownOpen}
+            setIsOpen={setIsOpen}
+            dropdownRef={dropdownRef}
+            children={children}
+            baseButtonText={baseButtonText}
+          />
+        )}
+      </div>
+    </ClickOutsideDetector>
   );
 };
 
