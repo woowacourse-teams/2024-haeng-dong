@@ -10,14 +10,14 @@ const useRequestPostImages = () => {
   const eventId = getEventIdByUrl();
   const queryClient = useQueryClient();
 
-  const {mutate, ...rest} = useMutation({
+  const {mutateAsync, ...rest} = useMutation({
     mutationFn: ({formData}: RequestPostImages) => requestPostImages({eventId, formData}),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.images]});
+      queryClient.removeQueries({queryKey: [QUERY_KEYS.images]});
     },
   });
 
-  return {postImages: mutate, ...rest};
+  return {postImages: mutateAsync, ...rest};
 };
 
 export default useRequestPostImages;
