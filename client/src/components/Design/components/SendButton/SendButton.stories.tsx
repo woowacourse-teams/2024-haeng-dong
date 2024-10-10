@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
 
-import BankSendButton from './SendButton';
+import SendButton from './SendButton';
 
 const meta = {
-  title: 'Components/BankSendButton',
-  component: BankSendButton,
+  title: 'Components/SendButton',
+  component: SendButton,
   tags: ['autodocs'],
   parameters: {
     // layout: 'centered',
@@ -21,7 +21,7 @@ const meta = {
     canSend: true,
     onClick: () => console.log('안녕'),
   },
-} satisfies Meta<typeof BankSendButton>;
+} satisfies Meta<typeof SendButton>;
 
 export default meta;
 
