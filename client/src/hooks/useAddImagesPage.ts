@@ -29,7 +29,7 @@ const useAddImagesPage = () => {
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
 
-  const {postImages, isPending, isSuccess: isSuccessPostImage} = useRequestPostImages();
+  const {postImages, isPending} = useRequestPostImages();
   const {deleteImage} = useRequestDeleteImage();
 
   useEffect(() => {
@@ -57,13 +57,13 @@ const useAddImagesPage = () => {
       deleteImage({
         imageId: images[index].id,
       });
-      setIsPrevImageDeleted(false);
+      setIsPrevImageDeleted(true);
     } else {
       setImages(prev => prev.filter((_, idx) => idx !== index));
     }
   };
 
-  const canSubmit = !!addedImages || isPrevImageDeleted;
+  const canSubmit = addedImages.length !== 0 || isPrevImageDeleted;
 
   const submitImages = async () => {
     const formData = new FormData();
