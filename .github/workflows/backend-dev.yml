@@ -2,7 +2,7 @@ name: backend-push
 
 on:
   push:
-    branches: [ "be-dev", "feature/#704" ]
+    branches: [ "be-dev" ]
 
 jobs:
   build:
