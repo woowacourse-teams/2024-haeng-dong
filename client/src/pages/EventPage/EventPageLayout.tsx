@@ -1,6 +1,7 @@
 import type {Event} from 'types/serviceType';
 
 import {Outlet} from 'react-router-dom';
+import {useEffect} from 'react';
 
 import useEventPageLayout from '@hooks/useEventPageLayout';
 import useShareEvent from '@hooks/useShareEvent';
@@ -13,7 +14,6 @@ import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
 
 import {isMobileDevice} from '@utils/detectDevice';
 import {updateMetaTag} from '@utils/udpateMetaTag';
-import {useEffect} from 'react';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
