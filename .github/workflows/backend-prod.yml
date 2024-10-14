@@ -66,8 +66,7 @@ jobs:
       - name: Delete existing has to be deleted container gracefully
         run: |
           echo "Stopping existing container if running..."
-          if sudo docker ps -a --filter "name=haengdong-backend-delete" --format "{{.Names}}" | grep -w 
-          haengdong-backend-delete; then
+          if sudo docker ps -a --filter "name=haengdong-backend-delete" --format "{{.Names}}" | grep -w haengdong-backend-delete; then
             sudo docker rm -f haengdong-backend-delete
           else
             echo "No running container named haengdong-backend-delete found."
