@@ -66,7 +66,7 @@ jobs:
       - name: Stop existing container gracefully
         run: |
           echo "Stopping existing container if running..."
-          if sudo docker ps --filter "name=haengdong-backend" --format "{{.Names}}" | grep -w haengdong-backend; then
+          if sudo docker ps -a --filter "name=haengdong-backend" --format "{{.Names}}" | grep -w haengdong-backend; then
             sudo docker stop haengdong-backend
             sudo docker rename haengdong-backend haengdong-backend-delete
           else
