@@ -2,7 +2,7 @@ name: backend-push
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feature/#745" ]
     paths:
       - 'server/**'
       - '.github/workflows/**'
@@ -59,20 +59,49 @@ jobs:
     needs: build
     strategy:
       matrix:
-        runner: [ prod-1, prod-2 ]
+        runner: [ prod-1, prod-2, prod-3 ]
+      max-parallel: 1
     runs-on: [ self-hosted, '${{ matrix.runner }}' ]
     steps:
-      - name: Docker remove
+      - name: Stop existing container gracefully
         run: |
-          CONTAINER_IDS=$(sudo docker ps -qa)
-          if [ -n "$CONTAINER_IDS" ]; then
-            sudo docker rm -f $CONTAINER_IDS
+          echo "Stopping existing container if running..."
+          if sudo docker ps --filter "name=haengdong-backend" --format "{{.Names}}" | grep -w haengdong-backend; then
+            sudo docker stop haengdong-backend
+            sudo docker rename haengdong-backend haengdong-backend-delete
           else
-            echo "No running containers found."
+            echo "No running container named haengdong-backend found."
           fi
 
       - name: Docker Image pull
         run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
-      - name: Docker run
-        run: sudo docker run -d -p 80:8080 -e SPRING_PROFILES_ACTIVE=prod -v log-volume:/app/logs --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
+      - name: Docker run and Health Check
+        run: |
+          echo "Running new container..."
+          sudo docker run -d -p 80:8080 -e SPRING_PROFILES_ACTIVE=prod -v log-volume:/app/logs --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
+          
+          echo "Performing health check..."
+          # 헬스 체크를 위해 일정 시간 대기 (애플리케이션이 시작될 시간을 확보)
+          sleep 10
+          
+          # 헬스 체크 수행 및 상태 추출 (jq 없이 sed 사용)
+          HEALTH_STATUS=$(curl -s http://localhost/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
+          
+          echo "Health check status: $HEALTH_STATUS"
+          
+          if [ "$HEALTH_STATUS" == "UP" ]; then
+            echo "Health check passed."
+            echo "Removing old container..."
+            sudo docker rm haengdong-backend-delete
+          else
+            echo "Health check failed. Status: $HEALTH_STATUS"
+            echo "Rolling back to previous container..."
+            sudo docker rm -f haengdong-backend
+            sudo docker rename haengdong-backend-delete haengdong-backend
+            sudo docker start haengdong-backend
+            exit 1
+          fi
+
+      - name: Waiting for ALB health check
+        run: sleep 90
