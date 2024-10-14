@@ -83,7 +83,10 @@ jobs:
           
           echo "Performing health check..."
           # 헬스 체크를 위해 일정 시간 대기 (애플리케이션이 시작될 시간을 확보)
-          sleep 10
+          for i in 1 2 3; do
+            echo "Waiting for application to start... (${i}0초 경과)"
+            sleep 10
+          done
           
           # 헬스 체크 수행 및 상태 추출 (jq 없이 sed 사용)
           HEALTH_STATUS=$(curl -s http://localhost/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
