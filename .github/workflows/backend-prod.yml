@@ -63,6 +63,19 @@ jobs:
       max-parallel: 1
     runs-on: [ self-hosted, '${{ matrix.runner }}' ]
     steps:
+      - name: Delete existing has to be deleted container gracefully
+        run: |
+          echo "Stopping existing container if running..."
+          if sudo docker ps -a --filter "name=haengdong-backend-delete" --format "{{.Names}}" | grep -w 
+          haengdong-backend-delete; then
+            sudo docker rm -f haengdong-backend-delete
+          else
+            echo "No running container named haengdong-backend-delete found."
+          fi
+
+      - name: Docker Image pull
+        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
+          
       - name: Stop existing container gracefully
         run: |
           echo "Stopping existing container if running..."
@@ -72,9 +85,6 @@ jobs:
           else
             echo "No running container named haengdong-backend found."
           fi
-
-      - name: Docker Image pull
-        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
       - name: Docker run and Health Check
         run: |
