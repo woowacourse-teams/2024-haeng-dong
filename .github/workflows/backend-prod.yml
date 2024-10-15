@@ -137,7 +137,9 @@ jobs:
 
             # Create or update the default.conf file with the new configuration
             echo "Creating or updating default.conf..."
-            cat > ./nginx-conf/default.conf <<EOF server { listen 80; location / { proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }}; }} EOF
+            cat > ./nginx-conf/default.conf <<EOF
+          server { listen 80; location / { proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }}; }} 
+          EOF
     
             # Test Nginx configuration inside a temporary container
             echo "Testing Nginx configuration..."
@@ -163,7 +165,9 @@ jobs:
             
             # Create the default.conf file with the initial configuration
             echo "Creating default.conf..."
-            cat > ./nginx-conf/default.conf <<EOF server { listen 80; location / { proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }}; }} EOF
+            cat > ./nginx-conf/default.conf <<EOF 
+          server { listen 80; location / { proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }}; }} 
+          EOF
           
             # Test Nginx configuration inside a temporary container
             echo "Testing Nginx configuration..."
