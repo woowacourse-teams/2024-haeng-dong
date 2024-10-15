@@ -222,10 +222,10 @@ jobs:
             echo "No container to stop and remove."
           fi
 
-    port-switch:
-      needs: build
-      strategy:
-        matrix:
-          runner: [ prod-1 , prod-2 ]
-      runs-on: [ self-hosted, '${{ matrix.runner }}' ]
-      steps:
+#    port-switch:
+#      needs: build
+#      strategy:
+#        matrix:
+#          runner: [ prod-1 , prod-2 ]
+#      runs-on: [ self-hosted, '${{ matrix.runner }}' ]
+#      steps:
