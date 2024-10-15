@@ -108,12 +108,7 @@ jobs:
 
       - name: Wait for Application Booting 30 seconds
         run: |
-          echo "Waiting for the application to boot..."
-          for ((i=1;i<=30;i++)); do
-            echo -n "."
-            sleep 1
-          done
-          echo # 줄바꿈
+          sleep 30
 
 #      - name: Health check the new container
 #        run: |
