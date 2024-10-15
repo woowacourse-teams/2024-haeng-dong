@@ -117,115 +117,115 @@ jobs:
           echo "Health check passed."
 
 
-    port-switch:
-      needs: deploy
-      strategy:
-        matrix:
-          runner: [ prod-1 , prod-2 ]
-      runs-on: [ self-hosted, '${{ matrix.runner }}' ]
-      steps:
-        - name: Update or create Nginx container to point to new container port
-          run: |
-            NGINX_CONTAINER_NAME="nginx-proxy"
+  port-switch:
+    needs: deploy
+    strategy:
+      matrix:
+        runner: [ prod-1 , prod-2 ]
+    runs-on: [ self-hosted, '${{ matrix.runner }}' ]
+    steps:
+      - name: Update or create Nginx container to point to new container port
+        run: |
+          NGINX_CONTAINER_NAME="nginx-proxy"
 
-            echo "Checking if Nginx container exists..."
-            if sudo docker ps -a --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
+          echo "Checking if Nginx container exists..."
+          if sudo docker ps -a --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
 
-              # Check if the Nginx container is running
-              if sudo docker ps --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
-                echo "Nginx container is running."
-              else
-                echo "Nginx container exists but is not running. Starting Nginx container..."
-                sudo docker start $NGINX_CONTAINER_NAME
-                echo "Nginx container started."
-              fi
+            # Check if the Nginx container is running
+            if sudo docker ps --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
+              echo "Nginx container is running."
+            else
+              echo "Nginx container exists but is not running. Starting Nginx container..."
+              sudo docker start $NGINX_CONTAINER_NAME
+              echo "Nginx container started."
+            fi
 
-              # Ensure nginx-conf directory and default.conf file exist
-              mkdir -p ./nginx-conf
+            # Ensure nginx-conf directory and default.conf file exist
+            mkdir -p ./nginx-conf
 
-              # Create or update the default.conf file with the new configuration
-              echo "Creating or updating default.conf..."
+            # Create or update the default.conf file with the new configuration
+            echo "Creating or updating default.conf..."
 
-              cat > ./nginx-conf/default <<EOF
-            server {
-                listen 80;
+            cat > ./nginx-conf/default <<EOF
+          server {
+              listen 80;
 
-                location / {
-                proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
-                proxy_set_header Host \$host;
-                proxy_set_header X-Real-IP \$remote_addr;
-                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto \$scheme;
-              }
+              location / {
+              proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
+              proxy_set_header Host \$host;
+              proxy_set_header X-Real-IP \$remote_addr;
+              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto \$scheme;
             }
-            EOF
+          }
+          EOF
 
-              # Test Nginx configuration inside a temporary container
-              echo "Testing Nginx configuration..."
-              sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/sites-available:ro nginx nginx -t
+            # Test Nginx configuration inside a temporary container
+            echo "Testing Nginx configuration..."
+            sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/sites-available:ro nginx nginx -t
 
-              if [ $? -eq 0 ]; then
-                echo "Nginx configuration test passed."
-              else
-                echo "Nginx configuration test failed. Please check the configuration file."
-                exit 1
-              fi
-
-              # Restart the Nginx container to apply changes
-              echo "Restarting Nginx container..."
-              sudo docker restart $NGINX_CONTAINER_NAME
-              echo "Nginx container restarted."
-
+            if [ $? -eq 0 ]; then
+              echo "Nginx configuration test passed."
             else
-              echo "Nginx container not found. Creating a new Nginx container..."
-
-              # Create nginx-conf directory
-              mkdir -p ./nginx-conf
-
-              # Create the default.conf file with the initial configuration
-              echo "Creating default.conf..."
-              cat > ./nginx-conf/default <<EOF 
-            server {
-                listen 80;
-
-                location / {
-                proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
-                proxy_set_header Host \$host;
-                proxy_set_header X-Real-IP \$remote_addr;
-                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto \$scheme;
-              }
-            } 
-            EOF
-
-              # Test Nginx configuration inside a temporary container
-              echo "Testing Nginx configuration..."
-              sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/sites-available:ro nginx nginx -t
-
-              if [ $? -eq 0 ]; then
-                echo "Nginx configuration test passed."
-              else
-                echo "Nginx configuration test failed. Please check the configuration file."
-                exit 1
-              fi
-
-              # Run a new Nginx container with the updated config
-              sudo docker run -d --name $NGINX_CONTAINER_NAME -p 80:80 \
-                -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro nginx
-
-              echo "New Nginx container created and running."
+              echo "Nginx configuration test failed. Please check the configuration file."
+              exit 1
             fi
 
-        - name: Stop and remove the old container
-          run: |
-            CURRENT_PORT=${{ steps.check-port.outputs.current_port }}
-            if [ -n "$CURRENT_PORT" ]; then
-              echo "Stopping on port $CURRENT_PORT..."
-              sudo docker ps --filter "publish=$CURRENT_PORT" --format "{{.ID}}" | xargs sudo docker stop
-              echo "Sleeping on port $CURRENT_PORT..."
-              sleep 15
-              echo "Removing on port $CURRENT_PORT..."
-              sudo docker ps -a --format "{{.Names}}" | grep "haengdong-backend-$CURRENT_PORT" | xargs sudo docker rm
+            # Restart the Nginx container to apply changes
+            echo "Restarting Nginx container..."
+            sudo docker restart $NGINX_CONTAINER_NAME
+            echo "Nginx container restarted."
+
+          else
+            echo "Nginx container not found. Creating a new Nginx container..."
+
+            # Create nginx-conf directory
+            mkdir -p ./nginx-conf
+
+            # Create the default.conf file with the initial configuration
+            echo "Creating default.conf..."
+            cat > ./nginx-conf/default <<EOF 
+          server {
+              listen 80;
+
+              location / {
+              proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
+              proxy_set_header Host \$host;
+              proxy_set_header X-Real-IP \$remote_addr;
+              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto \$scheme;
+            }
+          } 
+          EOF
+
+            # Test Nginx configuration inside a temporary container
+            echo "Testing Nginx configuration..."
+            sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/sites-available:ro nginx nginx -t
+
+            if [ $? -eq 0 ]; then
+              echo "Nginx configuration test passed."
             else
-              echo "No container to stop and remove."
+              echo "Nginx configuration test failed. Please check the configuration file."
+              exit 1
             fi
+
+            # Run a new Nginx container with the updated config
+            sudo docker run -d --name $NGINX_CONTAINER_NAME -p 80:80 \
+              -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro nginx
+
+            echo "New Nginx container created and running."
+          fi
+
+      - name: Stop and remove the old container
+        run: |
+          CURRENT_PORT=${{ steps.check-port.outputs.current_port }}
+          if [ -n "$CURRENT_PORT" ]; then
+            echo "Stopping on port $CURRENT_PORT..."
+            sudo docker ps --filter "publish=$CURRENT_PORT" --format "{{.ID}}" | xargs sudo docker stop
+            echo "Sleeping on port $CURRENT_PORT..."
+            sleep 15
+            echo "Removing on port $CURRENT_PORT..."
+            sudo docker ps -a --format "{{.Names}}" | grep "haengdong-backend-$CURRENT_PORT" | xargs sudo docker rm
+          else
+            echo "No container to stop and remove."
+          fi
