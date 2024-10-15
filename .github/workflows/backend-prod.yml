@@ -192,9 +192,11 @@ jobs:
         run: |
           CURRENT_PORT=${{ steps.check-port.outputs.current_port }}
           if [ -n "$CURRENT_PORT" ]; then
-            echo "Stopping and removing the container running on port $CURRENT_PORT..."
+            echo "Stopping on port $CURRENT_PORT..."
             sudo docker ps --filter "publish=$CURRENT_PORT" --format "{{.ID}}" | xargs sudo docker stop
-            sleep 5
+            echo "Sleeping on port $CURRENT_PORT..."
+            sleep 15
+            echo "Removing on port $CURRENT_PORT..."
             sudo docker ps -a --filter "publish=$CURRENT_PORT" --format "{{.ID}}" | xargs sudo docker rm
           else
             echo "No container to stop and remove."
