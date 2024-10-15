@@ -221,3 +221,9 @@ jobs:
           else
             echo "No container to stop and remove."
           fi
+
+      - name: Remove unused Docker images
+        run: |
+          echo "Removing unused Docker images..."
+          sudo docker image prune -af --filter "until=24h"
+          echo "Unused Docker images older than 24 hours have been removed."
