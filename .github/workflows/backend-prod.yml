@@ -187,7 +187,6 @@ jobs:
             echo "New Nginx container created and running."
           fi
 
-
       - name: Stop and remove the old container
         run: |
           CURRENT_PORT=${{ steps.check-port.outputs.current_port }}
