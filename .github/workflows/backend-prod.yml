@@ -113,43 +113,53 @@ jobs:
       - name: Update or create Nginx container to point to new container port
         run: |
           NGINX_CONTAINER_NAME="nginx-proxy"
-
+  
           echo "Checking if Nginx container is running..."
-          if sudo docker ps --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
-            echo "Nginx container is running. Updating configuration..."
-
+          
+          # Check if the Nginx container exists
+          if sudo docker ps -a --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
+        
+            # Check if the Nginx container is running
+            if sudo docker ps --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
+              echo "Nginx container is running. Updating configuration..."
+            else
+              echo "Nginx container exists but is not running. Starting Nginx container..."
+              sudo docker start $NGINX_CONTAINER_NAME
+              echo "Nginx container started."
+            fi
+        
             # Copy Nginx config from the running container to the host
             sudo docker cp $NGINX_CONTAINER_NAME:/etc/nginx/nginx.conf ./nginx.conf
-
+          
             # Update the proxy_pass setting in the config file
             sudo sed -i "s/proxy_pass http:\/\/127.0.0.1:.*;/proxy_pass http:\/\/127.0.0.1:${{ steps.check-port.outputs.next_port }};/" ./nginx.conf
-
+          
             # Copy the updated config back into the container
             sudo docker cp ./nginx.conf $NGINX_CONTAINER_NAME:/etc/nginx/nginx.conf
-
+          
             # Reload Nginx inside the container
             sudo docker exec $NGINX_CONTAINER_NAME nginx -s reload
-
+          
             echo "Nginx configuration updated and reloaded."
-
+            
           else
             echo "Nginx container not found. Creating a new Nginx container..."
-
+          
             # Create a basic Nginx config file with the updated proxy_pass
             echo "
             server {
               listen 80;
               location / {
-                proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
-              }
+              proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
             }
-            " > ./nginx.conf
-
-            # Run a new Nginx container with the updated config
-            sudo docker run -d --name $NGINX_CONTAINER_NAME -p 80:80 \
-              -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro nginx
-
-            echo "New Nginx container created and running."
+          }
+          " > ./nginx.conf
+        
+          # Run a new Nginx container with the updated config
+          sudo docker run -d --name $NGINX_CONTAINER_NAME -p 80:80 \
+            -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro nginx
+        
+          echo "New Nginx container created and running."
           fi
 
       - name: Stop and remove the old container
