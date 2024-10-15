@@ -196,7 +196,7 @@ jobs:
             echo "Sleeping on port $CURRENT_PORT..."
             sleep 15
             echo "Removing on port $CURRENT_PORT..."
-            sudo docker ps -a --filter "publish=$CURRENT_PORT" --format "{{.ID}}" | xargs sudo docker rm
+            sudo docker ps -a --format "{{.Names}}" | grep "haengdong-backend-$CURRENT_PORT" | xargs sudo docker rm
           else
             echo "No container to stop and remove."
           fi
