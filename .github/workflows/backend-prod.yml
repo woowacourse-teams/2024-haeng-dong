@@ -8,58 +8,58 @@ on:
       - '.github/workflows/**'
 
 jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    defaults:
-#      run:
-#        shell: bash
-#        working-directory: ./server
-#
-#    permissions:
-#      contents: read
-#
-#    steps:
-#      - name: CheckOut
-#        uses: actions/checkout@v4
-#        with:
-#          token: ${{secrets.CONFIG_SUBMODULE_TOKEN}}
-#          submodules: true
-#
-#      - name: Set up JDK 17
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
-#
-#      - name: Setup Gradle
-#        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
-#
-#      - name: Grant execute permission for gradlew
-#        run: chmod +x gradlew
-#
-#      - name: Test with Gradle Wrapper
-#        run: ./gradlew clean build
-#
-#      - name: Login to Docker Hub
-#        uses: docker/login-action@v3
-#        with:
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
-#
-#      - name: Set up Docker BuildX
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Build and push
-#        run: |
-#          docker buildx build --platform linux/arm64 -t \
-#              ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }} --push .
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./server
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: CheckOut
+        uses: actions/checkout@v4
+        with:
+          token: ${{secrets.CONFIG_SUBMODULE_TOKEN}}
+          submodules: true
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Test with Gradle Wrapper
+        run: ./gradlew clean build
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker BuildX
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        run: |
+          docker buildx build --platform linux/arm64 -t \
+              ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }} --push .
 
   deploy:
-#    needs: build
+    needs: build
     strategy:
       matrix:
-        runner: [ prod-1 ] #, prod-2, prod-3 ]
+        runner: [ prod-1 , prod-2 ]
     runs-on: [ self-hosted, '${{ matrix.runner }}' ]
     steps:
       - name: Docker Image pull
@@ -137,8 +137,19 @@ jobs:
 
             # Create or update the default.conf file with the new configuration
             echo "Creating or updating default.conf..."
+          
             cat > ./nginx-conf/default.conf <<EOF
-          server { listen 80; location / { proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }}; }} 
+          server {
+              listen 80;
+          
+              location / {
+              proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
+              proxy_set_header Host \$host;
+              proxy_set_header X-Real-IP \$remote_addr;
+              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto \$scheme;
+            }
+          }
           EOF
     
             # Test Nginx configuration inside a temporary container
@@ -166,7 +177,17 @@ jobs:
             # Create the default.conf file with the initial configuration
             echo "Creating default.conf..."
             cat > ./nginx-conf/default.conf <<EOF 
-          server { listen 80; location / { proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }}; }} 
+          server {
+              listen 80;
+          
+              location / {
+              proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
+              proxy_set_header Host \$host;
+              proxy_set_header X-Real-IP \$remote_addr;
+              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto \$scheme;
+            }
+          } 
           EOF
           
             # Test Nginx configuration inside a temporary container
@@ -200,3 +221,11 @@ jobs:
           else
             echo "No container to stop and remove."
           fi
+
+    port-switch:
+      needs: build
+      strategy:
+        matrix:
+          runner: [ prod-1 , prod-2 ]
+      runs-on: [ self-hosted, '${{ matrix.runner }}' ]
+      steps:
