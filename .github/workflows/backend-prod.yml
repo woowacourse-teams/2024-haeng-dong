@@ -134,76 +134,66 @@ jobs:
 
             # Ensure nginx-conf directory and default.conf file exist
             mkdir -p ./nginx-conf
-            if [ ! -f ./nginx-conf/default.conf ]; then
-              echo "Creating default.conf file..."
-              echo "
-              server {
-                listen 80;
-                location / {
-                  proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
-                }
-              }
-              " > ./nginx-conf/default.conf
-            fi
 
-            # Update Nginx configuration file on host
-            echo "Updating Nginx configuration file on host..."
-            echo "
+            # Create or update the default.conf file with the new configuration
+            echo "Creating or updating default.conf..."
+            cat > ./nginx-conf/default.conf <<EOF
             server {
               listen 80;
               location / {
                 proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
               }
             }
-            " > ./nginx-conf/default.conf
-
+            EOF
+    
             # Test Nginx configuration inside a temporary container
             echo "Testing Nginx configuration..."
             sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro nginx nginx -t
-
+            
             if [ $? -eq 0 ]; then
               echo "Nginx configuration test passed."
             else
               echo "Nginx configuration test failed. Please check the configuration file."
               exit 1
             fi
-
+            
             # Restart the Nginx container to apply changes
             echo "Restarting Nginx container..."
             sudo docker restart $NGINX_CONTAINER_NAME
             echo "Nginx container restarted."
-
+          
           else
             echo "Nginx container not found. Creating a new Nginx container..."
-
-            # Create Nginx configuration directory
+          
+            # Create nginx-conf directory
             mkdir -p ./nginx-conf
-
-            # Create a basic Nginx config file with the updated proxy_pass
-            echo "
+            
+            # Create the default.conf file with the initial configuration
+            echo "Creating default.conf..."
+            cat > ./nginx-conf/default.conf <<EOF
             server {
               listen 80;
               location / {
                 proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
               }
             }
-            " > ./nginx-conf/default.conf
-
+            EOF
+          
             # Test Nginx configuration inside a temporary container
             echo "Testing Nginx configuration..."
             sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro nginx nginx -t
-
+            
             if [ $? -eq 0 ]; then
               echo "Nginx configuration test passed."
             else
               echo "Nginx configuration test failed. Please check the configuration file."
               exit 1
             fi
-
+          
             # Run a new Nginx container with the updated config
             sudo docker run -d --name $NGINX_CONTAINER_NAME -p 80:80 \
               -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro nginx
-
+            
             echo "New Nginx container created and running."
           fi
 
