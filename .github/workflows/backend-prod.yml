@@ -200,7 +200,7 @@ jobs:
               --name $NGINX_CONTAINER_NAME \
               --network $NETWORK_NAME \
               -p 80:80 \
-              -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro \
+              -v $(pwd)/nginx-conf:/etc/nginx/conf.d \
               nginx
 
             echo "New Nginx container created and running."
