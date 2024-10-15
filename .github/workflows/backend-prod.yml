@@ -69,7 +69,7 @@ jobs:
         id: check-port
         run: |
           echo "Checking if any container is running on ports 8080 or 8081..."
-          CURRENT_PORT=$(sudo docker ps --format "{{.Names}} {{.Ports}}" | grep "haengdong-backend-" | grep -o '8080\|8081')
+          CURRENT_PORT=$(sudo docker ps --format "{{.Names}} {{.Ports}}" | grep "haengdong-backend" | grep -o '8080\|8081')
           
           if [ "$CURRENT_PORT" == "8080" ]; then
             NEXT_PORT=8081
