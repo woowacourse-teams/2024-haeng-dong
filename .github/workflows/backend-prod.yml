@@ -72,11 +72,11 @@ jobs:
           CURRENT_PORT=$(sudo docker ps --format "{{.Names}} {{.Ports}}" | grep "***-backend" | grep -o '8080\|8081' || echo "")
           echo "CURRENT_PORT on port $CURRENT_PORT."
           # CURRENT_PORT가 빈 문자열이거나 8081인 경우
-          if [ -z "$CURRENT_PORT" ] || [ "$CURRENT_PORT" == "8081" ]; then
-            echo "null or 8081"
+          if [ "$CURRENT_PORT" == "8081" ]; then
+            echo "IF CURRENT_PORT : null or 8081"
             NEXT_PORT=8080
           else
-            echo "8080"
+            echo "IF CURRENT_PORT : 8080"
             NEXT_PORT=8081
           fi
 
