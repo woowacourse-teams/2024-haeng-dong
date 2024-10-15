@@ -7,6 +7,7 @@ import {Button} from '@components/Design';
 
 import {Keypad} from './Keypad';
 import useNumberKeyboard from './useNumberKeyboard';
+import {amountKeypads, numberKeypads} from './keypads';
 
 export type KeyboardType = 'number' | 'string' | 'amount';
 
@@ -19,8 +20,6 @@ export interface NumberKeyboardProps {
 
 export default function NumberKeyboard({type, maxNumber, initialValue, onChange}: NumberKeyboardProps) {
   const {theme} = useTheme();
-  const amountKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '<-'];
-  const numberKeypads = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '<-'];
 
   const {onClickKeypad, onClickDelete, onClickDeleteAll, onClickAddAmount} = useNumberKeyboard({
     type,
@@ -65,12 +64,13 @@ export default function NumberKeyboard({type, maxNumber, initialValue, onChange}
           </Button>
         </div>
       )}
-      {(type === 'amount' ? amountKeypads : numberKeypads).map(el => (
+      {(type === 'amount' ? amountKeypads : numberKeypads).map(({keypad, label}) => (
         <Keypad
-          key={el}
-          value={el}
-          disabled={el === ''}
-          onClick={el === '<-' ? onClickDelete : () => onClickKeypad(el)}
+          key={keypad}
+          value={keypad}
+          label={label}
+          disabled={keypad === ''}
+          onClick={keypad === '<-' ? onClickDelete : () => onClickKeypad(keypad)}
         />
       ))}
     </div>
