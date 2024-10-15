@@ -118,6 +118,7 @@ export const GlobalStyle = css`
   #root {
     display: flex;
     justify-content: center;
+    -webkit-tap-highlight-color: transparent;
   }
 
   button {
