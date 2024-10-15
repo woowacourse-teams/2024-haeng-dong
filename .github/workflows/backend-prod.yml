@@ -62,6 +62,16 @@ jobs:
         runner: [ prod-1 , prod-2 ]
     runs-on: [ self-hosted, '${{ matrix.runner }}' ]
     steps:
+      - name: Create Docker network if not exists
+        run: |
+          NETWORK_NAME="haengdong_network"
+          if ! sudo docker network ls --format '{{.Name}}' | grep -w "$NETWORK_NAME" > /dev/null 2>&1; then
+            echo "Creating Docker network $NETWORK_NAME..."
+            sudo docker network create $NETWORK_NAME
+          else
+            echo "Docker network $NETWORK_NAME already exists."
+          fi
+
       - name: Docker Image pull
         run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
@@ -81,14 +91,19 @@ jobs:
           fi
 
           echo "Next container will run on port $NEXT_PORT."
-          echo "::set-output name=next_port::$NEXT_PORT"
-          echo "::set-output name=current_port::$CURRENT_PORT"
+          echo "NEXT_PORT=$NEXT_PORT" >> $GITHUB_ENV
+          echo "CURRENT_PORT=$CURRENT_PORT" >> $GITHUB_ENV
 
       - name: Run new container on the alternate port
         run: |
-          echo "Running new container on port ${{ steps.check-port.outputs.next_port }}..."
-          sudo docker run -d -p ${{ steps.check-port.outputs.next_port }}:8080 \
-            -e SPRING_PROFILES_ACTIVE=prod -v log-volume:/app/logs --name haengdong-backend-${{ steps.check-port.outputs.next_port }} \
+          NETWORK_NAME="haengdong_network"
+          echo "Running new container on port $NEXT_PORT..."
+          sudo docker run -d \
+            --name haengdong-backend-$NEXT_PORT \
+            --network $NETWORK_NAME \
+            -p $NEXT_PORT:8080 \
+            -e SPRING_PROFILES_ACTIVE=prod \
+            -v log-volume:/app/logs \
             ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
       - name: Wait for Application Booting 30 seconds
@@ -101,32 +116,27 @@ jobs:
           echo # 줄바꿈
 
       - name: Health check the new container
-        id: health-check
         run: |
-          echo "Performing health check for the new container on port ${{ steps.check-port.outputs.next_port }}..."
-          HEALTH_STATUS=$(curl -s http://localhost:${{ steps.check-port.outputs.next_port }}/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
-          
+          echo "Performing health check for the new container on port $NEXT_PORT..."
+          HEALTH_STATUS=$(curl -s http://localhost:$NEXT_PORT/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
+
           echo "Health check status: $HEALTH_STATUS"
-          
+
           if [ "$HEALTH_STATUS" != "UP" ]; then
             echo "Health check failed. Rolling back..."
-            sudo docker rm -f haengdong-backend-${{ steps.check-port.outputs.next_port }}
+            sudo docker rm -f haengdong-backend-$NEXT_PORT
             exit 1
           fi
-          
+
           echo "Health check passed."
 
-
-  port-switch:
-    needs: deploy
-    strategy:
-      matrix:
-        runner: [ prod-1 , prod-2 ]
-    runs-on: [ self-hosted, '${{ matrix.runner }}' ]
-    steps:
       - name: Update or create Nginx container to point to new container port
         run: |
           NGINX_CONTAINER_NAME="nginx-proxy"
+          NETWORK_NAME="haengdong_network"
+          NEXT_PORT=$NEXT_PORT
+
+          echo "Next port is $NEXT_PORT"
 
           echo "Checking if Nginx container exists..."
           if sudo docker ps -a --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
@@ -145,24 +155,24 @@ jobs:
 
             # Create or update the default.conf file with the new configuration
             echo "Creating or updating default.conf..."
+            echo "server {
+                listen 80;
 
-            cat > ./nginx-conf/default <<EOF
-          server {
-              listen 80;
-
-              location / {
-              proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
-              proxy_set_header Host \$host;
-              proxy_set_header X-Real-IP \$remote_addr;
-              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Proto \$scheme;
-            }
-          }
-          EOF
+                location / {
+                    proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto \$scheme;
+                }
+            }" > ./nginx-conf/default.conf
 
             # Test Nginx configuration inside a temporary container
             echo "Testing Nginx configuration..."
-            sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/sites-available:ro nginx nginx -t
+            sudo docker run --rm \
+              -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro \
+              --network $NETWORK_NAME \
+              nginx nginx -t
 
             if [ $? -eq 0 ]; then
               echo "Nginx configuration test passed."
@@ -184,23 +194,24 @@ jobs:
 
             # Create the default.conf file with the initial configuration
             echo "Creating default.conf..."
-            cat > ./nginx-conf/default <<EOF 
-          server {
-              listen 80;
+            echo "server {
+                listen 80;
 
-              location / {
-              proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
-              proxy_set_header Host \$host;
-              proxy_set_header X-Real-IP \$remote_addr;
-              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Proto \$scheme;
-            }
-          } 
-          EOF
+                location / {
+                    proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto \$scheme;
+                }
+            }" > ./nginx-conf/default.conf
 
             # Test Nginx configuration inside a temporary container
             echo "Testing Nginx configuration..."
-            sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/sites-available:ro nginx nginx -t
+            sudo docker run --rm \
+              -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro \
+              --network $NETWORK_NAME \
+              nginx nginx -t
 
             if [ $? -eq 0 ]; then
               echo "Nginx configuration test passed."
@@ -210,15 +221,19 @@ jobs:
             fi
 
             # Run a new Nginx container with the updated config
-            sudo docker run -d --name $NGINX_CONTAINER_NAME -p 80:80 \
-              -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro nginx
+            sudo docker run -d \
+              --name $NGINX_CONTAINER_NAME \
+              --network $NETWORK_NAME \
+              -p 80:80 \
+              -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro \
+              nginx
 
             echo "New Nginx container created and running."
           fi
 
       - name: Stop and remove the old container
         run: |
-          CURRENT_PORT=${{ steps.check-port.outputs.current_port }}
+          CURRENT_PORT=$CURRENT_PORT
           if [ -n "$CURRENT_PORT" ]; then
             echo "Stopping on port $CURRENT_PORT..."
             sudo docker ps --filter "publish=$CURRENT_PORT" --format "{{.ID}}" | xargs sudo docker stop
