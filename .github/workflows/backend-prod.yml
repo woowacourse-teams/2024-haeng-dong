@@ -132,13 +132,8 @@ jobs:
               echo "Nginx container started."
             fi
 
-            # Ensure nginx-conf directory exists
-            if [ ! -d ./nginx-conf ]; then
-              echo "Creating nginx-conf directory..."
-              mkdir -p ./nginx-conf
-            fi
-
-            # Ensure default.conf file exists
+            # Ensure nginx-conf directory and default.conf file exist
+            mkdir -p ./nginx-conf
             if [ ! -f ./nginx-conf/default.conf ]; then
               echo "Creating default.conf file..."
               echo "
@@ -153,22 +148,30 @@ jobs:
 
             # Update Nginx configuration file on host
             echo "Updating Nginx configuration file on host..."
-            sudo sed -i "s/proxy_pass http:\/\/127.0.0.1:.*;/proxy_pass http:\/\/127.0.0.1:${{ steps.check-port.outputs.next_port }};/" ./nginx-conf/default.conf
+            echo "
+            server {
+              listen 80;
+              location / {
+                proxy_pass http://127.0.0.1:${{ steps.check-port.outputs.next_port }};
+              }
+            }
+            " > ./nginx-conf/default.conf
 
-            # Test Nginx configuration
+            # Test Nginx configuration inside a temporary container
             echo "Testing Nginx configuration..."
-            sudo docker exec $NGINX_CONTAINER_NAME nginx -t
+            sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro nginx nginx -t
 
-            # If the configuration test passes, reload Nginx
             if [ $? -eq 0 ]; then
-              echo "Reloading Nginx inside the container..."
-              sudo docker exec $NGINX_CONTAINER_NAME nginx -s reload
-              echo "Nginx configuration updated and reloaded."
+              echo "Nginx configuration test passed."
             else
               echo "Nginx configuration test failed. Please check the configuration file."
-              sudo docker exec $NGINX_CONTAINER_NAME nginx -t
               exit 1
             fi
+
+            # Restart the Nginx container to apply changes
+            echo "Restarting Nginx container..."
+            sudo docker restart $NGINX_CONTAINER_NAME
+            echo "Nginx container restarted."
 
           else
             echo "Nginx container not found. Creating a new Nginx container..."
@@ -185,6 +188,17 @@ jobs:
               }
             }
             " > ./nginx-conf/default.conf
+
+            # Test Nginx configuration inside a temporary container
+            echo "Testing Nginx configuration..."
+            sudo docker run --rm -v $(pwd)/nginx-conf:/etc/nginx/conf.d:ro nginx nginx -t
+
+            if [ $? -eq 0 ]; then
+              echo "Nginx configuration test passed."
+            else
+              echo "Nginx configuration test failed. Please check the configuration file."
+              exit 1
+            fi
 
             # Run a new Nginx container with the updated config
             sudo docker run -d --name $NGINX_CONTAINER_NAME -p 80:80 \
