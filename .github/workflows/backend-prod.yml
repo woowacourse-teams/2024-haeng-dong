@@ -56,7 +56,7 @@ jobs:
 #              ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }} --push .
 
   deploy:
-    needs: build
+#    needs: build
     strategy:
       matrix:
         runner: [ prod-1 ] #, prod-2, prod-3 ]
