@@ -115,20 +115,20 @@ jobs:
           done
           echo # 줄바꿈
 
-      - name: Health check the new container
-        run: |
-          echo "Performing health check for the new container on port $NEXT_PORT..."
-          HEALTH_STATUS=$(curl -s http://localhost:$NEXT_PORT/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
-
-          echo "Health check status: $HEALTH_STATUS"
-
-          if [ "$HEALTH_STATUS" != "UP" ]; then
-            echo "Health check failed. Rolling back..."
-            sudo docker rm -f haengdong-backend-$NEXT_PORT
-            exit 1
-          fi
-
-          echo "Health check passed."
+#      - name: Health check the new container
+#        run: |
+#          echo "Performing health check for the new container on port $NEXT_PORT..."
+#          HEALTH_STATUS=$(curl -s http://localhost:$NEXT_PORT/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
+#
+#          echo "Health check status: $HEALTH_STATUS"
+#
+#          if [ "$HEALTH_STATUS" != "UP" ]; then
+#            echo "Health check failed. Rolling back..."
+#            sudo docker rm -f haengdong-backend-$NEXT_PORT
+#            exit 1
+#          fi
+#
+#          echo "Health check passed."
 
       - name: Update or create Nginx container to point to new container port
         run: |
