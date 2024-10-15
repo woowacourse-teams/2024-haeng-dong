@@ -106,24 +106,31 @@ jobs:
             -v log-volume:/app/logs \
             ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
-      - name: Wait for Application Booting 30 seconds
-        run: |
-          sleep 30
-
       - name: Health check the new container
         run: |
           echo "Performing health check for the new container on port $NEXT_PORT..."
-          HEALTH_STATUS=$(curl -s http://localhost:$NEXT_PORT/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
-
-          echo "Health check status: $HEALTH_STATUS"
-
-          if [ "$HEALTH_STATUS" != "UP" ]; then
-            echo "Health check failed. Rolling back..."
-            sudo docker rm -f haengdong-backend-$NEXT_PORT
-            exit 1
-          fi
-
-          echo "Health check passed."
+          MAX_ATTEMPTS=30
+          SLEEP_INTERVAL=2
+          ATTEMPT=1
+      
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            HEALTH_STATUS=$(curl -s http://localhost:$NEXT_PORT/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
+      
+            if [ "$HEALTH_STATUS" = "UP" ]; then
+              echo "Health check passed on attempt $ATTEMPT."
+              break
+            else
+              echo "Attempt $ATTEMPT: Health check status: $HEALTH_STATUS. Retrying in $SLEEP_INTERVAL seconds..."
+              ATTEMPT=$((ATTEMPT+1))
+              sleep $SLEEP_INTERVAL
+            fi
+      
+            if [ $ATTEMPT -gt $MAX_ATTEMPTS ]; then
+              echo "Health check failed after $MAX_ATTEMPTS attempts. Rolling back..."
+              sudo docker rm -f haengdong-backend-$NEXT_PORT
+              exit 1
+            fi
+          done
 
       - name: Update or create Nginx container to point to new container port
         run: |
