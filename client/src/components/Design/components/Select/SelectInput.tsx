@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import {useState} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
@@ -28,7 +27,7 @@ const SelectInput = ({
   };
 
   return (
-    <Flex flexDirection="column" gap="0.375rem">
+    <Flex flexDirection="column">
       {labelText && (
         <Flex justifyContent="spaceBetween" paddingInline="0.5rem" margin="0 0 0.375rem 0">
           {labelText && (
