@@ -1,23 +1,9 @@
 import {Theme} from '@theme/theme.type';
 import {ColorKeys} from '@token/colors';
 
-export type IconType =
-  | 'inputDelete'
-  | 'buljusa'
-  | 'rightChevron'
-  | 'search'
-  | 'error'
-  | 'confirm'
-  | 'trash'
-  | 'trashMini'
-  | 'check'
-  | 'x'
-  | 'pencilMini'
-  | 'toss'
-  | 'meatballs'
-  | 'editPencil'
-  | 'heundeut'
-  | 'photoButton';
+import {ICON} from './Icon';
+
+export type IconType = keyof typeof ICON;
 
 export type IconColor = ColorKeys;
 
