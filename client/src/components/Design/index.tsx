@@ -4,7 +4,6 @@ import {HDesignProvider, useTheme} from './theme/HDesignProvider';
 import BankSelect from './components/BankSelect/BankSelect';
 import BottomSheet from './components/BottomSheet/BottomSheet';
 import Button from './components/Button/Button';
-import DragHandleItemContainer from './components/DragHandleItemContainer/DragHandleItemContainer';
 import EditableItem from './components/EditableItem/EditableItem';
 import ExpenseList from './components/ExpenseList/ExpenseList';
 import FixedButton from './components/FixedButton/FixedButton';
@@ -34,7 +33,6 @@ export {
   BankSelect,
   BottomSheet,
   Button,
-  DragHandleItemContainer,
   EditableItem,
   ExpenseList,
   FixedButton,
