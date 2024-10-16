@@ -26,19 +26,40 @@ const useAdminPage = () => {
     postAuthenticate();
   }, [postAuthenticate]);
 
-  // session storage에 배너를 지웠는지 관리
-  const storageValue = SessionStorage.get<boolean>(SESSION_STORAGE_KEYS.closeAccountBannerByEventToken(eventId));
-  const isClosed = storageValue !== null && storageValue === true;
+  // session storage에 계좌번호 입력 배너를 지웠는지 관리
+  const storageAccountValue = SessionStorage.get<boolean>(SESSION_STORAGE_KEYS.closeAccountBannerByEventToken(eventId));
+  const isClosedAccount = storageAccountValue !== null && storageAccountValue === true;
 
-  const [isShowBanner, setIsShowBanner] = useState<boolean>((bankName === '' || accountNumber === '') && !isClosed);
+  const isEmptyAccount = bankName === '' || accountNumber === '';
+  const [isShowAccountBanner, setIsShowAccountBanner] = useState<boolean>(isEmptyAccount && !isClosedAccount);
 
   useEffect(() => {
-    setIsShowBanner((bankName === '' || accountNumber === '') && !isClosed);
-  }, [bankName, accountNumber, isShowBanner]);
+    setIsShowAccountBanner(isEmptyAccount && !isClosedAccount);
+  }, [bankName, accountNumber, isShowAccountBanner]);
 
-  const onDelete = () => {
-    setIsShowBanner(false);
+  const onDeleteAccount = () => {
+    setIsShowAccountBanner(false);
     SessionStorage.set<boolean>(SESSION_STORAGE_KEYS.closeAccountBannerByEventToken(eventId), true);
+  };
+
+  // session storage에 입금 상태관리 배너를 지웠는지 관리
+  const storageDepositStateValue = SessionStorage.get<boolean>(
+    SESSION_STORAGE_KEYS.closeDepositStateBannerByEventToken(eventId),
+  );
+  const isClosedDepositState = storageDepositStateValue != null && storageDepositStateValue;
+
+  const isExistStepsAndAccount = steps.length && !isEmptyAccount;
+  const [isShowDepositStateBanner, setIsShowDepositStateBanner] = useState<boolean>(
+    !!isExistStepsAndAccount && !isClosedDepositState,
+  );
+
+  useEffect(() => {
+    setIsShowDepositStateBanner(!!isExistStepsAndAccount && !isClosedDepositState);
+  }, [isShowDepositStateBanner, steps]);
+
+  const onDeleteDepositState = () => {
+    setIsShowDepositStateBanner(false);
+    SessionStorage.set<boolean>(SESSION_STORAGE_KEYS.closeDepositStateBannerByEventToken(eventId), true);
   };
 
   return {
@@ -46,9 +67,11 @@ const useAdminPage = () => {
     isAdmin,
     eventName,
     totalExpenseAmount,
-    isShowBanner,
-    onDelete,
+    isShowAccountBanner,
+    onDeleteAccount,
     steps,
+    isShowDepositStateBanner,
+    onDeleteDepositState,
   };
 };
 
