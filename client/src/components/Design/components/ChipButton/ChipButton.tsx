@@ -21,8 +21,8 @@ const ChipButton = ({color, text, onClick}: Props) => {
   return (
     <div css={chipButtonStyle({color, theme})}>
       <Text textColor="black">{text}</Text>
-      <IconButton variants="none">
-        <Icon iconType="inputDelete" onClick={onClick} />
+      <IconButton variants="none" onClick={onClick}>
+        <Icon iconType="inputDelete" />
       </IconButton>
     </div>
   );
