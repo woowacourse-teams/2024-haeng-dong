@@ -7,16 +7,16 @@ import {Text, useTheme} from '@components/Design';
 
 interface Props {
   value: string;
-  label: string;
+  ariaLabel?: string;
   onClick: () => void;
   disabled?: boolean;
 }
 
-export function Keypad({value, label, onClick, disabled = false}: Props) {
+export function Keypad({value, ariaLabel, onClick, disabled = false}: Props) {
   const {theme} = useTheme();
   return (
     <button
-      aria-label={label}
+      aria-label={ariaLabel}
       css={css`
         display: flex;
         justify-content: center;

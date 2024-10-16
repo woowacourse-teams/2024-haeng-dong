@@ -64,11 +64,11 @@ export default function NumberKeyboard({type, maxNumber, initialValue, onChange}
           </Button>
         </div>
       )}
-      {(type === 'amount' ? amountKeypads : numberKeypads).map(({keypad, label}) => (
+      {(type === 'amount' ? amountKeypads : numberKeypads).map(({keypad, ariaLabel}) => (
         <Keypad
           key={keypad}
           value={keypad}
-          label={label}
+          ariaLabel={ariaLabel}
           disabled={keypad === ''}
           onClick={keypad === '<-' ? onClickDelete : () => onClickKeypad(keypad)}
         />
