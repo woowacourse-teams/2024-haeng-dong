@@ -157,8 +157,9 @@ jobs:
 
             # default.conf 파일 생성 또는 업데이트
             echo "Creating or updating default.conf..."
-            echo "server {
-                listen 80;
+            worker_shutdown_timeout 10s;
+            server {
+                listen 80 reuseport;
 
                 location / {
                     proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
@@ -184,8 +185,9 @@ jobs:
 
             # default.conf 파일 생성
             echo "Creating default.conf..."
-            echo "server {
-                listen 80;
+            worker_shutdown_timeout 10s;
+            server {
+                listen 80 reuseport;
 
                 location / {
                     proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
