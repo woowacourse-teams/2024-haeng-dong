@@ -31,6 +31,7 @@ export default function Line({text, emphasize = []}: Props) {
             size="subTitle"
             textColor={emphasize.includes(text) ? 'black' : 'gray'}
             style={{whiteSpace: 'pre'}}
+            aria-hidden={true}
           >
             {`${text}`}
           </Text>
