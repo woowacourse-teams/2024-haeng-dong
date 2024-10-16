@@ -55,7 +55,7 @@ const useAdminPage = () => {
 
   useEffect(() => {
     setIsShowDepositStateBanner(!!isExistStepsAndAccount && !isClosedDepositState);
-  }, [isShowDepositStateBanner, steps]);
+  }, [isShowDepositStateBanner, steps, bankName, accountNumber]);
 
   const onDeleteDepositState = () => {
     setIsShowDepositStateBanner(false);
