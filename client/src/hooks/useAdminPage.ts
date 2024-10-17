@@ -8,8 +8,6 @@ import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import useRequestGetSteps from './queries/step/useRequestGetSteps';
-import useRequestPostAuthentication from './queries/auth/useRequestPostAuthentication';
-import useBanner from './useBanner';
 
 const useAdminPage = () => {
   const eventId = getEventIdByUrl();
@@ -18,18 +16,13 @@ const useAdminPage = () => {
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
   const {steps} = useRequestGetSteps();
-  const {postAuthenticate} = useRequestPostAuthentication();
-
+  
   const {isShowAccountBanner, onDeleteAccount, isShowDepositStateBanner, onDeleteDepositState} = useBanner({
     eventId,
     bankName,
     accountNumber,
     steps,
   });
-
-  useEffect(() => {
-    postAuthenticate();
-  }, [postAuthenticate]);
 
   return {
     eventId,

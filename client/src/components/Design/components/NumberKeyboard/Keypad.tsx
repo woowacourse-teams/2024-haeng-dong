@@ -5,16 +5,16 @@ import {setDarker, setLighter} from '@components/Design/utils/colors';
 
 import {Text, useTheme} from '@components/Design';
 
-interface Props {
+type KeypadProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'value'> & {
   value: string;
-  onClick: () => void;
-  disabled?: boolean;
-}
+};
 
-export function Keypad({value, onClick, disabled = false}: Props) {
+export function Keypad({value, ...restButtonProps}: KeypadProps) {
   const {theme} = useTheme();
+
   return (
     <button
+      {...restButtonProps}
       css={css`
         display: flex;
         justify-content: center;
@@ -33,10 +33,10 @@ export function Keypad({value, onClick, disabled = false}: Props) {
           }
         }
       `}
-      onClick={onClick}
-      disabled={disabled}
     >
-      <Text size="title">{value}</Text>
+      <Text size="title" aria-hidden>
+        {value}
+      </Text>
     </button>
   );
 }
