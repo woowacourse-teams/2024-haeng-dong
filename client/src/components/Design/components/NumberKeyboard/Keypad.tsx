@@ -5,18 +5,16 @@ import {setDarker, setLighter} from '@components/Design/utils/colors';
 
 import {Text, useTheme} from '@components/Design';
 
-interface Props {
+type KeypadProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   value: string;
-  ariaLabel?: string;
-  onClick: () => void;
-  disabled?: boolean;
-}
+};
 
-export function Keypad({value, ariaLabel, onClick, disabled = false}: Props) {
+export function Keypad({value, ...restButtonProps}: KeypadProps) {
   const {theme} = useTheme();
+
   return (
     <button
-      aria-label={ariaLabel}
+      {...restButtonProps}
       css={css`
         display: flex;
         justify-content: center;
@@ -35,8 +33,6 @@ export function Keypad({value, ariaLabel, onClick, disabled = false}: Props) {
           }
         }
       `}
-      onClick={onClick}
-      disabled={disabled}
     >
       <Text size="title">{value}</Text>
     </button>

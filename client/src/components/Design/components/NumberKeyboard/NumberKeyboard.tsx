@@ -68,7 +68,7 @@ export default function NumberKeyboard({type, maxNumber, initialValue, onChange}
         <Keypad
           key={keypad}
           value={keypad}
-          ariaLabel={ariaLabel}
+          aria-label={ariaLabel}
           disabled={keypad === ''}
           onClick={keypad === '<-' ? onClickDelete : () => onClickKeypad(keypad)}
         />
