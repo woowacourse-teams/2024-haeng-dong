@@ -157,7 +157,7 @@ jobs:
 
             # default.conf 파일 생성 또는 업데이트
             echo "Creating or updating default.conf..."
-            echo "worker_shutdown_timeout 10s;
+            echo "
             server {
                 listen 80 reuseport;
 
@@ -185,7 +185,7 @@ jobs:
 
             # default.conf 파일 생성
             echo "Creating default.conf..."
-            echo "worker_shutdown_timeout 10s;
+            echo "
             server {
                 listen 80 reuseport;
 
