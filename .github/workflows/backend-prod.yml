@@ -226,6 +226,7 @@ jobs:
               --name $NGINX_CONTAINER_NAME \
               --network $NETWORK_NAME \
               -p 80:80 \
+              -p 9100:9100 \
               -v $(pwd)/nginx-conf:/etc/nginx/conf.d \
               nginx
 
