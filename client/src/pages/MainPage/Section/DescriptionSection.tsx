@@ -13,12 +13,15 @@ const DescriptionSection = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%',
+        height: '100vh',
+        width: '100vw',
         gap: '1.5rem',
         padding: '3rem 1.5rem',
-        backgroundColor: theme.colors.lightGrayContainer,
+        backgroundColor: 'white',
       })}
     >
+      <img css={css({width: '10rem'})} src={`${process.env.IMAGE_URL}/standingDog.svg`} />
+
       <Text style={{textAlign: 'center'}} size="subTitle">{`행동대장들을 위해
         행동대장을 준비했어요
           `}</Text>

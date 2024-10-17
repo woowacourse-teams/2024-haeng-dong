@@ -17,6 +17,7 @@ export type IconType =
   | 'meatballs'
   | 'editPencil'
   | 'heundeut'
+  | 'chevronDown'
   | 'photoButton';
 
 export type IconColor = ColorKeys;

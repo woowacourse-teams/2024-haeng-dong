@@ -1,11 +1,12 @@
 import {css, keyframes} from '@emotion/react';
 import {useNavigate} from 'react-router-dom';
 
-import ChevronDown from '@assets/image/chevronDownLarge.svg';
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
+
+import {Icon} from '@components/Design';
 
 type MainSectionProps = {
   trackStartCreateEvent: () => void;
@@ -26,29 +27,40 @@ const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        width: '100%',
-        backgroundColor: 'white',
+        width: '100vw',
       })}
     >
+      <div
+        css={css({
+          position: 'fixed',
+          height: '100vh',
+          top: 0,
+          zIndex: -1,
+        })}
+      >
+        <img
+          css={css({
+            height: '100vh',
+            objectFit: 'cover',
+          })}
+          src={`${process.env.IMAGE_URL}/mainSectionBackground.png`}
+          alt=""
+        />
+      </div>
       <div
         css={css({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center',
           gap: '2rem',
           padding: '1.5rem',
-          height: '100vh',
-          width: '100%',
+          height: '100%',
         })}
       >
-        <div css={animateWithDelay(0)}>
-          <img src={`${process.env.IMAGE_URL}/standingDog.svg`} />
-        </div>
-        <Text css={animateWithDelay(1)} style={{textAlign: 'center'}} size="title">{`행동대장을 통해
+        <Text css={animateWithDelay(0)} textColor="white" style={{textAlign: 'left'}} size="title">{`행동대장으로
         간편하게 정산하세요
         `}</Text>
-        <Button id="startCreateEvent" css={animateWithDelay(2)} size="large" onClick={handleClick}>
+        <Button variants="tertiary" id="startCreateEvent" css={animateWithDelay(1)} size="large" onClick={handleClick}>
           정산 시작하기
         </Button>
       </div>
@@ -60,7 +72,7 @@ const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
           animation: `${bounce} 2s infinite ease-in-out`,
         })}
       >
-        <ChevronDown />
+        <Icon iconType="chevronDown" />
       </div>
     </div>
   );

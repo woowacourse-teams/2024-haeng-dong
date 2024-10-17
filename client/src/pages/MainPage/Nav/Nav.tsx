@@ -17,7 +17,7 @@ const Nav = ({trackStartCreateEvent}: NavProps) => {
   };
 
   return (
-    <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '37px'}}>
+    <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '2.5rem'}}>
       <TopNav>
         <TopNav.Item routePath="/">
           <IconButton variants="none">

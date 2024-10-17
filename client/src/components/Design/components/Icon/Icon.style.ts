@@ -21,6 +21,7 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   editPencil: 'gray',
   heundeut: 'gray',
   photoButton: 'white',
+  chevronDown: 'tertiary',
 };
 
 export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {
