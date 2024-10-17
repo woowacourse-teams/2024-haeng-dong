@@ -34,7 +34,9 @@ export function Keypad({value, ...restButtonProps}: KeypadProps) {
         }
       `}
     >
-      <Text size="title">{value}</Text>
+      <Text size="title" aria-hidden>
+        {value}
+      </Text>
     </button>
   );
 }
