@@ -4,9 +4,9 @@ import {useNavigate} from 'react-router-dom';
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
-
 import {Icon} from '@components/Design';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 type MainSectionProps = {
   trackStartCreateEvent: () => void;
