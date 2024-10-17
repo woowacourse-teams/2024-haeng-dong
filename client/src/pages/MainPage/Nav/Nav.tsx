@@ -20,7 +20,7 @@ const Nav = ({trackStartCreateEvent}: NavProps) => {
     <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '37px'}}>
       <TopNav>
         <TopNav.Item routePath="/">
-          <IconButton variants="none">
+          <IconButton variants="none" aria-label="행동대장 로고">
             <Icon iconType="heundeut" />
           </IconButton>
         </TopNav.Item>

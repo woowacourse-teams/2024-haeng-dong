@@ -19,7 +19,12 @@ const Banner = ({title, description, buttonText, onDelete, ...buttonProps}: Bann
       cssProp={{borderRadius: '0.75rem'}}
     >
       <Flex gap="0.5rem">
-        <IconButton variants="none" onClick={onDelete} style={{display: 'flex', alignItems: 'flex-start'}}>
+        <IconButton
+          variants="none"
+          onClick={onDelete}
+          style={{display: 'flex', alignItems: 'flex-start'}}
+          aria-label="배너 닫기"
+        >
           <Icon iconType="x" />
         </IconButton>
         <div>

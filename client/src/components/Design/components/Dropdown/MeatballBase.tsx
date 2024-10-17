@@ -20,7 +20,7 @@ const MeatballBase = ({isOpen, setIsOpen, dropdownRef, children}: MeatballBasePr
 
   return (
     <>
-      <IconButton variants="none" onClick={() => setIsOpen(true)}>
+      <IconButton variants="none" onClick={() => setIsOpen(true)} aria-label="더보기">
         <Icon iconType="meatballs" />
       </IconButton>
       {isOpen && (

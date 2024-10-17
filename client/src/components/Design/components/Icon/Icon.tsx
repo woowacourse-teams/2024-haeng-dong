@@ -2,7 +2,6 @@
 
 import Toss from '@assets/image/Toss_Symbol_Primary.png';
 import InputDelete from '@assets/image/inputDelete.svg';
-import Buljusa from '@assets/image/buljusa.svg';
 import Error from '@assets/image/error.svg';
 import Confirm from '@assets/image/confirm.svg';
 import Trash from '@assets/image/trash.svg';
@@ -20,9 +19,8 @@ import {useTheme} from '@theme/HDesignProvider';
 
 import {iconStyle} from './Icon.style';
 
-const ICON = {
+export const ICON = {
   inputDelete: <InputDelete />,
-  buljusa: <Buljusa />,
   rightChevron: <RightChevron />,
   search: <Search />,
   error: <Error />,
@@ -37,10 +35,11 @@ const ICON = {
   editPencil: <EditPencil />,
   heundeut: <img src={`${process.env.IMAGE_URL}/heundeut.svg`} />,
   photoButton: <PhotoButton />,
-};
+} as const;
 
-export const Icon: React.FC<IconProps> = ({iconColor, iconType, ...htmlProps}: IconProps) => {
+export const Icon = ({iconColor, iconType, ...htmlProps}: IconProps) => {
   const {theme} = useTheme();
+
   return (
     <div css={iconStyle({iconType, theme, iconColor})} {...htmlProps}>
       {ICON[iconType]}

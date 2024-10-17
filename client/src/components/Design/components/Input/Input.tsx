@@ -70,12 +70,12 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
             {...htmlProps}
           />
           {onDelete && value && hasFocus && (
-            <IconButton tabIndex={-1} variants="none" onMouseDown={onDelete}>
+            <IconButton tabIndex={-1} variants="none" onMouseDown={onDelete} aria-label="입력 내용 모두 지우기">
               <Icon iconType="inputDelete" />
             </IconButton>
           )}
           {inputType === 'search' && (
-            <IconButton tabIndex={-1} variants="none">
+            <IconButton tabIndex={-1} variants="none" aria-label="검색">
               <Icon iconType="search" />
             </IconButton>
           )}
