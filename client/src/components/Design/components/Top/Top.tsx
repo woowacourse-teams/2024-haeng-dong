@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react';
-import {useEffect, useState} from 'react';
 import React from 'react';
 
 import Line from './Line';
@@ -10,17 +9,12 @@ Top.Line = Line;
 Top.EditableLine = EditableLine;
 
 export default function Top({children}: React.PropsWithChildren) {
-  const [childrenTexts, setChildrenTexts] = useState<string[]>([]);
-
-  useEffect(() => {
-    const collectedTexts: string[] = [];
-    React.Children.forEach(children, child => {
-      if (React.isValidElement(child) && child.type === Top.Line) {
-        collectedTexts.push(child.props.text);
-      }
-    });
-    setChildrenTexts(collectedTexts);
-  }, [children]);
+  const childrenTexts: string[] = [];
+  React.Children.forEach(children, child => {
+    if (React.isValidElement(child) && child.type === Top.Line) {
+      childrenTexts.push(child.props.text);
+    }
+  });
 
   return (
     <div
