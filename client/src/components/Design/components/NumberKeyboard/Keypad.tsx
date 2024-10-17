@@ -5,7 +5,7 @@ import {setDarker, setLighter} from '@components/Design/utils/colors';
 
 import {Text, useTheme} from '@components/Design';
 
-type KeypadProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type KeypadProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'value'> & {
   value: string;
 };
 
