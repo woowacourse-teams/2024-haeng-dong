@@ -50,7 +50,7 @@ export const amountKeypads: Keypad[] = [
   },
   {
     keypad: '<-',
-    ariaLabel: '직전 입력 지우기',
+    ariaLabel: '마지막 숫자 지우기',
   },
 ];
 export const numberKeypads: Keypad[] = [
@@ -100,6 +100,6 @@ export const numberKeypads: Keypad[] = [
   },
   {
     keypad: '<-',
-    ariaLabel: '직전 입력 지우기',
+    ariaLabel: '마지막 숫자 지우기',
   },
 ];
