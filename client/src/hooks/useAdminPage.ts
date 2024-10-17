@@ -16,7 +16,7 @@ const useAdminPage = () => {
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
   const {steps} = useRequestGetSteps();
-  
+
   const {isShowAccountBanner, onDeleteAccount, isShowDepositStateBanner, onDeleteDepositState} = useBanner({
     eventId,
     bankName,

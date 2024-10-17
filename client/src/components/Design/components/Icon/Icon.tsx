@@ -39,7 +39,6 @@ export const ICON = {
   chevronDown: <ChevronDownLarge />,
 } as const;
 
-
 export const Icon = ({iconColor, iconType, ...htmlProps}: IconProps) => {
   const {theme} = useTheme();
 
