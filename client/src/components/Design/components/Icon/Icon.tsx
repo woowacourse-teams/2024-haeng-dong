@@ -20,21 +20,21 @@ import {useTheme} from '@theme/HDesignProvider';
 import {iconStyle} from './Icon.style';
 
 export const ICON = {
-  inputDelete: <InputDelete aria-label="지우기" />,
-  rightChevron: <RightChevron aria-label="더보기" />,
-  search: <Search aria-label="검색" />,
-  error: <Error aria-label="오류" />,
-  confirm: <Confirm aria-label="확인" />,
-  trash: <Trash aria-label="삭제" />,
-  trashMini: <TrashMini aria-label="삭제" />,
-  check: <Check aria-label="선택" />,
-  x: <X aria-label="x" />,
-  pencilMini: <PencilMini aria-label="수정" />,
+  inputDelete: <InputDelete />,
+  rightChevron: <RightChevron />,
+  search: <Search />,
+  error: <Error />,
+  confirm: <Confirm />,
+  trash: <Trash />,
+  trashMini: <TrashMini />,
+  check: <Check />,
+  x: <X />,
+  pencilMini: <PencilMini />,
   toss: <img src={Toss} width="16" height="16" alt="toss icon" />,
-  meatballs: <Meatballs aria-label="메뉴" />,
-  editPencil: <EditPencil aria-label="수정" />,
-  heundeut: <img src={`${process.env.IMAGE_URL}/heundeut.svg`} aria-label="행동대장 로고" />,
-  photoButton: <PhotoButton aria-label="사진" />,
+  meatballs: <Meatballs />,
+  editPencil: <EditPencil />,
+  heundeut: <img src={`${process.env.IMAGE_URL}/heundeut.svg`} />,
+  photoButton: <PhotoButton />,
 } as const;
 
 export const Icon = ({iconColor, iconType, ...htmlProps}: IconProps) => {
