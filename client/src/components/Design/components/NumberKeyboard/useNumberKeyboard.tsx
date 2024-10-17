@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
+import type {KeyboardType} from './keypads';
 
-import {KeyboardType} from './NumberKeyboard';
+import {useEffect, useState} from 'react';
 
 interface Props {
   type: KeyboardType;

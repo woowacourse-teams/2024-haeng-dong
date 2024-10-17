@@ -1,5 +1,4 @@
 import {useOutletContext} from 'react-router-dom';
-import {useEffect, useState} from 'react';
 
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
@@ -8,6 +7,7 @@ import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import useRequestGetSteps from './queries/step/useRequestGetSteps';
+import useBanner from './useBanner';
 
 const useAdminPage = () => {
   const eventId = getEventIdByUrl();
