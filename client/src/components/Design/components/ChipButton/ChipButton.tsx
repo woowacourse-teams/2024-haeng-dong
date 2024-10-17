@@ -21,7 +21,7 @@ const ChipButton = ({color, text, onClick}: Props) => {
   return (
     <div css={chipButtonStyle({color, theme})}>
       <Text textColor="black">{text}</Text>
-      <IconButton variants="none" onClick={onClick}>
+      <IconButton variants="none" onClick={onClick} aria-label="인원 지우기">
         <Icon iconType="inputDelete" />
       </IconButton>
     </div>

@@ -83,6 +83,7 @@ const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStat
           variants="tertiary"
           css={{width: '23px', height: '23px', borderRadius: '0.375rem'}}
           onClick={() => handleDeleteMember(member.memberId)}
+          aria-label="인원 삭제"
         >
           <Icon iconType="trashMini" />
         </IconButton>
