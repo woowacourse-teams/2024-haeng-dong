@@ -70,7 +70,7 @@ const AdminPage = () => {
           onClick={navigateEventMemberManage}
           onDelete={onDeleteDepositState}
           title="참여자 입금상태를 관리할 수 있어요"
-          description="어떤 참여자가 입금을 완료했는지 관리해 보세요"
+          description="어떤 참여자가 입금을 완료했는지 기록해 보세요"
           buttonText="관리하기"
         />
       )}
