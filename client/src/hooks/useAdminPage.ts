@@ -11,7 +11,6 @@ import SessionStorage from '@utils/SessionStorage';
 import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
 
 import useRequestGetSteps from './queries/step/useRequestGetSteps';
-import useRequestPostAuthentication from './queries/auth/useRequestPostAuthentication';
 
 const useAdminPage = () => {
   const eventId = getEventIdByUrl();
@@ -20,11 +19,6 @@ const useAdminPage = () => {
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
   const {steps} = useRequestGetSteps();
-  const {postAuthenticate} = useRequestPostAuthentication();
-
-  useEffect(() => {
-    postAuthenticate();
-  }, [postAuthenticate]);
 
   // session storage에 배너를 지웠는지 관리
   const storageValue = SessionStorage.get<boolean>(SESSION_STORAGE_KEYS.closeAccountBannerByEventToken(eventId));
