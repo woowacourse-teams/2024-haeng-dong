@@ -15,6 +15,7 @@ export const ListButton: React.FC<ListButtonProps> = forwardRef<HTMLButtonElemen
   ref,
 ) {
   const {theme} = useTheme();
+
   return (
     <button css={listButtonStyle(theme)} ref={ref} {...htmlProps}>
       <Text size="caption" textColor="gray">

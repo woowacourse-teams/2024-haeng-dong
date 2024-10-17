@@ -6,7 +6,6 @@ import {IconColor, IconStylePropsWithTheme, IconType} from './Icon.type';
 
 const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   inputDelete: 'gray',
-  buljusa: 'gray',
   rightChevron: 'gray',
   search: 'gray',
   confirm: 'complete',

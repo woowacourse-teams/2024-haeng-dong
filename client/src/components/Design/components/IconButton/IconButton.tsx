@@ -11,6 +11,7 @@ export const IconButton: React.FC<IconButtonProps> = forwardRef<HTMLButtonElemen
   ref,
 ) {
   const {theme} = useTheme();
+
   return (
     <button ref={ref} css={iconButtonStyle({theme, size, variants})} {...htmlProps}>
       {children}
