@@ -47,8 +47,6 @@ image:
   base-url: https://d2unln22cedgp9.cloudfront.net/
 
 management:
-  server:
-    port: 9100
   endpoints:
     web:
       exposure:
