@@ -51,6 +51,9 @@ management:
     web:
       exposure:
         include: health, metrics, logfile
+  endpoint:
+    prometheus:
+      enabled: true
 
 server:
   servlet:
@@ -59,6 +62,9 @@ server:
       enabled: true
       force: true
 
+  tomcat:
+    mbeanregistry:
+      enabled: true
 ---
 
 spring:
