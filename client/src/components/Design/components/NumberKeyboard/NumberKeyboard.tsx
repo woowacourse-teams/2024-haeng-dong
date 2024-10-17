@@ -7,9 +7,7 @@ import {Button} from '@components/Design';
 
 import {Keypad} from './Keypad';
 import useNumberKeyboard from './useNumberKeyboard';
-import {amountKeypads, numberKeypads} from './keypads';
-
-export type KeyboardType = 'number' | 'string' | 'amount';
+import {KeyboardType, makeKeypads} from './keypads';
 
 export interface NumberKeyboardProps {
   type: KeyboardType;
@@ -64,7 +62,7 @@ export default function NumberKeyboard({type, maxNumber, initialValue, onChange}
           </Button>
         </div>
       )}
-      {(type === 'amount' ? amountKeypads : numberKeypads).map(({keypad, ariaLabel}) => (
+      {makeKeypads(type).map(({keypad, ariaLabel}) => (
         <Keypad
           key={keypad}
           value={keypad}
