@@ -50,7 +50,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, metrics, logfile
+        include: health, metrics, logfile, prometheus
+
   endpoint:
     prometheus:
       enabled: true
