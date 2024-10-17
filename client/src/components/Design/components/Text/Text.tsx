@@ -7,10 +7,16 @@ import {useTheme} from '@theme/HDesignProvider';
 
 import {getSizeStyling} from './Text.style';
 
-const Text: React.FC<TextProps> = ({size = 'body', textColor = 'black', children, ...attributes}: TextProps) => {
+const Text: React.FC<TextProps> = ({
+  size = 'body',
+  textColor = 'black',
+  children,
+  responsive = false,
+  ...attributes
+}: TextProps) => {
   const {theme} = useTheme();
   return (
-    <p css={getSizeStyling({size, textColor, theme})} {...attributes}>
+    <p css={getSizeStyling({size, textColor, theme, responsive})} {...attributes}>
       {children === '' ? '\u00A0' : children}
     </p>
   );

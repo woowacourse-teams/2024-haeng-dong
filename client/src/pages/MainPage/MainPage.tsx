@@ -3,10 +3,10 @@ import useAmplitude from '@hooks/useAmplitude';
 import Nav from './Nav/Nav';
 import MainSection from './Section/MainSection';
 import DescriptionSection from './Section/DescriptionSection';
-import AddBillSection from './Section/AddBillSection';
 
 import {css} from '@emotion/react';
 import FeatureSection from './Section/FeatureSection';
+import CreatorSection from './Section/CreatorSection';
 
 const MainPage = () => {
   const {trackStartCreateEvent} = useAmplitude();
