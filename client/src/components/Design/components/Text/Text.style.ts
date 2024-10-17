@@ -5,18 +5,33 @@ import {css} from '@emotion/react';
 // TODO: (@todari) themeProvider 이용하도록 변경
 import TYPOGRAPHY from '@token/typography';
 
-export const getSizeStyling = ({size, textColor, theme}: Required<TextStylePropsWithTheme>) => {
+export const getSizeStyling = ({size, textColor, theme, responsive}: Required<TextStylePropsWithTheme>) => {
+  const getResponsiveStyle = (baseStyle: any) => {
+    if (responsive) {
+      return css`
+        ${baseStyle}
+        @media (min-width: 1024px) {
+          font-size: calc(${baseStyle.fontSize} * 1.2);
+        }
+        @media (min-width: 1600px) {
+          font-size: calc(${baseStyle.fontSize} * 1.5);
+        }
+      `;
+    }
+    return css(baseStyle);
+  };
+
   const style = {
-    head: css(TYPOGRAPHY.head),
-    title: css(TYPOGRAPHY.title),
-    subTitle: css(TYPOGRAPHY.subTitle),
-    bodyBold: css(TYPOGRAPHY.bodyBold),
-    body: css(TYPOGRAPHY.body),
-    smallBodyBold: css(TYPOGRAPHY.smallBodyBold),
-    smallBody: css(TYPOGRAPHY.smallBody),
-    captionBold: css(TYPOGRAPHY.captionBold),
-    caption: css(TYPOGRAPHY.caption),
-    tiny: css(TYPOGRAPHY.tiny),
+    head: getResponsiveStyle(TYPOGRAPHY.head),
+    title: getResponsiveStyle(TYPOGRAPHY.title),
+    subTitle: getResponsiveStyle(TYPOGRAPHY.subTitle),
+    bodyBold: getResponsiveStyle(TYPOGRAPHY.bodyBold),
+    body: getResponsiveStyle(TYPOGRAPHY.body),
+    smallBodyBold: getResponsiveStyle(TYPOGRAPHY.smallBodyBold),
+    smallBody: getResponsiveStyle(TYPOGRAPHY.smallBody),
+    captionBold: getResponsiveStyle(TYPOGRAPHY.captionBold),
+    caption: getResponsiveStyle(TYPOGRAPHY.caption),
+    tiny: getResponsiveStyle(TYPOGRAPHY.tiny),
   };
 
   const colorStyle = css({color: theme.colors[textColor]});

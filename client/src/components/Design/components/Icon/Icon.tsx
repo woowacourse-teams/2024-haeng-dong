@@ -16,6 +16,7 @@ import EditPencil from '@assets/image/editPencil.svg';
 import PhotoButton from '@assets/image/photoButton.svg';
 import {IconProps} from '@HDcomponents/Icon/Icon.type';
 import {useTheme} from '@theme/HDesignProvider';
+import ChevronDownLarge from '@assets/image/chevronDownLarge.svg';
 
 import {iconStyle} from './Icon.style';
 
@@ -35,7 +36,9 @@ export const ICON = {
   editPencil: <EditPencil />,
   heundeut: <img src={`${process.env.IMAGE_URL}/heundeut.svg`} />,
   photoButton: <PhotoButton />,
+  chevronDown: <ChevronDownLarge />,
 } as const;
+
 
 export const Icon = ({iconColor, iconType, ...htmlProps}: IconProps) => {
   const {theme} = useTheme();
