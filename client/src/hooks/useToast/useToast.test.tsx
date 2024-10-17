@@ -1,11 +1,10 @@
-import {render, renderHook, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {act} from 'react';
 
 import ToastContainer from '@components/Toast/ToastContainer';
 
 import {HDesignProvider} from '@HDesign/index';
 
-import {useToast} from './useToast';
 import toast from './toast';
 
 const TOAST_MESSAGE = '테스트 메세지에요.';

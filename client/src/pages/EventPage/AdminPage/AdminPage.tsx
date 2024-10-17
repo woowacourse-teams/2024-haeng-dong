@@ -14,7 +14,17 @@ const AdminPage = () => {
   const navigate = useNavigate();
   const {trackAddBillStart} = useAmplitude();
 
-  const {eventId, isAdmin, eventName, totalExpenseAmount, isShowBanner, onDelete, steps} = useAdminPage();
+  const {
+    eventId,
+    isAdmin,
+    eventName,
+    totalExpenseAmount,
+    isShowAccountBanner,
+    onDeleteAccount,
+    steps,
+    isShowDepositStateBanner,
+    onDeleteDepositState,
+  } = useAdminPage();
 
   const navigateAccountInputPage = () => {
     navigate(`/event/${eventId}/admin/edit`);
@@ -46,13 +56,22 @@ const AdminPage = () => {
           </Dropdown>
         }
       />
-      {isShowBanner && (
+      {isShowAccountBanner && (
         <Banner
           onClick={navigateAccountInputPage}
-          onDelete={onDelete}
+          onDelete={onDeleteAccount}
           title="계좌번호가 등록되지 않았어요"
           description="계좌번호를 입력해야 참여자가 편하게 송금할 수 있어요"
           buttonText="등록하기"
+        />
+      )}
+      {isShowDepositStateBanner && (
+        <Banner
+          onClick={navigateEventMemberManage}
+          onDelete={onDeleteDepositState}
+          title="참여자 입금상태를 관리할 수 있어요"
+          description="어떤 참여자가 입금을 완료했는지 기록해 보세요"
+          buttonText="관리하기"
         />
       )}
       {steps.length > 0 && <StepList data={steps ?? []} isAdmin={isAdmin} />}
