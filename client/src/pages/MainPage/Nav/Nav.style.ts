@@ -1,25 +1,27 @@
 import {css} from '@emotion/react';
 
-import {Theme} from '@components/Design/theme/theme.type';
-
-export const navStyle = (theme: Theme) =>
-  css({
-    position: 'fixed',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '1rem',
-
-    top: '0',
-    width: '100%',
-    maxWidth: '768px',
-    zIndex: theme.zIndex.navBackgroundColor,
-    height: '4rem',
-    backgroundColor: 'white',
-  });
-
-export const logoStyle = css({
+export const navFixedStyle = css({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: 10,
   display: 'flex',
-  gap: '0.5rem',
+  flexDirection: 'column',
   alignItems: 'center',
+  padding: '1rem 0',
+  width: '100%',
+  backgroundColor: 'white',
+});
+
+export const navWrapperStyle = css({
+  maxWidth: '1200px',
+  width: '100%',
+});
+
+export const navStyle = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  height: '2.5rem',
 });
