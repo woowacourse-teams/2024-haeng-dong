@@ -1,8 +1,8 @@
 import {Text} from '@components/Design';
 
-import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './Calculate.style';
+import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './AutoCalculate.style';
 
-const Calculate = () => {
+const AutoCalculate = () => {
   return (
     <section css={sectionStyle}>
       <article css={articleStyle}>
@@ -22,4 +22,4 @@ const Calculate = () => {
   );
 };
 
-export default Calculate;
+export default AutoCalculate;

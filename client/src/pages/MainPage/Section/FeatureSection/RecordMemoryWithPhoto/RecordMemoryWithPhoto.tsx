@@ -1,8 +1,8 @@
 import {Text} from '@components/Design';
 
-import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './Photo.style';
+import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './RecordMemoryWithPhoto.style';
 
-const Photo = () => {
+const RecordMemoryWithPhoto = () => {
   return (
     <section css={sectionStyle}>
       <article css={articleStyle}>
@@ -22,4 +22,4 @@ const Photo = () => {
   );
 };
 
-export default Photo;
+export default RecordMemoryWithPhoto;

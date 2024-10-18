@@ -1,17 +1,17 @@
 import {SimpleShare} from './SimpleShare';
-import {Calculate} from './Calculate';
+import {AutoCalculate} from './AutoCalculate';
 import {CheckDeposit} from './CheckDeposit';
 import {SimpleTransfer} from './SimpleTransfer';
-import {Photo} from './Photo';
+import {RecordMemoryWithPhoto} from './RecordMemoryWithPhoto';
 
 const FeatureSection = () => {
   return (
     <>
       <SimpleShare />
-      <Calculate />
+      <AutoCalculate />
       <CheckDeposit />
       <SimpleTransfer />
-      <Photo />
+      <RecordMemoryWithPhoto />
     </>
   );
 };
