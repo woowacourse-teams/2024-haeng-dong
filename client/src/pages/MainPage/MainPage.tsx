@@ -4,18 +4,14 @@ import Nav from './Nav/Nav';
 import {MainSection} from './Section/MainSection';
 import {DescriptionSection} from './Section/DescriptionSection';
 import {FeatureSection} from './Section/FeatureSection';
-import {mainContainer, navFixedStyle, navWrapperStyle} from './MainPage.style';
+import {mainContainer} from './MainPage.style';
 
 const MainPage = () => {
   const {trackStartCreateEvent} = useAmplitude();
 
   return (
     <div css={mainContainer}>
-      <div css={navFixedStyle}>
-        <div css={navWrapperStyle}>
-          <Nav trackStartCreateEvent={trackStartCreateEvent} />
-        </div>
-      </div>
+      <Nav trackStartCreateEvent={trackStartCreateEvent} />
       <MainSection trackStartCreateEvent={trackStartCreateEvent} />
       <DescriptionSection />
       <FeatureSection />
