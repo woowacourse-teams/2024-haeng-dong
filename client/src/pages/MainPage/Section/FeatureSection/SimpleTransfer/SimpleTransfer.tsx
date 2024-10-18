@@ -1,11 +1,11 @@
 import {Text} from '@components/Design';
 
-import {backgroundStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleTransfer.style';
+import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleTransfer.style';
 
 const SimpleTransfer = () => {
   return (
-    <div css={backgroundStyle}>
-      <div css={sectionStyle}>
+    <section css={sectionStyle}>
+      <article css={articleStyle}>
         <img src={`${process.env.IMAGE_URL}/feature4.svg`} css={imageStyle} />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
@@ -17,8 +17,8 @@ const SimpleTransfer = () => {
       언제 어디서든 쉽게 정산을 끝내세요.`}
           </Text>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 

@@ -1,11 +1,11 @@
 import {Text} from '@components/Design';
 
-import {backgroundStyle, imageStyle, sectionStyle, textContainerStyle} from './CheckDeposit.style';
+import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './CheckDeposit.style';
 
 const CheckDeposit = () => {
   return (
-    <div css={backgroundStyle}>
-      <div css={sectionStyle}>
+    <section css={sectionStyle}>
+      <article css={articleStyle}>
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             입금 확인도 걱정 없어요
@@ -17,8 +17,8 @@ const CheckDeposit = () => {
           </Text>
         </div>
         <img src={`${process.env.IMAGE_URL}/feature3.svg`} css={imageStyle} />
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 

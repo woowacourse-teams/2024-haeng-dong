@@ -1,11 +1,11 @@
 import {Text} from '@components/Design';
 
-import {backgroundStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleShare.style';
+import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleShare.style';
 
 const SimpleAccount = () => {
   return (
-    <div css={backgroundStyle}>
-      <div css={sectionStyle}>
+    <section css={sectionStyle}>
+      <article css={articleStyle}>
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             누구와도 간편하게 정산하세요
@@ -17,8 +17,8 @@ const SimpleAccount = () => {
           </Text>
         </div>
         <img src={`${process.env.IMAGE_URL}/feature1.svg`} css={imageStyle} />
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 

@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 
-export const backgroundStyle = css({
+export const sectionStyle = css({
   display: 'flex',
   height: '100vh',
   width: '100vw',
@@ -10,7 +10,7 @@ export const backgroundStyle = css({
   backgroundColor: '#DFC1FF',
 });
 
-export const sectionStyle = css({
+export const articleStyle = css({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',

@@ -1,11 +1,11 @@
 import {Text} from '@components/Design';
 
-import {backgroundStyle, imageStyle, sectionStyle, textContainerStyle} from './Calculate.style';
+import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './Calculate.style';
 
 const Calculate = () => {
   return (
-    <div css={backgroundStyle}>
-      <div css={sectionStyle}>
+    <section css={sectionStyle}>
+      <article css={articleStyle}>
         <img src={`${process.env.IMAGE_URL}/feature2.svg`} css={imageStyle} />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
@@ -17,8 +17,8 @@ const Calculate = () => {
               복잡한 계산은 이제 행동대장에게 맡기세요!`}
           </Text>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 
