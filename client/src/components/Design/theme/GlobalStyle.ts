@@ -2,8 +2,6 @@ import {css} from '@emotion/react';
 
 // reset css -> index css
 export const GlobalStyle = css`
-  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
   *:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
     all: unset;
     display: revert;
