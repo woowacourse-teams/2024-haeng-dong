@@ -4,6 +4,8 @@ import {Button, Text, Icon, TopNav, IconButton} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
+import {navStyle} from './Nav.style';
+
 type NavProps = {
   trackStartCreateEvent: () => void;
 };
@@ -17,7 +19,7 @@ const Nav = ({trackStartCreateEvent}: NavProps) => {
   };
 
   return (
-    <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '2.5rem'}}>
+    <header css={navStyle}>
       <TopNav>
         <TopNav.Item routePath="/">
           <IconButton variants="none" aria-label="행동대장 로고">
