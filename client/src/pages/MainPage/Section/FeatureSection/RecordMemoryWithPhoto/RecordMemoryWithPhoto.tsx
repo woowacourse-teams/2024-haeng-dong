@@ -1,10 +1,22 @@
+import {useRef} from 'react';
+
+import useImageLazyLoading from '@hooks/useImageLazyLoading';
+
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './RecordMemoryWithPhoto.style';
 
 const RecordMemoryWithPhoto = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const {imageSrc} = useImageLazyLoading({
+    targetRef: sectionRef,
+    src: `${process.env.IMAGE_URL}/feature5.svg`,
+    threshold: 0.1,
+  });
+
   return (
-    <section css={sectionStyle}>
+    <section css={sectionStyle} ref={sectionRef}>
       <article css={articleStyle}>
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
@@ -16,7 +28,7 @@ const RecordMemoryWithPhoto = () => {
         정산은 투명하게, 추억은 오래오래 간직할 수 있어요.`}
           </Text>
         </div>
-        <img src={`${process.env.IMAGE_URL}/feature5.svg`} css={imageStyle} />
+        <img src={imageSrc} css={imageStyle} alt="record memory with photo" />
       </article>
     </section>
   );
