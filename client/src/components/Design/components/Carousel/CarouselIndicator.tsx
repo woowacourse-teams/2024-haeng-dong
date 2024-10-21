@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import {indicatorContainerStyle, indicatorStyle} from './Carousel.style';
