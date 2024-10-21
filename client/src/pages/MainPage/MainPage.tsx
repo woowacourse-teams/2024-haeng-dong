@@ -5,7 +5,7 @@ import {MainSection} from './Section/MainSection';
 import {DescriptionSection} from './Section/DescriptionSection';
 import {FeatureSection} from './Section/FeatureSection';
 import {mainContainer} from './MainPage.style';
-import CreatorSection from './Section/FeatureSection/CreatorSection/CreatorSection';
+import CreatorSection from './Section/CreatorSection/CreatorSection';
 import useMainPageYScroll from '@hooks/useMainPageYScroll';
 
 const MainPage = () => {
