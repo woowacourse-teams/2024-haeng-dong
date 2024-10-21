@@ -16,7 +16,7 @@ const SimpleAccount = () => {
           복잡한 절차 없이, 빠르게 정산을 마치세요.`}
           </Text>
         </div>
-        <img src={`${process.env.IMAGE_URL}/feature1.svg`} css={imageStyle} />
+        <object type="image/svg+xml" data={`${process.env.IMAGE_URL}/feature1.svg`} css={imageStyle} />
       </article>
     </section>
   );
