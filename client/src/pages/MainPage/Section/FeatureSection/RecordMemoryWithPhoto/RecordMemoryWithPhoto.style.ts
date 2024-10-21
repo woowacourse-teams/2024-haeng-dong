@@ -7,7 +7,7 @@ export const sectionStyle = css({
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#C1CFFF',
+  // backgroundColor: '#C1CFFF',
 });
 
 export const articleStyle = css({
