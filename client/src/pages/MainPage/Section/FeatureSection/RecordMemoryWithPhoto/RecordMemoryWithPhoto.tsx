@@ -16,7 +16,7 @@ const RecordMemoryWithPhoto = () => {
         정산은 투명하게, 추억은 오래오래 간직할 수 있어요.`}
           </Text>
         </div>
-        <img src={`${process.env.IMAGE_URL}/feature5.svg`} css={imageStyle} />
+        <object type="image/svg+xml" data={`${process.env.IMAGE_URL}/feature5.svg`} css={imageStyle} />
       </article>
     </section>
   );

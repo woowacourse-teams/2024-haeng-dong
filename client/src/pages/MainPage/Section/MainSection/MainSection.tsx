@@ -1,14 +1,12 @@
-import {useNavigate} from 'react-router-dom';
-
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 import Image from '@components/Design/components/Image/Image';
 
+import useMainSectionBackgroundScroll from '@hooks/useMainSectionBackgroundScroll';
+
 import {Icon} from '@components/Design';
 
 import getImageUrl from '@utils/getImageUrl';
-
-import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {
   animateWithDelay,
@@ -24,18 +22,13 @@ type MainSectionProps = {
 };
 
 const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    trackStartCreateEvent();
-    navigate(ROUTER_URLS.createEvent);
-  };
+  const {isVisible, handleClick} = useMainSectionBackgroundScroll(trackStartCreateEvent);
 
   return (
     <div css={mainSectionStyle}>
       <div css={backgroundStyle}>
         <Image
-          css={backgroundImageStyle}
+          css={backgroundImageStyle(isVisible)}
           src={getImageUrl('mainSectionBackground', 'webp')}
           alt=""
           fallbackSrc={getImageUrl('mainSectionBackground', 'png')}

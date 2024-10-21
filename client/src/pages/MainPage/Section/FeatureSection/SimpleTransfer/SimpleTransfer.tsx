@@ -6,7 +6,7 @@ const SimpleTransfer = () => {
   return (
     <section css={sectionStyle}>
       <article css={articleStyle}>
-        <img src={`${process.env.IMAGE_URL}/feature4.svg`} css={imageStyle} />
+        <object type="image/svg+xml" data={`${process.env.IMAGE_URL}/feature4.svg`} css={imageStyle} />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             몇 번의 클릭으로 송금 완료!

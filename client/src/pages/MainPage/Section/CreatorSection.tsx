@@ -1,6 +1,7 @@
 import {css} from '@emotion/react';
 
 import Text from '@components/Design/components/Text/Text';
+import Image from '@components/Design/components/Image/Image';
 
 const CreatorSection = () => {
   return (
@@ -42,7 +43,7 @@ const CreatorSection = () => {
             gap: '1rem',
           })}
         >
-          <img
+          <Image
             src={`${process.env.IMAGE_URL}/feature1.svg`}
             css={css({
               minWidth: '15rem',
