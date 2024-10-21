@@ -7,7 +7,7 @@ export const sectionStyle = css({
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#ffffff',
+  // backgroundColor: '#ffffff',
 });
 
 export const articleStyle = css({
@@ -28,6 +28,8 @@ export const articleStyle = css({
 });
 
 export const imageStyle = css({
+  objectFit: 'cover',
+  aspectRatio: '1/1',
   minWidth: '15rem',
   maxWidth: '25rem',
   width: '100%',

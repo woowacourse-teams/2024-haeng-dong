@@ -16,7 +16,7 @@ const CheckDeposit = () => {
             간편하게 관리할 수 있어요.`}
           </Text>
         </div>
-        <img src={`${process.env.IMAGE_URL}/feature3.svg`} css={imageStyle} />
+        <object type="image/svg+xml" data={`${process.env.IMAGE_URL}/feature3.svg`} css={imageStyle} />
       </article>
     </section>
   );

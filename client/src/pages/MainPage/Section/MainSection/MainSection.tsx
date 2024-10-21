@@ -1,11 +1,9 @@
-import {useNavigate} from 'react-router-dom';
-
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
-import {Icon} from '@components/Design';
+import useMainSectionBackgroundScroll from '@hooks/useMainSectionBackgroundScroll';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
+import {Icon} from '@components/Design';
 
 import {
   animateWithDelay,
@@ -21,17 +19,12 @@ type MainSectionProps = {
 };
 
 const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    trackStartCreateEvent();
-    navigate(ROUTER_URLS.createEvent);
-  };
+  const {isVisible, handleClick} = useMainSectionBackgroundScroll(trackStartCreateEvent);
 
   return (
     <div css={mainSectionStyle}>
       <div css={backgroundStyle}>
-        <img css={backgroundImageStyle} src={`${process.env.IMAGE_URL}/mainSectionBackground.png`} alt="" />
+        <img css={backgroundImageStyle(isVisible)} src={`${process.env.IMAGE_URL}/mainSectionBackground.png`} alt="" />
       </div>
       <div css={sectionStyle}>
         <Text css={animateWithDelay(0)} textColor="white" style={{textAlign: 'left'}} size="title">{`행동대장으로
