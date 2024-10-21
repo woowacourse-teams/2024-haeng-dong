@@ -1,5 +1,6 @@
-import {Text} from '@components/Design';
 import {css} from '@emotion/react';
+
+import {Text} from '@components/Design';
 
 interface Props {
   imagePath: string;

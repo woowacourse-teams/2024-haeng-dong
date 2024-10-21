@@ -1,8 +1,9 @@
 import {css} from '@emotion/react';
+import {useNavigate} from 'react-router-dom';
 
 import Text from '@components/Design/components/Text/Text';
+
 import Avatar from './Avatar';
-import {useNavigate} from 'react-router-dom';
 import {avatarContainerStyle, partStyle, sectionStyle} from './CreatorSection.style';
 
 const CreatorSection = () => {

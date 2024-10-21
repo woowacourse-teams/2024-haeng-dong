@@ -1,6 +1,8 @@
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
+import useMainSectionBackgroundScroll from '@hooks/useMainSectionBackgroundScroll';
+
 import {Icon} from '@components/Design';
 
 import {
@@ -11,7 +13,6 @@ import {
   mainSectionStyle,
   sectionStyle,
 } from './MainSection.style';
-import useMainSectionBackgroundScroll from '@hooks/useMainSectionBackgroundScroll';
 
 type MainSectionProps = {
   trackStartCreateEvent: () => void;
