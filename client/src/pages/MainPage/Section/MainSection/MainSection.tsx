@@ -2,8 +2,11 @@ import {useNavigate} from 'react-router-dom';
 
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
+import Image from '@components/Design/components/Image/Image';
 
 import {Icon} from '@components/Design';
+
+import getImageUrl from '@utils/getImageUrl';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -31,7 +34,12 @@ const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
   return (
     <div css={mainSectionStyle}>
       <div css={backgroundStyle}>
-        <img css={backgroundImageStyle} src={`${process.env.IMAGE_URL}/mainSectionBackground.png`} alt="" />
+        <Image
+          css={backgroundImageStyle}
+          src={getImageUrl('mainSectionBackground', 'webp')}
+          alt=""
+          fallbackSrc={getImageUrl('mainSectionBackground', 'png')}
+        />
       </div>
       <div css={sectionStyle}>
         <Text css={animateWithDelay(0)} textColor="white" style={{textAlign: 'left'}} size="title">{`행동대장으로
