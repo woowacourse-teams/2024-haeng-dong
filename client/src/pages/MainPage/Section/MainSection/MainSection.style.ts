@@ -52,8 +52,9 @@ export const backgroundStyle = css({
 
 export const backgroundImageStyle = (isVisible: boolean) =>
   css({
-    height: '100vh',
     objectFit: 'cover',
+    height: '100vh',
+    width: '100vw',
     opacity: isVisible ? 1 : 0,
   });
 
