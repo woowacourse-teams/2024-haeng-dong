@@ -65,7 +65,7 @@ const EventPageLayout = () => {
         {isMobile ? (
           <MobileShareEventButton copyShare={trackLinkShare} kakaoShare={trackKakaoShare} />
         ) : (
-          <DesktopShareEventButton onCopy={trackLinkShare}>정산 초대하기</DesktopShareEventButton>
+          <DesktopShareEventButton onCopy={trackLinkShare} />
         )}
       </Flex>
       <Outlet context={outletContext} />
