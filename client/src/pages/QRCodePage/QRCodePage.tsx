@@ -1,8 +1,18 @@
 import {css} from '@emotion/react';
+import {QRCodeSVG} from 'qrcode.react';
 
 import {MainLayout, Top, TopNav} from '@components/Design';
+import {useTheme} from '@components/Design';
+
+import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
+
+import {QRCodeStyle} from './QRCodePage.style';
 
 const QRCodePage = () => {
+  const {theme} = useTheme();
+  const eventId = getEventIdByUrl();
+
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
@@ -21,13 +31,9 @@ const QRCodePage = () => {
           <Top.Line text="참여자를 초대해 보세요" />
         </Top>
       </div>
-      <div>QR코드가 들어감</div>
-      <div
-        css={css`
-          height: 9.25rem;
-          content: ' ';
-        `}
-      />
+      <div css={QRCodeStyle()}>
+        <QRCodeSVG value={getEventPageUrlByEnvironment(eventId, 'home')} size={240} fgColor={`${theme.colors.black}`} />
+      </div>
     </MainLayout>
   );
 };
