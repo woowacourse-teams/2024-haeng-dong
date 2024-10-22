@@ -1,4 +1,8 @@
+import Image from '@components/Design/components/Image/Image';
+
 import {Text} from '@components/Design';
+
+import getImageUrl from '@utils/getImageUrl';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleShare.style';
 
@@ -16,7 +20,7 @@ const SimpleAccount = () => {
           복잡한 절차 없이, 빠르게 정산을 마치세요.`}
           </Text>
         </div>
-        <object type="image/svg+xml" data={`${process.env.IMAGE_URL}/feature1.svg`} css={imageStyle} />
+        <Image src={getImageUrl('feature1', 'webp')} fallbackSrc={getImageUrl('feature1', 'svg')} css={imageStyle} />
       </article>
     </section>
   );

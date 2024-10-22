@@ -1,4 +1,8 @@
+import Image from '@components/Design/components/Image/Image';
+
 import {Text} from '@components/Design';
+
+import getImageUrl from '@utils/getImageUrl';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './RecordMemoryWithPhoto.style';
 
@@ -16,7 +20,7 @@ const RecordMemoryWithPhoto = () => {
         정산은 투명하게, 추억은 오래오래 간직할 수 있어요.`}
           </Text>
         </div>
-        <object type="image/svg+xml" data={`${process.env.IMAGE_URL}/feature5.svg`} css={imageStyle} />
+        <Image src={getImageUrl('feature5', 'webp')} fallbackSrc={getImageUrl('feature5', 'svg')} css={imageStyle} />
       </article>
     </section>
   );
