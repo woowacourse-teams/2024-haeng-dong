@@ -24,6 +24,7 @@ const EditBillPage = lazy(() => import('@pages/EditBillPage/EditBillPage'));
 const Account = lazy(() => import('@pages/AccountPage/Account'));
 const ImagesPage = lazy(() => import('@pages/ImagesPage/ImagesPage'));
 const AddImagesPage = lazy(() => import('@pages/AddImagesPage/AddImagesPage'));
+const QRCodePage = lazy(() => import('@pages/QRCodePage/QRCodePage'));
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
         path: ROUTER_URLS.send,
         element: <SendPage />,
         errorElement: <SendErrorPage />,
+      },
+      {
+        path: ROUTER_URLS.qrCode,
+        element: <QRCodePage />,
       },
       {
         path: '*',
