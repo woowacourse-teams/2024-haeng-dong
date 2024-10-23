@@ -6,17 +6,19 @@ import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './RecordMemoryWithPhoto.style';
 
-const RecordMemoryWithPhoto = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+type RecordMemoryWithPhotoProps = {
+  targetRef: React.RefObject<HTMLElement>;
+};
 
+const RecordMemoryWithPhoto = ({targetRef}: RecordMemoryWithPhotoProps) => {
   const {imageSrc} = useImageLazyLoading({
-    targetRef: sectionRef,
+    targetRef,
     src: `${process.env.IMAGE_URL}/feature5.svg`,
-    threshold: 0.1,
+    threshold: 0.05,
   });
 
   return (
-    <section css={sectionStyle} ref={sectionRef}>
+    <section css={sectionStyle}>
       <article css={articleStyle}>
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
