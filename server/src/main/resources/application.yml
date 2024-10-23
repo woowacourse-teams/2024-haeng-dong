@@ -64,10 +64,11 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-
   tomcat:
     mbeanregistry:
       enabled: true
+    threads:
+      max: 50
 ---
 
 spring:
