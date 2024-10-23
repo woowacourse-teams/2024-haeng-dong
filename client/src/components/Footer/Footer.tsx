@@ -15,8 +15,9 @@ const Footer: React.FC<FooterProps> = () => {
         <a href="https://github.com/woowacourse-teams/2024-haeng-dong/wiki" target="_blank">
           행동대장 소개
         </a>
-        {/* TODO: (@soha) 문의 페이지 링크로 꼭!! 추후 수정 */}
-        <Link to={'/'}>문의하기</Link>
+        <a href="https://forms.gle/qtGXJ8WdPsWA3KURA" target="_blank">
+          문의하기
+        </a>
         <a href="mailto:haengdongdj@gmail.com">이메일</a>
       </div>
       <Text size="tiny" textColor="gray">
