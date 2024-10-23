@@ -1,9 +1,10 @@
+import Image from '@components/Design/components/Image/Image';
+
 import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './RecordMemoryWithPhoto.style';
-import Image from '@components/Design/components/Image/Image';
 
 type RecordMemoryWithPhotoProps = {
   targetRef: React.RefObject<HTMLElement>;

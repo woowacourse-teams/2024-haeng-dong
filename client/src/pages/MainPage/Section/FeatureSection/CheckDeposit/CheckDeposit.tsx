@@ -1,11 +1,12 @@
 import {useRef} from 'react';
 
+import Image from '@components/Design/components/Image/Image';
+
 import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './CheckDeposit.style';
-import Image from '@components/Design/components/Image/Image';
 
 const CheckDeposit = () => {
   const sectionRef = useRef<HTMLElement>(null);
