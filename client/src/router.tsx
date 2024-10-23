@@ -22,6 +22,7 @@ const EditBillPage = lazy(() => import('@pages/EditBillPage/EditBillPage'));
 const Account = lazy(() => import('@pages/AccountPage/Account'));
 const ImagesPage = lazy(() => import('@pages/ImagesPage/ImagesPage'));
 const AddImagesPage = lazy(() => import('@pages/AddImagesPage/AddImagesPage'));
+const EssentialQueryApp = lazy(() => import('./EssentialQueryApp'));
 
 const router = createBrowserRouter([
   {
@@ -38,57 +39,64 @@ const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: ROUTER_URLS.createEvent,
-
-        element: <CreateEventFunnel />,
-      },
-      {
-        path: ROUTER_URLS.event,
-        element: (
-          <EventLoader>
-            <EventPage />
-          </EventLoader>
-        ),
+        element: <EssentialQueryApp />,
         children: [
           {
-            path: ROUTER_URLS.eventManage,
-            element: (
-              <AuthGate fallback={<EventLoginPage />}>
-                <AdminPage />
-              </AuthGate>
-            ),
+            path: ROUTER_URLS.createEvent,
+            element: <CreateEventFunnel />,
           },
-          {path: ROUTER_URLS.home, element: <HomePage />},
+          {
+            path: ROUTER_URLS.event,
+            element: (
+              <EventLoader>
+                <EventPage />
+              </EventLoader>
+            ),
+            children: [
+              {
+                path: ROUTER_URLS.eventManage,
+                element: (
+                  <AuthGate fallback={<EventLoginPage />}>
+                    <AdminPage />
+                  </AuthGate>
+                ),
+              },
+              {
+                path: ROUTER_URLS.home,
+                element: <HomePage />,
+              },
+            ],
+          },
+          {
+            path: ROUTER_URLS.addBill,
+            element: <AddBillFunnel />,
+          },
+          {
+            path: ROUTER_URLS.member,
+            element: <EventMember />,
+          },
+          {
+            path: ROUTER_URLS.editBill,
+            element: <EditBillPage />,
+          },
+          {
+            path: ROUTER_URLS.eventEdit,
+            element: <Account />,
+          },
+          {
+            path: ROUTER_URLS.images,
+            element: <ImagesPage />,
+          },
+          {
+            path: ROUTER_URLS.addImages,
+            element: <AddImagesPage />,
+          },
+          {
+            path: ROUTER_URLS.send,
+            element: <SendPage />,
+            errorElement: <SendErrorPage />,
+          },
         ],
-      },
-      {
-        path: ROUTER_URLS.addBill,
-        element: <AddBillFunnel />,
-      },
-      {
-        path: ROUTER_URLS.member,
-        element: <EventMember />,
-      },
-      {
-        path: ROUTER_URLS.editBill,
-        element: <EditBillPage />,
-      },
-      {
-        path: ROUTER_URLS.eventEdit,
-        element: <Account />,
-      },
-      {
-        path: ROUTER_URLS.images,
-        element: <ImagesPage />,
-      },
-      {
-        path: ROUTER_URLS.addImages,
-        element: <AddImagesPage />,
-      },
-      {
-        path: ROUTER_URLS.send,
-        element: <SendPage />,
-        errorElement: <SendErrorPage />,
       },
       {
         path: '*',
