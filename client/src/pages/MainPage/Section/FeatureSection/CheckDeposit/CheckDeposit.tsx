@@ -5,13 +5,14 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './CheckDeposit.style';
+import Image from '@components/Design/components/Image/Image';
 
 const CheckDeposit = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   const {imageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
-    src: `${process.env.IMAGE_URL}/feature3.svg`,
+    src: `${process.env.IMAGE_URL}/feature3.webp`,
     threshold: 0.05,
   });
 
@@ -28,7 +29,7 @@ const CheckDeposit = () => {
             간편하게 관리할 수 있어요.`}
           </Text>
         </div>
-        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
       </article>
     </section>
   );

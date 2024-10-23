@@ -5,20 +5,21 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './AutoCalculate.style';
+import Image from '@components/Design/components/Image/Image';
 
 const AutoCalculate = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   const {imageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
-    src: `${process.env.IMAGE_URL}/feature2.svg`,
+    src: `${process.env.IMAGE_URL}/feature2.webp`,
     threshold: 0.05,
   });
 
   return (
     <section css={sectionStyle} ref={sectionRef}>
       <article css={articleStyle}>
-        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             계산은 저희가 알아서 해드려요
