@@ -1,9 +1,10 @@
+import Image from '@components/Design/components/Image/Image';
+
 import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleTransfer.style';
-import Image from '@components/Design/components/Image/Image';
 
 type SimpleTransferProps = {
   targetRef: React.RefObject<HTMLElement>;
