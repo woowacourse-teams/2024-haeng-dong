@@ -6,17 +6,17 @@ import {avatarImageStyle, avatarStyle} from './Avatar.style';
 interface Props {
   imagePath: string;
   name: string;
-  onClick: () => void;
+  navigateUrl: string;
 }
 
-const Avatar = ({imagePath, name, onClick}: Props) => {
+const Avatar = ({imagePath, name, navigateUrl}: Props) => {
   return (
-    <button onClick={onClick} css={avatarStyle}>
+    <a href={navigateUrl} target="_blank" css={avatarStyle}>
       <img src={`${process.env.IMAGE_URL}/${imagePath}.png`} css={avatarImageStyle} />
       <Text size="bodyBold" textColor="white" responsive={true}>
         {name}
       </Text>
-    </button>
+    </a>
   );
 };
 
