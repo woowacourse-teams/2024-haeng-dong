@@ -1,16 +1,18 @@
 import {css} from '@emotion/react';
-import {forwardRef, ForwardedRef} from 'react';
 
 import {SimpleShare} from './SimpleShare';
 import {AutoCalculate} from './AutoCalculate';
 import {CheckDeposit} from './CheckDeposit';
 import {SimpleTransfer} from './SimpleTransfer';
 import {RecordMemoryWithPhoto} from './RecordMemoryWithPhoto';
+import useMainPageYScroll from '@hooks/useMainPageYScroll';
 
-const FeatureSection = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTMLDivElement>) => {
+const FeatureSection = () => {
+  const {featureSectionRef} = useMainPageYScroll();
+
   return (
     <div
-      ref={ref}
+      ref={featureSectionRef}
       css={css({
         display: 'flex',
         transform: 'translateX(200vw)',
@@ -25,6 +27,6 @@ const FeatureSection = forwardRef<HTMLDivElement>((props, ref: ForwardedRef<HTML
       <RecordMemoryWithPhoto />
     </div>
   );
-});
+};
 
 export default FeatureSection;
