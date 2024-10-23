@@ -20,7 +20,7 @@ const useMainSectionBackgroundScroll = (trackStartCreateEvent: () => void) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [window.scrollY, window.innerHeight]);
 
   return {isVisible, handleClick};
 };
