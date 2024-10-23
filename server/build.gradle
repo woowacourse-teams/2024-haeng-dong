@@ -40,6 +40,7 @@ dependencies {
 
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
     implementation 'software.amazon.awssdk:s3:2.25.27'
 

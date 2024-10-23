@@ -27,7 +27,7 @@ export const articleStyle = css({
 });
 
 export const imageStyle = css({
-  objectFit: 'cover',
+  objectFit: 'contain',
   aspectRatio: '1/1',
   minWidth: '15rem',
   maxWidth: '25rem',

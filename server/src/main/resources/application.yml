@@ -50,7 +50,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, metrics, logfile
+        include: health, metrics, logfile, prometheus
+    health:
+      show-details: always
+
+  endpoint:
+    prometheus:
+      enabled: true
 
 server:
   servlet:
@@ -58,7 +64,11 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-
+  tomcat:
+    mbeanregistry:
+      enabled: true
+    threads:
+      max: 50
 ---
 
 spring:

@@ -1,5 +1,7 @@
 import {useRef} from 'react';
 
+import Image from '@components/Design/components/Image/Image';
+
 import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
@@ -28,7 +30,7 @@ const SimpleAccount = () => {
           복잡한 절차 없이, 빠르게 정산을 마치세요.`}
           </Text>
         </div>
-        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
       </article>
     </section>
   );

@@ -1,3 +1,5 @@
+import Image from '@components/Design/components/Image/Image';
+
 import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
@@ -28,7 +30,7 @@ const RecordMemoryWithPhoto = ({targetRef}: RecordMemoryWithPhotoProps) => {
         정산은 투명하게, 추억은 오래오래 간직할 수 있어요.`}
           </Text>
         </div>
-        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
       </article>
     </section>
   );
