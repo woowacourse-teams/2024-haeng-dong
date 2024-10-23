@@ -28,7 +28,7 @@ const SimpleAccount = () => {
           복잡한 절차 없이, 빠르게 정산을 마치세요.`}
           </Text>
         </div>
-        <img src={imageSrc} css={imageStyle} alt="간편한 공유를 설명하는 UI 이미지" />
+        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
       </article>
     </section>
   );

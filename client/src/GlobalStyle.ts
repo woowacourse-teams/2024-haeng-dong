@@ -124,6 +124,7 @@ export const GlobalStyle = css`
   }
 
   body {
+    overflow-x: hidden;
     font-family:
       'Pretendard',
       -apple-system,

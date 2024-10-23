@@ -47,12 +47,16 @@ export const backgroundStyle = css({
   height: '100vh',
   top: 0,
   zIndex: -1,
+  backgroundColor: '#000000',
 });
 
-export const backgroundImageStyle = css({
-  height: '100vh',
-  objectFit: 'cover',
-});
+export const backgroundImageStyle = (isVisible: boolean) =>
+  css({
+    objectFit: 'cover',
+    height: '100vh',
+    width: '100vw',
+    opacity: isVisible ? 1 : 0,
+  });
 
 export const sectionStyle = css({
   display: 'flex',

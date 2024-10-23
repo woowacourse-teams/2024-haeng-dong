@@ -18,7 +18,7 @@ const SimpleTransfer = ({targetRef}: SimpleTransferProps) => {
   return (
     <section css={sectionStyle} ref={targetRef}>
       <article css={articleStyle}>
-        <img src={imageSrc} css={imageStyle} alt="간편 송금을 설명하는 UI 이미지" />
+        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             몇 번의 클릭으로 송금 완료!
