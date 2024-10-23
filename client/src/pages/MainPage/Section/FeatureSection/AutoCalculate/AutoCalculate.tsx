@@ -12,7 +12,7 @@ const AutoCalculate = () => {
   const {imageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
     src: `${process.env.IMAGE_URL}/feature2.svg`,
-    threshold: 0.1,
+    threshold: 0.05,
   });
 
   return (
