@@ -7,6 +7,19 @@ import Avatar from './Avatar';
 import {avatarContainerStyle, partStyle, sectionStyle} from './CreatorSection.style';
 
 const CreatorSection = () => {
+  const frontEndDevelopers = [
+    {imagePath: 'todari', name: '토다리', navigateUrl: 'https://github.com/Todari'},
+    {imagePath: 'cookie', name: '쿠키', navigateUrl: 'https://github.com/jinhokim98'},
+    {imagePath: 'soha', name: '소하', navigateUrl: 'https://github.com/soi-ha'},
+    {imagePath: 'weadie', name: '웨디', navigateUrl: 'https://github.com/pakxe'},
+  ];
+  const backEndDevelopers = [
+    {imagePath: '2sang', name: '이상', navigateUrl: 'https://github.com/kunsanglee'},
+    {imagePath: 'baekho', name: '백호', navigateUrl: 'https://github.com/Arachneee'},
+    {imagePath: 'mangcho', name: '망쵸', navigateUrl: 'https://github.com/3Juhwan'},
+    {imagePath: 'gamja', name: '감자', navigateUrl: 'https://github.com/khabh'},
+  ];
+
   return (
     <div css={sectionStyle}>
       <Text size="subTitle" textColor="white" responsive={true}>
@@ -17,10 +30,9 @@ const CreatorSection = () => {
           FRONTEND
         </Text>
         <div css={avatarContainerStyle}>
-          <Avatar imagePath="todari" name="토다리" navigateUrl="https://github.com/Todari" />
-          <Avatar imagePath="cookie" name="쿠키" navigateUrl="https://github.com/jinhokim98" />
-          <Avatar imagePath="soha" name="소하" navigateUrl="https://github.com/soi-ha" />
-          <Avatar imagePath="weadie" name="웨디" navigateUrl="https://github.com/pakxe" />
+          {frontEndDevelopers.map(developer => (
+            <Avatar key={developer.imagePath} {...developer} />
+          ))}
         </div>
       </div>
       <div
@@ -35,10 +47,9 @@ const CreatorSection = () => {
           BACKEND
         </Text>
         <div css={avatarContainerStyle}>
-          <Avatar imagePath="2sang" name="이상" navigateUrl="https://github.com/kunsanglee" />
-          <Avatar imagePath="baekho" name="백호" navigateUrl="https://github.com/Arachneee" />
-          <Avatar imagePath="mangcho" name="망쵸" navigateUrl="https://github.com/3Juhwan" />
-          <Avatar imagePath="gamja" name="감자" navigateUrl="https://github.com/khabh" />
+          {backEndDevelopers.map(developer => (
+            <Avatar key={developer.imagePath} {...developer} />
+          ))}
         </div>
       </div>
     </div>
