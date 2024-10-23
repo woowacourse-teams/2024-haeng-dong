@@ -1,19 +1,17 @@
 import {createBrowserRouter} from 'react-router-dom';
 import {lazy, Suspense} from 'react';
 
-import ErrorPage from '@pages/ErrorPage/ErrorPage';
-import EventLoginPage from '@pages/EventPage/AdminPage/EventLoginPage';
-import EventLoader from '@components/Loader/EventLoader';
-import SendErrorPage from '@pages/ErrorPage/SendErrorPage';
-import AuthGate from '@pages/EventPage/AuthGate';
-
-import {EventPage} from '@pages/EventPage';
-import SendPage from '@pages/SendPage';
-
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
 
+const ErrorPage = lazy(() => import('@pages/ErrorPage/ErrorPage'));
+const SendErrorPage = lazy(() => import('@pages/ErrorPage/SendErrorPage'));
+const EventLoginPage = lazy(() => import('@pages/EventPage/AdminPage/EventLoginPage'));
+const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
+const AuthGate = lazy(() => import('@pages/EventPage/AuthGate'));
+const EventPage = lazy(() => import('@pages/EventPage/EventPageLayout'));
+const SendPage = lazy(() => import('@pages/SendPage'));
 const MainPage = lazy(() => import('@pages/MainPage/MainPage'));
 const HomePage = lazy(() => import('@pages/EventPage/HomePage/HomePage'));
 const CreateEventFunnel = lazy(() => import('@pages/CreateEventPage/CreateEventFunnel'));
