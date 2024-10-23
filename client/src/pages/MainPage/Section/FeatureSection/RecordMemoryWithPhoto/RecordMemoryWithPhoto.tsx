@@ -1,3 +1,5 @@
+import {useRef} from 'react';
+
 import Image from '@components/Design/components/Image/Image';
 
 import useImageLazyLoading from '@hooks/useImageLazyLoading';
@@ -6,19 +8,18 @@ import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './RecordMemoryWithPhoto.style';
 
-type RecordMemoryWithPhotoProps = {
-  targetRef: React.RefObject<HTMLElement>;
-};
+const RecordMemoryWithPhoto = () => {
+  const sectionRef = useRef<HTMLElement>(null);
 
-const RecordMemoryWithPhoto = ({targetRef}: RecordMemoryWithPhotoProps) => {
-  const {imageSrc} = useImageLazyLoading({
-    targetRef,
+  const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
+    targetRef: sectionRef,
     src: `${process.env.IMAGE_URL}/feature5.webp`,
+    fallbackSrc: `${process.env.IMAGE_URL}/feature5.png`,
     threshold: 0.05,
   });
 
   return (
-    <section css={sectionStyle}>
+    <section css={sectionStyle} ref={sectionRef}>
       <article css={articleStyle}>
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
@@ -30,7 +31,7 @@ const RecordMemoryWithPhoto = ({targetRef}: RecordMemoryWithPhotoProps) => {
         정산은 투명하게, 추억은 오래오래 간직할 수 있어요.`}
           </Text>
         </div>
-        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={fallbackImageSrc} css={imageStyle} />
       </article>
     </section>
   );

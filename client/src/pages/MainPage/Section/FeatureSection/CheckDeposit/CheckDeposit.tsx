@@ -11,9 +11,10 @@ import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './Chec
 const CheckDeposit = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
-  const {imageSrc} = useImageLazyLoading({
+  const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
     src: `${process.env.IMAGE_URL}/feature3.webp`,
+    fallbackSrc: `${process.env.IMAGE_URL}/feature3.png`,
     threshold: 0.05,
   });
 
@@ -30,7 +31,7 @@ const CheckDeposit = () => {
             간편하게 관리할 수 있어요.`}
           </Text>
         </div>
-        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={fallbackImageSrc} css={imageStyle} />
       </article>
     </section>
   );

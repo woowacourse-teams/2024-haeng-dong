@@ -11,9 +11,10 @@ import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './Simp
 const SimpleAccount = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
-  const {imageSrc} = useImageLazyLoading({
+  const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
     src: `${process.env.IMAGE_URL}/feature1.webp`,
+    fallbackSrc: `${process.env.IMAGE_URL}/feature1.png`,
     threshold: 0.05,
   });
 
@@ -30,7 +31,7 @@ const SimpleAccount = () => {
           복잡한 절차 없이, 빠르게 정산을 마치세요.`}
           </Text>
         </div>
-        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={fallbackImageSrc} css={imageStyle} />
       </article>
     </section>
   );

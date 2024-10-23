@@ -1,3 +1,5 @@
+import {useRef} from 'react';
+
 import Image from '@components/Design/components/Image/Image';
 
 import useImageLazyLoading from '@hooks/useImageLazyLoading';
@@ -6,21 +8,20 @@ import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleTransfer.style';
 
-type SimpleTransferProps = {
-  targetRef: React.RefObject<HTMLElement>;
-};
+const SimpleTransfer = () => {
+  const simpleTransferRef = useRef<HTMLElement>(null);
 
-const SimpleTransfer = ({targetRef}: SimpleTransferProps) => {
-  const {imageSrc} = useImageLazyLoading({
-    targetRef,
+  const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
+    targetRef: simpleTransferRef,
     src: `${process.env.IMAGE_URL}/feature4.webp`,
+    fallbackSrc: `${process.env.IMAGE_URL}/feature4.png`,
     threshold: 0.05,
   });
 
   return (
-    <section css={sectionStyle} ref={targetRef}>
+    <section css={sectionStyle} ref={simpleTransferRef}>
       <article css={articleStyle}>
-        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={fallbackImageSrc} css={imageStyle} />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             몇 번의 클릭으로 송금 완료!
