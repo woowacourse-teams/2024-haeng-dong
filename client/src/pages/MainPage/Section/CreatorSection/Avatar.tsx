@@ -1,9 +1,10 @@
-import {Text} from '@components/Design';
-
-import {avatarImageStyle, avatarStyle} from './Avatar.style';
 import Image from '@components/Design/components/Image/Image';
 
+import {Text} from '@components/Design';
+
 import getImageUrl from '@utils/getImageUrl';
+
+import {avatarImageStyle, avatarStyle} from './Avatar.style';
 
 interface Props {
   imagePath: string;
