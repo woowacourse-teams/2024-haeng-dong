@@ -1,9 +1,12 @@
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
+import Image from '@components/Design/components/Image/Image';
 
 import useMainSectionBackgroundScroll from '@hooks/useMainSectionBackgroundScroll';
 
 import {Icon} from '@components/Design';
+
+import getImageUrl from '@utils/getImageUrl';
 
 import {
   animateWithDelay,
@@ -24,7 +27,12 @@ const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
   return (
     <div css={mainSectionStyle}>
       <div css={backgroundStyle}>
-        <img css={backgroundImageStyle(isVisible)} src={`${process.env.IMAGE_URL}/mainSectionBackground.png`} alt="" />
+        <Image
+          css={backgroundImageStyle(isVisible)}
+          src={getImageUrl('mainSectionBackground', 'webp')}
+          alt=""
+          fallbackSrc={getImageUrl('mainSectionBackground', 'png')}
+        />
       </div>
       <div css={sectionStyle}>
         <Text css={animateWithDelay(0)} textColor="white" style={{textAlign: 'left'}} size="title">{`행동대장으로

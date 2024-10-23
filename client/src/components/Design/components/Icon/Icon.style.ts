@@ -15,7 +15,6 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   check: 'primary',
   x: 'gray',
   pencilMini: 'gray',
-  toss: 'white',
   meatballs: 'black',
   editPencil: 'gray',
   heundeut: 'gray',

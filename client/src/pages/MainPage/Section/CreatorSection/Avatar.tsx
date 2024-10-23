@@ -1,5 +1,3 @@
-import {css} from '@emotion/react';
-
 import {Text} from '@components/Design';
 
 import {avatarImageStyle, avatarStyle} from './Avatar.style';

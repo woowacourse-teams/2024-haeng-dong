@@ -1,5 +1,4 @@
 import {css} from '@emotion/react';
-import {useNavigate} from 'react-router-dom';
 
 import Text from '@components/Design/components/Text/Text';
 
