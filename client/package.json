@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "sideEffects": false,
   "scripts": {
     "prod": "NODE_ENV=production webpack server --open --config webpack.prod.mjs",
     "dev": "NODE_ENV=development webpack server --open --config webpack.dev.mjs",
