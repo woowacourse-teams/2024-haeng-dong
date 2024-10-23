@@ -17,6 +17,10 @@ import {IconProps} from '@HDcomponents/Icon/Icon.type';
 import {useTheme} from '@theme/HDesignProvider';
 import ChevronDownLarge from '@assets/image/chevronDownLarge.svg';
 
+import getImageUrl from '@utils/getImageUrl';
+
+import Image from '../Image/Image';
+
 import {iconStyle} from './Icon.style';
 
 export const ICON = {
@@ -32,7 +36,7 @@ export const ICON = {
   pencilMini: <PencilMini />,
   meatballs: <Meatballs />,
   editPencil: <EditPencil />,
-  heundeut: <img src={`${process.env.IMAGE_URL}/heundeut.svg`} />,
+  heundeut: <Image src={getImageUrl('heundeut', 'webp')} fallbackSrc={getImageUrl('heundeut', 'svg')} />,
   photoButton: <PhotoButton />,
   chevronDown: <ChevronDownLarge />,
 } as const;
