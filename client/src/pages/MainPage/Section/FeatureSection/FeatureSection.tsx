@@ -2,6 +2,8 @@ import {css} from '@emotion/react';
 
 import useMainPageYScroll from '@hooks/useMainPageYScroll';
 
+import {useRef} from 'react';
+
 import {SimpleShare} from './SimpleShare';
 import {AutoCalculate} from './AutoCalculate';
 import {CheckDeposit} from './CheckDeposit';
@@ -10,6 +12,7 @@ import {RecordMemoryWithPhoto} from './RecordMemoryWithPhoto';
 
 const FeatureSection = () => {
   const {featureSectionRef} = useMainPageYScroll();
+  const simpleTransferRef = useRef<HTMLElement>(null);
 
   return (
     <div
@@ -24,8 +27,8 @@ const FeatureSection = () => {
       <SimpleShare />
       <AutoCalculate />
       <CheckDeposit />
-      <SimpleTransfer />
-      <RecordMemoryWithPhoto />
+      <SimpleTransfer targetRef={simpleTransferRef} />
+      <RecordMemoryWithPhoto targetRef={simpleTransferRef} />
     </div>
   );
 };
