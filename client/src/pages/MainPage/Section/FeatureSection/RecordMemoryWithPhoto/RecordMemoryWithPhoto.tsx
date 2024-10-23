@@ -1,5 +1,3 @@
-import {useRef} from 'react';
-
 import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
@@ -13,7 +11,7 @@ type RecordMemoryWithPhotoProps = {
 const RecordMemoryWithPhoto = ({targetRef}: RecordMemoryWithPhotoProps) => {
   const {imageSrc} = useImageLazyLoading({
     targetRef,
-    src: `${process.env.IMAGE_URL}/feature5.svg`,
+    src: `${process.env.IMAGE_URL}/feature5.webp`,
     threshold: 0.05,
   });
 

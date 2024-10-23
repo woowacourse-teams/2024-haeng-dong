@@ -1,5 +1,4 @@
 import useAmplitude from '@hooks/useAmplitude';
-import useMainPageYScroll from '@hooks/useMainPageYScroll';
 
 import Nav from './Nav/Nav';
 import {MainSection} from './Section/MainSection';

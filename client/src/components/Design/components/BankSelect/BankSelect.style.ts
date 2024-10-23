@@ -1,12 +1,12 @@
 import {css} from '@emotion/react';
 
-import ImageSprite from '@assets/image/banksprite.png';
+import getImageUrl from '@utils/getImageUrl';
 
 export const iconStyle = (position: string) =>
   css({
     width: '80px',
     height: '80px',
-    background: `url(${ImageSprite}) ${position}`,
+    background: `url(${getImageUrl('banksprite', 'webp')}) ${position}`,
   });
 
 export const bankSelectStyle = css({

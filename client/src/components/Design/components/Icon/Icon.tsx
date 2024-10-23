@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import Toss from '@assets/image/Toss_Symbol_Primary.png';
 import InputDelete from '@assets/image/inputDelete.svg';
 import Error from '@assets/image/error.svg';
 import Confirm from '@assets/image/confirm.svg';
@@ -18,6 +17,10 @@ import {IconProps} from '@HDcomponents/Icon/Icon.type';
 import {useTheme} from '@theme/HDesignProvider';
 import ChevronDownLarge from '@assets/image/chevronDownLarge.svg';
 
+import getImageUrl from '@utils/getImageUrl';
+
+import Image from '../Image/Image';
+
 import {iconStyle} from './Icon.style';
 
 export const ICON = {
@@ -31,10 +34,11 @@ export const ICON = {
   check: <Check />,
   x: <X />,
   pencilMini: <PencilMini />,
-  toss: <img src={Toss} width="16" height="16" alt="toss icon" />,
   meatballs: <Meatballs />,
   editPencil: <EditPencil />,
-  heundeut: <img src={`${process.env.IMAGE_URL}/heundeut.svg`} />,
+  heundeut: (
+    <Image src={getImageUrl('heundeut', 'webp')} fallbackSrc={getImageUrl('heundeut', 'svg')} style={{width: '3rem'}} />
+  ),
   photoButton: <PhotoButton />,
   chevronDown: <ChevronDownLarge />,
 } as const;
