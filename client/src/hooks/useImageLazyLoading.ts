@@ -6,7 +6,11 @@ type UseImageLazyLoadingProps<T extends HTMLElement> = {
   threshold?: number;
 };
 
-const useImageLazyLoading = <T extends HTMLElement>({targetRef, src, threshold = 0.1}: UseImageLazyLoadingProps<T>) => {
+const useImageLazyLoading = <T extends HTMLElement>({
+  targetRef,
+  src,
+  threshold = 0.05,
+}: UseImageLazyLoadingProps<T>) => {
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
