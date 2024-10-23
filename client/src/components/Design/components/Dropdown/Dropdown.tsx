@@ -7,7 +7,7 @@ import MeatballBase from './MeatballBase';
 import ButtonBase from './ButtonBase';
 import {dropdownBaseStyle} from './Dropdown.style';
 
-const Dropdown = ({base = 'meatballs', baseButtonText, children}: DropdownProps) => {
+const Dropdown = ({base = 'meatballs', baseButtonText, onBaseButtonClick, children}: DropdownProps) => {
   const {isOpen, setIsOpen, baseRef, dropdownRef} = useDropdown();
   const isDropdownOpen = isOpen && !!baseRef.current;
 
@@ -21,6 +21,7 @@ const Dropdown = ({base = 'meatballs', baseButtonText, children}: DropdownProps)
           <ButtonBase
             isOpen={isDropdownOpen}
             setIsOpen={setIsOpen}
+            onBaseButtonClick={onBaseButtonClick}
             dropdownRef={dropdownRef}
             children={children}
             baseButtonText={baseButtonText}
