@@ -17,7 +17,7 @@ const DescriptionSection = () => {
 
   return (
     <div css={descriptionSectionStyle} ref={descriptionRef}>
-      <img css={imgStyle} src={imageSrc} alt="행댕이" />
+      <img css={imgStyle} src={imageSrc} alt="행댕이 - 행동대장 마스코트" />
       <Text style={{textAlign: 'center'}} size="subTitle" responsive={true}>{`행동대장들을 위해
         행동대장을 준비했어요
           `}</Text>
