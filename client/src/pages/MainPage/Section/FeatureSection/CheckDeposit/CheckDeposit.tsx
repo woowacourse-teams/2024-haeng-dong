@@ -28,7 +28,7 @@ const CheckDeposit = () => {
             간편하게 관리할 수 있어요.`}
           </Text>
         </div>
-        <object type="image/svg+xml" data={imageSrc} css={imageStyle} alt="입금 확인 기능 UI 이미지" />
+        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
       </article>
     </section>
   );

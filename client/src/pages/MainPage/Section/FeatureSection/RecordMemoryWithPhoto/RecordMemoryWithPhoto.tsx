@@ -30,7 +30,7 @@ const RecordMemoryWithPhoto = ({targetRef}: RecordMemoryWithPhotoProps) => {
         정산은 투명하게, 추억은 오래오래 간직할 수 있어요.`}
           </Text>
         </div>
-        <object type="image/svg+xml" data={imgSrc} css={imageStyle} alt="행사 사진을 저장할 수 있는 UI 이미지"
+        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
       </article>
     </section>
   );

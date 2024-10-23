@@ -18,7 +18,7 @@ const AutoCalculate = () => {
   return (
     <section css={sectionStyle} ref={sectionRef}>
       <article css={articleStyle}>
-        <object type="image/svg+xml" data={imageSrc} css={imageStyle} alt="차등 정산 계산을 쉽게 해주는 UI 이미지" />
+        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             계산은 저희가 알아서 해드려요
