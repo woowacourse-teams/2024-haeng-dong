@@ -1,8 +1,7 @@
 import {css} from '@emotion/react';
+import {useRef} from 'react';
 
 import useMainPageYScroll from '@hooks/useMainPageYScroll';
-
-import {useRef} from 'react';
 
 import {SimpleShare} from './SimpleShare';
 import {AutoCalculate} from './AutoCalculate';
