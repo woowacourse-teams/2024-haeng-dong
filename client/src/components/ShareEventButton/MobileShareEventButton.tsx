@@ -5,6 +5,7 @@ import toast from '@hooks/useToast/toast';
 import {Dropdown, DropdownButton} from '@components/Design';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
+import initKakao from '@utils/initKakao';
 
 type MobileShareEventButtonProps = {
   copyShare: () => Promise<void>;
@@ -29,7 +30,7 @@ const MobileShareEventButton = ({copyShare, kakaoShare}: MobileShareEventButtonP
 
   return (
     <div style={{marginRight: '1rem'}}>
-      <Dropdown base="button" baseButtonText="정산 초대하기">
+      <Dropdown base="button" baseButtonText="정산 초대하기" onBaseButtonClick={initKakao}>
         <DropdownButton text="링크 복사하기" onClick={copyAndToast} />
         <DropdownButton text="QR코드로 초대하기" onClick={navigateQRPage} />
         <DropdownButton text="카카오톡으로 초대하기" onClick={kakaoShare} />
