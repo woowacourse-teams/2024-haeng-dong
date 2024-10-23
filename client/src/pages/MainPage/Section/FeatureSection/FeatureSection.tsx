@@ -1,11 +1,12 @@
 import {css} from '@emotion/react';
 
+import useMainPageYScroll from '@hooks/useMainPageYScroll';
+
 import {SimpleShare} from './SimpleShare';
 import {AutoCalculate} from './AutoCalculate';
 import {CheckDeposit} from './CheckDeposit';
 import {SimpleTransfer} from './SimpleTransfer';
 import {RecordMemoryWithPhoto} from './RecordMemoryWithPhoto';
-import useMainPageYScroll from '@hooks/useMainPageYScroll';
 
 const FeatureSection = () => {
   const {featureSectionRef} = useMainPageYScroll();
