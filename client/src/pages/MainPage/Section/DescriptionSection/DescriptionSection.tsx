@@ -12,7 +12,7 @@ const DescriptionSection = () => {
   const {imageSrc} = useImageLazyLoading({
     targetRef: descriptionRef,
     src: `${process.env.IMAGE_URL}/standingDog.svg`,
-    threshold: 0.1,
+    threshold: 0.05,
   });
 
   return (
