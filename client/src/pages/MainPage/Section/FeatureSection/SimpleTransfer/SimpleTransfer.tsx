@@ -6,6 +6,8 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
+import getImageUrl from '@utils/getImageUrl';
+
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleTransfer.style';
 
 const SimpleTransfer = () => {
@@ -13,8 +15,8 @@ const SimpleTransfer = () => {
 
   const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: simpleTransferRef,
-    src: `${process.env.IMAGE_URL}/feature4.webp`,
-    fallbackSrc: `${process.env.IMAGE_URL}/feature4.png`,
+    src: getImageUrl('feature4', 'webp'),
+    fallbackSrc: getImageUrl('feature4', 'png'),
     threshold: 0.05,
   });
 

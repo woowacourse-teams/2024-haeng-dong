@@ -6,6 +6,8 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
+import getImageUrl from '@utils/getImageUrl';
+
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleShare.style';
 
 const SimpleAccount = () => {
@@ -13,8 +15,8 @@ const SimpleAccount = () => {
 
   const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
-    src: `${process.env.IMAGE_URL}/feature1.webp`,
-    fallbackSrc: `${process.env.IMAGE_URL}/feature1.png`,
+    src: getImageUrl('feature1', 'webp'),
+    fallbackSrc: getImageUrl('feature1', 'png'),
     threshold: 0.05,
   });
 

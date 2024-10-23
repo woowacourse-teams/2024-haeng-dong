@@ -6,6 +6,8 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
+import getImageUrl from '@utils/getImageUrl';
+
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './AutoCalculate.style';
 
 const AutoCalculate = () => {
@@ -13,8 +15,8 @@ const AutoCalculate = () => {
 
   const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
-    src: `${process.env.IMAGE_URL}/feature2.webp`,
-    fallbackSrc: `${process.env.IMAGE_URL}/feature2.png`,
+    src: getImageUrl('feature2', 'webp'),
+    fallbackSrc: getImageUrl('feature2', 'png'),
     threshold: 0.05,
   });
 

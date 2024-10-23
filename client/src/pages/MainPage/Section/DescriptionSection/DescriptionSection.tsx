@@ -14,8 +14,8 @@ const DescriptionSection = () => {
 
   const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: descriptionRef,
-    src: `${process.env.IMAGE_URL}/standingDog.webp`,
-    fallbackSrc: `${process.env.IMAGE_URL}/standingDog.png`,
+    src: getImageUrl('standingDog', 'webp'),
+    fallbackSrc: getImageUrl('standingDog', 'png'),
     threshold: 0.05,
   });
 

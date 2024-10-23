@@ -6,6 +6,8 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
+import getImageUrl from '@utils/getImageUrl';
+
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './CheckDeposit.style';
 
 const CheckDeposit = () => {
@@ -13,8 +15,8 @@ const CheckDeposit = () => {
 
   const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
-    src: `${process.env.IMAGE_URL}/feature3.webp`,
-    fallbackSrc: `${process.env.IMAGE_URL}/feature3.png`,
+    src: getImageUrl('feature3', 'webp'),
+    fallbackSrc: getImageUrl('feature3', 'png'),
     threshold: 0.05,
   });
 

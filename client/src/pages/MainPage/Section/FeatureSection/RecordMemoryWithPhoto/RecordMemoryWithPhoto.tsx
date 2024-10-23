@@ -6,6 +6,8 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
+import getImageUrl from '@utils/getImageUrl';
+
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './RecordMemoryWithPhoto.style';
 
 const RecordMemoryWithPhoto = () => {
@@ -13,8 +15,8 @@ const RecordMemoryWithPhoto = () => {
 
   const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
-    src: `${process.env.IMAGE_URL}/feature5.webp`,
-    fallbackSrc: `${process.env.IMAGE_URL}/feature5.png`,
+    src: getImageUrl('feature5', 'webp'),
+    fallbackSrc: getImageUrl('feature5', 'png'),
     threshold: 0.05,
   });
 
