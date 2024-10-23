@@ -28,7 +28,7 @@ const RecordMemoryWithPhoto = () => {
         정산은 투명하게, 추억은 오래오래 간직할 수 있어요.`}
           </Text>
         </div>
-        <img src={imageSrc} css={imageStyle} alt="record memory with photo" />
+        <img src={imageSrc} css={imageStyle} alt="행사 사진을 저장할 수 있는 UI 이미지" />
       </article>
     </section>
   );
