@@ -1,12 +1,24 @@
+import useImageLazyLoading from '@hooks/useImageLazyLoading';
+
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleTransfer.style';
 
-const SimpleTransfer = () => {
+type SimpleTransferProps = {
+  targetRef: React.RefObject<HTMLElement>;
+};
+
+const SimpleTransfer = ({targetRef}: SimpleTransferProps) => {
+  const {imageSrc} = useImageLazyLoading({
+    targetRef,
+    src: `${process.env.IMAGE_URL}/feature4.svg`,
+    threshold: 0.05,
+  });
+
   return (
-    <section css={sectionStyle}>
+    <section css={sectionStyle} ref={targetRef}>
       <article css={articleStyle}>
-        <img src={`${process.env.IMAGE_URL}/feature4.svg`} css={imageStyle} />
+        <img src={imageSrc} css={imageStyle} alt="간편 송금을 설명하는 UI 이미지" />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             몇 번의 클릭으로 송금 완료!

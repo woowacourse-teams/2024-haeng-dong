@@ -1,10 +1,22 @@
+import {useRef} from 'react';
+
+import useImageLazyLoading from '@hooks/useImageLazyLoading';
+
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './CheckDeposit.style';
 
 const CheckDeposit = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const {imageSrc} = useImageLazyLoading({
+    targetRef: sectionRef,
+    src: `${process.env.IMAGE_URL}/feature3.svg`,
+    threshold: 0.05,
+  });
+
   return (
-    <section css={sectionStyle}>
+    <section css={sectionStyle} ref={sectionRef}>
       <article css={articleStyle}>
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
@@ -16,7 +28,7 @@ const CheckDeposit = () => {
             간편하게 관리할 수 있어요.`}
           </Text>
         </div>
-        <img src={`${process.env.IMAGE_URL}/feature3.svg`} css={imageStyle} />
+        <img src={imageSrc} css={imageStyle} alt="입금 확인 기능 UI 이미지" />
       </article>
     </section>
   );

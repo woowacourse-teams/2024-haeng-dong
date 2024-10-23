@@ -1,12 +1,24 @@
+import {useRef} from 'react';
+
+import useImageLazyLoading from '@hooks/useImageLazyLoading';
+
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './AutoCalculate.style';
 
 const AutoCalculate = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const {imageSrc} = useImageLazyLoading({
+    targetRef: sectionRef,
+    src: `${process.env.IMAGE_URL}/feature2.svg`,
+    threshold: 0.05,
+  });
+
   return (
-    <section css={sectionStyle}>
+    <section css={sectionStyle} ref={sectionRef}>
       <article css={articleStyle}>
-        <img src={`${process.env.IMAGE_URL}/feature2.svg`} css={imageStyle} />
+        <img src={imageSrc} css={imageStyle} alt="차등 정산 계산을 쉽게 해주는 UI 이미지" />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             계산은 저희가 알아서 해드려요
