@@ -36,7 +36,9 @@ export const ICON = {
   pencilMini: <PencilMini />,
   meatballs: <Meatballs />,
   editPencil: <EditPencil />,
-  heundeut: <Image src={getImageUrl('heundeut', 'webp')} fallbackSrc={getImageUrl('heundeut', 'svg')} />,
+  heundeut: (
+    <Image src={getImageUrl('heundeut', 'webp')} fallbackSrc={getImageUrl('heundeut', 'svg')} style={{width: '3rem'}} />
+  ),
   photoButton: <PhotoButton />,
   chevronDown: <ChevronDownLarge />,
 } as const;
