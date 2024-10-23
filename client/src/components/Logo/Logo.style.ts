@@ -6,3 +6,8 @@ export const logoStyle = css({
 
   width: '100%',
 });
+
+export const logoImageStyle = css({
+  maxWidth: '300px',
+  width: '100%',
+});

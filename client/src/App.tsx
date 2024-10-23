@@ -1,7 +1,6 @@
 import {Outlet} from 'react-router-dom';
 import {Global} from '@emotion/react';
 
-import KakaoInitializer from '@components/KakaoInitializer/KakaoInitializer';
 import AmplitudeInitializer from '@components/AmplitudeInitializer/AmplitudeInitializer';
 
 import {HDesignProvider} from '@HDesign/index';
@@ -18,9 +17,7 @@ const App: React.FC = () => {
         <Global styles={GlobalStyle} />
         <NetworkStateCatcher />
         <AmplitudeInitializer>
-          <KakaoInitializer>
-            <Outlet />
-          </KakaoInitializer>
+          <Outlet />
         </AmplitudeInitializer>
       </UnPredictableErrorBoundary>
     </HDesignProvider>

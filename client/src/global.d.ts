@@ -1,5 +1,6 @@
 declare module '*.svg';
 declare module '*.png';
+declare module '*.webp';
 
 declare namespace NodeJS {
   interface ProcessEnv {

@@ -1,8 +1,20 @@
+import useImageLazyLoading from '@hooks/useImageLazyLoading';
+
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './RecordMemoryWithPhoto.style';
 
-const RecordMemoryWithPhoto = () => {
+type RecordMemoryWithPhotoProps = {
+  targetRef: React.RefObject<HTMLElement>;
+};
+
+const RecordMemoryWithPhoto = ({targetRef}: RecordMemoryWithPhotoProps) => {
+  const {imageSrc} = useImageLazyLoading({
+    targetRef,
+    src: `${process.env.IMAGE_URL}/feature5.webp`,
+    threshold: 0.05,
+  });
+
   return (
     <section css={sectionStyle}>
       <article css={articleStyle}>
@@ -16,7 +28,7 @@ const RecordMemoryWithPhoto = () => {
         정산은 투명하게, 추억은 오래오래 간직할 수 있어요.`}
           </Text>
         </div>
-        <img src={`${process.env.IMAGE_URL}/feature5.svg`} css={imageStyle} />
+        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
       </article>
     </section>
   );
