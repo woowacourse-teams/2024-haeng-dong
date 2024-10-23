@@ -1,14 +1,22 @@
-import Image from '@components/Design/components/Image/Image';
+import {useRef} from 'react';
+
+import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
-
-import getImageUrl from '@utils/getImageUrl';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleShare.style';
 
 const SimpleAccount = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const {imageSrc} = useImageLazyLoading({
+    targetRef: sectionRef,
+    src: `${process.env.IMAGE_URL}/feature1.webp`,
+    threshold: 0.05,
+  });
+
   return (
-    <section css={sectionStyle}>
+    <section css={sectionStyle} ref={sectionRef}>
       <article css={articleStyle}>
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
@@ -20,7 +28,7 @@ const SimpleAccount = () => {
           복잡한 절차 없이, 빠르게 정산을 마치세요.`}
           </Text>
         </div>
-        <Image src={getImageUrl('feature1', 'webp')} fallbackSrc={getImageUrl('feature1', 'svg')} css={imageStyle} />
+        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
       </article>
     </section>
   );

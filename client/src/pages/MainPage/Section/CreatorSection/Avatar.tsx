@@ -1,44 +1,21 @@
-import {css} from '@emotion/react';
-
-import Image from '@components/Design/components/Image/Image';
-
 import {Text} from '@components/Design';
 
-import getImageUrl from '@utils/getImageUrl';
+import {avatarImageStyle, avatarStyle} from './Avatar.style';
 
 interface Props {
   imagePath: string;
   name: string;
-  onClick: () => void;
+  navigateUrl: string;
 }
 
-const Avatar = ({imagePath, name, onClick}: Props) => {
+const Avatar = ({imagePath, name, navigateUrl}: Props) => {
   return (
-    <button
-      onClick={onClick}
-      css={css({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '0.5rem',
-        '@media (min-width: 1200px)': {
-          gap: '1rem',
-        },
-      })}
-    >
-      <Image
-        src={getImageUrl(imagePath, 'webp')}
-        fallbackSrc={getImageUrl(imagePath, 'png')}
-        css={css({
-          width: '100%',
-          height: '100%',
-          borderRadius: '25%',
-        })}
-      />
+    <a href={navigateUrl} target="_blank" css={avatarStyle}>
+      <img src={`${process.env.IMAGE_URL}/${imagePath}.png`} css={avatarImageStyle} />
       <Text size="bodyBold" textColor="white" responsive={true}>
         {name}
       </Text>
-    </button>
+    </a>
   );
 };
 

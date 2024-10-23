@@ -1,20 +1,32 @@
+import {useRef} from 'react';
+
 import Text from '@HDesign/components/Text/Text';
 import Image from '@components/Design/components/Image/Image';
+
+import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import getImageUrl from '@utils/getImageUrl';
 
 import {descriptionSectionStyle, imgStyle} from './DescriptionSection.style';
 
 const DescriptionSection = () => {
+  const descriptionRef = useRef<HTMLDivElement>(null);
+
+  const {imageSrc} = useImageLazyLoading({
+    targetRef: descriptionRef,
+    src: `${process.env.IMAGE_URL}/standingDog.webp`,
+    threshold: 0.05,
+  });
+
   return (
-    <div css={descriptionSectionStyle}>
+    <div css={descriptionSectionStyle} ref={descriptionRef}>
       <Image
         css={imgStyle}
-        src={getImageUrl('standingDog', 'webp')}
-        alt="행댕이"
+        src={imageSrc!}
+        alt="행댕이 - 행동대장 마스코트"
         fallbackSrc={getImageUrl('standingDog', 'png')}
       />
-
+      <img css={imgStyle} />
       <Text style={{textAlign: 'center'}} size="subTitle" responsive={true}>{`행동대장들을 위해
         행동대장을 준비했어요
           `}</Text>
