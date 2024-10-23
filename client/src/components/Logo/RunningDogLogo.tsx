@@ -7,7 +7,7 @@ import {logoStyle} from './Logo.style';
 const RunningDogLogo = () => {
   return (
     <div css={logoStyle}>
-      <Image src={getImageUrl('runningDog', 'webp')} fallbackSrc={getImageUrl('runningDog', 'png')} />
+      <Image width="100%" src={getImageUrl('runningDog', 'webp')} fallbackSrc={getImageUrl('runningDog', 'png')} />
     </div>
   );
 };
