@@ -3,6 +3,7 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 import {Text} from '@components/Design';
 
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './SimpleTransfer.style';
+import Image from '@components/Design/components/Image/Image';
 
 type SimpleTransferProps = {
   targetRef: React.RefObject<HTMLElement>;
@@ -11,14 +12,14 @@ type SimpleTransferProps = {
 const SimpleTransfer = ({targetRef}: SimpleTransferProps) => {
   const {imageSrc} = useImageLazyLoading({
     targetRef,
-    src: `${process.env.IMAGE_URL}/feature4.svg`,
+    src: `${process.env.IMAGE_URL}/feature4.webp`,
     threshold: 0.05,
   });
 
   return (
     <section css={sectionStyle} ref={targetRef}>
       <article css={articleStyle}>
-        <object type="image/svg+xml" data={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
         <div css={textContainerStyle}>
           <Text size="subTitle" responsive={true}>
             몇 번의 클릭으로 송금 완료!
