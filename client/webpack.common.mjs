@@ -56,7 +56,7 @@ export default {
     new HtmlWebpackPlugin({
       template: './index.html',
       hash: true,
-      favicon: './favicon.ico',
+      favicon: path.resolve(__dirname, 'public/favicon.ico'),
     }),
     new ForkTsCheckerWebpackPlugin(),
     new ModifySourcePlugin({
