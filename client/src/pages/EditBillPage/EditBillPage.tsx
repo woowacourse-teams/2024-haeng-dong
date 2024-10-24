@@ -22,6 +22,7 @@ const EditBillPage = () => {
     handleClickUpdate,
     isPendingUpdate,
     canSubmit,
+    keyboardRef,
     keyboardInitialValue,
     keyboardMaxPrice,
     keyboardTargetId,
@@ -78,6 +79,7 @@ const EditBillPage = () => {
         수정완료
       </FixedButton>
       <NumberKeyboardBottomSheet
+        ref={keyboardRef}
         type="amount"
         maxNumber={keyboardMaxPrice}
         initialValue={keyboardInitialValue}

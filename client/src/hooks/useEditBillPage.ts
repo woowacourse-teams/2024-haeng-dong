@@ -23,6 +23,7 @@ const useEditBillPage = () => {
   });
 
   const {
+    keyboardRef,
     keyboardTargetId,
     setKeyboardTargetId,
     keyboardMaxPrice,
@@ -43,6 +44,7 @@ const useEditBillPage = () => {
     handleClickUpdate,
     isPendingUpdate,
     canSubmit,
+    keyboardRef,
     keyboardInitialValue,
     keyboardMaxPrice,
     keyboardTargetId,

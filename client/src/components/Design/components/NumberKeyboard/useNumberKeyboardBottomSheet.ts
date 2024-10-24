@@ -1,12 +1,11 @@
-import {useEffect, useRef} from 'react';
+import {useEffect} from 'react';
 
 interface Props {
   isOpened: boolean;
+  bottomSheetRef: React.RefObject<HTMLDivElement>;
 }
 
-const useNumberKeyboardBottomSheet = ({isOpened}: Props) => {
-  const bottomSheetRef = useRef<HTMLDivElement>(null);
-
+const useNumberKeyboardBottomSheet = ({isOpened, bottomSheetRef}: Props) => {
   useEffect(() => {
     const bottomSheet = bottomSheetRef.current;
     if (!bottomSheet) return;
