@@ -26,6 +26,9 @@ export default merge(common, {
       authToken: process.env.SENTRY_AUTH_TOKEN,
       org: 'wtc-o6',
       project: 'javascript-react',
+      sourcemaps: {
+        filesToDeleteAfterUpload: ['**/*.js.map', '**/*.css.map', '**/*.LICENSE.txt'],
+      },
     }),
   ],
 });
