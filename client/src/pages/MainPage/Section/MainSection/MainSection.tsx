@@ -1,39 +1,20 @@
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
-import Image from '@components/Design/components/Image/Image';
-
-import useMainSectionBackgroundScroll from '@hooks/useMainSectionBackgroundScroll';
 
 import {Icon} from '@components/Design';
 
-import getImageUrl from '@utils/getImageUrl';
-
-import {
-  animateWithDelay,
-  backgroundImageStyle,
-  backgroundStyle,
-  chevronStyle,
-  mainSectionStyle,
-  sectionStyle,
-} from './MainSection.style';
+import {animateWithDelay, chevronStyle, mainSectionStyle, sectionStyle} from './MainSection.style';
+import useMainSection from '@hooks/useMainSection';
 
 type MainSectionProps = {
   trackStartCreateEvent: () => void;
 };
 
 const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
-  const {isVisible, handleClick} = useMainSectionBackgroundScroll(trackStartCreateEvent);
+  const {handleClick} = useMainSection(trackStartCreateEvent);
 
   return (
     <div css={mainSectionStyle}>
-      <div css={backgroundStyle}>
-        <Image
-          css={backgroundImageStyle(isVisible)}
-          src={getImageUrl('mainSectionBackground', 'webp')}
-          alt=""
-          fallbackSrc={getImageUrl('mainSectionBackground', 'png')}
-        />
-      </div>
       <div css={sectionStyle}>
         <Text css={animateWithDelay(0)} textColor="white" style={{textAlign: 'left'}} size="title">{`행동대장으로
         간편하게 정산하세요
