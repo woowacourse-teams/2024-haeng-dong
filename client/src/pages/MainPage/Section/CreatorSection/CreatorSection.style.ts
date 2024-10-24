@@ -8,8 +8,9 @@ export const sectionStyle = css({
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#000000 ',
+  backgroundColor: '#000000',
   gap: '2rem',
+  marginTop: 'auto',
 });
 
 export const partStyle = css({
