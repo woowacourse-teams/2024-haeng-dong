@@ -6,14 +6,17 @@ import useImageLazyLoading from '@hooks/useImageLazyLoading';
 
 import {Text} from '@components/Design';
 
+import getImageUrl from '@utils/getImageUrl';
+
 import {articleStyle, imageStyle, sectionStyle, textContainerStyle} from './CheckDeposit.style';
 
 const CheckDeposit = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
-  const {imageSrc} = useImageLazyLoading({
+  const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: sectionRef,
-    src: `${process.env.IMAGE_URL}/feature3.webp`,
+    src: getImageUrl('feature3', 'webp'),
+    fallbackSrc: getImageUrl('feature3', 'png'),
     threshold: 0.05,
   });
 
@@ -30,7 +33,7 @@ const CheckDeposit = () => {
             간편하게 관리할 수 있어요.`}
           </Text>
         </div>
-        <Image src={imageSrc!} fallbackSrc={imageSrc} css={imageStyle} />
+        <Image src={imageSrc!} fallbackSrc={fallbackImageSrc} css={imageStyle} />
       </article>
     </section>
   );

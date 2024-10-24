@@ -3,15 +3,20 @@ import {useEffect, useState} from 'react';
 type UseImageLazyLoadingProps<T extends HTMLElement> = {
   targetRef: React.RefObject<T>;
   src: string;
+  fallbackSrc?: string;
   threshold?: number;
 };
+
+type ImgTagSrcType = string | undefined;
 
 const useImageLazyLoading = <T extends HTMLElement>({
   targetRef,
   src,
+  fallbackSrc,
   threshold = 0.05,
 }: UseImageLazyLoadingProps<T>) => {
-  const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
+  const [imageSrc, setImageSrc] = useState<ImgTagSrcType>(undefined);
+  const [fallbackImageSrc, setFallbackImageSrc] = useState<ImgTagSrcType>(undefined);
 
   useEffect(() => {
     if (targetRef && !imageSrc) {
@@ -19,6 +24,7 @@ const useImageLazyLoading = <T extends HTMLElement>({
         ([entry]) => {
           if (entry.isIntersecting) {
             setImageSrc(src);
+            setFallbackImageSrc(fallbackSrc);
             if (targetRef.current) {
               observer.unobserve(targetRef.current);
             }
@@ -39,10 +45,11 @@ const useImageLazyLoading = <T extends HTMLElement>({
     }
 
     return;
-  }, [targetRef, src]);
+  }, [targetRef, src, fallbackSrc]);
 
   return {
     imageSrc,
+    fallbackImageSrc,
   };
 };
 

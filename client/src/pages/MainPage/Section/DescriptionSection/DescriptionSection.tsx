@@ -12,20 +12,16 @@ import {descriptionSectionStyle, imgStyle} from './DescriptionSection.style';
 const DescriptionSection = () => {
   const descriptionRef = useRef<HTMLDivElement>(null);
 
-  const {imageSrc} = useImageLazyLoading({
+  const {imageSrc, fallbackImageSrc} = useImageLazyLoading({
     targetRef: descriptionRef,
-    src: `${process.env.IMAGE_URL}/standingDog.webp`,
+    src: getImageUrl('standingDog', 'webp'),
+    fallbackSrc: getImageUrl('standingDog', 'png'),
     threshold: 0.05,
   });
 
   return (
     <div css={descriptionSectionStyle} ref={descriptionRef}>
-      <Image
-        css={imgStyle}
-        src={imageSrc!}
-        alt="행댕이 - 행동대장 마스코트"
-        fallbackSrc={getImageUrl('standingDog', 'png')}
-      />
+      <Image css={imgStyle} src={imageSrc!} alt="행댕이 - 행동대장 마스코트" fallbackSrc={fallbackImageSrc} />
       <img css={imgStyle} />
       <Text style={{textAlign: 'center'}} size="subTitle" responsive={true}>{`행동대장들을 위해
         행동대장을 준비했어요
