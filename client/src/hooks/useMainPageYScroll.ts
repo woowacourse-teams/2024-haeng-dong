@@ -4,6 +4,14 @@ const useMainPageYScroll = () => {
   const featureSectionRef = useRef<HTMLDivElement>(null);
   const threshold = window.innerHeight * 2;
   const translateX = useRef(0);
+  const animationFrameId = useRef<number | null>(null);
+
+  const updateTransform = () => {
+    const newTransform = `translateX(calc(200vw - ${translateX.current}px))`;
+    if (featureSectionRef.current) {
+      featureSectionRef.current.style.transform = newTransform;
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,14 +36,22 @@ const useMainPageYScroll = () => {
           featureSectionRef.current.style.position = 'static';
           featureSectionRef.current.style.top = '';
         }
-        const newTransform = `translateX(calc(200vw - ${translateX.current}px))`;
-        featureSectionRef.current.style.transform = newTransform;
+
+        if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+        }
+        animationFrameId.current = requestAnimationFrame(updateTransform);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [featureSectionRef, window.innerHeight, window.innerWidth, window.scrollY]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+    };
+  }, [featureSectionRef]);
 
   return {featureSectionRef};
 };
