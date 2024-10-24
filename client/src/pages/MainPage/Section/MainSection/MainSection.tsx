@@ -1,10 +1,11 @@
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
+import useMainSection from '@hooks/useMainSection';
+
 import {Icon} from '@components/Design';
 
 import {animateWithDelay, chevronStyle, mainSectionStyle, sectionStyle} from './MainSection.style';
-import useMainSection from '@hooks/useMainSection';
 
 type MainSectionProps = {
   trackStartCreateEvent: () => void;

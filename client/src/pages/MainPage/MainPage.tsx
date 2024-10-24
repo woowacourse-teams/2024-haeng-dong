@@ -1,4 +1,9 @@
+import Image from '@components/Design/components/Image/Image';
+
 import useAmplitude from '@hooks/useAmplitude';
+import usePageBackground from '@hooks/usePageBackground';
+
+import getImageUrl from '@utils/getImageUrl';
 
 import Nav from './Nav/Nav';
 import {MainSection} from './Section/MainSection';
@@ -6,9 +11,6 @@ import {DescriptionSection} from './Section/DescriptionSection';
 import {FeatureSection} from './Section/FeatureSection';
 import {backgroundImageStyle, backgroundStyle, mainContainer} from './MainPage.style';
 import CreatorSection from './Section/CreatorSection/CreatorSection';
-import getImageUrl from '@utils/getImageUrl';
-import Image from '@components/Design/components/Image/Image';
-import usePageBackground from '@hooks/usePageBackground';
 
 const MainPage = () => {
   const {trackStartCreateEvent} = useAmplitude();
