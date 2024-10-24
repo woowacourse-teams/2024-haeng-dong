@@ -1,10 +1,6 @@
 import {Outlet} from 'react-router-dom';
 import {Global} from '@emotion/react';
-import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
-import QueryClientBoundary from '@components/QueryClientBoundary/QueryClientBoundary';
-import ErrorCatcher from '@components/AppErrorBoundary/ErrorCatcher';
-import ToastContainer from '@components/Toast/ToastContainer';
 import AmplitudeInitializer from '@components/AmplitudeInitializer/AmplitudeInitializer';
 
 import {HDesignProvider} from '@HDesign/index';
@@ -19,16 +15,10 @@ const App: React.FC = () => {
     <HDesignProvider>
       <UnPredictableErrorBoundary>
         <Global styles={GlobalStyle} />
-        <ErrorCatcher>
-          <QueryClientBoundary>
-            <ReactQueryDevtools initialIsOpen={false} />
-            <NetworkStateCatcher />
-            <ToastContainer />
-            <AmplitudeInitializer>
-              <Outlet />
-            </AmplitudeInitializer>
-          </QueryClientBoundary>
-        </ErrorCatcher>
+        <NetworkStateCatcher />
+        <AmplitudeInitializer>
+          <Outlet />
+        </AmplitudeInitializer>
       </UnPredictableErrorBoundary>
     </HDesignProvider>
   );
