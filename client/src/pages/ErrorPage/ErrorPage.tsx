@@ -15,7 +15,7 @@ const ErrorPage = () => {
         height="80vh"
         css={{alignContent: 'center'}}
       >
-        <Image src={getImageUrl('cryingDog', 'webp')} width="160px" />
+        <Image src={getImageUrl('cryingDog', 'webp')} fallbackSrc={getImageUrl('cryingDog', 'png')} width="160px" />
         <Text size="subTitle">알 수 없는 오류가 발생했습니다.</Text>
         <Text size="body" css={{textAlign: 'center'}}>
           계속 발생한다면 잠시 후 다시 시도해주세요. <br />
