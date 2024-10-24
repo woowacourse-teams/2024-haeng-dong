@@ -1,5 +1,5 @@
 import {css} from '@emotion/react';
-import {forwardRef, useEffect, useRef} from 'react';
+import {useRef} from 'react';
 
 import useMainPageYScroll from '@hooks/useMainPageYScroll';
 
