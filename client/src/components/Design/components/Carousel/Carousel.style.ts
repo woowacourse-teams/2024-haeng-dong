@@ -44,6 +44,7 @@ export const imageCardStyle = ({theme}: ImageCardStyleProps) => css`
   justify-content: center;
   align-items: center;
   clip-path: inset(0 round 1rem);
+  max-width: calc(768px - 4rem);
   background-color: ${theme.colors.gray};
 `;
 
