@@ -15,7 +15,12 @@ interface Props {
 const Avatar = ({imagePath, name, navigateUrl}: Props) => {
   return (
     <a href={navigateUrl} target="_blank" css={avatarStyle}>
-      <Image src={getImageUrl(imagePath, 'webp')} fallbackSrc={getImageUrl(imagePath, 'png')} css={avatarImageStyle} />
+      <Image
+        src={getImageUrl(imagePath, 'webp')}
+        fallbackSrc={getImageUrl(imagePath, 'png')}
+        loading="lazy"
+        css={avatarImageStyle}
+      />
       <Text size="bodyBold" textColor="white" responsive={true}>
         {name}
       </Text>
