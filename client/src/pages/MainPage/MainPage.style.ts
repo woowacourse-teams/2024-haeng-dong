@@ -6,4 +6,5 @@ export const mainContainer = css({
   justifyContent: 'start',
   alignItems: 'center',
   height: '850vh',
+  overflowX: 'hidden',
 });
