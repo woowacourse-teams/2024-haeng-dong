@@ -3,7 +3,8 @@ import {css} from '@emotion/react';
 export const mainContainer = css({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
+  justifyContent: 'start',
   alignItems: 'center',
-  width: '100%',
+  height: '850vh',
+  overflowX: 'hidden',
 });

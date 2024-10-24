@@ -44,6 +44,7 @@ export const imageCardStyle = ({theme}: ImageCardStyleProps) => css`
   justify-content: center;
   align-items: center;
   clip-path: inset(0 round 1rem);
+  max-width: calc(768px - 4rem);
   background-color: ${theme.colors.gray};
 `;
 
@@ -59,7 +60,7 @@ export const deleteButtonStyle = css`
   right: 1rem;
   padding: 0.5rem;
   opacity: 0.48;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -69,7 +70,7 @@ export const deleteButtonStyle = css`
 export const indicatorContainerStyle = css`
   position: absolute;
   left: 50%;
-  bottom: 1rem;
+  top: 1rem;
   transform: translateX(-50%);
   display: flex;
   gap: 0.25rem;

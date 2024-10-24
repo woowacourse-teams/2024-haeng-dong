@@ -1,4 +1,8 @@
+import Image from '@components/Design/components/Image/Image';
+
 import {Text} from '@components/Design';
+
+import getImageUrl from '@utils/getImageUrl';
 
 import {avatarImageStyle, avatarStyle} from './Avatar.style';
 
@@ -11,7 +15,12 @@ interface Props {
 const Avatar = ({imagePath, name, navigateUrl}: Props) => {
   return (
     <a href={navigateUrl} target="_blank" css={avatarStyle}>
-      <img src={`${process.env.IMAGE_URL}/${imagePath}.png`} loading="lazy" css={avatarImageStyle} />
+      <Image
+        src={getImageUrl(imagePath, 'webp')}
+        fallbackSrc={getImageUrl(imagePath, 'png')}
+        loading="lazy"
+        css={avatarImageStyle}
+      />
       <Text size="bodyBold" textColor="white" responsive={true}>
         {name}
       </Text>
