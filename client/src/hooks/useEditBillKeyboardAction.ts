@@ -16,7 +16,7 @@ interface Props {
 const useEditBillKeyboardAction = ({newBill, billDetails, newBillDetails}: Props) => {
   const [keyboardTargetId, setKeyboardTargetId] = useState<null | number>(null);
   const billDetailsRef = useRef<HTMLDivElement>(null);
-  const {handleScrollToFocus} = useEditBillPageScroll();
+  const {keyboardRef, handleScrollToFocus} = useEditBillPageScroll();
 
   const handleClickBillDetailInput = (id: number) => {
     setKeyboardTargetId(id);
@@ -33,6 +33,7 @@ const useEditBillKeyboardAction = ({newBill, billDetails, newBillDetails}: Props
     newBill.price.toLocaleString('ko-kr');
 
   return {
+    keyboardRef,
     handleClickBillDetailInput,
     billDetailsRef,
     keyboardMaxPrice,

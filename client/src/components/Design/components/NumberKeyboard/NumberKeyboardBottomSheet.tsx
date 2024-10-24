@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 import {createPortal} from 'react-dom';
-import {useEffect, useRef} from 'react';
+import {forwardRef, useEffect, useRef} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
@@ -14,9 +14,12 @@ interface Props extends NumberKeyboardProps {
   onClose: () => void;
 }
 
-const NumberKeyboardBottomSheet = ({isOpened, onClose, ...props}: Props) => {
+const NumberKeyboardBottomSheet = forwardRef<HTMLDivElement, Props>(({isOpened, onClose, ...props}, ref) => {
   const {theme} = useTheme();
-  const {bottomSheetRef} = useNumberKeyboardBottomSheet({isOpened});
+  const {bottomSheetRef} = useNumberKeyboardBottomSheet({
+    isOpened,
+    bottomSheetRef: ref as React.RefObject<HTMLDivElement>,
+  });
 
   return createPortal(
     <div
@@ -45,6 +48,6 @@ const NumberKeyboardBottomSheet = ({isOpened, onClose, ...props}: Props) => {
     </div>,
     document.body,
   );
-};
+});
 
 export default NumberKeyboardBottomSheet;

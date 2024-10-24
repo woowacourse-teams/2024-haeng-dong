@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {useCallback, useRef} from 'react';
 
 interface Props {
   id: number;
@@ -6,19 +6,19 @@ interface Props {
 }
 
 const useEditBillPageScroll = () => {
+  const keyboardRef = useRef<HTMLDivElement>(null);
+
   const handleScrollToFocus = useCallback(({id, billDetailsRef}: Props) => {
     setTimeout(() => {
       if (billDetailsRef.current) {
         const selectedItem = billDetailsRef.current.querySelector(`[data-id="${id}"]`) as HTMLElement;
-        if (selectedItem) {
-          const screenHeight = window.screen.height;
-          const keyboardHeight = 416;
+        if (selectedItem && keyboardRef.current) {
           const itemTop = selectedItem.offsetTop;
           const itemHeight = selectedItem.offsetHeight;
           const itemBottom = itemTop + itemHeight;
-          const visibleY = screenHeight - keyboardHeight;
+          const keyboardTop = keyboardRef.current.offsetTop;
 
-          const targetScrollTop = itemBottom < visibleY ? 0 : itemTop - (visibleY - itemHeight) / 2;
+          const targetScrollTop = itemBottom < keyboardTop ? 0 : itemTop - (keyboardTop - itemHeight) / 2;
 
           window.scrollTo({
             top: targetScrollTop,
@@ -29,7 +29,7 @@ const useEditBillPageScroll = () => {
     }, 100);
   }, []);
 
-  return {handleScrollToFocus};
+  return {keyboardRef, handleScrollToFocus};
 };
 
 export default useEditBillPageScroll;
