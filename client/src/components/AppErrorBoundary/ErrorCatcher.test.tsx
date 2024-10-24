@@ -86,7 +86,7 @@ describe('ErrorCatcher', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('알 수 없는 오류입니다.')).toBeInTheDocument();
+      expect(screen.getByText('알 수 없는 오류가 발생했습니다.')).toBeInTheDocument();
     });
   });
 });
