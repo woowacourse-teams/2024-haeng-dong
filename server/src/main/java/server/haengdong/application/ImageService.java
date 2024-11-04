@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,11 +33,19 @@ public class ImageService {
     private String directoryPath;
 
     private final S3Client s3Client;
+    private final ExecutorService executorService;
 
     public List<String> uploadImages(List<MultipartFile> images) {
-        return images.stream()
-                .map(this::uploadImage)
+        List<CompletableFuture<String>> futures = images.stream()
+                .map(image -> CompletableFuture.supplyAsync(() -> uploadImage(image), executorService))
                 .toList();
+
+        CompletableFuture<List<String>> result = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]))
+                .thenApply(v -> futures.stream()
+                        .map(CompletableFuture::join)
+                        .toList());
+
+        return result.join();
     }
 
     private String uploadImage(MultipartFile image) {
