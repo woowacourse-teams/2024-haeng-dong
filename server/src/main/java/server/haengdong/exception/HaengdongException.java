@@ -16,4 +16,9 @@ public class HaengdongException extends RuntimeException {
         super(String.format(errorCode.getMessage(), args));
         this.errorCode = errorCode;
     }
+
+    public HaengdongException(HaengdongErrorCode errorCode, Throwable cause) {
+        super(errorCode.getMessage(), cause);
+        this.errorCode = errorCode;
+    }
 }
