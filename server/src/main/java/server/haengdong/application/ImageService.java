@@ -39,7 +39,7 @@ public class ImageService {
                 .map(image -> CompletableFuture.supplyAsync(() -> uploadImage(image), executorService))
                 .toList();
 
-        CompletableFuture<List<String>> result = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]))
+        CompletableFuture<List<String>> result = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                 .thenApply(v -> futures.stream()
                         .map(this::getFuture)
                         .toList());
