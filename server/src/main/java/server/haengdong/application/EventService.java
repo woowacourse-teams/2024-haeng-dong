@@ -31,6 +31,8 @@ import server.haengdong.exception.HaengdongException;
 @Service
 public class EventService {
 
+    private static final int MAX_IMAGE_COUNT = 10;
+
     private final EventRepository eventRepository;
     private final EventTokenProvider eventTokenProvider;
     private final BillRepository billRepository;
@@ -136,5 +138,15 @@ public class EventService {
         }
         eventImageRepository.delete(eventImage);
         return eventImage.getName();
+    }
+
+    public void validateImageCount(String token, int uploadImageCount) {
+        Event event = getEvent(token);
+        Long imageCount = eventImageRepository.countByEvent(event);
+        Long totalImageCount = imageCount + uploadImageCount;
+
+        if (totalImageCount > MAX_IMAGE_COUNT) {
+            throw new HaengdongException(HaengdongErrorCode.IMAGE_COUNT_INVALID, totalImageCount);
+        }
     }
 }

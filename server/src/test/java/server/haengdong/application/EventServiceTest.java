@@ -2,6 +2,7 @@ package server.haengdong.application;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.BDDMockito.given;
@@ -28,6 +29,7 @@ import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
 import server.haengdong.domain.event.EventTokenProvider;
+import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.fixture.Fixture;
 
 class EventServiceTest extends ServiceTestSupport {
@@ -227,5 +229,18 @@ class EventServiceTest extends ServiceTestSupport {
 
         assertThat(eventImageRepository.findById(eventImage.getId()))
                 .isEmpty();
+    }
+
+    @DisplayName("행사 1개당 이미지는 10개까지 업로드 가능하다.")
+    @Test
+    void validateImageCount() {
+        Event event = Fixture.EVENT1;
+        eventRepository.save(event);
+        List<String> imageNames = List.of("image1.jpg", "image2.jpg");
+        String token = event.getToken();
+        eventService.saveImages(token, imageNames);
+
+        assertThatThrownBy(() -> eventService.validateImageCount(token, 9))
+                .isInstanceOf(HaengdongException.class);
     }
 }
