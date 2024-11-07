@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface EventImageRepository extends JpaRepository<EventImage, Long> {
 
     List<EventImage> findAllByEvent(Event event);
+
+    Long countByEvent(Event event);
 }

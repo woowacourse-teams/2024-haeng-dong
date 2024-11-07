@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import server.haengdong.application.EventImageFacadeService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.ImageService;
 import server.haengdong.application.response.ImageNameAppResponse;
@@ -24,7 +25,7 @@ import server.haengdong.presentation.request.EventUpdateRequest;
 public class AdminEventController {
 
     private final EventService eventService;
-    private final ImageService imageUploadService;
+    private final EventImageFacadeService eventImageFacadeService;
 
     @PostMapping("/api/admin/events/{eventId}/auth")
     public ResponseEntity<Void> authenticate() {
@@ -46,8 +47,7 @@ public class AdminEventController {
             @PathVariable("eventId") String token,
             @RequestPart("images") List<MultipartFile> images
     ) {
-        List<String> imageNames = imageUploadService.uploadImages(images);
-        eventService.saveImages(token, imageNames);
+        eventImageFacadeService.uploadImages(token, images);
 
         return ResponseEntity.ok().build();
     }
@@ -57,8 +57,7 @@ public class AdminEventController {
             @PathVariable("eventId") String token,
             @PathVariable("imageId") Long imageId
     ) {
-        String imageName = eventService.deleteImage(token, imageId);
-        imageUploadService.deleteImage(imageName);
+        eventImageFacadeService.deleteImage(token, imageId);
 
         return ResponseEntity.ok().build();
     }

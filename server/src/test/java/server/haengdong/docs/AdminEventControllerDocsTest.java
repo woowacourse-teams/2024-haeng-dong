@@ -26,19 +26,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
+import server.haengdong.application.EventImageFacadeService;
 import server.haengdong.application.EventService;
-import server.haengdong.application.ImageService;
 import server.haengdong.presentation.admin.AdminEventController;
 import server.haengdong.presentation.request.EventUpdateRequest;
 
 class AdminEventControllerDocsTest extends RestDocsSupport {
 
     private final EventService eventService = mock(EventService.class);
-    private final ImageService imageUploadService = mock(ImageService.class);
+    private final EventImageFacadeService eventImageFacadeService = mock(EventImageFacadeService.class);
 
     @Override
     protected Object initController() {
-        return new AdminEventController(eventService, imageUploadService);
+        return new AdminEventController(eventService, eventImageFacadeService);
     }
 
     @DisplayName("행사 어드민 권한을 확인한다.")
