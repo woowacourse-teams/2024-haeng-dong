@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import lombok.RequiredArgsConstructor;
@@ -39,12 +40,12 @@ public class ImageService {
                 .map(image -> CompletableFuture.supplyAsync(() -> uploadImage(image), executorService))
                 .toList();
 
-        CompletableFuture<List<String>> result = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .thenApply(v -> futures.stream()
-                        .map(this::getFuture)
-                        .toList());
-
-        return result.join();
+        try {
+            CompletableFuture<List<String>> result = collectUploadResults(futures);
+            return result.join();
+        } catch (CompletionException e) {
+            throw new HaengdongException(HaengdongErrorCode.IMAGE_UPLOAD_FAIL, e);
+        }
     }
 
     private String uploadImage(MultipartFile image) {
@@ -71,7 +72,14 @@ public class ImageService {
         return imageName;
     }
 
-    private String getFuture(CompletableFuture<String> future) {
+    private CompletableFuture<List<String>> collectUploadResults(List<CompletableFuture<String>> futures) {
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenApply(v -> futures.stream()
+                        .map(this::resolveFuture)
+                        .toList());
+    }
+
+    private String resolveFuture(CompletableFuture<String> future) {
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
