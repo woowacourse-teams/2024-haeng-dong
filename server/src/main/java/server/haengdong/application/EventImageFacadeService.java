@@ -50,9 +50,7 @@
                     .thenApply(v -> applyFutures(futures))
                     .exceptionally(ex -> {
                         eventService.deleteImages(token, getImageIds(imageNames));
-
-                        List<String> successUploadImages = getSuccessUploadImages(futures);
-                        imageService.deleteImages(successUploadImages);
+                        getSuccessUploadImages(futures).forEach(imageService::deleteImage);
 
                         throw new HaengdongException(HaengdongErrorCode.IMAGE_UPLOAD_FAIL, ex);
                     });

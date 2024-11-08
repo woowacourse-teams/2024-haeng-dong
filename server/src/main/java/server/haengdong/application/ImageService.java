@@ -4,7 +4,6 @@ import static software.amazon.awssdk.core.sync.RequestBody.fromInputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,9 +60,5 @@ public class ImageService {
                 .build();
 
         s3Client.deleteObject(deleteObjectRequest);
-    }
-
-    public void deleteImages(List<String> successUploadImages) {
-        successUploadImages.forEach(this::deleteImage);
     }
 }

@@ -77,7 +77,7 @@ class EventImageFacadeServiceTest extends ServiceTestSupport {
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("이미지 업로드에 실패했습니다.");
         assertThat(eventImageRepository.findAllByEvent(event)).isEmpty();
-        verify(imageService).deleteImages(any());
+        verify(imageService, times(4)).deleteImage(any());
     }
 
     @DisplayName("이미지 업로드가 성공 후 데이터베이스에 저장된다.")
