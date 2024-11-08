@@ -1,14 +1,20 @@
 package server.haengdong.application;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import server.haengdong.application.response.EventImageSaveAppResponse;
+import server.haengdong.application.response.ImageInfo;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
@@ -84,5 +90,39 @@ public class EventImageFacadeService {
     public void deleteImage(String token, Long imageId) {
         String imageName = eventService.deleteImage(token, imageId);
         imageService.deleteImage(imageName);
+    }
+
+    @Scheduled(cron = "0 0 0 * * MON")
+    public void removeUnmatchedImage() {
+        Instant endDate = Instant.now().minus(1, ChronoUnit.DAYS);
+
+        List<EventImageSaveAppResponse> savedEventImages = eventService.findImagesDateBefore(endDate);
+        List<ImageInfo> foundImages = imageService.findImages();
+
+        removeImageNotInS3(savedEventImages, foundImages);
+        removeImageNotInRepository(savedEventImages, foundImages);
+    }
+
+    private void removeImageNotInS3(List<EventImageSaveAppResponse> eventImages, List<ImageInfo> images) {
+        Set<String> imageNames = images.stream()
+                .map(ImageInfo::name)
+                .collect(Collectors.toSet());
+
+        eventImages.stream()
+                .filter(eventImage -> !imageNames.contains(eventImage.name()))
+                .map(EventImageSaveAppResponse::id)
+                .forEach(eventService::deleteImage);
+    }
+
+    private void removeImageNotInRepository(List<EventImageSaveAppResponse> eventImages, List<ImageInfo> images) {
+        Set<String> imageNames = eventImages.stream()
+                .map(EventImageSaveAppResponse::name)
+                .collect(Collectors.toSet());
+
+        images.stream()
+                .filter(imageInfo -> imageInfo.createAt().isBefore(Instant.now().minus(2, ChronoUnit.DAYS)))
+                .map(ImageInfo::name)
+                .filter(name -> !imageNames.contains(name))
+                .forEach(imageService::deleteImage);
     }
 }

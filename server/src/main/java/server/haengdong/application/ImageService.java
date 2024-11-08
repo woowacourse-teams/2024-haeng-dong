@@ -4,6 +4,7 @@ import static software.amazon.awssdk.core.sync.RequestBody.fromInputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +13,13 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import server.haengdong.application.response.ImageInfo;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Slf4j
@@ -64,5 +68,21 @@ public class ImageService {
 
         s3Client.deleteObject(deleteObjectRequest);
         return CompletableFuture.completedFuture(null);
+    }
+
+    public List<ImageInfo> findImages() {
+        ListObjectsV2Request request = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(directoryPath)
+                .build();
+
+        ListObjectsV2Response response = s3Client.listObjectsV2(request);
+
+        return response.contents().stream()
+                .map(s3Object -> new ImageInfo(
+                        s3Object.key().substring(directoryPath.length()),
+                        s3Object.lastModified()
+                ))
+                .toList();
     }
 }

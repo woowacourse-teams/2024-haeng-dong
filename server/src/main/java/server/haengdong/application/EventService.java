@@ -1,5 +1,6 @@
 package server.haengdong.application;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
@@ -150,6 +151,11 @@ public class EventService {
     }
 
     @Transactional
+    public void deleteImage(Long imageId) {
+        eventImageRepository.deleteById(imageId);
+    }
+
+    @Transactional
     public void deleteImages(String token, List<Long> imageIds) {
         imageIds.forEach(imageId -> deleteImage(token, imageId));
     }
@@ -162,5 +168,11 @@ public class EventService {
     private EventImage getEventImage(Long imageId) {
         return eventImageRepository.findById(imageId)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.IMAGE_NOT_FOUND));
+    }
+
+    public List<EventImageSaveAppResponse> findImagesDateBefore(Instant date) {
+        return eventImageRepository.findByCreatedAtAfter(date).stream()
+                .map(EventImageSaveAppResponse::of)
+                .toList();
     }
 }
