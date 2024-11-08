@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.request.EventLoginAppRequest;
@@ -13,7 +12,9 @@ import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.EventImageAppResponse;
+import server.haengdong.application.response.EventImageSaveAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
+import server.haengdong.domain.RandomValueProvider;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.bill.MemberBillReport;
@@ -21,7 +22,6 @@ import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventImage;
 import server.haengdong.domain.event.EventImageRepository;
 import server.haengdong.domain.event.EventRepository;
-import server.haengdong.domain.event.EventTokenProvider;
 import server.haengdong.domain.member.Member;
 import server.haengdong.exception.AuthenticationException;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -35,7 +35,7 @@ public class EventService {
     private static final int MAX_IMAGE_COUNT = 10;
 
     private final EventRepository eventRepository;
-    private final EventTokenProvider eventTokenProvider;
+    private final RandomValueProvider randomValueProvider;
     private final BillRepository billRepository;
     private final EventImageRepository eventImageRepository;
 
@@ -44,7 +44,7 @@ public class EventService {
 
     @Transactional
     public EventAppResponse saveEvent(EventAppRequest request) {
-        String token = eventTokenProvider.createToken();
+        String token = randomValueProvider.createRandomValue();
         Event event = request.toEvent(token);
         eventRepository.save(event);
 
@@ -62,11 +62,6 @@ public class EventService {
         if (event.isPasswordMismatch(request.password())) {
             throw new AuthenticationException(HaengdongErrorCode.PASSWORD_INVALID);
         }
-    }
-
-    private Event getEvent(String token) {
-        return eventRepository.findByToken(token)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
     }
 
     public List<MemberBillReportAppResponse> getMemberBillReports(String token) {
@@ -105,14 +100,28 @@ public class EventService {
     }
 
     @Transactional
-    public void saveImages(String token, List<String> imageNames) {
+    public List<EventImageSaveAppResponse> saveImages(String token, List<String> originalImageNames) {
         Event event = getEvent(token);
+        validateImageCount(originalImageNames, event);
 
-        List<EventImage> images = imageNames.stream()
-                .map(imageName -> new EventImage(event, imageName))
+        List<EventImage> eventImages = originalImageNames.stream()
+                .map(imageName -> new EventImage(event, randomValueProvider.createRandomValue() + imageName))
                 .toList();
 
-        eventImageRepository.saveAll(images);
+        eventImageRepository.saveAll(eventImages);
+
+        return eventImages.stream()
+                .map(EventImageSaveAppResponse::of)
+                .toList();
+    }
+
+    private void validateImageCount(List<String> images, Event event) {
+        Long imageCount = eventImageRepository.countByEvent(event);
+        Long totalImageCount = imageCount + images.size();
+
+        if (totalImageCount > MAX_IMAGE_COUNT) {
+            throw new HaengdongException(HaengdongErrorCode.IMAGE_COUNT_INVALID, totalImageCount);
+        }
     }
 
     public List<EventImageAppResponse> findImages(String token) {
@@ -130,8 +139,7 @@ public class EventService {
 
     @Transactional
     public String deleteImage(String token, Long imageId) {
-        EventImage eventImage = eventImageRepository.findById(imageId)
-                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.IMAGE_NOT_FOUND));
+        EventImage eventImage = getEventImage(imageId);
 
         Event event = eventImage.getEvent();
         if (event.isTokenMismatch(token)) {
@@ -141,13 +149,18 @@ public class EventService {
         return eventImage.getName();
     }
 
-    public void validateImageCount(String token, int uploadImageCount) {
-        Event event = getEvent(token);
-        Long imageCount = eventImageRepository.countByEvent(event);
-        Long totalImageCount = imageCount + uploadImageCount;
+    @Transactional
+    public void deleteImages(String token, List<Long> imageIds) {
+        imageIds.forEach(imageId -> deleteImage(token, imageId));
+    }
 
-        if (totalImageCount > MAX_IMAGE_COUNT) {
-            throw new HaengdongException(HaengdongErrorCode.IMAGE_COUNT_INVALID, totalImageCount);
-        }
+    private Event getEvent(String token) {
+        return eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
+    }
+
+    private EventImage getEventImage(Long imageId) {
+        return eventImageRepository.findById(imageId)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.IMAGE_NOT_FOUND));
     }
 }

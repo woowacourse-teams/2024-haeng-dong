@@ -18,8 +18,8 @@ import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.EventImageAppResponse;
-import server.haengdong.application.response.ImageNameAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
+import server.haengdong.domain.RandomValueProvider;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.EventImage;
@@ -28,7 +28,6 @@ import server.haengdong.domain.member.Member;
 import server.haengdong.domain.member.MemberRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
-import server.haengdong.domain.event.EventTokenProvider;
 import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.fixture.Fixture;
 
@@ -50,7 +49,7 @@ class EventServiceTest extends ServiceTestSupport {
     private EventImageRepository eventImageRepository;
 
     @MockBean
-    private EventTokenProvider eventTokenProvider;
+    private RandomValueProvider randomValueProvider;
 
     @Value("${image.base-url}")
     private String baseUrl;
@@ -59,7 +58,7 @@ class EventServiceTest extends ServiceTestSupport {
     @Test
     void saveEventTest() {
         EventAppRequest request = new EventAppRequest("test", "1234");
-        given(eventTokenProvider.createToken()).willReturn("TOKEN");
+        given(randomValueProvider.createRandomValue()).willReturn("TOKEN");
 
         EventAppResponse response = eventService.saveEvent(request);
 
@@ -194,7 +193,7 @@ class EventServiceTest extends ServiceTestSupport {
                 .extracting(EventImageAppResponse::url)
                 .containsExactlyInAnyOrder(
                         baseUrl + "image1.jpg",
-                       baseUrl + "image2.jpg"
+                        baseUrl + "image2.jpg"
                 );
     }
 
@@ -204,6 +203,7 @@ class EventServiceTest extends ServiceTestSupport {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
         List<String> imageNames = List.of("image1.jpg", "image2.jpg");
+        given(randomValueProvider.createRandomValue()).willReturn("1234");
 
         eventService.saveImages(event.getToken(), imageNames);
 
@@ -212,8 +212,8 @@ class EventServiceTest extends ServiceTestSupport {
                 .hasSize(2)
                 .extracting(EventImage::getName)
                 .containsExactlyInAnyOrder(
-                        "image1.jpg",
-                        "image2.jpg"
+                        "1234image1.jpg",
+                        "1234image2.jpg"
                 );
     }
 
@@ -240,7 +240,8 @@ class EventServiceTest extends ServiceTestSupport {
         String token = event.getToken();
         eventService.saveImages(token, imageNames);
 
-        assertThatThrownBy(() -> eventService.validateImageCount(token, 9))
+        assertThatThrownBy(
+                () -> eventService.saveImages(token, List.of("1", "2", "3", "4", "5", "6", "7", "8", "9")))
                 .isInstanceOf(HaengdongException.class);
     }
 }
