@@ -4,10 +4,12 @@ import static software.amazon.awssdk.core.sync.RequestBody.fromInputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import server.haengdong.exception.HaengdongErrorCode;
@@ -52,13 +54,15 @@ public class ImageService {
         s3Client.putObject(putObjectRequest, fromInputStream(inputStream, contentLength));
     }
 
+    @Async
     @Retryable
-    public void deleteImage(String imageName) {
+    public CompletableFuture<Void> deleteImage(String imageName) {
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                 .bucket(bucketName)
                 .key(directoryPath + imageName)
                 .build();
 
         s3Client.deleteObject(deleteObjectRequest);
+        return CompletableFuture.completedFuture(null);
     }
 }

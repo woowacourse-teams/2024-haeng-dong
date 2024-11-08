@@ -6,6 +6,8 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +46,12 @@ class ImageServiceTest extends ServiceTestSupport {
         doThrow(new RuntimeException("S3 delete failed"))
                 .when(s3Client).deleteObject(any(DeleteObjectRequest.class));
 
-        assertThatThrownBy(() -> imageService.deleteImage("1234file1"))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("S3 delete failed");
+        CompletableFuture<Void> future = imageService.deleteImage("1234file1");
+
+        assertThatThrownBy(future::join)
+                .isInstanceOf(CompletionException.class)
+                .hasCauseInstanceOf(RuntimeException.class)
+                .hasMessageContaining("S3 delete failed");
         verify(s3Client, times(3)).deleteObject(any(DeleteObjectRequest.class));
     }
 }
