@@ -5,20 +5,21 @@ import static software.amazon.awssdk.core.sync.RequestBody.fromInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import server.haengdong.application.response.ImageInfo;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Slf4j
@@ -33,31 +34,17 @@ public class ImageService {
     private String directoryPath;
 
     private final S3Client s3Client;
-    private final ExecutorService executorService;
 
-    public List<String> uploadImages(List<MultipartFile> images) {
-        List<CompletableFuture<String>> futures = images.stream()
-                .map(image -> CompletableFuture.supplyAsync(() -> uploadImage(image), executorService))
-                .toList();
-
-        try {
-            CompletableFuture<List<String>> result = collectUploadResults(futures);
-            return result.join();
-        } catch (CompletionException e) {
-            throw new HaengdongException(HaengdongErrorCode.IMAGE_UPLOAD_FAIL, e);
-        }
-    }
-
-    private String uploadImage(MultipartFile image) {
+    @Retryable
+    public void uploadImage(MultipartFile image, String imageName) {
         try (InputStream inputStream = image.getInputStream()) {
-            return uploadImageToStorage(inputStream, image);
+            uploadImageToStorage(inputStream, image, imageName);
         } catch (IOException e) {
             throw new HaengdongException(HaengdongErrorCode.IMAGE_UPLOAD_FAIL, e);
         }
     }
 
-    private String uploadImageToStorage(InputStream inputStream, MultipartFile image) {
-        String imageName = UUID.randomUUID() + image.getOriginalFilename();
+    private void uploadImageToStorage(InputStream inputStream, MultipartFile image, String imageName) {
         String key = directoryPath + imageName;
         long contentLength = image.getSize();
 
@@ -69,30 +56,33 @@ public class ImageService {
                 .build();
 
         s3Client.putObject(putObjectRequest, fromInputStream(inputStream, contentLength));
-        return imageName;
     }
 
-    private CompletableFuture<List<String>> collectUploadResults(List<CompletableFuture<String>> futures) {
-        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .thenApply(v -> futures.stream()
-                        .map(this::resolveFuture)
-                        .toList());
-    }
-
-    private String resolveFuture(CompletableFuture<String> future) {
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new HaengdongException(HaengdongErrorCode.IMAGE_UPLOAD_FAIL, e);
-        }
-    }
-
-    public void deleteImage(String imageName) {
+    @Async
+    @Retryable
+    public CompletableFuture<Void> deleteImage(String imageName) {
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                 .bucket(bucketName)
                 .key(directoryPath + imageName)
                 .build();
 
         s3Client.deleteObject(deleteObjectRequest);
+        return CompletableFuture.completedFuture(null);
+    }
+
+    public List<ImageInfo> findImages() {
+        ListObjectsV2Request request = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(directoryPath)
+                .build();
+
+        ListObjectsV2Response response = s3Client.listObjectsV2(request);
+
+        return response.contents().stream()
+                .map(s3Object -> new ImageInfo(
+                        s3Object.key().substring(directoryPath.length()),
+                        s3Object.lastModified()
+                ))
+                .toList();
     }
 }
