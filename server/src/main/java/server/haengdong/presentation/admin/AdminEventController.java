@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import server.haengdong.application.EventImageFacadeService;
 import server.haengdong.application.EventService;
-import server.haengdong.application.ImageService;
-import server.haengdong.application.response.ImageNameAppResponse;
 import server.haengdong.presentation.request.EventUpdateRequest;
 
 @Slf4j
