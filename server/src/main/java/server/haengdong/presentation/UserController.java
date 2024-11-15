@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/api/kakao-client-id")
-    public ResponseEntity<KakaoClientId> kakaoPage() {
+    public ResponseEntity<KakaoClientId> getKakaoClientId() {
         String clientId = kakaoUserService.getClientId();
         KakaoClientId kakaoClientId = new KakaoClientId(clientId);
 
