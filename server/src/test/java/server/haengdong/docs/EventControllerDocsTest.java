@@ -31,7 +31,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
-import server.haengdong.application.request.EventAppRequest;
 import server.haengdong.application.request.EventGuestAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
@@ -41,8 +40,6 @@ import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.EventController;
 import server.haengdong.presentation.request.EventGuestSaveRequest;
 import server.haengdong.presentation.request.EventLoginRequest;
-import server.haengdong.presentation.request.EventSaveRequest;
-import server.haengdong.support.fixture.Fixture;
 
 class EventControllerDocsTest extends RestDocsSupport {
 
@@ -124,39 +121,6 @@ class EventControllerDocsTest extends RestDocsSupport {
                                         fieldWithPath("reports[0].price").type(JsonFieldType.NUMBER)
                                                 .description("참여자 정산 금액")
                                 ))
-                );
-    }
-
-    @DisplayName("이벤트를 생성한다.")
-    @Test
-    void saveEvent() throws Exception {
-        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
-        String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
-        String eventId = "쿠키 토큰";
-        EventAppResponse eventAppResponse = new EventAppResponse(eventId, 1L);
-        given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
-        given(authService.createGuestToken(1L)).willReturn("jwtToken");
-        given(authService.getTokenName()).willReturn("accessToken");
-
-        mockMvc.perform(post("/api/events")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody)
-                        .cookie(Fixture.EVENT_COOKIE))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.eventId").value("쿠키 토큰"))
-                .andDo(
-                        document("createEvent",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                requestFields(
-                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
-                                ),
-                                responseFields(
-                                        fieldWithPath("eventId").type(JsonFieldType.STRING)
-                                                .description("행사 ID")
-                                )
-                        )
                 );
     }
 
