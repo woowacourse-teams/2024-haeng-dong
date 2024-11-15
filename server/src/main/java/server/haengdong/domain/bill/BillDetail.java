@@ -12,7 +12,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import server.haengdong.domain.BaseEntity;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,7 +29,7 @@ public class BillDetail extends BaseEntity {
 
     @JoinColumn(name = "member_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private EventMember eventMember;
 
     @Column(nullable = false)
     private Long price;
@@ -37,9 +37,9 @@ public class BillDetail extends BaseEntity {
     @Column(nullable = false)
     private boolean isFixed;
 
-    public BillDetail(Bill bill, Member member, Long price, boolean isFixed) {
+    public BillDetail(Bill bill, EventMember eventMember, Long price, boolean isFixed) {
         this.bill = bill;
-        this.member = member;
+        this.eventMember = eventMember;
         this.price = price;
         this.isFixed = isFixed;
     }
@@ -56,7 +56,7 @@ public class BillDetail extends BaseEntity {
         return this.id.equals(id);
     }
 
-    public boolean isMember(Member member) {
-        return this.member.equals(member);
+    public boolean isMember(EventMember eventMember) {
+        return this.eventMember.equals(eventMember);
     }
 }

@@ -17,7 +17,7 @@ import server.haengdong.application.response.BillDetailsAppResponse;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.StepAppResponse;
 import server.haengdong.domain.bill.Bill;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 import server.haengdong.support.fixture.Fixture;
 
 class BillControllerTest extends ControllerTestSupport {
@@ -28,8 +28,8 @@ class BillControllerTest extends ControllerTestSupport {
         Bill bill = Fixture.BILL1;
         List<BillAppResponse> bills = List.of(BillAppResponse.of(bill));
 
-        Member member = Fixture.MEMBER1;
-        List<MemberAppResponse> members = List.of(MemberAppResponse.of(member));
+        EventMember eventMember = Fixture.EVENT_MEMBER_1;
+        List<MemberAppResponse> members = List.of(MemberAppResponse.of(eventMember));
 
         StepAppResponse stepAppResponse = new StepAppResponse(bills, members);
         given(billService.findSteps(anyString())).willReturn(List.of(stepAppResponse));
@@ -44,8 +44,8 @@ class BillControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.steps[0].bills[0].price").value(bill.getPrice()))
                 .andExpect(jsonPath("$.steps[0].bills[0].isFixed").value(bill.isFixed()))
                 .andExpect(jsonPath("$.steps[0].members").isArray())
-                .andExpect(jsonPath("$.steps[0].members[0].id").value(member.getId()))
-                .andExpect(jsonPath("$.steps[0].members[0].name").value(member.getName()));
+                .andExpect(jsonPath("$.steps[0].members[0].id").value(eventMember.getId()))
+                .andExpect(jsonPath("$.steps[0].members[0].name").value(eventMember.getName()));
     }
 
     @DisplayName("참여자별 지출 금액을 조회한다.")

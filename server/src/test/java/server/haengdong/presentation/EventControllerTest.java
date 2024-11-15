@@ -16,13 +16,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.request.EventGuestAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.EventImageAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
-import server.haengdong.presentation.request.EventLoginRequest;
-import server.haengdong.presentation.request.EventSaveRequest;
+import server.haengdong.presentation.request.EventGuestSaveRequest;
 
 
 class EventControllerTest extends ControllerTestSupport {
@@ -66,39 +65,22 @@ class EventControllerTest extends ControllerTestSupport {
 
     @DisplayName("이벤트를 생성한다.")
     @Test
-    void saveEvent() throws Exception {
-        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리", "0987");
+    void saveEventGuest() throws Exception {
+        EventGuestSaveRequest eventSaveRequest = new EventGuestSaveRequest("토다리", "nick", "0987");
         String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
         String eventId = "망쵸토큰";
-        EventAppResponse eventAppResponse = new EventAppResponse(eventId);
-        given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
-        given(authService.createToken(eventId)).willReturn("jwtToken");
-        given(authService.getTokenName()).willReturn("eventToken");
+        EventAppResponse eventAppResponse = new EventAppResponse(eventId, 1L);
+        given(eventService.saveEventGuest(any(EventGuestAppRequest.class))).willReturn(eventAppResponse);
+        given(authService.createGuestToken(1L)).willReturn("jwtToken");
+        given(authService.getTokenName()).willReturn("accessToken");
 
-        mockMvc.perform(post("/api/events")
+        mockMvc.perform(post("/api/events/guest")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(cookie().value("eventToken", "jwtToken"))
+                .andExpect(cookie().value("accessToken", "jwtToken"))
                 .andExpect(jsonPath("$.eventId").value("망쵸토큰"));
-    }
-
-    @DisplayName("행사 어드민이 로그인한다.")
-    @Test
-    void loginEvent() throws Exception {
-        String token = "TOKEN";
-        EventLoginRequest eventLoginRequest = new EventLoginRequest("1234");
-        String requestBody = objectMapper.writeValueAsString(eventLoginRequest);
-        given(authService.createToken(token)).willReturn("jwtToken");
-        given(authService.getTokenName()).willReturn("eventToken");
-
-        mockMvc.perform(post("/api/events/{eventId}/login", token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andDo(print())
-                .andExpect(cookie().value("eventToken", "jwtToken"))
-                .andExpect(status().isOk());
     }
 
     @DisplayName("행사 이미지를 조회한다.")

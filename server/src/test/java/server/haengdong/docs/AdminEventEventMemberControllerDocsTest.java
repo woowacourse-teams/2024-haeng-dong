@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import server.haengdong.application.MemberService;
+import server.haengdong.application.EventMemberService;
 import server.haengdong.application.response.MemberSaveAppResponse;
 import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.presentation.admin.AdminMemberController;
@@ -36,13 +36,13 @@ import server.haengdong.presentation.request.MemberUpdateRequest;
 import server.haengdong.presentation.request.MembersSaveRequest;
 import server.haengdong.presentation.request.MembersUpdateRequest;
 
-class AdminMemberControllerDocsTest extends RestDocsSupport {
+class AdminEventEventMemberControllerDocsTest extends RestDocsSupport {
 
-    private final MemberService memberService = mock(MemberService.class);
+    private final EventMemberService eventMemberService = mock(EventMemberService.class);
 
     @Override
     protected Object initController() {
-        return new AdminMemberController(memberService);
+        return new AdminMemberController(eventMemberService);
     }
 
     @DisplayName("행사 참여자를 추가한다.")
@@ -62,7 +62,7 @@ class AdminMemberControllerDocsTest extends RestDocsSupport {
                         new MemberSaveAppResponse(2L, "소하")
                 )
         );
-        given(memberService.saveMembers(eventToken, membersSaveRequest.toAppRequest()))
+        given(eventMemberService.saveMembers(eventToken, membersSaveRequest.toAppRequest()))
                 .willReturn(appResponse);
 
         mockMvc.perform(post("/api/admin/events/{eventId}/members", "망쵸토큰")
@@ -83,7 +83,7 @@ class AdminMemberControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("토큰 토큰")
+                                        cookieWithName("accessToken").description("토큰 토큰")
                                 ),
                                 requestFields(
                                         fieldWithPath("members").type(JsonFieldType.ARRAY)
@@ -122,7 +122,7 @@ class AdminMemberControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("memberId").description("삭제할 참여자 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 토큰")
+                                        cookieWithName("accessToken").description("행사 토큰")
                                 )
                         )
                 );
@@ -155,7 +155,7 @@ class AdminMemberControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 토큰")
+                                        cookieWithName("accessToken").description("행사 토큰")
                                 ),
                                 requestFields(
                                         fieldWithPath("members").type(JsonFieldType.ARRAY)

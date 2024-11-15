@@ -32,14 +32,17 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.haengdong.application.AuthService;
 import server.haengdong.application.EventService;
 import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.request.EventGuestAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
 import server.haengdong.application.response.EventImageAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.EventController;
+import server.haengdong.presentation.request.EventGuestSaveRequest;
 import server.haengdong.presentation.request.EventLoginRequest;
 import server.haengdong.presentation.request.EventSaveRequest;
+import server.haengdong.support.fixture.Fixture;
 
 class EventControllerDocsTest extends RestDocsSupport {
 
@@ -127,35 +130,69 @@ class EventControllerDocsTest extends RestDocsSupport {
     @DisplayName("이벤트를 생성한다.")
     @Test
     void saveEvent() throws Exception {
-        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리", "0987");
+        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
         String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
         String eventId = "쿠키 토큰";
-        EventAppResponse eventAppResponse = new EventAppResponse(eventId);
+        EventAppResponse eventAppResponse = new EventAppResponse(eventId, 1L);
         given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
-        given(authService.createToken(eventId)).willReturn("jwtToken");
-        given(authService.getTokenName()).willReturn("eventToken");
+        given(authService.createGuestToken(1L)).willReturn("jwtToken");
+        given(authService.getTokenName()).willReturn("accessToken");
 
         mockMvc.perform(post("/api/events")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                        .content(requestBody)
+                        .cookie(Fixture.EVENT_COOKIE))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(cookie().value("eventToken", "jwtToken"))
                 .andExpect(jsonPath("$.eventId").value("쿠키 토큰"))
                 .andDo(
                         document("createEvent",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 requestFields(
+                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
+                                ),
+                                responseFields(
+                                        fieldWithPath("eventId").type(JsonFieldType.STRING)
+                                                .description("행사 ID")
+                                )
+                        )
+                );
+    }
+
+    @DisplayName("비회원으로 이벤트를 생성한다.")
+    @Test
+    void saveEventGuest() throws Exception {
+        EventGuestSaveRequest eventSaveRequest = new EventGuestSaveRequest("토다리", "nickname", "1234");
+        String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
+        String eventId = "쿠키 토큰";
+        EventAppResponse eventAppResponse = new EventAppResponse(eventId, 1L);
+        given(eventService.saveEventGuest(any(EventGuestAppRequest.class))).willReturn(eventAppResponse);
+        given(authService.createGuestToken(1L)).willReturn("jwtToken");
+        given(authService.getTokenName()).willReturn("accessToken");
+
+        mockMvc.perform(post("/api/events/guest")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(cookie().value("accessToken", "jwtToken"))
+                .andExpect(jsonPath("$.eventId").value("쿠키 토큰"))
+                .andDo(
+                        document("createGuestEvent",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                requestFields(
                                         fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름"),
-                                        fieldWithPath("password").type(JsonFieldType.STRING).description("행사 비밀 번호")
+                                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("비회원 닉네임"),
+                                        fieldWithPath("password").type(JsonFieldType.STRING).description("비회원 비밀번호")
                                 ),
                                 responseFields(
                                         fieldWithPath("eventId").type(JsonFieldType.STRING)
                                                 .description("행사 ID")
                                 ),
                                 responseCookies(
-                                        cookieWithName("eventToken").description("행사 관리자용 토큰")
+                                        cookieWithName("accessToken").description("행사 관리자용 토큰")
                                 )
                         )
                 );
@@ -167,14 +204,15 @@ class EventControllerDocsTest extends RestDocsSupport {
         String token = "TOKEN";
         EventLoginRequest eventLoginRequest = new EventLoginRequest("1234");
         String requestBody = objectMapper.writeValueAsString(eventLoginRequest);
-        given(authService.createToken(token)).willReturn("jwtToken");
-        given(authService.getTokenName()).willReturn("eventToken");
+        given(authService.createGuestToken(1L)).willReturn("jwtToken");
+        given(authService.getTokenName()).willReturn("accessToken");
+        given(eventService.findByGuestPassword(any())).willReturn(new EventAppResponse("TOKEN", 1L));
 
         mockMvc.perform(post("/api/events/{eventId}/login", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print())
-                .andExpect(cookie().value("eventToken", "jwtToken"))
+                .andExpect(cookie().value("accessToken", "jwtToken"))
                 .andExpect(status().isOk())
                 .andDo(
                         document("eventLogin",
@@ -188,7 +226,7 @@ class EventControllerDocsTest extends RestDocsSupport {
                                                 .description("행사 비밀 번호")
                                 ),
                                 responseCookies(
-                                        cookieWithName("eventToken").description("행사 관리자용 토큰")
+                                        cookieWithName("accessToken").description("행사 관리자용 토큰")
                                 )
                         )
                 );

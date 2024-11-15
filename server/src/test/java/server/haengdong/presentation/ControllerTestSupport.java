@@ -12,8 +12,8 @@ import server.haengdong.application.AuthService;
 import server.haengdong.application.BillService;
 import server.haengdong.application.EventImageFacadeService;
 import server.haengdong.application.EventService;
-import server.haengdong.application.ImageService;
-import server.haengdong.application.MemberService;
+import server.haengdong.application.EventMemberService;
+import server.haengdong.application.UserService;
 import server.haengdong.presentation.admin.AdminBillController;
 import server.haengdong.presentation.admin.AdminEventController;
 import server.haengdong.presentation.admin.AdminMemberController;
@@ -24,7 +24,7 @@ import server.haengdong.presentation.admin.AdminMemberController;
                 AdminBillController.class,
                 AdminMemberController.class,
                 EventController.class,
-                MemberController.class,
+                EventMemberController.class,
                 BillController.class
         },
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {WebMvcConfigurer.class})}
@@ -44,11 +44,14 @@ public abstract class ControllerTestSupport {
     protected AuthService authService;
 
     @MockBean
-    protected MemberService memberService;
+    protected EventMemberService eventMemberService;
 
     @MockBean
     protected BillService billService;
 
     @MockBean
     protected EventImageFacadeService eventImageFacadeService;
+
+    @MockBean
+    protected UserService userService;
 }

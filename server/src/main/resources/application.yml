@@ -69,6 +69,14 @@ server:
       enabled: true
     threads:
       max: 50
+
+kakao:
+  base-uri: https://kauth.kakao.com
+  redirect-uri: http://localhost:8080/api/login/kakao
+  token-request-uri: /oauth/token
+  client-id: 52f24834ff7304ed2c47294b3f57b053
+  oauth-code-uri: https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid
+
 ---
 
 spring:

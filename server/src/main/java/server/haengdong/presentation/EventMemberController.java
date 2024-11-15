@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import server.haengdong.application.MemberService;
+import server.haengdong.application.EventMemberService;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.presentation.response.CurrentMembersResponse;
 import server.haengdong.presentation.response.MembersResponse;
@@ -15,20 +15,20 @@ import server.haengdong.presentation.response.MembersResponse;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-public class MemberController {
+public class EventMemberController {
 
-    private final MemberService memberService;
+    private final EventMemberService eventMemberService;
 
     @GetMapping("/api/events/{eventId}/members")
     public ResponseEntity<MembersResponse> findAllMembers(@PathVariable("eventId") String token) {
-        MembersResponse response = MembersResponse.of(memberService.findAllMembers(token));
+        MembersResponse response = MembersResponse.of(eventMemberService.findAllMembers(token));
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/api/events/{eventId}/members/current")
     public ResponseEntity<CurrentMembersResponse> getCurrentMembers(@PathVariable("eventId") String token) {
-        List<MemberAppResponse> currentMembers = memberService.getCurrentMembers(token);
+        List<MemberAppResponse> currentMembers = eventMemberService.getCurrentMembers(token);
 
         return ResponseEntity.ok()
                 .body(CurrentMembersResponse.of(currentMembers));

@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import server.haengdong.application.AuthService;
+import server.haengdong.application.EventService;
 import server.haengdong.domain.TokenProvider;
 import server.haengdong.infrastructure.auth.AuthenticationExtractor;
 import server.haengdong.infrastructure.auth.JwtTokenProvider;
@@ -20,6 +21,7 @@ import server.haengdong.infrastructure.auth.TokenProperties;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final TokenProperties tokenProperties;
+    private final EventService eventService;
 
     @Value("${cors.max-age}")
     private Long maxAge;
@@ -50,7 +52,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public AuthService authService() {
-        return new AuthService(tokenProvider());
+        return new AuthService(tokenProvider(), eventService);
     }
 
     @Bean

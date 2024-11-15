@@ -22,7 +22,7 @@ import server.haengdong.presentation.request.MemberUpdateRequest;
 import server.haengdong.presentation.request.MembersSaveRequest;
 import server.haengdong.presentation.request.MembersUpdateRequest;
 
-class AdminMemberControllerTest extends ControllerTestSupport {
+class AdminEventEventMemberControllerTest extends ControllerTestSupport {
 
     @DisplayName("행사 참여자를 추가한다.")
     @Test
@@ -41,7 +41,7 @@ class AdminMemberControllerTest extends ControllerTestSupport {
                         new MemberSaveAppResponse(2L, "소하")
                 )
         );
-        given(memberService.saveMembers(eventToken, membersSaveRequest.toAppRequest()))
+        given(eventMemberService.saveMembers(eventToken, membersSaveRequest.toAppRequest()))
                 .willReturn(appResponse);
 
         mockMvc.perform(post("/api/admin/events/{eventId}/members", "망쵸토큰")

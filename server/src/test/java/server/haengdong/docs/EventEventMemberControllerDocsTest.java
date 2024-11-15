@@ -21,19 +21,19 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.JsonFieldType;
-import server.haengdong.application.MemberService;
+import server.haengdong.application.EventMemberService;
 import server.haengdong.application.response.MemberAppResponse;
 import server.haengdong.application.response.MemberDepositAppResponse;
 import server.haengdong.application.response.MembersDepositAppResponse;
-import server.haengdong.presentation.MemberController;
+import server.haengdong.presentation.EventMemberController;
 
-class MemberControllerDocsTest extends RestDocsSupport {
+class EventEventMemberControllerDocsTest extends RestDocsSupport {
 
-    private final MemberService memberService = mock(MemberService.class);
+    private final EventMemberService eventMemberService = mock(EventMemberService.class);
 
     @Override
     protected Object initController() {
-        return new MemberController(memberService);
+        return new EventMemberController(eventMemberService);
     }
 
     @DisplayName("행사에 참여한 전체 인원을 조회한다.")
@@ -46,7 +46,7 @@ class MemberControllerDocsTest extends RestDocsSupport {
         );
 
         MembersDepositAppResponse memberAppResponse = new MembersDepositAppResponse(members);
-        given(memberService.findAllMembers(anyString())).willReturn(memberAppResponse);
+        given(eventMemberService.findAllMembers(anyString())).willReturn(memberAppResponse);
 
         mockMvc.perform(get("/api/events/{eventId}/members", "TOKEN"))
                 .andDo(print())
@@ -90,7 +90,7 @@ class MemberControllerDocsTest extends RestDocsSupport {
                 new MemberAppResponse(2L, "백호")
         );
 
-        given(memberService.getCurrentMembers(any())).willReturn(members);
+        given(eventMemberService.getCurrentMembers(any())).willReturn(members);
 
         mockMvc.perform(get("/api/events/{eventId}/members/current", "TOKEN"))
                 .andExpect(status().isOk())

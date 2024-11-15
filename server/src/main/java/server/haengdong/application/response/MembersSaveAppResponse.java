@@ -1,15 +1,15 @@
 package server.haengdong.application.response;
 
 import java.util.List;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 
 public record MembersSaveAppResponse(
         List<MemberSaveAppResponse> members
 ) {
 
-    public static MembersSaveAppResponse of(List<Member> members) {
+    public static MembersSaveAppResponse of(List<EventMember> eventMembers) {
         return new MembersSaveAppResponse(
-                members.stream()
+                eventMembers.stream()
                         .map(MemberSaveAppResponse::of)
                         .toList()
         );

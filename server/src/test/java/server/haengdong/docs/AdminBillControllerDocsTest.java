@@ -62,7 +62,7 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
                                 parameterWithName("eventId").description("행사 ID")
                         ),
                         requestCookies(
-                                cookieWithName("eventToken").description("행사 관리자 토큰")
+                                cookieWithName("accessToken").description("행사 관리자 토큰")
                         ),
                         requestFields(
                                 fieldWithPath("title").description("생성할 지출 제목"),
@@ -94,7 +94,7 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
                                 parameterWithName("billId").description("지출 ID")
                         ),
                         requestCookies(
-                                cookieWithName("eventToken").description("행사 관리자 토큰")
+                                cookieWithName("accessToken").description("행사 관리자 토큰")
                         ),
                         requestFields(
                                 fieldWithPath("title").description("수정할 지출 제목"),
@@ -130,7 +130,7 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("billId").description("지출 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰")
+                                        cookieWithName("accessToken").description("행사 관리자 토큰")
                                 ),
                                 requestFields(
                                         fieldWithPath("billDetails").type(JsonFieldType.ARRAY)
@@ -164,7 +164,7 @@ class AdminBillControllerDocsTest extends RestDocsSupport {
                                 parameterWithName("billId").description("지출 ID")
                         ),
                         requestCookies(
-                                cookieWithName("eventToken").description("행사 관리자 토큰")
+                                cookieWithName("accessToken").description("행사 관리자 토큰")
                         )
                 ));
     }

@@ -58,7 +58,7 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰").optional()
+                                        cookieWithName("accessToken").description("행사 관리자 토큰").optional()
                                 )
                         )
                 );
@@ -86,7 +86,7 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                          parameterWithName("eventId").description("행사 ID")
                                  ),
                                  requestCookies(
-                                         cookieWithName("eventToken").description("행사 관리자 토큰")
+                                         cookieWithName("accessToken").description("행사 관리자 토큰")
                                  ),
                                  requestFields(
                                         fieldWithPath("eventName").type(JsonFieldType.STRING)
@@ -122,7 +122,7 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰")
+                                        cookieWithName("accessToken").description("행사 관리자 토큰")
                                 ),
                                 requestParts(
                                         partWithName("images").description("행사 이미지")
@@ -149,7 +149,7 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("imageId").description("이미지 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰")
+                                        cookieWithName("accessToken").description("행사 관리자 토큰")
                                 )
                         )
                 );
