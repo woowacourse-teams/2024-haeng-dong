@@ -77,6 +77,9 @@ kakao:
   client-id: 52f24834ff7304ed2c47294b3f57b053
   oauth-code-uri: https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid
 
+login-success:
+  uri: https://dev.haengdong.pro/event/create
+
 ---
 
 spring:

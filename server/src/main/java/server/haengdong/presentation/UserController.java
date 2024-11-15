@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,9 @@ public class UserController {
     private final AuthService authService;
     private final CookieProperties cookieProperties;
 
+    @Value("${login-success.uri}")
+    private String loginSuccessUri;
+
     @PatchMapping("/api/admin/users")
     public ResponseEntity<Void> updateUser(
             @Login Long userId,
@@ -58,8 +62,9 @@ public class UserController {
         String jwtToken = authService.createGuestToken(userId);
 
         ResponseCookie responseCookie = createResponseCookie(jwtToken);
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .location(URI.create(loginSuccessUri))
                 .build();
     }
 
