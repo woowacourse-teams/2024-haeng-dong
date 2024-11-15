@@ -1,6 +1,5 @@
 package server.haengdong.application;
 
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpHeaders;
@@ -22,11 +21,11 @@ public class KakaoClient {
     private final KakaoProperties kakaoProperties;
     private final RestClient restClient;
 
-    public KakaoTokenResponse join(String code) {
+    public KakaoTokenResponse join(String code, String redirectUri) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", kakaoProperties.clientId());
-        params.add("redirect_uri", kakaoProperties.redirectUri());
+        params.add("redirect_uri", redirectUri);
         params.add("code", code);
 
         try {
@@ -41,7 +40,7 @@ public class KakaoClient {
         }
     }
 
-    public URI getKakaoPageURI() {
-        return URI.create(kakaoProperties.oauthCodeUri().formatted(kakaoProperties.clientId(), kakaoProperties.redirectUri()));
+    public String getClientId() {
+        return kakaoProperties.clientId();
     }
 }

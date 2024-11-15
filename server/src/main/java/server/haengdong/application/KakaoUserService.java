@@ -2,7 +2,6 @@ package server.haengdong.application;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import server.haengdong.application.response.KakaoTokenResponse;
@@ -16,8 +15,8 @@ public class KakaoUserService {
     private final UserService userService;
     private final KakaoClient kakaoClient;
 
-    public Long joinByKakao(String code) {
-        KakaoTokenResponse kakaoToken = kakaoClient.join(code);
+    public Long joinByKakao(String code, String redirectUri) {
+        KakaoTokenResponse kakaoToken = kakaoClient.join(code, redirectUri);
         String idToken = kakaoToken.idToken();
         DecodedJWT decodedJWT = JWT.decode(idToken);
 
@@ -27,7 +26,7 @@ public class KakaoUserService {
         return userService.join(memberNumber, nickname);
     }
 
-    public URI getRedirectURI() {
-        return kakaoClient.getKakaoPageURI();
+    public String getClientId() {
+        return kakaoClient.getClientId();
     }
 }

@@ -1,13 +1,10 @@
 package server.haengdong.presentation;
 
 import jakarta.validation.Valid;
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +18,7 @@ import server.haengdong.application.UserService;
 import server.haengdong.config.Login;
 import server.haengdong.infrastructure.auth.CookieProperties;
 import server.haengdong.presentation.request.UserUpdateRequest;
+import server.haengdong.presentation.response.KakaoClientId;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,38 +31,35 @@ public class UserController {
     private final AuthService authService;
     private final CookieProperties cookieProperties;
 
-    @Value("${login-success.uri}")
-    private String loginSuccessUri;
-
     @PatchMapping("/api/admin/users")
     public ResponseEntity<Void> updateUser(
             @Login Long userId,
             @Valid @RequestBody UserUpdateRequest request
     ) {
         userService.updateUser(request.toAppRequest(userId));
-
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/api/login/kakao-page")
-    public ResponseEntity<Void> kakaoPage() {
-        URI redirectURI = kakaoUserService.getRedirectURI();
+    @GetMapping("/api/kakao-client-id")
+    public ResponseEntity<KakaoClientId> kakaoPage() {
+        String clientId = kakaoUserService.getClientId();
+        KakaoClientId kakaoClientId = new KakaoClientId(clientId);
 
-        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
-                .location(redirectURI)
-                .build();
+        return ResponseEntity.ok(kakaoClientId);
     }
 
     @GetMapping("/api/login/kakao")
-    public ResponseEntity<Void> kakaoLogin(@RequestParam String code) {
-        log.info("Kakao login code: {}", code);
-        Long userId = kakaoUserService.joinByKakao(code);
+    public ResponseEntity<Void> kakaoLogin(
+            @RequestParam String code,
+            @RequestParam("redirect_uri") String redirectUri
+    ) {
+        log.info("Kakao login code, redirectUri: {}, {}", code, redirectUri);
+        Long userId = kakaoUserService.joinByKakao(code, redirectUri);
         String jwtToken = authService.createGuestToken(userId);
 
         ResponseCookie responseCookie = createResponseCookie(jwtToken);
-        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
+        return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                .location(URI.create(loginSuccessUri))
                 .build();
     }
 
