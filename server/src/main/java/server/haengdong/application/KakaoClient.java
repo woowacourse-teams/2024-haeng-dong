@@ -11,6 +11,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 import server.haengdong.application.response.KakaoTokenResponse;
 import server.haengdong.config.KakaoProperties;
+import server.haengdong.exception.HaengdongErrorCode;
+import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
 @EnableConfigurationProperties(KakaoProperties.class)
@@ -27,14 +29,16 @@ public class KakaoClient {
         params.add("redirect_uri", kakaoProperties.redirectUri());
         params.add("code", code);
 
-        KakaoTokenResponse kakaoToken = restClient.post()
-                .uri(kakaoProperties.baseUri() + kakaoProperties.tokenRequestUri())
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .body(params)
-                .retrieve()
-                .body(KakaoTokenResponse.class);
-
-        return kakaoToken;
+        try {
+            return restClient.post()
+                    .uri(kakaoProperties.baseUri() + kakaoProperties.tokenRequestUri())
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                    .body(params)
+                    .retrieve()
+                    .body(KakaoTokenResponse.class);
+        } catch (Exception e) {
+            throw new HaengdongException(HaengdongErrorCode.KAKAO_LOGIN_FAIL, e);
+        }
     }
 
     public URI getKakaoPageURI() {
