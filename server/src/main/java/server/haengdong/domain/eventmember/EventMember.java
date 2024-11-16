@@ -1,4 +1,4 @@
-package server.haengdong.domain.member;
+package server.haengdong.domain.eventmember;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +23,7 @@ import server.haengdong.exception.HaengdongException;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"event_id", "name"})})
 @Entity
-public class Member extends BaseEntity {
+public class EventMember extends BaseEntity {
 
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 8;
@@ -42,11 +42,11 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private boolean isDeposited;
 
-    public Member(Event event, String name) {
+    public EventMember(Event event, String name) {
         this(null, event, name, false);
     }
 
-    public Member(Long id, Event event, String name, boolean isDeposited) {
+    public EventMember(Long id, Event event, String name, boolean isDeposited) {
         validateName(name);
         this.id = id;
         this.event = event;
@@ -74,8 +74,8 @@ public class Member extends BaseEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Member member = (Member) o;
-        return Objects.equals(id, member.id);
+        EventMember eventMember = (EventMember) o;
+        return Objects.equals(id, eventMember.id);
     }
 
     @Override

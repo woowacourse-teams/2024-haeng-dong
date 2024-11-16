@@ -1,5 +1,7 @@
 package server.haengdong.docs;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
@@ -13,6 +15,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -28,8 +31,12 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import server.haengdong.application.EventImageFacadeService;
 import server.haengdong.application.EventService;
+import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.presentation.admin.AdminEventController;
+import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.request.EventUpdateRequest;
+import server.haengdong.support.fixture.Fixture;
 
 class AdminEventControllerDocsTest extends RestDocsSupport {
 
@@ -58,7 +65,7 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰").optional()
+                                        cookieWithName("accessToken").description("행사 관리자 토큰").optional()
                                 )
                         )
                 );
@@ -86,7 +93,7 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                          parameterWithName("eventId").description("행사 ID")
                                  ),
                                  requestCookies(
-                                         cookieWithName("eventToken").description("행사 관리자 토큰")
+                                         cookieWithName("accessToken").description("행사 관리자 토큰")
                                  ),
                                  requestFields(
                                         fieldWithPath("eventName").type(JsonFieldType.STRING)
@@ -122,7 +129,7 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("eventId").description("행사 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰")
+                                        cookieWithName("accessToken").description("행사 관리자 토큰")
                                 ),
                                 requestParts(
                                         partWithName("images").description("행사 이미지")
@@ -149,7 +156,40 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                         parameterWithName("imageId").description("이미지 ID")
                                 ),
                                 requestCookies(
-                                        cookieWithName("eventToken").description("행사 관리자 토큰")
+                                        cookieWithName("accessToken").description("행사 관리자 토큰")
+                                )
+                        )
+                );
+    }
+
+    @DisplayName("이벤트를 생성한다.")
+    @Test
+    void saveEvent() throws Exception {
+        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
+        String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
+        String eventId = "쿠키 토큰";
+        EventAppResponse eventAppResponse = new EventAppResponse(eventId, 1L);
+        given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
+
+        mockMvc.perform(post("/api/admin/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .cookie(Fixture.EVENT_COOKIE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("createEvent",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                requestFields(
+                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
+                                ),
+                                requestCookies(
+                                        cookieWithName("accessToken").description("행사 관리자 토큰")
+                                ),
+                                responseFields(
+                                        fieldWithPath("eventId").type(JsonFieldType.STRING)
+                                                .description("행사 ID")
                                 )
                         )
                 );

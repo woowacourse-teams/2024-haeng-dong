@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.haengdong.application.AuthService;
-import server.haengdong.application.response.EventImageAppResponse;
 import server.haengdong.application.EventService;
+import server.haengdong.application.response.EventAppResponse;
+import server.haengdong.application.response.EventImageAppResponse;
 import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.infrastructure.auth.CookieProperties;
+import server.haengdong.presentation.request.EventGuestSaveRequest;
 import server.haengdong.presentation.request.EventLoginRequest;
-import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.response.EventDetailResponse;
 import server.haengdong.presentation.response.EventImagesResponse;
 import server.haengdong.presentation.response.EventResponse;
@@ -50,11 +51,12 @@ public class EventController {
                 .body(MemberBillReportsResponse.of(memberBillReports));
     }
 
-    @PostMapping("/api/events")
-    public ResponseEntity<EventResponse> saveEvent(@Valid @RequestBody EventSaveRequest request) {
-        EventResponse eventResponse = EventResponse.of(eventService.saveEvent(request.toAppRequest()));
+    @PostMapping("/api/events/guest")
+    public ResponseEntity<EventResponse> saveEventGuest(@Valid @RequestBody EventGuestSaveRequest request) {
+        EventAppResponse eventAppResponse = eventService.saveEventGuest(request.toAppRequest());
+        EventResponse eventResponse = EventResponse.of(eventAppResponse);
 
-        String jwtToken = authService.createToken(eventResponse.eventId());
+        String jwtToken = authService.createGuestToken(eventAppResponse.userId());
 
         ResponseCookie responseCookie = createResponseCookie(jwtToken);
         return ResponseEntity.ok()
@@ -67,8 +69,8 @@ public class EventController {
             @PathVariable("eventId") String token,
             @Valid @RequestBody EventLoginRequest request
     ) {
-        eventService.validatePassword(request.toAppRequest(token));
-        String jwtToken = authService.createToken(token);
+        EventAppResponse response = eventService.findByGuestPassword(request.toAppRequest(token));
+        String jwtToken = authService.createGuestToken(response.userId());
 
         ResponseCookie responseCookie = createResponseCookie(jwtToken);
         return ResponseEntity.ok()

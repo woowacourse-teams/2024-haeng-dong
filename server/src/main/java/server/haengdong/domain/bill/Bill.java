@@ -20,7 +20,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import server.haengdong.domain.BaseEntity;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 import server.haengdong.domain.event.Event;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
@@ -73,18 +73,18 @@ public class Bill extends BaseEntity {
         }
     }
 
-    public static Bill create(Event event, String title, Long price, List<Member> members) {
+    public static Bill create(Event event, String title, Long price, List<EventMember> eventMembers) {
         Bill bill = new Bill(event, title, price);
-        bill.resetBillDetails(members);
+        bill.resetBillDetails(eventMembers);
         return bill;
     }
 
-    public void resetBillDetails(List<Member> members) {
+    public void resetBillDetails(List<EventMember> eventMembers) {
         this.billDetails.clear();
-        Iterator<Long> priceIterator = distributePrice(members.size()).iterator();
+        Iterator<Long> priceIterator = distributePrice(eventMembers.size()).iterator();
 
-        for (Member member : members) {
-            BillDetail billDetail = new BillDetail(this, member, priceIterator.next(), false);
+        for (EventMember eventMember : eventMembers) {
+            BillDetail billDetail = new BillDetail(this, eventMember, priceIterator.next(), false);
             this.billDetails.add(billDetail);
         }
     }
@@ -112,9 +112,9 @@ public class Bill extends BaseEntity {
         return results;
     }
 
-    public void removeMemberBillDetail(Member member) {
+    public void removeMemberBillDetail(EventMember eventMember) {
         BillDetail foundBillDetail = billDetails.stream()
-                .filter(billDetail -> billDetail.isMember(member))
+                .filter(billDetail -> billDetail.isMember(eventMember))
                 .findFirst()
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND));
 
@@ -130,16 +130,16 @@ public class Bill extends BaseEntity {
         resetBillDetails();
     }
 
-    public boolean containMember(Member member) {
+    public boolean containMember(EventMember eventMember) {
         return billDetails.stream()
-                .anyMatch(billDetail -> billDetail.isMember(member));
+                .anyMatch(billDetail -> billDetail.isMember(eventMember));
     }
 
     public boolean isSameMembers(Bill other) {
-        Set<Member> members = Set.copyOf(this.getMembers());
-        Set<Member> otherMembers = Set.copyOf(other.getMembers());
+        Set<EventMember> eventMembers = Set.copyOf(this.getMembers());
+        Set<EventMember> otherEventMembers = Set.copyOf(other.getMembers());
 
-        return members.equals(otherMembers);
+        return eventMembers.equals(otherEventMembers);
     }
 
     public boolean isSamePrice(Long price) {
@@ -151,9 +151,9 @@ public class Bill extends BaseEntity {
                 .anyMatch(BillDetail::isFixed);
     }
 
-    public List<Member> getMembers() {
+    public List<EventMember> getMembers() {
         return billDetails.stream()
-                .map(BillDetail::getMember)
+                .map(BillDetail::getEventMember)
                 .toList();
     }
 }

@@ -14,7 +14,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             select b
             from Bill b
             join fetch b.billDetails bd
-            join fetch bd.member
+            join fetch bd.eventMember
             where b.event = :event
             """)
     List<Bill> findAllByEvent(Event event);

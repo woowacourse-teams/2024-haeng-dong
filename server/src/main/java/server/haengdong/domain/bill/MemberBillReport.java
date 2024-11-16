@@ -5,22 +5,22 @@ import static java.util.stream.Collectors.toMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 
 @Getter
 public class MemberBillReport {
 
-    private final Map<Member, Long> reports;
+    private final Map<EventMember, Long> reports;
 
-    private MemberBillReport(Map<Member, Long> reports) {
+    private MemberBillReport(Map<EventMember, Long> reports) {
         this.reports = reports;
     }
 
     public static MemberBillReport createByBills(List<Bill> bills) {
-        Map<Member, Long> reports = bills.stream()
+        Map<EventMember, Long> reports = bills.stream()
                 .flatMap(bill -> bill.getBillDetails().stream())
                 .collect(toMap(
-                        BillDetail::getMember,
+                        BillDetail::getEventMember,
                         BillDetail::getPrice,
                         Long::sum
                 ));

@@ -1,6 +1,6 @@
 package server.haengdong.application.response;
 
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 
 public record MemberDepositAppResponse(
         Long id,
@@ -8,7 +8,7 @@ public record MemberDepositAppResponse(
         boolean isDeposited
 ) {
 
-    public static MemberDepositAppResponse of(Member member) {
-        return new MemberDepositAppResponse(member.getId(), member.getName(), member.isDeposited());
+    public static MemberDepositAppResponse of(EventMember eventMember) {
+        return new MemberDepositAppResponse(eventMember.getId(), eventMember.getName(), eventMember.isDeposited());
     }
 }

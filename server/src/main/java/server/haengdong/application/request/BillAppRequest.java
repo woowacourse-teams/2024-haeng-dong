@@ -2,7 +2,7 @@ package server.haengdong.application.request;
 
 import java.util.List;
 import server.haengdong.domain.bill.Bill;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 import server.haengdong.domain.event.Event;
 
 public record BillAppRequest(
@@ -11,7 +11,7 @@ public record BillAppRequest(
         List<Long> memberIds
 ) {
 
-    public Bill toBill(Event event, List<Member> members) {
-        return Bill.create(event, title, price, members);
+    public Bill toBill(Event event, List<EventMember> eventMembers) {
+        return Bill.create(event, title, price, eventMembers);
     }
 }

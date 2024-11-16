@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.request.EventGuestAppRequest;
 import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
 import server.haengdong.application.response.EventDetailAppResponse;
@@ -22,12 +22,12 @@ import server.haengdong.application.response.MemberBillReportAppResponse;
 import server.haengdong.domain.RandomValueProvider;
 import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillRepository;
+import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventImage;
 import server.haengdong.domain.event.EventImageRepository;
-import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberRepository;
-import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
+import server.haengdong.domain.eventmember.EventMember;
+import server.haengdong.domain.eventmember.EventMemberRepository;
 import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.fixture.Fixture;
 
@@ -43,7 +43,7 @@ class EventServiceTest extends ServiceTestSupport {
     private BillRepository billRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private EventMemberRepository eventMemberRepository;
 
     @Autowired
     private EventImageRepository eventImageRepository;
@@ -56,11 +56,11 @@ class EventServiceTest extends ServiceTestSupport {
 
     @DisplayName("행사를 생성한다")
     @Test
-    void saveEventTest() {
-        EventAppRequest request = new EventAppRequest("test", "1234");
+    void saveEventGuestTest() {
+        EventGuestAppRequest request = new EventGuestAppRequest("test", "nickname", "1234");
         given(randomValueProvider.createRandomValue()).willReturn("TOKEN");
 
-        EventAppResponse response = eventService.saveEvent(request);
+        EventAppResponse response = eventService.saveEventGuest(request);
 
         assertThat(response.token()).isEqualTo("TOKEN");
     }
@@ -149,16 +149,16 @@ class EventServiceTest extends ServiceTestSupport {
     void getMemberBillReports() {
         Event event = Fixture.EVENT1;
         Event savedEvent = eventRepository.save(event);
-        List<Member> members = List.of(
-                new Member(savedEvent, "소하"),
-                new Member(savedEvent, "감자"),
-                new Member(savedEvent, "쿠키"),
-                new Member(savedEvent, "고구마")
+        List<EventMember> eventMembers = List.of(
+                new EventMember(savedEvent, "소하"),
+                new EventMember(savedEvent, "감자"),
+                new EventMember(savedEvent, "쿠키"),
+                new EventMember(savedEvent, "고구마")
         );
-        memberRepository.saveAll(members);
+        eventMemberRepository.saveAll(eventMembers);
         List<Bill> bills = List.of(
-                Bill.create(savedEvent, "뽕족", 60_000L, members),
-                Bill.create(savedEvent, "인생네컷", 20_000L, members)
+                Bill.create(savedEvent, "뽕족", 60_000L, eventMembers),
+                Bill.create(savedEvent, "인생네컷", 20_000L, eventMembers)
         );
         billRepository.saveAll(bills);
 

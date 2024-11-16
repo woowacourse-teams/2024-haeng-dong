@@ -1,7 +1,7 @@
 package server.haengdong.application.request;
 
 
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 import server.haengdong.domain.event.Event;
 
 public record MemberUpdateAppRequest(
@@ -10,7 +10,7 @@ public record MemberUpdateAppRequest(
         boolean isDeposited
 ) {
 
-    public Member toMember(Event event) {
-        return new Member(id, event, name, isDeposited);
+    public EventMember toMember(Event event) {
+        return new EventMember(id, event, name, isDeposited);
     }
 }
