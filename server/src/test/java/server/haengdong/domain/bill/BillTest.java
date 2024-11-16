@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 import server.haengdong.exception.HaengdongException;
 
 class BillTest {
@@ -54,8 +54,8 @@ class BillTest {
     @DisplayName("지출에 멤버별 고정 금액이 설정되어 있는지 확인한다.")
     @Test
     void isFixed1() {
-        List<Member> members = List.of(new Member(EVENT1, "감자"), new Member(EVENT1, "고구마"));
-        Bill fixedBill = Bill.create(EVENT1, "인생네컷", 2_000L, members);
+        List<EventMember> eventMembers = List.of(new EventMember(EVENT1, "감자"), new EventMember(EVENT1, "고구마"));
+        Bill fixedBill = Bill.create(EVENT1, "인생네컷", 2_000L, eventMembers);
 
         assertThat(fixedBill.isFixed()).isEqualTo(false);
     }
@@ -63,12 +63,12 @@ class BillTest {
     @DisplayName("같은 멤버 목록을 가지고 있는지 비교한다.")
     @Test
     void isSameMember1() {
-        Member member1 = new Member(1L, EVENT1, "감자", false);
-        Member member2 = new Member(2L, EVENT1, "고구마", false);
-        Member member3 = new Member(3L, EVENT1, "당근", false);
+        EventMember eventMember1 = new EventMember(1L, EVENT1, "감자", false);
+        EventMember eventMember2 = new EventMember(2L, EVENT1, "고구마", false);
+        EventMember eventMember3 = new EventMember(3L, EVENT1, "당근", false);
 
-        List<Member> members1 = List.of(member1, member2, member3);
-        List<Member> members2 = List.of(member2, member3, member1);
+        List<EventMember> members1 = List.of(eventMember1, eventMember2, eventMember3);
+        List<EventMember> members2 = List.of(eventMember2, eventMember3, eventMember1);
 
         Bill bill1 = Bill.create(EVENT1, "뽕족", 20_000L, members1);
         Bill bill2 = Bill.create(EVENT1, "인생네컷", 30_000L, members2);
@@ -81,12 +81,12 @@ class BillTest {
     @DisplayName("같은 멤버 목록을 가지고 있는지 비교한다.")
     @Test
     void isSameMember2() {
-        Member member1 = new Member(1L, EVENT1, "감자", false);
-        Member member2 = new Member(2L, EVENT1, "고구마", false);
-        Member member3 = new Member(3L, EVENT1, "당근", false);
+        EventMember eventMember1 = new EventMember(1L, EVENT1, "감자", false);
+        EventMember eventMember2 = new EventMember(2L, EVENT1, "고구마", false);
+        EventMember eventMember3 = new EventMember(3L, EVENT1, "당근", false);
 
-        List<Member> members1 = List.of(member1, member2, member3);
-        List<Member> members2 = List.of(member2, member1);
+        List<EventMember> members1 = List.of(eventMember1, eventMember2, eventMember3);
+        List<EventMember> members2 = List.of(eventMember2, eventMember1);
 
         Bill bill1 = Bill.create(EVENT1, "뽕족", 20_000L, members1);
         Bill bill2 = Bill.create(EVENT1, "인생네컷", 30_000L, members2);

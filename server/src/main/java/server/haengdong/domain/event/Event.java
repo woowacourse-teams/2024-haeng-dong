@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.Instant;
 import java.util.Arrays;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -35,7 +34,7 @@ public class Event extends BaseEntity {
     private String name;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "password", nullable = false))
+    @AttributeOverride(name = "value", column = @Column(name = "password"))
     private Password password;
 
     @Column(nullable = false, unique = true)
@@ -44,6 +43,8 @@ public class Event extends BaseEntity {
     @Column(length = MAX_ACCOUNT_NUMBER_LENGTH)
     private String account;
 
+    @Column(nullable = false)
+    private Long userId;
 
     public Event(String name, String password, String token) {
         validateName(name);
@@ -51,6 +52,14 @@ public class Event extends BaseEntity {
         this.password = new Password(password);
         this.token = token;
         this.account = "";
+        this.userId = 0L;
+    }
+
+    public Event(String name, Long userId, String token) {
+        validateName(name);
+        this.name = name;
+        this.userId = userId;
+        this.token = token;
     }
 
     private void validateName(String name) {

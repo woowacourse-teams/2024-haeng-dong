@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static server.haengdong.support.fixture.Fixture.BILL1;
 import static server.haengdong.support.fixture.Fixture.EVENT1;
 import static server.haengdong.support.fixture.Fixture.EVENT2;
-import static server.haengdong.support.fixture.Fixture.MEMBER1;
-import static server.haengdong.support.fixture.Fixture.MEMBER2;
-import static server.haengdong.support.fixture.Fixture.MEMBER3;
+import static server.haengdong.support.fixture.Fixture.EVENT_MEMBER_1;
+import static server.haengdong.support.fixture.Fixture.EVENT_MEMBER_2;
+import static server.haengdong.support.fixture.Fixture.EVENT_MEMBER_3;
 
 import java.util.List;
 import org.assertj.core.groups.Tuple;
@@ -32,17 +32,17 @@ import server.haengdong.domain.bill.BillDetail;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
-import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberRepository;
+import server.haengdong.domain.eventmember.EventMember;
+import server.haengdong.domain.eventmember.EventMemberRepository;
 import server.haengdong.exception.HaengdongException;
 
-class MemberServiceTest extends ServiceTestSupport {
+class EventEventMemberServiceTest extends ServiceTestSupport {
 
     @Autowired
-    private MemberService memberService;
+    private EventMemberService eventMemberService;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private EventMemberRepository eventMemberRepository;
 
     @Autowired
     private EventRepository eventRepository;
@@ -56,22 +56,22 @@ class MemberServiceTest extends ServiceTestSupport {
         Event event = EVENT1;
         String memberName1 = "웨디";
         String memberName2 = "쿠키";
-        Member member1 = new Member(event, memberName1);
-        Member member2 = new Member(event, memberName2);
+        EventMember eventMember1 = new EventMember(event, memberName1);
+        EventMember eventMember2 = new EventMember(event, memberName2);
         eventRepository.save(event);
         MembersSaveAppRequest request = new MembersSaveAppRequest(
                 List.of(
-                        new MemberSaveAppRequest(member1.getName()),
-                        new MemberSaveAppRequest(member2.getName())
+                        new MemberSaveAppRequest(eventMember1.getName()),
+                        new MemberSaveAppRequest(eventMember2.getName())
                 )
         );
 
-        MembersSaveAppResponse response = memberService.saveMembers(event.getToken(), request);
+        MembersSaveAppResponse response = eventMemberService.saveMembers(event.getToken(), request);
 
-        List<Member> savedMembers = memberRepository.findAll();
+        List<EventMember> savedEventMembers = eventMemberRepository.findAll();
         assertAll(
-                () -> assertThat(savedMembers)
-                        .extracting(Member::getName)
+                () -> assertThat(savedEventMembers)
+                        .extracting(EventMember::getName)
                         .containsExactlyInAnyOrder(memberName1, memberName2),
                 () -> assertThat(response.members())
                         .extracting(MemberSaveAppResponse::id, MemberSaveAppResponse::name)
@@ -86,18 +86,18 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void saveMembersTest1() {
         Event event = EVENT1;
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
+        EventMember eventMember1 = EVENT_MEMBER_1;
+        EventMember eventMember2 = EVENT_MEMBER_2;
         eventRepository.save(event);
-        memberRepository.save(member1);
+        eventMemberRepository.save(eventMember1);
         MembersSaveAppRequest request = new MembersSaveAppRequest(
                 List.of(
-                        new MemberSaveAppRequest(member1.getName()),
-                        new MemberSaveAppRequest(member2.getName())
+                        new MemberSaveAppRequest(eventMember1.getName()),
+                        new MemberSaveAppRequest(eventMember2.getName())
                 )
         );
 
-        assertThatThrownBy(() -> memberService.saveMembers(event.getToken(), request))
+        assertThatThrownBy(() -> eventMemberService.saveMembers(event.getToken(), request))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("현재 참여하고 있는 인원이 존재합니다.");
     }
@@ -114,7 +114,7 @@ class MemberServiceTest extends ServiceTestSupport {
                 )
         );
 
-        assertThatThrownBy(() -> memberService.saveMembers(event.getToken(), request))
+        assertThatThrownBy(() -> eventMemberService.saveMembers(event.getToken(), request))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessageContaining("행사에 중복된 참여자 이름이 존재합니다.");
     }
@@ -123,13 +123,13 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void deleteMemberTest() {
         Event event = EVENT1;
-        Member member = MEMBER1;
+        EventMember eventMember = EVENT_MEMBER_1;
         eventRepository.save(event);
-        memberRepository.save(member);
+        eventMemberRepository.save(eventMember);
 
-        memberService.deleteMember(event.getToken(), member.getId());
+        eventMemberService.deleteMember(event.getToken(), eventMember.getId());
 
-        assertThat(memberRepository.findById(member.getId())).isEmpty();
+        assertThat(eventMemberRepository.findById(eventMember.getId())).isEmpty();
     }
 
     @DisplayName("다른 이벤트의 참여 인원을 삭제하는 경우 예외가 발생한다.")
@@ -137,41 +137,41 @@ class MemberServiceTest extends ServiceTestSupport {
     void deleteMemberTest1() {
         Event event1 = EVENT1;
         Event event2 = EVENT2;
-        Member member = new Member(EVENT2, "감자");
+        EventMember eventMember = new EventMember(EVENT2, "감자");
         eventRepository.saveAll(List.of(event1, event2));
-        memberRepository.save(member);
+        eventMemberRepository.save(eventMember);
 
-        assertThatThrownBy(() -> memberService.deleteMember(event1.getToken(), member.getId()))
+        assertThatThrownBy(() -> eventMemberService.deleteMember(event1.getToken(), eventMember.getId()))
                 .isInstanceOf(HaengdongException.class);
 
-        assertThat(memberRepository.findById(member.getId())).isNotEmpty();
+        assertThat(eventMemberRepository.findById(eventMember.getId())).isNotEmpty();
     }
 
     @DisplayName("행사 참여 인원을 삭제하는 경우 해당 참여자가 포함된 Bill이 초기화된다.")
     @Test
     void deleteMemberTest2() {
         Event event1 = EVENT1;
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
-        List<Member> members = List.of(member1, member2);
-        Bill bill = Bill.create(event1, "title", 10000L, members);
+        EventMember eventMember1 = EVENT_MEMBER_1;
+        EventMember eventMember2 = EVENT_MEMBER_2;
+        List<EventMember> eventMembers = List.of(eventMember1, eventMember2);
+        Bill bill = Bill.create(event1, "title", 10000L, eventMembers);
         eventRepository.save(event1);
-        memberRepository.saveAll(members);
+        eventMemberRepository.saveAll(eventMembers);
 
-        BillDetail billDetail1 = getDetailByMember(bill, member1);
-        BillDetail billDetail2 = getDetailByMember(bill, member2);
+        BillDetail billDetail1 = getDetailByMember(bill, eventMember1);
+        BillDetail billDetail2 = getDetailByMember(bill, eventMember2);
         billDetail1.updatePrice(8000L);
         billDetail1.updateIsFixed(false);
         billDetail2.updatePrice(2000L);
         billDetail2.updateIsFixed(true);
         billRepository.save(bill);
 
-        memberService.deleteMember(event1.getToken(), member1.getId());
+        eventMemberService.deleteMember(event1.getToken(), eventMember1.getId());
         Bill bill1 = billRepository.findAllByEvent(event1).get(0);
         List<BillDetail> bill1Details = bill1.getBillDetails();
 
         assertAll(
-                () -> assertThat(memberRepository.findById(member1.getId())).isEmpty(),
+                () -> assertThat(eventMemberRepository.findById(eventMember1.getId())).isEmpty(),
                 () -> assertThat(bill1Details).doesNotContain(billDetail1),
                 () -> {
                     BillDetail foundDetail = bill1Details.stream()
@@ -182,10 +182,10 @@ class MemberServiceTest extends ServiceTestSupport {
         );
     }
 
-    private BillDetail getDetailByMember(Bill bill, Member member) {
+    private BillDetail getDetailByMember(Bill bill, EventMember eventMember) {
         return bill.getBillDetails()
                 .stream()
-                .filter(billDetail -> billDetail.isMember(member))
+                .filter(billDetail -> billDetail.isMember(eventMember))
                 .findFirst()
                 .orElseThrow();
     }
@@ -194,21 +194,21 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void updateMembersNameTest() {
         Event event = EVENT1;
-        Member member = MEMBER1;
+        EventMember eventMember = EVENT_MEMBER_1;
         eventRepository.save(event);
-        memberRepository.save(member);
+        eventMemberRepository.save(eventMember);
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(member.getId(), "수정된이름", true)
+                        new MemberUpdateAppRequest(eventMember.getId(), "수정된이름", true)
                 )
         );
 
-        memberService.updateMembers(event.getToken(), membersUpdateAppRequest);
+        eventMemberService.updateMembers(event.getToken(), membersUpdateAppRequest);
 
-        Member updatedMember = memberRepository.findById(member.getId()).orElseThrow();
+        EventMember updatedEventMember = eventMemberRepository.findById(eventMember.getId()).orElseThrow();
         assertAll(
-                () -> assertThat(updatedMember.getName()).isEqualTo("수정된이름"),
-                () -> assertTrue(updatedMember.isDeposited())
+                () -> assertThat(updatedEventMember.getName()).isEqualTo("수정된이름"),
+                () -> assertTrue(updatedEventMember.isDeposited())
         );
     }
 
@@ -216,21 +216,21 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void updateMembersIsDepositedTest() {
         Event event = EVENT1;
-        Member member = MEMBER1;
+        EventMember eventMember = EVENT_MEMBER_1;
         eventRepository.save(event);
-        memberRepository.save(member);
+        eventMemberRepository.save(eventMember);
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(member.getId(), member.getName(), false)
+                        new MemberUpdateAppRequest(eventMember.getId(), eventMember.getName(), false)
                 )
         );
 
-        memberService.updateMembers(event.getToken(), membersUpdateAppRequest);
+        eventMemberService.updateMembers(event.getToken(), membersUpdateAppRequest);
 
-        Member updatedMember = memberRepository.findById(member.getId()).orElseThrow();
+        EventMember updatedEventMember = eventMemberRepository.findById(eventMember.getId()).orElseThrow();
         assertAll(
-                () -> assertThat(updatedMember.getName()).isEqualTo(member.getName()),
-                () -> assertFalse(updatedMember.isDeposited())
+                () -> assertThat(updatedEventMember.getName()).isEqualTo(eventMember.getName()),
+                () -> assertFalse(updatedEventMember.isDeposited())
         );
     }
 
@@ -238,17 +238,17 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void updateMembersTest2() {
         Event event = EVENT1;
-        Member member = MEMBER1;
+        EventMember eventMember = EVENT_MEMBER_1;
         eventRepository.save(event);
-        memberRepository.save(member);
+        eventMemberRepository.save(eventMember);
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(member.getId(), "수정", true),
-                        new MemberUpdateAppRequest(member.getId(), "수정수정", false)
+                        new MemberUpdateAppRequest(eventMember.getId(), "수정", true),
+                        new MemberUpdateAppRequest(eventMember.getId(), "수정수정", false)
                 )
         );
 
-        assertThatThrownBy(() -> memberService.updateMembers(event.getToken(), membersUpdateAppRequest))
+        assertThatThrownBy(() -> eventMemberService.updateMembers(event.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("중복된 참여 인원 이름 변경 요청이 존재합니다.");
     }
@@ -257,18 +257,18 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void updateMembersTest3() {
         Event event = EVENT1;
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
+        EventMember eventMember1 = EVENT_MEMBER_1;
+        EventMember eventMember2 = EVENT_MEMBER_2;
         eventRepository.save(event);
-        memberRepository.saveAll(List.of(member1, member2));
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2));
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(member1.getId(), "수정", true),
-                        new MemberUpdateAppRequest(member2.getId(), "수정", false)
+                        new MemberUpdateAppRequest(eventMember1.getId(), "수정", true),
+                        new MemberUpdateAppRequest(eventMember2.getId(), "수정", false)
                 )
         );
 
-        assertThatThrownBy(() -> memberService.updateMembers(event.getToken(), membersUpdateAppRequest))
+        assertThatThrownBy(() -> eventMemberService.updateMembers(event.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("중복된 참여 인원 이름 변경 요청이 존재합니다.");
     }
@@ -278,16 +278,16 @@ class MemberServiceTest extends ServiceTestSupport {
     void updateMembersTest4() {
         Event event1 = EVENT1;
         Event event2 = EVENT2;
-        Member member = new Member(event2, "이상");
+        EventMember eventMember = new EventMember(event2, "이상");
         eventRepository.saveAll(List.of(event1, event2));
-        memberRepository.save(member);
+        eventMemberRepository.save(eventMember);
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(member.getId(), "수정", true)
+                        new MemberUpdateAppRequest(eventMember.getId(), "수정", true)
                 )
         );
 
-        assertThatThrownBy(() -> memberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
+        assertThatThrownBy(() -> eventMemberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
     }
@@ -296,17 +296,17 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void updateMembersTest5() {
         Event event1 = EVENT1;
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
+        EventMember eventMember1 = EVENT_MEMBER_1;
+        EventMember eventMember2 = EVENT_MEMBER_2;
         eventRepository.save(event1);
-        memberRepository.saveAll(List.of(member1, member2));
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2));
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(member1.getId(), member2.getName(), true)
+                        new MemberUpdateAppRequest(eventMember1.getId(), eventMember2.getName(), true)
                 )
         );
 
-        assertThatThrownBy(() -> memberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
+        assertThatThrownBy(() -> eventMemberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
     }
@@ -315,18 +315,18 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void updateMembersTest6() {
         Event event = EVENT1;
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
+        EventMember eventMember1 = EVENT_MEMBER_1;
+        EventMember eventMember2 = EVENT_MEMBER_2;
         eventRepository.save(event);
-        memberRepository.saveAll(List.of(member1, member2));
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2));
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(member1.getId(), member2.getName(), true),
-                        new MemberUpdateAppRequest(member2.getId(), member1.getName(), false)
+                        new MemberUpdateAppRequest(eventMember1.getId(), eventMember2.getName(), true),
+                        new MemberUpdateAppRequest(eventMember2.getId(), eventMember1.getName(), false)
                 )
         );
 
-        assertThatThrownBy(() -> memberService.updateMembers(event.getToken(), membersUpdateAppRequest))
+        assertThatThrownBy(() -> eventMemberService.updateMembers(event.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("행사에 중복된 참여자 이름이 존재합니다.");
     }
@@ -336,21 +336,21 @@ class MemberServiceTest extends ServiceTestSupport {
     void findAllMembersTest() {
         Event event = EVENT1;
         Bill bill = BILL1;
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
-        Member member3 = MEMBER3;
+        EventMember eventMember1 = EVENT_MEMBER_1;
+        EventMember eventMember2 = EVENT_MEMBER_2;
+        EventMember eventMember3 = EVENT_MEMBER_3;
         eventRepository.save(event);
-        memberRepository.saveAll(List.of(member1, member2, member3));
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2, eventMember3));
         billRepository.save(bill);
 
-        MembersDepositAppResponse membersDepositAppResponse = memberService.findAllMembers(event.getToken());
+        MembersDepositAppResponse membersDepositAppResponse = eventMemberService.findAllMembers(event.getToken());
 
         assertThat(membersDepositAppResponse.members()).hasSize(3)
                 .extracting(MemberDepositAppResponse::name, MemberDepositAppResponse::isDeposited)
                 .containsExactlyInAnyOrder(
-                        tuple(member1.getName(), member1.isDeposited()),
-                        tuple(member2.getName(), member2.isDeposited()),
-                        tuple(member3.getName(), member3.isDeposited())
+                        tuple(eventMember1.getName(), eventMember1.isDeposited()),
+                        tuple(eventMember2.getName(), eventMember2.isDeposited()),
+                        tuple(eventMember3.getName(), eventMember3.isDeposited())
                 );
     }
 
@@ -358,31 +358,31 @@ class MemberServiceTest extends ServiceTestSupport {
     @Test
     void getCurrentMembersTest() {
         Event event = EVENT1;
-        Member member1 = MEMBER1;
-        Member member2 = MEMBER2;
-        Member member3 = MEMBER3;
-        Bill bill1 = Bill.create(event, "title1", 100000L, List.of(member1));
-        Bill bill2 = Bill.create(event, "title2", 200000L, List.of(member1, member2, member3));
-        Bill bill3 = Bill.create(event, "title2", 200000L, List.of(member1, member2, member3));
+        EventMember eventMember1 = EVENT_MEMBER_1;
+        EventMember eventMember2 = EVENT_MEMBER_2;
+        EventMember eventMember3 = EVENT_MEMBER_3;
+        Bill bill1 = Bill.create(event, "title1", 100000L, List.of(eventMember1));
+        Bill bill2 = Bill.create(event, "title2", 200000L, List.of(eventMember1, eventMember2, eventMember3));
+        Bill bill3 = Bill.create(event, "title2", 200000L, List.of(eventMember1, eventMember2, eventMember3));
         eventRepository.save(event);
-        memberRepository.saveAll(List.of(member1, member2, member3));
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2, eventMember3));
         billRepository.saveAll(List.of(bill1, bill2, bill3));
 
-        List<MemberAppResponse> currentMembers = memberService.getCurrentMembers(event.getToken());
+        List<MemberAppResponse> currentMembers = eventMemberService.getCurrentMembers(event.getToken());
 
         assertThat(currentMembers).hasSize(3)
                 .extracting(MemberAppResponse::id, MemberAppResponse::name)
                 .containsExactlyInAnyOrder(
-                        tuple(member1.getId(), member1.getName()),
-                        tuple(member2.getId(), member2.getName()),
-                        tuple(member3.getId(), member3.getName())
+                        tuple(eventMember1.getId(), eventMember1.getName()),
+                        tuple(eventMember2.getId(), eventMember2.getName()),
+                        tuple(eventMember3.getId(), eventMember3.getName())
                 );
     }
 
     @DisplayName("행사가 없으면 현재 참여 인원을 조회할 수 없다.")
     @Test
     void getCurrentMembersTest1() {
-        assertThatThrownBy(() -> memberService.getCurrentMembers("token"))
+        assertThatThrownBy(() -> eventMemberService.getCurrentMembers("token"))
                 .isInstanceOf(HaengdongException.class);
     }
 }

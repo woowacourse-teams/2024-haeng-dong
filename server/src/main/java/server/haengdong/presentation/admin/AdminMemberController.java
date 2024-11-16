@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import server.haengdong.application.MemberService;
+import server.haengdong.application.EventMemberService;
 import server.haengdong.application.response.MembersSaveAppResponse;
 import server.haengdong.presentation.request.MembersSaveRequest;
 import server.haengdong.presentation.request.MembersUpdateRequest;
@@ -21,14 +21,14 @@ import server.haengdong.presentation.response.MembersSaveResponse;
 @RestController
 public class AdminMemberController {
 
-    private final MemberService memberService;
+    private final EventMemberService eventMemberService;
 
     @PostMapping("/api/admin/events/{eventId}/members")
     public ResponseEntity<MembersSaveResponse> saveMembers(
             @PathVariable("eventId") String token,
             @Valid @RequestBody MembersSaveRequest request
     ) {
-        MembersSaveAppResponse response = memberService.saveMembers(token, request.toAppRequest());
+        MembersSaveAppResponse response = eventMemberService.saveMembers(token, request.toAppRequest());
 
         return ResponseEntity.ok(MembersSaveResponse.of(response));
     }
@@ -38,7 +38,7 @@ public class AdminMemberController {
             @PathVariable("eventId") String token,
             @Valid @RequestBody MembersUpdateRequest request
     ) {
-        memberService.updateMembers(token, request.toAppRequest());
+        eventMemberService.updateMembers(token, request.toAppRequest());
 
         return ResponseEntity.ok().build();
     }
@@ -48,7 +48,7 @@ public class AdminMemberController {
             @PathVariable("eventId") String token,
             @PathVariable("memberId") Long memberId
     ) {
-        memberService.deleteMember(token, memberId);
+        eventMemberService.deleteMember(token, memberId);
 
         return ResponseEntity.ok().build();
     }

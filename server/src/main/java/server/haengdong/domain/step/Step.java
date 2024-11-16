@@ -5,26 +5,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import server.haengdong.domain.bill.Bill;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
 public class Step {
 
     private final List<Bill> bills;
-    private final Set<Member> members;
+    private final Set<EventMember> eventMembers;
 
-    private Step(List<Bill> bills, Set<Member> members) {
+    private Step(List<Bill> bills, Set<EventMember> eventMembers) {
         this.bills = bills;
-        this.members = members;
+        this.eventMembers = eventMembers;
     }
 
     public static Step of(Bill bill) {
         List<Bill> bills = new ArrayList<>();
         bills.add(bill);
-        Set<Member> members = new HashSet<>(bill.getMembers());
+        Set<EventMember> eventMembers = new HashSet<>(bill.getMembers());
 
-        return new Step(bills, members);
+        return new Step(bills, eventMembers);
     }
 
     public void add(Bill bill) {
@@ -36,15 +36,15 @@ public class Step {
     }
 
     public boolean isNotSameMember(Bill bill) {
-        Set<Member> otherMembers = Set.copyOf(bill.getMembers());
-        return !members.equals(otherMembers);
+        Set<EventMember> otherEventMembers = Set.copyOf(bill.getMembers());
+        return !eventMembers.equals(otherEventMembers);
     }
 
     public List<Bill> getBills() {
         return bills;
     }
 
-    public Set<Member> getMembers() {
-        return members;
+    public Set<EventMember> getMembers() {
+        return eventMembers;
     }
 }

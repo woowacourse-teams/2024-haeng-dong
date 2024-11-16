@@ -2,31 +2,43 @@ package server.haengdong.application;
 
 
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import server.haengdong.domain.TokenProvider;
+import server.haengdong.domain.user.Role;
 import server.haengdong.exception.AuthenticationException;
 import server.haengdong.exception.HaengdongErrorCode;
 
+@Slf4j
 public class AuthService {
 
-    private static final String TOKEN_NAME = "eventToken";
+    private static final String TOKEN_NAME = "accessToken";
     private static final String CLAIM_SUB = "sub";
+    private static final String ROLE = "role";
 
     private final TokenProvider tokenProvider;
+    private final EventService eventService;
 
-    public AuthService(TokenProvider tokenProvider) {
+    public AuthService(TokenProvider tokenProvider, EventService eventService) {
         this.tokenProvider = tokenProvider;
+        this.eventService = eventService;
     }
 
-    public String createToken(String eventId) {
-        Map<String, Object> payload = Map.of(CLAIM_SUB, eventId);
+    public String createGuestToken(Long userId) {
+        Map<String, Object> payload = Map.of(CLAIM_SUB, userId, ROLE, Role.GUEST);
 
         return tokenProvider.createToken(payload);
     }
 
-    public String findEventIdByToken(String token) {
+    public String createMemberToken(Long userId) {
+        Map<String, Object> payload = Map.of(CLAIM_SUB, userId, ROLE, Role.MEMBER);
+
+        return tokenProvider.createToken(payload);
+    }
+
+    public Long findUserIdByToken(String token) {
         validateToken(token);
         Map<String, Object> payload = tokenProvider.getPayload(token);
-        return (String) payload.get(CLAIM_SUB);
+        return (Long) payload.get(CLAIM_SUB);
     }
 
     private void validateToken(String token) {
@@ -37,5 +49,14 @@ public class AuthService {
 
     public String getTokenName() {
         return TOKEN_NAME;
+    }
+
+    public void checkAuth(String eventToken, Long userId) {
+        boolean hasEvent = eventService.existsByTokenAndUserId(eventToken, userId);
+
+        if (!hasEvent) {
+            log.warn("[행사 접근 불가] Cookie EventId = {}, UserId = {}", eventToken, userId);
+            throw new AuthenticationException(HaengdongErrorCode.FORBIDDEN);
+        }
     }
 }

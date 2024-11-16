@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import server.haengdong.application.EventImageFacadeService;
 import server.haengdong.application.EventService;
+import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.config.Login;
+import server.haengdong.presentation.request.EventSaveRequest;
 import server.haengdong.presentation.request.EventUpdateRequest;
+import server.haengdong.presentation.response.EventResponse;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,6 +28,12 @@ public class AdminEventController {
 
     private final EventService eventService;
     private final EventImageFacadeService eventImageFacadeService;
+
+    @PostMapping("/api/admin/events")
+    public ResponseEntity<EventResponse> saveEvent(@Login Long userId, @Valid @RequestBody EventSaveRequest request) {
+        EventResponse eventResponse = EventResponse.of(eventService.saveEvent(new EventAppRequest(request.eventName(), userId)));
+        return ResponseEntity.ok(eventResponse);
+    }
 
     @PostMapping("/api/admin/events/{eventId}/auth")
     public ResponseEntity<Void> authenticate() {

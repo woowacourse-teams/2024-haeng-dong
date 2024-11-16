@@ -16,18 +16,18 @@ import server.haengdong.domain.bill.Bill;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
-import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberRepository;
-import server.haengdong.domain.member.UpdatedMembers;
+import server.haengdong.domain.eventmember.EventMember;
+import server.haengdong.domain.eventmember.EventMemberRepository;
+import server.haengdong.domain.eventmember.UpdatedMembers;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class MemberService {
+public class EventMemberService {
 
-    private final MemberRepository memberRepository;
+    private final EventMemberRepository eventMemberRepository;
     private final EventRepository eventRepository;
     private final BillRepository billRepository;
 
@@ -40,12 +40,12 @@ public class MemberService {
 
         validateMemberSave(memberNames, event);
 
-        List<Member> members = memberNames.stream()
-                .map(name -> new Member(event, name))
+        List<EventMember> eventMembers = memberNames.stream()
+                .map(name -> new EventMember(event, name))
                 .toList();
 
-        List<Member> savedMembers = memberRepository.saveAll(members);
-        return MembersSaveAppResponse.of(savedMembers);
+        List<EventMember> savedEventMembers = eventMemberRepository.saveAll(eventMembers);
+        return MembersSaveAppResponse.of(savedEventMembers);
     }
 
     private void validateMemberSave(List<String> memberNames, Event event) {
@@ -59,7 +59,7 @@ public class MemberService {
     }
 
     private boolean isDuplicatedMemberNames(Set<String> uniqueMemberNames, Event event) {
-        return memberRepository.findAllByEvent(event).stream()
+        return eventMemberRepository.findAllByEvent(event).stream()
                 .anyMatch(member -> uniqueMemberNames.contains(member.getName()));
     }
 
@@ -68,7 +68,7 @@ public class MemberService {
 
         return billRepository.findFirstByEventOrderByIdDesc(event)
                 .map(Bill::getMembers)
-                .orElseGet(() -> memberRepository.findAllByEvent(event))
+                .orElseGet(() -> eventMemberRepository.findAllByEvent(event))
                 .stream()
                 .map(MemberAppResponse::of)
                 .toList();
@@ -77,38 +77,38 @@ public class MemberService {
     public MembersDepositAppResponse findAllMembers(String token) {
         Event event = getEvent(token);
 
-        List<Member> members = memberRepository.findAllByEvent(event);
+        List<EventMember> eventMembers = eventMemberRepository.findAllByEvent(event);
 
-        return MembersDepositAppResponse.of(members);
+        return MembersDepositAppResponse.of(eventMembers);
     }
 
     @Transactional
     public void updateMembers(String token, MembersUpdateAppRequest request) {
         Event event = getEvent(token);
         UpdatedMembers updatedMembers = new UpdatedMembers(request.toMembers(event));
-        List<Member> originMembers = memberRepository.findAllByEvent(event);
+        List<EventMember> originEventMembers = eventMemberRepository.findAllByEvent(event);
 
-        updatedMembers.validateUpdatable(originMembers);
-        memberRepository.saveAll(updatedMembers.getMembers());
+        updatedMembers.validateUpdatable(originEventMembers);
+        eventMemberRepository.saveAll(updatedMembers.getMembers());
     }
 
     @Transactional
     public void deleteMember(String token, Long memberId) {
-        memberRepository.findById(memberId)
+        eventMemberRepository.findById(memberId)
                 .ifPresent(member -> deleteMember(token, member));
     }
 
-    private void deleteMember(String token, Member member) {
-        Event event = member.getEvent();
+    private void deleteMember(String token, EventMember eventMember) {
+        Event event = eventMember.getEvent();
         if (event.isTokenMismatch(token)) {
             throw new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND);
         }
 
         billRepository.findAllByEvent(event).stream()
-                .filter(bill -> bill.containMember(member))
-                .forEach(bill -> bill.removeMemberBillDetail(member));
+                .filter(bill -> bill.containMember(eventMember))
+                .forEach(bill -> bill.removeMemberBillDetail(eventMember));
         billRepository.flush();
-        memberRepository.delete(member);
+        eventMemberRepository.delete(eventMember);
     }
 
     private Event getEvent(String token) {

@@ -15,8 +15,8 @@ import server.haengdong.domain.bill.BillDetail;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
-import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberRepository;
+import server.haengdong.domain.eventmember.EventMember;
+import server.haengdong.domain.eventmember.EventMemberRepository;
 import server.haengdong.domain.step.Steps;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
@@ -28,22 +28,22 @@ public class BillService {
 
     private final BillRepository billRepository;
     private final EventRepository eventRepository;
-    private final MemberRepository memberRepository;
+    private final EventMemberRepository eventMemberRepository;
 
     @Transactional
     public void saveBill(String eventToken, BillAppRequest request) {
         Event event = getEvent(eventToken);
         List<Long> memberIds = request.memberIds();
-        List<Member> members = memberIds.stream()
+        List<EventMember> eventMembers = memberIds.stream()
                 .map(this::findMember)
                 .toList();
 
-        Bill bill = request.toBill(event, members);
+        Bill bill = request.toBill(event, eventMembers);
         billRepository.save(bill);
     }
 
-    private Member findMember(Long memberId) {
-        return memberRepository.findById(memberId)
+    private EventMember findMember(Long memberId) {
+        return eventMemberRepository.findById(memberId)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.MEMBER_NOT_FOUND));
     }
 

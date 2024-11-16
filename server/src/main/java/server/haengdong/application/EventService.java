@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.haengdong.application.request.EventAppRequest;
+import server.haengdong.application.request.EventGuestAppRequest;
 import server.haengdong.application.request.EventLoginAppRequest;
 import server.haengdong.application.request.EventUpdateAppRequest;
 import server.haengdong.application.response.EventAppResponse;
@@ -23,7 +24,8 @@ import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventImage;
 import server.haengdong.domain.event.EventImageRepository;
 import server.haengdong.domain.event.EventRepository;
-import server.haengdong.domain.member.Member;
+import server.haengdong.domain.eventmember.EventMember;
+import server.haengdong.domain.eventmember.EventMemberRepository;
 import server.haengdong.exception.AuthenticationException;
 import server.haengdong.exception.HaengdongErrorCode;
 import server.haengdong.exception.HaengdongException;
@@ -39,15 +41,31 @@ public class EventService {
     private final RandomValueProvider randomValueProvider;
     private final BillRepository billRepository;
     private final EventImageRepository eventImageRepository;
+    private final EventMemberRepository eventMemberRepository;
+    private final UserService userService;
 
     @Value("${image.base-url}")
     private String baseUrl;
 
     @Transactional
+    public EventAppResponse saveEventGuest(EventGuestAppRequest request) {
+        Long userId = userService.joinGuest(request.toUserRequest());
+        String token = randomValueProvider.createRandomValue();
+        Event event = new Event(request.eventName(), userId, token);
+        eventRepository.save(event);
+
+        eventMemberRepository.save(new EventMember(event, request.nickname()));
+        return EventAppResponse.of(event);
+    }
+
+    @Transactional
     public EventAppResponse saveEvent(EventAppRequest request) {
         String token = randomValueProvider.createRandomValue();
-        Event event = request.toEvent(token);
+        Event event = new Event(request.name(), request.userId(), token);
         eventRepository.save(event);
+
+        String nickname = userService.findNicknameById(request.userId());
+        eventMemberRepository.save(new EventMember(event, nickname));
 
         return EventAppResponse.of(event);
     }
@@ -58,11 +76,10 @@ public class EventService {
         return EventDetailAppResponse.of(event);
     }
 
-    public void validatePassword(EventLoginAppRequest request) throws HaengdongException {
+    public EventAppResponse findByGuestPassword(EventLoginAppRequest request) {
         Event event = getEvent(request.token());
-        if (event.isPasswordMismatch(request.password())) {
-            throw new AuthenticationException(HaengdongErrorCode.PASSWORD_INVALID);
-        }
+        userService.validateUser(event.getUserId(), request.password());
+        return EventAppResponse.of(event);
     }
 
     public List<MemberBillReportAppResponse> getMemberBillReports(String token) {
@@ -77,14 +94,14 @@ public class EventService {
                 .toList();
     }
 
-    private MemberBillReportAppResponse createMemberBillReportResponse(Entry<Member, Long> entry) {
-        Member member = entry.getKey();
+    private MemberBillReportAppResponse createMemberBillReportResponse(Entry<EventMember, Long> entry) {
+        EventMember eventMember = entry.getKey();
         Long price = entry.getValue();
 
         return new MemberBillReportAppResponse(
-                member.getId(),
-                member.getName(),
-                member.isDeposited(),
+                eventMember.getId(),
+                eventMember.getName(),
+                eventMember.isDeposited(),
                 price
         );
     }
@@ -174,5 +191,9 @@ public class EventService {
         return eventImageRepository.findByCreatedAtAfter(date).stream()
                 .map(EventImageSaveAppResponse::of)
                 .toList();
+    }
+
+    public boolean existsByTokenAndUserId(String eventToken, Long userId) {
+        return eventRepository.existsByTokenAndUserId(eventToken, userId);
     }
 }

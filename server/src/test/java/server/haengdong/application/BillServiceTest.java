@@ -23,8 +23,8 @@ import server.haengdong.domain.bill.BillDetail;
 import server.haengdong.domain.bill.BillRepository;
 import server.haengdong.domain.event.Event;
 import server.haengdong.domain.event.EventRepository;
-import server.haengdong.domain.member.Member;
-import server.haengdong.domain.member.MemberRepository;
+import server.haengdong.domain.eventmember.EventMember;
+import server.haengdong.domain.eventmember.EventMemberRepository;
 import server.haengdong.exception.HaengdongException;
 import server.haengdong.support.fixture.Fixture;
 
@@ -40,22 +40,24 @@ class BillServiceTest extends ServiceTestSupport {
     private BillRepository billRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private EventMemberRepository eventMemberRepository;
 
     @DisplayName("전체 지출 내역을 조회한다.")
     @Test
     void findSteps() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        Member member1 = new Member(event, "토다리");
-        Member member2 = new Member(event, "쿠키");
-        Member member3 = new Member(event, "소하");
-        Member member4 = new Member(event, "웨디");
-        memberRepository.saveAll(List.of(member1, member2, member3, member4));
-        Bill bill1 = Bill.create(event, "행동대장 회식1", 100000L, List.of(member1, member2, member3));
-        Bill bill2 = Bill.create(event, "행동대장 회식2", 200000L, List.of(member1, member2, member3, member4));
-        Bill bill3 = Bill.create(event, "행동대장 회식3", 300000L, List.of(member1, member2, member3, member4));
-        Bill bill4 = Bill.create(event, "행동대장 회식4", 400000L, List.of(member2, member3, member4));
+        EventMember eventMember1 = new EventMember(event, "토다리");
+        EventMember eventMember2 = new EventMember(event, "쿠키");
+        EventMember eventMember3 = new EventMember(event, "소하");
+        EventMember eventMember4 = new EventMember(event, "웨디");
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2, eventMember3, eventMember4));
+        Bill bill1 = Bill.create(event, "행동대장 회식1", 100000L, List.of(eventMember1, eventMember2, eventMember3));
+        Bill bill2 = Bill.create(event, "행동대장 회식2", 200000L, List.of(
+                eventMember1, eventMember2, eventMember3, eventMember4));
+        Bill bill3 = Bill.create(event, "행동대장 회식3", 300000L, List.of(
+                eventMember1, eventMember2, eventMember3, eventMember4));
+        Bill bill4 = Bill.create(event, "행동대장 회식4", 400000L, List.of(eventMember2, eventMember3, eventMember4));
         billRepository.saveAll(List.of(bill1, bill2, bill3, bill4));
 
         List<StepAppResponse> steps = billService.findSteps(event.getToken());
@@ -72,9 +74,9 @@ class BillServiceTest extends ServiceTestSupport {
         assertThat(steps.get(0).members()).hasSize(3)
                 .extracting(MemberAppResponse::id, MemberAppResponse::name)
                 .containsExactlyInAnyOrder(
-                        tuple(member1.getId(), member1.getName()),
-                        tuple(member2.getId(), member2.getName()),
-                        tuple(member3.getId(), member3.getName())
+                        tuple(eventMember1.getId(), eventMember1.getName()),
+                        tuple(eventMember2.getId(), eventMember2.getName()),
+                        tuple(eventMember3.getId(), eventMember3.getName())
                 );
 
         assertThat(steps.get(1).bills()).hasSize(2)
@@ -88,10 +90,10 @@ class BillServiceTest extends ServiceTestSupport {
         assertThat(steps.get(1).members()).hasSize(4)
                 .extracting(MemberAppResponse::id, MemberAppResponse::name)
                 .containsExactlyInAnyOrder(
-                        tuple(member1.getId(), member1.getName()),
-                        tuple(member2.getId(), member2.getName()),
-                        tuple(member3.getId(), member3.getName()),
-                        tuple(member4.getId(), member4.getName())
+                        tuple(eventMember1.getId(), eventMember1.getName()),
+                        tuple(eventMember2.getId(), eventMember2.getName()),
+                        tuple(eventMember3.getId(), eventMember3.getName()),
+                        tuple(eventMember4.getId(), eventMember4.getName())
                 );
 
         assertThat(steps.get(2).bills()).hasSize(1)
@@ -104,9 +106,9 @@ class BillServiceTest extends ServiceTestSupport {
         assertThat(steps.get(2).members()).hasSize(3)
                 .extracting(MemberAppResponse::id, MemberAppResponse::name)
                 .containsExactlyInAnyOrder(
-                        tuple(member2.getId(), member2.getName()),
-                        tuple(member3.getId(), member3.getName()),
-                        tuple(member4.getId(), member4.getName())
+                        tuple(eventMember2.getId(), eventMember2.getName()),
+                        tuple(eventMember3.getId(), eventMember3.getName()),
+                        tuple(eventMember4.getId(), eventMember4.getName())
                         );
     }
 
@@ -116,10 +118,10 @@ class BillServiceTest extends ServiceTestSupport {
         Event event = Fixture.EVENT1;
         Event savedEvent = eventRepository.save(event);
 
-        Member member1 = Fixture.MEMBER1;
-        Member member2 = Fixture.MEMBER2;
-        memberRepository.saveAll(List.of(member1, member2));
-        List<Long> memberIds = List.of(member1.getId(), member2.getId());
+        EventMember eventMember1 = Fixture.EVENT_MEMBER_1;
+        EventMember eventMember2 = Fixture.EVENT_MEMBER_2;
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2));
+        List<Long> memberIds = List.of(eventMember1.getId(), eventMember2.getId());
         BillAppRequest billAppRequest = new BillAppRequest("뽕족", 10_000L, memberIds);
 
         billService.saveBill(event.getToken(), billAppRequest);
@@ -138,12 +140,12 @@ class BillServiceTest extends ServiceTestSupport {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
 
-        Member member1 = Fixture.MEMBER1;
-        Member member2 = Fixture.MEMBER2;
-        List<Member> members = List.of(member1, member2);
-        memberRepository.saveAll(members);
+        EventMember eventMember1 = Fixture.EVENT_MEMBER_1;
+        EventMember eventMember2 = Fixture.EVENT_MEMBER_2;
+        List<EventMember> eventMembers = List.of(eventMember1, eventMember2);
+        eventMemberRepository.saveAll(eventMembers);
 
-        BillAppRequest request = new BillAppRequest("뽕족", 10_000L, List.of(member1.getId(), member2.getId()));
+        BillAppRequest request = new BillAppRequest("뽕족", 10_000L, List.of(eventMember1.getId(), eventMember2.getId()));
 
         billService.saveBill(event.getToken(), request);
 
@@ -153,10 +155,10 @@ class BillServiceTest extends ServiceTestSupport {
 
         assertThat(billDetails)
                 .hasSize(2)
-                .extracting("member", "price")
+                .extracting("eventMember", "price")
                 .containsExactlyInAnyOrder(
-                        tuple(member1, 5_000L),
-                        tuple(member2, 5_000L)
+                        tuple(eventMember1, 5_000L),
+                        tuple(eventMember2, 5_000L)
                 );
     }
 
@@ -166,12 +168,12 @@ class BillServiceTest extends ServiceTestSupport {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
 
-        Member member1 = Fixture.MEMBER1;
-        Member member2 = Fixture.MEMBER2;
-        List<Member> members = List.of(member1, member2);
-        memberRepository.saveAll(members);
+        EventMember eventMember1 = Fixture.EVENT_MEMBER_1;
+        EventMember eventMember2 = Fixture.EVENT_MEMBER_2;
+        List<EventMember> eventMembers = List.of(eventMember1, eventMember2);
+        eventMemberRepository.saveAll(eventMembers);
 
-        BillAppRequest request = new BillAppRequest("뽕족", 10_000L, List.of(member1.getId(), member2.getId()));
+        BillAppRequest request = new BillAppRequest("뽕족", 10_000L, List.of(eventMember1.getId(), eventMember2.getId()));
 
         assertThatThrownBy(() -> billService.saveBill("wrongToken", request))
                 .isInstanceOf(HaengdongException.class);
@@ -222,13 +224,13 @@ class BillServiceTest extends ServiceTestSupport {
     void updateBill2() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        Member member1 = new Member(event, "감자");
-        Member member2 = new Member(event, "고구마");
-        Member member3 = new Member(event, "당근");
-        Member member4 = new Member(event, "양파");
-        List<Member> members = List.of(member1, member2, member3, member4);
-        memberRepository.saveAll(members);
-        Bill bill = Bill.create(event, "뽕족", 10_000L, members);
+        EventMember eventMember1 = new EventMember(event, "감자");
+        EventMember eventMember2 = new EventMember(event, "고구마");
+        EventMember eventMember3 = new EventMember(event, "당근");
+        EventMember eventMember4 = new EventMember(event, "양파");
+        List<EventMember> eventMembers = List.of(eventMember1, eventMember2, eventMember3, eventMember4);
+        eventMemberRepository.saveAll(eventMembers);
+        Bill bill = Bill.create(event, "뽕족", 10_000L, eventMembers);
         bill.getBillDetails().forEach(billDetail -> billDetail.updateIsFixed(true));
         billRepository.save(bill);
         BillUpdateAppRequest request = new BillUpdateAppRequest("인생맥주", 20_000L);
@@ -248,11 +250,11 @@ class BillServiceTest extends ServiceTestSupport {
     void deleteBill() {
         Event event = Fixture.EVENT1;
         eventRepository.save(event);
-        Member member1 = new Member(event, "토다리");
-        Member member2 = new Member(event, "쿠키");
-        memberRepository.saveAll(List.of(member1, member2));
+        EventMember eventMember1 = new EventMember(event, "토다리");
+        EventMember eventMember2 = new EventMember(event, "쿠키");
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2));
 
-        Bill bill = Bill.create(event, "뽕족", 10000L, List.of(member1, member2));
+        Bill bill = Bill.create(event, "뽕족", 10000L, List.of(eventMember1, eventMember2));
         billRepository.save(bill);
         Long billId = bill.getId();
 
@@ -273,11 +275,11 @@ class BillServiceTest extends ServiceTestSupport {
     void updateBillDetailsTest1() {
         Event event1 = Fixture.EVENT1;
         eventRepository.save(event1);
-        Member member1 = new Member(event1, "토다리");
-        Member member2 = new Member(event1, "쿠키");
-        memberRepository.saveAll(List.of(member1, member2));
+        EventMember eventMember1 = new EventMember(event1, "토다리");
+        EventMember eventMember2 = new EventMember(event1, "쿠키");
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2));
 
-        Bill bill = Bill.create(event1, "뽕족", 10000L, List.of(member1, member2));
+        Bill bill = Bill.create(event1, "뽕족", 10000L, List.of(eventMember1, eventMember2));
         billRepository.save(bill);
         List<BillDetail> billDetails = bill.getBillDetails();
 
@@ -297,11 +299,11 @@ class BillServiceTest extends ServiceTestSupport {
     void updateBillDetailsTest2() {
         Event event1 = Fixture.EVENT1;
         eventRepository.save(event1);
-        Member member1 = new Member(event1, "토다리");
-        Member member2 = new Member(event1, "쿠키");
-        memberRepository.saveAll(List.of(member1, member2));
+        EventMember eventMember1 = new EventMember(event1, "토다리");
+        EventMember eventMember2 = new EventMember(event1, "쿠키");
+        eventMemberRepository.saveAll(List.of(eventMember1, eventMember2));
 
-        Bill bill = Bill.create(event1, "뽕족", 10000L, List.of(member1, member2));
+        Bill bill = Bill.create(event1, "뽕족", 10000L, List.of(eventMember1, eventMember2));
         billRepository.save(bill);
         List<BillDetail> billDetails = bill.getBillDetails();
 
@@ -329,12 +331,12 @@ class BillServiceTest extends ServiceTestSupport {
         Event event1 = Fixture.EVENT1;
         eventRepository.save(event1);
 
-        Member member1 = Fixture.MEMBER1;
-        Member member2 = Fixture.MEMBER2;
-        List<Member> members = List.of(member1, member2);
-        memberRepository.saveAll(members);
+        EventMember eventMember1 = Fixture.EVENT_MEMBER_1;
+        EventMember eventMember2 = Fixture.EVENT_MEMBER_2;
+        List<EventMember> eventMembers = List.of(eventMember1, eventMember2);
+        eventMemberRepository.saveAll(eventMembers);
 
-        Bill bill = Bill.create(event1, "뽕족", 10000L, members);
+        Bill bill = Bill.create(event1, "뽕족", 10000L, eventMembers);
         billRepository.save(bill);
 
         BillDetailsAppResponse response = billService.findBillDetails(event1.getToken(), bill.getId());

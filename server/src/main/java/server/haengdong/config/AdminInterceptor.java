@@ -15,6 +15,8 @@ import server.haengdong.infrastructure.auth.AuthenticationExtractor;
 @Slf4j
 public class AdminInterceptor implements HandlerInterceptor {
 
+    public static final String LOGIN_MEMBER_REQUEST = "loginUserId";
+
     private static final String ADMIN_URI_REGEX = "/api/admin/events/([^/]+)";
     private static final Pattern ADMIN_URI_PATTERN = Pattern.compile(ADMIN_URI_REGEX);
     private static final int EVENT_TOKEN_MATCHER_INDEX = 1;
@@ -39,18 +41,15 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     private void validateToken(HttpServletRequest request) {
         String token = authenticationExtractor.extract(request, authService.getTokenName());
-        String tokenEventId = authService.findEventIdByToken(token);
+        Long userId = authService.findUserIdByToken(token);
         String uri = request.getRequestURI();
-
         Matcher matcher = ADMIN_URI_PATTERN.matcher(uri);
         if (!matcher.find()) {
             throw new AuthenticationException(HaengdongErrorCode.FORBIDDEN);
         }
-
         String eventToken = matcher.group(EVENT_TOKEN_MATCHER_INDEX);
-        if (!tokenEventId.equals(eventToken)) {
-            log.warn("[행사 접근 불가] Cookie EventId = {}, URL EventId = {}", tokenEventId, eventToken);
-            throw new AuthenticationException(HaengdongErrorCode.FORBIDDEN);
-        }
+
+        authService.checkAuth(eventToken, userId);
+        request.setAttribute(LOGIN_MEMBER_REQUEST, userId);
     }
 }
