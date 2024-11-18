@@ -21,7 +21,7 @@ const LoginPage = () => {
       <FunnelLayout>
         <Flex flexDirection="column" justifyContent="spaceBetween" height="100%">
           <Flex flexDirection="column" justifyContent="center" alignItems="center" gap="1rem" margin="0 0 6rem 0">
-            <Image src={getImageUrl('heundeut', 'webp')} fallbackSrc={getImageUrl('heundeut', 'png')} />
+            <Image src={getImageUrl('heundeut', 'webp')} fallbackSrc={getImageUrl('heundeut', 'png')} width={109} />
             <Text size="bodyBold" css={{whiteSpace: 'pre-line', textAlign: 'center'}}>
               {`로그인을 사용하면\n더 편하게 사용할 수 있어요`}
             </Text>
