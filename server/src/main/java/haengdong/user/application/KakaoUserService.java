@@ -3,9 +3,11 @@ package haengdong.user.application;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import haengdong.user.application.response.KakaoTokenResponse;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class KakaoUserService {
@@ -22,6 +24,8 @@ public class KakaoUserService {
 
         String memberNumber = decodedJWT.getSubject();
         String nickname = decodedJWT.getClaim(NICKNAME_KEY).asString();
+
+        log.info("로그인 성공 : {}, {}", code, nickname);
 
         return userService.join(memberNumber, nickname);
     }
