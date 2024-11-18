@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,6 +64,12 @@ public class UserController {
                 .build();
     }
 
+    @DeleteMapping("/api/admin/users")
+    public ResponseEntity<Void> deleteUser(@Login Long userId) {
+        userService.withdraw(userId);
+        return ResponseEntity.ok().build();
+    }
+
     private ResponseCookie createResponseCookie(String token) {
         return ResponseCookie.from(authService.getTokenName(), token)
                 .httpOnly(cookieProperties.httpOnly())
@@ -73,5 +80,4 @@ public class UserController {
                 .maxAge(cookieProperties.maxAge())
                 .build();
     }
-
 }

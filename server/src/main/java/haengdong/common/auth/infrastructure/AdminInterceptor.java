@@ -1,4 +1,4 @@
-package haengdong.common.infrastructure;
+package haengdong.common.auth.infrastructure;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,7 +10,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import haengdong.common.auth.application.AuthService;
 import haengdong.common.exception.AuthenticationException;
 import haengdong.common.exception.HaengdongErrorCode;
-import haengdong.common.auth.infrastructure.AuthenticationExtractor;
 
 @Slf4j
 public class AdminInterceptor implements HandlerInterceptor {

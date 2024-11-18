@@ -4,7 +4,7 @@ import haengdong.common.auth.TokenProvider;
 import haengdong.common.auth.application.AuthService;
 import haengdong.common.auth.infrastructure.AuthenticationExtractor;
 import haengdong.common.auth.infrastructure.JwtTokenProvider;
-import haengdong.common.infrastructure.AdminInterceptor;
+import haengdong.common.auth.infrastructure.AdminInterceptor;
 import haengdong.common.properties.CorsProperties;
 import haengdong.common.properties.JwtProperties;
 import haengdong.event.application.EventService;

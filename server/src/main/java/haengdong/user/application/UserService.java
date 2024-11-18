@@ -61,6 +61,11 @@ public class UserService {
         return user.getNickname();
     }
 
+    @Transactional
+    public void withdraw(Long id) {
+        userRepository.deleteById(id);
+    }
+
     private User getUser(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.PASSWORD_INVALID));
