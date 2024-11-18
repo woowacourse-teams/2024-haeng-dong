@@ -1,6 +1,11 @@
 package haengdong.user.application;
 
+import haengdong.common.exception.HaengdongErrorCode;
+import haengdong.common.exception.HaengdongException;
+import haengdong.user.application.response.KakaoTokenResponse;
+import haengdong.user.config.KakaoProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -8,11 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
-import haengdong.user.application.response.KakaoTokenResponse;
-import haengdong.user.config.KakaoProperties;
-import haengdong.common.exception.HaengdongErrorCode;
-import haengdong.common.exception.HaengdongException;
 
+@Slf4j
 @RequiredArgsConstructor
 @EnableConfigurationProperties(KakaoProperties.class)
 @Component
@@ -36,6 +38,7 @@ public class KakaoClient {
                     .retrieve()
                     .body(KakaoTokenResponse.class);
         } catch (Exception e) {
+            log.info("로그인 실패 : {}", code);
             throw new HaengdongException(HaengdongErrorCode.KAKAO_LOGIN_FAIL, e);
         }
     }
