@@ -25,7 +25,7 @@ public class KakaoUserService {
         String memberNumber = decodedJWT.getSubject();
         String nickname = decodedJWT.getClaim(NICKNAME_KEY).asString();
 
-        log.info("로그인 성공 : {}, {}", code, nickname);
+        log.info("로그인 성공 : {}, {}, {}", code, memberNumber, nickname);
 
         return userService.join(memberNumber, nickname);
     }
