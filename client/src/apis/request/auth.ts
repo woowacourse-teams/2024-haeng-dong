@@ -32,8 +32,13 @@ export const requestKakaoClientId = async () => {
 };
 
 export const requestGetKakaoLogin = async (code: string) => {
+  const redirectUri =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000' + process.env.KAKAO_REDIRECT_URI
+      : 'https://haengdong.pro' + process.env.KAKAO_REDIRECT_URI;
+
   await requestGetWithoutResponse({
     baseUrl: BASE_URL.HD,
-    endpoint: `/api/login/kakao?code=${code}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}`,
+    endpoint: `/api/login/kakao?code=${code}&redirect_uri=${redirectUri}`,
   });
 };
