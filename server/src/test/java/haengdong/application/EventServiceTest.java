@@ -7,12 +7,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.BDDMockito.given;
 
-import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import haengdong.common.exception.HaengdongException;
 import haengdong.event.application.EventService;
 import haengdong.event.application.request.EventGuestAppRequest;
 import haengdong.event.application.request.EventUpdateAppRequest;
@@ -24,13 +19,17 @@ import haengdong.event.domain.RandomValueProvider;
 import haengdong.event.domain.bill.Bill;
 import haengdong.event.domain.bill.BillRepository;
 import haengdong.event.domain.event.Event;
+import haengdong.event.domain.event.EventRepository;
 import haengdong.event.domain.event.image.EventImage;
 import haengdong.event.domain.event.image.EventImageRepository;
-import haengdong.event.domain.event.EventRepository;
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.member.EventMemberRepository;
-import haengdong.common.exception.HaengdongException;
 import haengdong.support.fixture.Fixture;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 class EventServiceTest extends ServiceTestSupport {
 

@@ -36,7 +36,7 @@ public class User extends BaseEntity {
     @Column(length = MAX_ACCOUNT_NUMBER_LENGTH)
     private String accountNumber;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String memberNumber;
 
     private User(String nickname, String password, String bank, String accountNumber, String memberNumber) {
