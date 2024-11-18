@@ -20,7 +20,7 @@ const useLoginPage = () => {
     const clientId = queryResult.data?.clientId;
     const redirectUri =
       process.env.NODE_ENV === 'development'
-        ? 'https://localhost:3000' + process.env.KAKAO_REDIRECT_URI
+        ? 'http://localhost:3000' + process.env.KAKAO_REDIRECT_URI
         : 'https://haengdong.pro' + process.env.KAKAO_REDIRECT_URI;
 
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;

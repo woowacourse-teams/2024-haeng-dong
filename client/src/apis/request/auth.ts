@@ -1,6 +1,6 @@
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestPostWithoutResponse} from '@apis/fetcher';
+import {requestGet, requestGetWithoutResponse, requestPostWithoutResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
 export const requestPostAuthentication = async ({eventId}: WithEventId) => {
@@ -32,7 +32,7 @@ export const requestKakaoClientId = async () => {
 };
 
 export const requestGetKakaoLogin = async (code: string) => {
-  await requestGet({
+  await requestGetWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `/api/login/kakao?code=${code}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}`,
   });
