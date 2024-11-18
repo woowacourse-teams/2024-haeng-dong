@@ -3,6 +3,7 @@
 import InputDelete from '@assets/image/inputDelete.svg';
 import Error from '@assets/image/error.svg';
 import Confirm from '@assets/image/confirm.svg';
+import Kakao from '@assets/image/kakao.svg';
 import Trash from '@assets/image/trash.svg';
 import TrashMini from '@assets/image/trash_mini.svg';
 import Search from '@assets/image/search.svg';
@@ -41,6 +42,7 @@ export const ICON = {
   ),
   photoButton: <PhotoButton />,
   chevronDown: <ChevronDownLarge />,
+  kakao: <Kakao />,
 } as const;
 
 export const Icon = ({iconColor, iconType, ...htmlProps}: IconProps) => {
