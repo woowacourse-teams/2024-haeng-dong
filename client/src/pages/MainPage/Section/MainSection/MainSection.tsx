@@ -1,18 +1,20 @@
+import {useNavigate} from 'react-router-dom';
+
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 
-import useMainSection from '@hooks/useMainSection';
-
 import {Icon} from '@components/Design';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {animateWithDelay, chevronStyle, mainSectionStyle, sectionStyle} from './MainSection.style';
 
-type MainSectionProps = {
-  trackStartCreateEvent: () => void;
-};
+const MainSection = () => {
+  const navigate = useNavigate();
 
-const MainSection = ({trackStartCreateEvent}: MainSectionProps) => {
-  const {handleClick} = useMainSection(trackStartCreateEvent);
+  const handleClick = () => {
+    navigate(ROUTER_URLS.login);
+  };
 
   return (
     <div css={mainSectionStyle}>

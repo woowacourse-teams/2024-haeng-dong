@@ -12,4 +12,5 @@ export const ROUTER_URLS = {
   addImages: '/event/:eventId/admin/add-images',
   send: 'event/:eventId/:memberId/send',
   qrCode: 'event/:eventId/qrcode',
+  login: '/login',
 };
