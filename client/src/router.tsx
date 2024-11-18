@@ -41,12 +41,12 @@ const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: ROUTER_URLS.login,
-        element: <LoginPage />,
-      },
-      {
         element: <EssentialQueryApp />,
         children: [
+          {
+            path: ROUTER_URLS.login,
+            element: <LoginPage />,
+          },
           {
             path: ROUTER_URLS.createEvent,
             element: <CreateEventFunnel />,

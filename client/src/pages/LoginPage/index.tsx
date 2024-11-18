@@ -1,22 +1,17 @@
-import {useNavigate} from 'react-router-dom';
-
 import Image from '@components/Design/components/Image/Image';
+
+import useLoginPage from '@hooks/useLoginPage';
 
 import {Button, Flex, FunnelLayout, Icon, MainLayout, Text, TopNav, useTheme} from '@components/Design';
 
 import getImageUrl from '@utils/getImageUrl';
 
-import {ROUTER_URLS} from '@constants/routerUrls';
-
 import {hrStyle} from './LoginPage.style';
 
 const LoginPage = () => {
   const {theme} = useTheme();
-  const navigate = useNavigate();
 
-  const goNonLoginCreateEvent = () => {
-    navigate(ROUTER_URLS.createEvent);
-  };
+  const {goKakaoLogin, goNonLoginCreateEvent} = useLoginPage();
 
   return (
     <MainLayout backgroundColor="white">
@@ -32,14 +27,14 @@ const LoginPage = () => {
             </Text>
           </Flex>
           <Flex flexDirection="column" gap="1rem" width="100%" padding="0 2rem" paddingInline="auto">
-            <Button variants="kakao">
+            <Button variants="kakao" size="large" onClick={goKakaoLogin}>
               <Flex alignItems="center" gap="0.625rem">
                 <Icon iconType="kakao" />
                 카카오 로그인
               </Flex>
             </Button>
             <hr css={hrStyle(theme)} />
-            <Button variants="secondary" onClick={goNonLoginCreateEvent}>
+            <Button variants="secondary" size="large" onClick={goNonLoginCreateEvent}>
               비회원으로 진행하기
             </Button>
           </Flex>
