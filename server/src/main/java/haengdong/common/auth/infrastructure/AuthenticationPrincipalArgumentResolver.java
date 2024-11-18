@@ -1,6 +1,6 @@
-package haengdong.common.infrastructure;
+package haengdong.common.auth.infrastructure;
 
-import static haengdong.common.infrastructure.AdminInterceptor.LOGIN_MEMBER_REQUEST;
+import static haengdong.common.auth.infrastructure.AdminInterceptor.LOGIN_MEMBER_REQUEST;
 
 import haengdong.common.auth.Login;
 import jakarta.servlet.http.HttpServletRequest;
