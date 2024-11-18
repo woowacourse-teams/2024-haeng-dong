@@ -36,8 +36,10 @@ const useAmplitude = () => {
     });
   };
 
-  const trackStartCreateEvent = () => {
-    track('정산 시작하기 버튼 클릭');
+  const trackStartCreateEvent = ({login}: {login: boolean}) => {
+    track('정산 시작하기 버튼 클릭', {
+      login,
+    });
   };
 
   const trackCompleteCreateEvent = (eventUniqueData: EventUniqueData) => {
