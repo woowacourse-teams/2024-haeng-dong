@@ -41,4 +41,6 @@ export const requestGetKakaoLogin = async (code: string) => {
     baseUrl: BASE_URL.HD,
     endpoint: `/api/login/kakao?code=${code}&redirect_uri=${redirectUri}`,
   });
+
+  return null;
 };

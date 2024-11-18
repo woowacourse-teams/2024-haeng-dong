@@ -1,17 +1,20 @@
 import {useEffect} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 
-import {requestGetKakaoLogin} from '@apis/request/auth';
+import {useAuthStore} from '@store/authStore';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import useRequestGetKakaoClientId from './queries/auth/useRequestGetKakaoClientId';
 import useAmplitude from './useAmplitude';
+import useRequestGetKakaoLogin from './queries/auth/useRequestGetKakaoLogin';
 
 const useLoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {trackStartCreateEvent} = useAmplitude();
+  const {updateAuth} = useAuthStore();
+  const {requestGetKakaoLogin} = useRequestGetKakaoLogin();
 
   const {requestGetClientId} = useRequestGetKakaoClientId();
 
@@ -39,8 +42,10 @@ const useLoginPage = () => {
 
     const kakaoLogin = async () => {
       if (code) {
-        await requestGetKakaoLogin(code);
-        // 로그인 처리 후 (백엔드와 논의해서 로그인 유지 기능 추가)
+        await requestGetKakaoLogin();
+        updateAuth(true);
+
+        // 추후에 업데이트 하는 로직 필요
         trackStartCreateEvent({login: true});
         navigate(ROUTER_URLS.createEvent);
       }
