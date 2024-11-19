@@ -52,7 +52,7 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
 export const ERROR_MESSAGE = {
   eventName: SERVER_ERROR_MESSAGES.EVENT_NAME_LENGTH_INVALID,
   eventPasswordType: SERVER_ERROR_MESSAGES.EVENT_PASSWORD_FORMAT_INVALID,
-  memberName: SERVER_ERROR_MESSAGES.MEMBER_NAME_LENGTH_INVALID,
+  memberName: `이름은 ${RULE.maxMemberNameLength}자까지 입력 가능해요.`,
   purchasePrice: `${RULE.maxPrice.toLocaleString('ko-kr')}원 이하의 숫자만 입력이 가능해요`,
   purchaseTitle: `지출 이름은 ${RULE.maxBillNameLength}자 이하의 한글, 영어, 숫자만 가능해요`,
   preventEmpty: '값은 비어있을 수 없어요',
