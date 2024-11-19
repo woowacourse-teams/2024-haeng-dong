@@ -16,7 +16,7 @@ type SetEventNamePageProps = {
 
 const SetMemberEventNameStep = ({moveToNextStep, setEventToken}: SetEventNamePageProps) => {
   const {eventName, errorMessage, canSubmit, handleEventNameChange} = useSetEventNameStep();
-  const {postEvent} = useRequestPostMemberEvent();
+  const {postEvent, isPostEventPending} = useRequestPostMemberEvent();
   const {trackCompleteCreateMemberEvent} = useAmplitude();
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -56,7 +56,9 @@ const SetMemberEventNameStep = ({moveToNextStep, setEventToken}: SetEventNamePag
           isError={!!errorMessage}
           autoFocus
         />
-        <FixedButton disabled={!canSubmit}>다음</FixedButton>
+        <FixedButton variants={isPostEventPending ? 'loading' : 'primary'} disabled={!canSubmit}>
+          다음
+        </FixedButton>
       </form>
     </div>
   );
