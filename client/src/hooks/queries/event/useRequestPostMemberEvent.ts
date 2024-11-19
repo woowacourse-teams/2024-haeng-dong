@@ -6,7 +6,7 @@ import {CreateEventArgs, EventName} from 'types/createEvent';
 const useRequestPostMemberEvent = () => {
   const queryClient = useQueryClient();
 
-  const {mutate, mutateAsync, ...rest} = useMutation({
+  const {mutateAsync, ...rest} = useMutation({
     mutationFn: (eventName: EventName) => requestPostMemberEvent(eventName),
     onSuccess: () => {
       queryClient.removeQueries();
