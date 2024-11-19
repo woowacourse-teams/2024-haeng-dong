@@ -45,8 +45,7 @@ public class AdminEventController {
             @PathVariable("eventId") String token,
             @Valid @RequestBody EventUpdateRequest request
     ) {
-        eventService.updateEvent(token, request.toAppRequest());
-
+        eventService.updateEventName(token, request.toAppRequest());
         return ResponseEntity.ok().build();
     }
 

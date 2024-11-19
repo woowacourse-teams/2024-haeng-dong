@@ -3,6 +3,7 @@ package haengdong.user.application;
 import haengdong.common.exception.AuthenticationException;
 import haengdong.common.exception.HaengdongErrorCode;
 import haengdong.common.exception.HaengdongException;
+import haengdong.event.application.response.UserAppResponse;
 import haengdong.user.application.request.UserGuestSaveAppRequest;
 import haengdong.user.application.request.UserUpdateAppRequest;
 import haengdong.user.domain.User;
@@ -14,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
+
     private final KakaoClient kakaoClient;
 
     @Transactional
@@ -64,6 +65,12 @@ public class UserService {
     @Transactional
     public void withdraw(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public UserAppResponse findById(Long id) {
+        User user = getUser(id);
+
+        return UserAppResponse.of(user);
     }
 
     private User getUser(Long id) {

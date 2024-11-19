@@ -65,80 +65,29 @@ class EventServiceTest extends ServiceTestSupport {
     @DisplayName("토큰으로 행사를 조회한다.")
     @Test
     void findEventTest() {
-        Event event = Fixture.EVENT1;
-        eventRepository.save(event);
+        EventGuestAppRequest request = new EventGuestAppRequest("test", "nickname", "1234");
+        given(randomValueProvider.createRandomValue()).willReturn("TOKEN");
+        EventAppResponse response = eventService.saveEventGuest(request);
 
-        EventDetailAppResponse eventDetailAppResponse = eventService.findEvent(event.getToken());
+        EventDetailAppResponse eventDetailAppResponse = eventService.findEvent("TOKEN");
 
-        assertThat(eventDetailAppResponse.eventName()).isEqualTo(event.getName());
+        assertAll(
+                () -> assertThat(eventDetailAppResponse.eventName()).isEqualTo("test"),
+                () -> assertThat(eventDetailAppResponse.createdByGuest()).isEqualTo(true)
+        );
     }
 
     @DisplayName("행사 정보를 수정한다.")
     @Test
-    void updateEventTest() {
-        Event event = new Event("행동대장 비대위", "1234", "token");
+    void updateEventNameTest() {
+        Event event = new Event("행동대장 비대위", 1L, "token");
         eventRepository.save(event);
 
-        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest("새로운 행사 이름", "토스뱅크", "12345678");
-        eventService.updateEvent(event.getToken(), eventUpdateAppRequest);
+        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest("새로운 행사 이름");
+        eventService.updateEventName(event.getToken(), eventUpdateAppRequest);
 
         Event updateEvent = eventRepository.findByToken(event.getToken()).get();
-        assertAll(
-                () -> assertThat(updateEvent.getName()).isEqualTo("새로운 행사 이름"),
-                () -> assertThat(updateEvent.getBankName()).isEqualTo("토스뱅크"),
-                () -> assertThat(updateEvent.getAccountNumber()).isEqualTo("12345678")
-        );
-    }
-
-    @DisplayName("행사의 은행 정보만 수정한다.")
-    @Test
-    void updateEventTest1() {
-        Event event = new Event("행동대장 비대위", "1234", "token");
-        eventRepository.save(event);
-
-        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest(null, "토스뱅크", "12345678");
-        eventService.updateEvent(event.getToken(), eventUpdateAppRequest);
-
-        Event updateEvent = eventRepository.findByToken(event.getToken()).get();
-        assertAll(
-                () -> assertThat(updateEvent.getName()).isEqualTo("행동대장 비대위"),
-                () -> assertThat(updateEvent.getBankName()).isEqualTo("토스뱅크"),
-                () -> assertThat(updateEvent.getAccountNumber()).isEqualTo("12345678")
-        );
-    }
-
-    @DisplayName("행사의 이름만 수정한다.")
-    @Test
-    void updateEventTest2() {
-        Event event = new Event("행동대장 비대위", "1234", "token");
-        eventRepository.save(event);
-
-        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest("행동대장 정상 영업", null, null);
-        eventService.updateEvent(event.getToken(), eventUpdateAppRequest);
-
-        Event updateEvent = eventRepository.findByToken(event.getToken()).get();
-        assertAll(
-                () -> assertThat(updateEvent.getName()).isEqualTo("행동대장 정상 영업"),
-                () -> assertThat(updateEvent.getBankName()).isEqualTo(""),
-                () -> assertThat(updateEvent.getAccountNumber()).isEqualTo("")
-        );
-    }
-
-    @DisplayName("행사의 계좌 정보 일부가 누락되면 변경하지 않는다.")
-    @Test
-    void updateEventTest3() {
-        Event event = new Event("행동대장 비대위", "1234", "token");
-        eventRepository.save(event);
-
-        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest(null, "망쵸뱅크", null);
-        eventService.updateEvent(event.getToken(), eventUpdateAppRequest);
-
-        Event updateEvent = eventRepository.findByToken(event.getToken()).get();
-        assertAll(
-                () -> assertThat(updateEvent.getName()).isEqualTo("행동대장 비대위"),
-                () -> assertThat(updateEvent.getBankName()).isEqualTo(""),
-                () -> assertThat(updateEvent.getAccountNumber()).isEqualTo("")
-        );
+        assertThat(updateEvent.getName()).isEqualTo("새로운 행사 이름");
     }
 
     @DisplayName("참여자별 정산 현황을 조회한다.")
