@@ -1,19 +1,19 @@
 import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
-import {UseSetNickNameStepProps} from '@hooks/createEvent/useSetNicknameStep';
+import {UseSetNicknameStepProps} from '@hooks/createEvent/useSetNicknameStep';
 
 import {FixedButton, Input} from '@HDesign/index';
 
-type SetEventNamePageProps = UseSetNickNameStepProps & {
+type SetEventNamePageProps = UseSetNicknameStepProps & {
   moveToNextStep: () => void;
 };
 
-const SetNickNameStep = ({
-  nickName,
+const SetNicknameStep = ({
+  nickname,
   moveToNextStep,
   errorMessage,
-  handleNickNameChange,
+  handleNicknameChange,
   canSubmit,
 }: SetEventNamePageProps) => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -39,10 +39,10 @@ const SetNickNameStep = ({
         <Input
           labelText="관리자 이름"
           errorText={errorMessage ?? ''}
-          value={nickName}
+          value={nickname}
           type="text"
           placeholder="홍길동"
-          onChange={handleNickNameChange}
+          onChange={handleNicknameChange}
           isError={!!errorMessage}
           autoFocus
         />
@@ -52,4 +52,4 @@ const SetNickNameStep = ({
   );
 };
 
-export default SetNickNameStep;
+export default SetNicknameStep;
