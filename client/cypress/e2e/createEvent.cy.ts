@@ -11,6 +11,8 @@ describe('Flow: 랜딩 페이지에서부터 이벤트를 생성 완료하는 fl
   it('랜딩페이지에서 "정산 시작하기" 버튼을 눌러 행사 이름 입력 페이지로 이동해야 한다.', () => {
     cy.visit('/');
     cy.get('button').contains('정산 시작하기').click();
+    cy.url().should('include', ROUTER_URLS.login);
+    cy.get('button').contains('비회원으로 진행하기').click();
     cy.url().should('include', ROUTER_URLS.createEvent);
   });
 
