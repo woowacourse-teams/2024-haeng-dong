@@ -1,14 +1,14 @@
 package haengdong.event.presentation.request;
 
 import haengdong.event.application.request.EventUpdateAppRequest;
+import jakarta.validation.constraints.NotBlank;
 
 public record EventUpdateRequest(
-        String eventName,
-        String bankName,
-        String accountNumber
+        @NotBlank
+        String eventName
 ) {
 
     public EventUpdateAppRequest toAppRequest() {
-        return new EventUpdateAppRequest(eventName, bankName, accountNumber);
+        return new EventUpdateAppRequest(eventName);
     }
 }

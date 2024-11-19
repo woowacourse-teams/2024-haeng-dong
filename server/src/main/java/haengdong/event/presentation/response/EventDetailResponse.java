@@ -5,10 +5,11 @@ import haengdong.event.application.response.EventDetailAppResponse;
 public record EventDetailResponse(
         String eventName,
         String bankName,
-        String accountNumber
+        String accountNumber,
+        Boolean createdByGuest
 ) {
 
     public static EventDetailResponse of(EventDetailAppResponse response) {
-        return new EventDetailResponse(response.eventName(), response.bankName(), response.accountNumber());
+        return new EventDetailResponse(response.eventName(), response.bankName(), response.accountNumber(), response.createdByGuest());
     }
 }

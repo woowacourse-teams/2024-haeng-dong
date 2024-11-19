@@ -7,8 +7,8 @@ import haengdong.event.domain.event.Event;
 
 public class Fixture {
 
-    public static final Event EVENT1 = new Event("쿠키", "1234", "TOKEN1");
-    public static final Event EVENT2 = new Event("웨디", "1234", "TOKEN2");
+    public static final Event EVENT1 = new Event("쿠키", 1L, "TOKEN1");
+    public static final Event EVENT2 = new Event("웨디", 1L, "TOKEN2");
     public static final Cookie EVENT_COOKIE = new Cookie("accessToken", "토큰토큰");
     public static final EventMember EVENT_MEMBER_1 = new EventMember(EVENT1, "토다리");
     public static final EventMember EVENT_MEMBER_2 = new EventMember(EVENT1, "쿠키");

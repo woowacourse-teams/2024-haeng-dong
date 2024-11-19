@@ -1,12 +1,8 @@
 package haengdong.event.application;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Map.Entry;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import haengdong.common.exception.AuthenticationException;
+import haengdong.common.exception.HaengdongErrorCode;
+import haengdong.common.exception.HaengdongException;
 import haengdong.event.application.request.EventAppRequest;
 import haengdong.event.application.request.EventGuestAppRequest;
 import haengdong.event.application.request.EventLoginAppRequest;
@@ -16,20 +12,24 @@ import haengdong.event.application.response.EventDetailAppResponse;
 import haengdong.event.application.response.EventImageAppResponse;
 import haengdong.event.application.response.EventImageSaveAppResponse;
 import haengdong.event.application.response.MemberBillReportAppResponse;
+import haengdong.event.application.response.UserAppResponse;
 import haengdong.event.domain.RandomValueProvider;
 import haengdong.event.domain.bill.Bill;
 import haengdong.event.domain.bill.BillRepository;
 import haengdong.event.domain.bill.MemberBillReport;
 import haengdong.event.domain.event.Event;
+import haengdong.event.domain.event.EventRepository;
 import haengdong.event.domain.event.image.EventImage;
 import haengdong.event.domain.event.image.EventImageRepository;
-import haengdong.event.domain.event.EventRepository;
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.member.EventMemberRepository;
-import haengdong.common.exception.AuthenticationException;
-import haengdong.common.exception.HaengdongErrorCode;
-import haengdong.common.exception.HaengdongException;
 import haengdong.user.application.UserService;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map.Entry;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -44,9 +44,6 @@ public class EventService {
     private final EventImageRepository eventImageRepository;
     private final EventMemberRepository eventMemberRepository;
     private final UserService userService;
-
-    @Value("${image.base-url}")
-    private String baseUrl;
 
     @Transactional
     public EventAppResponse saveEventGuest(EventGuestAppRequest request) {
@@ -73,8 +70,10 @@ public class EventService {
 
     public EventDetailAppResponse findEvent(String token) {
         Event event = getEvent(token);
+        Long userId = event.getUserId();
+        UserAppResponse user = userService.findById(userId);
 
-        return EventDetailAppResponse.of(event);
+        return EventDetailAppResponse.of(event, user);
     }
 
     public EventAppResponse findByGuestPassword(EventLoginAppRequest request) {
@@ -107,14 +106,9 @@ public class EventService {
     }
 
     @Transactional
-    public void updateEvent(String token, EventUpdateAppRequest request) {
+    public void updateEventName(String token, EventUpdateAppRequest request) {
         Event event = getEvent(token);
-        if (request.isEventNameExist()) {
-            event.rename(request.eventName());
-        }
-        if (request.isAccountExist()) {
-            event.changeAccount(request.bankName(), request.accountNumber());
-        }
+        event.rename(request.eventName());
     }
 
     @Transactional
