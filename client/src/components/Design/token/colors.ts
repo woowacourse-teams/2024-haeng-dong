@@ -35,7 +35,6 @@ const PRIMITIVE_COLORS = {
     700: '#c9d323',
     800: '#b9bb17',
     900: '#9e9305',
-    kakao: '#FEE500',
   },
   green: {
     50: '#f4ffe8',
@@ -60,7 +59,6 @@ const PRIMITIVE_COLORS = {
     700: '#56555A',
     800: '#38373B',
     900: '#18171B',
-    kakao: '#181600',
   },
 };
 
@@ -111,8 +109,8 @@ export const COLORS: ColorTokens = {
   warn: PRIMITIVE_COLORS.yellow[400],
   complete: PRIMITIVE_COLORS.green[300],
 
-  kakao: PRIMITIVE_COLORS.yellow['kakao'],
-  onKakao: PRIMITIVE_COLORS.gray['kakao'],
+  kakao: '#FEE500',
+  onKakao: '#181600',
 };
 
 export const PRIMARY_COLORS = PRIMITIVE_COLORS.purple;
