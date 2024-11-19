@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 
 import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
 import {Member} from 'types/serviceType';
+import validateMemberName from '@utils/validate/validateMemberName';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import {isIOS} from '@utils/detectDevice';
@@ -24,7 +25,7 @@ interface Props {
 }
 
 const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) => {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<null | string>('');
   const [nameInput, setNameInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const hiddenRef = useRef<HTMLInputElement>(null);
@@ -39,19 +40,13 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const eventId = getEventIdByUrl();
   const {eventName} = useRequestGetEvent();
 
-  const onNameInputChange = (value: string) => {
-    if (REGEXP.memberName.test(value)) {
-      setNameInput(value);
-    }
-  };
-
   const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value.length > 4) {
-      setErrorMessage('이름은 4자까지 입력 가능해요');
-      onNameInputChange(nameInput.slice(0, 4));
-    } else {
-      setErrorMessage('');
-      onNameInputChange(event.target.value);
+    const name = event.target.value;
+    const {isValid, errorMessage: errorMessageResult} = validateMemberName(name);
+
+    setErrorMessage(errorMessageResult);
+    if (isValid) {
+      setNameInput(name);
     }
   };
 
