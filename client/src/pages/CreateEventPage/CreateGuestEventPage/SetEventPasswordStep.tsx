@@ -34,7 +34,7 @@ const SetEventPasswordStep = ({eventName, nickname, moveToNextStep, setEventToke
     >
       <Top>
         <Top.Line
-          text={`행사에서 사용할 ${RULE.maxEventPasswordLength}자리 숫자`}
+          text={`행사를 정산하는 ${RULE.maxEventPasswordLength}자리 숫자의`}
           emphasize={[`${RULE.maxEventPasswordLength}자리 숫자`]}
         />
         <Top.Line text="관리자 비밀번호는 무엇으로 할까요?" emphasize={['관리자 비밀번호']} />
