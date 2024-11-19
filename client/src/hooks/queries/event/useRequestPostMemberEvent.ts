@@ -1,7 +1,7 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {requestPostMemberEvent} from '@apis/request/event';
-import {CreateEventArgs, EventName} from 'types/createEvent';
+import {EventName} from 'types/serviceType';
 
 const useRequestPostMemberEvent = () => {
   const queryClient = useQueryClient();

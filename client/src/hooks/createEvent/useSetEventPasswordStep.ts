@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
-import {CreateEventArgs, EventName} from 'types/createEvent';
+import {EventCreationData} from 'types/serviceType';
 
 import RULE from '@constants/rule';
 
@@ -10,7 +10,7 @@ import useAmplitude from '../useAmplitude';
 
 export type UseSetEventPasswordStepReturnType = ReturnType<typeof useSetEventPasswordStep>;
 
-type SubmitDataForPostEventArgs = Omit<CreateEventArgs, 'password'> & {
+type SubmitDataForPostEventArgs = Omit<EventCreationData, 'password'> & {
   event: React.FormEvent<HTMLFormElement>;
   setEventToken: (eventToken: string) => void;
 };

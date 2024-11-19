@@ -1,12 +1,11 @@
-import {Event, EventId} from 'types/serviceType';
+import {Event, EventCreationData, EventId, EventName} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
-import {CreateEventArgs, EventName} from 'types/createEvent';
 
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestPatch, requestPostWithResponse, requestPut} from '@apis/fetcher';
+import {requestGet, requestPatch, requestPostWithResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
-export const requestPostGuestEvent = async (postEventArgs: CreateEventArgs) => {
+export const requestPostGuestEvent = async (postEventArgs: EventCreationData) => {
   return await requestPostWithResponse<EventId>({
     endpoint: `${USER_API_PREFIX}/guest`,
     body: {

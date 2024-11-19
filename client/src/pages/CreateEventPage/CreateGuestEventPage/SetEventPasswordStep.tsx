@@ -2,13 +2,13 @@ import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
 import useSetEventPasswordStep from '@hooks/createEvent/useSetEventPasswordStep';
-import {CreateEventArgs} from 'types/createEvent';
+import {EventCreationData} from 'types/serviceType';
 
 import {FixedButton, Input} from '@HDesign/index';
 
 import RULE from '@constants/rule';
 
-type SetEventPasswordStepProps = Omit<CreateEventArgs, 'password'> & {
+type SetEventPasswordStepProps = Omit<EventCreationData, 'password'> & {
   moveToNextStep: () => void;
   setEventToken: (eventToken: string) => void;
 };
