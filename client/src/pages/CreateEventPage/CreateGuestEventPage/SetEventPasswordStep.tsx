@@ -1,25 +1,24 @@
 import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
-
-import useSetEventPasswordStep from '@hooks/useSetEventPasswordStep';
+import useSetEventPasswordStep from '@hooks/createEvent/useSetEventPasswordStep';
+import {CreateEventArgs, EventName, NickName} from 'types/createEvent';
 
 import {FixedButton, Input} from '@HDesign/index';
 
 import RULE from '@constants/rule';
 
-type SetEventPasswordPageProps = {
-  eventName: string;
+type SetEventPasswordPageProps = Omit<CreateEventArgs, 'password'> & {
   moveToNextStep: () => void;
   setEventToken: (eventToken: string) => void;
 };
 
-const SetEventPasswordStep = ({eventName, moveToNextStep, setEventToken}: SetEventPasswordPageProps) => {
+const SetEventPasswordStep = ({eventName, nickname, moveToNextStep, setEventToken}: SetEventPasswordPageProps) => {
   const {submitDataForPostEvent, errorMessage, password, handleChange, isPostEventPending, canSubmit} =
     useSetEventPasswordStep();
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    await submitDataForPostEvent({event, eventName, setEventToken});
+    await submitDataForPostEvent({event, eventName, nickname, setEventToken});
 
     moveToNextStep();
   };
@@ -35,10 +34,10 @@ const SetEventPasswordStep = ({eventName, moveToNextStep, setEventToken}: SetEve
     >
       <Top>
         <Top.Line
-          text={`관리에 필요한 ${RULE.maxEventPasswordLength}자리 숫자`}
+          text={`행사에서 사용할 ${RULE.maxEventPasswordLength}자리 숫자`}
           emphasize={[`${RULE.maxEventPasswordLength}자리 숫자`]}
         />
-        <Top.Line text="비밀번호는 무엇으로 할까요?" emphasize={['비밀번호']} />
+        <Top.Line text="관리자 비밀번호는 무엇으로 할까요?" emphasize={['관리자 비밀번호']} />
       </Top>
       <form onSubmit={submit}>
         <Input

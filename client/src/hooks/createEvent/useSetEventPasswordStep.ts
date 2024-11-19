@@ -1,50 +1,44 @@
 import {useState} from 'react';
 
 import validateEventPassword from '@utils/validate/validateEventPassword';
+import {CreateEventArgs, EventName} from 'types/createEvent';
 
 import RULE from '@constants/rule';
 
-import useRequestPostEvent from './queries/event/useRequestPostEvent';
-import useAmplitude from './useAmplitude';
+import useRequestPostGuestEvent from '../queries/event/useRequestPostGuestEvent';
+import useAmplitude from '../useAmplitude';
 
 export type UseSetEventPasswordStepReturnType = ReturnType<typeof useSetEventPasswordStep>;
+
+type SubmitDataForPostEventArgs = Omit<CreateEventArgs, 'password'> & {
+  event: React.FormEvent<HTMLFormElement>;
+  setEventToken: (eventToken: string) => void;
+};
 
 const useSetEventPasswordStep = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
-  const {postEvent: requestPostEvent, isPostEventPending} = useRequestPostEvent();
+  const {postEvent: requestPostEvent, isPostEventPending} = useRequestPostGuestEvent();
 
   const {trackCompleteCreateEvent} = useAmplitude();
 
-  const submitDataForPostEvent = async ({
-    event,
-    eventName,
-    setEventToken,
-  }: {
-    event: React.FormEvent<HTMLFormElement>;
-    eventName: string;
-    setEventToken: (eventToken: string) => void;
-  }) => {
+  const submitDataForPostEvent = async ({event, nickname, eventName, setEventToken}: SubmitDataForPostEventArgs) => {
     event.preventDefault();
 
-    await postEvent(eventName, setEventToken);
+    await requestPostEvent(
+      {eventName, nickname, password: getPasswordWithPad()},
+      {
+        onSuccess: ({eventId}) => {
+          trackCompleteCreateEvent({eventName, eventToken: eventId});
+          setEventToken(eventId);
+        },
+      },
+    );
   };
 
   const getPasswordWithPad = () => {
     return String(password).padStart(4, '0');
-  };
-
-  const postEvent = async (eventName: string, updateEventToken: (eventToken: string) => void) => {
-    await requestPostEvent(
-      {eventName, password: getPasswordWithPad()},
-      {
-        onSuccess: ({eventId}) => {
-          trackCompleteCreateEvent({eventName, eventToken: eventId});
-          updateEventToken(eventId);
-        },
-      },
-    );
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
