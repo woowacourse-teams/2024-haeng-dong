@@ -8,6 +8,8 @@ import getImageUrl from '@utils/getImageUrl';
 
 import {hrStyle} from './LoginPage.style';
 
+const LOGIN_COMMENT = `로그인을 하면 계좌번호를 저장하고\n이전 행사들을 쉽게 볼 수 있어요.`;
+
 const LoginPage = () => {
   const {theme} = useTheme();
 
@@ -23,7 +25,7 @@ const LoginPage = () => {
           <Flex flexDirection="column" justifyContent="center" alignItems="center" gap="1rem" margin="0 0 6rem 0">
             <Image src={getImageUrl('heundeut', 'webp')} fallbackSrc={getImageUrl('heundeut', 'png')} width={109} />
             <Text size="bodyBold" css={{whiteSpace: 'pre-line', textAlign: 'center'}}>
-              {`로그인을 사용하면\n더 편하게 사용할 수 있어요`}
+              {LOGIN_COMMENT}
             </Text>
           </Flex>
           <Flex flexDirection="column" gap="1rem" width="100%" padding="0 2rem" paddingInline="auto">
