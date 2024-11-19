@@ -2,18 +2,18 @@ import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
 import useSetEventPasswordStep from '@hooks/createEvent/useSetEventPasswordStep';
-import {CreateEventArgs, EventName, NickName} from 'types/createEvent';
+import {CreateEventArgs} from 'types/createEvent';
 
 import {FixedButton, Input} from '@HDesign/index';
 
 import RULE from '@constants/rule';
 
-type SetEventPasswordPageProps = Omit<CreateEventArgs, 'password'> & {
+type SetEventPasswordStepProps = Omit<CreateEventArgs, 'password'> & {
   moveToNextStep: () => void;
   setEventToken: (eventToken: string) => void;
 };
 
-const SetEventPasswordStep = ({eventName, nickname, moveToNextStep, setEventToken}: SetEventPasswordPageProps) => {
+const SetEventPasswordStep = ({eventName, nickname, moveToNextStep, setEventToken}: SetEventPasswordStepProps) => {
   const {submitDataForPostEvent, errorMessage, password, handleChange, isPostEventPending, canSubmit} =
     useSetEventPasswordStep();
 

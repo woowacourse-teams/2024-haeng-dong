@@ -32,7 +32,7 @@ const SetNicknameStep = ({
       `}
     >
       <Top>
-        <Top.Line text="행사를 정산할" />
+        <Top.Line text="행사를 정산하는" />
         <Top.Line text="관리자의 이름을 입력해주세요" emphasize={['관리자의 이름']} />
       </Top>
       <form onSubmit={onSubmit}>

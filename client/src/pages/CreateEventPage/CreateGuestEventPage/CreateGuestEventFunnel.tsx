@@ -10,7 +10,7 @@ import CompleteCreateEventStep from '../CompleteCreateEventStep';
 
 import SetGuestEventNameStep from './SetGuestEventNameStep';
 import SetEventPasswordStep from './SetEventPasswordStep';
-import SetNickNamePage from './SetNickNameStep';
+import SetNicknameStep from './SetNickNameStep';
 
 type CreateGuestEventStep = 'eventName' | 'adminName' | 'eventPassword' | 'complete';
 const STEP_SEQUENCE: CreateGuestEventStep[] = ['eventName', 'adminName', 'eventPassword', 'complete'];
@@ -45,7 +45,7 @@ const CreateGuestEventFunnel = () => {
         </Funnel.Step>
 
         <Funnel.Step name="adminName">
-          <SetNickNamePage moveToNextStep={moveToNextStep} {...nickNameProps} />
+          <SetNicknameStep moveToNextStep={moveToNextStep} {...nickNameProps} />
         </Funnel.Step>
 
         <Funnel.Step name="eventPassword">
