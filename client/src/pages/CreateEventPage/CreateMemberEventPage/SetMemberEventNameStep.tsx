@@ -19,7 +19,7 @@ const SetMemberEventNameStep = ({moveToNextStep, setEventToken}: SetEventNamePag
   const {postEvent, isPostEventPending} = useRequestPostMemberEvent();
   const {trackCompleteCreateMemberEvent} = useAmplitude();
 
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     await postEvent(eventName, {
@@ -45,7 +45,7 @@ const SetMemberEventNameStep = ({moveToNextStep, setEventToken}: SetEventNamePag
         <Top.Line text="정산을 시작하려는" />
         <Top.Line text="행사의 이름은 무엇인가요?" emphasize={['행사의 이름']} />
       </Top>
-      <form onSubmit={submit}>
+      <form onSubmit={onSubmit}>
         <Input
           labelText="행사 이름"
           errorText={errorMessage ?? ''}
