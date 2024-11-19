@@ -7,7 +7,7 @@ const useMainSection = (trackStartCreateEvent: () => void) => {
 
   const handleClick = () => {
     trackStartCreateEvent();
-    navigate(ROUTER_URLS.createEvent);
+    navigate(ROUTER_URLS.login);
   };
 
   return {handleClick};

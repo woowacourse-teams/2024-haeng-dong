@@ -15,7 +15,7 @@ const Nav = ({trackStartCreateEvent}: NavProps) => {
 
   const StartCreateEvent = () => {
     trackStartCreateEvent();
-    navigate(ROUTER_URLS.createEvent);
+    navigate(ROUTER_URLS.login);
   };
 
   return (
