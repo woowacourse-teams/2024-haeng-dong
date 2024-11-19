@@ -1,9 +1,11 @@
+import {EventName} from 'types/createEvent';
+
 import {useAmplitudeStore} from '@store/amplitudeStore';
 
 import detectBrowser from '@utils/detectBrowser';
 
 type EventUniqueData = {
-  eventName: string;
+  eventName: EventName;
   eventToken: string;
 };
 
