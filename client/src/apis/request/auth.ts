@@ -3,6 +3,8 @@ import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestGetWithoutResponse, requestPostWithoutResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
+import getKakaoRedirectUrl from '@utils/getKakaoRedirectUrl';
+
 export const requestPostAuthentication = async ({eventId}: WithEventId) => {
   await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
@@ -32,14 +34,9 @@ export const requestKakaoClientId = async () => {
 };
 
 export const requestGetKakaoLogin = async (code: string) => {
-  const redirectUri =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000' + process.env.KAKAO_REDIRECT_URI
-      : 'https://haengdong.pro' + process.env.KAKAO_REDIRECT_URI;
-
   await requestGetWithoutResponse({
     baseUrl: BASE_URL.HD,
-    endpoint: `/api/login/kakao?code=${code}&redirect_uri=${redirectUri}`,
+    endpoint: `/api/login/kakao?code=${code}&redirect_uri=${getKakaoRedirectUrl()}`,
   });
 
   return null;

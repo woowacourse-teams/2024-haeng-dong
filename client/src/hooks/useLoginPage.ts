@@ -3,6 +3,8 @@ import {useLocation, useNavigate} from 'react-router-dom';
 
 import {useAuthStore} from '@store/authStore';
 
+import getKakaoRedirectUrl from '@utils/getKakaoRedirectUrl';
+
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import useRequestGetKakaoClientId from './queries/auth/useRequestGetKakaoClientId';
@@ -21,12 +23,8 @@ const useLoginPage = () => {
   const goKakaoLogin = async () => {
     const queryResult = await requestGetClientId();
     const clientId = queryResult.data?.clientId;
-    const redirectUri =
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3000' + process.env.KAKAO_REDIRECT_URI
-        : 'https://haengdong.pro' + process.env.KAKAO_REDIRECT_URI;
 
-    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${getKakaoRedirectUrl()}&response_type=code`;
     window.location.href = link;
   };
 
