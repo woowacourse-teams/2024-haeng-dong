@@ -1,5 +1,3 @@
-import type {Event} from 'types/serviceType';
-
 import {useEffect, useState} from 'react';
 
 import validateAccountNumber from '@utils/validate/validateAccountNumber';

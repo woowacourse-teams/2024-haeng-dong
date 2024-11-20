@@ -8,13 +8,16 @@ import App from './App';
 const ErrorPage = lazy(() => import('@pages/ErrorPage/ErrorPage'));
 const SendErrorPage = lazy(() => import('@pages/ErrorPage/SendErrorPage'));
 const EventLoginPage = lazy(() => import('@pages/EventPage/AdminPage/EventLoginPage'));
+const CreateGuestEventFunnel = lazy(() => import('@pages/CreateEventPage/CreateGuestEventPage/CreateGuestEventFunnel'));
+const CreateMemberEventFunnel = lazy(
+  () => import('@pages/CreateEventPage/CreateMemberEventPage/CreateMemberEventFunnel'),
+);
 const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
 const AuthGate = lazy(() => import('@pages/EventPage/AuthGate'));
 const EventPage = lazy(() => import('@pages/EventPage/EventPageLayout'));
 const SendPage = lazy(() => import('@pages/SendPage'));
 const MainPage = lazy(() => import('@pages/MainPage/MainPage'));
 const HomePage = lazy(() => import('@pages/EventPage/HomePage/HomePage'));
-const CreateEventFunnel = lazy(() => import('@pages/CreateEventPage/CreateEventFunnel'));
 const AdminPage = lazy(() => import('@pages/EventPage/AdminPage/AdminPage'));
 const AddBillFunnel = lazy(() => import('@pages/AddBillFunnel/AddBillFunnel'));
 const EventMember = lazy(() => import('@pages/EventPage/AdminPage/EventMember'));
@@ -44,12 +47,16 @@ const router = createBrowserRouter([
         element: <EssentialQueryApp />,
         children: [
           {
-            path: ROUTER_URLS.login,
-            element: <LoginPage />,
+            path: ROUTER_URLS.createGuestEvent,
+            element: <CreateGuestEventFunnel />,
           },
           {
-            path: ROUTER_URLS.createEvent,
-            element: <CreateEventFunnel />,
+            path: ROUTER_URLS.createMemberEvent,
+            element: <CreateMemberEventFunnel />,
+          },
+          {
+            path: ROUTER_URLS.login,
+            element: <LoginPage />,
           },
           {
             path: ROUTER_URLS.event,

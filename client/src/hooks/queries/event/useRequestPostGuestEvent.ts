@@ -1,14 +1,14 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-import {RequestPostEvent, requestPostEvent} from '@apis/request/event';
+import {requestPostGuestEvent} from '@apis/request/event';
+import {EventCreationData} from 'types/serviceType';
 
-import QUERY_KEYS from '@constants/queryKeys';
-
-const useRequestPostEvent = () => {
+const useRequestPostGuestEvent = () => {
   const queryClient = useQueryClient();
 
   const {mutate, mutateAsync, ...rest} = useMutation({
-    mutationFn: ({eventName, password}: RequestPostEvent) => requestPostEvent({eventName, password}),
+    mutationFn: ({eventName, nickname, password}: EventCreationData) =>
+      requestPostGuestEvent({eventName, nickname, password}),
     onSuccess: () => {
       queryClient.removeQueries();
     },
@@ -22,4 +22,4 @@ const useRequestPostEvent = () => {
   };
 };
 
-export default useRequestPostEvent;
+export default useRequestPostGuestEvent;

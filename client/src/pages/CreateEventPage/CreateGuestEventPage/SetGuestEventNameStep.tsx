@@ -1,16 +1,15 @@
 import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
+import {UseSetEventNameStepReturnType} from '@hooks/createEvent/useSetEventNameStep';
 
-import {UseSetEventNameStepReturnType} from '@hooks/useSetEventNameStep';
-
-import {FixedButton, Flex, Input} from '@HDesign/index';
+import {FixedButton, Input} from '@HDesign/index';
 
 type SetEventNamePageProps = UseSetEventNameStepReturnType & {
   moveToNextStep: () => void;
 };
 
-const SetEventNameStep = ({
+const SetGuestEventNameStep = ({
   eventName,
   moveToNextStep,
   errorMessage,
@@ -53,4 +52,4 @@ const SetEventNameStep = ({
   );
 };
 
-export default SetEventNameStep;
+export default SetGuestEventNameStep;
