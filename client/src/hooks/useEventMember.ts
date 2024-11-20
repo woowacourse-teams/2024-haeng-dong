@@ -28,9 +28,7 @@ const useEventMember = (): ReturnUseEventMember => {
   const [deleteMembers, setDeleteMembers] = useState<number[]>([]);
 
   useEffect(() => {
-    const sortedMemberNameReports = initialReports.sort((a, b) => a.memberName.localeCompare(b.memberName));
-
-    setReports(sortedMemberNameReports);
+    setReports(initialReports);
   }, [initialReports]);
 
   const canSubmit = useMemo(() => {
