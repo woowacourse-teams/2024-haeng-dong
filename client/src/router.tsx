@@ -24,6 +24,7 @@ const ImagesPage = lazy(() => import('@pages/ImagesPage/ImagesPage'));
 const AddImagesPage = lazy(() => import('@pages/AddImagesPage/AddImagesPage'));
 const EssentialQueryApp = lazy(() => import('./EssentialQueryApp'));
 const QRCodePage = lazy(() => import('@pages/QRCodePage/QRCodePage'));
+const LoginPage = lazy(() => import('@pages/LoginPage'));
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         element: <EssentialQueryApp />,
         children: [
+          {
+            path: ROUTER_URLS.login,
+            element: <LoginPage />,
+          },
           {
             path: ROUTER_URLS.createEvent,
             element: <CreateEventFunnel />,

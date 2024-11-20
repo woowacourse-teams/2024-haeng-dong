@@ -12,6 +12,10 @@ export const authHandler = [
     return new HttpResponse(null, {status: 200});
   }),
 
+  http.get(`${MOCK_API_PREFIX}/api/login/kakao`, () => {
+    return new HttpResponse(null, {status: 200});
+  }),
+
   // POST /api/eventId/login (requestPostToken)
   http.post<{eventId: string}, {password: string}>(
     `${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/login`,

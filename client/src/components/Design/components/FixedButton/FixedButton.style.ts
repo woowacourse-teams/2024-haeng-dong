@@ -152,6 +152,12 @@ const getFixedButtonVariantsStyle = (variants: ButtonVariants, theme: Theme) => 
       }),
       getHoverAndActiveBackground(theme.colors.tertiary),
     ],
+    kakao: [
+      css({
+        backgroundColor: theme.colors.kakao,
+        color: theme.colors.onKakao,
+      }),
+    ],
   };
 
   return style[variants];

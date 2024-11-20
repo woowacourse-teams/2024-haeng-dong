@@ -10,6 +10,7 @@ declare namespace NodeJS {
     readonly API_BASE_URL: string;
     readonly AMPLITUDE_KEY: string;
     readonly KAKAO_JAVASCRIPT_KEY: string;
+    readonly KAKAO_REDIRECT_URI: string;
     readonly IMAGE_URL: string;
   }
 }

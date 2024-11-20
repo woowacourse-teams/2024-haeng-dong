@@ -81,7 +81,9 @@ export type ColorKeys =
   | 'errorContainer'
   | 'onErrorContainer'
   | 'warn'
-  | 'complete';
+  | 'complete'
+  | 'kakao'
+  | 'onKakao';
 export type ColorTokens = Record<ColorKeys, Color>;
 
 // TODO: (@soha) 대괄호 사용에 대해 논의
@@ -106,6 +108,9 @@ export const COLORS: ColorTokens = {
   onErrorContainer: PRIMITIVE_COLORS.pink[300],
   warn: PRIMITIVE_COLORS.yellow[400],
   complete: PRIMITIVE_COLORS.green[300],
+
+  kakao: '#FEE500',
+  onKakao: '#181600',
 };
 
 export const PRIMARY_COLORS = PRIMITIVE_COLORS.purple;

@@ -6,6 +6,8 @@ const QUERY_KEYS = {
   reports: 'reports',
   billDetails: 'billDetails',
   images: 'images',
+  kakaoClientId: 'kakao-client-id',
+  kakaoLogin: 'kakao-login',
 };
 
 export default QUERY_KEYS;
