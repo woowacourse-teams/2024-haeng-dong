@@ -50,12 +50,12 @@ export interface EventId {
 }
 
 export type EventName = string;
-export type NickName = string;
+export type Nickname = string;
 export type Password = string;
 
 export interface EventCreationData {
   eventName: EventName;
-  nickname: NickName;
+  nickname: Nickname;
   password: Password;
 }
 

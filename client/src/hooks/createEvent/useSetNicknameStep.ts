@@ -1,12 +1,12 @@
 import {useState} from 'react';
 
 import validateMemberName from '@utils/validate/validateMemberName';
-import {NickName} from 'types/createEvent';
+import {Nickname} from 'types/serviceType';
 
 type UseSetNicknameStepProps = ReturnType<typeof useSetNicknameStep>;
 
 const useSetNicknameStep = () => {
-  const [nickname, setNickname] = useState<NickName>('');
+  const [nickname, setNickname] = useState<Nickname>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
 
