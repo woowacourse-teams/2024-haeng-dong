@@ -1,6 +1,5 @@
 import Image from '@components/Design/components/Image/Image';
 
-import useAmplitude from '@hooks/useAmplitude';
 import usePageBackground from '@hooks/usePageBackground';
 
 import getImageUrl from '@utils/getImageUrl';
@@ -13,16 +12,14 @@ import {backgroundImageStyle, backgroundStyle, mainContainer} from './MainPage.s
 import CreatorSection from './Section/CreatorSection/CreatorSection';
 
 const MainPage = () => {
-  const {trackStartCreateEvent} = useAmplitude();
   const {isVisible} = usePageBackground();
   return (
     <div css={mainContainer}>
-      <Nav trackStartCreateEvent={trackStartCreateEvent} />
-      <MainSection trackStartCreateEvent={trackStartCreateEvent} />
+      <Nav />
+      <MainSection />
       <DescriptionSection />
       <FeatureSection />
       <CreatorSection />
-
       <div css={backgroundStyle}>
         <Image
           css={backgroundImageStyle(isVisible)}

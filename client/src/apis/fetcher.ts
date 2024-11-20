@@ -63,6 +63,19 @@ export const requestGet = async <T>({
   return data;
 };
 
+export const requestGetWithoutResponse = async ({
+  headers = {},
+  errorHandlingStrategy,
+  ...args
+}: WithErrorHandlingStrategy<RequestMethodProps>) => {
+  await request({
+    ...args,
+    method: 'GET',
+    headers,
+    errorHandlingStrategy,
+  });
+};
+
 export const requestPatch = ({headers = {}, ...args}: RequestMethodProps) => {
   return request({method: 'PATCH', headers, ...args});
 };
