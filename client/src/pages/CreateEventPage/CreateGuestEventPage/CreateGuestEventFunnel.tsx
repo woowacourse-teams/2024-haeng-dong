@@ -1,25 +1,28 @@
 import {useNavigate} from 'react-router-dom';
 
+import useCreateGuestEventData from '@hooks/createEvent/useCreateGuestEventData';
+
 import useFunnel from '@hooks/useFunnel';
-import useCreateEventData from '@hooks/useCreateEventData';
 
 import {MainLayout, TopNav} from '@components/Design';
 
-import SetEventNameStep from './SetEventNameStep';
+import CompleteCreateEventStep from '../CompleteCreateEventStep';
+
+import SetGuestEventNameStep from './SetGuestEventNameStep';
 import SetEventPasswordStep from './SetEventPasswordStep';
-import CompleteCreateEventStep from './CompleteCreateEventStep';
+import SetNicknameStep from './SetNickNameStep';
 
-type CreateEventStep = 'eventName' | 'eventPassword' | 'complete';
-const STEP_SEQUENCE: CreateEventStep[] = ['eventName', 'eventPassword', 'complete'];
+type CreateGuestEventStep = 'eventName' | 'adminName' | 'eventPassword' | 'complete';
+const STEP_SEQUENCE: CreateGuestEventStep[] = ['eventName', 'adminName', 'eventPassword', 'complete'];
 
-const CreateEventFunnel = () => {
+const CreateGuestEventFunnel = () => {
   const navigate = useNavigate();
   const {moveToNextStep, moveToPrevStep, Funnel, step} = useFunnel({
     defaultStep: 'eventName',
     stepList: STEP_SEQUENCE,
   });
 
-  const {eventNameProps, eventToken, setEventToken} = useCreateEventData();
+  const {eventNameProps, nickNameProps, eventToken, setEventToken} = useCreateGuestEventData();
 
   const handleBack = () => {
     if (step === STEP_SEQUENCE[0]) {
@@ -38,12 +41,17 @@ const CreateEventFunnel = () => {
       </TopNav>
       <Funnel step={step}>
         <Funnel.Step name="eventName">
-          <SetEventNameStep moveToNextStep={moveToNextStep} {...eventNameProps} />
+          <SetGuestEventNameStep moveToNextStep={moveToNextStep} {...eventNameProps} />
+        </Funnel.Step>
+
+        <Funnel.Step name="adminName">
+          <SetNicknameStep moveToNextStep={moveToNextStep} {...nickNameProps} />
         </Funnel.Step>
 
         <Funnel.Step name="eventPassword">
           <SetEventPasswordStep
             moveToNextStep={moveToNextStep}
+            nickname={nickNameProps.nickName}
             eventName={eventNameProps.eventName}
             setEventToken={setEventToken}
           />
@@ -57,4 +65,4 @@ const CreateEventFunnel = () => {
   );
 };
 
-export default CreateEventFunnel;
+export default CreateGuestEventFunnel;

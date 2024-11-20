@@ -47,7 +47,7 @@ Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: Inter
 });
 
 Cypress.Commands.add('createEventName', (eventName: string) => {
-  cy.visit(ROUTER_URLS.createEvent);
+  cy.visit(ROUTER_URLS.createMemberEvent);
   cy.get('input').type(eventName);
   cy.get('button').contains('다음').click();
 });

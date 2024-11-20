@@ -49,8 +49,18 @@ export interface EventId {
   eventId: string;
 }
 
+export type EventName = string;
+export type Nickname = string;
+export type Password = string;
+
+export interface EventCreationData {
+  eventName: EventName;
+  nickname: Nickname;
+  password: Password;
+}
+
 export interface Event {
-  eventName: string;
+  eventName: EventName;
   bankName: string;
   accountNumber: string;
 }

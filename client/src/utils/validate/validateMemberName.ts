@@ -6,14 +6,13 @@ import {ValidateResult} from './type';
 
 const validateMemberName = (name: string): ValidateResult => {
   let errorMessage = null;
+
   const validateOnlyString = () => {
-    if (!REGEXP.memberName.test(name)) return false;
-    return true;
+    return REGEXP.memberName.test(name);
   };
 
   const validateLength = () => {
-    if (name.length > RULE.maxMemberNameLength) return false;
-    return true;
+    return name.length <= RULE.maxMemberNameLength;
   };
 
   if (validateOnlyString() && validateLength()) {

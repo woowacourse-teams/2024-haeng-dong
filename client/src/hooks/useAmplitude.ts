@@ -1,9 +1,11 @@
+import {EventName} from 'types/createEvent';
+
 import {useAmplitudeStore} from '@store/amplitudeStore';
 
 import detectBrowser from '@utils/detectBrowser';
 
 type EventUniqueData = {
-  eventName: string;
+  eventName: EventName;
   eventToken: string;
 };
 
@@ -48,6 +50,12 @@ const useAmplitude = () => {
     });
   };
 
+  const trackCompleteCreateMemberEvent = (eventUniqueData: EventUniqueData) => {
+    track('회원 이벤트 생성 완료', {
+      ...eventUniqueData,
+    });
+  };
+
   const trackShareEvent = (eventSummary: EventSummary) => {
     track('이벤트 초대 클릭', {
       ...eventSummary,
@@ -75,6 +83,7 @@ const useAmplitude = () => {
   return {
     trackStartCreateEvent,
     trackCompleteCreateEvent,
+    trackCompleteCreateMemberEvent,
     trackShareEvent,
     trackAddBillStart,
     trackAddBillEnd,
