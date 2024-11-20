@@ -20,6 +20,7 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   heundeut: 'gray',
   photoButton: 'white',
   chevronDown: 'tertiary',
+  kakao: 'onKakao',
 };
 
 export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {
