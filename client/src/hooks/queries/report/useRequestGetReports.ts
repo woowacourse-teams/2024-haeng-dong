@@ -15,8 +15,10 @@ const useRequestGetReports = ({...props}: WithErrorHandlingStrategy | null = {})
     queryFn: () => requestGetReports({eventId, ...props}),
   });
 
+  const sortedMemberNameReports = data?.reports.sort((a, b) => a.memberName.localeCompare(b.memberName));
+
   return {
-    reports: data?.reports ?? [],
+    reports: sortedMemberNameReports ?? [],
     ...rest,
   };
 };
