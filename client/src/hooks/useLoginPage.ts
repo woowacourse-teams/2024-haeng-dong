@@ -30,7 +30,7 @@ const useLoginPage = () => {
 
   const goNonLoginCreateEvent = () => {
     trackStartCreateEvent({login: false});
-    navigate(ROUTER_URLS.createEvent);
+    navigate(ROUTER_URLS.createGuestEvent);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const useLoginPage = () => {
 
         // 추후에 업데이트 하는 로직 필요
         trackStartCreateEvent({login: true});
-        navigate(ROUTER_URLS.createEvent);
+        navigate(ROUTER_URLS.createMemberEvent);
       }
     };
 

@@ -51,7 +51,7 @@ const CreateGuestEventFunnel = () => {
         <Funnel.Step name="eventPassword">
           <SetEventPasswordStep
             moveToNextStep={moveToNextStep}
-            nickname={nickNameProps.nickName}
+            nickname={nickNameProps.nickname}
             eventName={eventNameProps.eventName}
             setEventToken={setEventToken}
           />
