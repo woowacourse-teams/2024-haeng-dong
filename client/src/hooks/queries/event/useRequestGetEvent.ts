@@ -19,6 +19,7 @@ const useRequestGetEvent = ({...props}: WithErrorHandlingStrategy | null = {}) =
     eventName: data?.eventName ?? '',
     bankName: data?.bankName ?? '',
     accountNumber: data?.accountNumber ?? '',
+    createdByGuest: data?.createdByGuest ?? true,
     ...rest,
   };
 };
