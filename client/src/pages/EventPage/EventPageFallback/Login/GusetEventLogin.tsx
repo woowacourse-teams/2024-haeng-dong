@@ -1,25 +1,16 @@
-import {css} from '@emotion/react';
-
 import Top from '@components/Design/components/Top/Top';
 
 import useEventLogin from '@hooks/useEventLogin';
 
-import {FixedButton, Input} from '@HDesign/index';
+import {FixedButton, FunnelLayout, Input} from '@HDesign/index';
 
 import RULE from '@constants/rule';
 
-const EventLoginPage = () => {
+const GuestEventLogin = () => {
   const {password, errorMessage, handleChange, canSubmit, submitPassword} = useEventLogin();
 
   return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-      `}
-    >
+    <FunnelLayout>
       <Top>
         <Top.Line
           text={`행사 생성 시 설정한 ${RULE.maxEventPasswordLength}자리`}
@@ -41,8 +32,8 @@ const EventLoginPage = () => {
         ></Input>
         <FixedButton disabled={!canSubmit}>관리 페이지로</FixedButton>
       </form>
-    </div>
+    </FunnelLayout>
   );
 };
 
-export default EventLoginPage;
+export default GuestEventLogin;
