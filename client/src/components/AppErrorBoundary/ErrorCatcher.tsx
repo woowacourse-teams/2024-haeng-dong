@@ -36,7 +36,11 @@ const ErrorCatcher = ({children}: React.PropsWithChildren) => {
     });
 
     // 로그인 처리
-    if (error.errorCode === 'TOKEN_NOT_FOUND') {
+    if (
+      error.errorCode === 'TOKEN_NOT_FOUND' &&
+      !window.location.pathname.includes('/guest/login') &&
+      !window.location.pathname.includes('/member/login')
+    ) {
       const createdByGuest = SessionStorage.get<boolean>(SESSION_STORAGE_KEYS.createdByGuest);
       SessionStorage.set<string>(SESSION_STORAGE_KEYS.previousUrlForLogin, window.location.pathname);
 
