@@ -3,7 +3,7 @@ import type {NavItemProps} from './NavItem.type';
 
 import {useLocation, useNavigate} from 'react-router-dom';
 
-import getDeletedLastPath from '@utils/getDeletedLastPath';
+import getEventBaseUrl from '@utils/getEventBaseUrl';
 
 import TextButton from '../TextButton/TextButton';
 
@@ -28,7 +28,7 @@ const NavItem = ({displayName, routePath, onHandleRouteInFunnel, noEmphasis = fa
         navigate(-1);
         break;
       default:
-        navigate(`${getDeletedLastPath(location.pathname)}${routePath}`);
+        navigate(`/${getEventBaseUrl(location.pathname)}${routePath}`);
         break;
     }
   };
