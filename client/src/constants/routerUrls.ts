@@ -17,4 +17,7 @@ export const ROUTER_URLS = {
   qrCode: `${EVENT_WITH_EVENT_ID}/qrcode`,
   event: EVENT,
   login: '/login',
+  guestEventLogin: `${EVENT_WITH_EVENT_ID}/admin/guest/login`,
+  memberEventLogin: `${EVENT_WITH_EVENT_ID}/admin/member/login`,
+  kakaoLoginRedirectUri: process.env.KAKAO_REDIRECT_URI,
 };
