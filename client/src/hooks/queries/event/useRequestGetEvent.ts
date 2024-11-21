@@ -16,10 +16,10 @@ const useRequestGetEvent = ({...props}: WithErrorHandlingStrategy | null = {}) =
   });
 
   return {
-    eventName: data?.eventName,
-    bankName: data?.bankName,
-    accountNumber: data?.accountNumber,
-    createdByGuest: data?.createdByGuest,
+    eventName: data.eventName,
+    bankName: data.bankName,
+    accountNumber: data.accountNumber,
+    createdByGuest: data.createdByGuest,
     ...rest,
   };
 };
