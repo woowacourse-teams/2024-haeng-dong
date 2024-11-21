@@ -38,7 +38,7 @@ const ErrorCatcher = ({children}: React.PropsWithChildren) => {
     // 로그인 처리
     if (error.errorCode === 'TOKEN_NOT_FOUND') {
       const createdByGuest = SessionStorage.get<boolean>(SESSION_STORAGE_KEYS.createdByGuest);
-      SessionStorage.set<string>(SESSION_STORAGE_KEYS.previousUrlForLogin, window.location.href);
+      SessionStorage.set<string>(SESSION_STORAGE_KEYS.previousUrlForLogin, window.location.pathname);
 
       const currentPath = window.location.pathname;
 
