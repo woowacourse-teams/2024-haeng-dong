@@ -17,4 +17,5 @@ export const ROUTER_URLS = {
   qrCode: `${EVENT_WITH_EVENT_ID}/qrcode`,
   event: EVENT,
   login: '/login',
+  myPage: '/mypage',
 };
