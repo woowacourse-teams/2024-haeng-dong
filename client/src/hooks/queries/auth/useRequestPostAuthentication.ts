@@ -1,4 +1,5 @@
 import {useMutation} from '@tanstack/react-query';
+import {useNavigate} from 'react-router-dom';
 
 import {requestPostAuthentication} from '@apis/request/auth';
 
@@ -13,6 +14,7 @@ import useRequestGetEvent from '../event/useRequestGetEvent';
 
 const useRequestPostAuthentication = () => {
   const eventId = getEventIdByUrl();
+  const navigate = useNavigate();
   const {updateAuth} = useAuthStore();
 
   const {createdByGuest} = useRequestGetEvent();
@@ -20,8 +22,18 @@ const useRequestPostAuthentication = () => {
   const {mutate, ...rest} = useMutation({
     mutationFn: () => requestPostAuthentication({eventId}),
     onSuccess: () => updateAuth(true),
-    onMutate: () => {
-      SessionStorage.set<boolean>(SESSION_STORAGE_KEYS.createdByGuest, createdByGuest);
+    onError: () => {
+      if (!window.location.pathname.includes('/guest/login') && !window.location.pathname.includes('/member/login')) {
+        SessionStorage.set<string>(SESSION_STORAGE_KEYS.previousUrlForLogin, window.location.pathname);
+
+        const currentPath = window.location.pathname;
+
+        if (createdByGuest) {
+          navigate(`${currentPath}/guest/login`);
+        } else {
+          navigate(`${currentPath}/member/login`);
+        }
+      }
     },
   });
 
