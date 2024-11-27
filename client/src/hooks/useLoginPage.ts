@@ -19,7 +19,7 @@ const useLoginPage = () => {
     const queryResult = await requestGetClientId();
     const clientId = queryResult.data?.clientId;
 
-    if (typeof previousUrl !== 'undefined') {
+    if (typeof previousUrl === 'string') {
       SessionStorage.set<string>(SESSION_STORAGE_KEYS.previousUrlForLogin, previousUrl);
     }
 
