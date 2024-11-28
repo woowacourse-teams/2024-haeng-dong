@@ -42,9 +42,9 @@ cookie:
   max-age: 7D
 
 image:
-  bucket: techcourse-project-2024
-  directory: haeng-dong/s3-upload-test/
-  baseUrl: https://d2unln22cedgp9.cloudfront.net/
+  bucket: haeng-dong
+  directory: image/
+  base-url: https://d3a4djq153056h.cloudfront.net/
 
 management:
   endpoints:
