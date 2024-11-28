@@ -39,7 +39,7 @@ public class AuthService {
     public Long findUserIdByToken(String token) {
         validateToken(token);
         Map<String, Object> payload = tokenProvider.getPayload(token);
-        return Long.parseLong((String) payload.get(CLAIM_SUB));
+        return ((Integer) payload.get(CLAIM_SUB)).longValue();
     }
 
     private void validateToken(String token) {
