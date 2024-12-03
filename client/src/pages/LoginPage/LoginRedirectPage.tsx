@@ -32,6 +32,8 @@ const LoginRedirectPage = () => {
       if (!code) return;
 
       await requestGetKakaoLogin();
+      SessionStorage.remove(SESSION_STORAGE_KEYS.previousUrlForLogin);
+
       updateAuth(true);
       trackStartCreateEvent({login: true});
 
