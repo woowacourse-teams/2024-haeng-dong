@@ -31,6 +31,7 @@ const EssentialQueryApp = lazy(() => import('./EssentialQueryApp'));
 const QRCodePage = lazy(() => import('@pages/QRCodePage/QRCodePage'));
 const LoginPage = lazy(() => import('@pages/LoginPage'));
 const LoginRedirectPage = lazy(() => import('@pages/LoginPage/LoginRedirectPage'));
+const LoginFailFallback = lazy(() => import('@pages/LoginPage/LoginFailFallback'));
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.kakaoLoginRedirectUri,
             element: <LoginRedirectPage />,
+            errorElement: <LoginFailFallback />,
           },
           {
             path: ROUTER_URLS.event,
