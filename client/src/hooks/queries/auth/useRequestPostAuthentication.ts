@@ -20,20 +20,23 @@ const useRequestPostAuthentication = () => {
 
   const {createdByGuest} = useRequestGetEvent();
 
+  const isSecondEncounteredOnError = () => {
+    return window.location.pathname.includes('/guest/login') || window.location.pathname.includes('/member/login');
+  };
+
   const {mutate, ...rest} = useMutation({
     mutationFn: () => requestPostAuthentication({eventId}),
     onSuccess: () => updateAuth(true),
     onError: () => {
-      if (!window.location.pathname.includes('/guest/login') && !window.location.pathname.includes('/member/login')) {
-        SessionStorage.set<string>(SESSION_STORAGE_KEYS.previousUrlForLogin, window.location.pathname);
+      if (isSecondEncounteredOnError()) return;
+      SessionStorage.set<string>(SESSION_STORAGE_KEYS.previousUrlForLogin, window.location.pathname);
 
-        const eventToken = getEventIdByUrl();
+      const eventToken = getEventIdByUrl();
 
-        if (createdByGuest) {
-          navigate(ROUTER_URLS.guestEventLogin.replace(':eventId', eventToken));
-        } else {
-          navigate(ROUTER_URLS.memberEventLogin.replace(':eventId', eventToken));
-        }
+      if (createdByGuest) {
+        navigate(ROUTER_URLS.guestEventLogin.replace(':eventId', eventToken));
+      } else {
+        navigate(ROUTER_URLS.memberEventLogin.replace(':eventId', eventToken));
       }
     },
   });
