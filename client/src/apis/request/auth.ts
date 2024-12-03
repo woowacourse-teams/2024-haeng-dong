@@ -37,6 +37,7 @@ export const requestGetKakaoLogin = async (code: string) => {
   await requestGetWithoutResponse({
     baseUrl: BASE_URL.HD,
     endpoint: `/api/login/kakao?code=${code}&redirect_uri=${getKakaoRedirectUrl()}`,
+    errorHandlingStrategy: 'errorBoundary',
   });
 
   return null;

@@ -31,7 +31,7 @@ const LoginRedirectPage = () => {
     const kakaoLogin = async () => {
       if (!code) return;
 
-      await requestGetKakaoLogin();
+      await requestGetKakaoLogin({throwOnError: true});
       SessionStorage.remove(SESSION_STORAGE_KEYS.previousUrlForLogin);
 
       updateAuth(true);
