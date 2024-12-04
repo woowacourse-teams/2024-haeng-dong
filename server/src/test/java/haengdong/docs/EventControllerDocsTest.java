@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.cookies.CookieDocumentation.responseCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -26,6 +27,7 @@ import haengdong.common.auth.application.AuthService;
 import haengdong.common.properties.CookieProperties;
 import haengdong.event.application.EventImageFacadeService;
 import haengdong.event.application.EventService;
+import haengdong.event.application.request.EventAppRequest;
 import haengdong.event.application.request.EventGuestAppRequest;
 import haengdong.event.application.response.EventAppResponse;
 import haengdong.event.application.response.EventDetailAppResponse;
@@ -34,6 +36,8 @@ import haengdong.event.application.response.MemberBillReportAppResponse;
 import haengdong.event.presentation.EventController;
 import haengdong.event.presentation.request.EventGuestSaveRequest;
 import haengdong.event.presentation.request.EventLoginRequest;
+import haengdong.event.presentation.request.EventSaveRequest;
+import haengdong.support.fixture.Fixture;
 import java.time.Duration;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -199,6 +203,38 @@ class EventControllerDocsTest extends RestDocsSupport {
                 );
     }
 
+    @DisplayName("이벤트를 생성한다.")
+    @Test
+    void saveEvent() throws Exception {
+        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
+        String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
+        String eventId = "쿠키 토큰";
+        EventAppResponse eventAppResponse = new EventAppResponse(eventId, 1L);
+        given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
+
+        mockMvc.perform(post("/api/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .cookie(Fixture.EVENT_COOKIE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("createEvent",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                requestFields(
+                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
+                                ),
+                                requestCookies(
+                                        cookieWithName("accessToken").description("행사 관리자 토큰")
+                                ),
+                                responseFields(
+                                        fieldWithPath("eventId").type(JsonFieldType.STRING)
+                                                .description("행사 ID")
+                                )
+                        )
+                );
+    }
 
     @DisplayName("행사 이미지를 조회한다.")
     @Test

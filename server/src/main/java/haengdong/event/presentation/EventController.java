@@ -1,14 +1,17 @@
 package haengdong.event.presentation;
 
+import haengdong.common.auth.Login;
 import haengdong.common.auth.application.AuthService;
 import haengdong.common.properties.CookieProperties;
 import haengdong.event.application.EventImageFacadeService;
 import haengdong.event.application.EventService;
+import haengdong.event.application.request.EventAppRequest;
 import haengdong.event.application.response.EventAppResponse;
 import haengdong.event.application.response.EventImageUrlAppResponse;
 import haengdong.event.application.response.MemberBillReportAppResponse;
 import haengdong.event.presentation.request.EventGuestSaveRequest;
 import haengdong.event.presentation.request.EventLoginRequest;
+import haengdong.event.presentation.request.EventSaveRequest;
 import haengdong.event.presentation.response.EventDetailResponse;
 import haengdong.event.presentation.response.EventImagesResponse;
 import haengdong.event.presentation.response.EventResponse;
@@ -64,6 +67,12 @@ public class EventController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .body(eventResponse);
+    }
+
+    @PostMapping("/api/events")
+    public ResponseEntity<EventResponse> saveEvent(@Login Long userId, @Valid @RequestBody EventSaveRequest request) {
+        EventResponse eventResponse = EventResponse.of(eventService.saveEvent(new EventAppRequest(request.eventName(), userId)));
+        return ResponseEntity.ok(eventResponse);
     }
 
     @PostMapping("/api/events/{eventId}/login")

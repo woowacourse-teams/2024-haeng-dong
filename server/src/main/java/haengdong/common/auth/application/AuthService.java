@@ -1,13 +1,13 @@
 package haengdong.common.auth.application;
 
 
-import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
-import haengdong.event.application.EventService;
 import haengdong.common.auth.TokenProvider;
-import haengdong.user.domain.Role;
 import haengdong.common.exception.AuthenticationException;
 import haengdong.common.exception.HaengdongErrorCode;
+import haengdong.event.application.EventService;
+import haengdong.user.domain.Role;
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AuthService {
@@ -36,7 +36,7 @@ public class AuthService {
         return tokenProvider.createToken(payload);
     }
 
-    public Long findUserIdByToken(String token) {
+    public Long findUserIdByJWT(String token) {
         validateToken(token);
         Map<String, Object> payload = tokenProvider.getPayload(token);
         return ((Integer) payload.get(CLAIM_SUB)).longValue();

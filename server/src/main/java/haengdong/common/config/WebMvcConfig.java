@@ -1,28 +1,27 @@
 package haengdong.common.config;
 
-import haengdong.common.auth.TokenProvider;
 import haengdong.common.auth.application.AuthService;
-import haengdong.common.auth.infrastructure.AuthenticationExtractor;
-import haengdong.common.auth.infrastructure.JwtTokenProvider;
 import haengdong.common.auth.infrastructure.AdminInterceptor;
+import haengdong.common.auth.infrastructure.AuthenticationExtractor;
+import haengdong.common.auth.infrastructure.AuthenticationPrincipalArgumentResolver;
 import haengdong.common.properties.CorsProperties;
-import haengdong.common.properties.JwtProperties;
-import haengdong.event.application.EventService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RequiredArgsConstructor
-@EnableConfigurationProperties({JwtProperties.class, CorsProperties.class})
+@EnableConfigurationProperties({CorsProperties.class})
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private final JwtProperties jwtProperties;
-    private final EventService eventService;
+    private final AuthService authService;
+    private final AuthenticationExtractor authenticationExtractor;
     private final CorsProperties corsProperties;
 
     @Override
@@ -41,23 +40,18 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/admin/**");
     }
 
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(authenticationPrincipalArgumentResolver());
+    }
+
     @Bean
     public AdminInterceptor adminInterceptor() {
-        return new AdminInterceptor(authService(), authenticationExtractor());
+        return new AdminInterceptor(authService, authenticationExtractor);
     }
 
     @Bean
-    public AuthService authService() {
-        return new AuthService(tokenProvider(), eventService);
-    }
-
-    @Bean
-    public TokenProvider tokenProvider() {
-        return new JwtTokenProvider(jwtProperties);
-    }
-
-    @Bean
-    public AuthenticationExtractor authenticationExtractor() {
-        return new AuthenticationExtractor();
+    public AuthenticationPrincipalArgumentResolver authenticationPrincipalArgumentResolver() {
+        return new AuthenticationPrincipalArgumentResolver(authService, authenticationExtractor);
     }
 }
