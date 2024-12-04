@@ -55,7 +55,7 @@ public class User extends BaseEntity {
     }
 
     public static User createGuest(String nickName, String password) {
-        return new User(nickName, password, "", "", "");
+        return new User(nickName, password, "", "", null);
     }
 
     public static User createMember(String nickName, String memberNumber) {
