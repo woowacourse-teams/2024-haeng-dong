@@ -1,42 +1,35 @@
 package haengdong.docs;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+import static haengdong.support.fixture.Fixture.EVENT_COOKIE;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static haengdong.support.fixture.Fixture.EVENT_COOKIE;
 
+import haengdong.event.application.EventImageFacadeService;
+import haengdong.event.application.EventService;
+import haengdong.event.presentation.admin.AdminEventController;
+import haengdong.event.presentation.request.EventUpdateRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
-import haengdong.event.application.EventImageFacadeService;
-import haengdong.event.application.EventService;
-import haengdong.event.application.request.EventAppRequest;
-import haengdong.event.application.response.EventAppResponse;
-import haengdong.event.presentation.admin.AdminEventController;
-import haengdong.event.presentation.request.EventSaveRequest;
-import haengdong.event.presentation.request.EventUpdateRequest;
-import haengdong.support.fixture.Fixture;
 
 class AdminEventControllerDocsTest extends RestDocsSupport {
 
@@ -153,39 +146,6 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                 ),
                                 requestCookies(
                                         cookieWithName("accessToken").description("행사 관리자 토큰")
-                                )
-                        )
-                );
-    }
-
-    @DisplayName("이벤트를 생성한다.")
-    @Test
-    void saveEvent() throws Exception {
-        EventSaveRequest eventSaveRequest = new EventSaveRequest("토다리");
-        String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
-        String eventId = "쿠키 토큰";
-        EventAppResponse eventAppResponse = new EventAppResponse(eventId, 1L);
-        given(eventService.saveEvent(any(EventAppRequest.class))).willReturn(eventAppResponse);
-
-        mockMvc.perform(post("/api/admin/events")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody)
-                        .cookie(Fixture.EVENT_COOKIE))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(
-                        document("createEvent",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                requestFields(
-                                        fieldWithPath("eventName").type(JsonFieldType.STRING).description("행사 이름")
-                                ),
-                                requestCookies(
-                                        cookieWithName("accessToken").description("행사 관리자 토큰")
-                                ),
-                                responseFields(
-                                        fieldWithPath("eventId").type(JsonFieldType.STRING)
-                                                .description("행사 ID")
                                 )
                         )
                 );

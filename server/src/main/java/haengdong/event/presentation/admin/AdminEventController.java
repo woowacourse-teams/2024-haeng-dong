@@ -1,5 +1,8 @@
 package haengdong.event.presentation.admin;
 
+import haengdong.event.application.EventImageFacadeService;
+import haengdong.event.application.EventService;
+import haengdong.event.presentation.request.EventUpdateRequest;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import haengdong.event.application.EventImageFacadeService;
-import haengdong.event.application.EventService;
-import haengdong.event.application.request.EventAppRequest;
-import haengdong.common.auth.Login;
-import haengdong.event.presentation.request.EventSaveRequest;
-import haengdong.event.presentation.request.EventUpdateRequest;
-import haengdong.event.presentation.response.EventResponse;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,12 +24,6 @@ public class AdminEventController {
 
     private final EventService eventService;
     private final EventImageFacadeService eventImageFacadeService;
-
-    @PostMapping("/api/admin/events")
-    public ResponseEntity<EventResponse> saveEvent(@Login Long userId, @Valid @RequestBody EventSaveRequest request) {
-        EventResponse eventResponse = EventResponse.of(eventService.saveEvent(new EventAppRequest(request.eventName(), userId)));
-        return ResponseEntity.ok(eventResponse);
-    }
 
     @PostMapping("/api/admin/events/{eventId}/auth")
     public ResponseEntity<Void> authenticate() {
