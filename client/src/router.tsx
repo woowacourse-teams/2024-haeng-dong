@@ -30,6 +30,7 @@ const AddImagesPage = lazy(() => import('@pages/AddImagesPage/AddImagesPage'));
 const EssentialQueryApp = lazy(() => import('./EssentialQueryApp'));
 const QRCodePage = lazy(() => import('@pages/QRCodePage/QRCodePage'));
 const LoginPage = lazy(() => import('@pages/LoginPage'));
+const MyPage = lazy(() => import('@pages/MyPage'));
 const LoginRedirectPage = lazy(() => import('@pages/LoginPage/LoginRedirectPage'));
 const LoginFailFallback = lazy(() => import('@pages/LoginPage/LoginFailFallback'));
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.login,
             element: <LoginPage />,
+          },
+          {
+            path: ROUTER_URLS.myPage,
+            element: <MyPage />,
           },
           {
             path: ROUTER_URLS.kakaoLoginRedirectUri,
