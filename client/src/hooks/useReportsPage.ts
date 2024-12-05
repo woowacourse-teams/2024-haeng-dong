@@ -3,7 +3,7 @@ import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
 
 import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
 
-import getDeletedLastPath from '@utils/getDeletedLastPath';
+import getEventBaseUrl from '@utils/getEventBaseUrl';
 
 import {useSearchReports} from './useSearchReports';
 import toast from './useToast/toast';
@@ -37,7 +37,7 @@ const useReportsPage = () => {
       eventToken,
     };
 
-    navigate(`${getDeletedLastPath(location.pathname)}/${memberId}/send`, {state: sendInfo});
+    navigate(`/${getEventBaseUrl(location.pathname)}/${memberId}/send`, {state: sendInfo});
   };
 
   const onCopy = async (amount: number) => {

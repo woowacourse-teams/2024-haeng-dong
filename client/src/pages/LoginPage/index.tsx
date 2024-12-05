@@ -29,7 +29,7 @@ const LoginPage = () => {
             </Text>
           </Flex>
           <Flex flexDirection="column" gap="1rem" width="100%" padding="0 2rem" paddingInline="auto">
-            <Button variants="kakao" size="large" onClick={goKakaoLogin}>
+            <Button variants="kakao" size="large" onClick={() => goKakaoLogin()}>
               <Flex alignItems="center" gap="0.625rem">
                 <Icon iconType="kakao" />
                 카카오 로그인
