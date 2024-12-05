@@ -14,6 +14,10 @@ const SessionStorage = {
     const element = JSON.stringify(data);
     sessionStorage.setItem(key, element);
   },
+
+  remove: (key: string) => {
+    sessionStorage.removeItem(key);
+  },
 };
 
 export default SessionStorage;

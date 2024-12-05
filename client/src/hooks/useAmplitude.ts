@@ -1,4 +1,4 @@
-import {EventName} from 'types/createEvent';
+import {EventName} from 'types/serviceType';
 
 import {useAmplitudeStore} from '@store/amplitudeStore';
 

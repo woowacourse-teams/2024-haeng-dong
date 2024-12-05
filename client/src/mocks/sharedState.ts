@@ -2,6 +2,7 @@ export let eventData = {
   eventName: '행동대장 야유회',
   bankName: '',
   accountNumber: '000000-01-121212',
+  createdByGuest: true,
 };
 
 export let memberData = {
