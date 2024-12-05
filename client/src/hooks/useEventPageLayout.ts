@@ -9,7 +9,7 @@ import useRequestGetSteps from './queries/step/useRequestGetSteps';
 
 const useEventPageLayout = () => {
   const eventId = getEventIdByUrl();
-  const {eventName, bankName, accountNumber} = useRequestGetEvent();
+  const {eventName, bankName, accountNumber, createdByGuest} = useRequestGetEvent();
   const {isAdmin} = useAuthStore();
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
   const {members} = useRequestGetAllMembers();
@@ -20,6 +20,7 @@ const useEventPageLayout = () => {
     eventName,
     bankName,
     accountNumber,
+    createdByGuest,
   };
 
   const eventSummary = {

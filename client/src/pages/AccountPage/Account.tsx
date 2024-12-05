@@ -7,7 +7,7 @@ import useAccount from '@hooks/useAccount';
 
 import {FixedButton, Flex, FunnelLayout, Input, MainLayout, Top, TopNav} from '@components/Design';
 
-import getDeletedLastPath from '@utils/getDeletedLastPath';
+import getEventBaseUrl from '@utils/getEventBaseUrl';
 
 const Account = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Account = () => {
 
   const enrollAccountAndNavigateAdmin = async () => {
     await enrollAccount();
-    navigate(getDeletedLastPath(location.pathname));
+    navigate(`/${getEventBaseUrl(location.pathname)}/admin`);
   };
 
   return (

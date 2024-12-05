@@ -63,6 +63,7 @@ export interface Event {
   eventName: EventName;
   bankName: string;
   accountNumber: string;
+  createdByGuest: boolean;
 }
 
 export interface Report {

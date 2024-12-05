@@ -9,7 +9,14 @@ import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 export const authHandler = [
   // POST /api/eventId/auth (requestPostAuthentication)
   http.post(`${MOCK_API_PREFIX}${ADMIN_API_PREFIX}/:eventId/auth`, () => {
-    return new HttpResponse(null, {status: 200});
+    // return new HttpResponse(null, {status: 200});
+    return HttpResponse.json(
+      {
+        errorCode: 'TOKEN_NOT_FOUND',
+        message: '토큰이 존재하지 않습니다.',
+      },
+      {status: 401},
+    );
   }),
 
   http.get(`${MOCK_API_PREFIX}/api/login/kakao`, () => {

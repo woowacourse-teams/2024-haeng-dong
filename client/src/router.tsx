@@ -7,11 +7,13 @@ import App from './App';
 
 const ErrorPage = lazy(() => import('@pages/ErrorPage/ErrorPage'));
 const SendErrorPage = lazy(() => import('@pages/ErrorPage/SendErrorPage'));
-const EventLoginPage = lazy(() => import('@pages/EventPage/AdminPage/EventLoginPage'));
 const CreateGuestEventFunnel = lazy(() => import('@pages/CreateEventPage/CreateGuestEventPage/CreateGuestEventFunnel'));
 const CreateMemberEventFunnel = lazy(
   () => import('@pages/CreateEventPage/CreateMemberEventPage/CreateMemberEventFunnel'),
 );
+const GuestEventLogin = lazy(() => import('@pages/EventPage/EventPageFallback/Login/GusetEventLogin'));
+const MemberEventLogin = lazy(() => import('@pages/EventPage/EventPageFallback/Login/MemberEventLogin'));
+
 const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
 const AuthGate = lazy(() => import('@pages/EventPage/AuthGate'));
 const EventPage = lazy(() => import('@pages/EventPage/EventPageLayout'));
@@ -29,6 +31,8 @@ const EssentialQueryApp = lazy(() => import('./EssentialQueryApp'));
 const QRCodePage = lazy(() => import('@pages/QRCodePage/QRCodePage'));
 const LoginPage = lazy(() => import('@pages/LoginPage'));
 const MyPage = lazy(() => import('@pages/MyPage'));
+const LoginRedirectPage = lazy(() => import('@pages/LoginPage/LoginRedirectPage'));
+const LoginFailFallback = lazy(() => import('@pages/LoginPage/LoginFailFallback'));
 
 const router = createBrowserRouter([
   {
@@ -64,6 +68,11 @@ const router = createBrowserRouter([
             element: <MyPage />,
           },
           {
+            path: ROUTER_URLS.kakaoLoginRedirectUri,
+            element: <LoginRedirectPage />,
+            errorElement: <LoginFailFallback />,
+          },
+          {
             path: ROUTER_URLS.event,
             element: (
               <EventLoader>
@@ -74,7 +83,7 @@ const router = createBrowserRouter([
               {
                 path: ROUTER_URLS.eventManage,
                 element: (
-                  <AuthGate fallback={<EventLoginPage />}>
+                  <AuthGate>
                     <AdminPage />
                   </AuthGate>
                 ),
@@ -82,6 +91,14 @@ const router = createBrowserRouter([
               {
                 path: ROUTER_URLS.home,
                 element: <HomePage />,
+              },
+              {
+                path: ROUTER_URLS.guestEventLogin,
+                element: <GuestEventLogin />,
+              },
+              {
+                path: ROUTER_URLS.memberEventLogin,
+                element: <MemberEventLogin />,
               },
             ],
           },
