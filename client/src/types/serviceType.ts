@@ -59,12 +59,19 @@ export interface EventCreationData {
   password: Password;
 }
 
-export interface Event {
-  eventName: EventName;
+export type BankAccount = {
   bankName: string;
   accountNumber: string;
+};
+
+export type Event = BankAccount & {
+  eventName: EventName;
   createdByGuest: boolean;
-}
+};
+
+export type User = BankAccount & {
+  nickname: Nickname;
+};
 
 export interface Report {
   memberId: number;
