@@ -32,7 +32,7 @@ public class UserController {
     private final AuthService authService;
     private final CookieProperties cookieProperties;
 
-    @PatchMapping("/api/admin/users")
+    @PatchMapping("/api/users")
     public ResponseEntity<Void> updateUser(
             @Login Long userId,
             @Valid @RequestBody UserUpdateRequest request
@@ -64,7 +64,7 @@ public class UserController {
                 .build();
     }
 
-    @DeleteMapping("/api/admin/users")
+    @DeleteMapping("/api/users")
     public ResponseEntity<Void> deleteUser(@Login Long userId) {
         userService.withdraw(userId);
         return ResponseEntity.ok().build();
