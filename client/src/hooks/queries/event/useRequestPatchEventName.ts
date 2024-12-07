@@ -2,19 +2,19 @@ import type {Event} from 'types/serviceType';
 
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-import {requestPatchEvent} from '@apis/request/event';
+import {requestPatchEventName} from '@apis/request/event';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
-const useRequestPatchEventOutline = () => {
+const useRequestPatchEventName = () => {
   const eventId = getEventIdByUrl();
 
   const queryClient = useQueryClient();
 
   const {mutateAsync, ...rest} = useMutation({
-    mutationFn: (eventOutline: Partial<Event>) => requestPatchEvent({eventId, eventOutline}),
+    mutationFn: (eventName: string) => requestPatchEventName({eventId, eventName}),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.event],
@@ -28,4 +28,4 @@ const useRequestPatchEventOutline = () => {
   };
 };
 
-export default useRequestPatchEventOutline;
+export default useRequestPatchEventName;

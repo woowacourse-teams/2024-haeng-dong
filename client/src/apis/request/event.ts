@@ -1,4 +1,4 @@
-import {Event, EventCreationData, EventId, EventName} from 'types/serviceType';
+import {Event, EventCreationData, EventId, EventName, User} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
@@ -31,14 +31,25 @@ export const requestGetEvent = async ({eventId, ...props}: WithEventId<WithError
 };
 
 export type RequestPatchEvent = WithEventId & {
-  eventOutline: Partial<Event>;
+  eventName: string;
 };
 
-export const requestPatchEvent = async ({eventId, eventOutline}: RequestPatchEvent) => {
+export const requestPatchEventName = async ({eventId, eventName}: RequestPatchEvent) => {
   return requestPatch({
     endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
     body: {
-      ...eventOutline,
+      eventName,
+    },
+  });
+};
+
+export type RequestPatchUser = Partial<User>;
+
+export const requestPatchUser = async (args: RequestPatchUser) => {
+  return requestPatch({
+    endpoint: `/api/users`,
+    body: {
+      ...args,
     },
   });
 };
