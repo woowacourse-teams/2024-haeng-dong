@@ -2,7 +2,7 @@ name: backend-push
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "release" ]
     paths:
       - 'server/**'
       - '.github/workflows/**'
@@ -112,10 +112,10 @@ jobs:
           MAX_ATTEMPTS=30
           SLEEP_INTERVAL=2
           ATTEMPT=1
-      
+
           while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
             HEALTH_STATUS=$(curl -s http://localhost:$NEXT_PORT/actuator/health | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
-      
+
             if [ "$HEALTH_STATUS" = "UP" ]; then
               echo "Health check passed on attempt $ATTEMPT."
               break
@@ -124,7 +124,7 @@ jobs:
               ATTEMPT=$((ATTEMPT+1))
               sleep $SLEEP_INTERVAL
             fi
-      
+
             if [ $ATTEMPT -gt $MAX_ATTEMPTS ]; then
               echo "Health check failed after $MAX_ATTEMPTS attempts. Rolling back..."
               sudo docker rm -f haengdong-backend-$NEXT_PORT
@@ -172,7 +172,7 @@ jobs:
             }
             server {
                 listen 9100;
-            
+
                 location /actuator {
                 proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
                 proxy_set_header Host \$host;
@@ -211,7 +211,7 @@ jobs:
             }
             server {
                 listen 9100;
-          
+
                 location /actuator {
                 proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
                 proxy_set_header Host \$host;
