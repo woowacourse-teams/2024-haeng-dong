@@ -6,6 +6,7 @@ import haengdong.common.properties.CookieProperties;
 import haengdong.event.application.EventImageFacadeService;
 import haengdong.event.application.EventService;
 import haengdong.event.application.request.EventAppRequest;
+import haengdong.event.application.request.EventMineAppResponse;
 import haengdong.event.application.response.EventAppResponse;
 import haengdong.event.application.response.EventImageUrlAppResponse;
 import haengdong.event.application.response.MemberBillReportAppResponse;
@@ -15,6 +16,7 @@ import haengdong.event.presentation.request.EventSaveRequest;
 import haengdong.event.presentation.response.EventDetailResponse;
 import haengdong.event.presentation.response.EventImagesResponse;
 import haengdong.event.presentation.response.EventResponse;
+import haengdong.event.presentation.response.EventsMineResponse;
 import haengdong.event.presentation.response.MemberBillReportsResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -46,6 +48,13 @@ public class EventController {
         EventDetailResponse eventDetailResponse = EventDetailResponse.of(eventService.findEvent(token));
 
         return ResponseEntity.ok(eventDetailResponse);
+    }
+
+    @GetMapping("/api/events/mine")
+    public ResponseEntity<EventsMineResponse> findMyEvents(@Login Long userId) {
+        List<EventMineAppResponse> responses = eventService.findByUserId(userId);
+
+        return ResponseEntity.ok(EventsMineResponse.of(responses));
     }
 
     @GetMapping("/api/events/{eventId}/reports")
