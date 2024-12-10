@@ -1,5 +1,6 @@
 package haengdong.event.config;
 
+import jakarta.annotation.PreDestroy;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,8 @@ public class S3Config {
 
     private static final int THREAD_POOL_SIZE = 10;
 
+    private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+
     @Bean
     public S3Client s3Client() {
         return S3Client.builder()
@@ -21,6 +24,11 @@ public class S3Config {
 
     @Bean
     public ExecutorService executorService() {
-        return Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+        return executorService;
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        executorService.shutdown();
     }
 }

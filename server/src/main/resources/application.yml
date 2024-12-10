@@ -9,6 +9,9 @@ spring:
       max-file-size: 50MB
       max-request-size: 300MB
 
+  lifecycle:
+    timeout-per-shutdown-phase: "10s"
+
   h2:
     console:
       enabled: true
@@ -69,6 +72,7 @@ server:
       enabled: true
     threads:
       max: 50
+  shutdown: graceful
 
 kakao:
   base-uri: https://kauth.kakao.com
