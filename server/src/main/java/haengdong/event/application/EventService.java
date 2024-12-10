@@ -6,6 +6,7 @@ import haengdong.common.exception.HaengdongException;
 import haengdong.event.application.request.EventAppRequest;
 import haengdong.event.application.request.EventGuestAppRequest;
 import haengdong.event.application.request.EventLoginAppRequest;
+import haengdong.event.application.request.EventMineAppResponse;
 import haengdong.event.application.request.EventUpdateAppRequest;
 import haengdong.event.application.response.EventAppResponse;
 import haengdong.event.application.response.EventDetailAppResponse;
@@ -84,9 +85,10 @@ public class EventService {
 
     public List<MemberBillReportAppResponse> getMemberBillReports(String token) {
         Event event = getEvent(token);
+        List<EventMember> eventMembers = eventMemberRepository.findAllByEvent(event);
         List<Bill> bills = billRepository.findAllByEvent(event);
 
-        MemberBillReport memberBillReport = MemberBillReport.createByBills(bills);
+        MemberBillReport memberBillReport = MemberBillReport.create(eventMembers, bills);
 
         return memberBillReport.getReports().entrySet().stream()
                 .map(this::createMemberBillReportResponse)
@@ -185,5 +187,12 @@ public class EventService {
     private EventImage getEventImage(Long imageId) {
         return eventImageRepository.findById(imageId)
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.IMAGE_NOT_FOUND));
+    }
+
+    public List<EventMineAppResponse> findByUserId(Long userId) {
+        return eventRepository.findByUserId(userId).stream()
+                .map(event -> EventMineAppResponse.of(
+                        event, !eventMemberRepository.existsByEventAndIsDeposited(event, false)))
+                .toList();
     }
 }
