@@ -27,12 +27,10 @@ const DesktopShareEventButton = ({onCopy}: DesktopShareEventButtonProps) => {
   };
 
   return (
-    <div style={{marginRight: '1rem'}}>
-      <Dropdown base="button" baseButtonText="정산 초대하기">
-        <DropdownButton text="링크 복사하기" onClick={copyAndToast} />
-        <DropdownButton text="QR코드로 초대하기" onClick={navigateQRPage} />
-      </Dropdown>
-    </div>
+    <Dropdown base="button" baseButtonText="정산 초대하기">
+      <DropdownButton text="링크 복사하기" onClick={copyAndToast} />
+      <DropdownButton text="QR코드로 초대하기" onClick={navigateQRPage} />
+    </Dropdown>
   );
 };
 
