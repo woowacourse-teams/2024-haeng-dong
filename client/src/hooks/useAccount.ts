@@ -4,8 +4,8 @@ import validateAccountNumber from '@utils/validate/validateAccountNumber';
 
 import RULE from '@constants/rule';
 
-import useRequestPatchEvent from './queries/event/useRequestPatchEvent';
 import useRequestGetEvent from './queries/event/useRequestGetEvent';
+import useRequestPatchUser from './queries/event/useRequestPatchUser';
 
 const useAccount = () => {
   const {bankName, accountNumber} = useRequestGetEvent();
@@ -20,7 +20,7 @@ const useAccount = () => {
     setAccountNumber(accountNumber);
   }, [bankName, accountNumber]);
 
-  const {patchEventOutline} = useRequestPatchEvent();
+  const {patchUser} = useRequestPatchUser();
 
   const selectBank = (name: string) => {
     setBankName(name);
@@ -56,7 +56,7 @@ const useAccount = () => {
   };
 
   const enrollAccount = async () => {
-    await patchEventOutline({bankName: bankNameState, accountNumber: accountNumberState});
+    await patchUser({bankName: bankNameState, accountNumber: accountNumberState});
   };
 
   useEffect(() => {
