@@ -1,6 +1,7 @@
 package haengdong.user.application;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import haengdong.user.application.request.UserJoinAppRequest;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,8 @@ public class KakaoUserService {
 
         String memberNumber = decodedJWT.getSubject();
         String nickname = decodedJWT.getClaim(NICKNAME_KEY).asString();
-        String picture = decodedJWT.getClaim(PICTURE_KEY).asString();
+        Claim pictureClaim = decodedJWT.getClaim(PICTURE_KEY);
+        String picture = pictureClaim.isNull() ? null : pictureClaim.asString();
 
         log.info("로그인 성공 : {}, {}, {}, {}", code, memberNumber, nickname, picture);
 
