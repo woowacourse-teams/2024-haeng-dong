@@ -71,6 +71,8 @@ export type Event = BankAccount & {
 
 export type User = BankAccount & {
   nickname: Nickname;
+  isGuest: boolean;
+  profileImage: string | null;
 };
 
 export interface Report {
