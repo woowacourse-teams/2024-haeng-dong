@@ -5,6 +5,7 @@ import haengdong.common.exception.HaengdongErrorCode;
 import haengdong.common.exception.HaengdongException;
 import haengdong.event.application.response.UserAppResponse;
 import haengdong.user.application.request.UserGuestSaveAppRequest;
+import haengdong.user.application.request.UserJoinAppRequest;
 import haengdong.user.application.request.UserUpdateAppRequest;
 import haengdong.user.domain.User;
 import haengdong.user.domain.repository.UserRepository;
@@ -28,9 +29,9 @@ public class UserService {
     }
 
     @Transactional
-    public Long join(String memberNumber, String nickname) {
-        User user = userRepository.findByMemberNumber(memberNumber)
-                .orElseGet(() -> userRepository.save(User.createMember(nickname, memberNumber)));
+    public Long join(UserJoinAppRequest request) {
+        User user = userRepository.findByMemberNumber(request.memberNumber())
+                .orElseGet(() -> userRepository.save(request.toUser()));
 
         return user.getId();
     }

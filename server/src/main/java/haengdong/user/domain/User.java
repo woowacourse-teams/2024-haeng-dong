@@ -46,20 +46,23 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String memberNumber;
 
-    private User(String nickname, String password, String bank, String accountNumber, String memberNumber) {
+    private String picture;
+
+    private User(String nickname, String password, String bank, String accountNumber, String memberNumber, String picture) {
         this.nickname = nickname;
         this.password = new Password(password);
         this.bank = bank;
         this.accountNumber = accountNumber;
         this.memberNumber = memberNumber;
+        this.picture = picture;
     }
 
     public static User createGuest(String nickName, String password) {
-        return new User(nickName, password, "", "", null);
+        return new User(nickName, password, "", "", null, null);
     }
 
-    public static User createMember(String nickName, String memberNumber) {
-        return new User(nickName, "0000", "", "", memberNumber);
+    public static User createMember(String nickName, String memberNumber, String picture) {
+        return new User(nickName, "0000", "", "", memberNumber, picture);
     }
 
     public void changeNickname(String nickname) {
