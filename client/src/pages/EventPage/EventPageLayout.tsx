@@ -55,6 +55,8 @@ const EventPageLayout = () => {
     };
   }, []);
 
+  const isKakaoUser = event.userInfo && event.userInfo.isGuest === false;
+
   return (
     <MainLayout backgroundColor="gray">
       <Flex justifyContent="spaceBetween" alignItems="center">
@@ -73,9 +75,11 @@ const EventPageLayout = () => {
           ) : (
             <DesktopShareEventButton onCopy={trackLinkShare} />
           )}
-          <Link to={ROUTER_URLS.myPage}>
-            <Profile src={getImageUrl('runningDog', 'png')} />
-          </Link>
+          {isKakaoUser && (
+            <Link to={ROUTER_URLS.myPage}>
+              <Profile src={event.userInfo.profileImage ?? getImageUrl('runningDog', 'png')} />
+            </Link>
+          )}
         </Flex>
       </Flex>
       <Outlet context={outletContext} />
