@@ -54,6 +54,10 @@ public class EventMember extends BaseEntity {
         this.isDeposited = isDeposited;
     }
 
+    public static EventMember createHost(Event event, String name) {
+        return new EventMember(null, event, name, true);
+    }
+
     private void validateName(String name) {
         int nameLength = name.length();
         if (nameLength < MIN_NAME_LENGTH || nameLength > MAX_NAME_LENGTH) {

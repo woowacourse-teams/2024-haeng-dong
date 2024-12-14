@@ -53,7 +53,7 @@ public class EventService {
         Event event = new Event(request.eventName(), userId, token);
         eventRepository.save(event);
 
-        eventMemberRepository.save(new EventMember(event, request.nickname()));
+        eventMemberRepository.save(EventMember.createHost(event, request.nickname()));
         return EventAppResponse.of(event);
     }
 
@@ -64,7 +64,7 @@ public class EventService {
         eventRepository.save(event);
 
         String nickname = userService.findNicknameById(request.userId());
-        eventMemberRepository.save(new EventMember(event, nickname));
+        eventMemberRepository.save(EventMember.createHost(event, nickname));
 
         return EventAppResponse.of(event);
     }
