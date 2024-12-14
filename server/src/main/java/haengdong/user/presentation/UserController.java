@@ -1,5 +1,7 @@
 package haengdong.user.presentation;
 
+import haengdong.event.application.response.UserAppResponse;
+import haengdong.user.presentation.response.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +64,12 @@ public class UserController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .build();
+    }
+
+    @GetMapping("/api/users")
+    public ResponseEntity<UserResponse> findUser(@Login Long userId) {
+        UserAppResponse response = userService.findById(userId);
+        return ResponseEntity.ok(UserResponse.of(response));
     }
 
     @DeleteMapping("/api/users")
