@@ -66,7 +66,7 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/api/users")
+    @GetMapping("/api/users/mine")
     public ResponseEntity<UserResponse> findUser(@Login Long userId) {
         UserAppResponse response = userService.findById(userId);
         return ResponseEntity.ok(UserResponse.of(response));
