@@ -6,10 +6,14 @@ public record UserResponse(
         String nickname,
         String bankName,
         String accountNumber,
-        boolean isGuest
+        boolean isGuest,
+        String profileImage
 ) {
 
     public static UserResponse of(UserAppResponse response) {
-        return new UserResponse(response.nickname(), response.bankName(), response.accountNumber(), response.isGuest());
+        return new UserResponse(
+                response.nickname(), response.bankName(), response.accountNumber(), response.isGuest(),
+                response.profileImage()
+        );
     }
 }
