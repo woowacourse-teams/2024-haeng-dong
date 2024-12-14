@@ -58,7 +58,7 @@ public class UserController {
     ) {
         log.info("Kakao login code, redirectUri: {}, {}", code, redirectUri);
         Long userId = kakaoUserService.joinByKakao(code, redirectUri);
-        String jwtToken = authService.createGuestToken(userId);
+        String jwtToken = authService.createMemberToken(userId);
 
         ResponseCookie responseCookie = createResponseCookie(jwtToken);
         return ResponseEntity.ok()
