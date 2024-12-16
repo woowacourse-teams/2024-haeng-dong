@@ -49,99 +49,94 @@ const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        element: <EssentialQueryApp />,
+        path: ROUTER_URLS.createGuestEvent,
+        element: <CreateGuestEventFunnel />,
+      },
+      {
+        path: ROUTER_URLS.createMemberEvent,
+        element: <CreateMemberEventFunnel />,
+      },
+      {
+        path: ROUTER_URLS.login,
+        element: <LoginPage />,
+      },
+      {
+        path: ROUTER_URLS.myPage,
+        element: <MyPage />,
+      },
+      {
+        path: ROUTER_URLS.kakaoLoginRedirectUri,
+        element: <LoginRedirectPage />,
+        errorElement: <LoginFailFallback />,
+      },
+      {
+        path: ROUTER_URLS.event,
+        element: (
+          <EventLoader>
+            <EventPage />
+          </EventLoader>
+        ),
         children: [
           {
-            path: ROUTER_URLS.createGuestEvent,
-            element: <CreateGuestEventFunnel />,
-          },
-          {
-            path: ROUTER_URLS.createMemberEvent,
-            element: <CreateMemberEventFunnel />,
-          },
-          {
-            path: ROUTER_URLS.login,
-            element: <LoginPage />,
-          },
-          {
-            path: ROUTER_URLS.myPage,
-            element: <MyPage />,
-          },
-          {
-            path: ROUTER_URLS.kakaoLoginRedirectUri,
-            element: <LoginRedirectPage />,
-            errorElement: <LoginFailFallback />,
-          },
-          {
-            path: ROUTER_URLS.event,
+            path: ROUTER_URLS.eventManage,
             element: (
-              <EventLoader>
-                <EventPage />
-              </EventLoader>
+              <AuthGate>
+                <AdminPage />
+              </AuthGate>
             ),
-            children: [
-              {
-                path: ROUTER_URLS.eventManage,
-                element: (
-                  <AuthGate>
-                    <AdminPage />
-                  </AuthGate>
-                ),
-              },
-              {
-                path: ROUTER_URLS.home,
-                element: <HomePage />,
-              },
-              {
-                path: ROUTER_URLS.guestEventLogin,
-                element: <GuestEventLogin />,
-              },
-              {
-                path: ROUTER_URLS.memberEventLogin,
-                element: <MemberEventLogin />,
-              },
-            ],
           },
           {
-            path: ROUTER_URLS.addBill,
-            element: <AddBillFunnel />,
+            path: ROUTER_URLS.home,
+            element: <HomePage />,
           },
           {
-            path: ROUTER_URLS.member,
-            element: <EventMember />,
+            path: ROUTER_URLS.guestEventLogin,
+            element: <GuestEventLogin />,
           },
           {
-            path: ROUTER_URLS.editBill,
-            element: <EditBillPage />,
-          },
-          {
-            path: ROUTER_URLS.eventEdit,
-            element: <Account />,
-          },
-          {
-            path: ROUTER_URLS.images,
-            element: <ImagesPage />,
-          },
-          {
-            path: ROUTER_URLS.addImages,
-            element: <AddImagesPage />,
-          },
-          {
-            path: ROUTER_URLS.send,
-            element: <SendPage />,
-            errorElement: <SendErrorPage />,
-          },
-          {
-            path: ROUTER_URLS.qrCode,
-            element: <QRCodePage />,
+            path: ROUTER_URLS.memberEventLogin,
+            element: <MemberEventLogin />,
           },
         ],
       },
       {
-        path: '*',
-        element: <ErrorPage />,
+        path: ROUTER_URLS.addBill,
+        element: <AddBillFunnel />,
+      },
+      {
+        path: ROUTER_URLS.member,
+        element: <EventMember />,
+      },
+      {
+        path: ROUTER_URLS.editBill,
+        element: <EditBillPage />,
+      },
+      {
+        path: ROUTER_URLS.eventEdit,
+        element: <Account />,
+      },
+      {
+        path: ROUTER_URLS.images,
+        element: <ImagesPage />,
+      },
+      {
+        path: ROUTER_URLS.addImages,
+        element: <AddImagesPage />,
+      },
+      {
+        path: ROUTER_URLS.send,
+        element: <SendPage />,
+        errorElement: <SendErrorPage />,
+      },
+      {
+        path: ROUTER_URLS.qrCode,
+        element: <QRCodePage />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
   },
 ]);
 
