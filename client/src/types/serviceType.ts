@@ -92,3 +92,9 @@ export interface ImageFile {
   id: number;
   url: string;
 }
+
+export type UserInfo = BankAccount & {
+  nickname: string;
+  isGuest: boolean;
+  profileImage: string;
+};
