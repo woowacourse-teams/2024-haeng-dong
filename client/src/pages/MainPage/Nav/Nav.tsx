@@ -1,16 +1,20 @@
 import {useNavigate} from 'react-router-dom';
 
+import {UseRequestGetUserInfo} from '@hooks/queries/auth/useRequestGetUserInfo';
+
 import {Button, Text, Icon, TopNav, IconButton} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {navFixedStyle, navStyle, navWrapperStyle} from './Nav.style';
 
-const Nav = () => {
+type NavProps = Pick<UseRequestGetUserInfo, 'isGuest'>;
+
+const Nav = ({isGuest}: NavProps) => {
   const navigate = useNavigate();
 
   const goLogin = () => {
-    navigate(ROUTER_URLS.login);
+    navigate(isGuest ? ROUTER_URLS.createMemberEvent : ROUTER_URLS.login);
   };
 
   return (

@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom';
 
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
+import {UseRequestGetUserInfo} from '@hooks/queries/auth/useRequestGetUserInfo';
 
 import {Icon} from '@components/Design';
 
@@ -9,11 +10,13 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {animateWithDelay, chevronStyle, mainSectionStyle, sectionStyle} from './MainSection.style';
 
-const MainSection = () => {
+type NavProps = Pick<UseRequestGetUserInfo, 'isGuest'>;
+
+const MainSection = ({isGuest}: NavProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(ROUTER_URLS.login);
+    navigate(isGuest ? ROUTER_URLS.createMemberEvent : ROUTER_URLS.login);
   };
 
   return (
