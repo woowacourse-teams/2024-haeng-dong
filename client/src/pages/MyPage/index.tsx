@@ -1,9 +1,11 @@
+import {useNavigate} from 'react-router-dom';
+
 import {Button, Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav, useTheme} from '@components/Design';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {mockImageStyle} from './MyPage.style';
 import Container from './Container';
-import {ROUTER_URLS} from '@constants/routerUrls';
-import {useNavigate} from 'react-router-dom';
 
 const MyPage = () => {
   const {theme} = useTheme();
