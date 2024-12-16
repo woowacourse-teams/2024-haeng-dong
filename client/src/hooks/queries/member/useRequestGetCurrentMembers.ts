@@ -11,7 +11,7 @@ const useRequestGetCurrentMembers = ({...props}: WithErrorHandlingStrategy | nul
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({
-    queryKey: [QUERY_KEYS.currentMembers],
+    queryKey: [QUERY_KEYS.currentMembers, eventId],
     queryFn: () => requestGetCurrentMembers({eventId, ...props}),
   });
 
