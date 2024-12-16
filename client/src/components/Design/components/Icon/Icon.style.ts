@@ -37,7 +37,11 @@ export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme)
 const getIconColor = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {
   if (iconColor) {
     return css({
-      color: theme.colors[iconColor as ColorKeys],
+      svg: {
+        path: {
+          stroke: theme.colors[iconColor as ColorKeys],
+        },
+      },
     });
   } else {
     return css({color: theme.colors[ICON_DEFAULT_COLOR[iconType]]});
