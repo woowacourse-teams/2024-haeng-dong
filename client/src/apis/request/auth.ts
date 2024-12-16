@@ -1,5 +1,7 @@
+import {UserInfo} from 'types/serviceType';
+
 import {BASE_URL} from '@apis/baseUrl';
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestGetWithoutResponse, requestPostWithoutResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
@@ -41,4 +43,12 @@ export const requestGetKakaoLogin = async (code: string) => {
   });
 
   return null;
+};
+
+// 아직 안나온 api라 임의로 두었음
+export const requestGetUserInfo = async () => {
+  return await requestGet<UserInfo>({
+    baseUrl: BASE_URL.HD,
+    endpoint: `${MEMBER_API_PREFIX}/mine`,
+  });
 };
