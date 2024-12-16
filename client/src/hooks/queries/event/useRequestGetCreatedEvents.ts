@@ -8,10 +8,14 @@ const useRequestGetCreatedEvents = () => {
   const {data, ...rest} = useQuery({
     queryKey: [QUERY_KEYS.createdEvents],
     queryFn: () => requestGetCreatedEvents(),
+    select: data => ({
+      ...data,
+      events: data.events.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
+    }),
   });
 
   return {
-    events: data?.events.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
+    events: data?.events,
     ...rest,
   };
 };
