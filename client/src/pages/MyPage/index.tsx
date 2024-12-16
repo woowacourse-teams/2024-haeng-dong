@@ -2,9 +2,12 @@ import {Button, Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav, useThe
 
 import {mockImageStyle} from './MyPage.style';
 import Container from './Container';
+import {ROUTER_URLS} from '@constants/routerUrls';
+import {useNavigate} from 'react-router-dom';
 
 const MyPage = () => {
   const {theme} = useTheme();
+  const navigate = useNavigate();
 
   return (
     <MainLayout backgroundColor="gray">
@@ -33,7 +36,7 @@ const MyPage = () => {
             <TextButton textColor="onTertiary" textSize="body">
               기본 계좌 번호 설정하기
             </TextButton>
-            <TextButton textColor="onTertiary" textSize="body">
+            <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.createdEvents)}>
               내가 만든 행사 목록 보기
             </TextButton>
             <TextButton textColor="onTertiary" textSize="body">
