@@ -36,8 +36,9 @@ function CreatedEventItem({createdEvent}: CreatedEventItemProps) {
       height="2.5rem"
       padding="0.5rem 1rem"
       paddingInline="0.5rem"
+      onClick={onClick}
     >
-      <Flex gap="0.5rem" alignItems="center" onClick={onClick}>
+      <Flex gap="0.5rem" alignItems="center">
         <InProgressCheck inProgress={createdEvent.isFinished} />
         <Text size="bodyBold" color="onTertiary">
           {createdEvent.eventName}
