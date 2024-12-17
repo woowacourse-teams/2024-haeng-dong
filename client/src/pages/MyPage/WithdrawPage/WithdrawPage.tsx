@@ -7,6 +7,7 @@ import NotUseServiceStep from './steps/NotUseServiceStep';
 import EtcStep from './steps/EtcStep';
 import CheckBeforeWithdrawingStep from './steps/CheckBeforeWithdrawingStep';
 import WithdrawalCompleted from './steps/WithdrawalCompleted';
+import UnableToUseDueToError from './steps/UnableToUseDueToError';
 
 const WithdrawPage = () => {
   const {step, handleMoveStep} = useWithdrawFunnel();
@@ -18,6 +19,7 @@ const WithdrawPage = () => {
       </TopNav>
       {step === 'withdrawReason' && <ReasonStep handleMoveStep={handleMoveStep} />}
       {step === 'notUseService' && <NotUseServiceStep handleMoveStep={handleMoveStep} />}
+      {step === 'unableToUseDueToError' && <UnableToUseDueToError handleMoveStep={handleMoveStep} />}
       {step === 'etc' && <EtcStep handleMoveStep={handleMoveStep} />}
       {step === 'checkBeforeWithdrawing' && <CheckBeforeWithdrawingStep handleMoveStep={handleMoveStep} />}
       {step === 'withdrawalCompleted' && <WithdrawalCompleted />}
