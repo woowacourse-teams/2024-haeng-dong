@@ -1,12 +1,27 @@
 import {css} from '@emotion/react';
 
 import StandingDogLogo from '@components/Logo/StandingDogLogo';
+import useRequestDeleteUser from '@hooks/queries/user/useRequestDeleteUser';
+import toast from '@hooks/useToast/toast';
 
 import {WithdrawStep} from '@hooks/useWithdrawFunnel';
 
 import {Top, FixedButton, Flex, Text} from '@components/Design';
 
 const CheckBeforeWithdrawingStep = ({handleMoveStep}: {handleMoveStep: (nextStep: WithdrawStep) => void}) => {
+  const {deleteAsyncUser} = useRequestDeleteUser();
+
+  const handleWithdraw = async () => {
+    try {
+      await deleteAsyncUser();
+      handleMoveStep('withdrawalCompleted');
+    } catch (error) {
+      toast.error('회원 탈퇴에 실패했어요.', {
+        showingTime: 3000,
+        position: 'bottom',
+      });
+    }
+  };
   return (
     <>
       <div
@@ -28,7 +43,7 @@ const CheckBeforeWithdrawingStep = ({handleMoveStep}: {handleMoveStep: (nextStep
         </Flex>
         <StandingDogLogo />
       </div>
-      <FixedButton onClick={() => handleMoveStep('withdrawalCompleted')}>탈퇴하기</FixedButton>
+      <FixedButton onClick={handleWithdraw}>탈퇴하기</FixedButton>
     </>
   );
 };
