@@ -13,10 +13,6 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    // isFocus: {
-    //   description: '',
-    //   control: {type: 'boolean'},
-    // },
     placeholder: {
       description: '',
       control: {type: 'text'},
