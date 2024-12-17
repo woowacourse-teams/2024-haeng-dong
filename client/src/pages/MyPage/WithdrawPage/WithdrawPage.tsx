@@ -4,6 +4,7 @@ import {MainLayout, TopNav} from '@components/Design';
 
 import ReasonStep from './steps/ReasonStep';
 import NotUseServiceStep from './steps/NotUseServiceStep';
+import EtcStep from './steps/EtcStep';
 
 const WithdrawPage = () => {
   const {step, handleMoveStep} = useWithdrawFunnel();
@@ -15,6 +16,7 @@ const WithdrawPage = () => {
       </TopNav>
       {step === 'withdrawReason' && <ReasonStep handleMoveStep={handleMoveStep} />}
       {step === 'notUseService' && <NotUseServiceStep handleMoveStep={handleMoveStep} />}
+      {step === 'etc' && <EtcStep handleMoveStep={handleMoveStep} />}
     </MainLayout>
   );
 };
