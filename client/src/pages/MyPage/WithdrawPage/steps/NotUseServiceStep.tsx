@@ -29,6 +29,7 @@ const NotUseServiceStep = ({handleMoveStep}: {handleMoveStep: (nextStep: Withdra
           <Checkbox isChecked={false} onChange={() => {}} labelText="기타" />
         </Flex>
       </div>
+      {/* TODO: (@soha) checkbox를 하나라도 해야 탈퇴하기 버튼 활성화 */}
       <FixedButton
         onClick={() => handleMoveStep('checkBeforeWithdrawing')}
         onBackClick={() => handleMoveStep('withdrawReason')}

@@ -24,6 +24,7 @@ const EtcStep = ({handleMoveStep}: {handleMoveStep: (nextStep: WithdrawStep) => 
           <Textarea value={''} placeholder="내용을 입력해주세요." maxLength={300} height="275px" />
         </Flex>
       </div>
+      {/* TODO: (@soha) 1글자라도 작성해야 탈퇴하기 버튼 활성화 */}
       <FixedButton
         onClick={() => handleMoveStep('checkBeforeWithdrawing')}
         onBackClick={() => handleMoveStep('withdrawReason')}
