@@ -28,7 +28,7 @@ const CheckBeforeWithdrawingStep = ({handleMoveStep}: {handleMoveStep: (nextStep
         </Flex>
         <StandingDogLogo />
       </div>
-      <FixedButton onClick={() => handleMoveStep('checkBeforeWithdrawing')}>탈퇴하기</FixedButton>
+      <FixedButton onClick={() => handleMoveStep('withdrawalCompleted')}>탈퇴하기</FixedButton>
     </>
   );
 };
