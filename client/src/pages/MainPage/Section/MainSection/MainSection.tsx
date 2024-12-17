@@ -16,7 +16,7 @@ const MainSection = ({isGuest}: NavProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(isGuest ? ROUTER_URLS.createMemberEvent : ROUTER_URLS.login);
+    navigate(isGuest ? ROUTER_URLS.login : ROUTER_URLS.createMemberEvent);
   };
 
   return (

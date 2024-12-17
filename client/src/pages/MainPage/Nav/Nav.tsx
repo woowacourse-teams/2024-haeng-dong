@@ -14,7 +14,7 @@ const Nav = ({isGuest}: NavProps) => {
   const navigate = useNavigate();
 
   const goLogin = () => {
-    navigate(isGuest ? ROUTER_URLS.createMemberEvent : ROUTER_URLS.login);
+    navigate(isGuest ? ROUTER_URLS.login : ROUTER_URLS.createMemberEvent);
   };
 
   return (
