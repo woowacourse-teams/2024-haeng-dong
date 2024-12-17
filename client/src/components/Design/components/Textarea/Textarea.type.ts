@@ -1,8 +1,8 @@
-export interface TextareaStyleProps {}
+export interface TextareaStyleProps {
+  height?: string;
+}
 
 export interface TextareaCustomProps {
-  // isFocus: boolean;
-  // onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
   maxLength?: number;
   placeholder?: string;

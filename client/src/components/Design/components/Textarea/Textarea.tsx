@@ -7,7 +7,7 @@ import {textareaStyle} from './Textarea.style';
 import {TextareaProps} from './Textarea.type';
 
 const Textarea: React.FC<TextareaProps> = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textrea(
-  {placeholder, maxLength, onChange, value, ...htmlProps}: TextareaProps,
+  {placeholder, maxLength, onChange, value, height, ...htmlProps}: TextareaProps,
   ref,
 ) {
   const {theme} = useTheme();
@@ -32,7 +32,7 @@ const Textarea: React.FC<TextareaProps> = forwardRef<HTMLTextAreaElement, Textar
       onChange={onChange}
       value={value}
       ref={inputRef}
-      css={textareaStyle({theme, isFocus})}
+      css={textareaStyle({theme, isFocus, height})}
       {...htmlProps}
     ></textarea>
   );
