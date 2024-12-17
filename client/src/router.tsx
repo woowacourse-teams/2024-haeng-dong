@@ -33,6 +33,7 @@ const LoginPage = lazy(() => import('@pages/LoginPage'));
 const MyPage = lazy(() => import('@pages/MyPage'));
 const LoginRedirectPage = lazy(() => import('@pages/LoginPage/LoginRedirectPage'));
 const LoginFailFallback = lazy(() => import('@pages/LoginPage/LoginFailFallback'));
+const WithdrawPage = lazy(() => import('@pages/MyPage/WithdrawPage/WithdrawPage'));
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.myPage,
             element: <MyPage />,
+          },
+          {
+            path: ROUTER_URLS.withdraw,
+            element: <WithdrawPage />,
           },
           {
             path: ROUTER_URLS.kakaoLoginRedirectUri,

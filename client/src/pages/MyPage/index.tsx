@@ -1,10 +1,15 @@
+import {useNavigate} from 'react-router-dom';
+
 import {Button, Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav, useTheme} from '@components/Design';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {mockImageStyle} from './MyPage.style';
 import Container from './Container';
 
 const MyPage = () => {
   const {theme} = useTheme();
+  const navigate = useNavigate();
 
   return (
     <MainLayout backgroundColor="gray">
@@ -36,7 +41,7 @@ const MyPage = () => {
             <TextButton textColor="onTertiary" textSize="body">
               내가 만든 행사 목록 보기
             </TextButton>
-            <TextButton textColor="onTertiary" textSize="body">
+            <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.withdraw)}>
               탈퇴하기
             </TextButton>
           </Flex>
