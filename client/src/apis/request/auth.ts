@@ -45,10 +45,10 @@ export const requestGetKakaoLogin = async (code: string) => {
   return null;
 };
 
-// 아직 안나온 api라 임의로 두었음
 export const requestGetUserInfo = async () => {
   return await requestGet<UserInfo>({
     baseUrl: BASE_URL.HD,
     endpoint: `${MEMBER_API_PREFIX}/mine`,
+    errorHandlingStrategy: 'unsubscribe',
   });
 };
