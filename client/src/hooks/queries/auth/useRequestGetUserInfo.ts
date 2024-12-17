@@ -20,6 +20,7 @@ const useRequestGetUserInfo = () => {
       accountNumber: '',
       bankName: '',
     },
+    initialDataUpdatedAt: 0,
   });
 
   return {
