@@ -5,8 +5,9 @@ import useFunnel from '@hooks/useFunnel';
 
 import {MainLayout, TopNav} from '@components/Design';
 
-import SetMemberEventNameStep from './SetUserEventNameStep';
 import CompleteCreateEventStep from '../CompleteCreateEventStep';
+
+import SetMemberEventNameStep from './SetUserEventNameStep';
 
 type CreateUserEventStep = 'eventName' | 'complete';
 const STEP_SEQUENCE: CreateUserEventStep[] = ['eventName', 'complete'];

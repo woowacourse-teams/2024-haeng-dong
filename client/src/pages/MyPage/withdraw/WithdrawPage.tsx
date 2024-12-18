@@ -1,13 +1,13 @@
-import useWithdrawFunnel from '@hooks/useWithdrawFunnel';
-
-import {MainLayout, TopNav} from '@components/Design';
-
 import ReasonStep from '@pages/mypage/withdraw/ReasonStep';
 import NotUseServiceStep from '@pages/mypage/withdraw/NotUseServiceStep';
 import EtcStep from '@pages/mypage/withdraw/EtcStep';
 import CheckBeforeWithdrawingStep from '@pages/mypage/withdraw/CheckBeforeWithdrawingStep';
 import WithdrawalCompleted from '@pages/mypage/withdraw/WithdrawalCompleted';
 import UnableToUseDueToError from '@pages/mypage/withdraw/UnableToUseDueToError';
+
+import useWithdrawFunnel from '@hooks/useWithdrawFunnel';
+
+import {MainLayout, TopNav} from '@components/Design';
 
 const WithdrawPage = () => {
   const {step, handleMoveStep} = useWithdrawFunnel();
