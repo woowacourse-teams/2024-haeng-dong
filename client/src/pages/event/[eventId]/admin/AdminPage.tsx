@@ -27,11 +27,11 @@ const AdminPage = () => {
   } = useAdminPage();
 
   const navigateAccountInputPage = () => {
-    navigate(`/event/${eventId}/admin/edit`);
+    navigate(`/event/${eventId}/admin/edit-account`);
   };
 
   const navigateEventMemberManage = () => {
-    navigate(`/event/${eventId}/admin/member`);
+    navigate(`/event/${eventId}/admin/members`);
   };
 
   const navigateAddImages = () => {

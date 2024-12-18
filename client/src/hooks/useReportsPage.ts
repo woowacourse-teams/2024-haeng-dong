@@ -37,7 +37,7 @@ const useReportsPage = () => {
       eventToken,
     };
 
-    navigate(`/${getEventBaseUrl(location.pathname)}/${memberId}/send`, {state: sendInfo});
+    navigate(`/${getEventBaseUrl(location.pathname)}/home/send/${memberId}`, {state: sendInfo});
   };
 
   const onCopy = async (amount: number) => {
