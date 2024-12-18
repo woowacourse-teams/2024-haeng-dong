@@ -14,7 +14,7 @@ export const requestPostGuestEvent = async (postEventArgs: EventCreationData) =>
   });
 };
 
-export const requestPostMemberEvent = async (eventName: EventName) => {
+export const requestPostUserEvent = async (eventName: EventName) => {
   return await requestPostWithResponse<EventId>({
     endpoint: USER_API_PREFIX,
     body: {

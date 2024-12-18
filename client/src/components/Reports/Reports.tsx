@@ -1,4 +1,4 @@
-import BillEmptyFallback from '@pages/EventPage/EventPageFallback/BillEmptyFallback';
+import BillEmptyFallback from '@pages/fallback/BillEmptyFallback';
 
 import useReportsPage from '@hooks/useReportsPage';
 

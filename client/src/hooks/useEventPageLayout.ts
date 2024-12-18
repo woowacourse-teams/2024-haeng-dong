@@ -6,7 +6,7 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 import useRequestGetEvent from './queries/event/useRequestGetEvent';
 import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
 import useRequestGetSteps from './queries/step/useRequestGetSteps';
-import useRequestGetUserInfo from './queries/user/useRequestGetUserInfo';
+import useRequestGetUserInfo from './queries/auth/useRequestGetUserInfo';
 
 const useEventPageLayout = () => {
   const eventId = getEventIdByUrl();

@@ -1,14 +1,12 @@
 import {useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
+import {BillInfo} from '@pages/event/[eventId]/admin/add-bill/AddBillFunnel';
 import {Member} from 'types/serviceType';
 import validateMemberName from '@utils/validate/validateMemberName';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import {isIOS} from '@utils/detectDevice';
-
-import REGEXP from '@constants/regExp';
 
 import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
