@@ -41,7 +41,7 @@ const MyPage = () => {
             <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.createdEvents)}>
               내가 만든 행사 목록 보기
             </TextButton>
-            <TextButton textColor="onTertiary" textSize="body">
+            <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.withdraw)}>
               탈퇴하기
             </TextButton>
           </Flex>
