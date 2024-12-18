@@ -1,4 +1,4 @@
-import {Event, EventCreationData, EventId, EventName, User} from 'types/serviceType';
+import {CreatedEvents, Event, EventCreationData, EventId, EventName, User} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {ADMIN_API_PREFIX, MEMBER_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
@@ -51,5 +51,11 @@ export const requestPatchUser = async (args: RequestPatchUser) => {
     body: {
       ...args,
     },
+  });
+};
+
+export const requestGetCreatedEvents = async () => {
+  return await requestGet<CreatedEvents>({
+    endpoint: `${USER_API_PREFIX}/mine`,
   });
 };

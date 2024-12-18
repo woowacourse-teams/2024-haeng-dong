@@ -6,6 +6,7 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 import useRequestGetEvent from './queries/event/useRequestGetEvent';
 import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
 import useRequestGetSteps from './queries/step/useRequestGetSteps';
+import useRequestGetUserInfo from './queries/user/useRequestGetUserInfo';
 
 const useEventPageLayout = () => {
   const eventId = getEventIdByUrl();
@@ -14,6 +15,7 @@ const useEventPageLayout = () => {
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
   const {members} = useRequestGetAllMembers();
   const {steps} = useRequestGetSteps();
+  const {userInfo} = useRequestGetUserInfo();
   const billsCount = steps.flatMap(step => [...step.bills]).length;
 
   const event = {
@@ -21,6 +23,7 @@ const useEventPageLayout = () => {
     bankName,
     accountNumber,
     createdByGuest,
+    userInfo,
   };
 
   const eventSummary = {

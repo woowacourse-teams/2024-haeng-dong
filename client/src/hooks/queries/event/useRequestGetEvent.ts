@@ -11,7 +11,7 @@ const useRequestGetEvent = ({...props}: WithErrorHandlingStrategy | null = {}) =
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useSuspenseQuery({
-    queryKey: [QUERY_KEYS.event],
+    queryKey: [QUERY_KEYS.event, eventId],
     queryFn: () => requestGetEvent({eventId, ...props}),
   });
 

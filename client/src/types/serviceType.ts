@@ -71,6 +71,8 @@ export type Event = BankAccount & {
 
 export type User = BankAccount & {
   nickname: Nickname;
+  isGuest: boolean;
+  profileImage: string | null;
 };
 
 export interface Report {
@@ -98,3 +100,14 @@ export type UserInfo = BankAccount & {
   isGuest: boolean;
   profileImage: string;
 };
+
+export interface CreatedEvent {
+  eventId: string;
+  eventName: string;
+  isFinished: boolean;
+  createdAt: string;
+}
+
+export interface CreatedEvents {
+  events: CreatedEvent[];
+}

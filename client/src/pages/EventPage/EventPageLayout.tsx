@@ -1,7 +1,9 @@
 import type {Event} from 'types/serviceType';
 
-import {Outlet} from 'react-router-dom';
+import {Link, Outlet} from 'react-router-dom';
 import {useEffect} from 'react';
+
+import {Profile} from '@components/Design/components/Profile/Profile';
 
 import useEventPageLayout from '@hooks/useEventPageLayout';
 import useShareEvent from '@hooks/useShareEvent';
@@ -14,6 +16,9 @@ import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
 
 import {isMobileDevice} from '@utils/detectDevice';
 import {updateMetaTag} from '@utils/udpateMetaTag';
+import getImageUrl from '@utils/getImageUrl';
+
+import {ROUTER_URLS} from '@constants/routerUrls';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
@@ -50,6 +55,8 @@ const EventPageLayout = () => {
     };
   }, []);
 
+  const isKakaoUser = event.userInfo && event.userInfo.isGuest === false;
+
   return (
     <MainLayout backgroundColor="gray">
       <Flex justifyContent="spaceBetween" alignItems="center">
@@ -62,11 +69,18 @@ const EventPageLayout = () => {
           <TopNav.Item displayName="홈" routePath="/home" />
           <TopNav.Item displayName="관리" routePath="/admin" />
         </TopNav>
-        {isMobile ? (
-          <MobileShareEventButton copyShare={trackLinkShare} kakaoShare={trackKakaoShare} />
-        ) : (
-          <DesktopShareEventButton onCopy={trackLinkShare} />
-        )}
+        <Flex alignItems="center" gap="0.75rem" margin="0 1rem 0 0">
+          {isMobile ? (
+            <MobileShareEventButton copyShare={trackLinkShare} kakaoShare={trackKakaoShare} />
+          ) : (
+            <DesktopShareEventButton onCopy={trackLinkShare} />
+          )}
+          {isKakaoUser && (
+            <Link to={ROUTER_URLS.myPage}>
+              <Profile src={event.userInfo.profileImage ?? getImageUrl('runningDog', 'png')} size="medium" />
+            </Link>
+          )}
+        </Flex>
       </Flex>
       <Outlet context={outletContext} />
       <Footer />
