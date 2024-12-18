@@ -18,7 +18,7 @@ const ChipGroup = ({color, texts}: Props) => {
   return (
     <div css={chipGroupStyle}>
       {texts.map(text => (
-        <Chip color={color} text={text} />
+        <Chip key={text} color={color} text={text} />
       ))}
     </div>
   );

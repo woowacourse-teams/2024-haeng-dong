@@ -1,4 +1,7 @@
+import {useEffect} from 'react';
+
 import Image from '@components/Design/components/Image/Image';
+import useRequestGetUserInfo from '@hooks/queries/auth/useRequestGetUserInfo';
 
 import usePageBackground from '@hooks/usePageBackground';
 
@@ -13,10 +16,12 @@ import CreatorSection from './Section/CreatorSection/CreatorSection';
 
 const MainPage = () => {
   const {isVisible} = usePageBackground();
+  const {isGuest} = useRequestGetUserInfo();
+
   return (
     <div css={mainContainer}>
-      <Nav />
-      <MainSection />
+      <Nav isGuest={isGuest} />
+      <MainSection isGuest={isGuest} />
       <DescriptionSection />
       <FeatureSection />
       <CreatorSection />

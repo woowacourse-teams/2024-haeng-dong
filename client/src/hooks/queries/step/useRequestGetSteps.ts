@@ -11,7 +11,7 @@ const useRequestGetSteps = ({...props}: WithErrorHandlingStrategy | null = {}) =
   const eventId = getEventIdByUrl();
 
   const queryResult = useQuery({
-    queryKey: [QUERY_KEYS.steps],
+    queryKey: [QUERY_KEYS.steps, eventId],
     queryFn: () => requestGetSteps({eventId, ...props}),
   });
 

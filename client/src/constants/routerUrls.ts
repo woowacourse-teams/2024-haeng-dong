@@ -19,6 +19,7 @@ export const ROUTER_URLS = {
   login: '/login',
   myPage: '/mypage',
   withdraw: '/mypage/withdraw',
+  createdEvents: '/mypage/events',
   guestEventLogin: `${EVENT_WITH_EVENT_ID}/admin/guest/login`,
   memberEventLogin: `${EVENT_WITH_EVENT_ID}/admin/member/login`,
   kakaoLoginRedirectUri: process.env.KAKAO_REDIRECT_URI,

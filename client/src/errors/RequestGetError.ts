@@ -1,7 +1,7 @@
 import RequestError from './RequestError';
 import {RequestErrorType} from './requestErrorType';
 
-type ErrorHandlingStrategy = 'toast' | 'errorBoundary';
+type ErrorHandlingStrategy = 'toast' | 'errorBoundary' | 'unsubscribe';
 
 export type WithErrorHandlingStrategy<P = unknown> = P & {
   errorHandlingStrategy?: ErrorHandlingStrategy;
