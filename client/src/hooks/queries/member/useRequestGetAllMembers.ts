@@ -11,7 +11,7 @@ const useRequestGetAllMembers = ({...props}: WithErrorHandlingStrategy | null = 
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({
-    queryKey: [QUERY_KEYS.allMembers],
+    queryKey: [QUERY_KEYS.allMembers, eventId],
     queryFn: () => requestGetAllMembers({eventId, ...props}),
   });
 
