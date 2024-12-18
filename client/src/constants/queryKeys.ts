@@ -8,8 +8,8 @@ const QUERY_KEYS = {
   images: 'images',
   kakaoClientId: 'kakao-client-id',
   kakaoLogin: 'kakao-login',
+  userInfo: 'user-info',
   createdEvents: 'createdEvents',
-  userInfo: 'userinfo',
 };
 
 export default QUERY_KEYS;

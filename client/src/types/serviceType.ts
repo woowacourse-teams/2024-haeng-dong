@@ -95,6 +95,12 @@ export interface ImageFile {
   url: string;
 }
 
+export type UserInfo = BankAccount & {
+  nickname: string;
+  isGuest: boolean;
+  profileImage: string;
+};
+
 export interface CreatedEvent {
   eventId: string;
   eventName: string;
