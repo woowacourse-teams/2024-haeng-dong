@@ -35,6 +35,7 @@ const LoginRedirectPage = lazy(() => import('@pages/LoginPage/LoginRedirectPage'
 const LoginFailFallback = lazy(() => import('@pages/LoginPage/LoginFailFallback'));
 const CreatedEventsPage = lazy(() => import('@pages/CreatedEventsPage/CreatedEventsPage'));
 const EventPageLoading = lazy(() => import('@pages/EventPage/EventPageFallback/EventPageLoading'));
+const WithdrawPage = lazy(() => import('@pages/MyPage/WithdrawPage/WithdrawPage'));
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,14 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.myPage,
         element: <MyPage />,
+      },
+      {
+        path: ROUTER_URLS.withdraw,
+        element: <WithdrawPage />,
+      },
+      {
+        path: ROUTER_URLS.createdEvents,
+        element: <CreatedEventsPage />,
       },
       {
         path: ROUTER_URLS.kakaoLoginRedirectUri,
@@ -100,10 +109,6 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.memberEventLogin,
             element: <MemberEventLogin />,
-          },
-          {
-            path: ROUTER_URLS.createdEvents,
-            element: <CreatedEventsPage />,
           },
         ],
       },

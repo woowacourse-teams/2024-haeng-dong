@@ -18,6 +18,7 @@ export const ROUTER_URLS = {
   event: EVENT,
   login: '/login',
   myPage: '/mypage',
+  withdraw: '/mypage/withdraw',
   createdEvents: '/mypage/events',
   guestEventLogin: `${EVENT_WITH_EVENT_ID}/admin/guest/login`,
   memberEventLogin: `${EVENT_WITH_EVENT_ID}/admin/member/login`,

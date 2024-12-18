@@ -24,6 +24,8 @@ import DepositToggle from './components/DepositToggle/DepositToggle';
 import Amount from './components/Amount/Amount';
 import Dropdown from './components/Dropdown/Dropdown';
 import DropdownButton from './components/Dropdown/DropdownButton';
+import Checkbox from './components/Checkbox/Checkbox';
+import Textarea from './components/Textarea/Textarea';
 import {Select} from './components/Select';
 
 export {
@@ -55,4 +57,6 @@ export {
   DropdownButton,
   useTheme,
   Select,
+  Checkbox,
+  Textarea,
 };

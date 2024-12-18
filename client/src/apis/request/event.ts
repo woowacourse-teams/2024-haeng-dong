@@ -45,6 +45,7 @@ export const requestPatchEventName = async ({eventId, eventName}: RequestPatchEv
 
 export type RequestPatchUser = Partial<User>;
 
+// TODO: (@soha) 해당 요청은 user.ts 파일로 이동하는 건 어떨지?
 export const requestPatchUser = async (args: RequestPatchUser) => {
   return requestPatch({
     endpoint: MEMBER_API_PREFIX,
