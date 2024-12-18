@@ -1,7 +1,7 @@
 import {CreatedEvents, Event, EventCreationData, EventId, EventName, User} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestPatch, requestPostWithResponse} from '@apis/fetcher';
 import {WithEventId} from '@apis/withId.type';
 
@@ -47,7 +47,7 @@ export type RequestPatchUser = Partial<User>;
 
 export const requestPatchUser = async (args: RequestPatchUser) => {
   return requestPatch({
-    endpoint: `/api/users`,
+    endpoint: MEMBER_API_PREFIX,
     body: {
       ...args,
     },

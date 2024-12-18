@@ -23,6 +23,7 @@ const QueryClientBoundary = ({children}: React.PropsWithChildren) => {
       onError: (error: Error) => {
         // errorBoundary로 처리해야하는 에러인 경우 updateAppError를 하지 못하도록 얼리리턴
         if (error instanceof RequestGetError && error.errorHandlingStrategy === 'errorBoundary') return;
+        if (error instanceof RequestGetError && error.errorHandlingStrategy === 'unsubscribe') return;
 
         updateAppError(error);
       },
