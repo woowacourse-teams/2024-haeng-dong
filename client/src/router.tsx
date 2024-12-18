@@ -10,7 +10,7 @@ const SendErrorPage = lazy(() => import('@pages/fallback/SendErrorPage'));
 const CreateGuestEventFunnel = lazy(() => import('@pages/event/create/guest/CreateGuestEventFunnel'));
 const CreateUserEventFunnel = lazy(() => import('@pages/event/create/user/CreateUserEventFunnel'));
 const GuestEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/guest/GuestEventLogin'));
-const MemberEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/user/UserEventLogin'));
+const UserEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/user/UserEventLogin'));
 
 const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
 const AuthGate = lazy(() => import('@pages/event/[eventId]/admin/AuthGate'));
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
           },
           {
             path: ROUTER_URLS.userEventLogin,
-            element: <MemberEventLogin />,
+            element: <UserEventLogin />,
           },
         ],
       },
