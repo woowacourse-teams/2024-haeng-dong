@@ -4,22 +4,28 @@ import RULE from '@constants/rule';
 
 import {ValidateResult} from './type';
 
-const validateMemberName = (name: string): ValidateResult => {
-  let errorMessage = null;
+const validateMemberName = (name: string) => {
+  const slicedName = name.trim().slice(0, RULE.maxMemberNameLength);
 
   const validateOnlyString = () => {
-    return REGEXP.memberName.test(name);
+    return REGEXP.memberName.test(slicedName);
   };
 
   const validateLength = () => {
-    return name.length <= RULE.maxMemberNameLength;
+    return slicedName.length > 0;
   };
 
-  if (validateOnlyString() && validateLength()) {
-    return {isValid: true, errorMessage: null};
-  }
+  const getErrorMessage = () => {
+    if (!validateOnlyString()) return ERROR_MESSAGE.memberNameFormat;
+    if (name.length > RULE.maxMemberNameLength) return ERROR_MESSAGE.memberNameLength;
+    return null;
+  };
 
-  return {isValid: false, errorMessage: errorMessage || ERROR_MESSAGE.memberName};
+  return {
+    memberName: slicedName,
+    isValid: validateLength() && validateOnlyString(),
+    errorMessage: getErrorMessage(),
+  };
 };
 
 export default validateMemberName;

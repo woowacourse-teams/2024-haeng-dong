@@ -12,18 +12,15 @@ const useSetNicknameStep = () => {
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value;
-    const {isValid, errorMessage: errorMessageResult} = validateMemberName(name);
-
+    const {memberName: nicknameResult, isValid, errorMessage: errorMessageResult} = validateMemberName(name);
     setErrorMessage(errorMessageResult);
 
-    if (isValid) {
-      setNickname(name);
+    if (isValid || name.length === 0) {
+      setNickname(nicknameResult);
+      setCanSubmit(isValid);
     }
-
-    setCanSubmit(name.length !== 0);
   };
 
   return {handleNicknameChange, canSubmit, nickname, errorMessage};
 };
-
 export {useSetNicknameStep, type UseSetNicknameStepProps};
