@@ -17,7 +17,7 @@ const Checkbox = ({labelText, isChecked = false, onChange}: Props) => {
   return (
     <label css={checkboxStyle}>
       <div css={inputGroupStyle({theme, isChecked})}>
-        {isChecked ? <Icon iconType="check" className="check-icon" /> : null}
+        {isChecked ? <Icon iconType="check" iconColor="onPrimary" className="check-icon" /> : null}
         <input type="checkbox" checked={isChecked} onChange={onChange} className="checkbox-input" />
       </div>
       <Text size="bodyBold">{labelText}</Text>
