@@ -18,6 +18,8 @@ const AdminPage = () => {
     eventId,
     isAdmin,
     eventName,
+    bankName,
+    accountNumber,
     totalExpenseAmount,
     isShowAccountBanner,
     onDeleteAccount,
@@ -27,7 +29,7 @@ const AdminPage = () => {
   } = useAdminPage();
 
   const navigateAccountInputPage = () => {
-    navigate(`/event/${eventId}/admin/edit-account`);
+    navigate(`/event/${eventId}/admin/edit-account`, {state: {accountNumber, bankName}});
   };
 
   const navigateEventMemberManage = () => {

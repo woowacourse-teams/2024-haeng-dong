@@ -28,6 +28,8 @@ const useAdminPage = () => {
     eventId,
     isAdmin,
     eventName,
+    bankName,
+    accountNumber,
     totalExpenseAmount,
     isShowAccountBanner,
     onDeleteAccount,
