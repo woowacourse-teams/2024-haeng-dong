@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
 
-import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
+import {EventPageContextProps} from '@pages/event/[eventId]/EventPageLayout';
 
 import getEventBaseUrl from '@utils/getEventBaseUrl';
 

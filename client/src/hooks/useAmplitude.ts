@@ -50,7 +50,7 @@ const useAmplitude = () => {
     });
   };
 
-  const trackCompleteCreateMemberEvent = (eventUniqueData: EventUniqueData) => {
+  const trackCompletecreateUserEvent = (eventUniqueData: EventUniqueData) => {
     track('회원 이벤트 생성 완료', {
       ...eventUniqueData,
     });
@@ -83,7 +83,7 @@ const useAmplitude = () => {
   return {
     trackStartCreateEvent,
     trackCompleteCreateEvent,
-    trackCompleteCreateMemberEvent,
+    trackCompletecreateUserEvent,
     trackShareEvent,
     trackAddBillStart,
     trackAddBillEnd,

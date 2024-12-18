@@ -21,7 +21,7 @@ const useRequestPostAuthentication = () => {
   const {createdByGuest} = useRequestGetEvent();
 
   const isSecondEncounteredOnError = () => {
-    return window.location.pathname.includes('/guest/login') || window.location.pathname.includes('/member/login');
+    return window.location.pathname.includes('/login/guest') || window.location.pathname.includes('/login/user');
   };
 
   const {mutate, ...rest} = useMutation({
@@ -36,7 +36,7 @@ const useRequestPostAuthentication = () => {
       if (createdByGuest) {
         navigate(ROUTER_URLS.guestEventLogin.replace(':eventId', eventToken));
       } else {
-        navigate(ROUTER_URLS.memberEventLogin.replace(':eventId', eventToken));
+        navigate(ROUTER_URLS.userEventLogin.replace(':eventId', eventToken));
       }
     },
   });
