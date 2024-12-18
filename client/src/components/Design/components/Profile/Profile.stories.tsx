@@ -19,7 +19,7 @@ const meta: Meta<typeof Profile> = {
   ],
   args: {
     src: 'https://wooteco-crew-wiki.s3.ap-northeast-2.amazonaws.com/%EC%9B%A8%EB%94%94%286%EA%B8%B0%29/g583lirp8yg.jpg',
-    size: 100,
+    size: 'large',
   },
 };
 

@@ -2,12 +2,20 @@ import {css} from '@emotion/react';
 
 import {Theme} from '@components/Design/theme/theme.type';
 
-export const profileContainerStyle = (theme: Theme, size: number) =>
-  css({
+import {ProfileSize} from './Profile.type';
+
+const SEMANTIC_SIZE: Record<ProfileSize, string> = {
+  small: '1rem',
+  medium: '1.75rem',
+  large: '3rem',
+};
+
+export const profileContainerStyle = (theme: Theme, size: ProfileSize) => {
+  return css({
     display: 'flex',
 
-    width: `${size}px`,
-    height: `${size}px`,
+    width: SEMANTIC_SIZE[size],
+    height: SEMANTIC_SIZE[size],
 
     borderRadius: '50%',
 
@@ -15,3 +23,4 @@ export const profileContainerStyle = (theme: Theme, size: number) =>
 
     objectFit: 'cover',
   });
+};

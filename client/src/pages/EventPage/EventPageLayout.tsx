@@ -77,7 +77,7 @@ const EventPageLayout = () => {
           )}
           {isKakaoUser && (
             <Link to={ROUTER_URLS.myPage}>
-              <Profile src={event.userInfo.profileImage ?? getImageUrl('runningDog', 'png')} />
+              <Profile src={event.userInfo.profileImage ?? getImageUrl('runningDog', 'png')} size="medium" />
             </Link>
           )}
         </Flex>
