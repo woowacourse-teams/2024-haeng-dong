@@ -1,4 +1,5 @@
-type ImageProps = React.ComponentProps<'img'> & {
+/** @jsxImportSource @emotion/react */
+export type ImageProps = React.ComponentProps<'img'> & {
   src: string;
   fallbackSrc?: string;
 };

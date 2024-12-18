@@ -9,6 +9,7 @@ const QUERY_KEYS = {
   kakaoClientId: 'kakao-client-id',
   kakaoLogin: 'kakao-login',
   createdEvents: 'createdEvents',
+  userInfo: 'userinfo',
 };
 
 export default QUERY_KEYS;
