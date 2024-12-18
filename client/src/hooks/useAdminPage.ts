@@ -1,6 +1,6 @@
 import {useOutletContext} from 'react-router-dom';
 
-import {EventPageContextProps} from '@pages/EventPage/EventPageLayout';
+import {EventPageContextProps} from '@pages/event/[eventId]/EventPageLayout';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
