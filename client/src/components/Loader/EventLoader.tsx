@@ -1,4 +1,4 @@
-import {useQueries} from '@tanstack/react-query';
+import {useSuspenseQueries} from '@tanstack/react-query';
 import {useEffect} from 'react';
 
 import {requestGetEvent} from '@apis/request/event';
@@ -16,7 +16,7 @@ import QUERY_KEYS from '@constants/queryKeys';
 const EventLoader = ({children, ...props}: React.PropsWithChildren<WithErrorHandlingStrategy | null> = {}) => {
   const eventId = getEventIdByUrl();
 
-  const queries = useQueries({
+  const queries = useSuspenseQueries({
     queries: [
       {queryKey: [QUERY_KEYS.event], queryFn: () => requestGetEvent({eventId, ...props})},
       {
@@ -44,9 +44,7 @@ const EventLoader = ({children, ...props}: React.PropsWithChildren<WithErrorHand
     }
   }, [stepsData.data, stepsData.isSuccess, updateTotalExpenseAmount]);
 
-  const isLoading = queries.some(query => query.isLoading === true);
-
-  return !isLoading && children;
+  return children;
 };
 
 export default EventLoader;
