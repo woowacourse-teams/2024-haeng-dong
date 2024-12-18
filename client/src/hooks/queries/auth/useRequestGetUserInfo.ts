@@ -1,5 +1,4 @@
 import {useQuery} from '@tanstack/react-query';
-import {useEffect} from 'react';
 
 import {requestGetUserInfo} from '@apis/request/auth';
 
@@ -23,7 +22,16 @@ const useRequestGetUserInfo = () => {
     initialDataUpdatedAt: 0,
   });
 
+  const userInfo = {
+    isGuest: data.isGuest,
+    nickname: data.nickname,
+    profileImage: data.profileImage,
+    accountNumber: data.accountNumber,
+    bankName: data.bankName,
+  };
+
   return {
+    userInfo,
     ...data,
     ...rest,
   };
