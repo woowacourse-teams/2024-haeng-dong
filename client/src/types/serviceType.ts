@@ -94,3 +94,14 @@ export interface ImageFile {
   id: number;
   url: string;
 }
+
+export interface CreatedEvent {
+  eventId: string;
+  eventName: string;
+  isFinished: boolean;
+  createdAt: string;
+}
+
+export interface CreatedEvents {
+  events: CreatedEvent[];
+}

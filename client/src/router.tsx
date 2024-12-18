@@ -33,6 +33,7 @@ const LoginPage = lazy(() => import('@pages/LoginPage'));
 const MyPage = lazy(() => import('@pages/MyPage'));
 const LoginRedirectPage = lazy(() => import('@pages/LoginPage/LoginRedirectPage'));
 const LoginFailFallback = lazy(() => import('@pages/LoginPage/LoginFailFallback'));
+const CreatedEventsPage = lazy(() => import('@pages/CreatedEventsPage/CreatedEventsPage'));
 const EventPageLoading = lazy(() => import('@pages/EventPage/EventPageFallback/EventPageLoading'));
 
 const router = createBrowserRouter([
@@ -137,6 +138,10 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.qrCode,
             element: <QRCodePage />,
+          },
+          {
+            path: ROUTER_URLS.createdEvents,
+            element: <CreatedEventsPage />,
           },
         ],
       },
