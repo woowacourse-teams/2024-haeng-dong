@@ -1,24 +1,34 @@
 import {useEffect, useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import validateAccountNumber from '@utils/validate/validateAccountNumber';
+import {BankAccount} from 'types/serviceType';
+
+import getEventBaseUrl from '@utils/getEventBaseUrl';
 
 import RULE from '@constants/rule';
 
-import useRequestGetEvent from './queries/event/useRequestGetEvent';
 import useRequestPatchUser from './queries/event/useRequestPatchUser';
 
 const useAccount = () => {
-  const {bankName, accountNumber} = useRequestGetEvent();
-  const [bankNameState, setBankName] = useState(bankName);
-  const [accountNumberState, setAccountNumber] = useState(accountNumber);
+  const location = useLocation();
+  const locationState = location.state as BankAccount | null;
+
+  const navigate = useNavigate();
+  const [bankNameState, setBankName] = useState<string>();
+  const [accountNumberState, setAccountNumber] = useState<string>();
   const [accountNumberErrorMessage, setAccountNumberErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
   const [isPasting, setIsPasting] = useState(false);
 
   useEffect(() => {
-    setBankName(bankName);
-    setAccountNumber(accountNumber);
-  }, [bankName, accountNumber]);
+    if (locationState === null) {
+      navigate(`${getEventBaseUrl(location.pathname)}/admin`);
+    } else {
+      setBankName(locationState.bankName);
+      setAccountNumber(locationState.accountNumber);
+    }
+  }, [locationState]);
 
   const {patchUser} = useRequestPatchUser();
 
@@ -60,11 +70,11 @@ const useAccount = () => {
   };
 
   useEffect(() => {
-    const existEmptyField = bankNameState.trim() === '' || accountNumberState.trim() === '';
-    const isChanged = bankName !== bankNameState || accountNumber !== accountNumberState;
+    const existEmptyField = bankNameState?.trim() === '' || accountNumberState?.trim() === '';
+    const isChanged = locationState?.bankName !== bankNameState || locationState?.accountNumber !== accountNumberState;
 
     setCanSubmit(!existEmptyField && isChanged && accountNumberErrorMessage === null);
-  }, [bankName, accountNumber, bankNameState, accountNumberState, accountNumberErrorMessage]);
+  }, [locationState, bankNameState, accountNumberState, accountNumberErrorMessage]);
 
   return {
     bankName: bankNameState,

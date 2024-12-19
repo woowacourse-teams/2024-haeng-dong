@@ -1,4 +1,4 @@
-import {createBrowserRouter} from 'react-router-dom';
+import {createBrowserRouter, Navigate} from 'react-router-dom';
 import {lazy, Suspense} from 'react';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
@@ -10,7 +10,7 @@ const SendErrorPage = lazy(() => import('@pages/fallback/SendErrorPage'));
 const CreateGuestEventFunnel = lazy(() => import('@pages/event/create/guest/CreateGuestEventFunnel'));
 const CreateUserEventFunnel = lazy(() => import('@pages/event/create/user/CreateUserEventFunnel'));
 const GuestEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/guest/GuestEventLogin'));
-const MemberEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/user/UserEventLogin'));
+const UserEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/user/UserEventLogin'));
 
 const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
 const AuthGate = lazy(() => import('@pages/event/[eventId]/admin/AuthGate'));
@@ -22,7 +22,7 @@ const AdminPage = lazy(() => import('@pages/event/[eventId]/admin/AdminPage'));
 const AddBillFunnel = lazy(() => import('@pages/event/[eventId]/admin/add-bill/AddBillFunnel'));
 const MembersPage = lazy(() => import('@pages/event/[eventId]/admin/members/MembersPage'));
 const EditBillPage = lazy(() => import('@pages/event/[eventId]/admin/edit-bill/EditBillPage'));
-const Account = lazy(() => import('@pages/event/[eventId]/admin/edit-account/EditAccountPage'));
+const EditAccountPage = lazy(() => import('@pages/event/[eventId]/admin/edit-account/EditAccountPage'));
 const ImagesPage = lazy(() => import('@pages/event/[eventId]/images/ImagesPage'));
 const AddImagesPage = lazy(() => import('@pages/event/[eventId]/admin/add-images/AddImagesPage'));
 const QRCodePage = lazy(() => import('@pages/event/[eventId]/qrcode/QRCodePage'));
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
           },
           {
             path: ROUTER_URLS.userEventLogin,
-            element: <MemberEventLogin />,
+            element: <UserEventLogin />,
           },
         ],
       },
@@ -123,7 +123,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTER_URLS.editAccount,
-        element: <Account />,
+        element: <EditAccountPage />,
       },
       {
         path: ROUTER_URLS.images,
