@@ -4,8 +4,8 @@ import validateEventName from '@utils/validate/validateEventName';
 
 export type UseSetEventNameStepReturnType = ReturnType<typeof useSetEventNameStep>;
 
-const useSetEventNameStep = () => {
-  const [eventName, setEventName] = useState('');
+const useSetEventNameStep = (initialEventName?: string) => {
+  const [eventName, setEventName] = useState(initialEventName ?? '');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
 

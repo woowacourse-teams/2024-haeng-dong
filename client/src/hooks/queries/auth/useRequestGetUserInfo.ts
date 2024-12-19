@@ -15,7 +15,7 @@ const useRequestGetUserInfo = () => {
     initialData: {
       isGuest: true,
       nickname: '',
-      profileImage: '',
+      profileImage: null,
       accountNumber: '',
       bankName: '',
     },

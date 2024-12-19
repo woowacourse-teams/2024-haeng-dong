@@ -17,7 +17,7 @@ function InProgressCheck({inProgress}: {inProgress: boolean}) {
   return (
     <div css={inProgressCheckStyle({theme, inProgress})}>
       <Text size="tiny" className="in-progress-check-text">
-        {inProgress ? '진행' : '완료'}
+        {inProgress ? '정산 중' : '정산 완료'}
       </Text>
     </div>
   );

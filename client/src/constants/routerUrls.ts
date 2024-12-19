@@ -12,6 +12,7 @@ export const ROUTER_URLS = {
   addBill: `${EVENT_WITH_EVENT_ID}/admin/add-bill`,
   editBill: `${EVENT_WITH_EVENT_ID}/admin/edit-bill`,
   editAccount: `${EVENT_WITH_EVENT_ID}/admin/edit-account`,
+  editEventName: `${EVENT_WITH_EVENT_ID}/admin/edit-event-name`,
   images: `${EVENT_WITH_EVENT_ID}/images`,
   addImages: `${EVENT_WITH_EVENT_ID}/admin/add-images`,
   send: `${EVENT_WITH_EVENT_ID}/home/send/:memberId`,
