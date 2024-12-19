@@ -1,15 +1,19 @@
 import {useNavigate} from 'react-router-dom';
 
-import {mockImageStyle} from '@pages/mypage/MyPage.style';
 import Container from '@pages/mypage/Container';
+import {Profile} from '@components/Design/components/Profile/Profile';
 
-import {Button, Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav, useTheme} from '@components/Design';
+import useMyPage from '@hooks/useMyPage';
+
+import {Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav, useTheme} from '@components/Design';
+
+import getImageUrl from '@utils/getImageUrl';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 const MyPage = () => {
-  const {theme} = useTheme();
   const navigate = useNavigate();
+  const {profileImage, nickname} = useMyPage();
 
   return (
     <MainLayout backgroundColor="gray">
@@ -20,14 +24,11 @@ const MyPage = () => {
         <Container>
           <Flex justifyContent="spaceBetween" alignItems="center" margin="0 1rem">
             <Flex gap="1rem" alignItems="center">
-              <div css={mockImageStyle(theme)}></div>
+              <Profile src={profileImage ?? getImageUrl('runningDog', 'png')} size="medium" />
               <Text size="bodyBold" textColor="onTertiary">
-                이름이 올 곳
+                {nickname}
               </Text>
             </Flex>
-            <Button variants="tertiary" size="small">
-              로그아웃
-            </Button>
           </Flex>
         </Container>
         <Container>
