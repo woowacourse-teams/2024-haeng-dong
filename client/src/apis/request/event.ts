@@ -42,7 +42,7 @@ export const requestPatchEvent = async ({eventId, ...event}: RequestPatchEvent) 
   return requestPatch({
     endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
     body: {
-      event,
+      ...event,
     },
   });
 };
