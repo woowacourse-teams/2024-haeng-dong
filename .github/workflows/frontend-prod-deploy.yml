@@ -3,10 +3,17 @@ name: frontend-prod-deploy
 on:
   push:
     branches: ["main"]
+    paths:
+      - "client/**"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./client
 
     steps:
       # 1. Git 리포지토리 체크아웃
@@ -44,7 +51,7 @@ jobs:
 
       # 6. S3에 빌드 결과 업로드 (이전 업로드 파일을 지우지 않음)
       - name: Upload build results to S3
-        run: aws s3 sync ./client/dist s3://${{ secrets.S3_BUCKET_NAME }}/prod/
+        run: aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }}/prod/
 
       # 7. CloudFront 캐시 무효화
       - name: Invalidate CloudFront Cache
