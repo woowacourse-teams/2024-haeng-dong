@@ -14,7 +14,7 @@ const UserEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/use
 
 const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
 const AuthGate = lazy(() => import('@pages/event/[eventId]/admin/AuthGate'));
-const EventPage = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
+const EventPageLayout = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
 const SendPage = lazy(() => import('@pages/event/[eventId]/home/send/[memberId]/SendPage'));
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 const HomePage = lazy(() => import('@pages/event/[eventId]/home/HomePage'));
@@ -81,31 +81,39 @@ const router = createBrowserRouter([
         path: ROUTER_URLS.event,
         element: (
           <Suspense fallback={<EventPageLoading />}>
-            <EventLoader>
-              <EventPage />
-            </EventLoader>
+            <EventLoader />
           </Suspense>
         ),
         children: [
           {
-            path: ROUTER_URLS.eventManage,
-            element: (
-              <AuthGate>
-                <AdminPage />
-              </AuthGate>
-            ),
+            path: ROUTER_URLS.editAccount,
+            element: <EditAccountPage />,
           },
           {
-            path: ROUTER_URLS.home,
-            element: <HomePage />,
-          },
-          {
-            path: ROUTER_URLS.guestEventLogin,
-            element: <GuestEventLogin />,
-          },
-          {
-            path: ROUTER_URLS.userEventLogin,
-            element: <UserEventLogin />,
+            path: '',
+            element: <EventPageLayout />,
+            children: [
+              {
+                path: ROUTER_URLS.eventManage,
+                element: (
+                  <AuthGate>
+                    <AdminPage />
+                  </AuthGate>
+                ),
+              },
+              {
+                path: ROUTER_URLS.home,
+                element: <HomePage />,
+              },
+              {
+                path: ROUTER_URLS.guestEventLogin,
+                element: <GuestEventLogin />,
+              },
+              {
+                path: ROUTER_URLS.userEventLogin,
+                element: <UserEventLogin />,
+              },
+            ],
           },
         ],
       },
