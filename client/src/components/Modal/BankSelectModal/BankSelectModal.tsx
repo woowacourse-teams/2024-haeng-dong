@@ -1,3 +1,5 @@
+import {BankName} from 'types/serviceType';
+
 import {BankSelect, BottomSheet, Text} from '@HDesign/index';
 
 import {bottomSheetHeaderStyle, bottomSheetStyle, inputContainerStyle} from './BankSelectModal.style';
@@ -5,11 +7,11 @@ import {bottomSheetHeaderStyle, bottomSheetStyle, inputContainerStyle} from './B
 type BankSelectProps = {
   isBottomSheetOpened: boolean;
   setIsBottomSheetOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  selectBank: (name: string) => void;
+  selectBank: (name: BankName) => void;
 };
 
 const BankSelectModal = ({isBottomSheetOpened, setIsBottomSheetOpened, selectBank}: BankSelectProps) => {
-  const selectBankAndClose = (name: string) => {
+  const selectBankAndClose = (name: BankName) => {
     selectBank(name);
     setIsBottomSheetOpened(false);
   };

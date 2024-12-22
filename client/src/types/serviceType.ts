@@ -2,6 +2,8 @@
 // ******************** UX 개선 이후 변경된 부분들 24.09.19 ****************
 // *******************************************************************
 
+import BANKS from '@constants/bank';
+
 export interface Steps {
   steps: Step[];
 }
@@ -57,8 +59,9 @@ export interface EventCreationData {
   password: Password;
 }
 
+export type BankName = (typeof BANKS)[number]['name'];
 export type BankAccount = {
-  bankName: string;
+  bankName: BankName;
   accountNumber: string;
 };
 
