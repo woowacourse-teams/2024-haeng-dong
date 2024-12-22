@@ -1,6 +1,6 @@
 import {http, HttpResponse} from 'msw';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
 
 import {PASSWORD_LENGTH} from '@constants/password';
 
@@ -38,7 +38,7 @@ export const authHandler = [
 
   // POST /api/eventId/login (requestPostToken)
   http.post<{eventId: string}, {password: string}>(
-    `${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/login`,
+    `${MOCK_API_PREFIX}${MEMBER_API_PREFIX}/:eventId/login`,
     async ({params, request}) => {
       const {eventId} = params;
       const {password} = await request.json();
