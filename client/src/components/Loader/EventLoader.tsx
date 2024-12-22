@@ -8,11 +8,9 @@ const EventLoader = () => {
   const eventData = useEventLoader();
 
   return (
-    <>
-      <EventDataProvider {...eventData}>
-        <Outlet />
-      </EventDataProvider>
-    </>
+    <EventDataProvider {...eventData}>
+      <Outlet />
+    </EventDataProvider>
   );
 };
 
