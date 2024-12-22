@@ -14,7 +14,7 @@ export const ROUTER_URLS = {
   editAccount: `${EVENT_WITH_EVENT_ID}/admin/edit-account`,
   images: `${EVENT_WITH_EVENT_ID}/images`,
   addImages: `${EVENT_WITH_EVENT_ID}/admin/add-images`,
-  send: `${EVENT_WITH_EVENT_ID}/home/send/:memberId`,
+  send: `${EVENT_WITH_EVENT_ID}/home/send`,
   qrCode: `${EVENT_WITH_EVENT_ID}/qrcode`,
   login: '/login',
   myPage: '/mypage',
