@@ -7,7 +7,7 @@ import {WithEventId} from '@apis/withId.type';
 
 export const requestPostGuestEvent = async (postEventArgs: EventCreationData) => {
   return await requestPostWithResponse<WithEventId>({
-    endpoint: `${USER_API_PREFIX}/guest`,
+    endpoint: `${MEMBER_API_PREFIX}/guest`,
     body: {
       ...postEventArgs,
     },
@@ -16,7 +16,7 @@ export const requestPostGuestEvent = async (postEventArgs: EventCreationData) =>
 
 export const requestPostUserEvent = async (eventName: EventName) => {
   return await requestPostWithResponse<WithEventId>({
-    endpoint: USER_API_PREFIX,
+    endpoint: MEMBER_API_PREFIX,
     body: {
       eventName,
     },
