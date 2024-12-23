@@ -1,11 +1,11 @@
 import {Outlet} from 'react-router-dom';
 
-import useEventLoader from '@hooks/useEventLoader';
+import useEventPageLoader from '@hooks/useEventPageLoader';
 
 import EventDataProvider from './EventDataProvider';
 
-const EventLoader = () => {
-  const eventData = useEventLoader();
+const EventDataLoader = () => {
+  const eventData = useEventPageLoader();
 
   return (
     <EventDataProvider {...eventData}>
@@ -14,4 +14,4 @@ const EventLoader = () => {
   );
 };
 
-export default EventLoader;
+export default EventDataLoader;
