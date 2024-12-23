@@ -16,7 +16,7 @@ class EventTest {
     @ParameterizedTest
     @ValueSource(strings = {"12", "12345678901234567890", "공 백", " 공백", "공백 ", " 공 백 "})
     void createSuccessTest(String eventName) {
-        assertThatCode(() -> new Event(eventName, 1L, "TEST_TOKEN"))
+        assertThatCode(() -> Event.createByGuest(eventName, "TEST_TOKEN", 1L))
                 .doesNotThrowAnyException();
     }
 
@@ -24,7 +24,7 @@ class EventTest {
     @ParameterizedTest
     @ValueSource(strings = {"  공백", "공백  ", "공백  연속", "공    백"})
     void createFailTest1(String eventName) {
-        assertThatCode(() -> new Event(eventName, 1L, "TEST_TOKEN"))
+        assertThatCode(() -> Event.createByGuest(eventName, "TEST_TOKEN", 1L))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("행사 이름에는 공백 문자가 연속될 수 없습니다.");
     }
@@ -33,7 +33,7 @@ class EventTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "123456789012345678901"})
     void createFilTest2(String eventName) {
-        assertThatCode(() -> new Event(eventName, 1L, "TEST_TOKEN"))
+        assertThatCode(() -> Event.createByGuest(eventName, "TEST_TOKEN", 1L))
                 .isInstanceOf(HaengdongException.class)
                 .hasMessage("행사 이름은 1자 이상 20자 이하만 입력 가능합니다.");
     }
@@ -41,7 +41,7 @@ class EventTest {
     @DisplayName("이름을 수정한다.")
     @Test
     void renameTest() {
-        Event event = new Event("이름", 1L, "TEST_TOKEN");
+        Event event = Event.createByGuest("이름", "TEST_TOKEN", 1L);
 
         event.rename("새로운 이름");
 

@@ -32,7 +32,6 @@ public enum HaengdongErrorCode {
 
     IMAGE_NOT_FOUND("존재하지 않는 이미지 입니다."),
     IMAGE_COUNT_INVALID("이미지 수량은 %d개 까지 업로드할 수 있습니다."),
-    USER_NICK_NAME_LENGTH_INVALID("유저의 닉네임은 %d자 이상 %d자 이하만 입력 가능합니다."),
 
     /* Authentication */
 

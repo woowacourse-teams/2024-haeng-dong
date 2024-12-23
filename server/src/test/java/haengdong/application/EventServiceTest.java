@@ -25,6 +25,7 @@ import haengdong.event.domain.event.image.EventImageRepository;
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.member.EventMemberRepository;
 import haengdong.support.fixture.Fixture;
+import haengdong.user.domain.Nickname;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,11 +81,11 @@ class EventServiceTest extends ServiceTestSupport {
     @DisplayName("행사 정보를 수정한다.")
     @Test
     void updateEventNameTest() {
-        Event event = new Event("행동대장 비대위", 1L, "token");
+        Event event = Event.createByGuest("행동대장 비대위", "token", 1L);
         eventRepository.save(event);
 
-        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest("새로운 행사 이름");
-        eventService.updateEventName(event.getToken(), eventUpdateAppRequest);
+        EventUpdateAppRequest eventUpdateAppRequest = new EventUpdateAppRequest("새로운 행사 이름", null, null);
+        eventService.updateEvent(event.getToken(), eventUpdateAppRequest);
 
         Event updateEvent = eventRepository.findByToken(event.getToken()).get();
         assertThat(updateEvent.getName()).isEqualTo("새로운 행사 이름");
@@ -114,10 +115,10 @@ class EventServiceTest extends ServiceTestSupport {
                 .hasSize(4)
                 .extracting(MemberBillReportAppResponse::name, MemberBillReportAppResponse::price)
                 .containsExactlyInAnyOrder(
-                        tuple("감자", 20_000L),
-                        tuple("쿠키", 20_000L),
-                        tuple("소하", 20_000L),
-                        tuple("고구마", 20_000L)
+                        tuple(new Nickname("감자"), 20_000L),
+                        tuple(new Nickname("쿠키"), 20_000L),
+                        tuple(new Nickname("소하"), 20_000L),
+                        tuple(new Nickname("고구마"), 20_000L)
                 );
     }
 

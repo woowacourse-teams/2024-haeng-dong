@@ -5,10 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import haengdong.common.exception.HaengdongException;
 import haengdong.event.application.BillService;
 import haengdong.event.application.request.BillAppRequest;
 import haengdong.event.application.request.BillDetailUpdateAppRequest;
@@ -26,8 +23,12 @@ import haengdong.event.domain.event.Event;
 import haengdong.event.domain.event.EventRepository;
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.member.EventMemberRepository;
-import haengdong.common.exception.HaengdongException;
 import haengdong.support.fixture.Fixture;
+import haengdong.user.domain.Nickname;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 class BillServiceTest extends ServiceTestSupport {
 
@@ -345,8 +346,8 @@ class BillServiceTest extends ServiceTestSupport {
         assertThat(response.billDetails()).hasSize(2)
                 .extracting(BillDetailAppResponse::memberName, BillDetailAppResponse::price)
                 .containsExactly(
-                        tuple("토다리", 5000L),
-                        tuple("쿠키", 5000L)
+                        tuple(new Nickname("토다리"), 5000L),
+                        tuple(new Nickname("쿠키"), 5000L)
                 );
     }
 }

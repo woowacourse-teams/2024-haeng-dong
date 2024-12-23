@@ -9,6 +9,6 @@ public record MemberDepositResponse(
 ) {
 
     public static MemberDepositResponse of(MemberDepositAppResponse response) {
-        return new MemberDepositResponse(response.id(), response.name(), response.isDeposited());
+        return new MemberDepositResponse(response.id(), response.name().getValue(), response.isDeposited());
     }
 }

@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import haengdong.user.domain.Nickname;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,14 +46,14 @@ class BillControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.steps[0].bills[0].isFixed").value(bill.isFixed()))
                 .andExpect(jsonPath("$.steps[0].members").isArray())
                 .andExpect(jsonPath("$.steps[0].members[0].id").value(eventMember.getId()))
-                .andExpect(jsonPath("$.steps[0].members[0].name").value(eventMember.getName()));
+                .andExpect(jsonPath("$.steps[0].members[0].name").value(eventMember.getName().getValue()));
     }
 
     @DisplayName("참여자별 지출 금액을 조회한다.")
     @Test
     void findBillDetails() throws Exception {
         BillDetailsAppResponse appResponse = new BillDetailsAppResponse(
-                List.of(new BillDetailAppResponse(1L, "토다리", 1000L, false)));
+                List.of(new BillDetailAppResponse(1L, new Nickname("토다리"), 1000L, false)));
         given(billService.findBillDetails(anyString(), anyLong())).willReturn(appResponse);
 
         mockMvc.perform(get("/api/events/{eventId}/bills/{billId}/details", "TOKEN", 1L))

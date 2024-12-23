@@ -3,10 +3,14 @@ package haengdong.event.domain.event;
 import haengdong.common.domain.BaseEntity;
 import haengdong.common.exception.HaengdongErrorCode;
 import haengdong.common.exception.HaengdongException;
+import haengdong.user.domain.AccountNumber;
+import haengdong.user.domain.Bank;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,29 +34,34 @@ public class Event extends BaseEntity {
     @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;
 
-    @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "password"))
-    private Password password;
-
     @Column(nullable = false, unique = true)
     private String token;
 
     @Column(nullable = false)
     private Long userId;
 
-    private Event(String name, String password, String token) {
+    @Enumerated(EnumType.STRING)
+    private Bank bank;
+
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "accountNumber"))
+    private AccountNumber accountNumber;
+
+    private Event(String name, String token, Long userId, Bank bank, AccountNumber accountNumber) {
         validateName(name);
         this.name = name;
-        this.password = new Password(password);
         this.token = token;
-        this.userId = 0L;
+        this.userId = userId;
+        this.bank = bank;
+        this.accountNumber = accountNumber;
     }
 
-    public Event(String name, Long userId, String token) {
-        validateName(name);
-        this.name = name;
-        this.userId = userId;
-        this.token = token;
+    public static Event createByGuest(String name, String token, Long userId) {
+        return new Event(name, token, userId, null, null);
+    }
+
+    public static Event createWithAccount(String name, String token, Long userId, Bank bank, AccountNumber accountNumber) {
+        return new Event(name, token, userId, bank, accountNumber);
     }
 
     private void validateName(String name) {
@@ -74,12 +83,13 @@ public class Event extends BaseEntity {
         return !this.token.equals(token);
     }
 
-    public boolean isPasswordMismatch(String rawPassword) {
-        return !password.matches(rawPassword);
-    }
-
     public void rename(String name) {
         validateName(name);
         this.name = name;
+    }
+
+    public void changeAccount(String bankName, String accountNumber) {
+        this.bank = Bank.of(bankName);
+        this.accountNumber = new AccountNumber(accountNumber);
     }
 }

@@ -1,5 +1,6 @@
 package haengdong.presentation.admin;
 
+import static haengdong.support.fixture.Fixture.EVENT_COOKIE;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -7,20 +8,20 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static haengdong.support.fixture.Fixture.EVENT_COOKIE;
 
+import haengdong.event.application.response.MemberSaveAppResponse;
+import haengdong.event.application.response.MembersSaveAppResponse;
+import haengdong.event.presentation.request.MemberSaveRequest;
+import haengdong.event.presentation.request.MemberUpdateRequest;
+import haengdong.event.presentation.request.MembersSaveRequest;
+import haengdong.event.presentation.request.MembersUpdateRequest;
+import haengdong.presentation.ControllerTestSupport;
+import haengdong.user.domain.Nickname;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import haengdong.event.application.response.MemberSaveAppResponse;
-import haengdong.event.application.response.MembersSaveAppResponse;
-import haengdong.presentation.ControllerTestSupport;
-import haengdong.event.presentation.request.MemberSaveRequest;
-import haengdong.event.presentation.request.MemberUpdateRequest;
-import haengdong.event.presentation.request.MembersSaveRequest;
-import haengdong.event.presentation.request.MembersUpdateRequest;
 
 class AdminEventEventMemberControllerTest extends ControllerTestSupport {
 
@@ -37,8 +38,8 @@ class AdminEventEventMemberControllerTest extends ControllerTestSupport {
         String requestBody = objectMapper.writeValueAsString(membersSaveRequest);
         MembersSaveAppResponse appResponse = new MembersSaveAppResponse(
                 List.of(
-                        new MemberSaveAppResponse(1L, "웨디"),
-                        new MemberSaveAppResponse(2L, "소하")
+                        new MemberSaveAppResponse(1L, new Nickname("웨디")),
+                        new MemberSaveAppResponse(2L, new Nickname("소하"))
                 )
         );
         given(eventMemberService.saveMembers(eventToken, membersSaveRequest.toAppRequest()))

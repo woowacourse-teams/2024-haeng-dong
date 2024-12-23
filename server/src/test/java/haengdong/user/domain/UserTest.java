@@ -21,8 +21,8 @@ class UserTest {
         user.changeAccount("토스뱅크", "12345678");
 
         assertAll(
-                () -> assertThat(user.getBank()).isEqualTo("토스뱅크"),
-                () -> assertThat(user.getAccountNumber()).isEqualTo("12345678")
+                () -> assertThat(user.getBank().getName()).isEqualTo("토스뱅크"),
+                () -> assertThat(user.getAccountNumber().getValue()).isEqualTo("12345678")
         );
     }
 
@@ -83,8 +83,8 @@ class UserTest {
         user.changeAccount("토스뱅크", "12345678");
 
         assertAll(
-                () -> assertThat(user.getBank()).isEqualTo("토스뱅크"),
-                () -> assertThat(user.getAccountNumber()).isEqualTo("12345678")
+                () -> assertThat(user.getBank().getName()).isEqualTo("토스뱅크"),
+                () -> assertThat(user.getAccountNumber().getValue()).isEqualTo("12345678")
         );
     }
 
@@ -96,8 +96,8 @@ class UserTest {
         user.changeAccount("토스뱅크", "1234 5678 9012");
 
         assertAll(
-                () -> assertThat(user.getBank()).isEqualTo("토스뱅크"),
-                () -> assertThat(user.getAccountNumber()).isEqualTo("1234 5678 9012")
+                () -> assertThat(user.getBank().getName()).isEqualTo("토스뱅크"),
+                () -> assertThat(user.getAccountNumber().getValue()).isEqualTo("1234 5678 9012")
         );
     }
 }

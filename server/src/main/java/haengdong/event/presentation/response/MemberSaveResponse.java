@@ -8,6 +8,6 @@ public record MemberSaveResponse(
 ) {
 
     public static MemberSaveResponse of(MemberSaveAppResponse response) {
-        return new MemberSaveResponse(response.id(), response.name());
+        return new MemberSaveResponse(response.id(), response.name().getValue());
     }
 }

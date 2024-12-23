@@ -1,11 +1,14 @@
 package haengdong.event.application.response;
 
+import haengdong.user.domain.AccountNumber;
+import haengdong.user.domain.Bank;
+import haengdong.user.domain.Nickname;
 import haengdong.user.domain.User;
 
 public record UserAppResponse(
-        String nickname,
-        String bankName,
-        String accountNumber,
+        Nickname nickname,
+        Bank bankName,
+        AccountNumber accountNumber,
         boolean isGuest,
         String profileImage
 ) {

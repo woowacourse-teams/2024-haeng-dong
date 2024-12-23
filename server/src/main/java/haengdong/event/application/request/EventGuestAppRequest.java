@@ -1,6 +1,7 @@
 package haengdong.event.application.request;
 
 import haengdong.user.application.request.UserGuestSaveAppRequest;
+import haengdong.user.domain.Nickname;
 
 public record EventGuestAppRequest(
         String eventName,
@@ -9,5 +10,9 @@ public record EventGuestAppRequest(
 ) {
     public UserGuestSaveAppRequest toUserRequest() {
         return new UserGuestSaveAppRequest(nickname, password);
+    }
+
+    public Nickname getNickname() {
+        return new Nickname(nickname);
     }
 }

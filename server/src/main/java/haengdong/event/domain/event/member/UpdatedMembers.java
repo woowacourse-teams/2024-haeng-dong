@@ -1,5 +1,6 @@
 package haengdong.event.domain.event.member;
 
+import haengdong.user.domain.Nickname;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,7 @@ public class UpdatedMembers {
     }
 
     private void validateNameUnique(List<EventMember> eventMembers) {
-        Set<String> uniqueNames = eventMembers.stream()
+        Set<Nickname> uniqueNames = eventMembers.stream()
                 .map(EventMember::getName)
                 .collect(Collectors.toSet());
         if (eventMembers.size() != uniqueNames.size()) {

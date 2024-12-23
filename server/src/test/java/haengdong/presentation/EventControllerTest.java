@@ -10,18 +10,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import haengdong.event.application.request.EventGuestAppRequest;
 import haengdong.event.application.response.EventAppResponse;
 import haengdong.event.application.response.EventDetailAppResponse;
 import haengdong.event.application.response.EventImageAppResponse;
 import haengdong.event.application.response.MemberBillReportAppResponse;
 import haengdong.event.presentation.request.EventGuestSaveRequest;
+import haengdong.user.domain.AccountNumber;
+import haengdong.user.domain.Bank;
+import haengdong.user.domain.Nickname;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
 class EventControllerTest extends ControllerTestSupport {
@@ -30,7 +33,7 @@ class EventControllerTest extends ControllerTestSupport {
     @Test
     void findEventTest() throws Exception {
         String eventId = "망쵸토큰";
-        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", "토스뱅크", "1231245", true);
+        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", Bank.of("토스뱅크"), new AccountNumber("12312455"), true);
         given(eventService.findEvent(eventId)).willReturn(eventDetailAppResponse);
 
         mockMvc.perform(get("/api/events/{eventId}", eventId))
@@ -43,8 +46,8 @@ class EventControllerTest extends ControllerTestSupport {
     @Test
     void getMemberBillReports() throws Exception {
         List<MemberBillReportAppResponse> memberBillReportAppResponses = List.of(
-                new MemberBillReportAppResponse(1L, "소하", false, 20_000L),
-                new MemberBillReportAppResponse(2L, "토다리", false, 200_000L)
+                new MemberBillReportAppResponse(1L, new Nickname("소하"), false, 20_000L),
+                new MemberBillReportAppResponse(2L, new Nickname("토다리"), false, 200_000L)
         );
 
         given(eventService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);

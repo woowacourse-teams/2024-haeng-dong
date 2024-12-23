@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import haengdong.user.domain.Nickname;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,9 +41,9 @@ class EventEventMemberControllerDocsTest extends RestDocsSupport {
     @Test
     void findAllMembersTest() throws Exception {
         List<MemberDepositAppResponse> members = List.of(
-                new MemberDepositAppResponse(1L, "감자", false),
-                new MemberDepositAppResponse(2L, "백호", true),
-                new MemberDepositAppResponse(3L, "이상", true)
+                new MemberDepositAppResponse(1L, new Nickname("감자"), false),
+                new MemberDepositAppResponse(2L, new Nickname("백호"), true),
+                new MemberDepositAppResponse(3L, new Nickname("이상"), true)
         );
 
         MembersDepositAppResponse memberAppResponse = new MembersDepositAppResponse(members);
@@ -86,8 +87,8 @@ class EventEventMemberControllerDocsTest extends RestDocsSupport {
     @Test
     void getCurrentMembers() throws Exception {
         List<MemberAppResponse> members = List.of(
-                new MemberAppResponse(1L, "감자"),
-                new MemberAppResponse(2L, "백호")
+                new MemberAppResponse(1L, new Nickname("감자")),
+                new MemberAppResponse(2L, new Nickname("백호"))
         );
 
         given(eventMemberService.getCurrentMembers(any())).willReturn(members);

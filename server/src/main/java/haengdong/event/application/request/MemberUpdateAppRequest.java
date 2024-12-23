@@ -3,10 +3,11 @@ package haengdong.event.application.request;
 
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.Event;
+import haengdong.user.domain.Nickname;
 
 public record MemberUpdateAppRequest(
         Long id,
-        String name,
+        Nickname name,
         boolean isDeposited
 ) {
 
