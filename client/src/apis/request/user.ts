@@ -23,7 +23,7 @@ export const requestGetUserInfo = async () => {
 export type RequestPatchUser = Partial<User>;
 
 export const requestPatchUser = async (args: RequestPatchUser) => {
-  requestPatchWithoutResponse({
+  await requestPatchWithoutResponse({
     endpoint: USER_API_PREFIX,
     body: {
       ...args,
