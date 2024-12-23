@@ -59,7 +59,7 @@ export interface EventCreationData {
   password: Password;
 }
 
-export type BankName = (typeof BANKS)[number]['name'];
+export type BankName = (typeof BANKS)[number]['name'] | '';
 export type BankAccount = {
   bankName: BankName;
   accountNumber: string;
