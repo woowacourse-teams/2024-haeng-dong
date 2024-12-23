@@ -1,5 +1,6 @@
 const EVENT = '/event';
 const EVENT_WITH_EVENT_ID = `${EVENT}/:eventId`;
+const MY_PAGE = '/mypage';
 
 export const ROUTER_URLS = {
   main: '/',
@@ -17,9 +18,10 @@ export const ROUTER_URLS = {
   send: `${EVENT_WITH_EVENT_ID}/home/send/:memberId`,
   qrCode: `${EVENT_WITH_EVENT_ID}/qrcode`,
   login: '/login',
-  myPage: '/mypage',
-  withdraw: '/mypage/withdraw',
-  createdEvents: '/mypage/events',
+  myPage: MY_PAGE,
+  withdraw: `${MY_PAGE}/withdraw`,
+  createdEvents: `${MY_PAGE}/events`,
+  editUserAccount: `${MY_PAGE}/edit-account`,
   guestEventLogin: `${EVENT_WITH_EVENT_ID}/admin/login/guest`,
   userEventLogin: `${EVENT_WITH_EVENT_ID}/admin/login/user`,
   kakaoLoginRedirectUri: process.env.KAKAO_REDIRECT_URI,
