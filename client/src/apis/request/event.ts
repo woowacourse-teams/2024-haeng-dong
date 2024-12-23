@@ -1,8 +1,8 @@
 import {CreatedEvents, Event, EventCreationData, EventName, User} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestPatch, requestPostWithResponse} from '@apis/fetcher';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
+import {requestGet, requestPatch, requestPostWithResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 export const requestPostGuestEvent = async (postEventArgs: EventCreationData) => {
@@ -39,18 +39,6 @@ export const requestPatchEventName = async ({eventId, eventName}: RequestPatchEv
     endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
     body: {
       eventName,
-    },
-  });
-};
-
-export type RequestPatchUser = Partial<User>;
-
-// TODO: (@soha) 해당 요청은 user.ts 파일로 이동하는 건 어떨지?
-export const requestPatchUser = async (args: RequestPatchUser) => {
-  return requestPatch({
-    endpoint: USER_API_PREFIX,
-    body: {
-      ...args,
     },
   });
 };
