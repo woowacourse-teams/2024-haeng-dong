@@ -16,7 +16,7 @@ import QUERY_KEYS from '@constants/queryKeys';
  * 이 훅이 하는 일:
  * 이벤트 정보 불러오기 + 총액 상태 계산하기
  */
-const useEventLoader = () => {
+const useEventPageLoader = () => {
   const eventId = getEventIdByUrl();
 
   const {updateTotalExpenseAmount} = useTotalExpenseAmountStore();
@@ -59,4 +59,4 @@ const useEventLoader = () => {
   };
 };
 
-export default useEventLoader;
+export default useEventPageLoader;
