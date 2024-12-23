@@ -1,4 +1,4 @@
-import {ObjectQueryParams} from '@apis/fetcher';
+import {ObjectQueryParams} from '@apis/request';
 
 const objectToQueryString = (params: ObjectQueryParams): string => {
   return Object.entries(params)
