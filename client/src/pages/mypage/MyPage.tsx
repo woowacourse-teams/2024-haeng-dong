@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import {mockImageStyle} from '@pages/mypage/MyPage.style';
 import Container from '@pages/mypage/Container';
 
+import useUserInfoContext from '@hooks/useUserInfoContext';
+
 import {Button, Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav, useTheme} from '@components/Design';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
@@ -10,6 +12,8 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 const MyPage = () => {
   const {theme} = useTheme();
   const navigate = useNavigate();
+
+  const {nickname} = useUserInfoContext();
 
   return (
     <MainLayout backgroundColor="gray">
@@ -22,7 +26,7 @@ const MyPage = () => {
             <Flex gap="1rem" alignItems="center">
               <div css={mockImageStyle(theme)}></div>
               <Text size="bodyBold" textColor="onTertiary">
-                이름이 올 곳
+                {nickname}
               </Text>
             </Flex>
             <Button variants="tertiary" size="small">
@@ -35,7 +39,7 @@ const MyPage = () => {
             <TextButton textColor="onTertiary" textSize="body">
               닉네임 설정하기
             </TextButton>
-            <TextButton textColor="onTertiary" textSize="body">
+            <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.editUserAccount)}>
               기본 계좌 번호 설정하기
             </TextButton>
             <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.createdEvents)}>
