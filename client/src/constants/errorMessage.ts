@@ -59,5 +59,6 @@ export const ERROR_MESSAGE = {
   preventEmpty: '값은 비어있을 수 없어요',
   invalidInput: '올바르지 않은 입력이에요.',
   emptyBank: '계좌번호가 입력되지 않아서\n토스 송금 기능을 사용할 수 없어요',
-  invalidAccountNumber: '계좌번호는 8자에서 30자 사이로 입력 가능해요',
+  accountNumberFormat: '계좌번호는 숫자, 연속되지 않는 하이픈(-)만 입력 가능해요',
+  accountNumberLength: `계좌번호는 ${RULE.minAccountNumberLength}자에서 ${RULE.maxAccountNumberLength}자 사이로 입력 가능해요`,
 };
