@@ -4,7 +4,7 @@ import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestDelete, requestGet, requestPut, requestPostWithResponse} from '@apis/fetcher';
+import {requestDelete, requestGet, requestPut, requestPostWithResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 export interface PostMember {

@@ -2,7 +2,7 @@ import {UserInfo} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, USER_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestGetWithoutResponse, requestPostWithoutResponse} from '@apis/fetcher';
+import {requestGet, requestGetWithoutResponse, requestPostWithoutResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 import getKakaoRedirectUrl from '@utils/getKakaoRedirectUrl';

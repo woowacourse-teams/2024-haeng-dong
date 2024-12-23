@@ -4,7 +4,7 @@ import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestDelete, requestGet, requestPostWithoutResponse, requestPut} from '@apis/fetcher';
+import {requestDelete, requestGet, requestPostWithoutResponse, requestPut} from '@apis/request';
 import {WithBillId, WithEventId} from '@apis/withId.type';
 
 export interface RequestPostBill {

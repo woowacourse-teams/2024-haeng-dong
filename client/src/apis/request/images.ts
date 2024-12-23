@@ -2,7 +2,7 @@ import {EventId, Images} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestDelete, requestGet, requestPostWithoutResponse} from '@apis/fetcher';
+import {requestDelete, requestGet, requestPostWithoutResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 export interface RequestPostImages {
