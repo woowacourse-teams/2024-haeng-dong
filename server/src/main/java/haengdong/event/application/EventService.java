@@ -25,6 +25,7 @@ import haengdong.event.domain.event.image.EventImageRepository;
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.member.EventMemberRepository;
 import haengdong.user.application.UserService;
+import haengdong.user.domain.Nickname;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map.Entry;
@@ -50,21 +51,21 @@ public class EventService {
     public EventAppResponse saveEventGuest(EventGuestAppRequest request) {
         Long userId = userService.joinGuest(request.toUserRequest());
         String token = randomValueProvider.createRandomValue();
-        Event event = new Event(request.eventName(), userId, token);
+        Event event = Event.createByGuest(request.eventName(), token, userId);
         eventRepository.save(event);
 
-        eventMemberRepository.save(EventMember.createHost(event, request.nickname()));
+        eventMemberRepository.save(EventMember.createHost(event, request.getNickname()));
         return EventAppResponse.of(event);
     }
 
     @Transactional
     public EventAppResponse saveEvent(EventAppRequest request) {
-        String token = randomValueProvider.createRandomValue();
-        Event event = new Event(request.name(), request.userId(), token);
-        eventRepository.save(event);
+        UserAppResponse user = userService.findById(request.userId());
 
-        String nickname = userService.findNicknameById(request.userId());
-        eventMemberRepository.save(EventMember.createHost(event, nickname));
+        String token = randomValueProvider.createRandomValue();
+        Event event = Event.createWithAccount(request.name(), token, request.userId(), user.bankName(), user.accountNumber());
+        eventRepository.save(event);
+        eventMemberRepository.save(EventMember.createHost(event, user.nickname()));
 
         return EventAppResponse.of(event);
     }
@@ -108,9 +109,14 @@ public class EventService {
     }
 
     @Transactional
-    public void updateEventName(String token, EventUpdateAppRequest request) {
+    public void updateEvent(String token, EventUpdateAppRequest request) {
         Event event = getEvent(token);
-        event.rename(request.eventName());
+        if (request.isEventNameExist()) {
+            event.rename(request.eventName());
+        }
+        if (request.isAccountExist()) {
+            event.changeAccount(request.bankName(), request.accountNumber());
+        }
     }
 
     @Transactional

@@ -36,9 +36,9 @@ public enum Bank {
         this.name = name;
     }
 
-    public static void isExists(String bankName) {
-        Arrays.stream(Bank.values())
-                .filter(bank -> bank.name.equals(bankName))
+    public static Bank of(String name) {
+        return Arrays.stream(Bank.values())
+                .filter(bank -> bank.name.equals(name))
                 .findFirst()
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.BANK_NAME_INVALID, getSupportedBanks()));
     }

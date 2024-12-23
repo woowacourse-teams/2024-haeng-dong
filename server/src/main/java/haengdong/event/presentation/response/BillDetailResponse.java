@@ -12,7 +12,7 @@ public record BillDetailResponse(
     public static BillDetailResponse of(BillDetailAppResponse billDetailAppResponse) {
         return new BillDetailResponse(
                 billDetailAppResponse.id(),
-                billDetailAppResponse.memberName(),
+                billDetailAppResponse.memberName().getValue(),
                 billDetailAppResponse.price(),
                 billDetailAppResponse.isFixed()
         );

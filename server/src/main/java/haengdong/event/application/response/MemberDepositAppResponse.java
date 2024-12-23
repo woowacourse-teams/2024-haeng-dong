@@ -1,10 +1,11 @@
 package haengdong.event.application.response;
 
 import haengdong.event.domain.event.member.EventMember;
+import haengdong.user.domain.Nickname;
 
 public record MemberDepositAppResponse(
         Long id,
-        String name,
+        Nickname name,
         boolean isDeposited
 ) {
 

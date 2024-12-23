@@ -1,4 +1,6 @@
 package haengdong.event.application.request;
 
-public record MemberSaveAppRequest(String name) {
+import haengdong.user.domain.Nickname;
+
+public record MemberSaveAppRequest(Nickname name) {
 }

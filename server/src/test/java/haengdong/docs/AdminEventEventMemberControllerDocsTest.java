@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static haengdong.support.fixture.Fixture.EVENT_COOKIE;
 
+import haengdong.user.domain.Nickname;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,8 +59,8 @@ class AdminEventEventMemberControllerDocsTest extends RestDocsSupport {
         String requestBody = objectMapper.writeValueAsString(membersSaveRequest);
         MembersSaveAppResponse appResponse = new MembersSaveAppResponse(
                 List.of(
-                        new MemberSaveAppResponse(1L, "웨디"),
-                        new MemberSaveAppResponse(2L, "소하")
+                        new MemberSaveAppResponse(1L, new Nickname("웨디")),
+                        new MemberSaveAppResponse(2L, new Nickname("소하"))
                 )
         );
         given(eventMemberService.saveMembers(eventToken, membersSaveRequest.toAppRequest()))

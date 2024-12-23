@@ -2,6 +2,7 @@ package haengdong.event.domain.event.member;
 
 import haengdong.common.exception.HaengdongErrorCode;
 import haengdong.common.exception.HaengdongException;
+import haengdong.user.domain.Nickname;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class EventUniqueMembers {
     }
 
     private void validateDuplicateName(List<EventMember> eventMembers) {
-        Set<String> uniqueNames = eventMembers.stream()
+        Set<Nickname> uniqueNames = eventMembers.stream()
                 .map(EventMember::getName)
                 .distinct()
                 .collect(Collectors.toSet());

@@ -42,13 +42,13 @@ class EventEventMemberControllerTest extends ControllerTestSupport {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
                 .andExpect(jsonPath("$.members[0].id").value(eventMember1.getId()))
-                .andExpect(jsonPath("$.members[0].name").value(eventMember1.getName()))
+                .andExpect(jsonPath("$.members[0].name").value(eventMember1.getName().getValue()))
                 .andExpect(jsonPath("$.members[0].isDeposited").value(eventMember1.isDeposited()))
                 .andExpect(jsonPath("$.members[1].id").value(eventMember2.getId()))
-                .andExpect(jsonPath("$.members[1].name").value(eventMember2.getName()))
+                .andExpect(jsonPath("$.members[1].name").value(eventMember2.getName().getValue()))
                 .andExpect(jsonPath("$.members[1].isDeposited").value(eventMember2.isDeposited()))
                 .andExpect(jsonPath("$.members[2].id").value(eventMember3.getId()))
-                .andExpect(jsonPath("$.members[2].name").value(eventMember3.getName()))
+                .andExpect(jsonPath("$.members[2].name").value(eventMember3.getName().getValue()))
                 .andExpect(jsonPath("$.members[2].isDeposited").value(eventMember3.isDeposited()));
     }
 
@@ -70,8 +70,8 @@ class EventEventMemberControllerTest extends ControllerTestSupport {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.members").isArray())
                 .andExpect(jsonPath("$.members[0].id").value(eventMember1.getId()))
-                .andExpect(jsonPath("$.members[0].name").value(eventMember1.getName()))
+                .andExpect(jsonPath("$.members[0].name").value(eventMember1.getName().getValue()))
                 .andExpect(jsonPath("$.members[1].id").value(eventMember2.getId()))
-                .andExpect(jsonPath("$.members[1].name").value(eventMember2.getName()));
+                .andExpect(jsonPath("$.members[1].name").value(eventMember2.getName().getValue()));
     }
 }

@@ -20,7 +20,7 @@ class AdminEventControllerTest extends ControllerTestSupport {
     @Test
     void updateEventTest() throws Exception {
         String token = "TOKEN";
-        EventUpdateRequest eventUpdateRequest = new EventUpdateRequest("행동대장 비대위");
+        EventUpdateRequest eventUpdateRequest = new EventUpdateRequest("행동대장 비대위", null, null);
 
         String requestBody = objectMapper.writeValueAsString(eventUpdateRequest);
 

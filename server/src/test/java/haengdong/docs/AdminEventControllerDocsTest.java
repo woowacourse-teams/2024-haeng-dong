@@ -68,7 +68,7 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
     @Test
     void updateEventTest() throws Exception {
         String token = "TOKEN";
-        EventUpdateRequest eventUpdateRequest = new EventUpdateRequest("행동대장 비대위");
+        EventUpdateRequest eventUpdateRequest = new EventUpdateRequest("행동대장 비대위", null, null);
 
         String requestBody = objectMapper.writeValueAsString(eventUpdateRequest);
 
@@ -90,7 +90,11 @@ class AdminEventControllerDocsTest extends RestDocsSupport {
                                  ),
                                  requestFields(
                                         fieldWithPath("eventName").type(JsonFieldType.STRING)
-                                                .description("수정할 이벤트 이름").optional()
+                                                .description("수정할 이벤트 이름").optional(),
+                                         fieldWithPath("bankName").type(JsonFieldType.STRING)
+                                                 .description("수정할 은행 이름").optional(),
+                                         fieldWithPath("accountNumber").type(JsonFieldType.STRING)
+                                                 .description("수정할 계좌번호").optional()
                                  )
                         )
                 );
