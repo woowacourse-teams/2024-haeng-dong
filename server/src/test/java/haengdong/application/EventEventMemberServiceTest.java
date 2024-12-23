@@ -13,6 +13,7 @@ import static haengdong.support.fixture.Fixture.EVENT_MEMBER_1;
 import static haengdong.support.fixture.Fixture.EVENT_MEMBER_2;
 import static haengdong.support.fixture.Fixture.EVENT_MEMBER_3;
 
+import haengdong.user.domain.Nickname;
 import java.util.List;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.DisplayName;
@@ -55,8 +56,8 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
     @Test
     void saveMembersTest() {
         Event event = EVENT1;
-        String memberName1 = "웨디";
-        String memberName2 = "쿠키";
+        Nickname memberName1 = new Nickname("웨디");
+        Nickname memberName2 = new Nickname("쿠키");
         EventMember eventMember1 = new EventMember(event, memberName1);
         EventMember eventMember2 = new EventMember(event, memberName2);
         eventRepository.save(event);
@@ -110,8 +111,8 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
         eventRepository.save(event);
         MembersSaveAppRequest request = new MembersSaveAppRequest(
                 List.of(
-                        new MemberSaveAppRequest("토다리"),
-                        new MemberSaveAppRequest("토다리")
+                        new MemberSaveAppRequest(new Nickname("토다리")),
+                        new MemberSaveAppRequest(new Nickname("토다리"))
                 )
         );
 
@@ -138,7 +139,7 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
     void deleteMemberTest1() {
         Event event1 = EVENT1;
         Event event2 = EVENT2;
-        EventMember eventMember = new EventMember(EVENT2, "감자");
+        EventMember eventMember = new EventMember(EVENT2, new Nickname("감자"));
         eventRepository.saveAll(List.of(event1, event2));
         eventMemberRepository.save(eventMember);
 
@@ -200,7 +201,7 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
         eventMemberRepository.save(eventMember);
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(eventMember.getId(), "수정된이름", true)
+                        new MemberUpdateAppRequest(eventMember.getId(), new Nickname("수정된이름"), true)
                 )
         );
 
@@ -208,7 +209,7 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
 
         EventMember updatedEventMember = eventMemberRepository.findById(eventMember.getId()).orElseThrow();
         assertAll(
-                () -> assertThat(updatedEventMember.getName()).isEqualTo("수정된이름"),
+                () -> assertThat(updatedEventMember.getName().getValue()).isEqualTo("수정된이름"),
                 () -> assertTrue(updatedEventMember.isDeposited())
         );
     }
@@ -244,8 +245,8 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
         eventMemberRepository.save(eventMember);
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(eventMember.getId(), "수정", true),
-                        new MemberUpdateAppRequest(eventMember.getId(), "수정수정", false)
+                        new MemberUpdateAppRequest(eventMember.getId(), new Nickname("수정"), true),
+                        new MemberUpdateAppRequest(eventMember.getId(), new Nickname("수정수정"), false)
                 )
         );
 
@@ -264,8 +265,8 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
         eventMemberRepository.saveAll(List.of(eventMember1, eventMember2));
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(eventMember1.getId(), "수정", true),
-                        new MemberUpdateAppRequest(eventMember2.getId(), "수정", false)
+                        new MemberUpdateAppRequest(eventMember1.getId(), new Nickname("수정"), true),
+                        new MemberUpdateAppRequest(eventMember2.getId(), new Nickname("수정"), false)
                 )
         );
 
@@ -279,12 +280,12 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
     void updateMembersTest4() {
         Event event1 = EVENT1;
         Event event2 = EVENT2;
-        EventMember eventMember = new EventMember(event2, "이상");
+        EventMember eventMember = new EventMember(event2, new Nickname("이상"));
         eventRepository.saveAll(List.of(event1, event2));
         eventMemberRepository.save(eventMember);
         MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
                 List.of(
-                        new MemberUpdateAppRequest(eventMember.getId(), "수정", true)
+                        new MemberUpdateAppRequest(eventMember.getId(), new Nickname("수정"), true)
                 )
         );
 

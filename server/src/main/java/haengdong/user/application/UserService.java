@@ -57,12 +57,6 @@ public class UserService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public String findNicknameById(Long id) {
-        User user = getUser(id);
-        return user.getNickname();
-    }
-
     @Transactional
     public void withdraw(Long id) {
         userRepository.deleteById(id);

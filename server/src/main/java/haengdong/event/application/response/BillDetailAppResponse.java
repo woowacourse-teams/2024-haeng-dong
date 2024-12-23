@@ -1,10 +1,11 @@
 package haengdong.event.application.response;
 
 import haengdong.event.domain.bill.BillDetail;
+import haengdong.user.domain.Nickname;
 
 public record BillDetailAppResponse(
         Long id,
-        String memberName,
+        Nickname memberName,
         Long price,
         boolean isFixed
 ) {

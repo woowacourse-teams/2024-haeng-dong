@@ -1,6 +1,11 @@
 package haengdong.event.domain.event.member;
 
+import haengdong.common.domain.BaseEntity;
+import haengdong.event.domain.event.Event;
+import haengdong.user.domain.Nickname;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -14,19 +19,12 @@ import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import haengdong.common.domain.BaseEntity;
-import haengdong.event.domain.event.Event;
-import haengdong.common.exception.HaengdongErrorCode;
-import haengdong.common.exception.HaengdongException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"event_id", "name"})})
 @Entity
 public class EventMember extends BaseEntity {
-
-    private static final int MIN_NAME_LENGTH = 1;
-    private static final int MAX_NAME_LENGTH = 8;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,37 +34,37 @@ public class EventMember extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Event event;
 
-    @Column(nullable = false, length = MAX_NAME_LENGTH)
-    private String name;
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "name"))
+    private Nickname name;
 
     @Column(nullable = false)
     private boolean isDeposited;
 
-    public EventMember(Event event, String name) {
+    public EventMember(Event event, Nickname name) {
         this(null, event, name, false);
     }
 
-    public EventMember(Long id, Event event, String name, boolean isDeposited) {
-        validateName(name);
+    public EventMember(Event event, String name) {
+        this(null, event, new Nickname(name), false);
+    }
+
+    public EventMember(Long id, Event event, Nickname name, boolean isDeposited) {
         this.id = id;
         this.event = event;
         this.name = name;
         this.isDeposited = isDeposited;
     }
 
-    public static EventMember createHost(Event event, String name) {
+    public EventMember(Long id, Event event, String name, boolean isDeposited) {
+        this(id, event, new Nickname(name), isDeposited);
+    }
+
+    public static EventMember createHost(Event event, Nickname name) {
         return new EventMember(null, event, name, true);
     }
 
-    private void validateName(String name) {
-        int nameLength = name.length();
-        if (nameLength < MIN_NAME_LENGTH || nameLength > MAX_NAME_LENGTH) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_NAME_LENGTH_INVALID, MIN_NAME_LENGTH,
-                    MAX_NAME_LENGTH);
-        }
-    }
-
-    public boolean hasName(String name) {
+    public boolean hasName(Nickname name) {
         return this.name.equals(name);
     }
 

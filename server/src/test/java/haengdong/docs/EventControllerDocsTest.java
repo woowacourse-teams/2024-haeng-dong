@@ -38,6 +38,9 @@ import haengdong.event.presentation.request.EventGuestSaveRequest;
 import haengdong.event.presentation.request.EventLoginRequest;
 import haengdong.event.presentation.request.EventSaveRequest;
 import haengdong.support.fixture.Fixture;
+import haengdong.user.domain.AccountNumber;
+import haengdong.user.domain.Bank;
+import haengdong.user.domain.Nickname;
 import java.time.Duration;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -64,7 +67,7 @@ class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void findEventTest() throws Exception {
         String eventId = "망쵸토큰";
-        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", "토스뱅크", "12312455", true);
+        EventDetailAppResponse eventDetailAppResponse = new EventDetailAppResponse("행동대장 회식", Bank.of("토스뱅크"),  new AccountNumber("12312455"), true);
         given(eventService.findEvent(eventId)).willReturn(eventDetailAppResponse);
 
         mockMvc.perform(get("/api/events/{eventId}", eventId))
@@ -92,8 +95,8 @@ class EventControllerDocsTest extends RestDocsSupport {
     @Test
     void getMemberBillReports() throws Exception {
         List<MemberBillReportAppResponse> memberBillReportAppResponses = List.of(
-                new MemberBillReportAppResponse(1L, "소하", false, 20_000L),
-                new MemberBillReportAppResponse(2L, "토다리", false, 200_000L)
+                new MemberBillReportAppResponse(1L, new Nickname("소하"), false, 20_000L),
+                new MemberBillReportAppResponse(2L, new Nickname("토다리"), false, 200_000L)
         );
 
         given(eventService.getMemberBillReports(any())).willReturn(memberBillReportAppResponses);

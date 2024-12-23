@@ -12,7 +12,7 @@ public record MemberBillReportResponse(
     public static MemberBillReportResponse of(MemberBillReportAppResponse memberBillReportAppResponse) {
         return new MemberBillReportResponse(
                 memberBillReportAppResponse.memberId(),
-                memberBillReportAppResponse.name(),
+                memberBillReportAppResponse.name().getValue(),
                 memberBillReportAppResponse.isDeposited(),
                 memberBillReportAppResponse.price()
         );

@@ -12,7 +12,7 @@ public record UserResponse(
 
     public static UserResponse of(UserAppResponse response) {
         return new UserResponse(
-                response.nickname(), response.bankName(), response.accountNumber(), response.isGuest(),
+                response.nickname().getValue(), response.bankName().getName(), response.accountNumber().getValue(), response.isGuest(),
                 response.profileImage()
         );
     }

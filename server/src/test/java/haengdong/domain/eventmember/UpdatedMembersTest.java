@@ -17,7 +17,7 @@ class UpdatedMembersTest {
     @DisplayName("이벤트 이름들은 중복될 수 없다.")
     @Test
     void validateNameUnique() {
-        Event event = new Event("행동대장 회식", 1L, "1231415jaksdf");
+        Event event = Event.createByGuest("행동대장 회식", "1231415jaksdf", 1L);
         List<EventMember> eventMembers = List.of(
                 new EventMember(1L, event, "고구마", false),
                 new EventMember(2L, event, "감자", false),
@@ -32,7 +32,7 @@ class UpdatedMembersTest {
     @DisplayName("이벤트 회원들은 중복될 수 없다.")
     @Test
     void validateMemberUnique() {
-        Event event = new Event("행동대장 회식", 1L, "1231415jaksdf");
+        Event event = Event.createByGuest("행동대장 회식", "1231415jaksdf", 1L);
         EventMember eventMember1 = new EventMember(1L, event, "고구마", false);
         EventMember eventMember2 = new EventMember(2L, event, "감자", false);
         List<EventMember> eventMembers = List.of(eventMember1, eventMember2, eventMember2);
@@ -46,7 +46,7 @@ class UpdatedMembersTest {
     @DisplayName("이벤트 이름들로 이벤트 참여자들을 생성한다.")
     @Test
     void create() {
-        Event event = new Event("행동대장 회식", 1L, "1231415jaksdf");
+        Event event = Event.createByGuest("행동대장 회식", "1231415jaksdf", 1L);
         EventMember eventMember1 = new EventMember(1L, event, "고구마", false);
         EventMember eventMember2 = new EventMember(2L, event, "감자", false);
         EventMember eventMember3 = new EventMember(3L, event, "당근", false);
@@ -60,7 +60,7 @@ class UpdatedMembersTest {
     @DisplayName("이벤트의 참여자들 전체가 존재하지 않으면 업데이트할 수 없다.")
     @Test
     void validateUpdatedMembersExist() {
-        Event event = new Event("행동대장 회식", 1L, "1231415jaksdf");
+        Event event = Event.createByGuest("행동대장 회식", "1231415jaksdf", 1L);
         EventMember eventMember1 = new EventMember(1L, event, "고구마", false);
         EventMember eventMember2 = new EventMember(2L, event, "감자", false);
         EventMember eventMember3 = new EventMember(3L, event, "당근", false);
@@ -81,7 +81,7 @@ class UpdatedMembersTest {
     @DisplayName("업데이트할 이름 중에 기존 이벤트의 참여자들의 이름과 중복되면 업데이트할 수 없다.")
     @Test
     void validateUpdatedNamesUnique() {
-        Event event = new Event("행동대장 회식", 1L, "1231415jaksdf");
+        Event event = Event.createByGuest("행동대장 회식", "1231415jaksdf", 1L);
         EventMember eventMember1 = new EventMember(1L, event, "고구마", false);
         EventMember eventMember2 = new EventMember(2L, event, "감자", false);
         EventMember eventMember3 = new EventMember(3L, event, "당근", false);
@@ -103,7 +103,7 @@ class UpdatedMembersTest {
     @DisplayName("이벤트의 참여자들 전체를 업데이트 검증한다.")
     @Test
     void validateUpdatable() {
-        Event event = new Event("행동대장 회식", 1L, "1231415jaksdf");
+        Event event = Event.createByGuest("행동대장 회식", "1231415jaksdf", 1L);
         EventMember eventMember1 = new EventMember(1L, event, "고구마", false);
         EventMember eventMember2 = new EventMember(2L, event, "감자", false);
         EventMember eventMember3 = new EventMember(3L, event, "당근", false);

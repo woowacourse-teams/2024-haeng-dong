@@ -1,5 +1,7 @@
 package haengdong.event.domain.event;
 
+import haengdong.common.exception.HaengdongErrorCode;
+import haengdong.common.exception.HaengdongException;
 import jakarta.persistence.Embeddable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,13 +9,13 @@ import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import haengdong.common.exception.HaengdongErrorCode;
-import haengdong.common.exception.HaengdongException;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@EqualsAndHashCode
 @Embeddable
 public class Password {
 

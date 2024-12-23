@@ -9,10 +9,10 @@ public record MemberResponse(
 ) {
 
     public static MemberResponse of(MemberAppResponse response) {
-        return new MemberResponse(response.id(), response.name());
+        return new MemberResponse(response.id(), response.name().getValue());
     }
 
     public static MemberResponse of(LastBillMemberAppResponse response) {
-        return new MemberResponse(response.id(), response.name());
+        return new MemberResponse(response.id(), response.name().getValue());
     }
 }
