@@ -10,7 +10,7 @@ import RULE from '@constants/rule';
 
 import useRequestPatchEvent from './queries/event/useRequestPatchEvent';
 
-const useEventAccount = () => {
+const useAccount = () => {
   const location = useLocation();
   const locationState = location.state as BankAccount | null;
 
@@ -88,4 +88,4 @@ const useEventAccount = () => {
   };
 };
 
-export default useEventAccount;
+export default useAccount;

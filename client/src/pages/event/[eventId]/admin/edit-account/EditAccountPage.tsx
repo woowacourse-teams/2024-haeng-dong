@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 
 import BankSelectModal from '@components/Modal/BankSelectModal/BankSelectModal';
 
-import useEventAccount from '@hooks/useEventAccount';
+import useAccount from '@hooks/useAccount';
 
 import {FixedButton, Flex, FunnelLayout, Input, MainLayout, Top, TopNav} from '@components/Design';
 
@@ -24,7 +24,7 @@ const EditAccountPage = () => {
     handleAccount,
     handleAccountOnPaste,
     enrollAccount,
-  } = useEventAccount();
+  } = useAccount();
 
   const enrollAccountAndNavigateAdmin = async () => {
     await enrollAccount();
