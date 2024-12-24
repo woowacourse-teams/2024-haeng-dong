@@ -10,16 +10,8 @@ const useRequestSuspenseGetUserInfo = () => {
     queryFn: () => requestGetUserInfo(),
   });
 
-  const userInfo = {
-    isGuest: data.isGuest,
-    nickname: data.nickname,
-    profileImage: data.profileImage,
-    accountNumber: data.accountNumber,
-    bankName: data.bankName,
-  };
-
   return {
-    userInfo,
+    userInfo: {...data},
     ...rest,
   };
 };
