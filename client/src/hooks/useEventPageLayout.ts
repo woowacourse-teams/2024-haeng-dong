@@ -1,17 +1,15 @@
-import {useAuthStore} from '@store/authStore';
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-import useRequestGetEvent from './queries/event/useRequestGetEvent';
 import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
 import useRequestGetSteps from './queries/step/useRequestGetSteps';
 import useRequestGetUserInfo from './queries/auth/useRequestGetUserInfo';
+import useEventDataContext from './useEventDataContext';
 
 const useEventPageLayout = () => {
   const eventId = getEventIdByUrl();
-  const {eventName, bankName, accountNumber, createdByGuest} = useRequestGetEvent();
-  const {isAdmin} = useAuthStore();
+  const {isAdmin, eventName, bankName, accountNumber, createdByGuest} = useEventDataContext();
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
   const {members} = useRequestGetAllMembers();
   const {steps} = useRequestGetSteps();

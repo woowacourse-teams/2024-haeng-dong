@@ -1,17 +1,14 @@
-import {useOutletContext} from 'react-router-dom';
-
-import {EventPageContextProps} from '@pages/event/[eventId]/EventPageLayout';
-
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import useRequestGetSteps from './queries/step/useRequestGetSteps';
 import useBanner from './useBanner';
+import useEventDataContext from './useEventDataContext';
 
 const useAdminPage = () => {
   const eventId = getEventIdByUrl();
-  const {isAdmin, eventName, bankName, accountNumber} = useOutletContext<EventPageContextProps>();
+  const {isAdmin, bankName, accountNumber, eventName} = useEventDataContext();
 
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 

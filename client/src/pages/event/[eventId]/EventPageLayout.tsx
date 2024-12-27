@@ -26,12 +26,8 @@ export type EventPageContextProps = Event & {
 };
 
 const EventPageLayout = () => {
-  const {isAdmin, event, eventId, eventSummary} = useEventPageLayout();
-  const outletContext: EventPageContextProps = {
-    isAdmin,
-    eventToken: eventId,
-    ...event,
-  };
+  const {event, eventSummary} = useEventPageLayout();
+
   const {trackShareEvent} = useAmplitude();
 
   const isMobile = isMobileDevice();
@@ -82,7 +78,7 @@ const EventPageLayout = () => {
           )}
         </Flex>
       </Flex>
-      <Outlet context={outletContext} />
+      <Outlet />
       <Footer />
     </MainLayout>
   );

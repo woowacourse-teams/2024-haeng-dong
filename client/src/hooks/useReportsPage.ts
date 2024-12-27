@@ -1,12 +1,11 @@
 import {useState} from 'react';
-import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
-
-import {EventPageContextProps} from '@pages/event/[eventId]/EventPageLayout';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import getEventBaseUrl from '@utils/getEventBaseUrl';
 
 import {useSearchReports} from './useSearchReports';
 import toast from './useToast/toast';
+import useEventDataContext from './useEventDataContext';
 
 export type SendInfo = {
   bankName: string;
@@ -18,7 +17,7 @@ export type SendInfo = {
 
 const useReportsPage = () => {
   const [memberName, setMemberName] = useState('');
-  const {eventName, eventToken, bankName, accountNumber} = useOutletContext<EventPageContextProps>();
+  const {eventName, eventToken, bankName, accountNumber} = useEventDataContext();
   const {matchedReports, reports} = useSearchReports({memberName});
 
   const location = useLocation();
