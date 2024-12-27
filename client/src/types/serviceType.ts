@@ -99,7 +99,7 @@ export interface ImageFile {
 export type UserInfo = BankAccount & {
   nickname: string;
   isGuest: boolean;
-  profileImage: string;
+  profileImage: string | null;
 };
 
 export interface CreatedEvent {

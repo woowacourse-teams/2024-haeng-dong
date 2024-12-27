@@ -1,13 +1,13 @@
-import {CreatedEvents, Event, EventCreationData, EventName, User} from 'types/serviceType';
+import {BankAccount, CreatedEvents, Event, EventCreationData, EventName} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
-import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestPatch, requestPostWithResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 export const requestPostGuestEvent = async (postEventArgs: EventCreationData) => {
   return await requestPostWithResponse<WithEventId>({
-    endpoint: `${MEMBER_API_PREFIX}/guest`,
+    endpoint: `${USER_API_PREFIX}/guest`,
     body: {
       ...postEventArgs,
     },
@@ -16,7 +16,7 @@ export const requestPostGuestEvent = async (postEventArgs: EventCreationData) =>
 
 export const requestPostUserEvent = async (eventName: EventName) => {
   return await requestPostWithResponse<WithEventId>({
-    endpoint: MEMBER_API_PREFIX,
+    endpoint: USER_API_PREFIX,
     body: {
       eventName,
     },
@@ -30,15 +30,19 @@ export const requestGetEvent = async ({eventId, ...props}: WithEventId<WithError
   });
 };
 
-export type RequestPatchEvent = WithEventId & {
-  eventName: string;
-};
+export type PartialEvent = Partial<
+  BankAccount & {
+    eventName: EventName;
+  }
+>;
 
-export const requestPatchEventName = async ({eventId, eventName}: RequestPatchEvent) => {
+export type RequestPatchEvent = WithEventId & PartialEvent;
+
+export const requestPatchEvent = async ({eventId, ...event}: RequestPatchEvent) => {
   return requestPatch({
     endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
     body: {
-      eventName,
+      ...event,
     },
   });
 };

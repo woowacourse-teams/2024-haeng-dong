@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 
-import {UseRequestGetUserInfo} from '@hooks/queries/auth/useRequestGetUserInfo';
+import {User} from 'types/serviceType';
 
 import {Button, Text, Icon, TopNav, IconButton} from '@HDesign/index';
 
@@ -8,7 +8,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {navFixedStyle, navStyle, navWrapperStyle} from './Nav.style';
 
-type NavProps = Pick<UseRequestGetUserInfo, 'isGuest'>;
+type NavProps = Pick<User, 'isGuest'>;
 
 const Nav = ({isGuest}: NavProps) => {
   const navigate = useNavigate();

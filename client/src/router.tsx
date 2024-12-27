@@ -17,7 +17,7 @@ const UserEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/use
 const EventLoader = lazy(() => import('@components/Loader/EventData/EventDataLoader'));
 const AuthGate = lazy(() => import('@pages/event/[eventId]/admin/AuthGate'));
 const EventPageLayout = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
-const SendPage = lazy(() => import('@pages/event/[eventId]/home/send/[memberId]/SendPage'));
+const SendPage = lazy(() => import('@pages/event/[eventId]/home/send/SendPage'));
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 const HomePage = lazy(() => import('@pages/event/[eventId]/home/HomePage'));
 const AdminPage = lazy(() => import('@pages/event/[eventId]/admin/AdminPage'));
@@ -35,6 +35,7 @@ const LoginFailFallback = lazy(() => import('@pages/login/LoginFailFallback'));
 const CreatedEventsPage = lazy(() => import('@pages/mypage/events/CreatedEventsPage'));
 const EventPageLoading = lazy(() => import('@pages/fallback/EventPageLoading'));
 const WithdrawPage = lazy(() => import('@pages/mypage/withdraw/WithdrawPage'));
+const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event-name/EditEventNamePage'));
 
 const router = createBrowserRouter([
   {
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.editBill,
         element: <EditBillPage />,
+      },
+      {
+        path: ROUTER_URLS.editEventName,
+        element: <EditEventName />,
       },
       {
         path: ROUTER_URLS.images,
