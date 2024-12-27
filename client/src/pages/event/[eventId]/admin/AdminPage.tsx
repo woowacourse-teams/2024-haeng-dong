@@ -32,6 +32,10 @@ const AdminPage = () => {
     navigate(`/event/${eventId}/admin/edit-account`, {state: {accountNumber, bankName}});
   };
 
+  const navigateEditEventName = () => {
+    navigate(`/event/${eventId}/admin/edit-event-name`, {state: eventName});
+  };
+
   const navigateEventMemberManage = () => {
     navigate(`/event/${eventId}/admin/members`);
   };
@@ -52,6 +56,7 @@ const AdminPage = () => {
         amount={totalExpenseAmount}
         dropdown={
           <Dropdown>
+            <DropdownButton text="행사 이름 변경" onClick={navigateEditEventName} />
             <DropdownButton text="전체 참여자 관리" onClick={navigateEventMemberManage} />
             <DropdownButton text="계좌번호 입력하기" onClick={navigateAccountInputPage} />
             <DropdownButton text="사진 첨부하기" onClick={navigateAddImages} />
