@@ -1,4 +1,4 @@
-import {Body, Method} from '@apis/fetcher';
+import {Body, Method} from '@apis/request';
 
 export type RequestErrorType = Error & {
   requestBody: Body;

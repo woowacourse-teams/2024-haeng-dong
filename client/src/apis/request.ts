@@ -80,6 +80,10 @@ export const requestPatch = ({headers = {}, ...args}: RequestMethodProps) => {
   return request({method: 'PATCH', headers, ...args});
 };
 
+export const requestPatchWithoutResponse = async ({headers = {}, ...args}: RequestMethodProps) => {
+  await request({method: 'PATCH', headers, ...args});
+};
+
 export const requestPut = ({headers = {}, ...args}: RequestMethodProps) => {
   return request({method: 'PUT', headers, ...args});
 };

@@ -1,6 +1,6 @@
 import {http, HttpResponse, PathParams} from 'msw';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
 
 import {billData, billDetailsData} from '@mocks/sharedState';
 
@@ -12,12 +12,12 @@ interface BillDetailsData {
 
 export const billHandler = [
   // GET /api/eventId/bills
-  http.get(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/bills`, () => {
+  http.get(`${MOCK_API_PREFIX}${MEMBER_API_PREFIX}/:eventId/bills`, () => {
     return HttpResponse.json(billData);
   }),
 
   // GET /api/eventId/bills/billId/fixed
-  http.get(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/bills/:billId/fixed`, ({params}) => {
+  http.get(`${MOCK_API_PREFIX}${MEMBER_API_PREFIX}/:eventId/bills/:billId/fixed`, ({params}) => {
     const {billId} = params;
     const billDetails = (billDetailsData as unknown as BillDetailsData)[billId as keyof BillDetailsData];
     return HttpResponse.json(billDetails);

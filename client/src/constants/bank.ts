@@ -1,10 +1,4 @@
-type Bank = {
-  name: string;
-  displayName: string;
-  iconPosition: string;
-};
-
-const BANKS: Bank[] = [
+const BANKS = [
   {name: '우리은행', displayName: '우리은행', iconPosition: '-10px -10px'},
   {name: 'SC제일은행', displayName: '제일은행', iconPosition: '-110px -10px'},
   {name: '신한은행', displayName: '신한은행', iconPosition: '-10px -110px'},
@@ -28,6 +22,6 @@ const BANKS: Bank[] = [
   {name: '카카오뱅크', displayName: '카카오뱅크', iconPosition: '-10px -410px'},
   {name: '토스뱅크', displayName: '토스뱅크', iconPosition: '-110px -410px'},
   {name: '케이뱅크', displayName: '케이뱅크', iconPosition: '-210px -410px'},
-];
+] as const;
 
 export default BANKS;

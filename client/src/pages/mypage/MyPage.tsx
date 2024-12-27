@@ -7,6 +7,8 @@ import useRequestSuspenseGetUserInfo from '@hooks/queries/auth/useRequestSuspens
 import MyPageError from '@pages/fallback/MyPageError';
 import MyPageLoading from '@pages/fallback/MyPageLoading';
 
+import useUserInfoContext from '@hooks/useUserInfoContext';
+
 import {Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav} from '@components/Design';
 
 import getImageUrl from '@utils/getImageUrl';
@@ -48,6 +50,8 @@ const UserInfoSection = () => {
 
 const SettingSection = () => {
   const navigate = useNavigate();
+
+  const {nickname} = useUserInfoContext();
 
   return (
     <SectionContainer>

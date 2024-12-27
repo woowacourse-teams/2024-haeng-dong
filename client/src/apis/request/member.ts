@@ -3,8 +3,8 @@ import type {AllMembers, Members} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {BASE_URL} from '@apis/baseUrl';
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestDelete, requestGet, requestPut, requestPostWithResponse} from '@apis/fetcher';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
+import {requestDelete, requestGet, requestPut, requestPostWithResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 export interface PostMember {
@@ -59,14 +59,14 @@ export const requestPutMembers = async ({eventId, members}: WithEventId<RequestP
 export const requestGetCurrentMembers = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
   return await requestGet<Members>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/members/current`,
+    endpoint: `${MEMBER_API_PREFIX}/${eventId}/members/current`,
     ...props,
   });
 };
 
 export const requestGetAllMembers = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
   return await requestGet<AllMembers>({
-    endpoint: `${USER_API_PREFIX}/${eventId}/members`,
+    endpoint: `${MEMBER_API_PREFIX}/${eventId}/members`,
     ...props,
   });
 };

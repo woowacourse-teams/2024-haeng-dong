@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 
-import {EventDataContext} from '@components/Loader/EventDataProvider';
+import {EventDataContext} from '@components/Loader/EventData/EventDataProvider';
 
 const useEventDataContext = () => {
   const value = useContext(EventDataContext);

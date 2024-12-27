@@ -1,75 +1,81 @@
 import {useEffect, useState} from 'react';
 
 import validateAccountNumber from '@utils/validate/validateAccountNumber';
+import {BankAccount, BankName} from 'types/serviceType';
 
 import RULE from '@constants/rule';
+import REGEXP from '@constants/regExp';
 
-import useRequestPatchUser from './queries/event/useRequestPatchUser';
-import useEventDataContext from './useEventDataContext';
+type UseAccountArgs = {
+  bankName: BankName;
+  accountNumber: string;
+  onSubmit: (args: Partial<BankAccount>) => Promise<void>;
+};
 
-const useAccount = () => {
-  const {bankName, accountNumber} = useEventDataContext();
+const canEditAccountNumber = (newAccountNumber: string) => {
+  return (
+    newAccountNumber === '' ||
+    (newAccountNumber.length <= RULE.maxAccountNumberLength && REGEXP.accountNumber.test(newAccountNumber))
+  );
+};
 
-  const [bankNameState, setBankName] = useState<string>(bankName);
-  const [accountNumberState, setAccountNumber] = useState<string>(accountNumber);
+const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankName, onSubmit}: UseAccountArgs) => {
+  const [bankName, setBankName] = useState<BankName>(defaultBankName);
+  const [accountNumber, setAccountNumber] = useState<string>(defaultAccountNumber);
+
   const [accountNumberErrorMessage, setAccountNumberErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
   const [isPasting, setIsPasting] = useState(false);
 
-  const {patchUser} = useRequestPatchUser();
-
-  const selectBank = (name: string) => {
+  const selectBank = (name: BankName) => {
     setBankName(name);
   };
 
-  const handleAccount = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (isPasting) return;
-
-    const newValue = event.target.value;
-    const {isValid, errorMessage} = validateAccountNumber(newValue);
+  const handleAccount = (newAccountNumber: string) => {
+    const {errorMessage} = validateAccountNumber(newAccountNumber);
     setAccountNumberErrorMessage(errorMessage);
 
-    const isValidMinLength = newValue.length >= RULE.minAccountNumberLength;
+    const canEdit = canEditAccountNumber(newAccountNumber);
 
-    if (isValid) {
-      setAccountNumber(event.target.value);
-    } else if (!isValid && !isValidMinLength) {
-      setAccountNumber(event.target.value.replace(/[^0-9\s\-]/g, '').trim());
-    }
+    if (canEdit) setAccountNumber(newAccountNumber);
+  };
+
+  const handleAccountOnTyping = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (isPasting) return;
+
+    const newAccountNumber = event.target.value;
+    handleAccount(newAccountNumber);
   };
 
   const handleAccountOnPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     setIsPasting(true);
 
-    const value = `${accountNumberState}${event.clipboardData.getData('text')}`;
-    const newValue = value.replace(/[^0-9\s\-]/g, '').trim();
-    const {isValid, errorMessage} = validateAccountNumber(newValue);
-
-    setAccountNumberErrorMessage(errorMessage);
-    if (isValid) setAccountNumber(newValue);
+    const newAccountNumber = `${accountNumber}${event.clipboardData.getData('text')}`;
+    handleAccount(newAccountNumber);
 
     setTimeout(() => setIsPasting(false), 0);
   };
 
   const enrollAccount = async () => {
-    await patchUser({bankName: bankNameState, accountNumber: accountNumberState});
+    await onSubmit({bankName, accountNumber});
   };
 
   useEffect(() => {
-    const existEmptyField = bankNameState?.trim() === '' || accountNumberState?.trim() === '';
-    const isChanged = bankName !== bankNameState || accountNumber !== accountNumberState;
+    const areAllFieldsFilled = bankName.trim() !== '' && accountNumber.trim() !== '';
+    const isChanged = bankName !== defaultBankName || accountNumber !== defaultAccountNumber;
 
-    setCanSubmit(!existEmptyField && isChanged && accountNumberErrorMessage === null);
-  }, [bankNameState, accountNumberState, accountNumberErrorMessage]);
+    setCanSubmit(areAllFieldsFilled && isChanged && accountNumberErrorMessage === null);
+  }, [bankName, accountNumber, accountNumberErrorMessage]);
 
   return {
-    bankName: bankNameState,
-    accountNumber: accountNumberState,
+    bankName,
+    accountNumber,
     accountNumberErrorMessage,
     canSubmit,
     selectBank,
     handleAccount,
     handleAccountOnPaste,
+    handleAccountOnTyping,
     enrollAccount,
   };
 };
