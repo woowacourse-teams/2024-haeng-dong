@@ -1,13 +1,13 @@
 import {BankAccount, CreatedEvents, Event, EventCreationData, EventName} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
-import {ADMIN_API_PREFIX, MEMBER_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestGet, requestPatch, requestPostWithResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 export const requestPostGuestEvent = async (postEventArgs: EventCreationData) => {
   return await requestPostWithResponse<WithEventId>({
-    endpoint: `${USER_API_PREFIX}/guest`,
+    endpoint: `${MEMBER_API_PREFIX}/guest`,
     body: {
       ...postEventArgs,
     },
@@ -16,7 +16,7 @@ export const requestPostGuestEvent = async (postEventArgs: EventCreationData) =>
 
 export const requestPostUserEvent = async (eventName: EventName) => {
   return await requestPostWithResponse<WithEventId>({
-    endpoint: USER_API_PREFIX,
+    endpoint: MEMBER_API_PREFIX,
     body: {
       eventName,
     },
