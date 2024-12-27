@@ -2,6 +2,7 @@ import {useLocation} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 
 import {isMobileDevice} from '@utils/detectDevice';
+import navigateApp from '@utils/navigateApp';
 
 import {SendInfo} from './useReportsPage';
 import toast from './useToast/toast';
@@ -54,16 +55,32 @@ const useSendPage = () => {
   const onTossClick = () => {
     trackSendMoney({eventName, eventToken, amount, sendMethod: 'toss'});
 
-    const tossUrl = `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`;
-    window.location.href = tossUrl;
+    navigateApp({
+      android: {
+        appScheme: `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`,
+        storeUrl: 'intent://details?id=viva.republica.toss#Intent;scheme=market;package=com.android.vending;end;',
+      },
+      ios: {
+        appScheme: `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`,
+        storeUrl: 'https://apps.apple.com/kr/app/%ED%86%A0%EC%8A%A4/id839333328',
+      },
+    });
   };
 
   const onKakaoPayClick = async () => {
     await window.navigator.clipboard.writeText(copyText);
     trackSendMoney({eventName, eventToken, amount, sendMethod: 'kakaopay'});
 
-    const kakaoPayUrl = 'kakaotalk://kakaopay/home';
-    window.location.href = kakaoPayUrl;
+    navigateApp({
+      android: {
+        appScheme: `kakaotalk://kakaopay/home`,
+        storeUrl: 'intent://details?id=com.kakao.talk#Intent;scheme=market;package=com.android.vending;end;',
+      },
+      ios: {
+        appScheme: `kakaotalk://kakaopay/home`,
+        storeUrl: 'https://apps.apple.com/kr/app/kakaotalk/id362057947',
+      },
+    });
   };
 
   const buttonText: Record<SendMethod, string> = {

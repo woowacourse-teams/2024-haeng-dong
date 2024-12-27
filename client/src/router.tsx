@@ -1,4 +1,4 @@
-import {createBrowserRouter, Navigate} from 'react-router-dom';
+import {createBrowserRouter} from 'react-router-dom';
 import {lazy, Suspense} from 'react';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
@@ -14,8 +14,8 @@ const UserEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/use
 
 const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
 const AuthGate = lazy(() => import('@pages/event/[eventId]/admin/AuthGate'));
-const EventPageLayout = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
-const SendPage = lazy(() => import('@pages/event/[eventId]/home/send/[memberId]/SendPage'));
+const EventPage = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
+const SendPage = lazy(() => import('@pages/event/[eventId]/home/send/SendPage'));
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 const HomePage = lazy(() => import('@pages/event/[eventId]/home/HomePage'));
 const AdminPage = lazy(() => import('@pages/event/[eventId]/admin/AdminPage'));
@@ -33,6 +33,7 @@ const LoginFailFallback = lazy(() => import('@pages/login/LoginFailFallback'));
 const CreatedEventsPage = lazy(() => import('@pages/mypage/events/CreatedEventsPage'));
 const EventPageLoading = lazy(() => import('@pages/fallback/EventPageLoading'));
 const WithdrawPage = lazy(() => import('@pages/mypage/withdraw/WithdrawPage'));
+const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event-name/EditEventNamePage'));
 
 const router = createBrowserRouter([
   {
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
           },
           {
             path: '',
-            element: <EventPageLayout />,
+            element: <EventPage />,
             children: [
               {
                 path: ROUTER_URLS.eventManage,
@@ -132,6 +133,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.editAccount,
         element: <EditAccountPage />,
+      },
+      {
+        path: ROUTER_URLS.editEventName,
+        element: <EditEventName />,
       },
       {
         path: ROUTER_URLS.images,
