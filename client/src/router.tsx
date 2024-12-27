@@ -33,6 +33,7 @@ const LoginFailFallback = lazy(() => import('@pages/login/LoginFailFallback'));
 const CreatedEventsPage = lazy(() => import('@pages/mypage/events/CreatedEventsPage'));
 const EventPageLoading = lazy(() => import('@pages/fallback/EventPageLoading'));
 const WithdrawPage = lazy(() => import('@pages/mypage/withdraw/WithdrawPage'));
+const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event-name/EditEventNamePage'));
 
 const router = createBrowserRouter([
   {
@@ -124,6 +125,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.editAccount,
         element: <EditAccountPage />,
+      },
+      {
+        path: ROUTER_URLS.editEventName,
+        element: <EditEventName />,
       },
       {
         path: ROUTER_URLS.images,

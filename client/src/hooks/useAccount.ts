@@ -8,7 +8,7 @@ import getEventBaseUrl from '@utils/getEventBaseUrl';
 
 import RULE from '@constants/rule';
 
-import useRequestPatchUser from './queries/event/useRequestPatchUser';
+import useRequestPatchEvent from './queries/event/useRequestPatchEvent';
 
 const useAccount = () => {
   const location = useLocation();
@@ -30,7 +30,7 @@ const useAccount = () => {
     }
   }, [locationState]);
 
-  const {patchUser} = useRequestPatchUser();
+  const {patchEvent} = useRequestPatchEvent();
 
   const selectBank = (name: string) => {
     setBankName(name);
@@ -66,7 +66,7 @@ const useAccount = () => {
   };
 
   const enrollAccount = async () => {
-    await patchUser({bankName: bankNameState, accountNumber: accountNumberState});
+    await patchEvent({bankName: bankNameState, accountNumber: accountNumberState});
   };
 
   useEffect(() => {
