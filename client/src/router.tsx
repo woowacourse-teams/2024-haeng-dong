@@ -5,6 +5,8 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
 
+const UserInfoLoader = lazy(() => import('@components/Loader/UserInfo/UserInfoLoader'));
+const EditUserAccountPage = lazy(() => import('@pages/mypage/edit-account/EditUserAccountPage'));
 const ErrorPage = lazy(() => import('@pages/fallback/ErrorPage'));
 const SendErrorPage = lazy(() => import('@pages/fallback/SendErrorPage'));
 const CreateGuestEventFunnel = lazy(() => import('@pages/event/create/guest/CreateGuestEventFunnel'));
@@ -12,9 +14,9 @@ const CreateUserEventFunnel = lazy(() => import('@pages/event/create/user/Create
 const GuestEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/guest/GuestEventLogin'));
 const UserEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/user/UserEventLogin'));
 
-const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
+const EventLoader = lazy(() => import('@components/Loader/EventData/EventDataLoader'));
 const AuthGate = lazy(() => import('@pages/event/[eventId]/admin/AuthGate'));
-const EventPage = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
+const EventPageLayout = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
 const SendPage = lazy(() => import('@pages/event/[eventId]/home/send/SendPage'));
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 const HomePage = lazy(() => import('@pages/event/[eventId]/home/HomePage'));
@@ -61,10 +63,7 @@ const router = createBrowserRouter([
         path: ROUTER_URLS.login,
         element: <LoginPage />,
       },
-      {
-        path: ROUTER_URLS.myPage,
-        element: <MyPage />,
-      },
+
       {
         path: ROUTER_URLS.withdraw,
         element: <WithdrawPage />,
@@ -92,7 +91,7 @@ const router = createBrowserRouter([
           },
           {
             path: '',
-            element: <EventPage />,
+            element: <EventPageLayout />,
             children: [
               {
                 path: ROUTER_URLS.eventManage,
@@ -119,6 +118,24 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: ROUTER_URLS.myPage,
+        element: (
+          <Suspense>
+            <UserInfoLoader />
+          </Suspense>
+        ),
+        children: [
+          {
+            index: true,
+            element: <MyPage />,
+          },
+          {
+            path: ROUTER_URLS.editUserAccount,
+            element: <EditUserAccountPage />,
+          },
+        ],
+      },
+      {
         path: ROUTER_URLS.addBill,
         element: <AddBillFunnel />,
       },
@@ -129,10 +146,6 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.editBill,
         element: <EditBillPage />,
-      },
-      {
-        path: ROUTER_URLS.editAccount,
-        element: <EditAccountPage />,
       },
       {
         path: ROUTER_URLS.editEventName,

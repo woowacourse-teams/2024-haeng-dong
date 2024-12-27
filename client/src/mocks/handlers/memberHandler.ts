@@ -2,7 +2,7 @@ import {http, HttpResponse, PathParams} from 'msw';
 
 import {AllMembers, Members} from 'types/serviceType';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
 
 import {MOCK_API_PREFIX} from '@mocks/mockEndpointPrefix';
 import {memberData} from '@mocks/sharedState';
@@ -48,7 +48,7 @@ export const memberHandler = [
   ),
 
   // GET /api/eventId/members/current (requestGetCurrentMember)
-  http.get(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/members/current`, () => {
+  http.get(`${MOCK_API_PREFIX}${MEMBER_API_PREFIX}/:eventId/members/current`, () => {
     const currentMembers: Members = {
       members: memberData.members.map(({id, name}) => ({id, name})),
     };
@@ -56,7 +56,7 @@ export const memberHandler = [
   }),
 
   // GET /api/eventId/members (requestGetAllMember)
-  http.get(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/members`, () => {
+  http.get(`${MOCK_API_PREFIX}${MEMBER_API_PREFIX}/:eventId/members`, () => {
     return HttpResponse.json(memberData);
   }),
 ];

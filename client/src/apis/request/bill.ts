@@ -3,8 +3,8 @@ import type {BillDetails} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {BASE_URL} from '@apis/baseUrl';
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestDelete, requestGet, requestPostWithoutResponse, requestPut} from '@apis/fetcher';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
+import {requestDelete, requestGet, requestPostWithoutResponse, requestPut} from '@apis/request';
 import {WithBillId, WithEventId} from '@apis/withId.type';
 
 export interface RequestPostBill {
@@ -52,7 +52,7 @@ export const requestGetBillDetails = async ({
 }: WithEventId<WithErrorHandlingStrategy<WithBillId>>) => {
   return requestGet<BillDetails>({
     baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/bills/${billId}/details`,
+    endpoint: `${MEMBER_API_PREFIX}/${eventId}/bills/${billId}/details`,
     ...props,
   });
 };

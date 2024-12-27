@@ -1,5 +1,3 @@
-import {useEffect} from 'react';
-
 import Image from '@components/Design/components/Image/Image';
 import useRequestGetUserInfo from '@hooks/queries/auth/useRequestGetUserInfo';
 
@@ -16,7 +14,8 @@ import CreatorSection from './Section/CreatorSection/CreatorSection';
 
 const MainPage = () => {
   const {isVisible} = usePageBackground();
-  const {isGuest} = useRequestGetUserInfo();
+  const {userInfo} = useRequestGetUserInfo();
+  const {isGuest} = userInfo;
 
   return (
     <div css={mainContainer}>

@@ -4,7 +4,7 @@ import useEventLoader from '@hooks/useEventLoader';
 
 import EventDataProvider from './EventDataProvider';
 
-const EventLoader = () => {
+const EventDataLoader = () => {
   const eventData = useEventLoader();
 
   return (
@@ -14,4 +14,4 @@ const EventLoader = () => {
   );
 };
 
-export default EventLoader;
+export default EventDataLoader;
