@@ -38,7 +38,7 @@ export const eventHandler = [
       );
     }
 
-    const eventId: EventId = {eventId: 'mock-event-id'};
+    const eventId: {eventId: EventId} = {eventId: 'mock-event-id'};
     return HttpResponse.json(eventId, {
       status: 201,
       headers: {

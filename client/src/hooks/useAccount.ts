@@ -1,36 +1,22 @@
 import {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
 
 import validateAccountNumber from '@utils/validate/validateAccountNumber';
-import {BankAccount} from 'types/serviceType';
-
-import getEventBaseUrl from '@utils/getEventBaseUrl';
 
 import RULE from '@constants/rule';
 
-import useRequestPatchEvent from './queries/event/useRequestPatchEvent';
+import useRequestPatchUser from './queries/event/useRequestPatchUser';
+import useEventDataContext from './useEventDataContext';
 
 const useAccount = () => {
-  const location = useLocation();
-  const locationState = location.state as BankAccount | null;
+  const {bankName, accountNumber} = useEventDataContext();
 
-  const navigate = useNavigate();
-  const [bankNameState, setBankName] = useState<string>();
-  const [accountNumberState, setAccountNumber] = useState<string>();
+  const [bankNameState, setBankName] = useState<string>(bankName);
+  const [accountNumberState, setAccountNumber] = useState<string>(accountNumber);
   const [accountNumberErrorMessage, setAccountNumberErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
   const [isPasting, setIsPasting] = useState(false);
 
-  useEffect(() => {
-    if (locationState === null) {
-      navigate(`${getEventBaseUrl(location.pathname)}/admin`);
-    } else {
-      setBankName(locationState.bankName);
-      setAccountNumber(locationState.accountNumber);
-    }
-  }, [locationState]);
-
-  const {patchEvent} = useRequestPatchEvent();
+  const {patchUser} = useRequestPatchUser();
 
   const selectBank = (name: string) => {
     setBankName(name);
@@ -66,15 +52,15 @@ const useAccount = () => {
   };
 
   const enrollAccount = async () => {
-    await patchEvent({bankName: bankNameState, accountNumber: accountNumberState});
+    await patchUser({bankName: bankNameState, accountNumber: accountNumberState});
   };
 
   useEffect(() => {
     const existEmptyField = bankNameState?.trim() === '' || accountNumberState?.trim() === '';
-    const isChanged = locationState?.bankName !== bankNameState || locationState?.accountNumber !== accountNumberState;
+    const isChanged = bankName !== bankNameState || accountNumber !== accountNumberState;
 
     setCanSubmit(!existEmptyField && isChanged && accountNumberErrorMessage === null);
-  }, [locationState, bankNameState, accountNumberState, accountNumberErrorMessage]);
+  }, [bankNameState, accountNumberState, accountNumberErrorMessage]);
 
   return {
     bankName: bankNameState,

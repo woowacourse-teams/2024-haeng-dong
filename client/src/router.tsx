@@ -82,31 +82,39 @@ const router = createBrowserRouter([
         path: ROUTER_URLS.event,
         element: (
           <Suspense fallback={<EventPageLoading />}>
-            <EventLoader>
-              <EventPage />
-            </EventLoader>
+            <EventLoader />
           </Suspense>
         ),
         children: [
           {
-            path: ROUTER_URLS.eventManage,
-            element: (
-              <AuthGate>
-                <AdminPage />
-              </AuthGate>
-            ),
+            path: ROUTER_URLS.editAccount,
+            element: <EditAccountPage />,
           },
           {
-            path: ROUTER_URLS.home,
-            element: <HomePage />,
-          },
-          {
-            path: ROUTER_URLS.guestEventLogin,
-            element: <GuestEventLogin />,
-          },
-          {
-            path: ROUTER_URLS.userEventLogin,
-            element: <UserEventLogin />,
+            path: '',
+            element: <EventPage />,
+            children: [
+              {
+                path: ROUTER_URLS.eventManage,
+                element: (
+                  <AuthGate>
+                    <AdminPage />
+                  </AuthGate>
+                ),
+              },
+              {
+                path: ROUTER_URLS.home,
+                element: <HomePage />,
+              },
+              {
+                path: ROUTER_URLS.guestEventLogin,
+                element: <GuestEventLogin />,
+              },
+              {
+                path: ROUTER_URLS.userEventLogin,
+                element: <UserEventLogin />,
+              },
+            ],
           },
         ],
       },

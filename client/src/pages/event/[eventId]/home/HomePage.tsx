@@ -1,11 +1,11 @@
-import type {EventPageContextProps} from '@pages/event/[eventId]/EventPageLayout';
-
-import {useMatch, useNavigate, useOutletContext} from 'react-router-dom';
+import {useMatch, useNavigate} from 'react-router-dom';
 
 import StepList from '@components/StepList/Steps';
 import useRequestGetSteps from '@hooks/queries/step/useRequestGetSteps';
 import Reports from '@components/Reports/Reports';
 import useRequestGetImages from '@hooks/queries/images/useRequestGetImages';
+
+import useEventDataContext from '@hooks/useEventDataContext';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
@@ -18,7 +18,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 import {receiptStyle} from './HomePage.style';
 
 const HomePage = () => {
-  const {isAdmin, eventName} = useOutletContext<EventPageContextProps>();
+  const {isAdmin, eventName} = useEventDataContext();
   const isInHomePage = useMatch(ROUTER_URLS.home) !== null;
 
   const {steps} = useRequestGetSteps();

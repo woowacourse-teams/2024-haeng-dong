@@ -45,10 +45,8 @@ export interface MemberWithDeposited extends Member {
 export interface AllMembers {
   members: MemberWithDeposited[];
 }
-export interface EventId {
-  eventId: string;
-}
 
+export type EventId = string;
 export type EventName = string;
 export type Nickname = string;
 export type Password = string;
