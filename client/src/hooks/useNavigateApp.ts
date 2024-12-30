@@ -24,7 +24,7 @@ const useNavigateApp = (installThresholdTime?: number) => {
       ) {
         toast.error('앱이 설치되지 않았어요. 다른 앱을 사용해주세요.');
       }
-    }, 1500);
+    }, installThresholdTime ?? DEFAULT_INSTALL_THRESHOLD_TIME);
 
     return () => {
       clearTimeout(timeoutId);
