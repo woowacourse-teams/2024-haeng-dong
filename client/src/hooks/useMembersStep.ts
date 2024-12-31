@@ -6,8 +6,10 @@ import {Member} from 'types/serviceType';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import {isIOS} from '@utils/detectDevice';
+import isDuplicate from '@utils/isDuplicate';
 
 import RULE from '@constants/rule';
+import {ERROR_MESSAGE} from '@constants/errorMessage';
 
 import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
@@ -45,6 +47,7 @@ const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
 
   const setBillInfoMemberWithId = (name: string) => {
     const existingMember = allMembers.find(currentMember => currentMember.name === name);
+
     if (existingMember) {
       setBillInfo(prev => ({...prev, members: [...prev.members, {id: existingMember.id, name: name}]}));
     } else {
@@ -116,7 +119,12 @@ const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
   };
 
   return {
-    errorMessage,
+    errorMessage: isDuplicate(
+      allMembers.map(({name}) => name),
+      name,
+    )
+      ? ERROR_MESSAGE.memberNameDuplicate
+      : errorMessage,
     nameInput: name,
     inputRef,
     hiddenRef,
