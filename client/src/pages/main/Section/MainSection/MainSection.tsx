@@ -7,7 +7,7 @@ import {User} from 'types/serviceType';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {animateWithDelay, chevronStyle, mainSectionStyle, sectionStyle} from './MainSection.style';
-import {IconChevron} from '@components/Design/components/Icon/Icons/IconChevron';
+import {IconChevron} from '@components/Design/components/Icons/Icons/IconChevron';
 
 type NavProps = Pick<User, 'isGuest'>;
 
@@ -29,7 +29,7 @@ const MainSection = ({isGuest}: NavProps) => {
         </Button>
       </div>
       <div css={chevronStyle}>
-        <IconChevron color="tertiary" />
+        <IconChevron direction="down" size={48} color="tertiary" />
       </div>
     </div>
   );

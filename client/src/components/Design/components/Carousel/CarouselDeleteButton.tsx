@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import Icon from '../Icon/Icon';
+import Icon from '../Icons/Icon';
 
 import {deleteButtonStyle} from './Carousel.style';
 

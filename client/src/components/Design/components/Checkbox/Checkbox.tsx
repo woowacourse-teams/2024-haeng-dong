@@ -2,7 +2,7 @@
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
+import Icon from '../Icons/Icon';
 
 import {checkboxStyle, inputGroupStyle} from './Checkbox.style';
 
