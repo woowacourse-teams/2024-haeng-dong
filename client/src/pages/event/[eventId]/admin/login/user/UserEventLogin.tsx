@@ -2,9 +2,10 @@ import Top from '@components/Design/components/Top/Top';
 
 import useLoginPage from '@hooks/useLoginPage';
 
-import {Button, Flex, FunnelLayout, Icon} from '@HDesign/index';
+import {Button, Flex, FunnelLayout} from '@HDesign/index';
 
 import getEventBaseUrl from '@utils/getEventBaseUrl';
+import {IconKakao} from '@components/Design/components/Icons/Icons/IconKakao';
 
 const UserEventLogin = () => {
   const {goKakaoLogin} = useLoginPage();
@@ -18,7 +19,7 @@ const UserEventLogin = () => {
       </Top>
       <Button variants="kakao" size="large" onClick={() => goKakaoLogin(previousUrl)}>
         <Flex alignItems="center" gap="0.625rem">
-          <Icon iconType="kakao" />
+          <IconKakao />
           카카오 로그인
         </Flex>
       </Button>

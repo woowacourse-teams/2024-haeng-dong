@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import {useTheme} from '@components/Design/theme/HDesignProvider';
 import {SvgProps} from '../Icon.type';
 import Svg from '../Svg';
 
 export const IconTrash = ({color = 'black', size, width, height, ...rest}: Omit<SvgProps, 'children'>) => {
-  const {theme} = useTheme();
   const w = width ?? size ?? 24;
   const h = height ?? size ?? 24;
   const x = w / 24;

@@ -11,9 +11,9 @@ export const IconCheck = ({color = 'primary', size, width, height, ...rest}: Omi
   return (
     <Svg size={size} width={w} height={h} {...rest}>
       <path
-        d={`M${w * 0.75} ${h * 0.25}L${w * 0.375} ${h * 0.625}L${w * 0.25} ${h * 0.5}`}
+        d={`M${w * 0.75} ${h * 0.3}L${w * 0.375} ${h * 0.675}L${w * 0.25} ${h * 0.55}`}
         stroke={theme.colors[color]}
-        stroke-width={size ? size * 0.1 : width ? width * 0.1 : 1.6}
+        stroke-width={w * 0.125}
         stroke-linecap="round"
         stroke-linejoin="round"
       />

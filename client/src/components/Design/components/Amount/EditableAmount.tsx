@@ -4,8 +4,8 @@ import {useEffect, useRef, useState} from 'react';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 import TYPOGRAPHY from '@components/Design/token/typography';
 
-import Icon from '../Icons/Icon';
 import Text from '../Text/Text';
+import {IconEdit} from '../Icons/Icons/IconEdit';
 
 interface Props {
   value: string;
@@ -75,7 +75,7 @@ const EditableAmount = ({value, onChange, onClick, readOnly = true, isFixed = fa
             원
           </Text>
         </div>
-        <Icon iconType="editPencil" />
+        <IconEdit />
       </div>
 
       <span

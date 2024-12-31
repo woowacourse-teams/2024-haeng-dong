@@ -3,15 +3,17 @@ import {useState, useEffect} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
-import {Button, Flex, Icon, Text} from '@HDesign/index';
+import {Button, Flex, Text} from '@HDesign/index';
 
 import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';
 import {ToastProps, ToastType} from './Toast.type';
+import {IconConfirmCircle} from '@components/Design/components/Icons/Icons/IconConfirmCircle';
+import {IconErrorCircle} from '@components/Design/components/Icons/Icons/IconErrorCircle';
 
 const renderIcon = (type: ToastType) => {
-  if (type === 'none') return null;
-
-  return <Icon iconType={type} />;
+  if (type === 'confirm') return <IconConfirmCircle />;
+  if (type === 'error') return <IconErrorCircle />;
+  return null;
 };
 
 const ANIMATION_TIME = 500;

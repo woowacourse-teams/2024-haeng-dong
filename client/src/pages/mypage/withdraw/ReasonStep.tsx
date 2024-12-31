@@ -2,9 +2,10 @@ import {css} from '@emotion/react';
 
 import {WithdrawStep} from '@hooks/useWithdrawFunnel';
 
-import {Top, Icon, Text} from '@components/Design';
+import {Top, Text} from '@components/Design';
 
 import {stepButtonGroupStyle, stepButtonBoxStyle} from './ReasonStep.style';
+import {IconChevron} from '@components/Design/components/Icons/Icons/IconChevron';
 
 const ReasonStep = ({handleMoveStep}: {handleMoveStep: (nextStep: WithdrawStep) => void}) => {
   return (
@@ -46,7 +47,7 @@ const StepButton = ({stepText, nextStep}: StepButtonProps) => {
       <Text size="bodyBold" textColor="onTertiary">
         {stepText}
       </Text>
-      <Icon iconType="rightChevron" />
+      <IconChevron direction="right" size={12} />
     </div>
   );
 };

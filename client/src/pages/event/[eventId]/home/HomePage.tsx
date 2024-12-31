@@ -9,13 +9,14 @@ import useEventDataContext from '@hooks/useEventDataContext';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
-import {Icon, Tab, Tabs, Title} from '@HDesign/index';
+import {Tab, Tabs, Title} from '@HDesign/index';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {receiptStyle} from './HomePage.style';
+import {IconPictureSquare} from '@components/Design/components/Icons/Icons/IconPictureSquare';
 
 const HomePage = () => {
   const {isAdmin, eventName} = useEventDataContext();
@@ -35,7 +36,7 @@ const HomePage = () => {
         icon={
           images.length !== 0 && (
             <button>
-              <Icon iconType="photoButton" onClick={() => navigate(`/event/${eventId}/images`)} />
+              <IconPictureSquare onClick={() => navigate(`/event/${eventId}/images`)} />
             </button>
           )
         }

@@ -1,4 +1,5 @@
-import {Flex, Icon, IconButton, MainLayout, TopNav} from '@components/Design';
+import {Flex, IconButton, MainLayout, TopNav} from '@components/Design';
+import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
 import {Footer} from '@components/Footer';
 
 const EventPageLoading = () => {
@@ -8,7 +9,7 @@ const EventPageLoading = () => {
         <TopNav>
           <TopNav.Item routePath="/">
             <IconButton variants="none">
-              <Icon iconType="heundeut" />
+              <IconHeundeut />
             </IconButton>
           </TopNav.Item>
           <TopNav.Item displayName="홈" routePath="/home" />

@@ -29,7 +29,7 @@ const MainSection = ({isGuest}: NavProps) => {
         </Button>
       </div>
       <div css={chevronStyle}>
-        <IconChevron direction="down" size={48} color="tertiary" />
+        <IconChevron size={48} color="tertiary" />
       </div>
     </div>
   );

@@ -3,19 +3,19 @@ import {useTheme} from '@components/Design';
 
 import Text from '../Text/Text';
 
-import {DepositCheckStyle} from './DepositCheck.style';
+import {depositCheckStyle} from './DepositCheck.style';
 import {DepositCheckProps} from './DepositCheck.type';
 import {IconCheck} from '../Icons/Icons/IconCheck';
+import {IconX} from '../Icons/Icons/IconX';
 
 const DepositCheck: React.FC<DepositCheckProps> = ({isDeposited = false}: DepositCheckProps) => {
   const {theme} = useTheme();
   return (
-    <div css={DepositCheckStyle({theme, isDeposited})}>
+    <div css={depositCheckStyle({theme, isDeposited})}>
       <Text size="tiny" className="deposit-check-text">
         입금
       </Text>
-      <IconCheck color={isDeposited ? 'primary' : 'secondary'} />
-      {/* <Icon iconType={isDeposited ? 'check' : 'x'} size={40} width={40} height={40}></Icon> */}
+      {isDeposited ? <IconCheck size={12} color="primary" /> : <IconX color="gray" />}
     </div>
   );
 };

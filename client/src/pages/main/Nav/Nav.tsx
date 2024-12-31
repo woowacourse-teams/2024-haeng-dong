@@ -2,11 +2,12 @@ import {useNavigate} from 'react-router-dom';
 
 import {User} from 'types/serviceType';
 
-import {Button, Text, Icon, TopNav, IconButton} from '@HDesign/index';
+import {Button, Text, TopNav, IconButton} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {navFixedStyle, navStyle, navWrapperStyle} from './Nav.style';
+import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
 
 type NavProps = Pick<User, 'isGuest'>;
 
@@ -24,7 +25,7 @@ const Nav = ({isGuest}: NavProps) => {
           <TopNav>
             <TopNav.Item routePath="/">
               <IconButton variants="none" aria-label="행동대장 로고">
-                <Icon iconType="heundeut" />
+                <IconHeundeut />
               </IconButton>
             </TopNav.Item>
             <TopNav.Item routePath="/">

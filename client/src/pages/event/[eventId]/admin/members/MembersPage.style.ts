@@ -54,3 +54,13 @@ export const memberEditInput = (theme: Theme) =>
       borderBottom: `1px solid ${theme.colors.primary}`,
     },
   });
+
+export const deleteButtonStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0',
+  width: '23px',
+  height: '23px',
+  borderRadius: '0.375rem',
+});

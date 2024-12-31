@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import Icon from '../Icons/Icon';
+import {IconX} from '../Icons/Icons/IconX';
 
 import {deleteButtonStyle} from './Carousel.style';
 
@@ -10,7 +10,7 @@ interface Props {
 const CarouselDeleteButton = ({onClick}: Props) => {
   return (
     <button css={deleteButtonStyle} onClick={onClick}>
-      <Icon iconType="x" />
+      <IconX />
     </button>
   );
 };

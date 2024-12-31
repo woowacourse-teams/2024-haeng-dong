@@ -3,13 +3,14 @@ import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} fro
 
 import IconButton from '@HDcomponents/IconButton/IconButton';
 import {InputProps} from '@HDcomponents/Input/Input.type';
-import Icon from '@components/Design/components/Icons/Icon';
 import {useTheme} from '@theme/HDesignProvider';
 
 import Flex from '../Flex/Flex';
 import Text from '../Text/Text';
 
 import {inputBoxStyle, inputStyle, labelTextStyle, errorTextStyle} from './Input.style';
+import {IconXCircle} from '../Icons/Icons/IconXCircle';
+import {IconSearch} from '../Icons/Icons/IconSearch';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
@@ -71,12 +72,12 @@ export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputPro
           />
           {onDelete && value && hasFocus && (
             <IconButton tabIndex={-1} variants="none" onMouseDown={onDelete} aria-label="입력 내용 모두 지우기">
-              <Icon iconType="inputDelete" />
+              <IconXCircle />
             </IconButton>
           )}
           {inputType === 'search' && (
             <IconButton tabIndex={-1} variants="none" aria-label="검색">
-              <Icon iconType="search" />
+              <IconSearch />
             </IconButton>
           )}
         </div>

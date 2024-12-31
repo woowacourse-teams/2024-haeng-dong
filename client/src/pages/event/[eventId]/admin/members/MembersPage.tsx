@@ -4,9 +4,18 @@ import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import useEventMember from '@hooks/useEventMember';
 
-import {MainLayout, TopNav, Top, Amount, DepositToggle, Icon, IconButton, FixedButton, Text} from '@components/Design';
+import {MainLayout, TopNav, Top, Amount, DepositToggle, IconButton, FixedButton, Text} from '@components/Design';
 
-import {eventMemberStyle, memberList, eventMember, memberEditInput, noneReports} from './MembersPage.style';
+import {
+  eventMemberStyle,
+  memberList,
+  eventMember,
+  memberEditInput,
+  noneReports,
+  deleteButtonStyle,
+} from './MembersPage.style';
+import {IconEdit} from '@components/Design/components/Icons/Icons/IconEdit';
+import {IconTrash} from '@components/Design/components/Icons/Icons/IconTrash';
 
 const MembersPage = () => {
   const {reports, canSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =
@@ -73,19 +82,19 @@ const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStat
     <div css={eventMember} id={`${member.memberId}`}>
       <div css={memberEditInput(theme)}>
         <input type="text" value={member.memberName} onChange={e => handleChangeName(e)} />
-        <Icon iconType="pencilMini" />
+        <IconEdit size={14} />
       </div>
-      <div style={{display: 'flex', flexDirection: 'row', gap: '0.5rem'}}>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem'}}>
         <Amount amount={member.price} />
         <DepositToggle isDeposit={member.isDeposited} onToggle={() => toggleDepositStatus(member.memberId)} />
         <IconButton
           size="small"
           variants="tertiary"
-          css={{width: '23px', height: '23px', borderRadius: '0.375rem'}}
+          css={deleteButtonStyle}
           onClick={() => handleDeleteMember(member.memberId)}
           aria-label="인원 삭제"
         >
-          <Icon iconType="trashMini" />
+          <IconTrash size={14} />
         </IconButton>
       </div>
     </div>

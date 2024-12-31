@@ -12,13 +12,14 @@ import useAmplitude from '@hooks/useAmplitude';
 import {Footer} from '@components/Footer';
 import {DesktopShareEventButton, MobileShareEventButton} from '@components/ShareEventButton';
 
-import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
+import {Flex, IconButton, MainLayout, TopNav} from '@HDesign/index';
 
 import {isMobileDevice} from '@utils/detectDevice';
 import {updateMetaTag} from '@utils/udpateMetaTag';
 import getImageUrl from '@utils/getImageUrl';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
+import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
@@ -59,7 +60,7 @@ const EventPageLayout = () => {
         <TopNav>
           <TopNav.Item routePath="/">
             <IconButton variants="none">
-              <Icon iconType="heundeut" />
+              <IconHeundeut />
             </IconButton>
           </TopNav.Item>
           <TopNav.Item displayName="홈" routePath="/home" />
