@@ -3,7 +3,7 @@ import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} fro
 
 import IconButton from '@HDcomponents/IconButton/IconButton';
 import {InputProps} from '@HDcomponents/Input/Input.type';
-import Icon from '@components/Design/components/Iconx/Icon';
+import Icon from '@components/Design/components/Icon/Icon';
 import {useTheme} from '@theme/HDesignProvider';
 
 import Flex from '../Flex/Flex';

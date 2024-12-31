@@ -2,7 +2,7 @@
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Flex from '../Flex/Flex';
-import Icon from '../Iconx/Icon';
+import Icon from '../Icon/Icon';
 import IconButton from '../IconButton/IconButton';
 
 import {dropdownStyle} from './Dropdown.style';

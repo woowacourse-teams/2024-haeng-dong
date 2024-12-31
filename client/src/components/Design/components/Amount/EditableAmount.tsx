@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from 'react';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 import TYPOGRAPHY from '@components/Design/token/typography';
 
-import Icon from '../Iconx/Icon';
+import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
 
 interface Props {

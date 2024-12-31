@@ -7,12 +7,12 @@ import {IconConfirmCircle} from './Icons/IconConfirmCircle';
 import {COLORS} from '@components/Design/token/colors';
 import {IconEdit} from './Icons/IconEdit';
 import {IconErrorCircle} from './Icons/IconErrorCircle';
-import {IconXCircle} from './Icons/IconXCircle';
 import {IconKakao} from './Icons/IconKakao';
 import {IconMeatballs} from './Icons/IconMeatballs';
 import {IconPictureSquare} from './Icons/IconPictureSquare';
 import {IconSearch} from './Icons/IconSearch';
 import {IconTrash} from './Icons/IconTrash';
+import {IconXCircle} from './Icons/IconXCircle';
 
 const meta: Meta<
   typeof IconCheck | typeof IconChevron | typeof IconConfirmCircle | typeof IconEdit | typeof IconErrorCircle

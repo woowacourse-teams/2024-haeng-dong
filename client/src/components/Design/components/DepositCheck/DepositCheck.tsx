@@ -5,7 +5,7 @@ import Text from '../Text/Text';
 
 import {DepositCheckStyle} from './DepositCheck.style';
 import {DepositCheckProps} from './DepositCheck.type';
-import {IconCheck} from '../Iconx/Icons/IconCheck';
+import {IconCheck} from '../Icon/Icons/IconCheck';
 
 const DepositCheck: React.FC<DepositCheckProps> = ({isDeposited = false}: DepositCheckProps) => {
   const {theme} = useTheme();
