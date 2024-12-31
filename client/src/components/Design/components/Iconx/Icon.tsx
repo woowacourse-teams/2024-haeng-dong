@@ -14,7 +14,7 @@ import PencilMini from '@assets/image/pencil_mini.svg';
 import Meatballs from '@assets/image/meatballs.svg';
 import EditPencil from '@assets/image/editPencil.svg';
 import PhotoButton from '@assets/image/photoButton.svg';
-import {IconProps} from '@HDcomponents/Icon/Icon.type';
+import {IconProps} from '@components/Design/components/Iconx/Icon.type';
 import {useTheme} from '@theme/HDesignProvider';
 import ChevronDownLarge from '@assets/image/chevronDownLarge.svg';
 

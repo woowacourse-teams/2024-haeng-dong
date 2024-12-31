@@ -4,11 +4,10 @@ import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 import {User} from 'types/serviceType';
 
-import {Icon} from '@components/Design';
-
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {animateWithDelay, chevronStyle, mainSectionStyle, sectionStyle} from './MainSection.style';
+import {IconChevron} from '@components/Design/components/Icon/Icons/IconChevron';
 
 type NavProps = Pick<User, 'isGuest'>;
 
@@ -30,7 +29,7 @@ const MainSection = ({isGuest}: NavProps) => {
         </Button>
       </div>
       <div css={chevronStyle}>
-        <Icon iconType="chevronDown" />
+        <IconChevron color="tertiary" />
       </div>
     </div>
   );

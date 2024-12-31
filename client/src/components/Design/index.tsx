@@ -8,7 +8,7 @@ import EditableItem from './components/EditableItem/EditableItem';
 import ExpenseList from './components/ExpenseList/ExpenseList';
 import FixedButton from './components/FixedButton/FixedButton';
 import Flex from './components/Flex/Flex';
-import Icon from './components/Icon/Icon';
+import Icon from './components/Iconx/Icon';
 import IconButton from './components/IconButton/IconButton';
 import Input from './components/Input/Input';
 import ListButton from './components/ListButton/ListButton';

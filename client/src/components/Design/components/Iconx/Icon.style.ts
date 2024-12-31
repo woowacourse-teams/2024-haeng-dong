@@ -23,7 +23,7 @@ const ICON_DEFAULT_COLOR: Record<IconType, IconColor> = {
   kakao: 'onKakao',
 };
 
-export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => {
+export const iconStyle = ({iconType, theme, iconColor, size, width, height}: IconStylePropsWithTheme) => {
   return [
     css({
       display: 'flex',
@@ -31,6 +31,7 @@ export const iconStyle = ({iconType, theme, iconColor}: IconStylePropsWithTheme)
       alignItems: 'center',
     }),
     getIconColor({iconType, theme, iconColor}),
+    getIconSize({size, width, height}),
   ];
 };
 
@@ -46,4 +47,14 @@ const getIconColor = ({iconType, theme, iconColor}: IconStylePropsWithTheme) => 
   } else {
     return css({color: theme.colors[ICON_DEFAULT_COLOR[iconType]]});
   }
+};
+
+const getIconSize = ({size, width, height}: Omit<IconStylePropsWithTheme, 'theme' | 'iconType'>) => {
+  return css({
+    svg: {
+      width: size ?? width,
+      height: size ?? height,
+      viewBox: size ? `0 0 ${size} ${size}` : width && height ? `0 0 ${width} ${height}` : '',
+    },
+  });
 };

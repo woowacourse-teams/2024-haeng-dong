@@ -2,7 +2,7 @@
 import type {BannerProps} from './Banner.type';
 
 import Flex from '../Flex/Flex';
-import Icon from '../Icon/Icon';
+import Icon from '../Iconx/Icon';
 import IconButton from '../IconButton/IconButton';
 import Text from '../Text/Text';
 import Button from '../Button/Button';

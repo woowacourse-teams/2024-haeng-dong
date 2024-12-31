@@ -4,7 +4,7 @@ import {ColorKeys} from '@components/Design/token/colors';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
+import Icon from '../Iconx/Icon';
 import IconButton from '../IconButton/IconButton';
 
 import {chipButtonStyle} from './ChipButton.style';
