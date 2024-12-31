@@ -3,7 +3,7 @@ import {useTheme} from '@components/Design/theme/HDesignProvider';
 import {SvgProps} from '../Icon.type';
 import Svg from '../Svg';
 
-export const IconPictureSquare = ({color = 'white', size, width, height}: Omit<SvgProps, 'children'>) => {
+export const IconPictureSquare = ({color = 'white', size, width, height, ...rest}: Omit<SvgProps, 'children'>) => {
   const {theme} = useTheme();
   const w = width ?? size ?? 36;
   const h = height ?? size ?? 36;
@@ -11,7 +11,7 @@ export const IconPictureSquare = ({color = 'white', size, width, height}: Omit<S
   const y = h / 36;
 
   return (
-    <Svg size={size} width={w} height={h} isUsingFill={true}>
+    <Svg size={size} width={w} height={h} isUsingFill={true} {...rest}>
       <rect opacity="0.24" width={w} height={h} rx={w / 4.5} fill={theme.colors.black} />
       <path
         fill-rule="evenodd"

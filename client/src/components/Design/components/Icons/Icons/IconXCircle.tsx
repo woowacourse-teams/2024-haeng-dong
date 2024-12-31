@@ -3,7 +3,7 @@ import {useTheme} from '@components/Design/theme/HDesignProvider';
 import {SvgProps} from '../Icon.type';
 import Svg from '../Svg';
 
-export const IconXCircle = ({color = 'gray', size, width, height}: Omit<SvgProps, 'children'>) => {
+export const IconXCircle = ({color = 'gray', size, width, height, ...rest}: Omit<SvgProps, 'children'>) => {
   const {theme} = useTheme();
   const w = width ?? size ?? 20;
   const h = height ?? size ?? 20;
@@ -11,7 +11,7 @@ export const IconXCircle = ({color = 'gray', size, width, height}: Omit<SvgProps
   const y = h / 20;
 
   return (
-    <Svg size={size} width={w} height={h}>
+    <Svg size={size} width={w} height={h} {...rest}>
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"

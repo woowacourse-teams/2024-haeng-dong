@@ -11,7 +11,8 @@ export const IconChevron = ({
   width,
   height,
   direction = 'down',
-}: Omit<SvgProps, 'children'> & {direction: direction}) => {
+  ...rest
+}: Omit<SvgProps, 'children'> & {direction?: direction}) => {
   const {theme} = useTheme();
   const w = width ?? size ?? 16;
   const h = height ?? size ?? 16;
@@ -30,7 +31,7 @@ export const IconChevron = ({
   };
 
   return (
-    <Svg size={size} width={w} height={h}>
+    <Svg size={size} width={w} height={h} {...rest}>
       <g transform={`rotate(${getRotation()}, ${w / 2}, ${h / 2})`}>
         <path
           d={`M${w * 0.9} ${h * 0.33}L${w * 0.5} ${h * 0.66}L${w * 0.1} ${h * 0.33}`}
