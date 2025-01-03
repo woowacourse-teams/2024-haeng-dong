@@ -1,5 +1,5 @@
-const isDuplicate = (arr: string[], target: string) => {
+const isDuplicated = (arr: string[], target: string) => {
   return arr.includes(target);
 };
 
-export default isDuplicate;
+export default isDuplicated;
