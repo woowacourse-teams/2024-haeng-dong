@@ -6,7 +6,7 @@ import {Member} from 'types/serviceType';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import {isIOS} from '@utils/detectDevice';
-import isDuplicate from '@utils/isDuplicate';
+import isDuplicated from '@utils/isDuplicate';
 
 import RULE from '@constants/rule';
 import {ERROR_MESSAGE} from '@constants/errorMessage';
@@ -40,7 +40,7 @@ const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
   const eventId = getEventIdByUrl();
   const {eventName} = useRequestGetEvent();
 
-  const {name, handleNameChange, clearNickname, errorMessage} = useMemberName();
+  const {name, handleNameChange, clearMemberName, errorMessage} = useMemberName();
 
   const canAddMembers = name && name.length <= RULE.maxMemberNameLength;
   const canSubmitMembers = billInfo.members.length !== 0;
@@ -58,7 +58,7 @@ const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
   const addMembersFromInput = () => {
     if (!billInfo.members.map(({name}) => name).includes(name)) {
       setBillInfoMemberWithId(name);
-      clearNickname();
+      clearMemberName();
 
       if (isIOS()) {
         hiddenRef.current?.focus();
@@ -119,7 +119,7 @@ const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
   };
 
   return {
-    errorMessage: isDuplicate(
+    errorMessage: isDuplicated(
       allMembers.map(({name}) => name),
       name,
     )

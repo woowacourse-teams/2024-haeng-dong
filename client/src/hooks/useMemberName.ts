@@ -3,29 +3,29 @@ import {useState} from 'react';
 import validateMemberName from '@utils/validate/validateMemberName';
 import {Nickname} from 'types/serviceType';
 
-const useMemberName = (defaultNickname?: string) => {
-  const [name, setName] = useState<Nickname>(defaultNickname ?? '');
+const useMemberName = (defaultMemberName?: string) => {
+  const [name, setName] = useState<Nickname>(defaultMemberName ?? '');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value;
-    const {memberName: nicknameResult, isValid, errorMessage: errorMessageResult} = validateMemberName(name);
+    const {memberName: memberNameResult, isValid, errorMessage: errorMessageResult} = validateMemberName(name);
     setErrorMessage(errorMessageResult);
 
     if (isValid || name.length === 0) {
-      setName(nicknameResult);
+      setName(memberNameResult);
       setCanSubmit(isValid);
     }
   };
 
-  const clearNickname = () => {
+  const clearMemberName = () => {
     setName('');
     setErrorMessage(null);
     setCanSubmit(false);
   };
 
-  return {errorMessage, canSubmit, name, handleNameChange, clearNickname};
+  return {errorMessage, canSubmit, name, handleNameChange, clearMemberName};
 };
 
 export default useMemberName;
