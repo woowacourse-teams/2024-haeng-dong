@@ -6,10 +6,12 @@ import haengdong.common.properties.CookieProperties;
 import haengdong.event.application.EventImageFacadeService;
 import haengdong.event.application.EventService;
 import haengdong.event.application.request.EventAppRequest;
+import haengdong.event.application.request.EventDeleteAppRequest;
 import haengdong.event.application.request.EventMineAppResponse;
 import haengdong.event.application.response.EventAppResponse;
 import haengdong.event.application.response.EventImageUrlAppResponse;
 import haengdong.event.application.response.MemberBillReportAppResponse;
+import haengdong.event.presentation.request.EventDeleteRequest;
 import haengdong.event.presentation.request.EventGuestSaveRequest;
 import haengdong.event.presentation.request.EventLoginRequest;
 import haengdong.event.presentation.request.EventSaveRequest;
@@ -26,6 +28,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,6 +85,13 @@ public class EventController {
     public ResponseEntity<EventResponse> saveEvent(@Login Long userId, @Valid @RequestBody EventSaveRequest request) {
         EventResponse eventResponse = EventResponse.of(eventService.saveEvent(new EventAppRequest(request.eventName(), userId)));
         return ResponseEntity.ok(eventResponse);
+    }
+
+    @DeleteMapping("/api/events")
+    public ResponseEntity<Void> deleteEvent(@Login Long userId, @RequestBody EventDeleteRequest request) {
+        eventService.deleteEvents(new EventDeleteAppRequest(userId, request.eventIds()));
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/api/events/{eventId}/login")
