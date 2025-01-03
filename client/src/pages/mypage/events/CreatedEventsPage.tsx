@@ -4,6 +4,8 @@ import {useEffect, useState} from 'react';
 import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreatedEvents';
 import {CreatedEvent} from 'types/serviceType';
 import {CreatedEventItem} from '@components/Design/components/CreatedEvent/CreatedEvent';
+import useRequestDeleteEvents from '@hooks/queries/event/useRequestDeleteEvents';
+import toast from '@hooks/useToast/toast';
 
 import {FixedButton, Flex, FunnelLayout, Input, MainLayout, TextButton, Top, TopNav} from '@components/Design';
 
@@ -77,6 +79,15 @@ function CreatedEventList({createdEvents, eventName, onSearch, placeholder}: Cre
   const {mode, handleMode, selectedEvents, has, handleSelectedEvents} = useCreatedEventsPageContext();
   const setViewMode = () => handleMode('view');
 
+  const {deleteEvents} = useRequestDeleteEvents();
+
+  const onDeleteClick = async () => {
+    const selectedEventsId = selectedEvents.map(event => event.eventId);
+    await deleteEvents({eventIds: selectedEventsId});
+    toast.confirm('행사가 정상적으로 삭제되었습니다');
+    handleMode('view');
+  };
+
   return (
     <>
       <Flex
@@ -103,7 +114,7 @@ function CreatedEventList({createdEvents, eventName, onSearch, placeholder}: Cre
           ))}
       </Flex>
       {mode === 'edit' && (
-        <FixedButton variants="tertiary" onDeleteClick={() => {}} onClick={setViewMode}>
+        <FixedButton variants="tertiary" onDeleteClick={onDeleteClick} onClick={setViewMode}>
           편집완료
         </FixedButton>
       )}
