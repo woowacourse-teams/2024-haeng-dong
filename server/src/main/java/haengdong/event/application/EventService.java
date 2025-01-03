@@ -4,6 +4,7 @@ import haengdong.common.exception.AuthenticationException;
 import haengdong.common.exception.HaengdongErrorCode;
 import haengdong.common.exception.HaengdongException;
 import haengdong.event.application.request.EventAppRequest;
+import haengdong.event.application.request.EventDeleteAppRequest;
 import haengdong.event.application.request.EventGuestAppRequest;
 import haengdong.event.application.request.EventLoginAppRequest;
 import haengdong.event.application.request.EventMineAppResponse;
@@ -25,7 +26,6 @@ import haengdong.event.domain.event.image.EventImageRepository;
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.member.EventMemberRepository;
 import haengdong.user.application.UserService;
-import haengdong.user.domain.Nickname;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map.Entry;
@@ -200,5 +200,22 @@ public class EventService {
                 .map(event -> EventMineAppResponse.of(
                         event, !eventMemberRepository.existsByEventAndIsDeposited(event, false)))
                 .toList();
+    }
+
+    @Transactional
+    public void deleteEvents(EventDeleteAppRequest request) {
+        request.eventIds()
+                .forEach(token -> deleteEvent(token, request.token()));
+    }
+
+    private void deleteEvent(String token, Long userId) {
+        Event event = eventRepository.findByToken(token)
+                .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.EVENT_NOT_FOUND));
+
+        if (event.isNotHost(userId)) {
+            throw new AuthenticationException(HaengdongErrorCode.FORBIDDEN);
+        }
+
+        eventRepository.delete(event);
     }
 }
