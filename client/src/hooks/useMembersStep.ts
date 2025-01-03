@@ -1,12 +1,15 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {BillInfo} from '@pages/event/[eventId]/admin/add-bill/AddBillFunnel';
 import {Member} from 'types/serviceType';
-import validateMemberName from '@utils/validate/validateMemberName';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import {isIOS} from '@utils/detectDevice';
+import isDuplicated from '@utils/isDuplicate';
+
+import RULE from '@constants/rule';
+import {ERROR_MESSAGE} from '@constants/errorMessage';
 
 import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
@@ -14,6 +17,7 @@ import {BillStep} from './useAddBillFunnel';
 import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
 import useAmplitude from './useAmplitude';
 import useRequestGetEvent from './queries/event/useRequestGetEvent';
+import useMemberName from './useMemberName';
 
 interface Props {
   billInfo: BillInfo;
@@ -22,9 +26,7 @@ interface Props {
   currentMembers: Member[];
 }
 
-const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props) => {
-  const [errorMessage, setErrorMessage] = useState<null | string>('');
-  const [nameInput, setNameInput] = useState('');
+const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const hiddenRef = useRef<HTMLInputElement>(null);
 
@@ -38,22 +40,14 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   const eventId = getEventIdByUrl();
   const {eventName} = useRequestGetEvent();
 
-  const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.value;
-    const {isValid, errorMessage: errorMessageResult} = validateMemberName(name);
+  const {name, handleNameChange, clearMemberName, errorMessage} = useMemberName();
 
-    setErrorMessage(errorMessageResult);
-    if (isValid) {
-      setNameInput(name);
-    }
-  };
-
-  const canAddMembers = nameInput && nameInput.length <= 4;
-
+  const canAddMembers = name && name.length <= RULE.maxMemberNameLength;
   const canSubmitMembers = billInfo.members.length !== 0;
 
   const setBillInfoMemberWithId = (name: string) => {
     const existingMember = allMembers.find(currentMember => currentMember.name === name);
+
     if (existingMember) {
       setBillInfo(prev => ({...prev, members: [...prev.members, {id: existingMember.id, name: name}]}));
     } else {
@@ -62,9 +56,10 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   };
 
   const addMembersFromInput = () => {
-    if (!billInfo.members.map(({name}) => name).includes(nameInput)) {
-      setBillInfoMemberWithId(nameInput);
-      setNameInput('');
+    if (!billInfo.members.map(({name}) => name).includes(name)) {
+      setBillInfoMemberWithId(name);
+      clearMemberName();
+
       if (isIOS()) {
         hiddenRef.current?.focus();
         inputRef.current?.focus();
@@ -124,11 +119,16 @@ const useMembersStep = ({billInfo, setBillInfo, currentMembers, setStep}: Props)
   };
 
   return {
-    errorMessage,
-    nameInput,
+    errorMessage: isDuplicated(
+      allMembers.map(({name}) => name),
+      name,
+    )
+      ? ERROR_MESSAGE.memberNameDuplicate
+      : errorMessage,
+    nameInput: name,
     inputRef,
     hiddenRef,
-    handleNameInputChange,
+    handleNameInputChange: handleNameChange,
     handleNameInputEnter,
     handleNameInputComplete,
     isPendingPostBill,
