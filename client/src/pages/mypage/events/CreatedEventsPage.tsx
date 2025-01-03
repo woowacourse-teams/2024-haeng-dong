@@ -5,7 +5,6 @@ import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreate
 import {CreatedEvent} from 'types/serviceType';
 import {CreatedEventItem} from '@components/Design/components/CreatedEvent/CreatedEvent';
 import useRequestDeleteEvents from '@hooks/queries/event/useRequestDeleteEvents';
-import toast from '@hooks/useToast/toast';
 
 import {FixedButton, Flex, FunnelLayout, Input, MainLayout, TextButton, Top, TopNav} from '@components/Design';
 
@@ -84,7 +83,6 @@ function CreatedEventList({createdEvents, eventName, onSearch, placeholder}: Cre
   const onDeleteClick = async () => {
     const selectedEventsId = selectedEvents.map(event => event.eventId);
     await deleteEvents({eventIds: selectedEventsId});
-    toast.confirm('행사가 정상적으로 삭제되었습니다');
     handleMode('view');
   };
 
