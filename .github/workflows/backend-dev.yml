@@ -72,4 +72,4 @@ jobs:
         run: sudo docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=dev -v log-volume:/app/logs --name haengdong-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_DEV }}
 
       - name: Docker image delete
-        run: sudo docker image prune
+        run: sudo docker image prune -f
