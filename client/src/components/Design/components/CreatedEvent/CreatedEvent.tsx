@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import {useNavigate} from 'react-router-dom';
-import {useEffect, useRef, useState} from 'react';
 
 import Text from '@HDcomponents/Text/Text';
+
+import useLongPressAnimation from '@hooks/useLongPressAnimation';
 
 import {useTheme} from '@components/Design';
 
@@ -10,7 +11,7 @@ import Flex from '../Flex/Flex';
 import Input from '../Input/Input';
 
 import {CreatedEventItemProps, CreatedEventListProps} from './CreatedEvent.type';
-import {inProgressCheckStyle, rippleDefaultStyle, touchAreaStyle} from './CreatedEvent.style';
+import {inProgressCheckStyle, touchAreaStyle} from './CreatedEvent.style';
 
 function InProgressCheck({inProgress}: {inProgress: boolean}) {
   const {theme} = useTheme();
@@ -24,42 +25,13 @@ function InProgressCheck({inProgress}: {inProgress: boolean}) {
   );
 }
 
-export type RippleAnimation = {
-  x: number;
-  y: number;
-  size: number;
-};
-
 function CreatedEventItem({createdEvent}: CreatedEventItemProps) {
   const navigate = useNavigate();
 
   const {theme} = useTheme();
-  const [ripple, setRipple] = useState<RippleAnimation | null>(null);
+  const onLongPress = () => {};
 
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const touch = e.touches[0];
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-
-    setRipple({x, y, size: 0});
-
-    timeoutRef.current = setTimeout(() => {
-      console.log('Callback executed!');
-    }, 500);
-  };
-
-  const handleTouchMove = () => {
-    clearTimeout(timeoutRef.current!);
-    setRipple(null);
-  };
-
-  const handleTouchEnd = () => {
-    clearTimeout(timeoutRef.current!);
-    timeoutRef.current = null;
-  };
+  const {handleTouchStart, handleTouchEnd, handleTouchMove, LongPressAnimation} = useLongPressAnimation(onLongPress);
 
   const onClick = () => {
     navigate(`/event/${createdEvent.eventId}/admin`);
@@ -78,12 +50,7 @@ function CreatedEventItem({createdEvent}: CreatedEventItemProps) {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {ripple && (
-        <div
-          css={rippleDefaultStyle({theme, ...ripple})}
-          onAnimationStart={() => setRipple(prev => prev && {...prev, size: 400})}
-        />
-      )}
+      {LongPressAnimation}
       <Flex gap="0.5rem" alignItems="center">
         <InProgressCheck inProgress={createdEvent.isFinished} />
         <Text size="bodyBold" color="onTertiary">
