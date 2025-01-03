@@ -1,6 +1,6 @@
 import {useLocation} from 'react-router-dom';
 
-import useRequestPatchUser from '@hooks/queries/event/useRequestPatchUser';
+import useRequestPatchEvent from '@hooks/queries/event/useRequestPatchEvent';
 
 import useEventDataContext from '@hooks/useEventDataContext';
 
@@ -10,7 +10,7 @@ import getEventBaseUrl from '@utils/getEventBaseUrl';
 
 const EditAccountPage = () => {
   const {bankName, accountNumber} = useEventDataContext();
-  const {patchUser} = useRequestPatchUser();
+  const {patchEvent} = useRequestPatchEvent();
 
   const location = useLocation();
   const redirectUrlOnSubmit = `/${getEventBaseUrl(location.pathname)}/admin`;
@@ -19,7 +19,7 @@ const EditAccountPage = () => {
     <EditAccountPageView
       bankName={bankName}
       accountNumber={accountNumber}
-      onSubmit={patchUser}
+      onSubmit={patchEvent}
       redirectUrlOnSubmit={redirectUrlOnSubmit}
     />
   );
