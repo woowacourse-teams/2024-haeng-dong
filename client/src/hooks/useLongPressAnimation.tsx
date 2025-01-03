@@ -22,16 +22,21 @@ const animationFrame = keyframes`
   }
 `;
 
+const defaultAnimationColor: ColorKeys = 'grayContainer';
+const defaultLongPressTime = 500;
+
 const animationStyle = ({
   theme,
   x,
   y,
   size,
-  animationColor,
-}: WithTheme<AnimationCoordinate & {animationColor: ColorKeys}>) => {
+  animationColor = defaultAnimationColor,
+  longProgressTime = defaultLongPressTime,
+}: WithTheme<AnimationCoordinate & UseLongPressAnimationOptions>) => {
   const remSize = size / 16;
   const remX = x / 16;
   const remY = y / 16;
+  const animationTime = longProgressTime / 1000;
 
   return css({
     position: 'absolute',
@@ -42,13 +47,13 @@ const animationStyle = ({
     background: theme.colors[animationColor],
     borderRadius: `50%`,
     transform: 'scale(1)',
-    animation: `${animationFrame} 0.5s ease-out forwards`,
+    animation: `${animationFrame} ${animationTime}s ease-out forwards`,
   });
 };
 
 type UseLongPressAnimationOptions = {
   longProgressTime?: number;
-  animationColor: ColorKeys;
+  animationColor?: ColorKeys;
 };
 
 const useLongPressAnimation = (onLongPress: () => void, options?: UseLongPressAnimationOptions) => {
@@ -66,7 +71,7 @@ const useLongPressAnimation = (onLongPress: () => void, options?: UseLongPressAn
 
     timeoutRef.current = setTimeout(() => {
       onLongPress();
-    }, options?.longProgressTime ?? 500);
+    }, options?.longProgressTime ?? defaultLongPressTime);
   };
 
   const handleTouchMove = () => {
@@ -82,7 +87,11 @@ const useLongPressAnimation = (onLongPress: () => void, options?: UseLongPressAn
   const LongPressAnimation = useMemo(() => {
     return coordinate ? (
       <div
-        css={animationStyle({theme, animationColor: options?.animationColor ?? 'grayContainer', ...coordinate})}
+        css={animationStyle({
+          theme,
+          ...options,
+          ...coordinate,
+        })}
         onAnimationStart={() => setCoordinate(prev => prev && {...prev, size: 800})}
       />
     ) : null;
