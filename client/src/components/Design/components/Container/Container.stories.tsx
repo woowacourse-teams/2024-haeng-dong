@@ -6,15 +6,17 @@ import Stack from '../Stack/Stack';
 import HStack from '../Stack/HStack';
 
 const meta = {
-  title: 'pattern/Container',
+  title: 'patterns/Container',
   component: Container,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component: `
-Container 컴포넌트는 콘텐츠를 좌우로 감싸는 래퍼(wrapper) 컴포넌트입니다.\n
-최대 너비를 지정하고 내부 콘텐츠를 중앙 정렬할 수 있는 기능을 제공합니다.
+Container 컴포넌트는 콘텐츠를 좌우로 감싸는 래퍼(wrapper) 컴포넌트입니다.</br>
+최대 너비를 지정하고 내부 콘텐츠를 중앙 정렬할 수 있는 기능을 제공합니다.<br>
+주로 **최대 넓이가 필요한 곳에서 layout을 잡는** 용도로 사용합니다.<br>
+기본적으로 **w 100%**가 적용되어 있습니다.<br>
 
 ### 주요 기능
 - **최대 너비(maxW) 설정**: number(px) 또는 string(%, rem, em 등)

@@ -3,15 +3,15 @@ import type {Meta, StoryObj} from '@storybook/react';
 import Box from './Box';
 
 const meta = {
-  title: 'pattern/Box',
+  title: 'patterns/Box',
   component: Box,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component: `
-Box 컴포넌트는 기본적인 레이아웃을 구성하는데 사용되는 컨테이너 컴포넌트입니다.\n
-기본적으로 div를 사용하여 레이아웃을 구성하며, 간단한 div가 사용되는 곳을 대체할 수 있는 컴포넌트입니다.
+Box 컴포넌트는 기본적인 레이아웃을 구성하는데 사용되는 컨테이너 컴포넌트입니다.<br/>
+간단한 div가 사용되는 곳을 대체할 수 있는 컴포넌트입니다.<br/>
 
 ### 주요 기능
 - **너비(w)와 높이(h) 조절 가능**: number(px) 또는 string(%, rem, em 등)
