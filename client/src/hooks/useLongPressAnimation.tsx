@@ -74,13 +74,9 @@ const useLongPressAnimation = (onLongPress: () => void, options?: UseLongPressAn
     }, options?.longProgressTime ?? defaultLongPressTime);
   };
 
-  const handleTouchMove = () => {
-    clearTimeout(timeoutRef.current!);
-    setCoordinate(null);
-  };
-
   const handleTouchEnd = () => {
     clearTimeout(timeoutRef.current!);
+    setCoordinate(null);
     timeoutRef.current = null;
   };
 
@@ -99,7 +95,7 @@ const useLongPressAnimation = (onLongPress: () => void, options?: UseLongPressAn
 
   return {
     handleTouchStart,
-    handleTouchMove,
+    handleTouchMove: handleTouchEnd,
     handleTouchEnd,
     LongPressAnimation,
   };
