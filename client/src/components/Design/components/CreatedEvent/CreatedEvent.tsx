@@ -35,7 +35,6 @@ export interface CreatedEventItemProps {
 export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, createdEvent}: CreatedEventItemProps) {
   const navigate = useNavigate();
 
-  const {theme} = useTheme();
   const onLongPress = () => {
     setEditMode();
     if (!isChecked) onChange(createdEvent);
@@ -59,7 +58,7 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
         padding="0.5rem 1rem"
         paddingInline="0.5rem"
         onClick={onClick}
-        css={touchAreaStyle({theme})}
+        css={touchAreaStyle}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}

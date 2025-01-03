@@ -18,11 +18,9 @@ export const inProgressCheckStyle = ({inProgress, theme}: WithTheme<{inProgress:
     },
   });
 
-export const touchAreaStyle = ({theme}: WithTheme) =>
-  css({
-    position: 'relative',
-    overflow: 'hidden',
+export const touchAreaStyle = css({
+  position: 'relative',
+  overflow: 'hidden',
 
-    width: '100%',
-    backgroundColor: theme.colors.white,
-  });
+  width: '100%',
+});
