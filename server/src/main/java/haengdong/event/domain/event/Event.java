@@ -17,9 +17,13 @@ import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "UPDATE event SET deleted = true WHERE id = ?")
+@SQLRestriction("deleted = false")
 @Entity
 public class Event extends BaseEntity {
 
@@ -46,6 +50,8 @@ public class Event extends BaseEntity {
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "accountNumber"))
     private AccountNumber accountNumber;
+
+    private boolean deleted = Boolean.FALSE;
 
     private Event(String name, String token, Long userId, Bank bank, AccountNumber accountNumber) {
         validateName(name);
@@ -91,5 +97,9 @@ public class Event extends BaseEntity {
     public void changeAccount(String bankName, String accountNumber) {
         this.bank = Bank.of(bankName);
         this.accountNumber = new AccountNumber(accountNumber);
+    }
+
+    public boolean isNotHost(Long userId) {
+        return !this.userId.equals(userId);
     }
 }
