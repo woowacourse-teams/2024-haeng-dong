@@ -39,7 +39,7 @@ const animationStyle = ({
     left: `${remX - remSize / 2}rem`,
     width: `${remSize}rem`,
     height: `${remSize}rem`,
-    background: animationColor,
+    background: theme.colors[animationColor],
     borderRadius: `50%`,
     transform: 'scale(1)',
     animation: `${animationFrame} 0.5s ease-out forwards`,
