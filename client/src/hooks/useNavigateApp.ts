@@ -38,7 +38,7 @@ const useNavigateApp = (installThresholdTime?: number) => {
       }
     };
     document.addEventListener('visibilitychange', clearTime);
-    return () => document.addEventListener('visibilitychange', clearTime);
+    return () => document.removeEventListener('visibilitychange', clearTime);
   }, [document.visibilityState]);
 
   const navigateApp = ({androidAppScheme, iosAppScheme}: NavigateAppArgs) => {
