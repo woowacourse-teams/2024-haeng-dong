@@ -58,8 +58,6 @@ type DeleteEvents = {
 };
 
 export const requestDeleteEvents = async (args: DeleteEvents) => {
-  console.log(args);
-
   await requestDelete({
     endpoint: MEMBER_API_PREFIX,
     body: args,
