@@ -4,6 +4,7 @@ import {Link, Outlet} from 'react-router-dom';
 import {useEffect} from 'react';
 
 import {Profile} from '@components/Design/components/Profile/Profile';
+import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
 
 import useEventPageLayout from '@hooks/useEventPageLayout';
 import useShareEvent from '@hooks/useShareEvent';
@@ -19,7 +20,6 @@ import {updateMetaTag} from '@utils/udpateMetaTag';
 import getImageUrl from '@utils/getImageUrl';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
-import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;

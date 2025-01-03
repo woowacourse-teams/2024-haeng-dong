@@ -1,4 +1,5 @@
 import getImageUrl from '@utils/getImageUrl';
+
 import Image from '../../Image/Image';
 
 export const IconHeundeut = () => {

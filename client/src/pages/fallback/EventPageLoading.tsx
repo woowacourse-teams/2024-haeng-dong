@@ -1,5 +1,6 @@
-import {Flex, IconButton, MainLayout, TopNav} from '@components/Design';
 import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
+
+import {Flex, IconButton, MainLayout, TopNav} from '@components/Design';
 import {Footer} from '@components/Footer';
 
 const EventPageLoading = () => {

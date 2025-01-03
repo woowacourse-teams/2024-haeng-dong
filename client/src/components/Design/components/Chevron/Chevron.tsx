@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {IconChevron} from '../Icons/Icons/IconChevron';
+
 import {chevronStyle, activeChevronStyle} from './Chevron.style';
 
 type ChevronProps = {

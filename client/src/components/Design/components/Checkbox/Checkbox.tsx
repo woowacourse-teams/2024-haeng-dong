@@ -2,9 +2,9 @@
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Text from '../Text/Text';
+import {IconCheck} from '../Icons/Icons/IconCheck';
 
 import {checkboxStyle, inputGroupStyle} from './Checkbox.style';
-import {IconCheck} from '../Icons/Icons/IconCheck';
 
 interface Props {
   labelText: string;

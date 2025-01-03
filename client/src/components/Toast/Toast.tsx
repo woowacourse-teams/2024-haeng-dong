@@ -2,13 +2,13 @@ import {createPortal} from 'react-dom';
 import {useState, useEffect} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
+import {IconConfirmCircle} from '@components/Design/components/Icons/Icons/IconConfirmCircle';
+import {IconErrorCircle} from '@components/Design/components/Icons/Icons/IconErrorCircle';
 
 import {Button, Flex, Text} from '@HDesign/index';
 
 import {toastStyle, textStyle, toastMarginStyle} from './Toast.style';
 import {ToastProps, ToastType} from './Toast.type';
-import {IconConfirmCircle} from '@components/Design/components/Icons/Icons/IconConfirmCircle';
-import {IconErrorCircle} from '@components/Design/components/Icons/Icons/IconErrorCircle';
 
 const renderIcon = (type: ToastType) => {
   if (type === 'confirm') return <IconConfirmCircle />;

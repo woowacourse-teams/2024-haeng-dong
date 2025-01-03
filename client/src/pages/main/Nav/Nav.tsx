@@ -1,13 +1,13 @@
 import {useNavigate} from 'react-router-dom';
 
 import {User} from 'types/serviceType';
+import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
 
 import {Button, Text, TopNav, IconButton} from '@HDesign/index';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {navFixedStyle, navStyle, navWrapperStyle} from './Nav.style';
-import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
 
 type NavProps = Pick<User, 'isGuest'>;
 

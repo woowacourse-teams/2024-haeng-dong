@@ -5,9 +5,9 @@ import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Text from '../Text/Text';
 import IconButton from '../IconButton/IconButton';
+import {IconXCircle} from '../Icons/Icons/IconXCircle';
 
 import {chipButtonStyle} from './ChipButton.style';
-import {IconXCircle} from '../Icons/Icons/IconXCircle';
 
 interface Props {
   color: ColorKeys;

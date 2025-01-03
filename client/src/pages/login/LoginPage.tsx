@@ -1,4 +1,5 @@
 import Image from '@components/Design/components/Image/Image';
+import {IconKakao} from '@components/Design/components/Icons/Icons/IconKakao';
 
 import useLoginPage from '@hooks/useLoginPage';
 
@@ -7,7 +8,6 @@ import {Button, Flex, FunnelLayout, MainLayout, Text, TopNav, useTheme} from '@c
 import getImageUrl from '@utils/getImageUrl';
 
 import {hrStyle} from './LoginPage.style';
-import {IconKakao} from '@components/Design/components/Icons/Icons/IconKakao';
 
 const LOGIN_COMMENT = `로그인을 하면 계좌번호를 저장하고\n이전 행사들을 쉽게 볼 수 있어요.`;
 

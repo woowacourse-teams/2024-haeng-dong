@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {useTheme} from '@components/Design/theme/HDesignProvider';
+
 import {SvgProps} from './Icon.type';
 
 const Svg: React.FC<SvgProps> = ({children, color, height, isUsingFill = false, size, viewBox, width, ...rest}) => {

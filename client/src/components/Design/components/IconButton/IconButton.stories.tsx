@@ -2,6 +2,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import IconButton from '@HDcomponents/IconButton/IconButton';
+
 import {IconMeatballs} from '../Icons/Icons/IconMeatballs';
 import {IconXCircle} from '../Icons/Icons/IconXCircle';
 import {IconChevron} from '../Icons/Icons/IconChevron';

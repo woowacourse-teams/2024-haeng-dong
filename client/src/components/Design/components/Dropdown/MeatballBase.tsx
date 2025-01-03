@@ -3,11 +3,11 @@ import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Flex from '../Flex/Flex';
 import IconButton from '../IconButton/IconButton';
+import {IconMeatballs} from '../Icons/Icons/IconMeatballs';
 
 import {dropdownStyle} from './Dropdown.style';
 import {DropdownProps} from './Dropdown.type';
 import DropdownButton from './DropdownButton';
-import {IconMeatballs} from '../Icons/Icons/IconMeatballs';
 
 type MeatballBaseProps = DropdownProps & {
   isOpen: boolean;

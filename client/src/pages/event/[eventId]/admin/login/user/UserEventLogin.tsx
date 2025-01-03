@@ -1,11 +1,11 @@
 import Top from '@components/Design/components/Top/Top';
+import {IconKakao} from '@components/Design/components/Icons/Icons/IconKakao';
 
 import useLoginPage from '@hooks/useLoginPage';
 
 import {Button, Flex, FunnelLayout} from '@HDesign/index';
 
 import getEventBaseUrl from '@utils/getEventBaseUrl';
-import {IconKakao} from '@components/Design/components/Icons/Icons/IconKakao';
 
 const UserEventLogin = () => {
   const {goKakaoLogin} = useLoginPage();

@@ -7,10 +7,10 @@ import {useTheme} from '@theme/HDesignProvider';
 
 import Flex from '../Flex/Flex';
 import Text from '../Text/Text';
-
-import {inputBoxStyle, inputStyle, labelTextStyle, errorTextStyle} from './Input.style';
 import {IconXCircle} from '../Icons/Icons/IconXCircle';
 import {IconSearch} from '../Icons/Icons/IconSearch';
+
+import {inputBoxStyle, inputStyle, labelTextStyle, errorTextStyle} from './Input.style';
 
 export const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(function Input(
   {

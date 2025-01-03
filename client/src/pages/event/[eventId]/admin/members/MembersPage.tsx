@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import {Report} from 'types/serviceType';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
+import {IconEdit} from '@components/Design/components/Icons/Icons/IconEdit';
+import {IconTrash} from '@components/Design/components/Icons/Icons/IconTrash';
 
 import useEventMember from '@hooks/useEventMember';
 
@@ -14,8 +16,6 @@ import {
   noneReports,
   deleteButtonStyle,
 } from './MembersPage.style';
-import {IconEdit} from '@components/Design/components/Icons/Icons/IconEdit';
-import {IconTrash} from '@components/Design/components/Icons/Icons/IconTrash';
 
 const MembersPage = () => {
   const {reports, canSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =

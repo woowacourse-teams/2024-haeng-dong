@@ -4,6 +4,7 @@ import StepList from '@components/StepList/Steps';
 import useRequestGetSteps from '@hooks/queries/step/useRequestGetSteps';
 import Reports from '@components/Reports/Reports';
 import useRequestGetImages from '@hooks/queries/images/useRequestGetImages';
+import {IconPictureSquare} from '@components/Design/components/Icons/Icons/IconPictureSquare';
 
 import useEventDataContext from '@hooks/useEventDataContext';
 
@@ -16,7 +17,6 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {receiptStyle} from './HomePage.style';
-import {IconPictureSquare} from '@components/Design/components/Icons/Icons/IconPictureSquare';
 
 const HomePage = () => {
   const {isAdmin, eventName} = useEventDataContext();

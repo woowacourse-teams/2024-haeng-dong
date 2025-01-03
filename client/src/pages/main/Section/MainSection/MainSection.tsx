@@ -3,11 +3,11 @@ import {useNavigate} from 'react-router-dom';
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 import {User} from 'types/serviceType';
+import {IconChevron} from '@components/Design/components/Icons/Icons/IconChevron';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import {animateWithDelay, chevronStyle, mainSectionStyle, sectionStyle} from './MainSection.style';
-import {IconChevron} from '@components/Design/components/Icons/Icons/IconChevron';
 
 type NavProps = Pick<User, 'isGuest'>;
 

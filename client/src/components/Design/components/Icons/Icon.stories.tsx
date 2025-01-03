@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
 
+import {COLORS} from '@components/Design/token/colors';
+
 import {IconCheck} from './Icons/IconCheck';
 import {IconChevron} from './Icons/IconChevron';
 import {IconConfirmCircle} from './Icons/IconConfirmCircle';
-import {COLORS} from '@components/Design/token/colors';
 import {IconEdit} from './Icons/IconEdit';
 import {IconErrorCircle} from './Icons/IconErrorCircle';
 import {IconKakao} from './Icons/IconKakao';

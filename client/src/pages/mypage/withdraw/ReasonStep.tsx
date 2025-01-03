@@ -1,11 +1,12 @@
 import {css} from '@emotion/react';
 
+import {IconChevron} from '@components/Design/components/Icons/Icons/IconChevron';
+
 import {WithdrawStep} from '@hooks/useWithdrawFunnel';
 
 import {Top, Text} from '@components/Design';
 
 import {stepButtonGroupStyle, stepButtonBoxStyle} from './ReasonStep.style';
-import {IconChevron} from '@components/Design/components/Icons/Icons/IconChevron';
 
 const ReasonStep = ({handleMoveStep}: {handleMoveStep: (nextStep: WithdrawStep) => void}) => {
   return (
