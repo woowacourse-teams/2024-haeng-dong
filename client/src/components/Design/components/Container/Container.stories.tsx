@@ -16,12 +16,13 @@ const meta = {
 Container 컴포넌트는 콘텐츠를 좌우로 감싸는 래퍼(wrapper) 컴포넌트입니다.</br>
 최대 너비를 지정하고 내부 콘텐츠를 중앙 정렬할 수 있는 기능을 제공합니다.<br>
 주로 **최대 넓이가 필요한 곳에서 layout을 잡는** 용도로 사용합니다.<br>
-기본적으로 **w 100%**가 적용되어 있습니다.<br>
+기본적으로 width는 100%이고 height는 auto인 것 처럼 작동합니다.<br>
 
 ### 주요 기능
 - **최대 너비(maxW) 설정**: number(px) 또는 string(%, rem, em 등)
 - **배경색(bg) 설정**: string(색상코드, rgb, rgba 등)
 - **패딩(p)과 마진(m) 조절**: number(px) 또는 string(%, rem, em 등)
+- **테두리(b)와 라운드(br) 스타일링 가능**: number(px) 또는 string(%, rem, em 등 / border는 CSS border 속성 형식 지원)
 - **중앙 정렬(center) 설정**: boolean
 - 이 외의 요소들은 **css prop으로 추가 스타일링 가능**
 
@@ -45,6 +46,27 @@ Container 컴포넌트는 콘텐츠를 좌우로 감싸는 래퍼(wrapper) 컴�
 \`\`\`jsx
 <Container p={24} m="0 auto" bg="#fff">
   여백이 있는 컨테이너
+</Container>
+\`\`\`
+
+#### 테두리와 라운드 설정
+\`\`\`jsx
+<Container maxW={800} b="2px solid #ddd" br={8}>
+  테두리와 라운드가 있는 컨테이너
+</Container>
+\`\`\`
+
+#### 복합 스타일링
+\`\`\`jsx
+<Container 
+  maxW={600}
+  p={32}
+  b="1px solid #eee"
+  br={16}
+  center
+  bg="#fafafa"
+>
+  모든 속성을 활용한 컨테이너
 </Container>
 \`\`\`
         `,

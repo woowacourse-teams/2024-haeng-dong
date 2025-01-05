@@ -1,7 +1,11 @@
 import {css} from '@emotion/react';
 import {HStackProps, StackProps, VStackProps} from './Stack.type';
 
-export const stackStyle = ({gap, direction, justify, align, p, m, br, b, bg}: StackProps) => {
+export const stackStyle = ({gap, direction, justify, align, p, m, br, b, bg, w, h}: StackProps) => {
+  const widthValue =
+    typeof w === 'number' ? `${w}px` : w?.includes('px') || w?.includes('%') || w?.includes('em') ? w : `${w}px`;
+  const heightValue =
+    typeof h === 'number' ? `${h}px` : h?.includes('px') || h?.includes('%') || h?.includes('em') ? h : `${h}px`;
   const paddingValue =
     typeof p === 'number'
       ? `${p}px`
@@ -23,6 +27,8 @@ export const stackStyle = ({gap, direction, justify, align, p, m, br, b, bg}: St
 
   return css`
     display: flex;
+    width: ${widthValue};
+    height: ${heightValue};
     gap: ${gapValue};
     flex-direction: ${direction};
     justify-content: ${justify};
@@ -35,7 +41,7 @@ export const stackStyle = ({gap, direction, justify, align, p, m, br, b, bg}: St
   `;
 };
 
-export const hStackStyle = ({gap, justify, align, p, m, br, b, bg}: HStackProps) => {
+export const hStackStyle = ({gap, justify, p, m, br, b, bg}: HStackProps) => {
   const paddingValue =
     typeof p === 'number'
       ? `${p}px`
@@ -60,7 +66,7 @@ export const hStackStyle = ({gap, justify, align, p, m, br, b, bg}: HStackProps)
     display: flex;
     gap: ${gapValue};
     justify-content: ${justify};
-    align-items: ${align};
+    align-items: center;
     padding: ${paddingValue};
     margin: ${marginValue};
     border-radius: ${borderRadiusValue};
@@ -69,7 +75,7 @@ export const hStackStyle = ({gap, justify, align, p, m, br, b, bg}: HStackProps)
   `;
 };
 
-export const vStackStyle = ({gap, justify, align, p, m, br, b, bg}: VStackProps) => {
+export const vStackStyle = ({gap, align, p, m, br, b, bg}: VStackProps) => {
   const paddingValue =
     typeof p === 'number'
       ? `${p}px`
@@ -93,7 +99,7 @@ export const vStackStyle = ({gap, justify, align, p, m, br, b, bg}: VStackProps)
     flex-direction: column;
     display: flex;
     gap: ${gapValue};
-    justify-content: ${justify};
+    justify-content: center;
     align-items: ${align};
     padding: ${paddingValue};
     margin: ${marginValue};

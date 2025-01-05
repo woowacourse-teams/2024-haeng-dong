@@ -4,13 +4,28 @@ import {stackStyle} from './Stack.style';
 import {StackProps} from './Stack.type';
 
 export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
-  {children, gap = 0, direction = 'column', justify = 'center', align = 'center', p, m, br, b, bg, divider, ...props},
+  {
+    children,
+    gap = 0,
+    direction = 'column',
+    justify = 'center',
+    align = 'center',
+    w = 'auto',
+    h = 'auto',
+    p,
+    m,
+    br,
+    b,
+    bg,
+    divider,
+    ...props
+  },
   ref,
 ) {
   const childrenArray = React.Children.toArray(children);
 
   return (
-    <div css={stackStyle({gap, direction, justify, align, p, m, br, b, bg})} ref={ref} {...props}>
+    <div css={stackStyle({gap, direction, justify, align, p, m, br, b, bg, w, h})} ref={ref} {...props}>
       {childrenArray.map((child, index) => {
         const key = React.isValidElement(child) ? child.key || index : index;
         return (

@@ -12,12 +12,9 @@ const meta = {
     docs: {
       description: {
         component: `
-
-Stack 컴포넌트는 자식 요소들을 **수직** 또는 **수평**으로 배치하는 레이아웃 컴포넌트입니다.<br/>
-주로 **꽉 채우는 화면에서 하나의 자식을 중앙에 배치**하는 용도로 사용하거나,<br/>
-**넓은 화면을 채우는 곳에서 layout을 잡는** 용도로 사용합니다.
-기본적으로 width는 100%이고 height는 auto인 것 처럼 작동합니다.
-
+Stack 컴포넌트는 자식 요소들을 **수직** 또는 **수평**으로 배치하는 레이아웃 컴포넌트입니다.</br>
+**넓은 화면을 채우는 곳에서 layout을 잡는** 용도로 사용합니다.</br>
+width와 height, justify와 align을 수정할 수 있습니다.
 
 ### 주요 기능
 - **간격(gap) 조절**: 자식 요소들 사이의 간격을 설정할 수 있습니다.
@@ -28,7 +25,7 @@ Stack 컴포넌트는 자식 요소들을 **수직** 또는 **수평**으로 배
 ### 사용 예시
 \`\`\`jsx
 // 기본 사용
-<Stack gap={16} direction="column">
+<Stack w="100%" h={640} gap={16} direction="column">
   <div>첫 번째 아이템</div>
   <div>두 번째 아이템</div>
 </Stack>
@@ -78,8 +75,26 @@ Stack 컴포넌트는 자식 요소들을 **수직** 또는 **수평**으로 배
   },
   tags: ['autodocs'],
   argTypes: {
+    w: {
+      description: '스택의 너비 (가능한 타입: number(px), string("100%" 형식, rem, em), "auto")',
+      control: {
+        type: 'range',
+        min: 0,
+        max: 40,
+        step: 4,
+      },
+    },
+    h: {
+      description: '스택의 높이 (가능한 타입: number(px), string("100%" 형식, rem, em), "auto")',
+      control: {
+        type: 'range',
+        min: 0,
+        max: 40,
+        step: 4,
+      },
+    },
     p: {
-      description: '박스의 패딩 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
+      description: '스택의 패딩 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
       control: {
         type: 'range',
         min: 0,
@@ -88,7 +103,7 @@ Stack 컴포넌트는 자식 요소들을 **수직** 또는 **수평**으로 배
       },
     },
     m: {
-      description: '박스의 마진 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
+      description: '스택의 마진 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
       control: {
         type: 'range',
         min: 0,
@@ -97,7 +112,7 @@ Stack 컴포넌트는 자식 요소들을 **수직** 또는 **수평**으로 배
       },
     },
     br: {
-      description: '박스의 라운드 값 (가능한 타입: number(px), string(%, rem, em), "50%"(원형))',
+      description: '스택의 라운드 값 (가능한 타입: number(px), string(%, rem, em), "50%"(원형))',
       control: {
         type: 'range',
         min: 0,
@@ -106,13 +121,13 @@ Stack 컴포넌트는 자식 요소들을 **수직** 또는 **수평**으로 배
       },
     },
     b: {
-      description: '박스의 테두리 (가능한 타입: string("1px solid black" 형식), "none")',
+      description: '스택의 테두리 (가능한 타입: string("1px solid black" 형식), "none")',
       control: {
         type: 'text',
       },
     },
     bg: {
-      description: '박스의 배경색 (가능한 타입: string(hex, rgb, rgba, hsl, hsla, 색상명))',
+      description: '스택의 배경색 (가능한 타입: string(hex, rgb, rgba, hsl, hsla, 색상명))',
       control: {
         type: 'color',
       },

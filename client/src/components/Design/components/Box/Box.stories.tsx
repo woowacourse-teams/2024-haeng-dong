@@ -11,13 +11,16 @@ const meta = {
       description: {
         component: `
 Box 컴포넌트는 기본적인 레이아웃을 구성하는데 사용되는 컨테이너 컴포넌트입니다.<br/>
-간단한 div가 사용되는 곳을 대체할 수 있는 컴포넌트입니다.<br/>
+적은 빈도로 사용될 것으로 예상되며, 크기를 직접 지정할 수 있는 간단한 div가 사용되는 곳을 대체할 수 있는 컴포넌트입니다.<br/>
 
 ### 주요 기능
 - **너비(w)와 높이(h) 조절 가능**: number(px) 또는 string(%, rem, em 등)
+- **z-index(z) 조절 가능**: number
 - **배경색(bg) 설정 가능**: string(색상코드, rgb, rgba 등)
 - **패딩(p)과 마진(m) 조절 가능**: number(px) 또는 string(%, rem, em 등 / "상하 좌우" 형식 지원)
 - **테두리(b)와 라운드(br) 스타일링 가능**: number(px) 또는 string(%, rem, em 등 / border는 CSS border 속성 형식 지원)
+- **중앙 정렬 사용 가능**: boolean
+- **고정 위치 사용 가능**: boolean
 - 이 외의 요소들은 **css prop으로 추가 스타일링 가능**
 
 ### 사용 예시
@@ -26,6 +29,13 @@ Box 컴포넌트는 기본적인 레이아웃을 구성하는데 사용되는 �
 \`\`\`jsx
 <Box w={200} h={200} bg="#fff">
   기본 박스
+</Box>
+\`\`\`
+
+#### z-index 설정
+\`\`\`jsx
+<Box w={200} h={200} bg="#fff" z={10}>
+  고정 위치 박스
 </Box>
 \`\`\`
 
@@ -38,23 +48,22 @@ Box 컴포넌트는 기본적인 레이아웃을 구성하는데 사용되는 �
 
 #### 여백 설정
 \`\`\`jsx
-<Box p={36} m={16} bg="#fff">
-  여백이 있는 박스
-</Box>
-
-<Box p="8px 16px" m="8px 16px" bg="#fff">
+<Box p="8px 16px" m={16}  bg="#fff">
   여백이 있는 박스
 </Box>
 \`\`\`
 
 #### 테두리와 라운드 설정
 \`\`\`jsx
-<Box br="50%" b="2px solid #ddd" bg="#fff">
-  원형 박스
-</Box>
-
-<Box br={4} b="1px dashed #999" bg="#fff">
+<Box br="25%" b="2px solid #ddd" bg="#fff">
   라운드 박스
+</Box>
+\`\`\`
+
+#### 고정 위치 설정
+\`\`\`jsx
+<Box fixed>
+  고정 위치 박스
 </Box>
 \`\`\`
 
@@ -102,6 +111,15 @@ Box 컴포넌트는 기본적인 레이아웃을 구성하는데 사용되는 �
       },
       description: '박스의 높이 (가능한 타입: number(px), string(%, rem, em, vh, vw 등), "auto")',
     },
+    z: {
+      description: '박스의 z-index 값 (가능한 타입: number)',
+      control: {
+        type: 'range',
+        min: 0,
+        max: 10,
+        step: 1,
+      },
+    },
     p: {
       description: '박스의 패딩 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
       control: {
@@ -141,6 +159,12 @@ Box 컴포넌트는 기본적인 레이아웃을 구성하는데 사용되는 �
         type: 'color',
       },
     },
+    fixed: {
+      description: '박스를 고정 위치로 배치할지 여부',
+      control: {
+        type: 'boolean',
+      },
+    },
     center: {
       description: '박스를 중앙에 배치할지 여부',
       control: {
@@ -170,6 +194,7 @@ export const Default: Story = {
     m: 16,
     br: 16,
     b: '1px solid #f66',
+    z: 1,
     center: false,
   },
 };

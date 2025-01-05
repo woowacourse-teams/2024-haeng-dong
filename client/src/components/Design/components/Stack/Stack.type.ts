@@ -1,6 +1,8 @@
 import {CSSProperties, HTMLAttributes, ReactNode} from 'react';
 
 export interface StackProps extends HTMLAttributes<HTMLDivElement> {
+  w?: CSSProperties['width'];
+  h?: CSSProperties['height'];
   p?: CSSProperties['padding'];
   m?: CSSProperties['margin'];
   br?: CSSProperties['borderRadius'];
@@ -13,5 +15,5 @@ export interface StackProps extends HTMLAttributes<HTMLDivElement> {
   divider?: ReactNode;
 }
 
-export type HStackProps = Omit<StackProps, 'direction'>;
-export type VStackProps = Omit<StackProps, 'direction'>;
+export type HStackProps = Omit<StackProps, 'w' | 'h' | 'direction' | 'align'>;
+export type VStackProps = Omit<StackProps, 'w' | 'h' | 'direction' | 'justify'>;

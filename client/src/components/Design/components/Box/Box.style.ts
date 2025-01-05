@@ -1,11 +1,12 @@
 import {css} from '@emotion/react';
 import {BoxProps} from './Box.type';
 
-export const boxStyle = ({w, h, bg, p, m, br, b, center}: BoxProps) => {
+export const boxStyle = ({w, h, z, bg, p, m, br, b, center, fixed}: BoxProps) => {
   const widthValue =
     typeof w === 'number' ? `${w}px` : w?.includes('px') || w?.includes('%') || w?.includes('em') ? w : `${w}px`;
   const heightValue =
     typeof h === 'number' ? `${h}px` : h?.includes('px') || h?.includes('%') || h?.includes('em') ? h : `${h}px`;
+  const zIndexValue = typeof z === 'number' ? z : z;
   const paddingValue =
     typeof p === 'number'
       ? `${p}px`
@@ -32,11 +33,16 @@ export const boxStyle = ({w, h, bg, p, m, br, b, center}: BoxProps) => {
     margin: ${marginValue};
     border-radius: ${borderRadiusValue};
     border: ${borderValue};
+    z-index: ${zIndexValue};
     ${center &&
     css`
       display: flex;
       justify-content: center;
       align-items: center;
+    `}
+    ${fixed &&
+    css`
+      position: fixed;
     `}
   `;
 };

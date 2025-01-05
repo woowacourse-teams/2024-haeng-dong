@@ -13,6 +13,8 @@ const meta = {
         component: `
 HStack 컴포넌트는 자식 요소들을 **수평**으로 배치하는 레이아웃 컴포넌트입니다.<br/>
 기본적으로 width 100%이고 height는 auto인 것 처럼 작동합니다.
+align은 center로 고정되어 있으며, justify를 수정할 수 있습니다.
+width, height, justify를 수정하려면 Stack 컴포넌트를 사용해야 합니다.
 
 ### 주요 기능
 - **간격(gap) 조절**: 자식 요소들 사이의 간격을 설정할 수 있습니다.
@@ -28,7 +30,7 @@ HStack 컴포넌트는 자식 요소들을 **수평**으로 배치하는 레이�
 </HStack>
 
 // 정렬 설정
-<HStack gap={8} justify="space-between" align="center">
+<HStack gap={8} justify="space-between">
   <div>왼쪽</div>
   <div>오른쪽</div>
 </HStack>
@@ -46,7 +48,7 @@ HStack 컴포넌트는 자식 요소들을 **수평**으로 배치하는 레이�
   tags: ['autodocs'],
   argTypes: {
     p: {
-      description: '박스의 패딩 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
+      description: '스택의 패딩 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
       control: {
         type: 'range',
         min: 0,
@@ -55,7 +57,7 @@ HStack 컴포넌트는 자식 요소들을 **수평**으로 배치하는 레이�
       },
     },
     m: {
-      description: '박스의 마진 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
+      description: '스택의 마진 (가능한 타입: number(px), string("10px 20px" 형식, rem, em), "auto")',
       control: {
         type: 'range',
         min: 0,
@@ -64,7 +66,7 @@ HStack 컴포넌트는 자식 요소들을 **수평**으로 배치하는 레이�
       },
     },
     br: {
-      description: '박스의 라운드 값 (가능한 타입: number(px), string(%, rem, em), "50%"(원형))',
+      description: '스택의 라운드 값 (가능한 타입: number(px), string(%, rem, em), "50%"(원형))',
       control: {
         type: 'range',
         min: 0,
@@ -73,13 +75,13 @@ HStack 컴포넌트는 자식 요소들을 **수평**으로 배치하는 레이�
       },
     },
     b: {
-      description: '박스의 테두리 (가능한 타입: string("1px solid black" 형식), "none")',
+      description: '스택의 테두리 (가능한 타입: string("1px solid black" 형식), "none")',
       control: {
         type: 'text',
       },
     },
     bg: {
-      description: '박스의 배경색 (가능한 타입: string(hex, rgb, rgba, hsl, hsla, 색상명))',
+      description: '스택의 배경색 (가능한 타입: string(hex, rgb, rgba, hsl, hsla, 색상명))',
       control: {
         type: 'color',
       },
@@ -99,12 +101,7 @@ HStack 컴포넌트는 자식 요소들을 **수평**으로 배치하는 레이�
       description: '주축 방향 정렬 방식',
       defaultValue: 'center',
     },
-    align: {
-      control: 'select',
-      options: ['flex-start', 'center', 'flex-end', 'stretch', 'baseline'],
-      description: '교차축 방향 정렬 방식',
-      defaultValue: 'flex-start',
-    },
+
     divider: {
       description: '자식 요소들 사이의 구분선 표시 여부',
     },
@@ -117,7 +114,7 @@ type Story = StoryObj<typeof HStack>;
 const Divider = () => <Box w={1} h="100%" bg="#ddd" css={{flexShrink: 0}} />;
 
 const DemoBox = ({children}: {children: React.ReactNode}) => (
-  <Box w="100%" h={64} bg="#f0f0f0" b="1px solid #ddd" br={8}>
+  <Box w={64} h={64} bg="#f0f0f0" b="1px solid #ddd" br={8}>
     {children}
   </Box>
 );
@@ -139,8 +136,7 @@ export const Default: Story = {
     b: '1px solid #f66',
     bg: '#fff',
     gap: 16,
-    justify: 'center',
-    align: 'flex-start',
+    justify: 'flex-start',
   },
 };
 
@@ -161,7 +157,6 @@ export const WithDivider: Story = {
     b: '1px solid #f66',
     bg: '#fff',
     gap: 16,
-    justify: 'center',
-    align: 'flex-start',
+    justify: 'flex-start',
   },
 };
