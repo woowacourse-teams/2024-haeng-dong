@@ -75,7 +75,7 @@ const EditableAmount = ({value, onChange, onClick, readOnly = true, isFixed = fa
             원
           </Text>
         </div>
-        <Icon iconType="editPencil" />
+        {onClick && <Icon iconType="editPencil" />}
       </div>
 
       <span

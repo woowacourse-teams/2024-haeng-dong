@@ -8,8 +8,8 @@ import {Text} from '@components/Design';
 
 interface Props {
   billDetails: BillDetail[];
-  onClickInput: (id: number) => void;
-  activatedId: number;
+  onClickInput?: (id: number) => void;
+  activatedId?: number;
 }
 
 const BillDetails = forwardRef<HTMLDivElement, Props>(({billDetails, onClickInput, activatedId}, ref) => {
@@ -39,7 +39,7 @@ const BillDetails = forwardRef<HTMLDivElement, Props>(({billDetails, onClickInpu
           <EditableAmount
             value={billDetail.price.toLocaleString('ko-kr')}
             onChange={() => {}}
-            onClick={() => onClickInput(billDetail.id)}
+            onClick={onClickInput ? () => onClickInput(billDetail.id) : undefined}
             isFixed={billDetail.isFixed}
             activated={activatedId === billDetail.id}
           />

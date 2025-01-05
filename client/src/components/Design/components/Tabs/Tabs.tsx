@@ -9,10 +9,10 @@ import Flex from '../Flex/Flex';
 import {tabListStyle, tabItemStyle, tabTextStyle, indicatorStyle} from './Tabs.style';
 import {TabsProps} from './Tab.type';
 
-const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
+const Tabs: React.FC<TabsProps> = ({children, active = 0, tabsContainerStyle}) => {
   const {theme} = useTheme();
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [tabWidth, setTabWidth] = useState(0);
+  const [activeTabIndex, setActiveTabIndex] = useState(active);
   const tabRef = useRef<HTMLLIElement>(null);
 
   const isActive = (index: number) => activeTabIndex === index;
