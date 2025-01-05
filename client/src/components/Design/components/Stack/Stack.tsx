@@ -14,10 +14,10 @@ export const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
       {childrenArray.map((child, index) => {
         const key = React.isValidElement(child) ? child.key || index : index;
         return (
-          <React.Fragment key={key}>
-            {child}
+          <>
+            <React.Fragment key={key}>{child}</React.Fragment>
             {index !== childrenArray.length - 1 && divider}
-          </React.Fragment>
+          </>
         );
       })}
     </div>

@@ -1,7 +1,7 @@
 import {css} from '@emotion/react';
 import {BoxProps} from './Box.type';
 
-export const boxStyle = ({w, h, bg, p, m, br, b}: BoxProps) => {
+export const boxStyle = ({w, h, bg, p, m, br, b, center}: BoxProps) => {
   const widthValue =
     typeof w === 'number' ? `${w}px` : w?.includes('px') || w?.includes('%') || w?.includes('em') ? w : `${w}px`;
   const heightValue =
@@ -32,5 +32,11 @@ export const boxStyle = ({w, h, bg, p, m, br, b}: BoxProps) => {
     margin: ${marginValue};
     border-radius: ${borderRadiusValue};
     border: ${borderValue};
+    ${center &&
+    css`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `}
   `;
 };

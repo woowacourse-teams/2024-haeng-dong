@@ -8,4 +8,5 @@ export interface BoxProps extends React.HTMLAttributes<HTMLDivElement> {
   br?: CSSProperties['borderRadius'];
   b?: CSSProperties['border'];
   bg?: CSSProperties['background'];
+  center?: boolean;
 }

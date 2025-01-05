@@ -2,7 +2,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import Stack from './Stack';
 import Box from '../Box/Box';
-import {FlexDirectionType} from '../Flex/Flex.type';
 import {CSSProperties} from 'react';
 
 const meta = {
@@ -17,7 +16,7 @@ const meta = {
 Stack 컴포넌트는 자식 요소들을 **수직** 또는 **수평**으로 배치하는 레이아웃 컴포넌트입니다.<br/>
 주로 **꽉 채우는 화면에서 하나의 자식을 중앙에 배치**하는 용도로 사용하거나,<br/>
 **넓은 화면을 채우는 곳에서 layout을 잡는** 용도로 사용합니다.
-기본적으로 **w, h 모두 100%**가 적용되어 있습니다.<br/>
+기본적으로 width는 100%이고 height는 auto인 것 처럼 작동합니다.
 
 
 ### 주요 기능
@@ -159,7 +158,7 @@ const Divider = ({direction}: {direction: CSSProperties['flexDirection']}) => (
 );
 
 const DemoBox = ({children}: {children: React.ReactNode}) => (
-  <Box w={64} h={64} bg="#f0f0f0" b="1px solid #ddd" br={8}>
+  <Box w="100%" h={64} bg="#f0f0f0" b="1px solid #ddd" br={8}>
     {children}
   </Box>
 );

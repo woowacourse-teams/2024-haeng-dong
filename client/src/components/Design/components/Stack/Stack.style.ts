@@ -22,7 +22,6 @@ export const stackStyle = ({gap, direction, justify, align, p, m, br, b, bg}: St
   const gapValue = typeof gap === 'number' ? `${gap}px` : gap?.includes('px') || gap?.includes('em') ? gap : `${gap}px`;
 
   return css`
-    height: 100%;
     display: flex;
     gap: ${gapValue};
     flex-direction: ${direction};

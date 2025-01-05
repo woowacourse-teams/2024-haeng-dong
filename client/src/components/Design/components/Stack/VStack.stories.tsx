@@ -125,6 +125,28 @@ const DemoBox = ({children}: {children: React.ReactNode}) => (
 export const Default: Story = {
   render: args => (
     <Box w={640} h={640} bg="#ffffff" p={16} b="1px solid #eee" br={8}>
+      <VStack {...args}>
+        <DemoBox>Box 1</DemoBox>
+        <DemoBox>Box 2</DemoBox>
+        <DemoBox>Box 3</DemoBox>
+      </VStack>
+    </Box>
+  ),
+  args: {
+    p: 16,
+    m: 0,
+    br: 16,
+    b: '1px solid #f66',
+    bg: '#fff',
+    gap: 16,
+    justify: 'flex-start',
+    align: 'center',
+  },
+};
+
+export const WithDivider: Story = {
+  render: args => (
+    <Box w={640} h={640} bg="#ffffff" p={16} b="1px solid #eee" br={8}>
       <VStack {...args} divider={<Divider />}>
         <DemoBox>Box 1</DemoBox>
         <DemoBox>Box 2</DemoBox>

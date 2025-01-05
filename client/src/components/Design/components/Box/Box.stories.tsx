@@ -141,6 +141,12 @@ Box 컴포넌트는 기본적인 레이아웃을 구성하는데 사용되는 �
         type: 'color',
       },
     },
+    center: {
+      description: '박스를 중앙에 배치할지 여부',
+      control: {
+        type: 'boolean',
+      },
+    },
   },
 } satisfies Meta<typeof Box>;
 
@@ -149,7 +155,13 @@ type Story = StoryObj<typeof Box>;
 
 // 기본 박스 컴포넌트
 export const Default: Story = {
-  render: args => <Box {...args}>기본 박스 컴포넌트</Box>,
+  render: args => (
+    <Box {...args}>
+      <Box w={80} h={80} bg="#f0f0f0" b="1px solid #ddd" br={8}>
+        children
+      </Box>
+    </Box>
+  ),
   args: {
     w: 240,
     h: 240,
@@ -158,5 +170,6 @@ export const Default: Story = {
     m: 16,
     br: 16,
     b: '1px solid #f66',
+    center: false,
   },
 };

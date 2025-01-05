@@ -114,15 +114,37 @@ HStack 컴포넌트는 자식 요소들을 **수평**으로 배치하는 레이�
 export default meta;
 type Story = StoryObj<typeof HStack>;
 
-const Divider = () => <Box w={1} h="100%" bg="#ddd" />;
+const Divider = () => <Box w={1} h="100%" bg="#ddd" css={{flexShrink: 0}} />;
 
 const DemoBox = ({children}: {children: React.ReactNode}) => (
-  <Box w={64} h={64} bg="#f0f0f0" b="1px solid #ddd" br={8}>
+  <Box w="100%" h={64} bg="#f0f0f0" b="1px solid #ddd" br={8}>
     {children}
   </Box>
 );
 
 export const Default: Story = {
+  render: args => (
+    <Box w={640} h={240} bg="#ffffff" p={16} b="1px solid #eee" br={8}>
+      <HStack {...args}>
+        <DemoBox>Box 1</DemoBox>
+        <DemoBox>Box 2</DemoBox>
+        <DemoBox>Box 3</DemoBox>
+      </HStack>
+    </Box>
+  ),
+  args: {
+    p: 16,
+    m: 0,
+    br: 16,
+    b: '1px solid #f66',
+    bg: '#fff',
+    gap: 16,
+    justify: 'center',
+    align: 'flex-start',
+  },
+};
+
+export const WithDivider: Story = {
   render: args => (
     <Box w={640} h={240} bg="#ffffff" p={16} b="1px solid #eee" br={8}>
       <HStack {...args} divider={<Divider />}>
