@@ -83,8 +83,8 @@ width와 height, justify와 align을 수정할 수 있습니다.
       control: {
         type: 'range',
         min: 0,
-        max: 40,
-        step: 4,
+        max: 640,
+        step: 16,
       },
     },
     h: {
@@ -92,8 +92,8 @@ width와 height, justify와 align을 수정할 수 있습니다.
       control: {
         type: 'range',
         min: 0,
-        max: 40,
-        step: 4,
+        max: 640,
+        step: 16,
       },
     },
     p: {
