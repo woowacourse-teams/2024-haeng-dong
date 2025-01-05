@@ -1,4 +1,5 @@
 import {css} from '@emotion/react';
+
 import {BoxProps} from './Box.type';
 
 export const boxStyle = ({w, h, z, bg, p, m, br, b, center, fixed}: BoxProps) => {

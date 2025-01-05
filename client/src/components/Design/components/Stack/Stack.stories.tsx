@@ -1,8 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
-import Stack from './Stack';
-import Box from '../Box/Box';
+
 import {CSSProperties} from 'react';
+
+import Box from '../Box/Box';
+
+import Stack from './Stack';
 
 const meta = {
   title: 'patterns/Stack',

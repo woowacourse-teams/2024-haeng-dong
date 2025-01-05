@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
-import HStack from './HStack';
+
 import Box from '../Box/Box';
+
+import HStack from './HStack';
 
 const meta = {
   title: 'patterns/HStack',
