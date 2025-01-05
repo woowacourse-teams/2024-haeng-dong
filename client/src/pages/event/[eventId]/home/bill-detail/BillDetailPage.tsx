@@ -1,14 +1,16 @@
 import {css} from '@emotion/react';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import AmountInput from '@components/AmountInput/AmountInput';
 import BillDetails from '@components/BillDetails/BillDetails';
 import Top from '@components/Design/components/Top/Top';
-
-import {FixedButton, Flex, MainLayout, TopNav} from '@components/Design';
-import {useLocation, useNavigate} from 'react-router-dom';
 import {Bill} from 'types/serviceType';
 import useRequestGetBillDetails from '@hooks/queries/bill/useRequestGetBillDetails';
+
 import useEditBillState from '@hooks/useEditBillState';
+
+import {FixedButton, Flex, MainLayout, TopNav} from '@components/Design';
+
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 const BillDetailPage = () => {
