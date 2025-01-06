@@ -43,6 +43,7 @@ public enum HaengdongErrorCode {
     FORBIDDEN("접근할 수 없는 행사입니다."),
 
     KAKAO_LOGIN_FAIL("카카오 인증에 실패했습니다."),
+    KAKAO_UNLINK_FAIL("카카오 회원 탈퇴에 실패했습니다."),
 
     /* Request Validation */
 

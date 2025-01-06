@@ -46,4 +46,25 @@ public class KakaoClient {
     public String getClientId() {
         return kakaoProperties.clientId();
     }
+
+    public void unlink(String memberNumber) {
+        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        formData.add("target_id_type", "user_id");
+        formData.add("target_id", memberNumber);
+
+        try {
+            String responseBody = restClient
+                    .post()
+                    .uri(kakaoProperties.unlinkRequestUri())
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                    .header(HttpHeaders.AUTHORIZATION, "KakaoAK " + kakaoProperties.adminKey())
+                    .body(formData)
+                    .retrieve()
+                    .body(String.class);
+
+            log.info("카카오 회원 탈퇴: {}", responseBody);
+        } catch (Exception e) {
+            throw new HaengdongException(HaengdongErrorCode.KAKAO_LOGIN_FAIL, e);
+        }
+    }
 }

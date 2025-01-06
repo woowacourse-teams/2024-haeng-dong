@@ -7,6 +7,8 @@ public record KakaoProperties(
         String baseUri,
         String clientId,
         String tokenRequestUri,
-        String oauthCodeUri
+        String unlinkRequestUri,
+        String oauthCodeUri,
+        String adminKey
 ) {
 }

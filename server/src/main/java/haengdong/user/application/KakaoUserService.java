@@ -3,6 +3,7 @@ package haengdong.user.application;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import haengdong.event.application.response.UserAppResponse;
 import haengdong.user.application.request.UserJoinAppRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,5 +38,11 @@ public class KakaoUserService {
 
     public String getClientId() {
         return kakaoClient.getClientId();
+    }
+
+    public void withdraw(Long userId) {
+        String memberNumber = userService.findMemberNumberById(userId);
+        kakaoClient.unlink(memberNumber);
+        userService.withdraw(userId);
     }
 }
