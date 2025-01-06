@@ -25,13 +25,17 @@ import haengdong.event.domain.event.image.EventImage;
 import haengdong.event.domain.event.image.EventImageRepository;
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.member.EventMemberRepository;
+import haengdong.user.application.UserDeleteEvent;
 import haengdong.user.application.UserService;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -217,5 +221,12 @@ public class EventService {
         }
 
         eventRepository.delete(event);
+    }
+
+    @Async
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    public void handleUserDelete(UserDeleteEvent userDeleteEvent) {
+        Long userId = userDeleteEvent.id();
+        eventRepository.deleteByUserId(userId);
     }
 }

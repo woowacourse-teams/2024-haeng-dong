@@ -10,6 +10,7 @@ import haengdong.user.application.request.UserUpdateAppRequest;
 import haengdong.user.domain.User;
 import haengdong.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public Long joinGuest(UserGuestSaveAppRequest request) {
@@ -59,6 +61,7 @@ public class UserService {
     @Transactional
     public void withdraw(Long id) {
         userRepository.deleteById(id);
+        eventPublisher.publishEvent(new UserDeleteEvent(id));
     }
 
     @Transactional(readOnly = true)
