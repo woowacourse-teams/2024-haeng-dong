@@ -56,7 +56,7 @@ const SettingSection = () => {
   return (
     <SectionContainer>
       <Flex flexDirection="column" margin="0 1.5rem" gap="1rem">
-        <TextButton textColor="onTertiary" textSize="body">
+        <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.editUserNickname)}>
           닉네임 설정하기
         </TextButton>
         <TextButton textColor="onTertiary" textSize="body">
