@@ -48,9 +48,9 @@ public class KakaoClient {
     }
 
     public void unlink(String memberNumber) {
-        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
         formData.add("target_id_type", "user_id");
-        formData.add("target_id", memberNumber);
+        formData.add("target_id", Long.parseLong(memberNumber));
 
         try {
             String responseBody = restClient
@@ -64,7 +64,7 @@ public class KakaoClient {
 
             log.info("카카오 회원 탈퇴: {}", responseBody);
         } catch (Exception e) {
-            throw new HaengdongException(HaengdongErrorCode.KAKAO_LOGIN_FAIL, e);
+            throw new HaengdongException(HaengdongErrorCode.KAKAO_UNLINK_FAIL, e);
         }
     }
 }
