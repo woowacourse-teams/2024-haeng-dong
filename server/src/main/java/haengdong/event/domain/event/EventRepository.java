@@ -13,4 +13,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     boolean existsByTokenAndUserId(String token, Long userId);
 
     List<Event> findByUserId(Long userId);
+
+    void deleteByUserId(Long hostId);
 }
