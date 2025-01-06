@@ -38,7 +38,6 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 @Service
 public class EventService {
 
@@ -74,6 +73,7 @@ public class EventService {
         return EventAppResponse.of(event);
     }
 
+    @Transactional(readOnly = true)
     public EventDetailAppResponse findEvent(String token) {
         Event event = getEvent(token);
         Long userId = event.getUserId();
@@ -82,12 +82,14 @@ public class EventService {
         return EventDetailAppResponse.of(event, user);
     }
 
+    @Transactional(readOnly = true)
     public EventAppResponse findByGuestPassword(EventLoginAppRequest request) {
         Event event = getEvent(request.token());
         userService.validateUser(event.getUserId(), request.password());
         return EventAppResponse.of(event);
     }
 
+    @Transactional(readOnly = true)
     public List<MemberBillReportAppResponse> getMemberBillReports(String token) {
         Event event = getEvent(token);
         List<EventMember> eventMembers = eventMemberRepository.findAllByEvent(event);
@@ -148,6 +150,7 @@ public class EventService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<EventImageAppResponse> findImages(String token) {
         Event event = getEvent(token);
 
@@ -179,12 +182,14 @@ public class EventService {
         imageIds.forEach(imageId -> deleteImage(token, imageId));
     }
 
+    @Transactional(readOnly = true)
     public List<EventImageSaveAppResponse> findImagesDateBefore(Instant date) {
         return eventImageRepository.findByCreatedAtAfter(date).stream()
                 .map(EventImageSaveAppResponse::of)
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public boolean existsByTokenAndUserId(String eventToken, Long userId) {
         return eventRepository.existsByTokenAndUserId(eventToken, userId);
     }
@@ -199,6 +204,7 @@ public class EventService {
                 .orElseThrow(() -> new HaengdongException(HaengdongErrorCode.IMAGE_NOT_FOUND));
     }
 
+    @Transactional(readOnly = true)
     public List<EventMineAppResponse> findByUserId(Long userId) {
         return eventRepository.findByUserId(userId).stream()
                 .map(event -> EventMineAppResponse.of(
@@ -224,6 +230,7 @@ public class EventService {
     }
 
     @Async
+    @Transactional
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handleUserDelete(UserDeleteEvent userDeleteEvent) {
         Long userId = userDeleteEvent.id();
