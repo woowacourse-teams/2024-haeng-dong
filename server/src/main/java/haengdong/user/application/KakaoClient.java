@@ -53,8 +53,7 @@ public class KakaoClient {
         formData.add("target_id", Long.parseLong(memberNumber));
 
         try {
-            String responseBody = restClient
-                    .post()
+            String responseBody = restClient.post()
                     .uri(kakaoProperties.unlinkRequestUri())
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                     .header(HttpHeaders.AUTHORIZATION, "KakaoAK " + kakaoProperties.adminKey())
