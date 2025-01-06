@@ -75,7 +75,22 @@ public class UserController {
     @DeleteMapping("/api/users")
     public ResponseEntity<Void> deleteUser(@Login Long userId) {
         userService.withdraw(userId);
-        return ResponseEntity.ok().build();
+
+        ResponseCookie responseCookie = expireCookie();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .build();
+    }
+
+    private ResponseCookie expireCookie() {
+        return ResponseCookie.from(authService.getTokenName(), null)
+                .httpOnly(cookieProperties.httpOnly())
+                .secure(cookieProperties.secure())
+                .domain(cookieProperties.domain())
+                .path(cookieProperties.path())
+                .sameSite(cookieProperties.sameSite())
+                .maxAge(0L)
+                .build();
     }
 
     private ResponseCookie createResponseCookie(String token) {
