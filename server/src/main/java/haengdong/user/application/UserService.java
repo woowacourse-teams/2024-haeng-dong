@@ -16,9 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-    private final UserRepository userRepository;
 
-    private final KakaoClient kakaoClient;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long joinGuest(UserGuestSaveAppRequest request) {
@@ -62,10 +61,16 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public UserAppResponse findById(Long id) {
         User user = getUser(id);
 
         return UserAppResponse.of(user);
+    }
+
+    @Transactional(readOnly = true)
+    public String findMemberNumberById(Long id) {
+        return getUser(id).getMemberNumber();
     }
 
     private User getUser(Long id) {

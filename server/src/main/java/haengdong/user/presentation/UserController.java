@@ -74,7 +74,7 @@ public class UserController {
 
     @DeleteMapping("/api/users")
     public ResponseEntity<Void> deleteUser(@Login Long userId) {
-        userService.withdraw(userId);
+        kakaoUserService.withdraw(userId);
 
         ResponseCookie responseCookie = expireCookie();
         return ResponseEntity.ok()
