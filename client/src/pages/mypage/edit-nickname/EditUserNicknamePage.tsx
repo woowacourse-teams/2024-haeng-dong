@@ -1,5 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 
+import useRequestPatchUser from '@hooks/queries/event/useRequestPatchUser';
+
 import useUserInfoContext from '@hooks/useUserInfoContext';
 import useMemberName from '@hooks/useMemberName';
 
@@ -9,6 +11,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 const EditUserNicknamePage = () => {
   const {nickname} = useUserInfoContext();
+  const {patchUser} = useRequestPatchUser();
 
   const {errorMessage, canSubmit, name, handleNameChange} = useMemberName(nickname);
 
@@ -17,6 +20,7 @@ const EditUserNicknamePage = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    await patchUser({nickname: name});
     navigate(ROUTER_URLS.myPage);
   };
   return (
