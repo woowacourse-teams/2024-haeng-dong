@@ -1,5 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 
+import toast from '@hooks/useToast/toast';
 import useRequestPatchUser from '@hooks/queries/event/useRequestPatchUser';
 
 import useUserInfoContext from '@hooks/useUserInfoContext';
@@ -20,8 +21,13 @@ const EditUserNicknamePage = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    await patchUser({nickname: name});
-    navigate(ROUTER_URLS.myPage);
+    try {
+      await patchUser({nickname: name});
+      toast.confirm('이름 변경이 완료되었어요!');
+      navigate(ROUTER_URLS.myPage);
+    } catch (error) {
+      toast.error('이름 변경에 실패했어요. 다시 시도해주세요.');
+    }
   };
   return (
     <MainLayout backgroundColor="white">
