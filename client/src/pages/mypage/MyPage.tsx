@@ -7,8 +7,6 @@ import useRequestSuspenseGetUserInfo from '@hooks/queries/auth/useRequestSuspens
 import MyPageError from '@pages/fallback/MyPageError';
 import MyPageLoading from '@pages/fallback/MyPageLoading';
 
-import useUserInfoContext from '@hooks/useUserInfoContext';
-
 import {Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav} from '@components/Design';
 
 import getImageUrl from '@utils/getImageUrl';
@@ -51,13 +49,11 @@ const UserInfoSection = () => {
 const SettingSection = () => {
   const navigate = useNavigate();
 
-  const {nickname} = useUserInfoContext();
-
   return (
     <SectionContainer>
       <Flex flexDirection="column" margin="0 1.5rem" gap="1rem">
         <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.editUserNickname)}>
-          닉네임 설정하기
+          이름 변경하기
         </TextButton>
         <TextButton textColor="onTertiary" textSize="body">
           기본 계좌 번호 설정하기
