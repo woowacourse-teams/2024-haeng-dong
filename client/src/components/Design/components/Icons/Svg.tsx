@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import React, {useRef} from 'react';
+import ReactDOMServer from 'react-dom/server';
+
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import {SvgProps} from './Icon.type';
 import {svgStyle, svgWrapperStyle} from './Svg.style';
-import React, {useRef} from 'react';
-import ReactDOMServer from 'react-dom/server';
 
 const Svg: React.FC<SvgProps> = ({children, color, size, width, height, direction, ...rest}) => {
   const {theme} = useTheme();

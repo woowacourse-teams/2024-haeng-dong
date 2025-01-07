@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import IconXCircleSvg from '@assets/image/x-circle.svg';
+
 import {SvgProps} from '../Icon.type';
 import Svg from '../Svg';
-
-import IconXCircleSvg from '@assets/image/x-circle.svg';
 
 export const IconXCircle = ({color = 'gray', ...rest}: Omit<SvgProps, 'children'>) => {
   return (

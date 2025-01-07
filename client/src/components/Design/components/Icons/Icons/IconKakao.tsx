@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
+import IconKakaoSvg from '@assets/image/kakao.svg';
+
 import {SvgProps} from '../Icon.type';
 import Svg from '../Svg';
-
-import IconKakaoSvg from '@assets/image/kakao.svg';
 
 export const IconKakao = ({color = 'onKakao', ...rest}: Omit<SvgProps, 'children'>) => {
   return (
