@@ -8,4 +8,7 @@ export interface SvgProps extends React.ComponentProps<'svg'> {
   size?: number;
   isUsingFill?: boolean;
   viewBox?: string;
+  direction?: Direction;
 }
+
+export type Direction = 'up' | 'right' | 'down' | 'left';
