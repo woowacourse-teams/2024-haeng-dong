@@ -1,7 +1,8 @@
 import {css} from '@emotion/react';
 
-import {ContainerProps} from './Container.type';
 import {attributeWithUnit} from '@components/Design/utils/attribute';
+
+import {ContainerProps} from './Container.type';
 
 export const containerStyle = ({maxW, p, m, br, b, bg, center}: ContainerProps) => {
   const [maxWidthValue, paddingValue, marginValue, borderRadiusValue, borderValue] = attributeWithUnit({
