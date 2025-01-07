@@ -46,7 +46,7 @@ const BillDetailPage = () => {
 
         <BillDetails billDetails={newBillDetails} />
       </div>
-      <FixedButton onClick={() => navigate(`/event/${eventId}/home`, {state: {tab: 'step'}})}>닫기</FixedButton>
+      <FixedButton onClick={() => navigate(`/event/${eventId}/home`)}>닫기</FixedButton>
     </MainLayout>
   );
 };

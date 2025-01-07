@@ -8,14 +8,25 @@ import Flex from '../Flex/Flex';
 
 import {tabListStyle, tabItemStyle, tabTextStyle, indicatorStyle} from './Tabs.style';
 import {TabsProps} from './Tab.type';
+import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
+import SessionStorage from '@utils/SessionStorage';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-const Tabs: React.FC<TabsProps> = ({children, active = 0, tabsContainerStyle}) => {
+const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
   const {theme} = useTheme();
   const [tabWidth, setTabWidth] = useState(0);
-  const [activeTabIndex, setActiveTabIndex] = useState(active);
   const tabRef = useRef<HTMLLIElement>(null);
+  const eventId = getEventIdByUrl();
+  const [activeTabIndex, setActiveTabIndex] = useState(
+    SessionStorage.get<{eventId: string; activeTabIndex: number}>(SESSION_STORAGE_KEYS.eventHomeTab)?.activeTabIndex ??
+      0,
+  );
 
   const isActive = (index: number) => activeTabIndex === index;
+
+  useEffect(() => {
+    SessionStorage.set(SESSION_STORAGE_KEYS.eventHomeTab, {eventId, activeTabIndex});
+  }, [activeTabIndex, eventId]);
 
   const setTabWidthResizeObserveCallback = (entries: ResizeObserverEntry[]) => {
     for (const entry of entries) {
