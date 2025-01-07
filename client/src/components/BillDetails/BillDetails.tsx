@@ -13,6 +13,12 @@ interface Props {
 }
 
 const BillDetails = forwardRef<HTMLDivElement, Props>(({billDetails, onClickInput, activatedId}, ref) => {
+  const handleClickInput = (id: number) => {
+    if (onClickInput) {
+      onClickInput(id);
+    }
+  };
+
   return (
     <div
       ref={ref}
@@ -39,7 +45,7 @@ const BillDetails = forwardRef<HTMLDivElement, Props>(({billDetails, onClickInpu
           <EditableAmount
             value={billDetail.price.toLocaleString('ko-kr')}
             onChange={() => {}}
-            onClick={onClickInput ? () => onClickInput(billDetail.id) : undefined}
+            onClick={() => handleClickInput(billDetail.id)}
             isFixed={billDetail.isFixed}
             activated={activatedId === billDetail.id}
           />
