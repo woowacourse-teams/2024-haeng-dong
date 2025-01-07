@@ -8,7 +8,7 @@ interface SelectedEventContextProps {
   mode: Mode;
   handleMode: (mode: Mode) => void;
   selectedEvents: CreatedEvent[];
-  has: (event: CreatedEvent) => boolean;
+  isAlreadySelected: (event: CreatedEvent) => boolean;
   handleSelectedEvents: (event: CreatedEvent) => void;
 }
 
@@ -28,12 +28,12 @@ export const CreatedEventsPageContextProvider: React.FC<PropsWithChildren> = ({c
 
   const handleMode = (mode: Mode) => setMode(mode);
 
-  const has = (event: CreatedEvent) => {
+  const isAlreadySelected = (event: CreatedEvent) => {
     return selectedEvents.map(event => event.eventId).includes(event.eventId);
   };
 
   const handleSelectedEvents = (event: CreatedEvent) => {
-    if (has(event)) {
+    if (isAlreadySelected(event)) {
       setSelectedEvents(prev => prev.filter(prevEvent => prevEvent.eventId !== event.eventId));
     } else {
       setSelectedEvents(prev => [...prev, event]);
@@ -41,7 +41,9 @@ export const CreatedEventsPageContextProvider: React.FC<PropsWithChildren> = ({c
   };
 
   return (
-    <CreatedEventsPageContext.Provider value={{mode, handleMode, selectedEvents, has, handleSelectedEvents}}>
+    <CreatedEventsPageContext.Provider
+      value={{mode, handleMode, selectedEvents, isAlreadySelected, handleSelectedEvents}}
+    >
       {children}
     </CreatedEventsPageContext.Provider>
   );

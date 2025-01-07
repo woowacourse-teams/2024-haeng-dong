@@ -13,7 +13,7 @@ type CreatedEventListProps = {
 };
 
 export const CreatedEventList = ({createdEvents, eventName, onSearch, placeholder}: CreatedEventListProps) => {
-  const {mode, handleMode, selectedEvents, has, handleSelectedEvents} = useCreatedEventsPageContext();
+  const {mode, handleMode, selectedEvents, isAlreadySelected, handleSelectedEvents} = useCreatedEventsPageContext();
   const setViewMode = () => handleMode('view');
 
   const {deleteEvents} = useRequestDeleteEvents();
@@ -43,7 +43,7 @@ export const CreatedEventList = ({createdEvents, eventName, onSearch, placeholde
               key={createdEvent.eventId}
               isEditMode={mode === 'edit'}
               setEditMode={() => handleMode('edit')}
-              isChecked={has(createdEvent)}
+              isChecked={isAlreadySelected(createdEvent)}
               onChange={handleSelectedEvents}
               createdEvent={createdEvent}
             />
