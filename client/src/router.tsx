@@ -63,11 +63,6 @@ const router = createBrowserRouter([
         path: ROUTER_URLS.login,
         element: <LoginPage />,
       },
-
-      {
-        path: ROUTER_URLS.withdraw,
-        element: <WithdrawPage />,
-      },
       {
         path: ROUTER_URLS.createdEvents,
         element: <CreatedEventsPage />,
@@ -132,6 +127,10 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.editUserAccount,
             element: <EditUserAccountPage />,
+          },
+          {
+            path: ROUTER_URLS.withdraw,
+            element: <WithdrawPage />,
           },
         ],
       },
