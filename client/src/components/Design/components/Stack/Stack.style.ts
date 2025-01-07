@@ -1,30 +1,19 @@
 import {css} from '@emotion/react';
 
 import {HStackProps, StackProps, VStackProps} from './Stack.type';
+import {attributeWithUnit} from '@components/Design/utils/attribute';
 
 export const stackStyle = ({gap, direction, justify, align, p, m, br, b, bg, w, h}: StackProps) => {
-  const widthValue =
-    typeof w === 'number' ? `${w}px` : w?.includes('px') || w?.includes('%') || w?.includes('em') ? w : `${w}px`;
-  const heightValue =
-    typeof h === 'number' ? `${h}px` : h?.includes('px') || h?.includes('%') || h?.includes('em') ? h : `${h}px`;
-  const paddingValue =
-    typeof p === 'number'
-      ? `${p}px`
-      : p
-          ?.split(' ')
-          .map(value => (value.includes('px') || value.includes('%') || value.includes('em') ? value : `${value}px`))
-          .join(' ');
-  const marginValue =
-    typeof m === 'number'
-      ? `${m}px`
-      : m
-          ?.split(' ')
-          .map(value => (value.includes('px') || value.includes('%') || value.includes('em') ? value : `${value}px`))
-          .join(' ');
-  const borderRadiusValue =
-    typeof br === 'number' ? `${br}px` : br?.includes('px') || br?.includes('%') || br?.includes('em') ? br : `${br}px`;
-  const borderValue = typeof b === 'number' ? `${b}px` : b;
-  const gapValue = typeof gap === 'number' ? `${gap}px` : gap?.includes('px') || gap?.includes('em') ? gap : `${gap}px`;
+  const [widthValue, heightValue, paddingValue, marginValue, borderRadiusValue, borderValue, gapValue] =
+    attributeWithUnit({
+      w,
+      h,
+      p,
+      m,
+      br,
+      b,
+      gap,
+    });
 
   return css`
     display: flex;
@@ -43,24 +32,13 @@ export const stackStyle = ({gap, direction, justify, align, p, m, br, b, bg, w, 
 };
 
 export const hStackStyle = ({gap, justify, p, m, br, b, bg}: HStackProps) => {
-  const paddingValue =
-    typeof p === 'number'
-      ? `${p}px`
-      : p
-          ?.split(' ')
-          .map(value => (value.includes('px') || value.includes('%') || value.includes('em') ? value : `${value}px`))
-          .join(' ');
-  const marginValue =
-    typeof m === 'number'
-      ? `${m}px`
-      : m
-          ?.split(' ')
-          .map(value => (value.includes('px') || value.includes('%') || value.includes('em') ? value : `${value}px`))
-          .join(' ');
-  const borderRadiusValue =
-    typeof br === 'number' ? `${br}px` : br?.includes('px') || br?.includes('%') || br?.includes('em') ? br : `${br}px`;
-  const borderValue = typeof b === 'number' ? `${b}px` : b;
-  const gapValue = typeof gap === 'number' ? `${gap}px` : gap?.includes('px') || gap?.includes('em') ? gap : `${gap}px`;
+  const [paddingValue, marginValue, borderRadiusValue, borderValue, gapValue] = attributeWithUnit({
+    p,
+    m,
+    br,
+    b,
+    gap,
+  });
 
   return css`
     flex-direction: row;
@@ -77,24 +55,13 @@ export const hStackStyle = ({gap, justify, p, m, br, b, bg}: HStackProps) => {
 };
 
 export const vStackStyle = ({gap, align, p, m, br, b, bg}: VStackProps) => {
-  const paddingValue =
-    typeof p === 'number'
-      ? `${p}px`
-      : p
-          ?.split(' ')
-          .map(value => (value.includes('px') || value.includes('%') || value.includes('em') ? value : `${value}px`))
-          .join(' ');
-  const marginValue =
-    typeof m === 'number'
-      ? `${m}px`
-      : m
-          ?.split(' ')
-          .map(value => (value.includes('px') || value.includes('%') || value.includes('em') ? value : `${value}px`))
-          .join(' ');
-  const borderRadiusValue =
-    typeof br === 'number' ? `${br}px` : br?.includes('px') || br?.includes('%') || br?.includes('em') ? br : `${br}px`;
-  const borderValue = typeof b === 'number' ? `${b}px` : b;
-  const gapValue = typeof gap === 'number' ? `${gap}px` : gap?.includes('px') || gap?.includes('em') ? gap : `${gap}px`;
+  const [paddingValue, marginValue, borderRadiusValue, borderValue, gapValue] = attributeWithUnit({
+    p,
+    m,
+    br,
+    b,
+    gap,
+  });
 
   return css`
     flex-direction: column;
