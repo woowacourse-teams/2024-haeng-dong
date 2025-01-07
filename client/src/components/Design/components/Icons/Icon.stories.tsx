@@ -13,6 +13,7 @@ import {IconMeatballs} from './Icons/IconMeatballs';
 import {IconPictureSquare} from './Icons/IconPictureSquare';
 import {IconSearch} from './Icons/IconSearch';
 import {IconTrash} from './Icons/IconTrash';
+import {IconX} from './Icons/IconX';
 import {IconXCircle} from './Icons/IconXCircle';
 
 const meta: Meta<
@@ -68,8 +69,8 @@ const IconShowcase = ({IconComponent, args}: {IconComponent: any; args: any}) =>
     {IconComponent.name === 'IconChevron' && (
       <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
         <IconComponent {...args} direction="left" />
-        <IconComponent {...args} direction="right" />
         <IconComponent {...args} direction="up" />
+        <IconComponent {...args} direction="right" />
         <IconComponent {...args} direction="down" />
       </div>
     )}
@@ -101,6 +102,10 @@ export const Error: Story = {
 };
 
 export const X: Story = {
+  render: (args: React.ComponentProps<typeof IconX>) => <IconShowcase IconComponent={IconX} args={args} />,
+};
+
+export const XCircle: Story = {
   render: (args: React.ComponentProps<typeof IconXCircle>) => <IconShowcase IconComponent={IconXCircle} args={args} />,
 };
 
