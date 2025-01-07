@@ -3,14 +3,16 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {useTheme} from '@theme/HDesignProvider';
 
+import SessionStorage from '@utils/SessionStorage';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
+
+import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
+
 import Text from '../Text/Text';
 import Flex from '../Flex/Flex';
 
 import {tabListStyle, tabItemStyle, tabTextStyle, indicatorStyle} from './Tabs.style';
 import {TabsProps} from './Tab.type';
-import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
-import SessionStorage from '@utils/SessionStorage';
-import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
   const {theme} = useTheme();
