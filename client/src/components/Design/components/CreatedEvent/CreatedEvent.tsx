@@ -48,9 +48,7 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
 
   return (
     <Flex>
-      {isEditMode && (
-        <Checkbox labelText="" hideLabelText isChecked={isChecked} onChange={() => onChange(createdEvent)} />
-      )}
+      {isEditMode && <Checkbox isChecked={isChecked} onChange={() => onChange(createdEvent)} />}
       <Flex
         justifyContent="spaceBetween"
         alignItems="center"
