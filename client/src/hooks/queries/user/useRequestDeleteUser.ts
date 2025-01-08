@@ -12,6 +12,7 @@ const useRequestDeleteUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.kakaoLogin]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.kakaoClientId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.userInfo]});
     },
   });
 

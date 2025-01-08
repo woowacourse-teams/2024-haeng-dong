@@ -1,10 +1,12 @@
 import {css} from '@emotion/react';
+import {useNavigate} from 'react-router-dom';
 
 import RunningDogLogo from '@components/Logo/RunningDogLogo';
 
 import {Top, FixedButton, Flex, Text} from '@components/Design';
 
 const WithdrawalCompleted = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -25,8 +27,7 @@ const WithdrawalCompleted = () => {
         </Flex>
         <RunningDogLogo />
       </div>
-      {/* TODO: (@soha) 홈으로 이동 */}
-      <FixedButton onClick={() => {}}>홈으로</FixedButton>
+      <FixedButton onClick={() => navigate('/')}>홈으로</FixedButton>
     </>
   );
 };

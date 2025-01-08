@@ -15,12 +15,13 @@ const WithdrawPage = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
-        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
+        {step !== 'withdrawalCompleted' && <TopNav.Item displayName={'뒤로가기'} noEmphasis routePath="-1" />}
       </TopNav>
-      {step === 'withdrawReason' && <ReasonStep handleMoveStep={handleMoveStep} />}
+      {/* TODO: (@soha) 탈퇴 사유를 입력받기 위한 step. 당장 사용하지 않으므로 주석. */}
+      {/* {step === 'withdrawReason' && <ReasonStep handleMoveStep={handleMoveStep} />}
       {step === 'notUseService' && <NotUseServiceStep handleMoveStep={handleMoveStep} />}
       {step === 'unableToUseDueToError' && <UnableToUseDueToError handleMoveStep={handleMoveStep} />}
-      {step === 'etc' && <EtcStep handleMoveStep={handleMoveStep} />}
+      {step === 'etc' && <EtcStep handleMoveStep={handleMoveStep} />} */}
       {step === 'checkBeforeWithdrawing' && <CheckBeforeWithdrawingStep handleMoveStep={handleMoveStep} />}
       {step === 'withdrawalCompleted' && <WithdrawalCompleted />}
     </MainLayout>

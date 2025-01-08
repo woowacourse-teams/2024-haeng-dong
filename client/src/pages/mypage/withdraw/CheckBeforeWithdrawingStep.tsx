@@ -5,10 +5,12 @@ import useRequestDeleteUser from '@hooks/queries/user/useRequestDeleteUser';
 import toast from '@hooks/useToast/toast';
 
 import {WithdrawStep} from '@hooks/useWithdrawFunnel';
+import useUserInfoContext from '@hooks/useUserInfoContext';
 
 import {Top, FixedButton, Flex, Text} from '@components/Design';
 
 const CheckBeforeWithdrawingStep = ({handleMoveStep}: {handleMoveStep: (nextStep: WithdrawStep) => void}) => {
+  const {nickname} = useUserInfoContext();
   const {deleteAsyncUser} = useRequestDeleteUser();
 
   const handleWithdraw = async () => {
@@ -37,7 +39,7 @@ const CheckBeforeWithdrawingStep = ({handleMoveStep}: {handleMoveStep: (nextStep
         </Top>
 
         <Flex flexDirection="column" gap="0.5rem">
-          <Text textColor="onTertiary">• 행동대장에서 관리했던 __님의 모든 개인정보를 다시 볼 수 없어요.</Text>
+          <Text textColor="onTertiary">• 행동대장에서 관리했던 {nickname}님의 모든 개인정보를 다시 볼 수 없어요.</Text>
           <Text textColor="onTertiary">• 지난 행사 목록이 모두 사라져요.</Text>
           <Text textColor="onTertiary">• 개인 정보는 즉시 파기돼요.</Text>
         </Flex>

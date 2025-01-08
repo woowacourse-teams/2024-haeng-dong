@@ -10,7 +10,7 @@ export type WithdrawStep =
   | 'withdrawalCompleted';
 
 const useWithdrawFunnel = () => {
-  const [step, setStep] = useState<WithdrawStep>('withdrawReason');
+  const [step, setStep] = useState<WithdrawStep>('checkBeforeWithdrawing');
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
