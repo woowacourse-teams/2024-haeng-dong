@@ -16,8 +16,6 @@ export const boxStyle = ({w, h, z, bg, p, m, br, b, center, fixed}: BoxProps) =>
       b,
     });
 
-  console.log(widthValue, heightValue, zIndexValue, paddingValue, marginValue, borderRadiusValue, borderValue);
-
   return css`
     width: ${widthValue};
     height: ${heightValue};
