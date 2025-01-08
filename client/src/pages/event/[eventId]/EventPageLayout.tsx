@@ -4,6 +4,7 @@ import {Link, Outlet} from 'react-router-dom';
 import {useEffect} from 'react';
 
 import {Profile} from '@components/Design/components/Profile/Profile';
+import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
 
 import useEventPageLayout from '@hooks/useEventPageLayout';
 import useShareEvent from '@hooks/useShareEvent';
@@ -12,7 +13,7 @@ import useAmplitude from '@hooks/useAmplitude';
 import {Footer} from '@components/Footer';
 import {DesktopShareEventButton, MobileShareEventButton} from '@components/ShareEventButton';
 
-import {Flex, Icon, IconButton, MainLayout, TopNav} from '@HDesign/index';
+import {Flex, IconButton, MainLayout, TopNav} from '@HDesign/index';
 
 import {isMobileDevice} from '@utils/detectDevice';
 import {updateMetaTag} from '@utils/udpateMetaTag';
@@ -59,7 +60,7 @@ const EventPageLayout = () => {
         <TopNav>
           <TopNav.Item routePath="/">
             <IconButton variants="none">
-              <Icon iconType="heundeut" />
+              <IconHeundeut />
             </IconButton>
           </TopNav.Item>
           <TopNav.Item displayName="홈" routePath="/home" />

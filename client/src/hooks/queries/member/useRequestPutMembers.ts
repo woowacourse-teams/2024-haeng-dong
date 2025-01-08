@@ -18,6 +18,7 @@ const useRequestPutMembers = () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers]});
       queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.createdEvents]});
     },
   });
 

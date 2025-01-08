@@ -7,6 +7,7 @@ export interface TabProps {
 
 export interface TabsCustomProps {
   children: React.ReactElement<TabProps>[];
+  active?: number;
 }
 
 export interface TabsStyleProps {

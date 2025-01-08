@@ -17,3 +17,10 @@ export const inProgressCheckStyle = ({inProgress, theme}: WithTheme<{inProgress:
       paddingTop: '0.0625rem',
     },
   });
+
+export const touchAreaStyle = css({
+  position: 'relative',
+  overflow: 'hidden',
+
+  width: '100%',
+});
