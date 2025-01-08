@@ -3,6 +3,11 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {useTheme} from '@theme/HDesignProvider';
 
+import SessionStorage from '@utils/SessionStorage';
+import getEventIdByUrl from '@utils/getEventIdByUrl';
+
+import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
+
 import Text from '../Text/Text';
 import Flex from '../Flex/Flex';
 
@@ -11,11 +16,19 @@ import {TabsProps} from './Tab.type';
 
 const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
   const {theme} = useTheme();
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [tabWidth, setTabWidth] = useState(0);
   const tabRef = useRef<HTMLLIElement>(null);
+  const eventId = getEventIdByUrl();
+  const [activeTabIndex, setActiveTabIndex] = useState(
+    SessionStorage.get<{eventId: string; activeTabIndex: number}>(SESSION_STORAGE_KEYS.eventHomeTab)?.activeTabIndex ??
+      0,
+  );
 
   const isActive = (index: number) => activeTabIndex === index;
+
+  useEffect(() => {
+    SessionStorage.set(SESSION_STORAGE_KEYS.eventHomeTab, {eventId, activeTabIndex});
+  }, [activeTabIndex, eventId]);
 
   const setTabWidthResizeObserveCallback = (entries: ResizeObserverEntry[]) => {
     for (const entry of entries) {

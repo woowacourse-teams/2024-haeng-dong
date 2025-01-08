@@ -4,7 +4,6 @@ import {lazy, Suspense} from 'react';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
-
 const UserInfoLoader = lazy(() => import('@components/Loader/UserInfo/UserInfoLoader'));
 const EditUserAccountPage = lazy(() => import('@pages/mypage/edit-account/EditUserAccountPage'));
 const ErrorPage = lazy(() => import('@pages/fallback/ErrorPage'));
@@ -36,6 +35,7 @@ const CreatedEventsPage = lazy(() => import('@pages/mypage/events/CreatedEventsP
 const EventPageLoading = lazy(() => import('@pages/fallback/EventPageLoading'));
 const WithdrawPage = lazy(() => import('@pages/mypage/withdraw/WithdrawPage'));
 const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event-name/EditEventNamePage'));
+const BillDetailPage = lazy(() => import('@pages/event/[eventId]/home/bill-detail/BillDetailPage'));
 
 const router = createBrowserRouter([
   {
@@ -163,6 +163,10 @@ const router = createBrowserRouter([
         path: ROUTER_URLS.send,
         element: <SendPage />,
         errorElement: <SendErrorPage />,
+      },
+      {
+        path: ROUTER_URLS.billDetail,
+        element: <BillDetailPage />,
       },
       {
         path: ROUTER_URLS.qrCode,
