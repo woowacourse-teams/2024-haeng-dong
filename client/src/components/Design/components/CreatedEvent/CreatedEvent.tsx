@@ -40,7 +40,9 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
     if (!isChecked) onChange(createdEvent);
   };
 
-  const {handleTouchStart, handleTouchEnd, handleTouchMove, LongPressAnimation} = useLongPressAnimation(onLongPress);
+  const {handleTouchStart, handleTouchEnd, handleTouchMove, LongPressAnimation} = useLongPressAnimation(onLongPress, {
+    disabled: isEditMode,
+  });
 
   const onClick = () => {
     isEditMode ? onChange(createdEvent) : navigate(`/event/${createdEvent.eventId}/admin`);

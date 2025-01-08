@@ -54,6 +54,7 @@ const animationStyle = ({
 type UseLongPressAnimationOptions = {
   longProgressTime?: number;
   animationColor?: ColorKeys;
+  disabled?: boolean;
 };
 
 const useLongPressAnimation = (onLongPress: () => void, options?: UseLongPressAnimationOptions) => {
@@ -81,7 +82,7 @@ const useLongPressAnimation = (onLongPress: () => void, options?: UseLongPressAn
   };
 
   const LongPressAnimation = useMemo(() => {
-    return coordinate ? (
+    return coordinate && !options?.disabled ? (
       <div
         css={animationStyle({
           theme,
