@@ -19,8 +19,14 @@ interface Prop {
 const Step = ({step, isAdmin}: Prop) => {
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
+
   const handleClickStep = (bill: Bill) => {
-    if (isAdmin) navigate(`/event/${eventId}/admin/edit-bill`, {state: {bill}});
+    if (isAdmin) {
+      navigate(`/event/${eventId}/admin/edit-bill`, {state: {bill}});
+      return;
+    }
+
+    navigate(`/event/${eventId}/home/bill-detail`, {state: {bill}});
   };
 
   return (
