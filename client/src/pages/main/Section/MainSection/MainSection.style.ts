@@ -69,7 +69,7 @@ export const sectionStyle = css({
 
 export const chevronStyle = css({
   position: 'absolute',
-  bottom: '2rem',
+  bottom: '1rem',
   left: '50%',
   animation: `${bounce} 2s infinite ease-in-out`,
 });

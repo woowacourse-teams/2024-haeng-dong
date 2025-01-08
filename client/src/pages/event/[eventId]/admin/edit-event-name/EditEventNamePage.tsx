@@ -12,7 +12,6 @@ import getEventBaseUrl from '@utils/getEventBaseUrl';
 const EditEventNamePage = () => {
   const location = useLocation();
   const locationState = location.state as EventName | null;
-  console.log(locationState);
 
   const navigate = useNavigate();
 

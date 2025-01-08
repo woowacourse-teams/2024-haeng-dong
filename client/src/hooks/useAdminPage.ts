@@ -8,7 +8,7 @@ import useEventDataContext from './useEventDataContext';
 
 const useAdminPage = () => {
   const eventId = getEventIdByUrl();
-  const {isAdmin, bankName, accountNumber, eventName} = useEventDataContext();
+  const {isAdmin, bankName, accountNumber, eventName, createdByGuest} = useEventDataContext();
 
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
 
@@ -26,6 +26,7 @@ const useAdminPage = () => {
     isAdmin,
     eventName,
     bankName,
+    createdByGuest,
     accountNumber,
     totalExpenseAmount,
     isShowAccountBanner,

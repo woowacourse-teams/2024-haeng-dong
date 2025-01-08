@@ -2,17 +2,21 @@ import {useNavigate} from 'react-router-dom';
 
 import StepList from '@components/StepList/Steps';
 import {Banner} from '@components/Design/components/Banner';
+import useRequestDeleteEvents from '@hooks/queries/event/useRequestDeleteEvents';
 
 import useAdminPage from '@hooks/useAdminPage';
 import useAmplitude from '@hooks/useAmplitude';
 
 import {Title, Button, Dropdown, DropdownButton} from '@HDesign/index';
 
+import {ROUTER_URLS} from '@constants/routerUrls';
+
 import {receiptStyle} from './AdminPage.style';
 
 const AdminPage = () => {
   const navigate = useNavigate();
   const {trackAddBillStart} = useAmplitude();
+  const {deleteEvents} = useRequestDeleteEvents();
 
   const {
     eventId,
@@ -20,6 +24,7 @@ const AdminPage = () => {
     eventName,
     bankName,
     accountNumber,
+    createdByGuest,
     totalExpenseAmount,
     isShowAccountBanner,
     onDeleteAccount,
@@ -49,6 +54,16 @@ const AdminPage = () => {
     navigate(`/event/${eventId}/admin/add-bill`);
   };
 
+  const deleteEventAndNavigateByUser = async () => {
+    if (createdByGuest) {
+      navigate(ROUTER_URLS.main, {replace: true});
+    } else {
+      navigate(ROUTER_URLS.createdEvents, {replace: true});
+    }
+
+    await deleteEvents({eventIds: [eventId]});
+  };
+
   return (
     <section css={receiptStyle}>
       <Title
@@ -60,6 +75,7 @@ const AdminPage = () => {
             <DropdownButton text="전체 참여자 관리" onClick={navigateEventMemberManage} />
             <DropdownButton text="계좌번호 입력하기" onClick={navigateAccountInputPage} />
             <DropdownButton text="사진 첨부하기" onClick={navigateAddImages} />
+            <DropdownButton text="행사 삭제하기" onClick={deleteEventAndNavigateByUser} />
           </Dropdown>
         }
       />
