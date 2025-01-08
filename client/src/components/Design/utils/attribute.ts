@@ -8,14 +8,14 @@ const checkStringUnit = (value?: string) => {
   if (value.includes('vh')) return 'vh';
   if (value.includes('vw')) return 'vw';
   if (value.includes('px')) return 'px';
-  return 'none';
+  return null;
 };
 
 export const stringValueWithUnit = (value?: string | number) => {
   if (!value) return '';
   const stringValue = typeof value === 'number' ? `${value}px` : value;
   const unit = checkStringUnit(stringValue);
-  return `${stringValue}${unit === 'none' ? (isNaN(Number(stringValue)) ? unit : 'px') : ''}`;
+  return `${stringValue}${unit === null ? (isNaN(Number(stringValue)) ? unit : 'px') : ''}`;
 };
 
 export const stringAndNumberValue = (value?: string | number) => {
