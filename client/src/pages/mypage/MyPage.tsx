@@ -59,7 +59,7 @@ const SettingSection = () => {
         <TextButton textColor="onTertiary" textSize="body">
           닉네임 설정하기
         </TextButton>
-        <TextButton textColor="onTertiary" textSize="body">
+        <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.editUserAccount)}>
           기본 계좌 번호 설정하기
         </TextButton>
         <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.createdEvents)}>
