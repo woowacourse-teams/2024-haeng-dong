@@ -6,6 +6,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 import App from './App';
 const UserInfoLoader = lazy(() => import('@components/Loader/UserInfo/UserInfoLoader'));
 const EditUserAccountPage = lazy(() => import('@pages/mypage/edit-account/EditUserAccountPage'));
+const EditUserNicknamePage = lazy(() => import('@pages/mypage/edit-nickname/EditUserNicknamePage'));
 const ErrorPage = lazy(() => import('@pages/fallback/ErrorPage'));
 const SendErrorPage = lazy(() => import('@pages/fallback/SendErrorPage'));
 const CreateGuestEventFunnel = lazy(() => import('@pages/event/create/guest/CreateGuestEventFunnel'));
@@ -62,11 +63,6 @@ const router = createBrowserRouter([
       {
         path: ROUTER_URLS.login,
         element: <LoginPage />,
-      },
-
-      {
-        path: ROUTER_URLS.withdraw,
-        element: <WithdrawPage />,
       },
       {
         path: ROUTER_URLS.createdEvents,
@@ -132,6 +128,14 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.editUserAccount,
             element: <EditUserAccountPage />,
+          },
+          {
+            path: ROUTER_URLS.editUserNickname,
+            element: <EditUserNicknamePage />,
+          },
+          {
+            path: ROUTER_URLS.withdraw,
+            element: <WithdrawPage />,
           },
         ],
       },
