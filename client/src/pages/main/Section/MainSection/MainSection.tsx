@@ -3,8 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import Button from '@HDesign/components/Button/Button';
 import Text from '@HDesign/components/Text/Text';
 import {User} from 'types/serviceType';
-
-import {Icon} from '@components/Design';
+import {IconChevron} from '@components/Design/components/Icons/Icons/IconChevron';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
@@ -30,7 +29,7 @@ const MainSection = ({isGuest}: NavProps) => {
         </Button>
       </div>
       <div css={chevronStyle}>
-        <Icon iconType="chevronDown" />
+        <IconChevron size={48} color="tertiary" />
       </div>
     </div>
   );

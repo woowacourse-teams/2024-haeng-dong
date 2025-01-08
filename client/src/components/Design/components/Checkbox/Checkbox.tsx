@@ -2,7 +2,7 @@
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
+import {IconCheck} from '../Icons/Icons/IconCheck';
 
 import {checkboxStyle, inputGroupStyle} from './Checkbox.style';
 
@@ -17,7 +17,7 @@ const Checkbox = ({labelText, isChecked = false, onChange}: Props) => {
   return (
     <label css={checkboxStyle}>
       <div css={inputGroupStyle({theme, isChecked})}>
-        {isChecked ? <Icon iconType="check" iconColor="onPrimary" className="check-icon" /> : null}
+        {isChecked ? <IconCheck size={20} color="onPrimary" className="check-icon" /> : null}
         <input type="checkbox" checked={isChecked} onChange={onChange} className="checkbox-input" />
       </div>
       <Text size="bodyBold">{labelText}</Text>
