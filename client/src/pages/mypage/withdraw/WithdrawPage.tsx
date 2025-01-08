@@ -15,9 +15,7 @@ const WithdrawPage = () => {
   return (
     <MainLayout backgroundColor="white">
       <TopNav>
-        {step !== 'withdrawalCompleted' ? (
-          <TopNav.Item displayName={'뒤로가기'} noEmphasis routePath="-1" />
-        ) : undefined}
+        {step !== 'withdrawalCompleted' && <TopNav.Item displayName={'뒤로가기'} noEmphasis routePath="-1" />}
       </TopNav>
       {/* TODO: (@soha) 탈퇴 사유를 입력받기 위한 step. 당장 사용하지 않으므로 주석. */}
       {/* {step === 'withdrawReason' && <ReasonStep handleMoveStep={handleMoveStep} />}
