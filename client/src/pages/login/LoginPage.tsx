@@ -1,8 +1,9 @@
 import Image from '@components/Design/components/Image/Image';
+import {IconKakao} from '@components/Design/components/Icons/Icons/IconKakao';
 
 import useLoginPage from '@hooks/useLoginPage';
 
-import {Button, Flex, FunnelLayout, Icon, MainLayout, Text, TopNav, useTheme} from '@components/Design';
+import {Button, Flex, FunnelLayout, MainLayout, Text, TopNav, useTheme} from '@components/Design';
 
 import getImageUrl from '@utils/getImageUrl';
 
@@ -31,7 +32,7 @@ const LoginPage = () => {
           <Flex flexDirection="column" gap="1rem" width="100%" padding="0 2rem" paddingInline="auto">
             <Button variants="kakao" size="large" onClick={() => goKakaoLogin()}>
               <Flex alignItems="center" gap="0.625rem">
-                <Icon iconType="kakao" />
+                <IconKakao />
                 카카오 로그인
               </Flex>
             </Button>

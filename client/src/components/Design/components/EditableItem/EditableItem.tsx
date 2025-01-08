@@ -9,6 +9,7 @@ import {EditableItemProps} from './EditableItem.type';
 import {EditableItemProvider} from './EditableItem.context';
 import useEditableItem from './useEditableItem';
 
+// TODO: (@Todari) 사용하지 않는 component
 const EditableItemBase = ({
   onInputFocus,
   onInputBlur,

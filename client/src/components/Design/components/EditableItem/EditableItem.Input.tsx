@@ -10,6 +10,7 @@ import {editingContainerStyle, inputStyle, inputWrapperStyle, underlineStyle} fr
 import {InputProps} from './EditableItem.Input.type';
 import useEditableItemInput from './useEditableItemInput';
 
+// TODO: (@Todari) 사용하지 않는 component
 export const EditableItemInput = forwardRef<HTMLInputElement, InputProps>(function Input(
   {isFixed = false, textSize = 'body', hasError = false, readOnly = false, ...htmlProps},
   ref,
