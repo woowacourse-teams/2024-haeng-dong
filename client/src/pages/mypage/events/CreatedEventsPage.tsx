@@ -1,15 +1,18 @@
 import {css} from '@emotion/react';
 import {useEffect, useState} from 'react';
 
-import CreatedEventList from '@components/Design/components/CreatedEvent/CreatedEvent';
 import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreatedEvents';
 
-import {MainLayout, Top, TopNav} from '@components/Design';
+import {FunnelLayout, MainLayout, TextButton, Top, TopNav} from '@components/Design';
+import {CreatedEventList} from '@components/CreatedEventList';
 
-export default function CreatedEventsPage() {
+import {useCreatedEventsPageContext, CreatedEventsPageContextProvider} from './CreatedEvent.context';
+
+const PageInner = () => {
   const [eventName, setEventName] = useState('');
   const {events} = useRequestGetCreatedEvents();
   const [matchedEvents, setMatchedEvents] = useState(events);
+  const {mode, handleMode} = useCreatedEventsPageContext();
 
   useEffect(() => {
     setMatchedEvents(events?.filter(event => event.eventName.includes(eventName)));
@@ -23,20 +26,18 @@ export default function CreatedEventsPage() {
     <MainLayout backgroundColor="white">
       <TopNav>
         <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
+        {mode === 'view' && (
+          <TextButton textColor="gray" textSize="bodyBold" onClick={() => handleMode('edit')}>
+            편집하기
+          </TextButton>
+        )}
       </TopNav>
-      <div
-        css={css`
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          padding: 1rem;
-        `}
-      >
+      <FunnelLayout>
         <Top>
           <Top.Line text="지금까지 주최했던 행사를" emphasize={['주최했던 행사']} />
           <Top.Line text="확인해 보세요" />
         </Top>
-      </div>
+      </FunnelLayout>
       <div
         css={css`
           display: flex;
@@ -50,6 +51,16 @@ export default function CreatedEventsPage() {
           placeholder="행사 이름 검색"
         />
       </div>
+    </MainLayout>
+  );
+};
+
+export default function CreatedEventsPage() {
+  return (
+    <MainLayout backgroundColor="white">
+      <CreatedEventsPageContextProvider>
+        <PageInner />
+      </CreatedEventsPageContextProvider>
     </MainLayout>
   );
 }
