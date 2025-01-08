@@ -7,7 +7,7 @@ import {IconCheck} from '../Icons/Icons/IconCheck';
 import {checkboxStyle, inputGroupStyle} from './Checkbox.style';
 
 interface Props {
-  labelText: string;
+  labelText?: string;
   isChecked: boolean;
   onChange: () => void;
 }
@@ -20,7 +20,7 @@ const Checkbox = ({labelText, isChecked = false, onChange}: Props) => {
         {isChecked ? <IconCheck size={20} color="onPrimary" className="check-icon" /> : null}
         <input type="checkbox" checked={isChecked} onChange={onChange} className="checkbox-input" />
       </div>
-      <Text size="bodyBold">{labelText}</Text>
+      {labelText && <Text size="bodyBold">{labelText}</Text>}
     </label>
   );
 };
