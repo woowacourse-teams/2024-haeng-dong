@@ -40,7 +40,7 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
     if (!isChecked) onChange(createdEvent);
   };
 
-  const {handleTouchStart, handleTouchEnd, handleTouchMove, LongPressAnimation} = useLongPressAnimation(onLongPress, {
+  const {handleTouchStart, handleTouchEnd, handleTouchMove} = useLongPressAnimation(onLongPress, {
     disabled: isEditMode,
   });
 
@@ -63,7 +63,6 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {LongPressAnimation}
         <Flex gap="0.5rem" alignItems="center">
           <InProgressCheck inProgress={createdEvent.isFinished} />
           <Text size="bodyBold" color="onTertiary">
