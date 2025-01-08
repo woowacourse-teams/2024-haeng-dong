@@ -1,8 +1,8 @@
 import {BankAccount, CreatedEvents, Event, EventCreationData, EventName} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
-import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestPatch, requestPostWithResponse} from '@apis/request';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {requestDelete, requestGet, requestPatchWithoutResponse, requestPostWithResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 export const requestPostGuestEvent = async (postEventArgs: EventCreationData) => {
@@ -39,7 +39,7 @@ export type PartialEvent = Partial<
 export type RequestPatchEvent = WithEventId & PartialEvent;
 
 export const requestPatchEvent = async ({eventId, ...event}: RequestPatchEvent) => {
-  return requestPatch({
+  await requestPatchWithoutResponse({
     endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
     body: {
       ...event,
@@ -50,5 +50,16 @@ export const requestPatchEvent = async ({eventId, ...event}: RequestPatchEvent) 
 export const requestGetCreatedEvents = async () => {
   return await requestGet<CreatedEvents>({
     endpoint: `${MEMBER_API_PREFIX}/mine`,
+  });
+};
+
+type DeleteEvents = {
+  eventIds: string[];
+};
+
+export const requestDeleteEvents = async (args: DeleteEvents) => {
+  await requestDelete({
+    endpoint: MEMBER_API_PREFIX,
+    body: args,
   });
 };

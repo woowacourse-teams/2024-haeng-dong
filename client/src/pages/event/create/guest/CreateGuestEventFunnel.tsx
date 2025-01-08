@@ -22,7 +22,7 @@ const CreateGuestEventFunnel = () => {
     stepList: STEP_SEQUENCE,
   });
 
-  const {eventNameProps, nickNameProps, eventToken, setEventToken} = useCreateGuestEventData();
+  const {eventNameProps, nicknameProps, eventToken, setEventToken} = useCreateGuestEventData();
 
   const handleBack = () => {
     if (step === STEP_SEQUENCE[0]) {
@@ -45,13 +45,13 @@ const CreateGuestEventFunnel = () => {
         </Funnel.Step>
 
         <Funnel.Step name="adminName">
-          <SetNicknameStep moveToNextStep={moveToNextStep} {...nickNameProps} />
+          <SetNicknameStep moveToNextStep={moveToNextStep} {...nicknameProps} />
         </Funnel.Step>
 
         <Funnel.Step name="eventPassword">
           <SetEventPasswordStep
             moveToNextStep={moveToNextStep}
-            nickname={nickNameProps.nickname}
+            nickname={nicknameProps.nickname}
             eventName={eventNameProps.eventName}
             setEventToken={setEventToken}
           />

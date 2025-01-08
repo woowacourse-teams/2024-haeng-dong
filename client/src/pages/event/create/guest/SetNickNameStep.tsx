@@ -1,11 +1,11 @@
 import {css} from '@emotion/react';
 
 import Top from '@components/Design/components/Top/Top';
-import {UseSetNicknameStepProps} from '@hooks/createEvent/useSetNicknameStep';
+import useCreateGuestEventData from '@hooks/createEvent/useCreateGuestEventData';
 
 import {FixedButton, Input} from '@HDesign/index';
 
-type SetEventNamePageProps = UseSetNicknameStepProps & {
+type SetNicknameStepProps = Pick<ReturnType<typeof useCreateGuestEventData>, 'nicknameProps'>['nicknameProps'] & {
   moveToNextStep: () => void;
 };
 
@@ -15,7 +15,7 @@ const SetNicknameStep = ({
   errorMessage,
   handleNicknameChange,
   canSubmit,
-}: SetEventNamePageProps) => {
+}: SetNicknameStepProps) => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 

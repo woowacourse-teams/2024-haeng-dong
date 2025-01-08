@@ -2,8 +2,8 @@
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Flex from '../Flex/Flex';
-import Icon from '../Icon/Icon';
 import IconButton from '../IconButton/IconButton';
+import {IconMeatballs} from '../Icons/Icons/IconMeatballs';
 
 import {dropdownStyle} from './Dropdown.style';
 import {DropdownProps} from './Dropdown.type';
@@ -21,7 +21,7 @@ const MeatballBase = ({isOpen, setIsOpen, dropdownRef, children}: MeatballBasePr
   return (
     <>
       <IconButton variants="none" onClick={() => setIsOpen(true)} aria-label="더보기">
-        <Icon iconType="meatballs" />
+        <IconMeatballs />
       </IconButton>
       {isOpen && (
         <section ref={dropdownRef}>

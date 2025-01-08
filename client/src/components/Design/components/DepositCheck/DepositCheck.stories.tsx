@@ -7,7 +7,7 @@ const meta = {
   component: DepositCheck,
   tags: ['autodocs'],
   parameters: {
-    layout: 'centered',
+    // layout: 'centered',
   },
   argTypes: {
     isDeposited: {
