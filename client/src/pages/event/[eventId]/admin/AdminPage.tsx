@@ -54,13 +54,8 @@ const AdminPage = () => {
     navigate(`/event/${eventId}/admin/add-bill`);
   };
 
-  const deleteEventAndNavigateByUser = async () => {
-    if (createdByGuest) {
-      navigate(ROUTER_URLS.main, {replace: true});
-    } else {
-      navigate(ROUTER_URLS.createdEvents, {replace: true});
-    }
-
+  const deleteEventAndNavigateCreatedEventsPage = async () => {
+    navigate(ROUTER_URLS.createdEvents, {replace: true});
     await deleteEvents({eventIds: [eventId]});
   };
 
@@ -75,7 +70,9 @@ const AdminPage = () => {
             <DropdownButton text="전체 참여자 관리" onClick={navigateEventMemberManage} />
             <DropdownButton text="계좌번호 입력하기" onClick={navigateAccountInputPage} />
             <DropdownButton text="사진 첨부하기" onClick={navigateAddImages} />
-            <DropdownButton text="행사 삭제하기" onClick={deleteEventAndNavigateByUser} />
+            {!createdByGuest ? (
+              <DropdownButton text="행사 삭제하기" onClick={deleteEventAndNavigateCreatedEventsPage} />
+            ) : null}
           </Dropdown>
         }
       />
