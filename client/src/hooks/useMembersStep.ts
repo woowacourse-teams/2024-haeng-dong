@@ -11,7 +11,6 @@ import isDuplicated from '@utils/isDuplicate';
 
 import RULE from '@constants/rule';
 import {ERROR_MESSAGE} from '@constants/errorMessage';
-import QUERY_KEYS from '@constants/queryKeys';
 
 import useRequestPostMembers from './queries/member/useRequestPostMembers';
 import useRequestPostBill from './queries/bill/useRequestPostBill';
@@ -31,7 +30,6 @@ interface Props {
 const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const hiddenRef = useRef<HTMLInputElement>(null);
-  const queryClient = useQueryClient();
 
   const {trackAddBillEnd} = useAmplitude();
 
@@ -93,20 +91,13 @@ const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
             name,
           })),
       });
-      postBill(
-        {
-          title: billInfo.title,
-          price: Number(billInfo.price.replace(/,/g, '')),
-          memberIds: billInfo.members.map(member =>
-            member.id === -1 ? newMembers.members.find(m => m.name === member.name)?.id || member.id : member.id,
-          ),
-        },
-        {
-          onSettled: () => {
-            queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers]});
-          },
-        },
-      );
+      postBill({
+        title: billInfo.title,
+        price: Number(billInfo.price.replace(/,/g, '')),
+        memberIds: billInfo.members.map(member =>
+          member.id === -1 ? newMembers.members.find(m => m.name === member.name)?.id || member.id : member.id,
+        ),
+      });
     } else {
       postBill({
         title: billInfo.title,
