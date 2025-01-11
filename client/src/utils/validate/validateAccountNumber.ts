@@ -5,7 +5,7 @@ import RULE from '@constants/rule';
 import {ValidateResult} from './type';
 
 const validateAccountNumber = (accountNumber: string): Pick<ValidateResult, 'errorMessage'> => {
-  const slicedAccountNumber = accountNumber.slice(0, RULE.maxAccountNumberLength);
+  const sanitizedAccountNumber = accountNumber.replace(/[-\s]/g, '');
 
   const isValidateFormat = () => {
     return REGEXP.accountNumber.test(accountNumber);
@@ -13,8 +13,8 @@ const validateAccountNumber = (accountNumber: string): Pick<ValidateResult, 'err
 
   const isValidateLength = () => {
     return (
-      slicedAccountNumber.length >= RULE.minAccountNumberLength &&
-      slicedAccountNumber.length <= RULE.maxAccountNumberLength
+      sanitizedAccountNumber.length >= RULE.minAccountNumberLength &&
+      sanitizedAccountNumber.length <= RULE.maxAccountNumberLength
     );
   };
 

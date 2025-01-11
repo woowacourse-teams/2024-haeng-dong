@@ -15,7 +15,8 @@ type UseAccountArgs = {
 const canEditAccountNumber = (newAccountNumber: string) => {
   return (
     newAccountNumber === '' ||
-    (newAccountNumber.length <= RULE.maxAccountNumberLength && REGEXP.accountNumber.test(newAccountNumber))
+    (newAccountNumber.replace(/[-\s]/g, '').length <= RULE.maxAccountNumberLength &&
+      REGEXP.accountNumber.test(newAccountNumber))
   );
 };
 
