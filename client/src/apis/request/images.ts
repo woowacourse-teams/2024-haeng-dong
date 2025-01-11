@@ -1,4 +1,4 @@
-import {EventId, Images} from 'types/serviceType';
+import {Images} from 'types/serviceType';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';

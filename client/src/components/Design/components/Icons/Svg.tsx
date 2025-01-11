@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {useRef} from 'react';
+import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
