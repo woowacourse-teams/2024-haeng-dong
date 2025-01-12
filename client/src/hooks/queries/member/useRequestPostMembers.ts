@@ -13,10 +13,10 @@ const useRequestPostMembers = () => {
   const {mutate, mutateAsync, data, ...rest} = useMutation({
     mutationFn: ({members}: RequestPostMembers) => requestPostMembers({eventId, members}),
     onSuccess: responseData => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers, eventId]});
       return responseData;
     },
   });

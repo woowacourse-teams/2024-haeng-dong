@@ -13,7 +13,7 @@ const useRequestDeleteImage = () => {
   const {mutate, ...rest} = useMutation({
     mutationFn: ({imageId}: RequestDeleteImage) => requestDeleteImage({eventId, imageId}),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.images]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.images, eventId]});
     },
   });
 

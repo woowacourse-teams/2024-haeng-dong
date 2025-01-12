@@ -13,9 +13,9 @@ const useRequestPostBill = () => {
   const {mutate, ...rest} = useMutation({
     mutationFn: ({title, price, memberIds}: RequestPostBill) => requestPostBill({eventId, title, price, memberIds}),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers, eventId]});
     },
   });
 

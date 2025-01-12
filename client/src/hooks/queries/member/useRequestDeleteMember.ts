@@ -13,11 +13,12 @@ const useRequestDeleteMember = () => {
   const {mutateAsync, ...rest} = useMutation({
     mutationFn: ({memberId}: RequestDeleteMember) => requestDeleteMember({eventId, memberId}),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers]});
-      queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.allMembers, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports, eventId]});
+
+      queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails, eventId]});
     },
   });
 
