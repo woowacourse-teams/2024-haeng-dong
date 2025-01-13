@@ -1,6 +1,6 @@
 import {useSuspenseQuery} from '@tanstack/react-query';
 
-import {requestGetUserInfo} from '@apis/request/auth';
+import {requestGetUserInfo} from '@apis/request/user';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
