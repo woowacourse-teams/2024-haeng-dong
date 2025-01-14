@@ -40,8 +40,8 @@ const MemberNameInput = ({member, changeMemberName}: MemberNameInputProps) => {
   const handleChangeMemberName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
 
-    const {isValid, memberName: memberNameResult} = validateMemberName(newName);
-    setIsError(!isValid);
+    const {isValid, errorMessage, memberName: memberNameResult} = validateMemberName(newName);
+    setIsError(!!errorMessage);
 
     if (isValid || memberNameResult.length === 0) {
       changeMemberName(member.memberId, memberNameResult);
