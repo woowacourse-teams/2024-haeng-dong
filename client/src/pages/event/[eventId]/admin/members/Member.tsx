@@ -48,7 +48,7 @@ const MemberNameInput = ({member, changeMemberName}: MemberNameInputProps) => {
   };
 
   return (
-    <div css={memberEditInput(theme)}>
+    <div css={memberEditInput(theme, isError)}>
       <input type="text" value={member.memberName} onChange={handleChangeMemberName} placeholder="행댕이" />
       <IconEdit size={14} />
     </div>
