@@ -62,8 +62,8 @@ const useEventMember = (): ReturnUseEventMember => {
 
   const changeMemberName = useCallback(
     (memberId: number, newName: string) => {
-      // 유효성 검사 (4자 이하)
-      if (!validateMemberName(newName).isValid) {
+      // 유효성 검사
+      if (!validateMemberName(newName).isValid && newName.length !== 0) {
         return;
       }
 

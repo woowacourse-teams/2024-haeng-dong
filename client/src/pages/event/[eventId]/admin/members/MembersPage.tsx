@@ -74,14 +74,14 @@ interface MemberProps {
 const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStatus}: MemberProps) => {
   const {theme} = useTheme();
 
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    changeMemberName(member.memberId, e.target.value);
-  };
-
   return (
     <div css={eventMember} id={`${member.memberId}`}>
       <div css={memberEditInput(theme)}>
-        <input type="text" value={member.memberName} onChange={e => handleChangeName(e)} />
+        <input
+          type="text"
+          value={member.memberName}
+          onChange={e => changeMemberName(member.memberId, e.target.value)}
+        />
         <IconEdit size={14} />
       </div>
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem'}}>
