@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {Report} from 'types/serviceType';
+
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 import {IconEdit} from '@components/Design/components/Icons/Icons/IconEdit';
 import {IconTrash} from '@components/Design/components/Icons/Icons/IconTrash';
@@ -8,6 +8,7 @@ import useEventMember from '@hooks/useEventMember';
 
 import {MainLayout, TopNav, Top, Amount, DepositToggle, IconButton, FixedButton, Text} from '@components/Design';
 
+import {MemberProps} from './MemberPageType';
 import {
   eventMemberStyle,
   memberList,
@@ -63,13 +64,6 @@ const MembersPage = () => {
     </MainLayout>
   );
 };
-
-interface MemberProps {
-  member: Report;
-  changeMemberName: (memberId: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDeleteMember: (memberId: number) => void;
-  toggleDepositStatus: (memberId: number) => void;
-}
 
 const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStatus}: MemberProps) => {
   const {theme} = useTheme();
