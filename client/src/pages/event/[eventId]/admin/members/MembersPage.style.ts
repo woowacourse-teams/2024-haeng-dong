@@ -56,7 +56,7 @@ export const memberEditInput = (theme: Theme, isError: boolean) =>
     },
 
     '&:placeholder': {
-      color: theme.colors.darkGray,
+      color: theme.colors.gray,
     },
   });
 
