@@ -1,7 +1,7 @@
 import {Report} from 'types/serviceType';
 
 interface MemberActions {
-  changeMemberName: (memberId: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  changeMemberName: (memberId: number, newName: string) => void;
   toggleDepositStatus: (memberId: number) => void;
   handleDeleteMember: (memberId: number) => void;
 }
@@ -14,4 +14,9 @@ export interface ReturnUseEventMember extends MemberActions {
 
 export interface MemberProps extends MemberActions {
   member: Report;
+}
+
+export interface MemberNameInputProps {
+  member: Report;
+  changeMemberName: (memberId: number, newName: string) => void;
 }
