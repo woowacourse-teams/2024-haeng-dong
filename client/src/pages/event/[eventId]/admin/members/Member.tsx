@@ -35,6 +35,7 @@ const MemberNameInput = ({member, changeMemberName}: MemberNameInputProps) => {
   const {theme} = useTheme();
 
   const [isError, setIsError] = useState<boolean>(false);
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
 
   const handleChangeMemberName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
@@ -45,10 +46,12 @@ const MemberNameInput = ({member, changeMemberName}: MemberNameInputProps) => {
     if (isValid || memberNameResult.length === 0) {
       changeMemberName(member.memberId, memberNameResult);
     }
+
+    setIsEmpty(memberNameResult.length === 0);
   };
 
   return (
-    <div css={memberEditInput(theme, isError)}>
+    <div css={memberEditInput(theme, isError, isEmpty)}>
       <input type="text" value={member.memberName} onChange={handleChangeMemberName} placeholder="행댕이" />
       <IconEdit size={14} />
     </div>
