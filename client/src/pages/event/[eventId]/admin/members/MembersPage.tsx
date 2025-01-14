@@ -66,7 +66,7 @@ const MembersPage = () => {
 
 interface MemberProps {
   member: Report;
-  changeMemberName: (memberId: number, newName: string) => void;
+  changeMemberName: (memberId: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDeleteMember: (memberId: number) => void;
   toggleDepositStatus: (memberId: number) => void;
 }
@@ -77,11 +77,7 @@ const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStat
   return (
     <div css={eventMember} id={`${member.memberId}`}>
       <div css={memberEditInput(theme)}>
-        <input
-          type="text"
-          value={member.memberName}
-          onChange={e => changeMemberName(member.memberId, e.target.value)}
-        />
+        <input type="text" value={member.memberName} onChange={e => changeMemberName(member.memberId, e)} />
         <IconEdit size={14} />
       </div>
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem'}}>

@@ -13,7 +13,7 @@ import useRequestGetReports from './queries/report/useRequestGetReports';
 interface ReturnUseEventMember {
   reports: Report[];
   canSubmit: boolean;
-  changeMemberName: (memberId: number, newName: string) => void;
+  changeMemberName: (memberId: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   toggleDepositStatus: (memberId: number) => void;
   handleDeleteMember: (memberId: number) => void;
   updateMembersOnServer: () => void;
@@ -61,7 +61,8 @@ const useEventMember = (): ReturnUseEventMember => {
   }, [reports, initialReports, deleteMembers]);
 
   const changeMemberName = useCallback(
-    (memberId: number, newName: string) => {
+    (memberId: number, e: React.ChangeEvent<HTMLInputElement>) => {
+      const newName = e.target.value;
       // 유효성 검사
       if (!validateMemberName(newName).isValid && newName.length !== 0) {
         return;
