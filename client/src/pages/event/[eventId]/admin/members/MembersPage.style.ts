@@ -47,7 +47,7 @@ export const memberEditInput = (theme: Theme, isError: boolean) =>
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    color: theme.colors.black,
+    color: theme.colors.onTertiary,
     borderBottom: isError ? `1px solid ${theme.colors.error}` : `1px solid ${theme.colors.tertiary}`,
     ...TYPOGRAPHY.bodyBold,
 
