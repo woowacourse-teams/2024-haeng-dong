@@ -53,6 +53,10 @@ export const memberEditInput = (theme: Theme) =>
     '&:has(input:focus)': {
       borderBottom: `1px solid ${theme.colors.primary}`,
     },
+
+    '&:placeholder': {
+      color: theme.colors.darkGray,
+    },
   });
 
 export const deleteButtonStyle = css({

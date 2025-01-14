@@ -71,7 +71,12 @@ const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStat
   return (
     <div css={eventMember} id={`${member.memberId}`}>
       <div css={memberEditInput(theme)}>
-        <input type="text" value={member.memberName} onChange={e => changeMemberName(member.memberId, e)} />
+        <input
+          type="text"
+          value={member.memberName}
+          onChange={e => changeMemberName(member.memberId, e)}
+          placeholder="행댕이"
+        />
         <IconEdit size={14} />
       </div>
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem'}}>
