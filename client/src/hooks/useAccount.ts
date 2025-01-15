@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 
-import validateAccountNumber from '@utils/validate/validateAccountNumber';
+import validateAccountNumber, {cleanedFormatAccountNumber} from '@utils/validate/validateAccountNumber';
 import {BankAccount, BankName} from 'types/serviceType';
 
 import RULE from '@constants/rule';
@@ -15,7 +15,8 @@ type UseAccountArgs = {
 const canEditAccountNumber = (newAccountNumber: string) => {
   return (
     newAccountNumber === '' ||
-    (newAccountNumber.length <= RULE.maxAccountNumberLength && REGEXP.accountNumber.test(newAccountNumber))
+    (cleanedFormatAccountNumber(newAccountNumber).length <= RULE.maxAccountNumberLength &&
+      REGEXP.accountNumber.test(newAccountNumber))
   );
 };
 
