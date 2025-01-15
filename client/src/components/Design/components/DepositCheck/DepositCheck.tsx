@@ -15,7 +15,7 @@ const DepositCheck: React.FC<DepositCheckProps> = ({isDeposited = false}: Deposi
       <Text size="tiny" className="deposit-check-text">
         입금
       </Text>
-      {isDeposited ? <IconCheck size={12} color="primary" /> : <IconX color="gray" />}
+      {isDeposited ? <IconCheck size={12} color="primary" /> : <IconX size={12} color="gray" />}
     </div>
   );
 };
