@@ -30,18 +30,21 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      # 4. Prod 환경으로 빌드
+      # 4. 환경변수 파일 github secret에서 가져와서 생성
+      - name: Create environments from github secrets
+        run: |
+          echo "API_BASE_URL=${{ secrets.API_BASE_URL }}" >> .env.prod
+          echo "AMPLITUDE_KEY=${{ secrets.AMPLITUDE_KEY }}" >> .env.prod
+          echo "KAKAO_JAVASCRIPT_KEY=${{ secrets.KAKAO_JAVASCRIPT_KEY }}" >> .env.prod
+          echo "IMAGE_URL=${{ secrets.IMAGE_URL }}" >> .env.prod
+          echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> .env.prod
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.prod
+
+      # 5. Prod 환경으로 빌드
       - name: Build for Prod environment
         run: npm run build
-        env:
-          API_BASE_URL: ${{ secrets.API_BASE_URL }}
-          AMPLITUDE_KEY: ${{ secrets.AMPLITUDE_KEY }}
-          KAKAO_JAVASCRIPT_KEY: ${{ secrets.KAKAO_JAVASCRIPT_KEY }}
-          IMAGE_URL: ${{ secrets.IMAGE_URL }}
-          KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-      # 5. AWS 인증 설정
+      # 6. AWS 인증 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -49,11 +52,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # 6. S3에 빌드 결과 업로드
+      # 7. S3에 빌드 결과 업로드
       - name: Upload build results to S3
         run: aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }}/prod/ --delete
 
-      # 7. CloudFront 캐시 무효화
+      # 8. CloudFront 캐시 무효화
       - name: Invalidate CloudFront Cache
         run: |
           aws cloudfront create-invalidation \
