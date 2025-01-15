@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {Report} from 'types/serviceType';
+
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 import {IconEdit} from '@components/Design/components/Icons/Icons/IconEdit';
 import {IconTrash} from '@components/Design/components/Icons/Icons/IconTrash';
@@ -8,6 +8,7 @@ import useEventMember from '@hooks/useEventMember';
 
 import {MainLayout, TopNav, Top, Amount, DepositToggle, IconButton, FixedButton, Text} from '@components/Design';
 
+import {MemberProps} from './MemberPageType';
 import {
   eventMemberStyle,
   memberList,
@@ -64,24 +65,18 @@ const MembersPage = () => {
   );
 };
 
-interface MemberProps {
-  member: Report;
-  changeMemberName: (memberId: number, newName: string) => void;
-  handleDeleteMember: (memberId: number) => void;
-  toggleDepositStatus: (memberId: number) => void;
-}
-
 const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStatus}: MemberProps) => {
   const {theme} = useTheme();
-
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    changeMemberName(member.memberId, e.target.value);
-  };
 
   return (
     <div css={eventMember} id={`${member.memberId}`}>
       <div css={memberEditInput(theme)}>
-        <input type="text" value={member.memberName} onChange={e => handleChangeName(e)} />
+        <input
+          type="text"
+          value={member.memberName}
+          onChange={e => changeMemberName(member.memberId, e)}
+          placeholder="행댕이"
+        />
         <IconEdit size={14} />
       </div>
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem'}}>

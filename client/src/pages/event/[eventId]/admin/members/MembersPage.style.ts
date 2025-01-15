@@ -47,11 +47,16 @@ export const memberEditInput = (theme: Theme) =>
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    color: theme.colors.black,
     borderBottom: `1px solid ${theme.colors.tertiary}`,
     ...TYPOGRAPHY.bodyBold,
 
     '&:has(input:focus)': {
       borderBottom: `1px solid ${theme.colors.primary}`,
+    },
+
+    '&:placeholder': {
+      color: theme.colors.darkGray,
     },
   });
 

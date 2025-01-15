@@ -2,6 +2,7 @@ import {useEffect, useState, useCallback, useMemo} from 'react';
 
 import {Report} from 'types/serviceType';
 import validateMemberName from '@utils/validate/validateMemberName';
+import {ReturnUseEventMember} from '@pages/event/[eventId]/admin/members/MemberPageType';
 
 import MESSAGE from '@constants/message';
 
@@ -9,15 +10,6 @@ import toast from './useToast/toast';
 import useRequestDeleteMember from './queries/member/useRequestDeleteMember';
 import useRequestPutMembers from './queries/member/useRequestPutMembers';
 import useRequestGetReports from './queries/report/useRequestGetReports';
-
-interface ReturnUseEventMember {
-  reports: Report[];
-  canSubmit: boolean;
-  changeMemberName: (memberId: number, newName: string) => void;
-  toggleDepositStatus: (memberId: number) => void;
-  handleDeleteMember: (memberId: number) => void;
-  updateMembersOnServer: () => void;
-}
 
 const useEventMember = (): ReturnUseEventMember => {
   const {reports: initialReports} = useRequestGetReports();
@@ -61,9 +53,10 @@ const useEventMember = (): ReturnUseEventMember => {
   }, [reports, initialReports, deleteMembers]);
 
   const changeMemberName = useCallback(
-    (memberId: number, newName: string) => {
-      // 유효성 검사 (4자 이하)
-      if (!validateMemberName(newName).isValid) {
+    (memberId: number, e: React.ChangeEvent<HTMLInputElement>) => {
+      const newName = e.target.value;
+      // 유효성 검사
+      if (!validateMemberName(newName).isValid && newName.length !== 0) {
         return;
       }
 
