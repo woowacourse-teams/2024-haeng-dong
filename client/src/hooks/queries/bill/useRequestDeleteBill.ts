@@ -19,7 +19,7 @@ const useRequestDeleteBill = () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports, eventId]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers, eventId]});
 
-      queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails, billId, eventId]});
+      queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails, eventId, billId]});
     },
   });
 
