@@ -1,22 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import {useTheme} from '@components/Design/theme/HDesignProvider';
-import {IconEdit} from '@components/Design/components/Icons/Icons/IconEdit';
-import {IconTrash} from '@components/Design/components/Icons/Icons/IconTrash';
-
 import useEventMember from '@hooks/useEventMember';
 
-import {MainLayout, TopNav, Top, Amount, DepositToggle, IconButton, FixedButton, Text} from '@components/Design';
+import {MainLayout, TopNav, Top, FixedButton, Text} from '@components/Design';
 
-import {MemberProps} from './MemberPageType';
-import {
-  eventMemberStyle,
-  memberList,
-  eventMember,
-  memberEditInput,
-  noneReports,
-  deleteButtonStyle,
-} from './MembersPage.style';
+import {eventMemberStyle, memberList, noneReports} from './MembersPage.style';
+import Member from './Member';
 
 const MembersPage = () => {
   const {reports, canSubmit, changeMemberName, handleDeleteMember, updateMembersOnServer, toggleDepositStatus} =
@@ -62,37 +51,6 @@ const MembersPage = () => {
         )}
       </section>
     </MainLayout>
-  );
-};
-
-const Member = ({member, changeMemberName, handleDeleteMember, toggleDepositStatus}: MemberProps) => {
-  const {theme} = useTheme();
-
-  return (
-    <div css={eventMember} id={`${member.memberId}`}>
-      <div css={memberEditInput(theme)}>
-        <input
-          type="text"
-          value={member.memberName}
-          onChange={e => changeMemberName(member.memberId, e)}
-          placeholder="행댕이"
-        />
-        <IconEdit size={14} />
-      </div>
-      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem'}}>
-        <Amount amount={member.price} />
-        <DepositToggle isDeposit={member.isDeposited} onToggle={() => toggleDepositStatus(member.memberId)} />
-        <IconButton
-          size="small"
-          variants="tertiary"
-          css={deleteButtonStyle}
-          onClick={() => handleDeleteMember(member.memberId)}
-          aria-label="인원 삭제"
-        >
-          <IconTrash size={14} />
-        </IconButton>
-      </div>
-    </div>
   );
 };
 

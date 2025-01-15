@@ -16,6 +16,7 @@ const validateMemberName = (name: string) => {
   const getErrorMessage = () => {
     if (!validateOnlyString()) return ERROR_MESSAGE.memberNameFormat;
     if (name.length > RULE.maxMemberNameLength) return ERROR_MESSAGE.memberNameLength;
+    if (name.length === 0) return ERROR_MESSAGE.memberNameNotEmpty;
     return null;
   };
 
