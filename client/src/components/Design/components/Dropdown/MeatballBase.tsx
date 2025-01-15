@@ -26,9 +26,10 @@ const MeatballBase = ({isOpen, setIsOpen, dropdownRef, children}: MeatballBasePr
       {isOpen && (
         <section ref={dropdownRef}>
           <Flex {...dropdownStyle(theme)}>
-            {children.map((button, index) => (
-              <DropdownButton key={index} setIsOpen={setIsOpen} {...button.props} />
-            ))}
+            {children.map((button, index) => {
+              if (button) return <DropdownButton key={index} setIsOpen={setIsOpen} {...button.props} />;
+              return null;
+            })}
           </Flex>
         </section>
       )}

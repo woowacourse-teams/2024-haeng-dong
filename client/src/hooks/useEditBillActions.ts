@@ -25,7 +25,7 @@ const useEditBillActions = ({bill, billDetails, newBill, newBillDetails}: Props)
   const {deleteBill, isSuccess: isSuccessDeleteBill} = useRequestDeleteBill();
   const {
     putBillDetails,
-    isSuccess: isSusseccPutBillDetails,
+    isSuccess: isSuccessPutBillDetails,
     isPending: isPendingPutBillDetails,
   } = useRequestPutBillDetails({billId: bill.id});
 
@@ -54,10 +54,10 @@ const useEditBillActions = ({bill, billDetails, newBill, newBillDetails}: Props)
   };
 
   useEffect(() => {
-    if (isSuccessDeleteBill || isSusseccPutBillDetails || (isSuccessPutBill && !isBillDetailsChanged)) {
+    if (isSuccessDeleteBill || isSuccessPutBillDetails || (isSuccessPutBill && !isBillDetailsChanged)) {
       navigate(`/event/${eventId}/admin`);
     }
-  }, [isSuccessDeleteBill, isSusseccPutBillDetails, isSuccessPutBill, isBillDetailsChanged]);
+  }, [isSuccessDeleteBill, isSuccessPutBillDetails, isSuccessPutBill, isBillDetailsChanged]);
 
   const isPendingUpdate = () => {
     if (!isBillChanged) {

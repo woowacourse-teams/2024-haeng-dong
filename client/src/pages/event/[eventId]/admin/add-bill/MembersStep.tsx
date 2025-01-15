@@ -1,5 +1,4 @@
 import {css} from '@emotion/react';
-import {useRef} from 'react';
 
 import Top from '@components/Design/components/Top/Top';
 import ChipButton from '@components/Design/components/ChipButton/ChipButton';

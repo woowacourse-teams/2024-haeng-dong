@@ -31,9 +31,10 @@ const ButtonBase = ({isOpen, setIsOpen, dropdownRef, baseButtonText, onBaseButto
       {isOpen && (
         <section ref={dropdownRef}>
           <Flex {...dropdownButtonBaseStyle(theme)}>
-            {children.map((button, index) => (
-              <DropdownButton key={index} setIsOpen={setIsOpen} {...button.props} />
-            ))}
+            {children.map((button, index) => {
+              if (button) return <DropdownButton key={index} setIsOpen={setIsOpen} {...button.props} />;
+              return null;
+            })}
           </Flex>
         </section>
       )}

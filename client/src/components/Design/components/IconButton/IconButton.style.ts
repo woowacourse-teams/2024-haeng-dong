@@ -4,12 +4,7 @@ import {css} from '@emotion/react';
 import {Theme} from '@theme/theme.type';
 import {setDarker, setLighter} from '@HDutils/colors';
 
-import {
-  IconButtonSize,
-  IconButtonStyleProps,
-  IconButtonStylePropsWithTheme,
-  IconButtonVariants,
-} from './IconButton.type';
+import {IconButtonSize, IconButtonStylePropsWithTheme} from './IconButton.type';
 
 export const iconButtonStyle = ({theme, size = 'large', variants}: IconButtonStylePropsWithTheme) => {
   if (variants === 'none') {

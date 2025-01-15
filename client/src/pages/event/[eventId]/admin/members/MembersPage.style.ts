@@ -58,6 +58,10 @@ export const memberEditInput = (theme: Theme, isError: boolean, isEmpty: boolean
     '&:placeholder': {
       color: theme.colors.gray,
     },
+
+    '&:placeholder': {
+      color: theme.colors.darkGray,
+    },
   });
 
 export const deleteButtonStyle = css({

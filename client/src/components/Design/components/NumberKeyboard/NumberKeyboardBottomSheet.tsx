@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 import {createPortal} from 'react-dom';
-import {forwardRef, useEffect, useRef} from 'react';
+import {forwardRef} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 

@@ -3,9 +3,10 @@ import {ErrorBoundary} from '@sentry/react';
 import {Suspense} from 'react';
 
 import {Profile} from '@components/Design/components/Profile/Profile';
-import useRequestSuspenseGetUserInfo from '@hooks/queries/auth/useRequestSuspenseGetUserInfo';
 import MyPageError from '@pages/fallback/MyPageError';
 import MyPageLoading from '@pages/fallback/MyPageLoading';
+
+import useUserInfoContext from '@hooks/useUserInfoContext';
 
 import {Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav} from '@components/Design';
 
@@ -29,14 +30,13 @@ const SectionContainer = ({children}: React.PropsWithChildren) => {
 };
 
 const UserInfoSection = () => {
-  const {userInfo} = useRequestSuspenseGetUserInfo();
-  const {profileImage, nickname} = userInfo;
+  const {nickname, profileImage} = useUserInfoContext();
 
   return (
     <SectionContainer>
       <Flex justifyContent="spaceBetween" alignItems="center" margin="0 1rem">
         <Flex gap="1rem" alignItems="center">
-          <Profile src={profileImage ?? getImageUrl('runningDog', 'png')} size="large" />
+          <Profile src={profileImage ? profileImage : getImageUrl('runningDog', 'png')} size="large" />
           <Text size="bodyBold" textColor="onTertiary">
             {nickname}
           </Text>

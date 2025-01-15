@@ -1,5 +1,5 @@
 import Image from '@components/Design/components/Image/Image';
-import useRequestGetUserInfo from '@hooks/queries/auth/useRequestGetUserInfo';
+import useRequestGetUserInfo from '@hooks/queries/user/useRequestGetUserInfo';
 
 import usePageBackground from '@hooks/usePageBackground';
 
