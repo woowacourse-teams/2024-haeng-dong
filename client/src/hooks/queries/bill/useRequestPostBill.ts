@@ -16,7 +16,7 @@ const useRequestPostBill = () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps, eventId]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports, eventId]});
 
-      // admin으로 navigate 되기 전 invalidate 실행 시 api를 불러오는 문제 발생 => remove를 사용하여 캐시 데이터 삭제하는 방식으로 해결s
+      // admin으로 navigate 되기 전 invalidate 실행 시 api를 불러오는 문제 발생 => remove를 사용하여 캐시 데이터 삭제하는 방식으로 해결
       queryClient.removeQueries({queryKey: [QUERY_KEYS.currentMembers, eventId]});
     },
   });
