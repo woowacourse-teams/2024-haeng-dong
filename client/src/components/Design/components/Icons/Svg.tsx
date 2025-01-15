@@ -18,7 +18,7 @@ const Svg: React.FC<SvgProps> = ({children, color, size, width, height, directio
   const heightMatch = xmlString.match(/height="([^"]+)"/);
   const originHeight = heightMatch ? parseInt(heightMatch[1]) : 24;
 
-  const viewBox = `0 0 ${originWidth}px ${originHeight}px`;
+  const viewBox = `0 0 ${originWidth} ${originHeight}`;
 
   const fillMatch = xmlString.match(/fill="([^"]+)"/);
   const originFill = fillMatch ? fillMatch[1] : null;
