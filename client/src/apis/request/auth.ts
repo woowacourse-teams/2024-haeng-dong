@@ -44,11 +44,3 @@ export const requestGetKakaoLogin = async (code: string) => {
 
   return null;
 };
-
-export const requestGetUserInfo = async () => {
-  return await requestGet<UserInfo>({
-    baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/mine`,
-    errorHandlingStrategy: 'unsubscribe',
-  });
-};
