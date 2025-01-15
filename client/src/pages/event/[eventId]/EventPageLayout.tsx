@@ -53,6 +53,7 @@ const EventPageLayout = () => {
   }, []);
 
   const isKakaoUser = event.userInfo && event.userInfo.isGuest === false;
+  const profileImage = event.userInfo.profileImage;
 
   return (
     <MainLayout backgroundColor="gray">
@@ -74,7 +75,7 @@ const EventPageLayout = () => {
           )}
           {isKakaoUser && (
             <Link to={ROUTER_URLS.myPage}>
-              <Profile src={event.userInfo.profileImage ?? getImageUrl('runningDog', 'png')} size="medium" />
+              <Profile src={profileImage ? profileImage : getImageUrl('runningDog', 'png')} size="large" />
             </Link>
           )}
         </Flex>
