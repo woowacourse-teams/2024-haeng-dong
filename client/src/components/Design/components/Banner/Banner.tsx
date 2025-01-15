@@ -25,7 +25,7 @@ const Banner = ({title, description, buttonText, onDelete, ...buttonProps}: Bann
           style={{display: 'flex', alignItems: 'flex-start'}}
           aria-label="배너 닫기"
         >
-          <IconX />
+          <IconX size={12} />
         </IconButton>
         <div>
           <Text size="captionBold" color="onTertiary">
