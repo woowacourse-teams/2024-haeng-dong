@@ -7,13 +7,13 @@ beforeEach(() => {
   cy.blockKakao();
 });
 
-describe('Flow: 랜딩 페이지에서부터 이벤트를 생성 완료하는 flow', () => {
-  it('랜딩페이지에서 "정산 시작하기" 버튼을 눌러 로그인 페이지지로 이동해야 한다.', () => {
+describe('Flow: 비회원이 랜딩 페이지에서부터 이벤트를 생성 완료하는 flow', () => {
+  it('비회원이 랜딩페이지에서 "정산 시작하기" 버튼을 누르면 로그인 페이지로 이동해야 한다.', () => {
     cy.visit(ROUTER_URLS.main);
     cy.get('button').contains('정산 시작하기').click();
     cy.url().should('include', ROUTER_URLS.login);
   });
-  it('로그인 페이지에서 "비회원으로 진행하기" 버튼을 눌러 비회원 행사 생성 페이지로 이동해야 한다. ', () => {
+  it('로그인 페이지에서 "비회원으로 진행하기" 버튼을 누르면 비회원 행사 생성 페이지로 이동해야 한다. ', () => {
     cy.visit(ROUTER_URLS.login);
     cy.get('button').contains('비회원으로 진행하기').click();
     cy.url().should('include', ROUTER_URLS.createGuestEvent);
