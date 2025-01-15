@@ -17,7 +17,7 @@ import {BillStep} from './useAddBillFunnel';
 import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
 import useAmplitude from './useAmplitude';
 import useMemberName from './useMemberName';
-import useEventDataContext from './useEventDataContext';
+import useRequestGetEvent from './queries/event/useRequestGetEvent';
 
 interface Props {
   billInfo: BillInfo;
@@ -38,7 +38,7 @@ const useMembersStep = ({billInfo, setBillInfo, setStep}: Props) => {
   const {postBill, isSuccess: isSuccessPostBill, isPending: isPendingPostBill} = useRequestPostBill();
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
-  const {eventName} = useEventDataContext();
+  const {eventName} = useRequestGetEvent();
 
   const {name, handleNameChange, clearMemberName, errorMessage} = useMemberName();
 
