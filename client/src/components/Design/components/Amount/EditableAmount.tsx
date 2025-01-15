@@ -74,8 +74,8 @@ const EditableAmount = ({value, onChange, onClick, readOnly = true, isFixed = fa
           <Text size="tiny" textColor="gray">
             원
           </Text>
+          {onClick && <IconEdit size={16} />}
         </div>
-        {onClick && <IconEdit />}
       </div>
 
       <span

@@ -30,6 +30,7 @@ export default function EditableLine({value, onChange}: Props) {
         css={css`
           display: flex;
           gap: 0.5rem;
+          align-items: center;
         `}
       >
         <input
@@ -48,7 +49,7 @@ export default function EditableLine({value, onChange}: Props) {
           value={value}
           onChange={onChange}
         />
-        <IconEdit />
+        <IconEdit size={16} />
       </div>
 
       <span
