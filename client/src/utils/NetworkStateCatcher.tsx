@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
 
-import {useToast} from '@hooks/useToast/useToast';
 import toast from '@hooks/useToast/toast';
 
 const NetworkStateCatcher = () => {

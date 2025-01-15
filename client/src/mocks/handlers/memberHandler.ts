@@ -1,6 +1,6 @@
 import {http, HttpResponse, PathParams} from 'msw';
 
-import {AllMembers, Members} from 'types/serviceType';
+import {Members} from 'types/serviceType';
 
 import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
 

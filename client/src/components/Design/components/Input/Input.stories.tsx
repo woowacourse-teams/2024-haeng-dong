@@ -1,9 +1,8 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import Input from '@HDcomponents/Input/Input';
-import Flex from '@HDcomponents/Flex/Flex';
 import Button from '@HDcomponents/Button/Button';
 
 const meta = {
