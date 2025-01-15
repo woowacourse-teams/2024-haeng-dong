@@ -1,7 +1,6 @@
 import {useLocation, useMatch, useNavigate} from 'react-router-dom';
 
 import StepList from '@components/StepList/Steps';
-import useRequestGetSteps from '@hooks/queries/step/useRequestGetSteps';
 import Reports from '@components/Reports/Reports';
 import useRequestGetImages from '@hooks/queries/images/useRequestGetImages';
 import {IconPictureSquare} from '@components/Design/components/Icons/Icons/IconPictureSquare';
@@ -20,10 +19,9 @@ import {receiptStyle} from './HomePage.style';
 
 const HomePage = () => {
   const location = useLocation();
-  const {isAdmin, eventName} = useEventDataContext();
+  const {isAdmin, eventName, steps} = useEventDataContext();
   const isInHomePage = useMatch(ROUTER_URLS.home) !== null;
 
-  const {steps} = useRequestGetSteps();
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
   const {images} = useRequestGetImages();
   const navigate = useNavigate();

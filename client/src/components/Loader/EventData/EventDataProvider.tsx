@@ -1,15 +1,14 @@
 import {createContext, PropsWithChildren} from 'react';
 
-import {Event, EventId} from 'types/serviceType';
+import useEventLoader from '@hooks/useEventLoader';
 
 import {useAuthStore} from '@store/authStore';
 
-type EventDataContextType = Event & {
-  eventToken: EventId;
+type EventDataContextType = ReturnType<typeof useEventLoader> & {
   isAdmin: boolean;
 };
 
-type EventDataProviderProps = PropsWithChildren<Omit<EventDataContextType, 'isAdmin'>>;
+type EventDataProviderProps = Omit<PropsWithChildren<EventDataContextType>, 'isAdmin'>;
 
 export const EventDataContext = createContext<EventDataContextType | null>(null);
 

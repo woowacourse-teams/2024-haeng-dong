@@ -2,17 +2,14 @@ import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-import useRequestGetAllMembers from './queries/member/useRequestGetAllMembers';
-import useRequestGetSteps from './queries/step/useRequestGetSteps';
 import useRequestGetUserInfo from './queries/auth/useRequestGetUserInfo';
 import useEventDataContext from './useEventDataContext';
 
 const useEventPageLayout = () => {
   const eventId = getEventIdByUrl();
-  const {isAdmin, eventName, bankName, accountNumber, createdByGuest} = useEventDataContext();
+  const {isAdmin, eventName, bankName, accountNumber, createdByGuest, steps, members} = useEventDataContext();
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
-  const {members} = useRequestGetAllMembers();
-  const {steps} = useRequestGetSteps();
+
   const {userInfo} = useRequestGetUserInfo();
   const billsCount = steps.flatMap(step => [...step.bills]).length;
 
