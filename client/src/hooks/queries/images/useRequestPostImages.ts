@@ -13,7 +13,7 @@ const useRequestPostImages = () => {
   const {mutateAsync, ...rest} = useMutation({
     mutationFn: ({formData}: RequestPostImages) => requestPostImages({eventId, formData}),
     onSuccess: () => {
-      queryClient.removeQueries({queryKey: [QUERY_KEYS.images]});
+      queryClient.removeQueries({queryKey: [QUERY_KEYS.images, eventId]});
     },
   });
 

@@ -10,7 +10,7 @@ const useRequestGetImages = () => {
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({
-    queryKey: [QUERY_KEYS.images],
+    queryKey: [QUERY_KEYS.images, eventId],
     queryFn: () => requestGetImages({eventId}),
   });
 
