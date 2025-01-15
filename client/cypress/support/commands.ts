@@ -47,8 +47,16 @@ Cypress.Commands.add('interceptAPI', ({type, delay = 0, statusCode = 200}: Inter
 });
 
 Cypress.Commands.add('createEventName', (eventName: string) => {
-  cy.visit(ROUTER_URLS.createUserEvent);
+  cy.visit(ROUTER_URLS.createGuestEvent);
   cy.get('input').type(eventName);
+  cy.get('button').contains('다음').click();
+});
+
+Cypress.Commands.add('createAdminName', (eventName: string, adminName: string) => {
+  cy.visit(ROUTER_URLS.createGuestEvent);
+  cy.get('input').type(eventName);
+  cy.get('button').contains('다음').click();
+  cy.get('input').type(adminName);
   cy.get('button').contains('다음').click();
 });
 
@@ -59,6 +67,7 @@ declare global {
       blockKakao(): Chainable<void>;
       interceptAPI(props: InterceptAPIProps): Chainable<void>;
       createEventName(eventName: string): Chainable<void>;
+      createAdminName(eventName: string, adminName: string): Chainable<void>;
     }
   }
 }

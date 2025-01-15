@@ -9,5 +9,5 @@ export type DropdownProps = {
   base?: DropdownBase;
   baseButtonText?: string;
   onBaseButtonClick?: () => void;
-  children: React.ReactElement<DropdownButtonProps>[];
+  children: (React.ReactElement<DropdownButtonProps> | null)[];
 };

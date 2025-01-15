@@ -18,7 +18,6 @@ const useRequestPutBillDetails = ({billId}: WithBillId) => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps, eventId]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports, eventId]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers, eventId]});
       queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails, eventId, billId]});
     },
     // onMutate: async (newMembers: MemberReportInAction[]) => {

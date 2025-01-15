@@ -5,7 +5,7 @@ import {
   fixedButtonContainerStyle,
   fixedButtonStyle,
   buttonContainerStyle,
-  cancleButtonStyle,
+  cancelButtonStyle,
   deleteButtonStyle,
 } from '@HDcomponents/FixedButton/FixedButton.style';
 import {FixedButtonProps} from '@HDcomponents/FixedButton/FixedButton.type';
@@ -34,7 +34,7 @@ export const FixedButton: React.FC<FixedButtonProps> = forwardRef<HTMLButtonElem
           </button>
         )}
         {onBackClick && (
-          <button css={cancleButtonStyle(theme)} ref={ref} onClick={onBackClick}>
+          <button css={cancelButtonStyle(theme)} ref={ref} onClick={onBackClick}>
             이전으로
           </button>
         )}

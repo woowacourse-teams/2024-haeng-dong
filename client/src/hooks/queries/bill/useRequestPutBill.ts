@@ -17,7 +17,6 @@ const useRequestPutBill = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps, eventId]});
       queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports, eventId]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers, eventId]});
     },
   });
 

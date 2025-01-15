@@ -66,7 +66,7 @@ export const fixedButtonStyle = (props: Required<FixedButtonStyleProps>) => {
   return [getFixedButtonDefaultStyle(props.theme), getFixedButtonVariantsStyle(props.variants, props.theme)];
 };
 
-export const cancleButtonStyle = (theme: Theme) =>
+export const cancelButtonStyle = (theme: Theme) =>
   css({
     display: 'flex',
     justifyContent: 'center',

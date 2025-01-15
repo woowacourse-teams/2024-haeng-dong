@@ -1,5 +1,3 @@
-import {Link} from 'react-router-dom';
-
 import {useTheme, Text} from '@components/Design';
 
 import {footerStyle} from './Footer.style';

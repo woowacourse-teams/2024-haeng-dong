@@ -13,7 +13,7 @@ interface Props {
   newBillDetails: BillDetail[];
 }
 
-const useEditBillKeyboardAction = ({newBill, billDetails, newBillDetails}: Props) => {
+const useEditBillKeyboardAction = ({newBill, newBillDetails}: Props) => {
   const [keyboardTargetId, setKeyboardTargetId] = useState<null | number>(null);
   const billDetailsRef = useRef<HTMLDivElement>(null);
   const {keyboardRef, handleScrollToFocus} = useEditBillPageScroll();
