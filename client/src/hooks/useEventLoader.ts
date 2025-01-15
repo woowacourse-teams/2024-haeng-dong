@@ -23,24 +23,37 @@ const useEventLoader = () => {
 
   const queries = useSuspenseQueries({
     queries: [
-      {queryKey: [QUERY_KEYS.event, eventId], queryFn: () => requestGetEvent({eventId})},
+      {
+        queryKey: [QUERY_KEYS.event, eventId],
+        queryFn: () => requestGetEvent({eventId}),
+        initialData: {eventName: '', bankName: 'KB국민은행', accountNumber: '', createdByGuest: true},
+        initialDataUpdatedAt: 0,
+      },
       {
         queryKey: [QUERY_KEYS.reports, eventId],
         queryFn: () => requestGetReports({eventId}),
+        initialData: {reports: []},
+        initialDataUpdatedAt: 0,
       },
       {
         queryKey: [QUERY_KEYS.steps, eventId],
         queryFn: () => requestGetSteps({eventId}),
+        initialData: [],
+        initialDataUpdatedAt: 0,
       },
       {
         queryKey: [QUERY_KEYS.allMembers, eventId],
         queryFn: () => requestGetAllMembers({eventId}),
+        initialData: {members: []},
+        initialDataUpdatedAt: 0,
       },
     ],
   });
 
   const [eventData, reportsData, stepsData, membersData] = queries;
   const {data, isSuccess} = stepsData;
+
+  const isFetching = queries.some(query => query.isFetching);
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -56,6 +69,10 @@ const useEventLoader = () => {
     accountNumber,
     createdByGuest,
     eventToken: eventId,
+    steps: stepsData.data,
+    reports: reportsData.data.reports,
+    members: membersData.data.members,
+    isFetching,
   };
 };
 

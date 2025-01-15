@@ -15,7 +15,7 @@ const useRequestPatchEvent = () => {
     mutationFn: (partialEvent: PartialEvent) => requestPatchEvent({eventId, ...partialEvent}),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.event],
+        queryKey: [QUERY_KEYS.event, eventId],
       });
     },
   });

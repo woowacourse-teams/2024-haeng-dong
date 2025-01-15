@@ -1,7 +1,7 @@
 import {BankAccount, CreatedEvents, Event, EventCreationData, EventName} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
-import {ADMIN_API_PREFIX, MEMBER_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
 import {requestDelete, requestGet, requestPatchWithoutResponse, requestPostWithResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 

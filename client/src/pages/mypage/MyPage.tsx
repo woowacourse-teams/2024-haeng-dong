@@ -36,7 +36,7 @@ const UserInfoSection = () => {
     <SectionContainer>
       <Flex justifyContent="spaceBetween" alignItems="center" margin="0 1rem">
         <Flex gap="1rem" alignItems="center">
-          <Profile src={profileImage ?? getImageUrl('runningDog', 'png')} size="large" />
+          <Profile src={profileImage ? profileImage : getImageUrl('runningDog', 'png')} size="large" />
           <Text size="bodyBold" textColor="onTertiary">
             {nickname}
           </Text>

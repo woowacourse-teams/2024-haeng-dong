@@ -2,17 +2,14 @@ import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-import useRequestGetSteps from './queries/step/useRequestGetSteps';
 import useBanner from './useBanner';
 import useEventDataContext from './useEventDataContext';
 
 const useAdminPage = () => {
   const eventId = getEventIdByUrl();
-  const {isAdmin, bankName, accountNumber, eventName, createdByGuest} = useEventDataContext();
+  const {isAdmin, bankName, accountNumber, eventName, createdByGuest, steps} = useEventDataContext();
 
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
-
-  const {steps} = useRequestGetSteps();
 
   const {isShowAccountBanner, onDeleteAccount, isShowDepositStateBanner, onDeleteDepositState} = useBanner({
     eventId,
