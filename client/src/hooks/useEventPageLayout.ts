@@ -2,7 +2,7 @@ import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 
-import useRequestGetUserInfo from './queries/auth/useRequestGetUserInfo';
+import useRequestGetUserInfo from './queries/user/useRequestGetUserInfo';
 import useEventDataContext from './useEventDataContext';
 
 const useEventPageLayout = () => {

@@ -1,6 +1,6 @@
 import {Outlet} from 'react-router-dom';
 
-import useRequestGetUserInfo from '@hooks/queries/auth/useRequestGetUserInfo';
+import useRequestGetUserInfo from '@hooks/queries/user/useRequestGetUserInfo';
 
 import UserInfoProvider from './UserInfoProvider';
 
