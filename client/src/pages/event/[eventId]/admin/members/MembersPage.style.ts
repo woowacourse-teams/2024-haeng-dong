@@ -38,7 +38,7 @@ export const eventMember = () =>
     justifyContent: 'space-between',
   });
 
-export const memberEditInput = (theme: Theme) =>
+export const memberEditInput = (theme: Theme, isError: boolean, isEmpty: boolean) =>
   css({
     input: {
       width: '100%',
@@ -47,12 +47,16 @@ export const memberEditInput = (theme: Theme) =>
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    color: theme.colors.black,
-    borderBottom: `1px solid ${theme.colors.tertiary}`,
+    color: theme.colors.onTertiary,
+    borderBottom: isError && isEmpty ? `1px solid ${theme.colors.error}` : `1px solid ${theme.colors.tertiary}`,
     ...TYPOGRAPHY.bodyBold,
 
     '&:has(input:focus)': {
-      borderBottom: `1px solid ${theme.colors.primary}`,
+      borderBottom: isError ? `1px solid ${theme.colors.error}` : `1px solid ${theme.colors.primary}`,
+    },
+
+    '&:placeholder': {
+      color: theme.colors.gray,
     },
 
     '&:placeholder': {

@@ -53,13 +53,7 @@ const useEventMember = (): ReturnUseEventMember => {
   }, [reports, initialReports, deleteMembers]);
 
   const changeMemberName = useCallback(
-    (memberId: number, e: React.ChangeEvent<HTMLInputElement>) => {
-      const newName = e.target.value;
-      // 유효성 검사
-      if (!validateMemberName(newName).isValid && newName.length !== 0) {
-        return;
-      }
-
+    (memberId: number, newName: string) => {
       setReports(prevReports =>
         prevReports.map(report => (report.memberId === memberId ? {...report, memberName: newName} : report)),
       );
