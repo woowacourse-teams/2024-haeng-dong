@@ -3,8 +3,8 @@ import {ErrorBoundary} from '@sentry/react';
 import {Suspense} from 'react';
 
 import {Profile} from '@components/Design/components/Profile/Profile';
-import MyPageError from '@pages/fallback/MyPageError';
-import MyPageLoading from '@pages/fallback/MyPageLoading';
+import LoungePageError from '@pages/fallback/LoungePageError';
+import LoungePageLoading from '@pages/fallback/LoungePageLoading';
 
 import useUserInfoContext from '@hooks/useUserInfoContext';
 
@@ -61,23 +61,17 @@ const SettingSection = () => {
         <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.createdEvents)}>
           내가 만든 행사 목록 보기
         </TextButton>
-        <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.withdraw)}>
-          탈퇴하기
-        </TextButton>
       </Flex>
     </SectionContainer>
   );
 };
 
-const MyPage = () => {
+const Lounge = () => {
   return (
     <MainLayout backgroundColor="gray">
-      <TopNav>
-        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
-      </TopNav>
       <FunnelLayout>
-        <ErrorBoundary fallback={<MyPageError />}>
-          <Suspense fallback={<MyPageLoading />}>
+        <ErrorBoundary fallback={<LoungePageError />}>
+          <Suspense fallback={<LoungePageLoading />}>
             <UserInfoSection />
             <SettingSection />
           </Suspense>
@@ -87,4 +81,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default Lounge;
