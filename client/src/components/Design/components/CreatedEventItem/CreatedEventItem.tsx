@@ -42,6 +42,7 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
       <Flex
         justifyContent="spaceBetween"
         alignItems="center"
+        paddingInline="0.5rem"
         onClick={onClick}
         css={touchAreaStyle}
         onTouchStart={handleTouchStart}
