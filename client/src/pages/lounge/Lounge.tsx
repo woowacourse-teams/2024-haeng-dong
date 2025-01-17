@@ -5,78 +5,98 @@ import {Suspense} from 'react';
 import {Profile} from '@components/Design/components/Profile/Profile';
 import LoungePageError from '@pages/fallback/LoungePageError';
 import LoungePageLoading from '@pages/fallback/LoungePageLoading';
+import ContentItem from '@components/Design/components/ContentItem/ContentItem';
+import HStack from '@components/Design/components/Stack/HStack';
+import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreatedEvents';
+import VStack from '@components/Design/components/Stack/VStack';
+import {CreatedEventView} from '@components/Design/components/CreatedEventItem/CreatedEventView';
 
 import useUserInfoContext from '@hooks/useUserInfoContext';
 
-import {Flex, FunnelLayout, MainLayout, Text, TextButton, TopNav} from '@components/Design';
+import {FixedButton, MainLayout, Text} from '@components/Design';
 
 import getImageUrl from '@utils/getImageUrl';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-const SectionContainer = ({children}: React.PropsWithChildren) => {
-  return (
-    <Flex
-      flexDirection="column"
-      width="100%"
-      gap="0.5rem"
-      backgroundColor="white"
-      padding="1rem"
-      css={{borderRadius: '0.75rem'}}
-    >
-      {children}
-    </Flex>
-  );
-};
-
 const UserInfoSection = () => {
   const {nickname, profileImage} = useUserInfoContext();
+  const navigate = useNavigate();
+
+  const navigateEditUserPage = () => {
+    navigate(ROUTER_URLS.editUserNickname);
+  };
 
   return (
-    <SectionContainer>
-      <Flex justifyContent="spaceBetween" alignItems="center" margin="0 1rem">
-        <Flex gap="1rem" alignItems="center">
-          <Profile src={profileImage ? profileImage : getImageUrl('runningDog', 'png')} size="large" />
-          <Text size="bodyBold" textColor="onTertiary">
-            {nickname}
-          </Text>
-        </Flex>
-      </Flex>
-    </SectionContainer>
+    <ContentItem onEditClick={navigateEditUserPage}>
+      <HStack gap="1rem">
+        <Profile src={profileImage ? profileImage : getImageUrl('runningDog', 'png')} size="medium" />
+        <Text size="bodyBold" textColor="onTertiary">
+          {nickname}
+        </Text>
+      </HStack>
+    </ContentItem>
   );
 };
 
-const SettingSection = () => {
+const AccountSection = () => {
+  const {accountNumber} = useUserInfoContext();
   const navigate = useNavigate();
 
+  const navigateEditAccountPage = () => {
+    navigate(ROUTER_URLS.editUserAccount);
+  };
+
   return (
-    <SectionContainer>
-      <Flex flexDirection="column" margin="0 1.5rem" gap="1rem">
-        <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.editUserNickname)}>
-          이름 변경하기
-        </TextButton>
-        <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.editUserAccount)}>
-          기본 계좌 번호 설정하기
-        </TextButton>
-        <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(ROUTER_URLS.createdEvents)}>
-          내가 만든 행사 목록 보기
-        </TextButton>
-      </Flex>
-    </SectionContainer>
+    <ContentItem label={{left: '기본 계좌번호'}} onEditClick={navigateEditAccountPage}>
+      <Text textColor="black" size="bodyBold">
+        {accountNumber}
+      </Text>
+    </ContentItem>
+  );
+};
+
+const CreatedEventsSection = () => {
+  const navigate = useNavigate();
+  const {events} = useRequestGetCreatedEvents();
+  const slicedEvents = events?.slice(0, 10) ?? [];
+
+  const navigateCreatedEventsPage = () => {
+    navigate(ROUTER_URLS.createdEvents);
+  };
+
+  return (
+    <ContentItem label={{left: '나의 행사목록', right: '전체보기', onRightClick: navigateCreatedEventsPage}}>
+      <VStack>
+        {slicedEvents.map(event => (
+          <CreatedEventView key={event.eventId} {...event} />
+        ))}
+      </VStack>
+    </ContentItem>
   );
 };
 
 const Lounge = () => {
+  const navigate = useNavigate();
+
+  const navigateCreateEvent = () => {
+    navigate(ROUTER_URLS.createUserEvent);
+  };
+
   return (
     <MainLayout backgroundColor="gray">
-      <FunnelLayout>
+      <VStack gap="0.5rem" p="1rem" css={{width: '100%'}}>
         <ErrorBoundary fallback={<LoungePageError />}>
           <Suspense fallback={<LoungePageLoading />}>
             <UserInfoSection />
-            <SettingSection />
+            <AccountSection />
+            <CreatedEventsSection />
           </Suspense>
         </ErrorBoundary>
-      </FunnelLayout>
+      </VStack>
+      <FixedButton variants="primary" onClick={navigateCreateEvent}>
+        행사 생성하기
+      </FixedButton>
     </MainLayout>
   );
 };
