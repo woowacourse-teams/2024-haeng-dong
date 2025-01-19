@@ -72,9 +72,13 @@ const SettingSection = () => {
 const MyPage = () => {
   return (
     <MainLayout backgroundColor="gray">
-      <TopNav>
-        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
-      </TopNav>
+      <TopNav
+        left={
+          <TopNav.Text routePath="-1" isEmphasis={false}>
+            뒤로가기
+          </TopNav.Text>
+        }
+      ></TopNav>
       <FunnelLayout>
         <ErrorBoundary fallback={<MyPageError />}>
           <Suspense fallback={<MyPageLoading />}>

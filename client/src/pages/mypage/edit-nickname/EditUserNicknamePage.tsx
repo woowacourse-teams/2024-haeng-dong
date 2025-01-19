@@ -31,9 +31,13 @@ const EditUserNicknamePage = () => {
   };
   return (
     <MainLayout backgroundColor="white">
-      <TopNav>
-        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
-      </TopNav>
+      <TopNav
+        left={
+          <TopNav.Text routePath="-1" isEmphasis={false}>
+            뒤로가기
+          </TopNav.Text>
+        }
+      ></TopNav>
       <FunnelLayout>
         <Top>
           <Top.Line text="행사에서 사용할" />
