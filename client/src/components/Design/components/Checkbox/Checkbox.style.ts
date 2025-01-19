@@ -3,7 +3,7 @@ import {css} from '@emotion/react';
 import {WithTheme} from '@components/Design/type/withTheme';
 
 interface CheckboxStyleProps {
-  isChecked: boolean;
+  checked: boolean;
 }
 
 export const checkboxStyle = () =>
@@ -15,24 +15,28 @@ export const checkboxStyle = () =>
     cursor: 'pointer',
   });
 
-export const inputGroupStyle = ({theme, isChecked}: WithTheme<CheckboxStyleProps>) =>
+export const boxStyle = ({theme, checked}: WithTheme<CheckboxStyleProps>) =>
   css({
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '1.375rem',
+    height: '1.375rem',
+    border: '1px solid',
+    borderRadius: '0.5rem',
+    borderColor: checked ? theme.colors.primary : theme.colors.tertiary,
+    backgroundColor: checked ? theme.colors.primary : theme.colors.white,
 
-    '.check-icon': {
-      position: 'absolute',
-    },
+    transition: 'all 0.2s',
+    transitionTimingFunction: 'cubic-bezier(0.7, 0, 0.3, 1)',
+  });
 
-    '.checkbox-input': {
-      width: '1.375rem',
-      height: '1.375rem',
-      border: '1px solid',
-      borderRadius: '0.5rem',
-      borderColor: isChecked ? theme.colors.primary : theme.colors.tertiary,
-      backgroundColor: isChecked ? theme.colors.primary : theme.colors.white,
-    },
+export const invisibleInputStyle = () =>
+  css({
+    position: 'absolute',
+    width: '1px',
+    height: '1px',
+    padding: 0,
+    margin: '-1px',
+    overflow: 'hidden',
+    clip: 'rect(0,0,0,0)',
+    whiteSpace: 'nowrap',
+    border: 0,
   });
