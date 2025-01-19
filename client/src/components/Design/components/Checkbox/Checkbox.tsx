@@ -23,8 +23,18 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       onChange?.(e);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        const input = e.currentTarget.querySelector('input');
+        if (input) {
+          input.click();
+        }
+      }
+    };
+
     return (
-      <label css={checkboxStyle} role="checkbox" aria-checked={checked}>
+      <label css={checkboxStyle} role="checkbox" aria-checked={checked} tabIndex={0} onKeyDown={handleKeyDown}>
         <div css={boxStyle({theme, checked})} aria-hidden="true">
           {checked && <IconCheck size={20} color="onPrimary" />}
           <input
