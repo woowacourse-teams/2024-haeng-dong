@@ -39,7 +39,7 @@ const CreateUserEventFunnel = () => {
             </TopNav.Text>
           )
         }
-      ></TopNav>
+      />
       <Funnel step={step}>
         <Funnel.Step name="eventName">
           <SetMemberEventNameStep moveToNextStep={moveToNextStep} setEventToken={setEventToken} />

@@ -78,7 +78,7 @@ const MyPage = () => {
             뒤로가기
           </TopNav.Text>
         }
-      ></TopNav>
+      />
       <FunnelLayout>
         <ErrorBoundary fallback={<MyPageError />}>
           <Suspense fallback={<MyPageLoading />}>

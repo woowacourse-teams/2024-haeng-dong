@@ -37,7 +37,7 @@ const PageInner = () => {
             </TopNav.Text>
           )
         }
-      ></TopNav>
+      />
       <FunnelLayout>
         <Top>
           <Top.Line text="지금까지 주최했던 행사를" emphasize={['주최했던 행사']} />

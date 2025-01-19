@@ -21,7 +21,7 @@ const QRCodePage = () => {
             뒤로가기
           </TopNav.Text>
         }
-      ></TopNav>
+      />
       <div
         css={css`
           display: flex;

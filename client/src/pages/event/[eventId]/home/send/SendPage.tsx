@@ -19,7 +19,7 @@ const SendPage = () => {
             뒤로가기
           </TopNav.Text>
         }
-      ></TopNav>
+      />
       <FunnelLayout>
         <Top>
           <Top.Line text={accountText} />

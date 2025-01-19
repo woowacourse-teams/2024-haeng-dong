@@ -42,7 +42,7 @@ const CreateGuestEventFunnel = () => {
             </TopNav.Text>
           )
         }
-      ></TopNav>
+      />
       <Funnel step={step}>
         <Funnel.Step name="eventName">
           <SetGuestEventNameStep moveToNextStep={moveToNextStep} {...eventNameProps} />

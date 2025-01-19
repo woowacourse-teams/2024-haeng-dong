@@ -24,7 +24,7 @@ const LoginPage = () => {
             뒤로가기
           </TopNav.Text>
         }
-      ></TopNav>
+      />
       <FunnelLayout>
         <Flex flexDirection="column" justifyContent="spaceBetween" height="100%">
           <Flex flexDirection="column" justifyContent="center" alignItems="center" gap="1rem" margin="0 0 6rem 0">

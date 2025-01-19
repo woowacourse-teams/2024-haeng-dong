@@ -25,7 +25,7 @@ const AddBillFunnel = () => {
             뒤로가기
           </TopNav.Text>
         }
-      ></TopNav>
+      />
       {step === 'price' && <PriceStep billInfo={billInfo} setBillInfo={setBillInfo} setStep={setStep} />}
       {step === 'title' && <TitleStep billInfo={billInfo} setBillInfo={setBillInfo} setStep={setStep} />}
       {step === 'members' && (

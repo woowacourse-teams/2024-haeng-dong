@@ -66,7 +66,7 @@ const EventPageLayout = () => {
               <TopNav.Text routePath={PATHS.admin}>관리</TopNav.Text>
             </>
           }
-        ></TopNav>
+        />
         <Flex alignItems="center" gap="0.75rem" margin="0 1rem 0 0">
           {isMobile ? (
             <MobileShareEventButton copyShare={trackLinkShare} kakaoShare={trackKakaoShare} />

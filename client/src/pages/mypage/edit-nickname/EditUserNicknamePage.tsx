@@ -37,7 +37,7 @@ const EditUserNicknamePage = () => {
             뒤로가기
           </TopNav.Text>
         }
-      ></TopNav>
+      />
       <FunnelLayout>
         <Top>
           <Top.Line text="행사에서 사용할" />
