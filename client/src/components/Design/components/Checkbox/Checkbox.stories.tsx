@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
+
+import Text from '../Text/Text';
 
 import Checkbox from './Checkbox';
-import Text from '../Text/Text';
 
 const meta = {
   title: 'Components/Checkbox',
