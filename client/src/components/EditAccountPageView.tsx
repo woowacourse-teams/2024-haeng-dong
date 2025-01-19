@@ -54,7 +54,7 @@ const EditAccountPageView = ({
             뒤로가기
           </TopNav.Text>
         }
-      ></TopNav>
+      />
       <FunnelLayout>
         <Top>
           <Top.Line text="행사 정산 금액은" />
