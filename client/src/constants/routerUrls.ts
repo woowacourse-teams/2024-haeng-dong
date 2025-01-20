@@ -1,6 +1,7 @@
 const EVENT = '/event';
 const EVENT_WITH_EVENT_ID = `${EVENT}/:eventId`;
 const MY_PAGE = '/mypage';
+const SETTING = '/setting';
 
 export const ROUTER_URLS = {
   main: '/',
@@ -20,8 +21,10 @@ export const ROUTER_URLS = {
   billDetail: `${EVENT_WITH_EVENT_ID}/home/bill-detail`,
   qrCode: `${EVENT_WITH_EVENT_ID}/qrcode`,
   login: '/login',
+  setting: SETTING,
+  withdraw: `${SETTING}/withdraw`,
+  // TODO: (@soha) myPage 삭제 필요
   myPage: MY_PAGE,
-  withdraw: `${MY_PAGE}/withdraw`,
   createdEvents: `${MY_PAGE}/events`,
   editUserAccount: `${MY_PAGE}/edit-account`,
   editUserNickname: `${MY_PAGE}/edit-nickname`,

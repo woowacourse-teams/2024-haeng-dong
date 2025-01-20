@@ -29,7 +29,9 @@ const ImagesPage = lazy(() => import('@pages/event/[eventId]/images/ImagesPage')
 const AddImagesPage = lazy(() => import('@pages/event/[eventId]/admin/add-images/AddImagesPage'));
 const QRCodePage = lazy(() => import('@pages/event/[eventId]/qrcode/QRCodePage'));
 const LoginPage = lazy(() => import('@pages/login/LoginPage'));
+// TODO:(@soha) MyPage 삭제 필요
 const MyPage = lazy(() => import('@pages/mypage/MyPage'));
+const SettingPage = lazy(() => import('@pages/setting/SettingPage'));
 const LoginRedirectPage = lazy(() => import('@pages/login/LoginRedirectPage'));
 const LoginFailFallback = lazy(() => import('@pages/login/LoginFailFallback'));
 const CreatedEventsPage = lazy(() => import('@pages/mypage/events/CreatedEventsPage'));
@@ -113,8 +115,35 @@ const router = createBrowserRouter([
           },
         ],
       },
+      // TODO: (@soha) myPage 삭제 필요
+      // {
+      //   path: ROUTER_URLS.myPage,
+      //   element: (
+      //     <Suspense>
+      //       <UserInfoLoader />
+      //     </Suspense>
+      //   ),
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <MyPage />,
+      //     },
+      //     {
+      //       path: ROUTER_URLS.editUserAccount,
+      //       element: <EditUserAccountPage />,
+      //     },
+      //     {
+      //       path: ROUTER_URLS.editUserNickname,
+      //       element: <EditUserNicknamePage />,
+      //     },
+      //     {
+      //       path: ROUTER_URLS.withdraw,
+      //       element: <WithdrawPage />,
+      //     },
+      //   ],
+      // },
       {
-        path: ROUTER_URLS.myPage,
+        path: ROUTER_URLS.setting,
         element: (
           <Suspense>
             <UserInfoLoader />
@@ -123,15 +152,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <MyPage />,
-          },
-          {
-            path: ROUTER_URLS.editUserAccount,
-            element: <EditUserAccountPage />,
-          },
-          {
-            path: ROUTER_URLS.editUserNickname,
-            element: <EditUserNicknamePage />,
+            element: <SettingPage />,
           },
           {
             path: ROUTER_URLS.withdraw,
