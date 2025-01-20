@@ -4,6 +4,7 @@ import {WithTheme} from '@components/Design/type/withTheme';
 
 interface CheckboxStyleProps {
   checked: boolean;
+  disabled?: boolean;
 }
 
 export const checkboxStyle = () =>
@@ -15,7 +16,7 @@ export const checkboxStyle = () =>
     cursor: 'pointer',
   });
 
-export const boxStyle = ({theme, checked}: WithTheme<CheckboxStyleProps>) =>
+export const boxStyle = ({theme, checked, disabled}: WithTheme<CheckboxStyleProps>) =>
   css({
     width: '1.375rem',
     height: '1.375rem',
@@ -31,6 +32,7 @@ export const boxStyle = ({theme, checked}: WithTheme<CheckboxStyleProps>) =>
       outlineOffset: '2px',
       borderRadius: '0.5rem',
     },
+    opacity: disabled ? 0.4 : 1,
   });
 
 export const invisibleInputStyle = () =>

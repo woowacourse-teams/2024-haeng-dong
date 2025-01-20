@@ -9,7 +9,7 @@ import {boxStyle, checkboxStyle, invisibleInputStyle} from './Checkbox.style';
 import {CheckboxProps} from './Checkbox.type';
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({right, checked: controlledChecked, onChange, defaultChecked = false, ...props}, ref) => {
+  ({right, checked: controlledChecked, onChange, defaultChecked = false, disabled, ...props}, ref) => {
     const {theme} = useTheme();
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
 
@@ -35,13 +35,14 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     return (
       <label css={checkboxStyle} role="checkbox" aria-checked={checked}>
-        <div css={boxStyle({theme, checked})} aria-hidden="true" tabIndex={0} onKeyDown={handleKeyDown}>
+        <div css={boxStyle({theme, checked, disabled})} aria-hidden="true" tabIndex={0} onKeyDown={handleKeyDown}>
           {checked && <IconCheck size={20} color="onPrimary" />}
           <input
             ref={ref}
             type="checkbox"
             checked={checked}
             onChange={handleChange}
+            disabled={disabled}
             css={invisibleInputStyle}
             aria-label="체크박스"
             {...props}
