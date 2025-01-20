@@ -40,7 +40,7 @@ const SettingSection = () => {
   const tabContext: TabContext = {navigate};
 
   return (
-    <VStack p="24" bg={`${theme.colors.white}`} br="12" gap="16">
+    <VStack p="24" bg={theme.colors.white} br="12" gap="16">
       <Category categoryTitle="계정" tabList={createAccountCategory(tabContext)} />
       <div style={{height: '1px', width: '100%', backgroundColor: theme.colors.grayContainer}}></div>
       <Category categoryTitle="앱" tabList={createAppCategory()} />
