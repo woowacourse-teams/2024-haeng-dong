@@ -4,8 +4,6 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {useState} from 'react';
 
 import Text from '../Text/Text';
-import Box from '../Box/Box';
-import VStack from '../Stack/VStack';
 
 import Checkbox from './Checkbox';
 
