@@ -9,39 +9,37 @@ import VStack from '@components/Design/components/Stack/VStack';
 import {FunnelLayout, MainLayout, TopNav} from '@components/Design';
 import {useTheme, Text, TextButton} from '@components/Design';
 
-import {CategoryProps, TabList} from './SettingPage.type';
+import {ROUTER_URLS} from '@constants/routerUrls';
 
-const accountCategory: TabList[] = [
-  {name: '약관', url: 'd'},
-  {name: '로그아웃', url: 'd'},
+import {CategoryProps, TabList, TabContext} from './SettingPage.type';
+
+export const createAccountCategory = ({navigate}: TabContext): TabList[] => [
+  {name: '약관', onClick: () => {}},
+  {name: '로그아웃', onClick: () => {}},
+  {name: '회원탈퇴', onClick: () => navigate(ROUTER_URLS.withdraw)},
 ];
 
-const Category = ({categoryTitle, tabList}: CategoryProps) => {
-  const navigate = useNavigate();
-
-  return (
-    <VStack gap="16">
-      <Text textColor="onTertiary" size="bodyBold">
-        {categoryTitle}
-      </Text>
-      {tabList.map(tab => {
-        return (
-          <TextButton textColor="onTertiary" textSize="body" onClick={() => navigate(tab.url)}>
-            {tab.name}
-          </TextButton>
-        );
-      })}
-    </VStack>
-  );
-};
+const Category = ({categoryTitle, tabList}: CategoryProps) => (
+  <VStack gap="16">
+    <Text textColor="onTertiary" size="bodyBold">
+      {categoryTitle}
+    </Text>
+    {tabList.map(tab => (
+      <TextButton key={tab.name} textColor="onTertiary" textSize="body" onClick={tab.onClick}>
+        {tab.name}
+      </TextButton>
+    ))}
+  </VStack>
+);
 
 const SettingSection = () => {
   const {theme} = useTheme();
+  const navigate = useNavigate();
+  const tabContext: TabContext = {navigate};
 
   return (
     <VStack p="24" bg={`${theme.colors.white}`} br="12">
-      <div>test</div>
-      <Category categoryTitle="계정" tabList={accountCategory} />
+      <Category categoryTitle="계정" tabList={createAccountCategory(tabContext)} />
     </VStack>
   );
 };
