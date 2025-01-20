@@ -1,5 +1,5 @@
 import {InputHTMLAttributes, ReactNode} from 'react';
 
-export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   right?: ReactNode;
 }
