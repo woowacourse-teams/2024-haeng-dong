@@ -1,6 +1,7 @@
 import {useEffect} from 'react';
 
 import toast from '@hooks/useToast/toast';
+import {RequestGetError} from '@errors/RequestGetError';
 
 import {useAppErrorStore} from '@store/appErrorStore';
 
@@ -23,6 +24,10 @@ const ErrorCatcher = ({children}: React.PropsWithChildren) => {
 
     captureError(error);
 
+    // 에러 무시
+    if (error instanceof RequestGetError && error.errorHandlingStrategy === 'ignore') return;
+
+    // 전역 에러 바운더리로 처리
     if (!isRequestError(error) || !isPredictableError(error)) throw error;
 
     toast.error(SERVER_ERROR_MESSAGES[error.errorCode], {
