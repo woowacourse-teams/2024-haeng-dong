@@ -19,6 +19,8 @@ export const createAccountCategory = ({navigate}: TabContext): TabList[] => [
   {name: '회원탈퇴', onClick: () => navigate(ROUTER_URLS.withdraw)},
 ];
 
+export const createAppCategory = (): TabList[] => [{name: '서비스 버전', onClick: () => {}}];
+
 const Category = ({categoryTitle, tabList}: CategoryProps) => (
   <VStack gap="16">
     <Text textColor="onTertiary" size="bodyBold">
@@ -38,8 +40,9 @@ const SettingSection = () => {
   const tabContext: TabContext = {navigate};
 
   return (
-    <VStack p="24" bg={`${theme.colors.white}`} br="12">
+    <VStack p="24" bg={`${theme.colors.white}`} br="12" gap="16">
       <Category categoryTitle="계정" tabList={createAccountCategory(tabContext)} />
+      <Category categoryTitle="앱" tabList={createAppCategory()} />
     </VStack>
   );
 };
