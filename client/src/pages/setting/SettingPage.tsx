@@ -11,15 +11,15 @@ import {useTheme, Text, TextButton} from '@components/Design';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-import {CategoryProps, TabList, TabContext} from './SettingPage.type';
+import {CategoryProps, Tab, TabContext} from './SettingPage.type';
 
-export const createAccountCategory = ({navigate}: TabContext): TabList[] => [
+export const createAccountCategory = ({navigate}: TabContext): Tab[] => [
   {name: '약관', onClick: () => {}},
   {name: '로그아웃', onClick: () => {}},
   {name: '회원탈퇴', onClick: () => navigate(ROUTER_URLS.withdraw)},
 ];
 
-export const createAppCategory = (): TabList[] => [{name: '서비스 버전', onClick: () => {}}];
+export const createAppCategory = (): Tab[] => [{name: '서비스 버전', onClick: () => {}}];
 
 const Category = ({categoryTitle, tabList}: CategoryProps) => (
   <VStack gap="16">

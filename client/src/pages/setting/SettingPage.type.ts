@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 
-export type TabList = {name: string; onClick: () => void};
+export type Tab = {name: string; onClick: () => void};
 
 export interface TabContext {
   navigate: ReturnType<typeof useNavigate>;
@@ -8,5 +8,5 @@ export interface TabContext {
 
 export interface CategoryProps {
   categoryTitle: string;
-  tabList: TabList[];
+  tabList: Tab[];
 }
