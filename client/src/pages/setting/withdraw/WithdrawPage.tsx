@@ -1,9 +1,9 @@
-import ReasonStep from '@pages/mypage/withdraw/ReasonStep';
-import NotUseServiceStep from '@pages/mypage/withdraw/NotUseServiceStep';
-import EtcStep from '@pages/mypage/withdraw/EtcStep';
-import CheckBeforeWithdrawingStep from '@pages/mypage/withdraw/CheckBeforeWithdrawingStep';
-import WithdrawalCompleted from '@pages/mypage/withdraw/WithdrawalCompleted';
-import UnableToUseDueToError from '@pages/mypage/withdraw/UnableToUseDueToError';
+import ReasonStep from '@pages/setting/withdraw/ReasonStep';
+import NotUseServiceStep from '@pages/setting/withdraw/NotUseServiceStep';
+import EtcStep from '@pages/setting/withdraw/EtcStep';
+import CheckBeforeWithdrawingStep from '@pages/setting/withdraw/CheckBeforeWithdrawingStep';
+import WithdrawalCompleted from '@pages/setting/withdraw/WithdrawalCompleted';
+import UnableToUseDueToError from '@pages/setting/withdraw/UnableToUseDueToError';
 
 import useWithdrawFunnel from '@hooks/useWithdrawFunnel';
 

@@ -1,5 +1,6 @@
 const EVENT = '/event';
 const EVENT_WITH_EVENT_ID = `${EVENT}/:eventId`;
+// TODO: (@soha) myPage 삭제 필요 & merge 충돌 조심
 const MY_PAGE = '/mypage';
 const SETTING = '/setting';
 

@@ -5,6 +5,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
 const UserInfoLoader = lazy(() => import('@components/Loader/UserInfo/UserInfoLoader'));
+// TODO: (@soha) merge 충돌 조심. 파일 위치 잘 확인 할 것
 const EditUserAccountPage = lazy(() => import('@pages/mypage/edit-account/EditUserAccountPage'));
 const EditUserNicknamePage = lazy(() => import('@pages/mypage/edit-nickname/EditUserNicknamePage'));
 const ErrorPage = lazy(() => import('@pages/fallback/ErrorPage'));
@@ -29,14 +30,14 @@ const ImagesPage = lazy(() => import('@pages/event/[eventId]/images/ImagesPage')
 const AddImagesPage = lazy(() => import('@pages/event/[eventId]/admin/add-images/AddImagesPage'));
 const QRCodePage = lazy(() => import('@pages/event/[eventId]/qrcode/QRCodePage'));
 const LoginPage = lazy(() => import('@pages/login/LoginPage'));
+const SettingPage = lazy(() => import('@pages/setting/SettingPage'));
+const WithdrawPage = lazy(() => import('@pages/setting/withdraw/WithdrawPage'));
 // TODO:(@soha) MyPage 삭제 필요
 const MyPage = lazy(() => import('@pages/mypage/MyPage'));
-const SettingPage = lazy(() => import('@pages/setting/SettingPage'));
 const LoginRedirectPage = lazy(() => import('@pages/login/LoginRedirectPage'));
 const LoginFailFallback = lazy(() => import('@pages/login/LoginFailFallback'));
 const CreatedEventsPage = lazy(() => import('@pages/mypage/events/CreatedEventsPage'));
 const EventPageLoading = lazy(() => import('@pages/fallback/EventPageLoading'));
-const WithdrawPage = lazy(() => import('@pages/mypage/withdraw/WithdrawPage'));
 const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event-name/EditEventNamePage'));
 const BillDetailPage = lazy(() => import('@pages/event/[eventId]/home/bill-detail/BillDetailPage'));
 
@@ -115,33 +116,29 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // TODO: (@soha) myPage 삭제 필요
-      // {
-      //   path: ROUTER_URLS.myPage,
-      //   element: (
-      //     <Suspense>
-      //       <UserInfoLoader />
-      //     </Suspense>
-      //   ),
-      //   children: [
-      //     {
-      //       index: true,
-      //       element: <MyPage />,
-      //     },
-      //     {
-      //       path: ROUTER_URLS.editUserAccount,
-      //       element: <EditUserAccountPage />,
-      //     },
-      //     {
-      //       path: ROUTER_URLS.editUserNickname,
-      //       element: <EditUserNicknamePage />,
-      //     },
-      //     {
-      //       path: ROUTER_URLS.withdraw,
-      //       element: <WithdrawPage />,
-      //     },
-      //   ],
-      // },
+      // TODO: (@soha) myPage 삭제 필요 & merge 충돌 조심
+      {
+        path: ROUTER_URLS.myPage,
+        element: (
+          <Suspense>
+            <UserInfoLoader />
+          </Suspense>
+        ),
+        children: [
+          {
+            index: true,
+            element: <MyPage />,
+          },
+          {
+            path: ROUTER_URLS.editUserAccount,
+            element: <EditUserAccountPage />,
+          },
+          {
+            path: ROUTER_URLS.editUserNickname,
+            element: <EditUserNicknamePage />,
+          },
+        ],
+      },
       {
         path: ROUTER_URLS.setting,
         element: (
