@@ -35,14 +35,7 @@ public class UpdatedMembers {
 
     public void validateUpdatable(List<EventMember> originEventMembers) {
         Set<EventMember> uniqueEventMembers = Set.copyOf(originEventMembers);
-        validateUpdatedMembersExist(uniqueEventMembers);
         validateUpdatedNamesUnique(uniqueEventMembers);
-    }
-
-    private void validateUpdatedMembersExist(Set<EventMember> originEventMembers) {
-        if (!this.eventMembers.equals(originEventMembers)) {
-            throw new HaengdongException(HaengdongErrorCode.MEMBER_UPDATE_MISMATCH);
-        }
     }
 
     private void validateUpdatedNamesUnique(Set<EventMember> originEventMembers) {
@@ -62,6 +55,10 @@ public class UpdatedMembers {
 
     public List<EventMember> getMembers() {
         return eventMembers.stream().toList();
+    }
+
+    public boolean contain(EventMember eventMember) {
+        return eventMembers.contains(eventMember);
     }
 }
 
