@@ -26,7 +26,7 @@ export const boxStyle = ({theme, checked}: WithTheme<CheckboxStyleProps>) =>
 
     transition: 'all 0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0, 0.3, 1)',
-    '&:focus-within': {
+    '&:focus-visible': {
       outline: `2px solid ${theme.colors.primary}`,
       outlineOffset: '2px',
       borderRadius: '0.5rem',

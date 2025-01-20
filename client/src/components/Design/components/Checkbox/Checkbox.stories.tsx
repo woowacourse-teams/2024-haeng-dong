@@ -15,7 +15,7 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    children: {
+    right: {
       description: '',
       control: {type: 'text'},
     },
@@ -37,9 +37,11 @@ const ControlledCheckbox = () => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <Checkbox checked={checked} onChange={e => setChecked(e.target.checked)}>
-      <Text size="bodyBold">체크박스</Text>
-    </Checkbox>
+    <Checkbox
+      checked={checked}
+      onChange={e => setChecked(e.target.checked)}
+      right={<Text size="bodyBold">체크박스</Text>}
+    />
   );
 };
 
