@@ -29,7 +29,7 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
 
   // 계좌 관련 에러 코드
   BANK_NAME_INVALID: '지원하지 않는 은행이에요. 다른 은행을 입력해주세요.',
-  ACCOUNT_LENGTH_INVALID: `계좌 번호는 8자 이상 ${RULE.maxAccountNumberLength}자 이하로 입력 가능해요.`,
+  ACCOUNT_LENGTH_INVALID: `계좌 번호는  ${RULE.minAccountNumberLength}자 이상 ${RULE.maxAccountNumberLength}자 이하로 입력 가능해요.`,
 
   // 로그인 관련 에러 코드
   TOKEN_NOT_FOUND: '로그인이 필요한 서비스에요.',
