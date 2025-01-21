@@ -31,6 +31,10 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
   BANK_NAME_INVALID: '지원하지 않는 은행이에요. 다른 은행을 입력해주세요.',
   ACCOUNT_LENGTH_INVALID: `계좌 번호는  ${RULE.minAccountNumberLength}자 이상 ${RULE.maxAccountNumberLength}자 이하로 입력 가능해요.`,
 
+  // 이미지 관련 에러 코드
+  // TODO:(@soha) FOUND 오타가 존재해서 서버측 확인 후 수정해야 함
+  IMAGE_NOT_FOUNT: '존재하지 않는 이미지에요.',
+
   // 로그인 관련 에러 코드
   TOKEN_NOT_FOUND: '로그인이 필요한 서비스에요.',
   TOKEN_EXPIRED: '로그인이 만료되었어요. 다시 로그인해주세요.',
