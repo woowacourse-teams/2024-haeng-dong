@@ -5,6 +5,8 @@ import {useNavigate} from 'react-router-dom';
 import MyPageError from '@pages/fallback/MyPageError';
 import MyPageLoading from '@pages/fallback/MyPageLoading';
 import VStack from '@components/Design/components/Stack/VStack';
+import {COLORS} from '@components/Design/token/colors';
+import Box from '@components/Design/components/Box/Box';
 
 import {FunnelLayout, MainLayout, TopNav} from '@components/Design';
 import {useTheme, Text, TextButton} from '@components/Design';
@@ -34,15 +36,15 @@ const Category = ({categoryTitle, tabList}: CategoryProps) => (
   </VStack>
 );
 
+const Divider = () => <Box w="100%" h={1} bg={COLORS.grayContainer} />;
+
 const SettingSection = () => {
-  const {theme} = useTheme();
   const navigate = useNavigate();
   const tabContext: TabContext = {navigate};
 
   return (
-    <VStack p="24" bg={theme.colors.white} br="12" gap="16">
+    <VStack p="24" bg={COLORS.white} br="12" gap="16" divider={<Divider />}>
       <Category categoryTitle="계정" tabList={createAccountCategory(tabContext)} />
-      <div style={{height: '1px', width: '100%', backgroundColor: theme.colors.grayContainer}}></div>
       <Category categoryTitle="앱" tabList={createAppCategory()} />
     </VStack>
   );
