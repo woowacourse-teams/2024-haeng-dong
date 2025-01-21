@@ -2,7 +2,7 @@ name: Frontend Sync Issue Info to PR
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
     branches: [fe-dev]
 
 jobs:
