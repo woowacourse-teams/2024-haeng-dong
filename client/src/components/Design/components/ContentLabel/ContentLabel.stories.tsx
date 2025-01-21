@@ -19,7 +19,7 @@ const meta = {
   ],
   argTypes: {},
   args: {
-    label: '기본 계좌번호',
+    children: '기본 계좌번호',
     onClick: () => {},
   },
 } satisfies Meta<typeof ContentLabel>;

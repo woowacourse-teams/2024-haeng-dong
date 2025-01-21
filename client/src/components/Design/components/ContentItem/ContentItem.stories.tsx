@@ -21,9 +21,7 @@ const meta = {
   ],
   argTypes: {},
   args: {
-    label: {
-      left: '기본 계좌번호',
-    },
+    labels: <ContentItem.Label>기본 계좌번호</ContentItem.Label>,
     children: (
       <Text textColor="black" size="bodyBold">
         000-00000-0000

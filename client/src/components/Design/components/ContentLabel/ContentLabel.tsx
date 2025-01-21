@@ -5,14 +5,14 @@ import Text from '../Text/Text';
 
 import {ContentLabelProps} from './ContentLabel.type';
 
-const ContentLabel = ({label, onClick}: ContentLabelProps) => {
+const ContentLabel = ({children, onClick}: ContentLabelProps) => {
   return typeof onClick !== 'undefined' ? (
     <TextButton textColor="gray" textSize="caption" onClick={onClick}>
-      {label}
+      {children}
     </TextButton>
   ) : (
     <Text size="caption" textColor="gray">
-      {label}
+      {children}
     </Text>
   );
 };

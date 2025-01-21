@@ -1,11 +1,4 @@
 export type ContentItemProps = React.PropsWithChildren & {
-  label?: LabelProps;
+  labels?: React.ReactElement;
   onEditClick?: () => void;
-};
-
-type LabelProps = {
-  left?: string;
-  right?: string;
-  onLeftClick?: () => void;
-  onRightClick?: () => void;
 };

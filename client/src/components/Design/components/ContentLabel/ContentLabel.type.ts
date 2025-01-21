@@ -1,4 +1,3 @@
-export type ContentLabelProps = {
-  label?: string;
+export type ContentLabelProps = React.PropsWithChildren & {
   onClick?: () => void;
 };

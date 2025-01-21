@@ -48,7 +48,7 @@ const AccountSection = () => {
   };
 
   return (
-    <ContentItem label={{left: '기본 계좌번호'}} onEditClick={navigateEditAccountPage}>
+    <ContentItem labels={<ContentItem.Label>기본 계좌번호</ContentItem.Label>} onEditClick={navigateEditAccountPage}>
       <Text textColor="black" size="bodyBold">
         {accountNumber}
       </Text>
@@ -66,7 +66,14 @@ const CreatedEventsSection = () => {
   };
 
   return (
-    <ContentItem label={{left: '나의 행사목록', right: '전체보기', onRightClick: navigateCreatedEventsPage}}>
+    <ContentItem
+      labels={
+        <>
+          <ContentItem.Label>나의 행사목록</ContentItem.Label>
+          <ContentItem.Label onClick={navigateCreatedEventsPage}>전체보기</ContentItem.Label>
+        </>
+      }
+    >
       <VStack>
         {slicedEvents.map(event => (
           <CreatedEventView key={event.eventId} {...event} />
