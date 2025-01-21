@@ -12,7 +12,7 @@ const EventEmptyFallback = () => {
       <Text
         size="bodyBold"
         css={{whiteSpace: 'pre-line', textAlign: 'center'}}
-      >{`아래 행사 생성하기 버튼을 눌러\n 행사를 만들어주세요`}</Text>
+      >{`행사 생성하기 버튼을 눌러\n 행사를 만들어주세요`}</Text>
     </VStack>
   );
 };
