@@ -23,8 +23,9 @@ export const SERVER_ERROR_MESSAGES: ErrorMessage = {
   BILL_NOT_FOUND: '존재하지 않는 지출 액션이에요.',
   BILL_TITLE_INVALID: `지출 내역 이름은 ${RULE.minBillNameLength}자 이상 ${RULE.maxBillNameLength} 이하여야 해요.`,
   BILL_PRICE_INVALID: `지출 금액은 ${RULE.maxPrice.toLocaleString('ko-KR')} 이하의 자연수여야 해요.`,
-  BILL_DETAIL_NOT_FOUND: '존재하지 않는 참여자 지출입니다.',
+  BILL_DETAIL_NOT_FOUND: '존재하지 않는 참여자 지출이에요.',
   BILL_PRICE_NOT_MATCHED: '지출 총액이 일치하지 않아요.',
+
   DIFFERENT_STEP_MEMBERS: '회원 목록이 일치하지 않아요.',
 
   // 계좌 관련 에러 코드
