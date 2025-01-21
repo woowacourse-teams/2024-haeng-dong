@@ -13,9 +13,9 @@ import {Text, TextButton} from '@components/Design';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-import {CategoryProps, Tab, TabContext} from './SettingPage.type';
+import {CategoryProps, Tab, TabActions} from './SettingPage.type';
 
-export const createAccountCategory = ({navigate}: TabContext): Tab[] => [
+export const createAccountCategory = ({navigate}: TabActions): Tab[] => [
   {name: '약관', onClick: () => {}},
   {name: '로그아웃', onClick: () => {}},
   {name: '회원탈퇴', onClick: () => navigate(ROUTER_URLS.withdraw)},
@@ -40,11 +40,11 @@ const Divider = () => <Box w="100%" h={1} bg={COLORS.grayContainer} />;
 
 const SettingSection = () => {
   const navigate = useNavigate();
-  const tabContext: TabContext = {navigate};
+  const tabActions: TabActions = {navigate};
 
   return (
     <VStack p="24" bg={COLORS.white} br="12" gap="16" divider={<Divider />}>
-      <Category categoryTitle="계정" tabList={createAccountCategory(tabContext)} />
+      <Category categoryTitle="계정" tabList={createAccountCategory(tabActions)} />
       <Category categoryTitle="앱" tabList={createAppCategory()} />
     </VStack>
   );
