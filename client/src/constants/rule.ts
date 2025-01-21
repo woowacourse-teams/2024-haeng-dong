@@ -1,7 +1,7 @@
 const EVENT_PASSWORD_LENGTH = 4;
 
 const RULE = {
-  maxEventNameLength: 30,
+  maxEventNameLength: 20,
   maxEventPasswordLength: EVENT_PASSWORD_LENGTH,
   minMemberNameLength: 1,
   maxMemberNameLength: 8,
