@@ -51,7 +51,7 @@ const AccountSection = () => {
   return (
     <ContentItem labels={<ContentItem.Label>기본 계좌번호</ContentItem.Label>} onEditClick={navigateEditAccountPage}>
       <Text textColor="black" size="bodyBold">
-        {accountNumber}
+        {accountNumber === '' ? '계좌번호를 입력해야\n참여자가 편하게 송금할 수 있어요' : accountNumber}
       </Text>
     </ContentItem>
   );
