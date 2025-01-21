@@ -10,6 +10,7 @@ import HStack from '@components/Design/components/Stack/HStack';
 import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreatedEvents';
 import VStack from '@components/Design/components/Stack/VStack';
 import {CreatedEventView} from '@components/Design/components/CreatedEventItem/CreatedEventView';
+import EventEmptyFallback from '@pages/fallback/EventEmptyFallback';
 
 import useUserInfoContext from '@hooks/useUserInfoContext';
 
@@ -74,11 +75,15 @@ const CreatedEventsSection = () => {
         </>
       }
     >
-      <VStack>
-        {slicedEvents.map(event => (
-          <CreatedEventView key={event.eventId} {...event} />
-        ))}
-      </VStack>
+      {slicedEvents.length === 0 ? (
+        <EventEmptyFallback />
+      ) : (
+        <VStack>
+          {slicedEvents.map(event => (
+            <CreatedEventView key={event.eventId} {...event} />
+          ))}
+        </VStack>
+      )}
     </ContentItem>
   );
 };
