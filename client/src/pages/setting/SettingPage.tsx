@@ -9,7 +9,7 @@ import {COLORS} from '@components/Design/token/colors';
 import Box from '@components/Design/components/Box/Box';
 
 import {FunnelLayout, MainLayout, TopNav} from '@components/Design';
-import {useTheme, Text, TextButton} from '@components/Design';
+import {Text, TextButton} from '@components/Design';
 
 import {ROUTER_URLS} from '@constants/routerUrls';
 
