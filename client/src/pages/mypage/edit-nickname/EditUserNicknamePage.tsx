@@ -41,7 +41,7 @@ const EditUserNicknamePage = () => {
         </Top>
         <form onSubmit={event => onSubmit(event)}>
           <Input
-            labelText="행사 이름"
+            labelText="이름"
             errorText={errorMessage ?? ''}
             value={name}
             type="text"
