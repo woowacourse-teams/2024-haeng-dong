@@ -1,5 +1,6 @@
 const EVENT = '/event';
 const EVENT_WITH_EVENT_ID = `${EVENT}/:eventId`;
+const SETTING = '/setting';
 const LOUNGE = '/lounge';
 
 export const ROUTER_URLS = {
@@ -20,6 +21,8 @@ export const ROUTER_URLS = {
   billDetail: `${EVENT_WITH_EVENT_ID}/home/bill-detail`,
   qrCode: `${EVENT_WITH_EVENT_ID}/qrcode`,
   login: '/login',
+  setting: SETTING,
+  withdraw: `${SETTING}/withdraw`,
   lounge: LOUNGE,
   createdEvents: `${LOUNGE}/events`,
   editUserAccount: `${LOUNGE}/edit-account`,
