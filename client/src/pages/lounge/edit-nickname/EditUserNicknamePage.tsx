@@ -24,16 +24,20 @@ const EditUserNicknamePage = () => {
     try {
       await patchUser({nickname: name});
       toast.confirm('이름 변경이 완료되었어요!');
-      navigate(ROUTER_URLS.myPage);
+      navigate(ROUTER_URLS.lounge);
     } catch (error) {
       toast.error('이름 변경에 실패했어요. 다시 시도해주세요.');
     }
   };
   return (
     <MainLayout backgroundColor="white">
-      <TopNav>
-        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
-      </TopNav>
+      <TopNav
+        left={
+          <TopNav.Text routePath="-1" isEmphasis={false}>
+            뒤로가기
+          </TopNav.Text>
+        }
+      />
       <FunnelLayout>
         <Top>
           <Top.Line text="행사에서 사용할" />

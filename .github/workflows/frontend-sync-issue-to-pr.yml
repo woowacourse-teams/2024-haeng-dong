@@ -1,0 +1,137 @@
+name: Frontend Sync Issue Info to PR
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [fe-dev]
+
+jobs:
+  sync-issue-info:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      # 1. Git 리포지토리 체크아웃
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      # 2. 브랜치 이름 추출 (#123 -> 123)
+      - name: Extract issue number from PR body
+        id: extract_issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.CONFIG_SUBMODULE_TOKEN }}
+        run: |
+          # Fetch PR body
+          PR_BODY=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}" \
+            | jq -r '.body')
+          # Extract issue number from PR body using regex (customize if needed)
+          ISSUE_NUMBER=$(echo "$PR_BODY" | grep -oP '#\d+' | head -1 | sed 's/#//')
+          echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_ENV
+
+      # 3. Assignees는 actor로 Reviewer는 Frontend team member로 설정
+      - name: Add Assignees and Reviewers
+        uses: kentaro-m/auto-assign-action@v2.0.0
+        with:
+          configuration-path: ".github/auto_assign.yml"
+
+      # 4. Issue에 설정되어있는 Labels와 Milestone을 PR에 추가
+      - name: Add Labels and Milestone From Issue
+        if: env.ISSUE_NUMBER != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.CONFIG_SUBMODULE_TOKEN }}
+        run: |
+          response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ env.ISSUE_NUMBER }})
+
+          # Extract issue_labels
+          issue_labels=$(echo "$response" | jq -r '.labels // [] | map(.name) | @json')
+
+          # Extract milestone
+          issue_milestone=$(echo "$response" | jq -r '.milestone.number // empty')
+
+          # Assign labels to PR
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
+            -d "$(jq -n --argjson labels "$issue_labels" '{"labels": $labels}')"
+
+          # Assign milestone to PR
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }} \
+            -d "$(jq -n --argjson milestone "$issue_milestone" '{"milestone": $milestone}')"
+
+      - name: Link Project and Issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.CONFIG_SUBMODULE_TOKEN }}
+          ORGANIZATION: "woowacourse-teams"
+          PROJECT_NUMBER: 53
+
+        run: |
+          # 조직 Project Node ID 가져오기
+          ORG_PROJECT_NODE_ID=$(curl -s -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            --url https://api.github.com/graphql \
+            --data '{"query":"query { organization(login: \"'$ORGANIZATION'\") { projectV2(number: '$PROJECT_NUMBER') { id } } }"}' \
+            | jq -r '.data.organization.projectV2.id')
+
+          # 현재 PR의 contentId 가져오기
+          PR_NODE_ID=$(curl -s -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            --url https://api.github.com/graphql \
+            --data '{"query":"query { repository(owner: \"'${{ github.repository_owner }}'\", name: \"'${{ github.event.repository.name }}'\") { pullRequest(number: '${{ github.event.pull_request.number }}') { id } } }"}' \
+            | jq -r '.data.repository.pullRequest.id')
+
+          # 특정 이슈의 contentId 가져오기
+          ISSUE_NODE_ID=$(curl -s -X POST \
+          -H "Authorization: Bearer $GITHUB_TOKEN" \
+          -H "Content-Type: application/json" \
+          --url https://api.github.com/graphql \
+          --data '{"query":"query { repository(owner: \"'${{ github.repository_owner }}'\", name: \"'${{ github.event.repository.name }}'\") { issue(number: '${{ env.ISSUE_NUMBER }}') { id } } }"}' \
+          | jq -r '.data.repository.issue.id')
+
+          # PR을 프로젝트에 추가
+          PR_RESPONSE=$(curl -s -X POST \
+          -H "Authorization: Bearer $GITHUB_TOKEN" \
+          -H "Content-Type: application/json" \
+          --url https://api.github.com/graphql \
+          --data '{"query":"mutation { addProjectV2ItemById(input: { projectId: \"'$ORG_PROJECT_NODE_ID'\", contentId: \"'$PR_NODE_ID'\" }) { item { id } } }"}')
+
+          # pr-item-id 추출
+          PR_ITEM_ID=$(echo "$PR_RESPONSE" | jq -r '.data.addProjectV2ItemById.item.id')
+          echo "PR_ITEM_ID=$PR_ITEM_ID" >> $GITHUB_ENV
+
+          # issue를 프로젝트에 추가 (이미 추가되어있지만 id를 알아내기 위함)
+          ISSUE_RESPONSE=$(curl -s -X POST \
+          -H "Authorization: Bearer $GITHUB_TOKEN" \
+          -H "Content-Type: application/json" \
+          --url https://api.github.com/graphql \
+          --data '{"query":"mutation { addProjectV2ItemById(input: { projectId: \"'$ORG_PROJECT_NODE_ID'\", contentId: \"'$ISSUE_NODE_ID'\" }) { item { id } } }"}')
+
+          # issue-item-id 추출
+          ISSUE_ITEM_ID=$(echo "$ISSUE_RESPONSE" | jq -r '.data.addProjectV2ItemById.item.id')
+          echo "ISSUE_ITEM_ID=$ISSUE_ITEM_ID" >> $GITHUB_ENV
+
+      - name: Set PR Status "🤼 In Review"
+        uses: kalgurn/update-project-item-status@main
+        with:
+          project-url: https://github.com/orgs/woowacourse-teams/projects/53
+          github-token: ${{ secrets.CONFIG_SUBMODULE_TOKEN }}
+          item-id: ${{ env.PR_ITEM_ID }}
+          status: "🤼 In Review"
+
+      - name: Set Issue Status "🤼 In Review"
+        uses: kalgurn/update-project-item-status@main
+        with:
+          project-url: https://github.com/orgs/woowacourse-teams/projects/53
+          github-token: ${{ secrets.CONFIG_SUBMODULE_TOKEN }}
+          item-id: ${{ env.ISSUE_ITEM_ID }}
+          status: "🤼 In Review"

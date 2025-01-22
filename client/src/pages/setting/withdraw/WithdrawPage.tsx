@@ -1,9 +1,9 @@
-import ReasonStep from '@pages/mypage/withdraw/ReasonStep';
-import NotUseServiceStep from '@pages/mypage/withdraw/NotUseServiceStep';
-import EtcStep from '@pages/mypage/withdraw/EtcStep';
-import CheckBeforeWithdrawingStep from '@pages/mypage/withdraw/CheckBeforeWithdrawingStep';
-import WithdrawalCompleted from '@pages/mypage/withdraw/WithdrawalCompleted';
-import UnableToUseDueToError from '@pages/mypage/withdraw/UnableToUseDueToError';
+import ReasonStep from '@pages/setting/withdraw/ReasonStep';
+import NotUseServiceStep from '@pages/setting/withdraw/NotUseServiceStep';
+import EtcStep from '@pages/setting/withdraw/EtcStep';
+import CheckBeforeWithdrawingStep from '@pages/setting/withdraw/CheckBeforeWithdrawingStep';
+import WithdrawalCompleted from '@pages/setting/withdraw/WithdrawalCompleted';
+import UnableToUseDueToError from '@pages/setting/withdraw/UnableToUseDueToError';
 
 import useWithdrawFunnel from '@hooks/useWithdrawFunnel';
 
@@ -14,9 +14,13 @@ const WithdrawPage = () => {
 
   return (
     <MainLayout backgroundColor="white">
-      <TopNav>
-        {step !== 'withdrawalCompleted' && <TopNav.Item displayName={'뒤로가기'} noEmphasis routePath="-1" />}
-      </TopNav>
+      <TopNav
+        left={
+          <TopNav.Text routePath="-1" isEmphasis={false}>
+            뒤로가기
+          </TopNav.Text>
+        }
+      />
       {/* TODO: (@soha) 탈퇴 사유를 입력받기 위한 step. 당장 사용하지 않으므로 주석. */}
       {/* {step === 'withdrawReason' && <ReasonStep handleMoveStep={handleMoveStep} />}
       {step === 'notUseService' && <NotUseServiceStep handleMoveStep={handleMoveStep} />}
