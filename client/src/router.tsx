@@ -29,6 +29,8 @@ const ImagesPage = lazy(() => import('@pages/event/[eventId]/images/ImagesPage')
 const AddImagesPage = lazy(() => import('@pages/event/[eventId]/admin/add-images/AddImagesPage'));
 const QRCodePage = lazy(() => import('@pages/event/[eventId]/qrcode/QRCodePage'));
 const LoginPage = lazy(() => import('@pages/login/LoginPage'));
+const SettingPage = lazy(() => import('@pages/setting/SettingPage'));
+const WithdrawPage = lazy(() => import('@pages/setting/withdraw/WithdrawPage'));
 const LoungePage = lazy(() => import('@pages/lounge/Lounge'));
 const LoginRedirectPage = lazy(() => import('@pages/login/LoginRedirectPage'));
 const LoginFailFallback = lazy(() => import('@pages/login/LoginFailFallback'));
@@ -131,6 +133,24 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.editUserNickname,
             element: <EditUserNicknamePage />,
+          },
+        ],
+      },
+      {
+        path: ROUTER_URLS.setting,
+        element: (
+          <Suspense>
+            <UserInfoLoader />
+          </Suspense>
+        ),
+        children: [
+          {
+            index: true,
+            element: <SettingPage />,
+          },
+          {
+            path: ROUTER_URLS.withdraw,
+            element: <WithdrawPage />,
           },
         ],
       },
