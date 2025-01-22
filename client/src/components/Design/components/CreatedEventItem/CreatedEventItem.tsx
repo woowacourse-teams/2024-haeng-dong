@@ -1,28 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import {useNavigate} from 'react-router-dom';
 
-import Text from '@HDcomponents/Text/Text';
 import {CreatedEvent} from 'types/serviceType';
 
 import useLongPressAnimation from '@hooks/useLongPressAnimation';
 
-import {Checkbox, useTheme} from '@components/Design';
+import {Checkbox} from '@components/Design';
 
 import Flex from '../Flex/Flex';
 
-import {inProgressCheckStyle, touchAreaStyle} from './CreatedEvent.style';
-
-function InProgressCheck({inProgress}: {inProgress: boolean}) {
-  const {theme} = useTheme();
-
-  return (
-    <div css={inProgressCheckStyle({theme, inProgress})}>
-      <Text size="tiny" className="in-progress-check-text">
-        {inProgress ? '정산 중' : '정산 완료'}
-      </Text>
-    </div>
-  );
-}
+import {touchAreaStyle} from './CreatedEventItem.style';
+import {CreatedEventView} from './CreatedEventView';
 
 export interface CreatedEventItemProps {
   setEditMode: () => void;
@@ -54,8 +42,6 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
       <Flex
         justifyContent="spaceBetween"
         alignItems="center"
-        height="2.5rem"
-        padding="0.5rem 1rem"
         paddingInline="0.5rem"
         onClick={onClick}
         css={touchAreaStyle}
@@ -63,12 +49,7 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <Flex gap="0.5rem" alignItems="center">
-          <InProgressCheck inProgress={!createdEvent.isFinished} />
-          <Text size="bodyBold" color="onTertiary">
-            {createdEvent.eventName}
-          </Text>
-        </Flex>
+        <CreatedEventView {...createdEvent} />
       </Flex>
     </Flex>
   );

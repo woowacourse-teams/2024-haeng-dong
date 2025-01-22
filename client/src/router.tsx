@@ -5,8 +5,8 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
 const UserInfoLoader = lazy(() => import('@components/Loader/UserInfo/UserInfoLoader'));
-const EditUserAccountPage = lazy(() => import('@pages/mypage/edit-account/EditUserAccountPage'));
-const EditUserNicknamePage = lazy(() => import('@pages/mypage/edit-nickname/EditUserNicknamePage'));
+const EditUserAccountPage = lazy(() => import('@pages/lounge/edit-account/EditUserAccountPage'));
+const EditUserNicknamePage = lazy(() => import('@pages/lounge/edit-nickname/EditUserNicknamePage'));
 const ErrorPage = lazy(() => import('@pages/fallback/ErrorPage'));
 const SendErrorPage = lazy(() => import('@pages/fallback/SendErrorPage'));
 const CreateGuestEventFunnel = lazy(() => import('@pages/event/create/guest/CreateGuestEventFunnel'));
@@ -29,12 +29,13 @@ const ImagesPage = lazy(() => import('@pages/event/[eventId]/images/ImagesPage')
 const AddImagesPage = lazy(() => import('@pages/event/[eventId]/admin/add-images/AddImagesPage'));
 const QRCodePage = lazy(() => import('@pages/event/[eventId]/qrcode/QRCodePage'));
 const LoginPage = lazy(() => import('@pages/login/LoginPage'));
-const MyPage = lazy(() => import('@pages/mypage/MyPage'));
+const SettingPage = lazy(() => import('@pages/setting/SettingPage'));
+const WithdrawPage = lazy(() => import('@pages/setting/withdraw/WithdrawPage'));
+const LoungePage = lazy(() => import('@pages/lounge/Lounge'));
 const LoginRedirectPage = lazy(() => import('@pages/login/LoginRedirectPage'));
 const LoginFailFallback = lazy(() => import('@pages/login/LoginFailFallback'));
-const CreatedEventsPage = lazy(() => import('@pages/mypage/events/CreatedEventsPage'));
+const CreatedEventsPage = lazy(() => import('@pages/lounge/events/CreatedEventsPage'));
 const EventPageLoading = lazy(() => import('@pages/fallback/EventPageLoading'));
-const WithdrawPage = lazy(() => import('@pages/mypage/withdraw/WithdrawPage'));
 const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event-name/EditEventNamePage'));
 const BillDetailPage = lazy(() => import('@pages/event/[eventId]/home/bill-detail/BillDetailPage'));
 
@@ -114,7 +115,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: ROUTER_URLS.myPage,
+        path: ROUTER_URLS.lounge,
         element: (
           <Suspense>
             <UserInfoLoader />
@@ -123,7 +124,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <MyPage />,
+            element: <LoungePage />,
           },
           {
             path: ROUTER_URLS.editUserAccount,
@@ -132,6 +133,20 @@ const router = createBrowserRouter([
           {
             path: ROUTER_URLS.editUserNickname,
             element: <EditUserNicknamePage />,
+          },
+        ],
+      },
+      {
+        path: ROUTER_URLS.setting,
+        element: (
+          <Suspense>
+            <UserInfoLoader />
+          </Suspense>
+        ),
+        children: [
+          {
+            index: true,
+            element: <SettingPage />,
           },
           {
             path: ROUTER_URLS.withdraw,

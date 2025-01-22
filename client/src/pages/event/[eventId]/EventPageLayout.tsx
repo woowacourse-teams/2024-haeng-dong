@@ -74,7 +74,7 @@ const EventPageLayout = () => {
             <DesktopShareEventButton onCopy={trackLinkShare} />
           )}
           {isKakaoUser && (
-            <Link to={ROUTER_URLS.myPage}>
+            <Link to={ROUTER_URLS.lounge}>
               <Profile src={profileImage ? profileImage : getImageUrl('runningDog', 'png')} size="large" />
             </Link>
           )}

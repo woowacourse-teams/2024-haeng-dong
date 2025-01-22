@@ -1,6 +1,7 @@
 const EVENT = '/event';
 const EVENT_WITH_EVENT_ID = `${EVENT}/:eventId`;
-const MY_PAGE = '/mypage';
+const SETTING = '/setting';
+const LOUNGE = '/lounge';
 
 export const PATHS = {
   home: '/home',
@@ -25,11 +26,12 @@ export const ROUTER_URLS = {
   billDetail: `${EVENT_WITH_EVENT_ID}/home/bill-detail`,
   qrCode: `${EVENT_WITH_EVENT_ID}/qrcode`,
   login: '/login',
-  myPage: MY_PAGE,
-  withdraw: `${MY_PAGE}/withdraw`,
-  createdEvents: `${MY_PAGE}/events`,
-  editUserAccount: `${MY_PAGE}/edit-account`,
-  editUserNickname: `${MY_PAGE}/edit-nickname`,
+  setting: SETTING,
+  withdraw: `${SETTING}/withdraw`,
+  lounge: LOUNGE,
+  createdEvents: `${LOUNGE}/events`,
+  editUserAccount: `${LOUNGE}/edit-account`,
+  editUserNickname: `${LOUNGE}/edit-nickname`,
   guestEventLogin: `${EVENT_WITH_EVENT_ID}/admin/login/guest`,
   userEventLogin: `${EVENT_WITH_EVENT_ID}/admin/login/user`,
   kakaoLoginRedirectUri: process.env.KAKAO_REDIRECT_URI,

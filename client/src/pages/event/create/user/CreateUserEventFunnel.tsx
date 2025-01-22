@@ -23,7 +23,7 @@ const CreateUserEventFunnel = () => {
 
   const handleBack = () => {
     if (step === STEP_SEQUENCE[0]) {
-      navigate('/');
+      navigate(-1);
     } else {
       moveToPrevStep();
     }
