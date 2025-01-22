@@ -15,7 +15,7 @@ const EditUserAccountPage = () => {
       bankName={bankName}
       accountNumber={accountNumber}
       onSubmit={patchUser}
-      redirectUrlOnSubmit={ROUTER_URLS.myPage}
+      redirectUrlOnSubmit={ROUTER_URLS.lounge}
     />
   );
 };
