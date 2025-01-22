@@ -71,7 +71,17 @@ public class EventMemberService {
         List<EventMember> originEventMembers = eventMemberRepository.findAllByEvent(event);
 
         updatedMembers.validateUpdatable(originEventMembers);
+
+        deleteMembers(token, originEventMembers, updatedMembers);
         eventMemberRepository.saveAll(updatedMembers.getMembers());
+    }
+
+    private void deleteMembers(String token, List<EventMember> originEventMembers, UpdatedMembers updatedMembers) {
+        for (EventMember originEventMember : originEventMembers) {
+            if (!updatedMembers.contain(originEventMember)) {
+                deleteMember(token, originEventMember);
+            }
+        }
     }
 
     @Transactional
