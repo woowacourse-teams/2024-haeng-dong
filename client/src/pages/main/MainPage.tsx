@@ -3,8 +3,8 @@ import {ErrorBoundary} from '@sentry/react';
 import {Suspense} from 'react';
 
 import {Profile} from '@components/Design/components/Profile/Profile';
-import LoungePageError from '@pages/fallback/LoungePageError';
-import LoungePageLoading from '@pages/fallback/LoungePageLoading';
+import MainPageError from '@pages/fallback/MainPageError';
+import MainPageLoading from '@pages/fallback/MainPageLoading';
 import ContentItem from '@components/Design/components/ContentItem/ContentItem';
 import HStack from '@components/Design/components/Stack/HStack';
 import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreatedEvents';
@@ -88,7 +88,7 @@ const CreatedEventsSection = () => {
   );
 };
 
-const Lounge = () => {
+const MainPage = () => {
   const navigate = useNavigate();
 
   const navigateCreateEvent = () => {
@@ -99,8 +99,8 @@ const Lounge = () => {
     <MainLayout backgroundColor="gray">
       {/* top nav 추가해야 함 */}
       <VStack gap="0.5rem" p="1rem" css={{width: '100%'}}>
-        <ErrorBoundary fallback={<LoungePageError />}>
-          <Suspense fallback={<LoungePageLoading />}>
+        <ErrorBoundary fallback={<MainPageError />}>
+          <Suspense fallback={<MainPageLoading />}>
             <UserInfoSection />
             <AccountSection />
             <CreatedEventsSection />
@@ -114,4 +114,4 @@ const Lounge = () => {
   );
 };
 
-export default Lounge;
+export default MainPage;

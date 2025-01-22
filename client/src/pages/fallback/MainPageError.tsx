@@ -6,7 +6,7 @@ import {Button, Flex, Text} from '@components/Design';
 
 import getImageUrl from '@utils/getImageUrl';
 
-const LoungePageError = () => {
+const MainPageError = () => {
   const navigate = useNavigate();
 
   return (
@@ -21,4 +21,4 @@ const LoungePageError = () => {
   );
 };
 
-export default LoungePageError;
+export default MainPageError;

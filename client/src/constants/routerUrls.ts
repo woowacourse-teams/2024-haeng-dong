@@ -1,7 +1,7 @@
 const EVENT = '/event';
 const EVENT_WITH_EVENT_ID = `${EVENT}/:eventId`;
 const SETTING = '/setting';
-const LOUNGE = '/lounge';
+const MAIN = '/main';
 
 export const PATHS = {
   home: '/home',
@@ -10,6 +10,8 @@ export const PATHS = {
 
 export const ROUTER_URLS = {
   landing: '/',
+  main: MAIN,
+
   event: EVENT,
   createGuestEvent: `${EVENT}/create/guest`,
   createUserEvent: `${EVENT}/create/user`,
@@ -28,10 +30,9 @@ export const ROUTER_URLS = {
   login: '/login',
   setting: SETTING,
   withdraw: `${SETTING}/withdraw`,
-  lounge: LOUNGE,
-  createdEvents: `${LOUNGE}/events`,
-  editUserAccount: `${LOUNGE}/edit-account`,
-  editUserNickname: `${LOUNGE}/edit-nickname`,
+  createdEvents: `${MAIN}/events`,
+  editUserAccount: `${MAIN}/edit-account`,
+  editUserNickname: `${MAIN}/edit-nickname`,
   guestEventLogin: `${EVENT_WITH_EVENT_ID}/admin/login/guest`,
   userEventLogin: `${EVENT_WITH_EVENT_ID}/admin/login/user`,
   kakaoLoginRedirectUri: process.env.KAKAO_REDIRECT_URI,

@@ -24,7 +24,7 @@ const EditUserNicknamePage = () => {
     try {
       await patchUser({nickname: name});
       toast.confirm('이름 변경이 완료되었어요!');
-      navigate(ROUTER_URLS.lounge);
+      navigate(ROUTER_URLS.main);
     } catch (error) {
       toast.error('이름 변경에 실패했어요. 다시 시도해주세요.');
     }
