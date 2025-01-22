@@ -97,6 +97,7 @@ const Lounge = () => {
 
   return (
     <MainLayout backgroundColor="gray">
+      {/* top nav 추가해야 함 */}
       <VStack gap="0.5rem" p="1rem" css={{width: '100%'}}>
         <ErrorBoundary fallback={<LoungePageError />}>
           <Suspense fallback={<LoungePageLoading />}>

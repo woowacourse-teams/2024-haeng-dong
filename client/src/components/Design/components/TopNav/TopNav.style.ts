@@ -6,3 +6,8 @@ export const topNavStyle = css({
   alignItems: 'center',
   width: '100%',
 });
+
+export const topNavWrapperStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+});

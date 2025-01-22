@@ -1,14 +1,5 @@
-export type NavItemOptionProps = {
-  displayName?: string;
-  onHandleRouteInFunnel?: () => void;
-};
+import {PropsWithChildren} from 'react';
 
-export type NavItemRequireProps = {
-  routePath: string;
+export type NavItemProps = PropsWithChildren & {
+  routePath?: string;
 };
-
-export type NavItemStyleProps = {
-  noEmphasis?: boolean;
-};
-
-export type NavItemProps = NavItemRequireProps & NavItemOptionProps & NavItemStyleProps & React.PropsWithChildren;
