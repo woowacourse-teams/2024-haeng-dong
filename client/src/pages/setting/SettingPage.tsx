@@ -2,8 +2,8 @@ import {ErrorBoundary} from '@sentry/react';
 import {Suspense} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import MyPageError from '@pages/fallback/MyPageError';
-import MyPageLoading from '@pages/fallback/MyPageLoading';
+import LoungePageLoading from '@pages/fallback/LoungePageLoading';
+import LoungePageError from '@pages/fallback/LoungePageError';
 import VStack from '@components/Design/components/Stack/VStack';
 import {COLORS} from '@components/Design/token/colors';
 import Box from '@components/Design/components/Box/Box';
@@ -57,8 +57,8 @@ const SettingPage = () => {
         <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
       </TopNav>
       <FunnelLayout>
-        <ErrorBoundary fallback={<MyPageError />}>
-          <Suspense fallback={<MyPageLoading />}>
+        <ErrorBoundary fallback={<LoungePageError />}>
+          <Suspense fallback={<LoungePageLoading />}>
             <SettingSection />
           </Suspense>
         </ErrorBoundary>

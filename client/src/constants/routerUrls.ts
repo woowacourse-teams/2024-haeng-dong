@@ -1,8 +1,7 @@
 const EVENT = '/event';
 const EVENT_WITH_EVENT_ID = `${EVENT}/:eventId`;
-// TODO: (@soha) myPage 삭제 필요 & merge 충돌 조심
-const MY_PAGE = '/mypage';
 const SETTING = '/setting';
+const LOUNGE = '/lounge';
 
 export const ROUTER_URLS = {
   main: '/',
@@ -24,11 +23,10 @@ export const ROUTER_URLS = {
   login: '/login',
   setting: SETTING,
   withdraw: `${SETTING}/withdraw`,
-  // TODO: (@soha) myPage 삭제 필요
-  myPage: MY_PAGE,
-  createdEvents: `${MY_PAGE}/events`,
-  editUserAccount: `${MY_PAGE}/edit-account`,
-  editUserNickname: `${MY_PAGE}/edit-nickname`,
+  lounge: LOUNGE,
+  createdEvents: `${LOUNGE}/events`,
+  editUserAccount: `${LOUNGE}/edit-account`,
+  editUserNickname: `${LOUNGE}/edit-nickname`,
   guestEventLogin: `${EVENT_WITH_EVENT_ID}/admin/login/guest`,
   userEventLogin: `${EVENT_WITH_EVENT_ID}/admin/login/user`,
   kakaoLoginRedirectUri: process.env.KAKAO_REDIRECT_URI,
