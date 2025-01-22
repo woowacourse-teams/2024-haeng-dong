@@ -37,12 +37,13 @@ export function CreatedEventItem({isEditMode, setEditMode, isChecked, onChange, 
   };
 
   return (
-    <Flex>
+    <Flex width="100%">
       {isEditMode && <Checkbox isChecked={isChecked} onChange={() => onChange(createdEvent)} />}
       <Flex
         justifyContent="spaceBetween"
         alignItems="center"
         paddingInline="0.5rem"
+        width="100%"
         onClick={onClick}
         css={touchAreaStyle}
         onTouchStart={handleTouchStart}
