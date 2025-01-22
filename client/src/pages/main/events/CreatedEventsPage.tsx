@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 
 import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreatedEvents';
 
-import {FunnelLayout, MainLayout, TextButton, Top, TopNav} from '@components/Design';
+import {FunnelLayout, MainLayout, Top, TopNav} from '@components/Design';
 import {CreatedEventList} from '@components/CreatedEventList';
 
 import {useCreatedEventsPageContext, CreatedEventsPageContextProvider} from './CreatedEvent.context';

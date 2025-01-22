@@ -78,7 +78,7 @@ const CreatedEventsSection = () => {
       {slicedEvents.length === 0 ? (
         <EventEmptyFallback />
       ) : (
-        <VStack>
+        <VStack css={{width: '100%'}}>
           {slicedEvents.map(event => (
             <CreatedEventView key={event.eventId} {...event} />
           ))}
