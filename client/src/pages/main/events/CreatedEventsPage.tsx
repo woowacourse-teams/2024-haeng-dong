@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 
 import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreatedEvents';
 
-import {FunnelLayout, MainLayout, TextButton, Top, TopNav} from '@components/Design';
+import {FunnelLayout, MainLayout, Top, TopNav} from '@components/Design';
 import {CreatedEventList} from '@components/CreatedEventList';
 
 import {useCreatedEventsPageContext, CreatedEventsPageContextProvider} from './CreatedEvent.context';
@@ -24,14 +24,20 @@ const PageInner = () => {
 
   return (
     <MainLayout backgroundColor="white">
-      <TopNav>
-        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
-        {mode === 'view' && (
-          <TextButton textColor="gray" textSize="bodyBold" onClick={() => handleMode('edit')}>
-            편집하기
-          </TextButton>
-        )}
-      </TopNav>
+      <TopNav
+        left={
+          <TopNav.Text routePath="-1" isEmphasis={false}>
+            뒤로가기
+          </TopNav.Text>
+        }
+        right={
+          mode === 'view' && (
+            <TopNav.Text textColor="gray" textSize="bodyBold" onClick={() => handleMode('edit')}>
+              편집하기
+            </TopNav.Text>
+          )
+        }
+      />
       <FunnelLayout>
         <Top>
           <Top.Line text="지금까지 주최했던 행사를" emphasize={['주최했던 행사']} />

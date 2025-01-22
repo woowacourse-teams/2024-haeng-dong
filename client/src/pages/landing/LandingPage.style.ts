@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 
-export const mainContainer = css({
+export const landingContainer = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'start',

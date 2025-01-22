@@ -1,7 +1,7 @@
 import useRequestDeleteEvents from '@hooks/queries/event/useRequestDeleteEvents';
-import {useCreatedEventsPageContext} from '@pages/mypage/events/CreatedEvent.context';
+import {useCreatedEventsPageContext} from '@pages/main/events/CreatedEvent.context';
 import {CreatedEvent} from 'types/serviceType';
-import {CreatedEventItem} from '@components/Design/components/CreatedEvent/CreatedEvent';
+import {CreatedEventItem} from '@components/Design/components/CreatedEventItem/CreatedEventItem';
 
 import {FixedButton, Flex, Input} from '@components/Design';
 

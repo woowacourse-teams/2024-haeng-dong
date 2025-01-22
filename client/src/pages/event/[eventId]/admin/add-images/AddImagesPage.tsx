@@ -12,9 +12,13 @@ const AddImagesPage = () => {
 
   return (
     <MainLayout backgroundColor="white">
-      <TopNav>
-        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
-      </TopNav>
+      <TopNav
+        left={
+          <TopNav.Text routePath="-1" isEmphasis={false}>
+            뒤로가기
+          </TopNav.Text>
+        }
+      />
       <div
         css={css`
           display: flex;
