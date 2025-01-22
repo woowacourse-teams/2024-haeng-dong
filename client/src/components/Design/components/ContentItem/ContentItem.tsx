@@ -24,7 +24,7 @@ const ContentItem = ({labels, onEditClick, children}: ContentItemProps) => {
       {children}
       {onEditClick && (
         <button onClick={onEditClick} css={iconStyle}>
-          <IconEdit />
+          <IconEdit size={16} />
         </button>
       )}
     </VStack>
