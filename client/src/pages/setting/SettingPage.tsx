@@ -2,8 +2,8 @@ import {ErrorBoundary} from '@sentry/react';
 import {Suspense} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import LoungePageLoading from '@pages/fallback/LoungePageLoading';
-import LoungePageError from '@pages/fallback/LoungePageError';
+import LoungePageLoading from '@pages/fallback/MainPageLoading';
+import LoungePageError from '@pages/fallback/MainPageError';
 import VStack from '@components/Design/components/Stack/VStack';
 import {COLORS} from '@components/Design/token/colors';
 import Box from '@components/Design/components/Box/Box';
