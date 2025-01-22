@@ -21,21 +21,21 @@ const Nav = ({isGuest}: NavProps) => {
   return (
     <div css={navFixedStyle}>
       <div css={navWrapperStyle}>
-        <header css={navStyle}>
-          <TopNav>
-            <TopNav.Item routePath="/">
-              <IconButton variants="none" aria-label="행동대장 로고">
-                <IconHeundeut />
-              </IconButton>
-            </TopNav.Item>
-            <TopNav.Item routePath="/">
-              <Text size="subTitle">행동대장</Text>
-            </TopNav.Item>
-          </TopNav>
-          <Button size="medium" variants="tertiary" onClick={goLogin} style={{marginRight: '1rem'}}>
-            정산 시작하기
-          </Button>
-        </header>
+        <TopNav
+          left={
+            <>
+              <TopNav.Icon routePath="/" aria-label="행동대장 로고" component={<IconHeundeut />} />
+              <TopNav.Text routePath="/" textSize="subTitle" isEmphasis={true}>
+                행동대장
+              </TopNav.Text>
+            </>
+          }
+          right={
+            <Button size="medium" variants="tertiary" onClick={goLogin}>
+              정산 시작하기
+            </Button>
+          }
+        />
       </div>
     </div>
   );

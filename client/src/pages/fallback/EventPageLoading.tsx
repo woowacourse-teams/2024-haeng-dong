@@ -3,20 +3,20 @@ import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeunde
 import {Flex, IconButton, MainLayout, TopNav} from '@components/Design';
 import {Footer} from '@components/Footer';
 
+import {PATHS} from '@constants/routerUrls';
+
 const EventPageLoading = () => {
   return (
     <MainLayout backgroundColor="gray">
-      <Flex justifyContent="spaceBetween" alignItems="center">
-        <TopNav>
-          <TopNav.Item routePath="/">
-            <IconButton variants="none">
-              <IconHeundeut />
-            </IconButton>
-          </TopNav.Item>
-          <TopNav.Item displayName="홈" routePath="/home" />
-          <TopNav.Item displayName="관리" routePath="/admin" />
-        </TopNav>
-      </Flex>
+      <TopNav
+        left={
+          <>
+            <TopNav.Icon routePath="/" component={<IconHeundeut />} />
+            <TopNav.Text routePath="/">홈</TopNav.Text>
+            <TopNav.Text routePath={PATHS.admin}>관리</TopNav.Text>
+          </>
+        }
+      />
       <Footer />
     </MainLayout>
   );

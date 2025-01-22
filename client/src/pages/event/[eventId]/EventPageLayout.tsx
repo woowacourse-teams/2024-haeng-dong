@@ -12,10 +12,12 @@ import useAmplitude from '@hooks/useAmplitude';
 import {Footer} from '@components/Footer';
 import {DesktopShareEventButton, MobileShareEventButton} from '@components/ShareEventButton';
 
-import {Flex, IconButton, MainLayout, TopNav} from '@HDesign/index';
+import {Flex, MainLayout, TopNav} from '@HDesign/index';
 
 import {isMobileDevice} from '@utils/detectDevice';
 import {updateMetaTag} from '@utils/udpateMetaTag';
+
+import {PATHS} from '@constants/routerUrls';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
@@ -51,15 +53,15 @@ const EventPageLayout = () => {
   return (
     <MainLayout backgroundColor="gray">
       <Flex justifyContent="spaceBetween" alignItems="center">
-        <TopNav>
-          <TopNav.Item routePath="/">
-            <IconButton variants="none">
-              <IconHeundeut />
-            </IconButton>
-          </TopNav.Item>
-          <TopNav.Item displayName="홈" routePath="/home" />
-          <TopNav.Item displayName="관리" routePath="/admin" />
-        </TopNav>
+        <TopNav
+          left={
+            <>
+              <TopNav.Icon routePath="/" component={<IconHeundeut />} />
+              <TopNav.Text routePath={PATHS.home}>홈</TopNav.Text>
+              <TopNav.Text routePath={PATHS.admin}>관리</TopNav.Text>
+            </>
+          }
+        />
         <Flex alignItems="center" gap="0.75rem" margin="0 1rem 0 0">
           {isMobile ? (
             <MobileShareEventButton copyShare={trackLinkShare} kakaoShare={trackKakaoShare} />
