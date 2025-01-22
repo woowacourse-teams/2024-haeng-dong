@@ -13,9 +13,13 @@ const MembersPage = () => {
 
   return (
     <MainLayout backgroundColor="white">
-      <TopNav>
-        <TopNav.Item displayName="뒤로가기" noEmphasis routePath="-1" />
-      </TopNav>
+      <TopNav
+        left={
+          <TopNav.Text routePath="-1" isEmphasis={false}>
+            뒤로가기
+          </TopNav.Text>
+        }
+      ></TopNav>
       <section css={eventMemberStyle}>
         <Top>
           <Top.Line text="전체 참여자 관리" emphasize={['전체 참여자 관리']}></Top.Line>

@@ -3,13 +3,18 @@ const EVENT_WITH_EVENT_ID = `${EVENT}/:eventId`;
 const SETTING = '/setting';
 const LOUNGE = '/lounge';
 
+export const PATHS = {
+  home: '/home',
+  admin: '/admin',
+};
+
 export const ROUTER_URLS = {
   main: '/',
   event: EVENT,
   createGuestEvent: `${EVENT}/create/guest`,
   createUserEvent: `${EVENT}/create/user`,
-  eventManage: `${EVENT_WITH_EVENT_ID}/admin`,
-  home: `${EVENT_WITH_EVENT_ID}/home`,
+  eventManage: `${EVENT_WITH_EVENT_ID}${PATHS.admin}`,
+  home: `${EVENT_WITH_EVENT_ID}${PATHS.home}`,
   members: `${EVENT_WITH_EVENT_ID}/admin/members`,
   addBill: `${EVENT_WITH_EVENT_ID}/admin/add-bill`,
   editBill: `${EVENT_WITH_EVENT_ID}/admin/edit-bill`,

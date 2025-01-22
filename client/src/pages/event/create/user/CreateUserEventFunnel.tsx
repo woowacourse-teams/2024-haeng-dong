@@ -31,11 +31,15 @@ const CreateUserEventFunnel = () => {
 
   return (
     <MainLayout backgroundColor="white">
-      <TopNav>
-        {step !== STEP_SEQUENCE[STEP_SEQUENCE.length - 1] && (
-          <TopNav.Item displayName="뒤로가기" noEmphasis routePath="" onHandleRouteInFunnel={handleBack} />
-        )}
-      </TopNav>
+      <TopNav
+        left={
+          step !== STEP_SEQUENCE[STEP_SEQUENCE.length - 1] && (
+            <TopNav.Text isEmphasis={false} onClick={handleBack}>
+              뒤로가기
+            </TopNav.Text>
+          )
+        }
+      />
       <Funnel step={step}>
         <Funnel.Step name="eventName">
           <SetMemberEventNameStep moveToNextStep={moveToNextStep} setEventToken={setEventToken} />

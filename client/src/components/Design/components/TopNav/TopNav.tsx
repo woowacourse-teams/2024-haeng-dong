@@ -1,19 +1,33 @@
-/** @jsxImportSource @emotion/react */
-import NavItem from './NavItem';
-import {topNavStyle} from './TopNav.style';
+import {ReactNode} from 'react';
 
-type TopNavProps = React.PropsWithChildren & {
-  Element?: React.ReactNode;
+import {topNavStyle, topNavWrapperStyle} from './TopNav.style';
+import NavText from './NavText';
+import NavIcon from './NavIcon';
+
+type TopNavProps = {
+  left?: ReactNode;
+  right?: ReactNode;
 };
 
-const TopNav = ({children}: TopNavProps) => {
+const TopNav = ({left, right}: TopNavProps) => {
   return (
     <nav style={{margin: '0 1rem'}}>
-      <ul css={topNavStyle}>{children}</ul>
+      <ul css={topNavStyle}>
+        <div css={topNavWrapperStyle}>{left}</div>
+        <div css={topNavWrapperStyle}>{right}</div>
+      </ul>
     </nav>
   );
 };
 
-TopNav.Item = NavItem;
+/**
+ * onClick를 넘겨주었으면 routePath는 무시됩니다.
+ */
+TopNav.Text = NavText;
+
+/**
+ * onClick를 넘겨주었으면 routePath는 무시됩니다.
+ */
+TopNav.Icon = NavIcon;
 
 export default TopNav;
