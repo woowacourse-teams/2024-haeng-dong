@@ -9,7 +9,7 @@ export const PATHS = {
 };
 
 export const ROUTER_URLS = {
-  main: '/',
+  landing: '/',
   event: EVENT,
   createGuestEvent: `${EVENT}/create/guest`,
   createUserEvent: `${EVENT}/create/user`,

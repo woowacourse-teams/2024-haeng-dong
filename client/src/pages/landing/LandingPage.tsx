@@ -9,16 +9,16 @@ import Nav from './Nav/Nav';
 import {MainSection} from './Section/MainSection';
 import {DescriptionSection} from './Section/DescriptionSection';
 import {FeatureSection} from './Section/FeatureSection';
-import {backgroundImageStyle, backgroundStyle, mainContainer} from './MainPage.style';
+import {backgroundImageStyle, backgroundStyle, landingContainer} from './LandingPage.style';
 import CreatorSection from './Section/CreatorSection/CreatorSection';
 
-const MainPage = () => {
+const LandingPage = () => {
   const {isVisible} = usePageBackground();
   const {userInfo} = useRequestGetUserInfo();
   const {isGuest} = userInfo;
 
   return (
-    <div css={mainContainer}>
+    <div css={landingContainer}>
       <Nav isGuest={isGuest} />
       <MainSection isGuest={isGuest} />
       <DescriptionSection />
@@ -36,4 +36,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default LandingPage;

@@ -4,6 +4,7 @@ import {lazy, Suspense} from 'react';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
+const LandingPage = lazy(() => import('@pages/landing/LandingPage'));
 const UserInfoLoader = lazy(() => import('@components/Loader/UserInfo/UserInfoLoader'));
 const EditUserAccountPage = lazy(() => import('@pages/lounge/edit-account/EditUserAccountPage'));
 const EditUserNicknamePage = lazy(() => import('@pages/lounge/edit-nickname/EditUserNicknamePage'));
@@ -18,7 +19,6 @@ const EventLoader = lazy(() => import('@components/Loader/EventData/EventDataLoa
 const AuthGate = lazy(() => import('@pages/event/[eventId]/admin/AuthGate'));
 const EventPageLayout = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
 const SendPage = lazy(() => import('@pages/event/[eventId]/home/send/SendPage'));
-const MainPage = lazy(() => import('@pages/main/MainPage'));
 const HomePage = lazy(() => import('@pages/event/[eventId]/home/HomePage'));
 const AdminPage = lazy(() => import('@pages/event/[eventId]/admin/AdminPage'));
 const AddBillFunnel = lazy(() => import('@pages/event/[eventId]/admin/add-bill/AddBillFunnel'));
@@ -50,8 +50,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        path: ROUTER_URLS.main,
-        element: <MainPage />,
+        path: ROUTER_URLS.landing,
+        element: <LandingPage />,
       },
       {
         path: ROUTER_URLS.createGuestEvent,
