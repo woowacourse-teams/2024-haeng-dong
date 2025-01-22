@@ -57,27 +57,6 @@ class UpdatedMembersTest {
                 .containsExactlyInAnyOrder(eventMember1, eventMember2, eventMember3);
     }
 
-    @DisplayName("이벤트의 참여자들 전체가 존재하지 않으면 업데이트할 수 없다.")
-    @Test
-    void validateUpdatedMembersExist() {
-        Event event = Event.createByGuest("행동대장 회식", "1231415jaksdf", 1L);
-        EventMember eventMember1 = new EventMember(1L, event, "고구마", false);
-        EventMember eventMember2 = new EventMember(2L, event, "감자", false);
-        EventMember eventMember3 = new EventMember(3L, event, "당근", false);
-        EventMember eventMember4 = new EventMember(4L, event, "양파", false);
-        List<EventMember> eventMembers = List.of(eventMember1, eventMember2, eventMember3, eventMember4);
-
-        EventMember updateEventMember1 = new EventMember(1L, event, "토다리", false);
-        EventMember updateEventMember2 = new EventMember(2L, event, "쿠키", false);
-        EventMember updateEventMember3 = new EventMember(3L, event, "백호", false);
-        UpdatedMembers updatedMembers = new UpdatedMembers(List.of(
-                updateEventMember1, updateEventMember2, updateEventMember3));
-
-        assertThatThrownBy(() -> updatedMembers.validateUpdatable(eventMembers))
-                .isInstanceOf(HaengdongException.class)
-                .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
-    }
-
     @DisplayName("업데이트할 이름 중에 기존 이벤트의 참여자들의 이름과 중복되면 업데이트할 수 없다.")
     @Test
     void validateUpdatedNamesUnique() {
