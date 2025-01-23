@@ -50,7 +50,22 @@ const config: StorybookConfig = {
 
     config.module.rules.push({
       test: /\.svg$/,
-      use: ['@svgr/webpack'],
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgoConfig: {
+              plugins: [
+                {
+                  name: 'removeViewBox',
+                  active: false, // viewBox 유지
+                },
+              ],
+              icon: true, // `symbol` 방식으로 출력
+            },
+          },
+        },
+      ],
     });
     return config;
   },
