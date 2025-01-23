@@ -1,4 +1,5 @@
 import {User, UserInfo} from 'types/serviceType';
+import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
 import {BASE_URL} from '@apis/baseUrl';
 import {USER_API_PREFIX} from '@apis/endpointPrefix';
@@ -12,11 +13,11 @@ export const requestDeleteUser = async () => {
   });
 };
 
-export const requestGetUserInfo = async () => {
+export const requestGetUserInfo = async ({...props}: WithErrorHandlingStrategy | null = {}) => {
   return await requestGet<UserInfo>({
     baseUrl: BASE_URL.HD,
     endpoint: `${USER_API_PREFIX}/mine`,
-    errorHandlingStrategy: 'unsubscribe',
+    ...props,
   });
 };
 
