@@ -1,9 +1,11 @@
 import {css} from '@emotion/react';
+import {useRef} from 'react';
 
 import Text from '@components/Design/components/Text/Text';
 
 import Avatar from './Avatar';
 import {avatarContainerStyle, partStyle, sectionStyle} from './CreatorSection.style';
+import TrackThisPageView from './TrackThisPageView';
 
 const CreatorSection = () => {
   const frontEndDevelopers = [
@@ -19,39 +21,43 @@ const CreatorSection = () => {
     {imagePath: 'gamja', name: '감자', navigateUrl: 'https://github.com/khabh'},
   ];
 
+  const sectionRef = useRef<HTMLElement>(null);
+
   return (
-    <div css={sectionStyle}>
-      <Text size="subTitle" textColor="white" responsive={true}>
-        행동대장을 만든 행동대장들
-      </Text>
-      <div css={partStyle}>
-        <Text size="bodyBold" textColor="white" responsive={true}>
-          FRONTEND
+    <TrackThisPageView sectionRef={sectionRef}>
+      <section ref={sectionRef} css={sectionStyle}>
+        <Text size="subTitle" textColor="white" responsive={true}>
+          행동대장을 만든 행동대장들
         </Text>
-        <div css={avatarContainerStyle}>
-          {frontEndDevelopers.map(developer => (
-            <Avatar key={developer.imagePath} {...developer} />
-          ))}
+        <div css={partStyle}>
+          <Text size="bodyBold" textColor="white" responsive={true}>
+            FRONTEND
+          </Text>
+          <div css={avatarContainerStyle}>
+            {frontEndDevelopers.map(developer => (
+              <Avatar key={developer.imagePath} {...developer} />
+            ))}
+          </div>
         </div>
-      </div>
-      <div
-        css={css({
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '2rem',
-        })}
-      >
-        <Text size="bodyBold" textColor="white" responsive={true}>
-          BACKEND
-        </Text>
-        <div css={avatarContainerStyle}>
-          {backEndDevelopers.map(developer => (
-            <Avatar key={developer.imagePath} {...developer} />
-          ))}
+        <div
+          css={css({
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '2rem',
+          })}
+        >
+          <Text size="bodyBold" textColor="white" responsive={true}>
+            BACKEND
+          </Text>
+          <div css={avatarContainerStyle}>
+            {backEndDevelopers.map(developer => (
+              <Avatar key={developer.imagePath} {...developer} />
+            ))}
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </TrackThisPageView>
   );
 };
 
