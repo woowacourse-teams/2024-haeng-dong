@@ -1,6 +1,6 @@
-import {EventName} from 'types/serviceType';
+import {track} from '@amplitude/analytics-browser';
 
-import {useAmplitudeStore} from '@store/amplitudeStore';
+import {EventName} from 'types/serviceType';
 
 import detectBrowser from '@utils/detectBrowser';
 
@@ -27,11 +27,10 @@ type SendMoneyData = EventUniqueData & {
 };
 
 const useAmplitude = () => {
-  const {amplitude} = useAmplitudeStore();
   const domainEnv = process.env.NODE_ENV;
 
-  const track = (eventName: string, eventProps: Record<string, any> = {}) => {
-    amplitude.track(eventName, {
+  const trackEvent = (eventName: string, eventProps: Record<string, any> = {}) => {
+    track(eventName, {
       domain: domainEnv,
       browser: detectBrowser(),
       ...eventProps,
@@ -39,43 +38,43 @@ const useAmplitude = () => {
   };
 
   const trackStartCreateEvent = ({login}: {login: boolean}) => {
-    track('정산 시작하기 버튼 클릭', {
+    trackEvent('정산 시작하기 버튼 클릭', {
       login,
     });
   };
 
   const trackCompleteCreateEvent = (eventUniqueData: EventUniqueData) => {
-    track('이벤트 생성 완료', {
+    trackEvent('이벤트 생성 완료', {
       ...eventUniqueData,
     });
   };
 
   const trackCompletecreateUserEvent = (eventUniqueData: EventUniqueData) => {
-    track('회원 이벤트 생성 완료', {
+    trackEvent('회원 이벤트 생성 완료', {
       ...eventUniqueData,
     });
   };
 
   const trackShareEvent = (eventSummary: EventSummary) => {
-    track('이벤트 초대 클릭', {
+    trackEvent('이벤트 초대 클릭', {
       ...eventSummary,
     });
   };
 
   const trackAddBillStart = (eventUniqueData: EventUniqueData) => {
-    track('지출내역 추가 시작', {
+    trackEvent('지출내역 추가 시작', {
       ...eventUniqueData,
     });
   };
 
   const trackAddBillEnd = (eventUniqueData: EventUniqueData) => {
-    track('지출내역 추가 완료', {
+    trackEvent('지출내역 추가 완료', {
       ...eventUniqueData,
     });
   };
 
   const trackSendMoney = (sendMoneyData: SendMoneyData) => {
-    track('송금 버튼 클릭', {
+    trackEvent('송금 버튼 클릭', {
       ...sendMoneyData,
     });
   };
