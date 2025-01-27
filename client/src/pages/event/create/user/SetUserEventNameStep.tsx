@@ -16,14 +16,14 @@ type SetEventNamePageProps = {
 const SetUserEventNameStep = ({moveToNextStep, setEventToken}: SetEventNamePageProps) => {
   const {eventName, errorMessage, canSubmit, handleEventNameChange} = useSetEventNameStep();
   const {postEvent, isPostEventPending} = useRequestPostUserEvent();
-  const {trackCompleteCreateUserEvent} = useAmplitude();
+  const {trackCompleteCreateEvent} = useAmplitude();
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     await postEvent(eventName, {
       onSuccess: ({eventId}) => {
-        trackCompleteCreateUserEvent({eventName, eventToken: eventId});
+        trackCompleteCreateEvent({eventName, eventToken: eventId});
         setEventToken(eventId);
       },
     });
