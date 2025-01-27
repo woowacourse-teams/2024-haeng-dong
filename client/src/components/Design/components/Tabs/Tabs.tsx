@@ -73,7 +73,12 @@ const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
               id={`tab-${tabItem.props.label}`}
               css={tabItemStyle}
               aria-selected={isActive(index)}
-              onClick={() => setActiveTabIndex(index)}
+              onClick={() => {
+                if (tabItem.props.onClick) {
+                  tabItem.props.onClick();
+                }
+                setActiveTabIndex(index);
+              }}
               aria-controls={`tabpanel-${tabItem.props.label}`}
             >
               <Text css={tabTextStyle({theme, selected: isActive(index)})} size={isActive(index) ? 'bodyBold' : 'body'}>
