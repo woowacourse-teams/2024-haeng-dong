@@ -29,12 +29,10 @@ export const GlobalStyle = css`
     cursor: revert;
     line-height: 0;
   }
-
   a:focus-visible,
   button:focus-visible {
     outline: 2px solid ${COLORS.primary};
     outline-offset: 2px;
-    border-radius: 0.75rem;
   }
 
   button:disabled {
