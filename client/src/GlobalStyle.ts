@@ -33,6 +33,7 @@ export const GlobalStyle = css`
   button:focus-visible {
     outline: 2px solid ${COLORS.primary};
     outline-offset: 2px;
+    opacity: 1;
   }
 
   button:disabled {
