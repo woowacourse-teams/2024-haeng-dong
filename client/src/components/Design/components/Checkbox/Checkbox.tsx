@@ -48,7 +48,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             {...props}
           />
         </div>
-        {right ?? null}
+        {right}
       </label>
     );
   },
