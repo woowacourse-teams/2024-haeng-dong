@@ -6,6 +6,7 @@ export interface TabProps {
   selected?: boolean;
   index?: number;
   ref?: React.Ref<HTMLLIElement>;
+  onClick?: () => void;
 }
 
 export interface TabsCustomProps {

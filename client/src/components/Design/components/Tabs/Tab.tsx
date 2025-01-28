@@ -10,9 +10,14 @@ import {TabProps} from './Tab.type';
 import {tabItemStyle, tabTextStyle} from './Tabs.style';
 import {useTabContext} from './useTabContext';
 
-const Tab = forwardRef<HTMLLIElement, TabProps>(({label, selected = false, index}, ref) => {
+const Tab = forwardRef<HTMLLIElement, TabProps>(({label, selected = false, index, onClick}, ref) => {
   const {theme} = useTheme();
   const {handleActiveTabIndex} = useTabContext();
+
+  const handleClick = () => {
+    if (onClick) onClick();
+    handleActiveTabIndex(index ?? 0);
+  };
 
   return (
     <li
@@ -20,7 +25,7 @@ const Tab = forwardRef<HTMLLIElement, TabProps>(({label, selected = false, index
       key={label}
       role="tab"
       id={`tab-${label}`}
-      onClick={() => handleActiveTabIndex(index ?? 0)}
+      onClick={handleClick}
       css={tabItemStyle}
       aria-selected={selected}
       aria-controls={`tabpanel-${label}`}
