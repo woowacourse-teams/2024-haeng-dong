@@ -2,12 +2,12 @@
 import {forwardRef, useState} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
+import {ariaProps, nonAriaProps} from '@components/Design/utils/attribute';
 
 import {IconCheck} from '../Icons/Icons/IconCheck';
 
 import {boxStyle, checkboxStyle, invisibleInputStyle} from './Checkbox.style';
 import {CheckboxProps} from './Checkbox.type';
-import {ariaProps, nonAriaProps} from '@components/Design/utils/attribute';
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({right, checked: controlledChecked, onChange, defaultChecked = false, disabled, ...props}, ref) => {
