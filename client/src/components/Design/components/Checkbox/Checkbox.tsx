@@ -7,6 +7,7 @@ import {IconCheck} from '../Icons/Icons/IconCheck';
 
 import {boxStyle, checkboxStyle, invisibleInputStyle} from './Checkbox.style';
 import {CheckboxProps} from './Checkbox.type';
+import {ariaProps, nonAriaProps} from '@components/Design/utils/attribute';
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({right, checked: controlledChecked, onChange, defaultChecked = false, disabled, ...props}, ref) => {
@@ -34,9 +35,18 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     };
 
     return (
-      <label css={checkboxStyle} role="checkbox" aria-checked={checked}>
-        <div css={boxStyle({theme, checked, disabled})} aria-hidden="true" tabIndex={0} onKeyDown={handleKeyDown}>
-          {checked && <IconCheck size={20} color="onPrimary" />}
+      <label
+        css={checkboxStyle}
+        role="checkbox"
+        aria-checked={checked}
+        onKeyDown={handleKeyDown}
+        {...ariaProps(props)}
+        aria-label={props['aria-label'] ?? (right ? `${right} 체크박스` : '체크박스')}
+      >
+        <div css={boxStyle({theme, checked, disabled})}>
+          <div aria-hidden="true" role="presentation">
+            {checked && <IconCheck size={20} color="onPrimary" />}
+          </div>
           <input
             ref={ref}
             type="checkbox"
@@ -44,8 +54,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             onChange={handleChange}
             disabled={disabled}
             css={invisibleInputStyle}
-            aria-label="체크박스"
-            {...props}
+            aria-hidden={true}
+            {...nonAriaProps(props)}
           />
         </div>
         {right}
