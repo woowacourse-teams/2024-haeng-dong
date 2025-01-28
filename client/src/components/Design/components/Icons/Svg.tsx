@@ -36,13 +36,13 @@ const Svg: React.FC<SvgProps> = ({children, color, size, width, height, directio
   const getRotation = () => {
     switch (direction) {
       case 'up':
-        return 180;
+        return '180deg';
       case 'left':
-        return 90;
+        return '90deg';
       case 'right':
-        return 270;
+        return '270deg';
       default:
-        return 0;
+        return '0deg';
     }
   };
 
@@ -54,7 +54,7 @@ const Svg: React.FC<SvgProps> = ({children, color, size, width, height, directio
         color={color ? theme.colors[color] : 'currentColor'}
         viewBox={viewBox}
         xmlns="http://www.w3.org/2000/svg"
-        transform={`rotate(${getRotation()})`}
+        style={{transform: `rotate(${getRotation()})`}}
         dangerouslySetInnerHTML={{__html: childrenString}}
         {...rest}
       />
