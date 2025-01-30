@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
@@ -9,6 +9,8 @@ const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
   const [translateX, setTranslateX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const parentWidth = useRef(0);
   const {theme} = useTheme();
 
   const handleDragStart = (e: React.TouchEvent | React.MouseEvent) => {
@@ -18,12 +20,17 @@ const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
 
   const handleDrag = (e: React.TouchEvent | React.MouseEvent) => {
     if (!isDragging) return;
+
     const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const deltaX = currentX - startX.current;
-    setTranslateX(deltaX);
+
+    const resistance = 0.5;
+    const resistedDelta = deltaX * resistance;
+
+    setTranslateX(resistedDelta);
   };
 
-  const threshold = window.screen.width / 10;
+  const threshold = parentWidth.current / 20;
 
   const handleDragEnd = () => {
     setIsDragging(false);
@@ -42,7 +49,55 @@ const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
     if (urls.length !== 1 && index === urls.length - 1) setCurrentIndex(prev => prev - 1);
   };
 
-  return {handleDragStart, handleDrag, handleDragEnd, theme, currentIndex, translateX, isDragging, handleClickDelete};
+  const handlePreventDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleToPrev = () => {
+    setCurrentIndex(prev => (prev !== 0 ? prev - 1 : prev));
+  };
+
+  const handleToNext = () => {
+    setCurrentIndex(prev => (prev !== urls.length - 1 ? prev + 1 : prev));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') handleToPrev();
+    if (e.key === 'ArrowRight') handleToNext();
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (wrapperRef.current) {
+        const parentElement = wrapperRef.current.parentElement;
+        parentWidth.current = parentElement?.clientWidth ?? 0;
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [wrapperRef, window.innerWidth]);
+
+  return {
+    handleDragStart,
+    handleDrag,
+    handleDragEnd,
+    theme,
+    currentIndex,
+    translateX,
+    isDragging,
+    handleClickDelete,
+    handlePreventDrag,
+    handleToPrev,
+    handleToNext,
+    handleKeyDown,
+    parentWidth: parentWidth.current,
+    wrapperRef,
+  };
 };
 
 export default useCarousel;
