@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import {forwardRef} from 'react';
-
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Text from '../Text/Text';
@@ -10,23 +8,20 @@ import {TabProps} from './Tab.type';
 import {tabItemStyle, tabTextStyle} from './Tabs.style';
 import {useTabContext} from './useTabContext';
 
-const Tab = forwardRef<HTMLLIElement, TabProps>(({label, selected = false, index, onClick}, ref) => {
+const Tab = ({label, index, onClick}: TabProps) => {
   const {theme} = useTheme();
-  const {handleActiveTabIndex} = useTabContext();
+  const {activeTabIndex} = useTabContext();
 
-  const handleClick = () => {
-    if (onClick) onClick();
-    handleActiveTabIndex(index ?? 0);
-  };
+  const selected = activeTabIndex === index;
 
   return (
     <li
-      ref={ref}
       key={label}
       role="tab"
+      data-label={label}
       id={`tab-${label}`}
-      onClick={handleClick}
-      css={tabItemStyle}
+      onClick={onClick}
+      css={tabItemStyle({theme})}
       aria-selected={selected}
       aria-controls={`tabpanel-${label}`}
     >
@@ -35,6 +30,6 @@ const Tab = forwardRef<HTMLLIElement, TabProps>(({label, selected = false, index
       </Text>
     </li>
   );
-});
+};
 
 export default Tab;
