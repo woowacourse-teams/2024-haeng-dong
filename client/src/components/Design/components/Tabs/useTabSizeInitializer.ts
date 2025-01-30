@@ -1,18 +1,26 @@
 import {useEffect, useState} from 'react';
 
-export const useTabSizeInitializer = (tabRefs: React.MutableRefObject<(HTMLLIElement | null)[]>) => {
+type UseTabSizeInitializerArgs = {
+  tabRef: React.MutableRefObject<HTMLUListElement | null>;
+  tabLength: number;
+};
+
+export const useTabSizeInitializer = ({tabRef, tabLength}: UseTabSizeInitializerArgs) => {
   const [tabWidth, setTabWidth] = useState(0);
 
   const setTabWidthResizeObserveCallback = (entries: ResizeObserverEntry[]) => {
     for (const entry of entries) {
-      if (entry.target === tabRefs.current[0]) {
-        setTabWidth(entry.contentRect.width);
+      if (entry.target === tabRef.current) {
+        const padding = 16;
+        const totalGap = (tabLength - 1) * 8;
+
+        setTabWidth((entry.contentRect.width - padding - totalGap) / tabLength);
       }
     }
   };
 
   useEffect(() => {
-    const tabCurrent = tabRefs.current[0];
+    const tabCurrent = tabRef.current;
 
     if (tabCurrent) {
       const resizeObserver = new ResizeObserver(setTabWidthResizeObserveCallback);
@@ -25,7 +33,7 @@ export const useTabSizeInitializer = (tabRefs: React.MutableRefObject<(HTMLLIEle
 
     // useEffect 경고문구 제거를 위해 return 추가 (Not all code paths return a value.)
     return;
-  }, [tabRefs]);
+  }, [tabRef]);
 
   return tabWidth;
 };
