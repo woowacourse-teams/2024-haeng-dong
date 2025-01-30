@@ -17,15 +17,18 @@ export const tabListStyle = ({theme}: WithTheme) =>
     WebkitTapHighlightColor: 'transparent',
   });
 
-export const tabItemStyle = css({
-  flex: 1,
+export const tabItemStyle = ({theme}: WithTheme) =>
+  css({
+    flex: 1,
 
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
 
-  height: '100%',
-});
+    height: '100%',
+    background: 'transparent',
+    zIndex: theme.zIndex.tabText,
+  });
 
 type WithSelected = WithTheme & {
   selected: boolean;
