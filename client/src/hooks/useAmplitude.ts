@@ -45,7 +45,7 @@ const useAmplitude = () => {
 
   // 1. 랜딩 페이지
   // 랜딩 페이지 최하단을 보는지에 대한 이벤트, 랜딩 페이지 컨텐츠를 다 확인하는지 궁금해서 추가
-  const trackLandingPageBottomView = () => {
+  const trackViewLandingPageBottom = () => {
     trackEvent('랜딩 페이지 최하단 확인');
   };
 
@@ -117,7 +117,7 @@ const useAmplitude = () => {
   // 8. 계좌번호 관련
   // 은행 선호도 조사 -> 어떤 은행을 많이 사용하는지 파악하여 선호가 높은 은행을 상위로 올려도 좋을 듯
   // 계좌번호를 설정하고 '확인' 버튼을 누를 때 사용할 예정
-  const trackBankName = (bankName: BankName) => {
+  const trackSetBankName = (bankName: BankName) => {
     trackEvent('은행 설정', {bankName});
   };
 
@@ -139,7 +139,7 @@ const useAmplitude = () => {
   // 행사 삭제를 단일, 복수 어떤 방식으로 많이 하는지 궁금합니다. (사실 행사 삭제도 많이 할 지 의문이기도 합니다.)
   // 복수 : 편집하기 -> 체크박스 선택 -> 삭제완료
   // 단일 : 행사 진입 -> 행사 삭제
-  const trackEventDelete = (method: 'single' | 'multi') => {
+  const trackDeleteEvent = (method: 'single' | 'multi') => {
     trackEvent('행사 삭제', {'삭제 방법': method});
   };
 
@@ -150,7 +150,7 @@ const useAmplitude = () => {
   };
 
   return {
-    trackLandingPageBottomView,
+    trackViewLandingPageBottom,
     trackStartCreateEvent,
     trackCompleteCreateEvent,
     trackShareEvent,
@@ -160,10 +160,10 @@ const useAmplitude = () => {
     trackChangeEventName,
     trackUploadImageCount,
     trackChangeUserName,
-    trackBankName,
+    trackSetBankName,
     trackWithdraw,
     trackAddBillStart,
-    trackEventDelete,
+    trackDeleteEvent,
     trackAddBillEnd,
     trackSendMoney,
   };

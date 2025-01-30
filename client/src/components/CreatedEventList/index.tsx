@@ -19,13 +19,11 @@ export const CreatedEventList = ({createdEvents, eventName, onSearch, placeholde
   const setViewMode = () => handleMode('view');
 
   const {deleteEvents} = useRequestDeleteEvents();
-  const {trackEventDelete} = useAmplitude();
+  const {trackDeleteEvent} = useAmplitude();
 
   const onDeleteClick = async () => {
-    trackEventDelete('multi');
-
     const selectedEventsId = selectedEvents.map(event => event.eventId);
-    await deleteEvents({eventIds: selectedEventsId});
+    await deleteEvents({eventIds: selectedEventsId}, {onSuccess: () => trackDeleteEvent('multi')});
     handleMode('view');
   };
 

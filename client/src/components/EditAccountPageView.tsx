@@ -23,7 +23,7 @@ const EditAccountPageView = ({
   redirectUrlOnSubmit,
 }: EditAccountPageProps) => {
   const navigate = useNavigate();
-  const {trackBankName} = useAmplitude();
+  const {trackSetBankName} = useAmplitude();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
@@ -44,7 +44,7 @@ const EditAccountPageView = ({
 
   const enrollAccountAndRedirectTo = async () => {
     await enrollAccount();
-    trackBankName(bankName);
+    trackSetBankName(bankName);
 
     navigate(redirectUrlOnSubmit);
   };

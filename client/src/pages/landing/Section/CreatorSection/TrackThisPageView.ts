@@ -7,14 +7,14 @@ type TrackThisPageViewProps = React.PropsWithChildren & {
 };
 
 const TrackThisPageView = ({sectionRef, children}: TrackThisPageViewProps) => {
-  const {trackLandingPageBottomView} = useAmplitude();
+  const {trackViewLandingPageBottom} = useAmplitude();
 
   useEffect(() => {
     if (sectionRef.current) {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            trackLandingPageBottomView();
+            trackViewLandingPageBottom();
             if (sectionRef.current) {
               observer.unobserve(sectionRef.current);
             }
