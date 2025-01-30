@@ -1,7 +1,7 @@
 import {createContext, useContext} from 'react';
 
 type TabContextType = {
-  handleActiveTabIndex: (index: number) => void;
+  activeTabIndex: number;
 };
 
 export const TabContext = createContext<TabContextType | null>(null);
