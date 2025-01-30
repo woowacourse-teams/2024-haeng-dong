@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {cloneElement, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {useTheme} from '@theme/HDesignProvider';
 
@@ -11,16 +11,20 @@ import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
 import Flex from '../Flex/Flex';
 
 import {tabListStyle, indicatorStyle} from './Tabs.style';
-import {TabProps, TabsProps} from './Tab.type';
+import {TabsProps} from './Tab.type';
 import {TabContext} from './useTabContext';
 import {useTabSizeInitializer} from './useTabSizeInitializer';
+import Tab from './Tab';
 
-const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
+const Tabs: React.FC<TabsProps> = ({children}) => {
   const {theme} = useTheme();
-  const tabRefs = useRef<Array<HTMLLIElement | null>>([]);
-  const tabWidth = useTabSizeInitializer(tabRefs);
+  const tabRef = useRef<HTMLUListElement>(null);
+
+  const tabLength = React.Children.count(children);
+  const tabWidth = useTabSizeInitializer({tabRef, tabLength});
 
   const eventId = getEventIdByUrl();
+
   const [activeTabIndex, setActiveTabIndex] = useState(
     SessionStorage.get<{eventId: string; activeTabIndex: number}>(SESSION_STORAGE_KEYS.eventHomeTab)?.activeTabIndex ??
       0,
@@ -30,18 +34,24 @@ const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
     SessionStorage.set(SESSION_STORAGE_KEYS.eventHomeTab, {eventId, activeTabIndex});
   }, [activeTabIndex, eventId]);
 
-  const handleActiveTabIndex = (index: number) => {
-    setActiveTabIndex(index);
+  const onClick = (event: React.MouseEvent<HTMLUListElement, MouseEvent>) => {
+    const targetValue = (event.target as HTMLElement).closest('li')?.dataset.label;
+    const labels = children.map(child => child.props.label);
+    const tabIndex = labels.findIndex(label => label === targetValue);
+
+    if (targetValue) {
+      setActiveTabIndex(tabIndex);
+    }
   };
 
   return (
     <TabContext.Provider
       value={{
-        handleActiveTabIndex,
+        activeTabIndex,
       }}
     >
-      <Flex flexDirection="column" {...tabsContainerStyle}>
-        <ul role="tablist" css={tabListStyle({theme})}>
+      <Flex flexDirection="column">
+        <ul ref={tabRef} role="tablist" css={tabListStyle({theme})} onClick={onClick}>
           <Flex
             justifyContent="spaceBetween"
             alignItems="center"
@@ -50,17 +60,11 @@ const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
             paddingInline="0.5rem"
             gap="0.5rem"
           >
-            {children.map((tabItem, index) =>
-              cloneElement(tabItem as React.ReactElement<TabProps>, {
-                ref: (el: HTMLLIElement) => (tabRefs.current[index] = el),
-                selected: activeTabIndex === index,
-                index,
-              }),
-            )}
+            {children.map((tabItem, index) => (
+              <Tab key={index} label={tabItem.props.label} content={tabItem.props.content} index={index} />
+            ))}
           </Flex>
-          {tabRefs.current && tabWidth !== 0 && (
-            <li value={activeTabIndex} css={indicatorStyle({theme, tabWidth, activeTabIndex})} />
-          )}
+          {tabRef.current && tabWidth !== 0 && <li css={indicatorStyle({theme, tabWidth, activeTabIndex})} />}
         </ul>
         <section
           role="tabpanel"
