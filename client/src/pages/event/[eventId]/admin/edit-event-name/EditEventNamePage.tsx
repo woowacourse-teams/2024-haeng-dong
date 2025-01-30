@@ -5,6 +5,8 @@ import useSetEventNameStep from '@hooks/createEvent/useSetEventNameStep';
 import useRequestPatchEvent from '@hooks/queries/event/useRequestPatchEvent';
 import {EventName} from 'types/serviceType';
 
+import useAmplitude from '@hooks/useAmplitude';
+
 import {FixedButton, FunnelLayout, Input, MainLayout, Top, TopNav} from '@components/Design';
 
 import getEventBaseUrl from '@utils/getEventBaseUrl';
@@ -23,13 +25,14 @@ const EditEventNamePage = () => {
 
   const {eventName, errorMessage, canSubmit, handleEventNameChange} = useSetEventNameStep(locationState ?? '');
   const {patchEvent} = useRequestPatchEvent();
+  const {trackChangeEventName} = useAmplitude();
 
   const disabled = !canSubmit || eventName === locationState;
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    await patchEvent({eventName});
+    await patchEvent({eventName}, {onSuccess: () => trackChangeEventName(eventName)});
     navigate(`/${getEventBaseUrl(location.pathname)}/admin`);
   };
 

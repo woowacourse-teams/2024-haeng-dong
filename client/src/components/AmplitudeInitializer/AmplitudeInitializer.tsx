@@ -1,12 +1,9 @@
 import {useEffect} from 'react';
-
-import {useAmplitudeStore} from '@store/amplitudeStore';
+import {init} from '@amplitude/analytics-browser';
 
 const AmplitudeInitializer = ({children}: React.PropsWithChildren) => {
-  const {amplitude} = useAmplitudeStore();
-
   useEffect(() => {
-    amplitude.init(process.env.AMPLITUDE_KEY, undefined, {
+    init(process.env.AMPLITUDE_KEY, undefined, {
       defaultTracking: true,
     });
   }, []);

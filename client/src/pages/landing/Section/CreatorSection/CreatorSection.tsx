@@ -2,8 +2,11 @@ import {css} from '@emotion/react';
 
 import Text from '@components/Design/components/Text/Text';
 
+import useAmplitude from '@hooks/useAmplitude';
+
 import Avatar from './Avatar';
 import {avatarContainerStyle, partStyle, sectionStyle} from './CreatorSection.style';
+import InViewportTrigger from './InViewportTrigger';
 
 const CreatorSection = () => {
   const frontEndDevelopers = [
@@ -19,8 +22,10 @@ const CreatorSection = () => {
     {imagePath: 'gamja', name: '감자', navigateUrl: 'https://github.com/khabh'},
   ];
 
+  const {trackViewLandingPageBottom} = useAmplitude();
+
   return (
-    <div css={sectionStyle}>
+    <InViewportTrigger callback={trackViewLandingPageBottom} css={sectionStyle}>
       <Text size="subTitle" textColor="white" responsive={true}>
         행동대장을 만든 행동대장들
       </Text>
@@ -51,7 +56,7 @@ const CreatorSection = () => {
           ))}
         </div>
       </div>
-    </div>
+    </InViewportTrigger>
   );
 };
 

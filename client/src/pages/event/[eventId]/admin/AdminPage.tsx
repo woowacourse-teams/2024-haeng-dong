@@ -15,7 +15,7 @@ import {receiptStyle} from './AdminPage.style';
 
 const AdminPage = () => {
   const navigate = useNavigate();
-  const {trackAddBillStart} = useAmplitude();
+  const {trackAddBillStart, trackDeleteEvent} = useAmplitude();
   const {deleteEvents} = useRequestDeleteEvents();
 
   const {
@@ -56,6 +56,7 @@ const AdminPage = () => {
 
   const deleteEventAndNavigateCreatedEventsPage = async () => {
     navigate(ROUTER_URLS.createdEvents, {replace: true});
+    trackDeleteEvent('single');
     await deleteEvents({eventIds: [eventId]});
   };
 

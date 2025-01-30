@@ -8,6 +8,7 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 import useRequestGetImages from './queries/images/useRequestGetImages';
 import useRequestPostImages from './queries/images/useRequestPostImages';
 import useRequestDeleteImage from './queries/images/useRequestDeleteImages';
+import useAmplitude from './useAmplitude';
 
 type LoadedImage = ImageFile;
 type AddedImage = File;
@@ -31,6 +32,7 @@ const useAddImagesPage = () => {
 
   const {postImages, isPending} = useRequestPostImages();
   const {deleteImage} = useRequestDeleteImage();
+  const {trackUploadImageCount} = useAmplitude();
 
   useEffect(() => {
     if (!isSuccess) return;
@@ -65,7 +67,7 @@ const useAddImagesPage = () => {
         formData.append('images', addedImages[i], addedImages[i].name);
       }
 
-      await postImages({formData});
+      await postImages({formData}, {onSuccess: () => trackUploadImageCount(addedImages.length)});
     }
 
     navigate(`/event/${eventId}/admin`);
