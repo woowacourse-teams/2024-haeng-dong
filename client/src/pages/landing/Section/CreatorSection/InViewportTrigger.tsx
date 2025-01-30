@@ -1,20 +1,19 @@
-import {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 
-import useAmplitude from '@hooks/useAmplitude';
+type InViewportTriggerProps = React.PropsWithChildren &
+  React.ComponentProps<'section'> & {
+    callback: () => void;
+  };
 
-type TrackThisPageViewProps = React.PropsWithChildren & {
-  sectionRef: React.RefObject<HTMLElement>;
-};
-
-const TrackThisPageView = ({sectionRef, children}: TrackThisPageViewProps) => {
-  const {trackViewLandingPageBottom} = useAmplitude();
+const InViewportTrigger = ({callback, children, ...viewportProps}: InViewportTriggerProps) => {
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (sectionRef.current) {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            trackViewLandingPageBottom();
+            callback();
             if (sectionRef.current) {
               observer.unobserve(sectionRef.current);
             }
@@ -37,7 +36,11 @@ const TrackThisPageView = ({sectionRef, children}: TrackThisPageViewProps) => {
     return;
   }, [sectionRef]);
 
-  return children;
+  return (
+    <section ref={sectionRef} {...viewportProps}>
+      {children}
+    </section>
+  );
 };
 
-export default TrackThisPageView;
+export default InViewportTrigger;
