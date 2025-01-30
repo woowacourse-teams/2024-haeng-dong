@@ -1,6 +1,7 @@
 import {css} from '@emotion/react';
 
 import {Theme} from '@components/Design/theme/theme.type';
+
 import {Direction} from '../Icons/Icon.type';
 
 export const carouselWrapperStyle = css`

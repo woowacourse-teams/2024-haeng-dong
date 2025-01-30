@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {Direction} from '../Icons/Icon.type';
 import {IconChevron} from '../Icons/Icons/IconChevron';
+
 import {changeButtonStyle} from './Carousel.style';
 
 interface Props {

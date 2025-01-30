@@ -2,6 +2,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import Box from '../Box/Box';
+
 import Carousel from './Carousel';
 
 const meta = {

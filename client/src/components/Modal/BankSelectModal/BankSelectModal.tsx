@@ -1,10 +1,11 @@
-import {BankName} from 'types/serviceType';
 import {useEffect, useRef} from 'react';
+
+import {BankName} from 'types/serviceType';
+import {IconX} from '@components/Design/components/Icons/Icons/IconX';
 
 import {BankSelect, BottomSheet, Text} from '@HDesign/index';
 
 import {bottomSheetHeaderStyle, bottomSheetStyle, inputContainerStyle} from './BankSelectModal.style';
-import {IconX} from '@components/Design/components/Icons/Icons/IconX';
 
 type BankSelectProps = {
   isBottomSheetOpened: boolean;
