@@ -29,7 +29,9 @@ export const GlobalStyle = css`
     cursor: revert;
     line-height: 0;
   }
-  a:focus-visible,
+  [href]:focus-visible,
+  [tabindex]:not([tabindex='-1']):focus-visible,
+  select:focus-visible,
   button:focus-visible {
     outline: 2px solid ${COLORS.primary};
     outline-offset: 2px;
