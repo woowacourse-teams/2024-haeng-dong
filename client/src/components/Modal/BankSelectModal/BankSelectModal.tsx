@@ -15,7 +15,6 @@ type BankSelectProps = {
 
 const BankSelectModal = ({isBottomSheetOpened, onClose, selectBank}: BankSelectProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const selectBankAndClose = (name: BankName) => {
     selectBank(name);
@@ -29,9 +28,6 @@ const BankSelectModal = ({isBottomSheetOpened, onClose, selectBank}: BankSelectP
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
     const firstFocusable = focusableElements?.[0] as HTMLElement;
-    if (document.activeElement !== firstFocusable) {
-      (focusableElements?.[1] as HTMLElement).focus();
-    }
     const lastFocusable = focusableElements?.[focusableElements.length - 1] as HTMLElement;
 
     const handleTabKey = (e: KeyboardEvent) => {
@@ -50,11 +46,20 @@ const BankSelectModal = ({isBottomSheetOpened, onClose, selectBank}: BankSelectP
       }
     };
 
+    const handleFocusChange = () => {
+      const isModalElement = Array.from(focusableElements ?? []).some(element => element === document.activeElement);
+
+      if (!isModalElement) {
+        (focusableElements?.[1] as HTMLElement)?.focus();
+      }
+    };
+
     document.addEventListener('keydown', handleTabKey);
-    closeButtonRef.current?.focus();
+    document.addEventListener('focusin', handleFocusChange);
 
     return () => {
       document.removeEventListener('keydown', handleTabKey);
+      document.removeEventListener('focusin', handleFocusChange);
     };
   }, [isBottomSheetOpened]);
 
