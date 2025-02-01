@@ -10,7 +10,7 @@ interface Props {
 
 const CarouselDeleteButton = ({onClick, tabIndex}: Props) => {
   return (
-    <button css={deleteButtonStyle} onClick={onClick} tabIndex={tabIndex}>
+    <button css={deleteButtonStyle} onClick={onClick} tabIndex={tabIndex} aria-label="이미지 삭제">
       <IconX />
     </button>
   );
