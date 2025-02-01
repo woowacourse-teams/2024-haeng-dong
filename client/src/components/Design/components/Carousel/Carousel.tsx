@@ -5,6 +5,7 @@ import CarouselDeleteButton from './CarouselDeleteButton';
 import {carouselWrapperStyle, imageCardContainerStyle, imageCardStyle, imageStyle} from './Carousel.style';
 import useCarousel from './useCarousel';
 import {CarouselChangeButton} from './CarouselChangeButton';
+import {srOnlyStyle} from '@components/Design/theme/commonStyle';
 
 const Carousel = ({urls, onClickDelete}: CarouselProps) => {
   const {
@@ -33,6 +34,9 @@ const Carousel = ({urls, onClickDelete}: CarouselProps) => {
       onKeyDown={handleKeyDown}
       ref={wrapperRef}
     >
+      <div aria-live="polite" aria-atomic="true" css={srOnlyStyle}>
+        전체 {urls.length}장 중 {currentIndex + 1}번째 이미지
+      </div>
       <div
         css={imageCardContainerStyle({currentIndex, length: urls.length, translateX, isDragging, parentWidth})}
         onMouseDown={handleDragStart}
@@ -43,7 +47,6 @@ const Carousel = ({urls, onClickDelete}: CarouselProps) => {
         onTouchEnd={handleDragEnd}
         role="group"
         aria-roledescription="slide"
-        aria-label={`전체 ${urls.length}장 중 ${currentIndex + 1}번째 이미지`}
       >
         {urls &&
           urls.map((url, index) => (
