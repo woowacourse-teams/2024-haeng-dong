@@ -1,8 +1,9 @@
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import {CarouselProps} from './Carousel.type';
+import {useParentWidth} from '@components/Design/hooks/useParentWidth';
 
 const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
   const startX = useRef(0);
@@ -10,7 +11,7 @@ const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const parentWidth = useRef(0);
+  const parentWidth = useParentWidth({elementRef: wrapperRef});
   const {theme} = useTheme();
 
   const handleDragStart = (e: React.TouchEvent | React.MouseEvent) => {
@@ -30,7 +31,7 @@ const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
     setTranslateX(resistedDelta);
   };
 
-  const threshold = parentWidth.current / 20;
+  const threshold = parentWidth / 20;
 
   const handleDragEnd = () => {
     setIsDragging(false);
@@ -66,22 +67,6 @@ const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
     if (e.key === 'ArrowRight') handleToNext();
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (wrapperRef.current) {
-        const parentElement = wrapperRef.current.parentElement;
-        parentWidth.current = parentElement?.clientWidth ?? 0;
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [wrapperRef, window.innerWidth]);
-
   return {
     handleDragStart,
     handleDrag,
@@ -95,7 +80,7 @@ const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
     handleToPrev,
     handleToNext,
     handleKeyDown,
-    parentWidth: parentWidth.current,
+    parentWidth,
     wrapperRef,
   };
 };
