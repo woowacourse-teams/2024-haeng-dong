@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import {srOnlyStyle} from '@components/Design/theme/commonStyle';
+
 import {CarouselProps} from './Carousel.type';
 import CarouselIndicator from './CarouselIndicator';
 import CarouselDeleteButton from './CarouselDeleteButton';
 import {carouselWrapperStyle, imageCardContainerStyle, imageCardStyle, imageStyle} from './Carousel.style';
 import useCarousel from './useCarousel';
 import {CarouselChangeButton} from './CarouselChangeButton';
-import {srOnlyStyle} from '@components/Design/theme/commonStyle';
 
 const Carousel = ({urls, onClickDelete}: CarouselProps) => {
   const {

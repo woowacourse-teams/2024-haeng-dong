@@ -1,9 +1,9 @@
 import {useRef, useState} from 'react';
 
 import {useTheme} from '@components/Design/theme/HDesignProvider';
+import {useParentWidth} from '@components/Design/hooks/useParentWidth';
 
 import {CarouselProps} from './Carousel.type';
-import {useParentWidth} from '@components/Design/hooks/useParentWidth';
 
 const useCarousel = ({urls, onClickDelete}: CarouselProps) => {
   const startX = useRef(0);
