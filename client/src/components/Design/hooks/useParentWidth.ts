@@ -15,7 +15,6 @@ export const useParentWidth = ({elementRef, delay = 16}: UseParentWidthProps) =>
       if (elementRef.current) {
         const parentElement = elementRef.current.parentElement;
         setParentWidth(parentElement?.clientWidth ?? 0);
-        console.log(count.current);
       }
     }, delay);
 
