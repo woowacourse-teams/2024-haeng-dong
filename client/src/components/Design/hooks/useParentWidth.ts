@@ -8,7 +8,6 @@ interface UseParentWidthProps {
 
 export const useParentWidth = ({elementRef, delay = 16}: UseParentWidthProps) => {
   const [parentWidth, setParentWidth] = useState<number>(0);
-  const count = useRef(0);
 
   useEffect(() => {
     const handleResize = throttle(() => {
