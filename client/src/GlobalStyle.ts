@@ -36,6 +36,7 @@ export const GlobalStyle = css`
     outline: 2px solid ${COLORS.primary};
     outline-offset: 2px;
     opacity: 1;
+    transition: all 0s;
   }
 
   button:disabled {
