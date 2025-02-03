@@ -2,6 +2,8 @@ import {css} from '@emotion/react';
 
 import {Theme} from '@components/Design/theme/theme.type';
 
+import {Direction} from '../Icons/Icon.type';
+
 export const carouselWrapperStyle = css`
   position: relative;
   overflow: hidden;
@@ -13,6 +15,7 @@ interface ImageCardContainerStyleProps {
   length: number;
   translateX: number;
   isDragging: boolean;
+  parentWidth: number;
 }
 
 export const imageCardContainerStyle = ({
@@ -20,31 +23,37 @@ export const imageCardContainerStyle = ({
   length,
   translateX,
   isDragging,
+  parentWidth,
 }: ImageCardContainerStyleProps) => css`
   display: flex;
   gap: 1rem;
   margin-inline: 2rem;
-  transform: translateX(
+  transform: translate3d(
     calc(
-      (100vw - 3rem) * ${-currentIndex} +
+      (${parentWidth}px - 3rem) * ${-currentIndex} +
         ${(currentIndex === 0 && translateX > 0) || (currentIndex === length - 1 && translateX < 0) ? 0 : translateX}px
-    )
+    ),
+    0,
+    0
   );
+  will-change: transform;
+  backface-visibility: hidden;
   transition: ${isDragging ? 'none' : '0.2s'};
   transition-timing-function: cubic-bezier(0.7, 0.62, 0.62, 1.16);
 `;
 
 interface ImageCardStyleProps {
   theme: Theme;
+  parentWidth: number;
 }
 
-export const imageCardStyle = ({theme}: ImageCardStyleProps) => css`
+export const imageCardStyle = ({theme, parentWidth}: ImageCardStyleProps) => css`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   clip-path: inset(0 round 1rem);
-  max-width: calc(768px - 4rem);
+  width: ${parentWidth ? `calc(${parentWidth}px - 4rem)` : 'calc(430px - 4rem)'};
   background-color: ${theme.colors.gray};
 `;
 
@@ -92,4 +101,18 @@ export const indicatorStyle = ({index, currentIndex, theme}: IndicatorStyleProps
   transition: 0.2s;
   transition-timing-function: cubic-bezier(0.7, 0.62, 0.62, 1.16);
   content: ' ';
+`;
+
+export const changeButtonStyle = (direction: Direction) => css`
+  position: absolute;
+  ${direction === ('left' as Direction) ? 'left' : 'right'}: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem;
+  opacity: 0.48;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

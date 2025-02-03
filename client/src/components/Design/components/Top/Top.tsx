@@ -23,7 +23,6 @@ export default function Top({children}: React.PropsWithChildren) {
         flex-direction: column;
       `}
       aria-label={childrenTexts.join(' ')}
-      tabIndex={0}
     >
       {children}
     </div>
