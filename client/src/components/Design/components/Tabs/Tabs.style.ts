@@ -35,7 +35,7 @@ type WithSelected = WithTheme & {
 };
 
 type IndicatorType = WithTheme & {
-  tabWidth: number;
+  tabIndicatorWidth: number;
   activeTabIndex: number;
 };
 
@@ -46,18 +46,18 @@ export const tabTextStyle = ({theme, selected}: WithSelected) =>
     zIndex: theme.zIndex.tabText,
   });
 
-export const indicatorStyle = ({theme, tabWidth, activeTabIndex}: IndicatorType) =>
+export const indicatorStyle = ({theme, tabIndicatorWidth, activeTabIndex}: IndicatorType) =>
   css({
     position: 'absolute',
     bottom: '0.5rem',
     left: '0.5rem',
-    width: `${tabWidth}px`,
+    width: `${tabIndicatorWidth}px`,
     height: 'calc(100% - 1rem)',
 
     borderRadius: '0.625rem',
     backgroundColor: theme.colors.tertiary,
 
-    transform: `translateX(${(tabWidth + 8) * activeTabIndex}px)`,
+    transform: `translateX(${(tabIndicatorWidth + 8) * activeTabIndex}px)`,
 
     transition: '0.2s',
     transitionTimingFunction: 'cubic-bezier(0.7, 0.62, 0.62, 1.16)',

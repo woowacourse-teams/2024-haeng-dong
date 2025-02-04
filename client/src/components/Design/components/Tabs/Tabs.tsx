@@ -13,7 +13,7 @@ import Flex from '../Flex/Flex';
 import {tabListStyle, indicatorStyle} from './Tabs.style';
 import {TabsProps} from './Tab.type';
 import {TabContext} from './useTabContext';
-import {useTabSizeInitializer} from './useTabSizeInitializer';
+import {useTabIndicatorWidthInitializer} from './useTabIndicatorWidthInitializer';
 import Tab from './Tab';
 
 const Tabs: React.FC<TabsProps> = ({children}) => {
@@ -21,7 +21,7 @@ const Tabs: React.FC<TabsProps> = ({children}) => {
   const tabRef = useRef<HTMLUListElement>(null);
 
   const tabLength = React.Children.count(children);
-  const tabWidth = useTabSizeInitializer({tabRef, tabLength});
+  const tabIndicatorWidth = useTabIndicatorWidthInitializer({tabRef, tabLength});
 
   const eventId = getEventIdByUrl();
 
@@ -64,7 +64,9 @@ const Tabs: React.FC<TabsProps> = ({children}) => {
               <Tab key={index} label={tabItem.props.label} content={tabItem.props.content} index={index} />
             ))}
           </Flex>
-          {tabRef.current && tabWidth !== 0 && <li css={indicatorStyle({theme, tabWidth, activeTabIndex})} />}
+          {tabRef.current && tabIndicatorWidth !== 0 && (
+            <li css={indicatorStyle({theme, tabIndicatorWidth, activeTabIndex})} />
+          )}
         </ul>
         <section
           role="tabpanel"

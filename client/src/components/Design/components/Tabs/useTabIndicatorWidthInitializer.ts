@@ -1,12 +1,12 @@
 import {useEffect, useState} from 'react';
 
-type UseTabSizeInitializerArgs = {
+type UseTabIndicatorWidthInitializerArgs = {
   tabRef: React.MutableRefObject<HTMLUListElement | null>;
   tabLength: number;
 };
 
-export const useTabSizeInitializer = ({tabRef, tabLength}: UseTabSizeInitializerArgs) => {
-  const [tabWidth, setTabWidth] = useState(0);
+export const useTabIndicatorWidthInitializer = ({tabRef, tabLength}: UseTabIndicatorWidthInitializerArgs) => {
+  const [tabIndicatorWidth, setTabIndicatorWidth] = useState(0);
 
   const setTabWidthResizeObserveCallback = (entries: ResizeObserverEntry[]) => {
     for (const entry of entries) {
@@ -14,7 +14,7 @@ export const useTabSizeInitializer = ({tabRef, tabLength}: UseTabSizeInitializer
         const padding = 16;
         const totalGap = (tabLength - 1) * 8;
 
-        setTabWidth((entry.contentRect.width - padding - totalGap) / tabLength);
+        setTabIndicatorWidth((entry.contentRect.width - padding - totalGap) / tabLength);
       }
     }
   };
@@ -35,5 +35,5 @@ export const useTabSizeInitializer = ({tabRef, tabLength}: UseTabSizeInitializer
     return;
   }, [tabRef]);
 
-  return tabWidth;
+  return tabIndicatorWidth;
 };
