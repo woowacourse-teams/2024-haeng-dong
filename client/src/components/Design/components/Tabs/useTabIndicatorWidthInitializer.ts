@@ -2,19 +2,19 @@ import {useEffect, useState} from 'react';
 
 type UseTabIndicatorWidthInitializerArgs = {
   tabRef: React.MutableRefObject<HTMLUListElement | null>;
-  tabLength: number;
+  tabCount: number;
 };
 
-export const useTabIndicatorWidthInitializer = ({tabRef, tabLength}: UseTabIndicatorWidthInitializerArgs) => {
+export const useTabIndicatorWidthInitializer = ({tabRef, tabCount}: UseTabIndicatorWidthInitializerArgs) => {
   const [tabIndicatorWidth, setTabIndicatorWidth] = useState(0);
 
   const setTabWidthResizeObserveCallback = (entries: ResizeObserverEntry[]) => {
     for (const entry of entries) {
       if (entry.target === tabRef.current) {
         const padding = 16;
-        const totalGap = (tabLength - 1) * 8;
+        const totalGap = (tabCount - 1) * 8;
 
-        setTabIndicatorWidth((entry.contentRect.width - padding - totalGap) / tabLength);
+        setTabIndicatorWidth((entry.contentRect.width - padding - totalGap) / tabCount);
       }
     }
   };

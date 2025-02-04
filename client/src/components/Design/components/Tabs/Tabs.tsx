@@ -20,8 +20,8 @@ const Tabs: React.FC<TabsProps> = ({children}) => {
   const {theme} = useTheme();
   const tabRef = useRef<HTMLUListElement>(null);
 
-  const tabLength = React.Children.count(children);
-  const tabIndicatorWidth = useTabIndicatorWidthInitializer({tabRef, tabLength});
+  const tabCount = React.Children.count(children);
+  const tabIndicatorWidth = useTabIndicatorWidthInitializer({tabRef, tabCount});
 
   const eventId = getEventIdByUrl();
 
