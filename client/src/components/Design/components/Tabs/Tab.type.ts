@@ -1,18 +1,9 @@
-import {FlexProps} from '../Flex/Flex.type';
-
-export interface TabProps {
+export type TabProps = Omit<React.ComponentProps<'li'>, 'content'> & {
   label: string;
   content: React.ReactNode;
-  onClick?: () => void;
-}
+  index?: number;
+};
 
-export interface TabsCustomProps {
+export type TabsProps = {
   children: React.ReactElement<TabProps>[];
-  active?: number;
-}
-
-export interface TabsStyleProps {
-  tabsContainerStyle?: FlexProps;
-}
-
-export type TabsProps = TabsCustomProps & TabsStyleProps;
+};
