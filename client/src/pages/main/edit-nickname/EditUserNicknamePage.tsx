@@ -5,6 +5,7 @@ import useRequestPatchUser from '@hooks/queries/event/useRequestPatchUser';
 
 import useUserInfoContext from '@hooks/useUserInfoContext';
 import useMemberName from '@hooks/useMemberName';
+import useAmplitude from '@hooks/useAmplitude';
 
 import {FixedButton, FunnelLayout, Input, MainLayout, Top, TopNav} from '@components/Design';
 
@@ -13,6 +14,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 const EditUserNicknamePage = () => {
   const {nickname} = useUserInfoContext();
   const {patchUser} = useRequestPatchUser();
+  const {trackChangeUserName} = useAmplitude();
 
   const {errorMessage, canSubmit, name, handleNameChange} = useMemberName(nickname);
 
@@ -22,7 +24,7 @@ const EditUserNicknamePage = () => {
     event.preventDefault();
 
     try {
-      await patchUser({nickname: name});
+      await patchUser({nickname: name}, {onSuccess: trackChangeUserName});
       toast.confirm('이름 변경이 완료되었어요!');
       navigate(ROUTER_URLS.main);
     } catch (error) {

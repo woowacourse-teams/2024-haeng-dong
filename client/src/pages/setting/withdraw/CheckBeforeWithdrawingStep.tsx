@@ -6,16 +6,20 @@ import toast from '@hooks/useToast/toast';
 
 import {WithdrawStep} from '@hooks/useWithdrawFunnel';
 import useUserInfoContext from '@hooks/useUserInfoContext';
+import useAmplitude from '@hooks/useAmplitude';
 
 import {Top, FixedButton, Flex, Text} from '@components/Design';
 
 const CheckBeforeWithdrawingStep = ({handleMoveStep}: {handleMoveStep: (nextStep: WithdrawStep) => void}) => {
   const {nickname} = useUserInfoContext();
   const {deleteAsyncUser} = useRequestDeleteUser();
+  const {trackWithdraw} = useAmplitude();
 
   const handleWithdraw = async () => {
     try {
       await deleteAsyncUser();
+      trackWithdraw();
+
       handleMoveStep('withdrawalCompleted');
     } catch (error) {
       toast.error('회원 탈퇴에 실패했어요.', {

@@ -5,6 +5,7 @@ import BankSelectModal from '@components/Modal/BankSelectModal/BankSelectModal';
 import {BankAccount, BankName} from 'types/serviceType';
 
 import useAccount from '@hooks/useAccount';
+import useAmplitude from '@hooks/useAmplitude';
 
 import {FixedButton, Flex, FunnelLayout, Input, MainLayout, Top, TopNav} from '@components/Design';
 
@@ -22,6 +23,7 @@ const EditAccountPageView = ({
   redirectUrlOnSubmit,
 }: EditAccountPageProps) => {
   const navigate = useNavigate();
+  const {trackSetBankName} = useAmplitude();
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
@@ -42,6 +44,7 @@ const EditAccountPageView = ({
 
   const enrollAccountAndRedirectTo = async () => {
     await enrollAccount();
+    trackSetBankName(bankName);
 
     navigate(redirectUrlOnSubmit);
   };
