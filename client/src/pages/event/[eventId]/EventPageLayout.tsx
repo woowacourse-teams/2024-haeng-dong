@@ -25,9 +25,10 @@ export type EventPageContextProps = Event & {
 };
 
 const EventPageLayout = () => {
-  const {event, eventSummary} = useEventPageLayout();
+  const {event, eventId, eventSummary} = useEventPageLayout();
   const {isGuest} = event.userInfo;
 
+  const navigate = useNavigate();
   const {trackShareEvent} = useAmplitude();
 
   const navigate = useNavigate();
@@ -47,6 +48,11 @@ const EventPageLayout = () => {
   const trackKakaoShare = () => {
     trackShareEvent({...eventSummary, shareMethod: 'kakao'});
     kakaoShare();
+  };
+
+  const trackQRShareAndNavigate = () => {
+    trackShareEvent({...eventSummary, shareMethod: 'qr'});
+    navigate(`/event/${eventId}/qrcode`);
   };
 
   useEffect(() => {
@@ -71,9 +77,13 @@ const EventPageLayout = () => {
         />
         <Flex alignItems="center" gap="0.75rem" margin="0 1rem 0 0">
           {isMobile ? (
-            <MobileShareEventButton copyShare={trackLinkShare} kakaoShare={trackKakaoShare} />
+            <MobileShareEventButton
+              copyShare={trackLinkShare}
+              kakaoShare={trackKakaoShare}
+              qrShare={trackQRShareAndNavigate}
+            />
           ) : (
-            <DesktopShareEventButton onCopy={trackLinkShare} />
+            <DesktopShareEventButton copyShare={trackLinkShare} qrShare={trackQRShareAndNavigate} />
           )}
         </Flex>
       </Flex>

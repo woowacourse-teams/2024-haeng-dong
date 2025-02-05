@@ -40,7 +40,7 @@ const LoginRedirectPage = () => {
       if (previousUrlForLogin) {
         navigate(previousUrlForLogin, {replace: true});
       } else {
-        navigate(ROUTER_URLS.createUserEvent);
+        navigate(ROUTER_URLS.main);
       }
     };
 

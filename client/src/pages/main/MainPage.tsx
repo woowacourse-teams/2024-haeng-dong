@@ -11,10 +11,13 @@ import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreate
 import VStack from '@components/Design/components/Stack/VStack';
 import {CreatedEventView} from '@components/Design/components/CreatedEventItem/CreatedEventView';
 import EventEmptyFallback from '@pages/fallback/EventEmptyFallback';
+import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
+import {IconSetting} from '@components/Design/components/Icons/Icons/IconSetting';
 
 import useUserInfoContext from '@hooks/useUserInfoContext';
 
-import {FixedButton, MainLayout, Text} from '@components/Design';
+import {FixedButton, MainLayout, Text, TopNav} from '@components/Design';
+import {AccountView} from '@components/AccountView';
 
 import getImageUrl from '@utils/getImageUrl';
 
@@ -41,7 +44,7 @@ const UserInfoSection = () => {
 };
 
 const AccountSection = () => {
-  const {accountNumber} = useUserInfoContext();
+  const {bankName, accountNumber} = useUserInfoContext();
   const navigate = useNavigate();
 
   const navigateEditAccountPage = () => {
@@ -50,9 +53,7 @@ const AccountSection = () => {
 
   return (
     <ContentItem labels={<ContentItem.Label>기본 계좌번호</ContentItem.Label>} onEditClick={navigateEditAccountPage}>
-      <Text textColor="black" size="bodyBold">
-        {accountNumber === '' ? '기본 계좌번호를 설정하여\n 행사마다 입력하는 번거로움을 줄이세요' : accountNumber}
-      </Text>
+      <AccountView bankName={bankName} accountNumber={accountNumber} />
     </ContentItem>
   );
 };
@@ -95,9 +96,30 @@ const MainPage = () => {
     navigate(ROUTER_URLS.createUserEvent);
   };
 
+  const navigateSettingPage = () => {
+    navigate(ROUTER_URLS.setting);
+  };
+
   return (
     <MainLayout backgroundColor="gray">
-      {/* top nav 추가해야 함 */}
+      <TopNav
+        left={
+          <>
+            <TopNav.Icon routePath="/" aria-label="행동대장 로고" component={<IconHeundeut />} />
+            <TopNav.Text routePath="/" textSize="subTitle" isEmphasis={true}>
+              행동대장
+            </TopNav.Text>
+          </>
+        }
+        right={
+          <TopNav.Icon
+            routePath="/"
+            aria-label="행동대장 로고"
+            component={<IconSetting size={24} />}
+            onClick={navigateSettingPage}
+          />
+        }
+      />
       <VStack gap="0.5rem" p="1rem" css={{width: '100%'}}>
         <ErrorBoundary fallback={<MainPageError />}>
           <Suspense fallback={<MainPageLoading />}>

@@ -1,5 +1,7 @@
 import {css} from '@emotion/react';
 
+import {COLORS} from '@token/colors';
+
 // reset css -> index css
 export const GlobalStyle = css`
   *:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
@@ -26,6 +28,15 @@ export const GlobalStyle = css`
   button {
     cursor: revert;
     line-height: 0;
+  }
+  [href]:focus-visible,
+  [tabindex]:not([tabindex='-1']):focus-visible,
+  select:focus-visible,
+  button:focus-visible {
+    outline: 2px solid ${COLORS.primary};
+    outline-offset: 2px;
+    opacity: 1;
+    transition: all 0s;
   }
 
   button:disabled {

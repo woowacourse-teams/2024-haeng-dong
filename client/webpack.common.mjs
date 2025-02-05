@@ -43,6 +43,17 @@ export default {
         use: [
           {
             loader: '@svgr/webpack',
+            options: {
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'removeViewBox',
+                    active: false, // viewBox 유지
+                  },
+                ],
+                icon: true, // `symbol` 방식으로 출력
+              },
+            },
           },
         ],
       },
