@@ -12,7 +12,7 @@ const useShareEvent = ({eventName, allMembers}: UserShareEventProps) => {
   const url = getEventPageUrlByEnvironment(eventId, 'home');
 
   const shareInfo = {
-    title: `${allMembers.join(', ')}\n행동대장이 ${eventName}에 대한 정산을 요청했어요 :)`,
+    title: `참여자: ${allMembers.join(', ')}\n\n행동대장이 ${eventName}에 대한 정산을 요청했어요 :)`,
     text: '아래 링크에 접속해서 정산 내역을 확인해 주세요!',
     url,
   };
