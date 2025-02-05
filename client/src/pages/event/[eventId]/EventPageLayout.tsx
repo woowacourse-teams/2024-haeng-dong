@@ -1,6 +1,6 @@
 import type {Event} from 'types/serviceType';
 
-import {Outlet} from 'react-router-dom';
+import {Outlet, useNavigate} from 'react-router-dom';
 import {useEffect} from 'react';
 
 import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
@@ -17,7 +17,7 @@ import {Flex, MainLayout, TopNav} from '@HDesign/index';
 import {isMobileDevice} from '@utils/detectDevice';
 import {updateMetaTag} from '@utils/udpateMetaTag';
 
-import {PATHS} from '@constants/routerUrls';
+import {PATHS, ROUTER_URLS} from '@constants/routerUrls';
 
 export type EventPageContextProps = Event & {
   isAdmin: boolean;
@@ -25,9 +25,17 @@ export type EventPageContextProps = Event & {
 };
 
 const EventPageLayout = () => {
-  const {event, eventSummary} = useEventPageLayout();
+  const {event, eventId, eventSummary} = useEventPageLayout();
+  const {isGuest} = event.userInfo;
 
+  const navigate = useNavigate();
   const {trackShareEvent} = useAmplitude();
+
+  const navigate = useNavigate();
+
+  const handleClickNavigateIconByUserStatus = () => {
+    navigate(isGuest ? ROUTER_URLS.landing : ROUTER_URLS.main);
+  };
 
   const isMobile = isMobileDevice();
   const {kakaoShare, copyShare} = useShareEvent({eventName: event.eventName});
@@ -40,6 +48,11 @@ const EventPageLayout = () => {
   const trackKakaoShare = () => {
     trackShareEvent({...eventSummary, shareMethod: 'kakao'});
     kakaoShare();
+  };
+
+  const trackQRShareAndNavigate = () => {
+    trackShareEvent({...eventSummary, shareMethod: 'qr'});
+    navigate(`/event/${eventId}/qrcode`);
   };
 
   useEffect(() => {
@@ -56,7 +69,7 @@ const EventPageLayout = () => {
         <TopNav
           left={
             <>
-              <TopNav.Icon routePath="/" component={<IconHeundeut />} />
+              <TopNav.Icon onClick={handleClickNavigateIconByUserStatus} component={<IconHeundeut />} />
               <TopNav.Text routePath={PATHS.home}>홈</TopNav.Text>
               <TopNav.Text routePath={PATHS.admin}>관리</TopNav.Text>
             </>
@@ -64,9 +77,13 @@ const EventPageLayout = () => {
         />
         <Flex alignItems="center" gap="0.75rem" margin="0 1rem 0 0">
           {isMobile ? (
-            <MobileShareEventButton copyShare={trackLinkShare} kakaoShare={trackKakaoShare} />
+            <MobileShareEventButton
+              copyShare={trackLinkShare}
+              kakaoShare={trackKakaoShare}
+              qrShare={trackQRShareAndNavigate}
+            />
           ) : (
-            <DesktopShareEventButton onCopy={trackLinkShare} />
+            <DesktopShareEventButton copyShare={trackLinkShare} qrShare={trackQRShareAndNavigate} />
           )}
         </Flex>
       </Flex>

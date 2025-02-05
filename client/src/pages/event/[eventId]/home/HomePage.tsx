@@ -6,6 +6,7 @@ import useRequestGetImages from '@hooks/queries/images/useRequestGetImages';
 import {IconPictureSquare} from '@components/Design/components/Icons/Icons/IconPictureSquare';
 
 import useEventDataContext from '@hooks/useEventDataContext';
+import useAmplitude from '@hooks/useAmplitude';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
@@ -18,6 +19,7 @@ import {ROUTER_URLS} from '@constants/routerUrls';
 import {receiptStyle} from './HomePage.style';
 
 const HomePage = () => {
+  const {trackCheckStepList} = useAmplitude();
   const {isAdmin, eventName, steps} = useEventDataContext();
   const isInHomePage = useMatch(ROUTER_URLS.home) !== null;
 
@@ -41,7 +43,11 @@ const HomePage = () => {
       />
       <Tabs>
         <Tab label="참여자 별 정산" content={<Reports />} />
-        <Tab label="전체 지출 내역" content={<StepList data={steps ?? []} isAdmin={isAdmin && !isInHomePage} />} />
+        <Tab
+          label="전체 지출 내역"
+          content={<StepList data={steps ?? []} isAdmin={isAdmin && !isInHomePage} />}
+          onClick={trackCheckStepList}
+        />
       </Tabs>
     </div>
   );
