@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-import {RequestPatchUser, requestPatchUser} from '@apis/request/event';
+import {RequestPatchUser, requestPatchUser} from '@apis/request/user';
 
 import QUERY_KEYS from '@constants/queryKeys';
 
@@ -9,9 +9,10 @@ const useRequestPatchUser = () => {
 
   const {mutateAsync, ...rest} = useMutation({
     mutationFn: (args: RequestPatchUser) => requestPatchUser({...args}),
+
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.event],
+        queryKey: [QUERY_KEYS.userInfo],
       });
     },
   });

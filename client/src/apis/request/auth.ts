@@ -1,6 +1,8 @@
+import {UserInfo} from 'types/serviceType';
+
 import {BASE_URL} from '@apis/baseUrl';
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestGetWithoutResponse, requestPostWithoutResponse} from '@apis/fetcher';
+import {ADMIN_API_PREFIX, USER_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
+import {requestGet, requestGetWithoutResponse, requestPostWithoutResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 import getKakaoRedirectUrl from '@utils/getKakaoRedirectUrl';
@@ -19,7 +21,7 @@ export interface RequestPostToken {
 export const requestPostToken = async ({eventId, password}: WithEventId<RequestPostToken>) => {
   await requestPostWithoutResponse({
     baseUrl: BASE_URL.HD,
-    endpoint: `${USER_API_PREFIX}/${eventId}/login`,
+    endpoint: `${MEMBER_API_PREFIX}/${eventId}/login`,
     body: {
       password: password,
     },

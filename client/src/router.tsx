@@ -4,35 +4,41 @@ import {lazy, Suspense} from 'react';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
 import App from './App';
+const LandingPage = lazy(() => import('@pages/landing/LandingPage'));
+const MainPage = lazy(() => import('@pages/main/MainPage'));
 
-const ErrorPage = lazy(() => import('@pages/ErrorPage/ErrorPage'));
-const SendErrorPage = lazy(() => import('@pages/ErrorPage/SendErrorPage'));
-const CreateGuestEventFunnel = lazy(() => import('@pages/CreateEventPage/CreateGuestEventPage/CreateGuestEventFunnel'));
-const CreateMemberEventFunnel = lazy(
-  () => import('@pages/CreateEventPage/CreateMemberEventPage/CreateMemberEventFunnel'),
-);
-const GuestEventLogin = lazy(() => import('@pages/EventPage/EventPageFallback/Login/GusetEventLogin'));
-const MemberEventLogin = lazy(() => import('@pages/EventPage/EventPageFallback/Login/MemberEventLogin'));
+const UserInfoLoader = lazy(() => import('@components/Loader/UserInfo/UserInfoLoader'));
+const EditUserAccountPage = lazy(() => import('@pages/main/edit-account/EditUserAccountPage'));
+const EditUserNicknamePage = lazy(() => import('@pages/main/edit-nickname/EditUserNicknamePage'));
+const ErrorPage = lazy(() => import('@pages/fallback/ErrorPage'));
+const SendErrorPage = lazy(() => import('@pages/fallback/SendErrorPage'));
+const CreateGuestEventFunnel = lazy(() => import('@pages/event/create/guest/CreateGuestEventFunnel'));
+const CreateUserEventFunnel = lazy(() => import('@pages/event/create/user/CreateUserEventFunnel'));
+const GuestEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/guest/GuestEventLogin'));
+const UserEventLogin = lazy(() => import('@pages/event/[eventId]/admin/login/user/UserEventLogin'));
 
-const EventLoader = lazy(() => import('@components/Loader/EventLoader'));
-const AuthGate = lazy(() => import('@pages/EventPage/AuthGate'));
-const EventPage = lazy(() => import('@pages/EventPage/EventPageLayout'));
-const SendPage = lazy(() => import('@pages/SendPage'));
-const MainPage = lazy(() => import('@pages/MainPage/MainPage'));
-const HomePage = lazy(() => import('@pages/EventPage/HomePage/HomePage'));
-const AdminPage = lazy(() => import('@pages/EventPage/AdminPage/AdminPage'));
-const AddBillFunnel = lazy(() => import('@pages/AddBillFunnel/AddBillFunnel'));
-const EventMember = lazy(() => import('@pages/EventPage/AdminPage/EventMember'));
-const EditBillPage = lazy(() => import('@pages/EditBillPage/EditBillPage'));
-const Account = lazy(() => import('@pages/AccountPage/Account'));
-const ImagesPage = lazy(() => import('@pages/ImagesPage/ImagesPage'));
-const AddImagesPage = lazy(() => import('@pages/AddImagesPage/AddImagesPage'));
-const EssentialQueryApp = lazy(() => import('./EssentialQueryApp'));
-const QRCodePage = lazy(() => import('@pages/QRCodePage/QRCodePage'));
-const LoginPage = lazy(() => import('@pages/LoginPage'));
-const MyPage = lazy(() => import('@pages/MyPage'));
-const LoginRedirectPage = lazy(() => import('@pages/LoginPage/LoginRedirectPage'));
-const LoginFailFallback = lazy(() => import('@pages/LoginPage/LoginFailFallback'));
+const EventLoader = lazy(() => import('@components/Loader/EventData/EventDataLoader'));
+const AuthGate = lazy(() => import('@pages/event/[eventId]/admin/AuthGate'));
+const EventPageLayout = lazy(() => import('@pages/event/[eventId]/EventPageLayout'));
+const SendPage = lazy(() => import('@pages/event/[eventId]/home/send/SendPage'));
+const HomePage = lazy(() => import('@pages/event/[eventId]/home/HomePage'));
+const AdminPage = lazy(() => import('@pages/event/[eventId]/admin/AdminPage'));
+const AddBillFunnel = lazy(() => import('@pages/event/[eventId]/admin/add-bill/AddBillFunnel'));
+const MembersPage = lazy(() => import('@pages/event/[eventId]/admin/members/MembersPage'));
+const EditBillPage = lazy(() => import('@pages/event/[eventId]/admin/edit-bill/EditBillPage'));
+const EditAccountPage = lazy(() => import('@pages/event/[eventId]/admin/edit-account/EditAccountPage'));
+const ImagesPage = lazy(() => import('@pages/event/[eventId]/images/ImagesPage'));
+const AddImagesPage = lazy(() => import('@pages/event/[eventId]/admin/add-images/AddImagesPage'));
+const QRCodePage = lazy(() => import('@pages/event/[eventId]/qrcode/QRCodePage'));
+const LoginPage = lazy(() => import('@pages/login/LoginPage'));
+const SettingPage = lazy(() => import('@pages/setting/SettingPage'));
+const WithdrawPage = lazy(() => import('@pages/setting/withdraw/WithdrawPage'));
+const LoginRedirectPage = lazy(() => import('@pages/login/LoginRedirectPage'));
+const LoginFailFallback = lazy(() => import('@pages/login/LoginFailFallback'));
+const CreatedEventsPage = lazy(() => import('@pages/main/events/CreatedEventsPage'));
+const EventPageLoading = lazy(() => import('@pages/fallback/EventPageLoading'));
+const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event-name/EditEventNamePage'));
+const BillDetailPage = lazy(() => import('@pages/event/[eventId]/home/bill-detail/BillDetailPage'));
 
 const router = createBrowserRouter([
   {
@@ -45,40 +51,45 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        path: ROUTER_URLS.main,
-        element: <MainPage />,
+        path: ROUTER_URLS.landing,
+        element: <LandingPage />,
       },
       {
-        element: <EssentialQueryApp />,
+        path: ROUTER_URLS.createGuestEvent,
+        element: <CreateGuestEventFunnel />,
+      },
+      {
+        path: ROUTER_URLS.createUserEvent,
+        element: <CreateUserEventFunnel />,
+      },
+      {
+        path: ROUTER_URLS.login,
+        element: <LoginPage />,
+      },
+      {
+        path: ROUTER_URLS.createdEvents,
+        element: <CreatedEventsPage />,
+      },
+      {
+        path: ROUTER_URLS.kakaoLoginRedirectUri,
+        element: <LoginRedirectPage />,
+        errorElement: <LoginFailFallback />,
+      },
+      {
+        path: ROUTER_URLS.event,
+        element: (
+          <Suspense fallback={<EventPageLoading />}>
+            <EventLoader />
+          </Suspense>
+        ),
         children: [
           {
-            path: ROUTER_URLS.createGuestEvent,
-            element: <CreateGuestEventFunnel />,
+            path: ROUTER_URLS.editAccount,
+            element: <EditAccountPage />,
           },
           {
-            path: ROUTER_URLS.createMemberEvent,
-            element: <CreateMemberEventFunnel />,
-          },
-          {
-            path: ROUTER_URLS.login,
-            element: <LoginPage />,
-          },
-          {
-            path: ROUTER_URLS.myPage,
-            element: <MyPage />,
-          },
-          {
-            path: ROUTER_URLS.kakaoLoginRedirectUri,
-            element: <LoginRedirectPage />,
-            errorElement: <LoginFailFallback />,
-          },
-          {
-            path: ROUTER_URLS.event,
-            element: (
-              <EventLoader>
-                <EventPage />
-              </EventLoader>
-            ),
+            path: '',
+            element: <EventPageLayout />,
             children: [
               {
                 path: ROUTER_URLS.eventManage,
@@ -97,51 +108,95 @@ const router = createBrowserRouter([
                 element: <GuestEventLogin />,
               },
               {
-                path: ROUTER_URLS.memberEventLogin,
-                element: <MemberEventLogin />,
+                path: ROUTER_URLS.userEventLogin,
+                element: <UserEventLogin />,
               },
             ],
-          },
-          {
-            path: ROUTER_URLS.addBill,
-            element: <AddBillFunnel />,
-          },
-          {
-            path: ROUTER_URLS.member,
-            element: <EventMember />,
-          },
-          {
-            path: ROUTER_URLS.editBill,
-            element: <EditBillPage />,
-          },
-          {
-            path: ROUTER_URLS.eventEdit,
-            element: <Account />,
-          },
-          {
-            path: ROUTER_URLS.images,
-            element: <ImagesPage />,
-          },
-          {
-            path: ROUTER_URLS.addImages,
-            element: <AddImagesPage />,
-          },
-          {
-            path: ROUTER_URLS.send,
-            element: <SendPage />,
-            errorElement: <SendErrorPage />,
-          },
-          {
-            path: ROUTER_URLS.qrCode,
-            element: <QRCodePage />,
           },
         ],
       },
       {
-        path: '*',
-        element: <ErrorPage />,
+        path: ROUTER_URLS.main,
+        element: (
+          <Suspense>
+            <UserInfoLoader />
+          </Suspense>
+        ),
+        children: [
+          {
+            index: true,
+            element: <MainPage />,
+          },
+          {
+            path: ROUTER_URLS.editUserAccount,
+            element: <EditUserAccountPage />,
+          },
+          {
+            path: ROUTER_URLS.editUserNickname,
+            element: <EditUserNicknamePage />,
+          },
+        ],
+      },
+      {
+        path: ROUTER_URLS.setting,
+        element: (
+          <Suspense>
+            <UserInfoLoader />
+          </Suspense>
+        ),
+        children: [
+          {
+            index: true,
+            element: <SettingPage />,
+          },
+          {
+            path: ROUTER_URLS.withdraw,
+            element: <WithdrawPage />,
+          },
+        ],
+      },
+      {
+        path: ROUTER_URLS.addBill,
+        element: <AddBillFunnel />,
+      },
+      {
+        path: ROUTER_URLS.members,
+        element: <MembersPage />,
+      },
+      {
+        path: ROUTER_URLS.editBill,
+        element: <EditBillPage />,
+      },
+      {
+        path: ROUTER_URLS.editEventName,
+        element: <EditEventName />,
+      },
+      {
+        path: ROUTER_URLS.images,
+        element: <ImagesPage />,
+      },
+      {
+        path: ROUTER_URLS.addImages,
+        element: <AddImagesPage />,
+      },
+      {
+        path: ROUTER_URLS.send,
+        element: <SendPage />,
+        errorElement: <SendErrorPage />,
+      },
+      {
+        path: ROUTER_URLS.billDetail,
+        element: <BillDetailPage />,
+      },
+      {
+        path: ROUTER_URLS.qrCode,
+        element: <QRCodePage />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
   },
 ]);
 

@@ -1,6 +1,6 @@
 import {css} from '@emotion/react';
 
-import {setDarker, setEmphasize, setLighter} from '@HDutils/colors';
+import {setDarker, setLighter} from '@HDutils/colors';
 import {Theme} from '@theme/theme.type';
 
 import {ButtonStyleProps, ButtonSize, ButtonVariants} from './Button.type';

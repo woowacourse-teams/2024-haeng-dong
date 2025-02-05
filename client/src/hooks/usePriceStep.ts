@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
 
-import {BillInfo} from '@pages/AddBillFunnel/AddBillFunnel';
+import {BillInfo} from '@pages/event/[eventId]/admin/add-bill/AddBillFunnel';
 
 import {BillStep} from './useAddBillFunnel';
 

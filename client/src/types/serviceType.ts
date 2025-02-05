@@ -2,6 +2,8 @@
 // ******************** UX 개선 이후 변경된 부분들 24.09.19 ****************
 // *******************************************************************
 
+import BANKS from '@constants/bank';
+
 export interface Steps {
   steps: Step[];
 }
@@ -45,10 +47,8 @@ export interface MemberWithDeposited extends Member {
 export interface AllMembers {
   members: MemberWithDeposited[];
 }
-export interface EventId {
-  eventId: string;
-}
 
+export type EventId = string;
 export type EventName = string;
 export type Nickname = string;
 export type Password = string;
@@ -59,8 +59,9 @@ export interface EventCreationData {
   password: Password;
 }
 
+export type BankName = (typeof BANKS)[number]['name'] | '';
 export type BankAccount = {
-  bankName: string;
+  bankName: BankName;
   accountNumber: string;
 };
 
@@ -71,6 +72,8 @@ export type Event = BankAccount & {
 
 export type User = BankAccount & {
   nickname: Nickname;
+  isGuest: boolean;
+  profileImage: string | null;
 };
 
 export interface Report {
@@ -91,4 +94,21 @@ export interface Images {
 export interface ImageFile {
   id: number;
   url: string;
+}
+
+export type UserInfo = BankAccount & {
+  nickname: string;
+  isGuest: boolean;
+  profileImage: string | null;
+};
+
+export interface CreatedEvent {
+  eventId: string;
+  eventName: string;
+  isFinished: boolean;
+  createdAt: string;
+}
+
+export interface CreatedEvents {
+  events: CreatedEvent[];
 }

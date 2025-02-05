@@ -15,7 +15,7 @@ const useRequestGetBillDetails = ({billId, ...props}: WithErrorHandlingStrategy<
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({
-    queryKey: [QUERY_KEYS.billDetails, billId],
+    queryKey: [QUERY_KEYS.billDetails, eventId, billId],
     queryFn: () => requestGetBillDetails({eventId, billId, ...props}),
   });
 

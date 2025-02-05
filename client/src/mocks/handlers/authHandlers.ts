@@ -1,6 +1,6 @@
 import {http, HttpResponse} from 'msw';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
 
 import {PASSWORD_LENGTH} from '@constants/password';
 
@@ -23,9 +23,22 @@ export const authHandler = [
     return new HttpResponse(null, {status: 200});
   }),
 
+  http.get(`${MOCK_API_PREFIX}/api/users/mine`, () => {
+    return HttpResponse.json(
+      {
+        nickname: '크리스마스',
+        isGuest: false,
+        profileImage: '',
+        bankName: '',
+        accountNumber: '',
+      },
+      {status: 200},
+    );
+  }),
+
   // POST /api/eventId/login (requestPostToken)
   http.post<{eventId: string}, {password: string}>(
-    `${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId/login`,
+    `${MOCK_API_PREFIX}${MEMBER_API_PREFIX}/:eventId/login`,
     async ({params, request}) => {
       const {eventId} = params;
       const {password} = await request.json();

@@ -1,7 +1,6 @@
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 import type {StorybookConfig} from '@storybook/react-webpack5';
 import path from 'path';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -51,7 +50,22 @@ const config: StorybookConfig = {
 
     config.module.rules.push({
       test: /\.svg$/,
-      use: ['@svgr/webpack'],
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgoConfig: {
+              plugins: [
+                {
+                  name: 'removeViewBox',
+                  active: false, // viewBox 유지
+                },
+              ],
+              icon: true, // `symbol` 방식으로 출력
+            },
+          },
+        },
+      ],
     });
     return config;
   },

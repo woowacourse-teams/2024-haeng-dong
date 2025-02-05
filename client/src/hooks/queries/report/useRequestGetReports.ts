@@ -11,7 +11,7 @@ const useRequestGetReports = ({...props}: WithErrorHandlingStrategy | null = {})
   const eventId = getEventIdByUrl();
 
   const {data, ...rest} = useQuery({
-    queryKey: [QUERY_KEYS.reports],
+    queryKey: [QUERY_KEYS.reports, eventId],
     queryFn: () => requestGetReports({eventId, ...props}),
   });
 

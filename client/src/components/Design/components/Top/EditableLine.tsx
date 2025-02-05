@@ -5,7 +5,7 @@ import {useEffect, useRef, useState} from 'react';
 import TYPOGRAPHY from '@components/Design/token/typography';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
-import Icon from '../Icon/Icon';
+import {IconEdit} from '../Icons/Icons/IconEdit';
 
 interface Props {
   value: string;
@@ -30,6 +30,7 @@ export default function EditableLine({value, onChange}: Props) {
         css={css`
           display: flex;
           gap: 0.5rem;
+          align-items: center;
         `}
       >
         <input
@@ -48,7 +49,7 @@ export default function EditableLine({value, onChange}: Props) {
           value={value}
           onChange={onChange}
         />
-        <Icon iconType="editPencil" />
+        <IconEdit size={16} />
       </div>
 
       <span

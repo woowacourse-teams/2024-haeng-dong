@@ -1,6 +1,5 @@
+/** @jsxImportSource @emotion/react */
 import type {Meta, StoryObj} from '@storybook/react';
-
-import React from 'react';
 
 import Tabs from '@HDcomponents/Tabs/Tabs';
 
@@ -18,9 +17,6 @@ const meta = {
       <Tab label="전체 지출 내역" content={<div>없지롱</div>} />,
       <Tab label="참여자 별 정산" content={<div>있지롱</div>} />,
     ],
-    tabsContainerStyle: {
-      gap: '0.5rem',
-    },
   },
 } satisfies Meta<typeof Tabs>;
 

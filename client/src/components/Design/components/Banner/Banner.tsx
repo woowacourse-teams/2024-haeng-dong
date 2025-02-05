@@ -2,10 +2,10 @@
 import type {BannerProps} from './Banner.type';
 
 import Flex from '../Flex/Flex';
-import Icon from '../Icon/Icon';
 import IconButton from '../IconButton/IconButton';
 import Text from '../Text/Text';
 import Button from '../Button/Button';
+import {IconX} from '../Icons/Icons/IconX';
 
 const Banner = ({title, description, buttonText, onDelete, ...buttonProps}: BannerProps) => {
   return (
@@ -25,7 +25,7 @@ const Banner = ({title, description, buttonText, onDelete, ...buttonProps}: Bann
           style={{display: 'flex', alignItems: 'flex-start'}}
           aria-label="배너 닫기"
         >
-          <Icon iconType="x" />
+          <IconX size={12} />
         </IconButton>
         <div>
           <Text size="captionBold" color="onTertiary">

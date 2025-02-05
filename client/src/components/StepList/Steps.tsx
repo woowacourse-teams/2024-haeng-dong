@@ -1,5 +1,5 @@
 import {Step as StepType} from 'types/serviceType';
-import BillEmptyFallback from '@pages/EventPage/EventPageFallback/BillEmptyFallback';
+import BillEmptyFallback from '@pages/fallback/BillEmptyFallback';
 
 import {Flex} from '@HDesign/index';
 

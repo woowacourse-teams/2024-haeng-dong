@@ -6,12 +6,14 @@ import {isMobileDevice} from '@utils/detectDevice';
 import {SendInfo} from './useReportsPage';
 import toast from './useToast/toast';
 import useAmplitude from './useAmplitude';
+import useNavigateApp from './useNavigateApp';
 
 export type SendMethod = '복사하기' | '토스' | '카카오페이';
 export type OnSend = () => void | Promise<void>;
 
 const useSendPage = () => {
   const isMobile = isMobileDevice();
+  const {navigateApp} = useNavigateApp();
   const options: SendMethod[] = isMobile ? ['토스', '카카오페이', '복사하기'] : ['복사하기'];
   const defaultValue: SendMethod = isMobile ? '토스' : '복사하기';
 
@@ -54,16 +56,20 @@ const useSendPage = () => {
   const onTossClick = () => {
     trackSendMoney({eventName, eventToken, amount, sendMethod: 'toss'});
 
-    const tossUrl = `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`;
-    window.location.href = tossUrl;
+    navigateApp({
+      androidAppScheme: `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`,
+      iosAppScheme: `supertoss://send?amount=${amount}&bank=${bankName}&accountNo=${accountNumber}`,
+    });
   };
 
   const onKakaoPayClick = async () => {
     await window.navigator.clipboard.writeText(copyText);
     trackSendMoney({eventName, eventToken, amount, sendMethod: 'kakaopay'});
 
-    const kakaoPayUrl = 'kakaotalk://kakaopay/home';
-    window.location.href = kakaoPayUrl;
+    navigateApp({
+      androidAppScheme: `kakaotalk://kakaopay/home`,
+      iosAppScheme: `kakaotalk://kakaopay/home`,
+    });
   };
 
   const buttonText: Record<SendMethod, string> = {

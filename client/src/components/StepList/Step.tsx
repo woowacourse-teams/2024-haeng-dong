@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {useMatch, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {css} from '@emotion/react';
 
 import Amount from '@components/Design/components/Amount/Amount';
@@ -19,8 +19,14 @@ interface Prop {
 const Step = ({step, isAdmin}: Prop) => {
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
+
   const handleClickStep = (bill: Bill) => {
-    if (isAdmin) navigate(`/event/${eventId}/admin/edit-bill`, {state: {bill}});
+    if (isAdmin) {
+      navigate(`/event/${eventId}/admin/edit-bill`, {state: {bill}});
+      return;
+    }
+
+    navigate(`/event/${eventId}/home/bill-detail`, {state: {bill}});
   };
 
   return (
@@ -43,7 +49,7 @@ const Step = ({step, isAdmin}: Prop) => {
       </ListItem.Row>
       {step.bills.map(bill => {
         return (
-          <ListItem.Row onClick={() => handleClickStep(bill)}>
+          <ListItem.Row key={bill.id} onClick={() => handleClickStep(bill)}>
             <Text size="bodyBold">{bill.title}</Text>
             <Amount amount={bill.price} />
           </ListItem.Row>

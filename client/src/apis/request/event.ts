@@ -1,22 +1,22 @@
-import {Event, EventCreationData, EventId, EventName, User} from 'types/serviceType';
+import {BankAccount, CreatedEvents, Event, EventCreationData, EventName} from 'types/serviceType';
 import {WithErrorHandlingStrategy} from '@errors/RequestGetError';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
-import {requestGet, requestPatch, requestPostWithResponse} from '@apis/fetcher';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
+import {requestDelete, requestGet, requestPatchWithoutResponse, requestPostWithResponse} from '@apis/request';
 import {WithEventId} from '@apis/withId.type';
 
 export const requestPostGuestEvent = async (postEventArgs: EventCreationData) => {
-  return await requestPostWithResponse<EventId>({
-    endpoint: `${USER_API_PREFIX}/guest`,
+  return await requestPostWithResponse<WithEventId>({
+    endpoint: `${MEMBER_API_PREFIX}/guest`,
     body: {
       ...postEventArgs,
     },
   });
 };
 
-export const requestPostMemberEvent = async (eventName: EventName) => {
-  return await requestPostWithResponse<EventId>({
-    endpoint: USER_API_PREFIX,
+export const requestPostUserEvent = async (eventName: EventName) => {
+  return await requestPostWithResponse<WithEventId>({
+    endpoint: MEMBER_API_PREFIX,
     body: {
       eventName,
     },
@@ -25,31 +25,41 @@ export const requestPostMemberEvent = async (eventName: EventName) => {
 
 export const requestGetEvent = async ({eventId, ...props}: WithEventId<WithErrorHandlingStrategy>) => {
   return await requestGet<Event>({
-    endpoint: `${USER_API_PREFIX}/${eventId}`,
+    endpoint: `${MEMBER_API_PREFIX}/${eventId}`,
     ...props,
   });
 };
 
-export type RequestPatchEvent = WithEventId & {
-  eventName: string;
-};
+export type PartialEvent = Partial<
+  BankAccount & {
+    eventName: EventName;
+  }
+>;
 
-export const requestPatchEventName = async ({eventId, eventName}: RequestPatchEvent) => {
-  return requestPatch({
+export type RequestPatchEvent = WithEventId & PartialEvent;
+
+export const requestPatchEvent = async ({eventId, ...event}: RequestPatchEvent) => {
+  await requestPatchWithoutResponse({
     endpoint: `${ADMIN_API_PREFIX}/${eventId}`,
     body: {
-      eventName,
+      ...event,
     },
   });
 };
 
-export type RequestPatchUser = Partial<User>;
+export const requestGetCreatedEvents = async () => {
+  return await requestGet<CreatedEvents>({
+    endpoint: `${MEMBER_API_PREFIX}/mine`,
+  });
+};
 
-export const requestPatchUser = async (args: RequestPatchUser) => {
-  return requestPatch({
-    endpoint: `/api/users`,
-    body: {
-      ...args,
-    },
+type DeleteEvents = {
+  eventIds: string[];
+};
+
+export const requestDeleteEvents = async (args: DeleteEvents) => {
+  await requestDelete({
+    endpoint: MEMBER_API_PREFIX,
+    body: args,
   });
 };

@@ -4,7 +4,7 @@ import {WithTheme} from '@components/Design/type/withTheme';
 
 import {DepositCheckStyleProps} from './DepositCheck.type';
 
-export const DepositCheckStyle = ({theme, isDeposited}: WithTheme<DepositCheckStyleProps>) =>
+export const depositCheckStyle = ({theme, isDeposited}: WithTheme<DepositCheckStyleProps>) =>
   css({
     display: 'flex',
     alignItems: 'center',
@@ -13,6 +13,7 @@ export const DepositCheckStyle = ({theme, isDeposited}: WithTheme<DepositCheckSt
     borderRadius: '0.5rem',
     padding: '0.25rem 0.375rem',
     height: '1.25rem',
+    width: 'fit-content',
 
     '.deposit-check-text': {
       color: isDeposited ? theme.colors.primary : theme.colors.gray,

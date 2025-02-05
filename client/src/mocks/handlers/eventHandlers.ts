@@ -2,7 +2,7 @@ import type {EventId} from 'types/serviceType';
 
 import {http, HttpResponse} from 'msw';
 
-import {ADMIN_API_PREFIX, USER_API_PREFIX} from '@apis/endpointPrefix';
+import {ADMIN_API_PREFIX, MEMBER_API_PREFIX} from '@apis/endpointPrefix';
 
 import RULE from '@constants/rule';
 
@@ -12,7 +12,7 @@ import {eventData} from '@mocks/sharedState';
 
 export const eventHandler = [
   // POST /api/events (requestPostEvent)
-  http.post<any, {eventName: string; password: string}>(`${MOCK_API_PREFIX}${USER_API_PREFIX}`, async ({request}) => {
+  http.post<any, {eventName: string; password: string}>(`${MOCK_API_PREFIX}${MEMBER_API_PREFIX}`, async ({request}) => {
     const {eventName, password} = await request.json();
 
     if (
@@ -38,7 +38,7 @@ export const eventHandler = [
       );
     }
 
-    const eventId: EventId = {eventId: 'mock-event-id'};
+    const eventId: {eventId: EventId} = {eventId: 'mock-event-id'};
     return HttpResponse.json(eventId, {
       status: 201,
       headers: {
@@ -48,7 +48,7 @@ export const eventHandler = [
   }),
 
   // GET /api/events/:eventId (requestGetEvent)
-  http.get(`${MOCK_API_PREFIX}${USER_API_PREFIX}/:eventId`, () => {
+  http.get(`${MOCK_API_PREFIX}${MEMBER_API_PREFIX}/:eventId`, () => {
     return HttpResponse.json(eventData);
   }),
 

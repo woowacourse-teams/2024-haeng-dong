@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router-dom';
 
 import {requestPostAuthentication} from '@apis/request/auth';
 
+import useEventDataContext from '@hooks/useEventDataContext';
+
 import {useAuthStore} from '@store/authStore';
 
 import getEventIdByUrl from '@utils/getEventIdByUrl';
@@ -11,17 +13,15 @@ import SessionStorage from '@utils/SessionStorage';
 import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
 import {ROUTER_URLS} from '@constants/routerUrls';
 
-import useRequestGetEvent from '../event/useRequestGetEvent';
-
 const useRequestPostAuthentication = () => {
   const eventId = getEventIdByUrl();
   const navigate = useNavigate();
   const {updateAuth} = useAuthStore();
 
-  const {createdByGuest} = useRequestGetEvent();
+  const {createdByGuest} = useEventDataContext();
 
   const isSecondEncounteredOnError = () => {
-    return window.location.pathname.includes('/guest/login') || window.location.pathname.includes('/member/login');
+    return window.location.pathname.includes('/login/guest') || window.location.pathname.includes('/login/user');
   };
 
   const {mutate, ...rest} = useMutation({
@@ -36,7 +36,7 @@ const useRequestPostAuthentication = () => {
       if (createdByGuest) {
         navigate(ROUTER_URLS.guestEventLogin.replace(':eventId', eventToken));
       } else {
-        navigate(ROUTER_URLS.memberEventLogin.replace(':eventId', eventToken));
+        navigate(ROUTER_URLS.userEventLogin.replace(':eventId', eventToken));
       }
     },
   });

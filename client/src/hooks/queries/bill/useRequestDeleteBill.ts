@@ -14,10 +14,12 @@ const useRequestDeleteBill = () => {
 
   const {mutate, ...rest} = useMutation({
     mutationFn: ({billId}: WithBillId) => requestDeleteBill({eventId, billId}),
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports]});
-      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers]});
+    onSuccess: (_, {billId}) => {
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.steps, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.reports, eventId]});
+      queryClient.invalidateQueries({queryKey: [QUERY_KEYS.currentMembers, eventId]});
+
+      queryClient.removeQueries({queryKey: [QUERY_KEYS.billDetails, eventId, billId]});
     },
   });
 

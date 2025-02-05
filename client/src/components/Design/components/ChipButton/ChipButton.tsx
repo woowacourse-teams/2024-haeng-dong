@@ -4,8 +4,8 @@ import {ColorKeys} from '@components/Design/token/colors';
 import {useTheme} from '@components/Design/theme/HDesignProvider';
 
 import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
 import IconButton from '../IconButton/IconButton';
+import {IconXCircle} from '../Icons/Icons/IconXCircle';
 
 import {chipButtonStyle} from './ChipButton.style';
 
@@ -22,7 +22,7 @@ const ChipButton = ({color, text, onClick}: Props) => {
     <div css={chipButtonStyle({color, theme})}>
       <Text textColor="black">{text}</Text>
       <IconButton variants="none" onClick={onClick} aria-label="인원 지우기">
-        <Icon iconType="inputDelete" />
+        <IconXCircle />
       </IconButton>
     </div>
   );

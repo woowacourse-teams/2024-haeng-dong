@@ -1,20 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import {useTheme} from '@components/Design';
 
-import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
+import {IconCheck} from '../Icons/Icons/IconCheck';
+import {IconX} from '../Icons/Icons/IconX';
 
-import {DepositCheckStyle} from './DepositCheck.style';
+import {depositCheckStyle} from './DepositCheck.style';
 import {DepositCheckProps} from './DepositCheck.type';
 
 const DepositCheck: React.FC<DepositCheckProps> = ({isDeposited = false}: DepositCheckProps) => {
   const {theme} = useTheme();
   return (
-    <div css={DepositCheckStyle({theme, isDeposited})}>
+    <div css={depositCheckStyle({theme, isDeposited})}>
       <Text size="tiny" className="deposit-check-text">
         입금
       </Text>
-      <Icon iconType={isDeposited ? 'check' : 'x'}></Icon>
+      {isDeposited ? <IconCheck size={12} color="primary" /> : <IconX size={12} color="gray" />}
     </div>
   );
 };
