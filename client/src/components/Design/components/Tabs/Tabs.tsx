@@ -8,95 +8,75 @@ import getEventIdByUrl from '@utils/getEventIdByUrl';
 
 import SESSION_STORAGE_KEYS from '@constants/sessionStorageKeys';
 
-import Text from '../Text/Text';
 import Flex from '../Flex/Flex';
 
-import {tabListStyle, tabItemStyle, tabTextStyle, indicatorStyle} from './Tabs.style';
+import {tabListStyle, indicatorStyle} from './Tabs.style';
 import {TabsProps} from './Tab.type';
+import {TabContext} from './useTabContext';
+import {useTabIndicatorWidthInitializer} from './useTabIndicatorWidthInitializer';
+import Tab from './Tab';
 
-const Tabs: React.FC<TabsProps> = ({children, tabsContainerStyle}) => {
+const Tabs: React.FC<TabsProps> = ({children}) => {
   const {theme} = useTheme();
-  const [tabWidth, setTabWidth] = useState(0);
-  const tabRef = useRef<HTMLLIElement>(null);
+  const tabRef = useRef<HTMLUListElement>(null);
+
+  const tabCount = React.Children.count(children);
+  const tabIndicatorWidth = useTabIndicatorWidthInitializer({tabRef, tabCount});
+
   const eventId = getEventIdByUrl();
+
   const [activeTabIndex, setActiveTabIndex] = useState(
     SessionStorage.get<{eventId: string; activeTabIndex: number}>(SESSION_STORAGE_KEYS.eventHomeTab)?.activeTabIndex ??
       0,
   );
 
-  const isActive = (index: number) => activeTabIndex === index;
-
   useEffect(() => {
     SessionStorage.set(SESSION_STORAGE_KEYS.eventHomeTab, {eventId, activeTabIndex});
   }, [activeTabIndex, eventId]);
 
-  const setTabWidthResizeObserveCallback = (entries: ResizeObserverEntry[]) => {
-    for (const entry of entries) {
-      if (entry.target === tabRef.current) {
-        setTabWidth(entry.contentRect.width);
-      }
+  const onClick = (event: React.MouseEvent<HTMLUListElement, MouseEvent>) => {
+    const targetValue = (event.target as HTMLElement).closest('li')?.dataset.label;
+    const labels = children.map(child => child.props.label);
+    const tabIndex = labels.findIndex(label => label === targetValue);
+
+    if (targetValue) {
+      setActiveTabIndex(tabIndex);
     }
   };
 
-  useEffect(() => {
-    const tabCurrent = tabRef.current;
-
-    if (tabCurrent) {
-      const resizeObserver = new ResizeObserver(setTabWidthResizeObserveCallback);
-      resizeObserver.observe(tabCurrent);
-
-      return () => {
-        resizeObserver.unobserve(tabCurrent);
-      };
-    }
-
-    // useEffect 경고문구 제거를 위해 return 추가 (Not all code paths return a value.)
-    return;
-  }, [tabRef]);
-
   return (
-    <Flex flexDirection="column" {...tabsContainerStyle}>
-      <ul role="tablist" css={tabListStyle({theme})}>
-        <Flex
-          justifyContent="spaceBetween"
-          alignItems="center"
-          height="100%"
-          padding="0.5rem"
-          paddingInline="0.5rem"
-          gap="0.5rem"
+    <TabContext.Provider
+      value={{
+        activeTabIndex,
+      }}
+    >
+      <Flex flexDirection="column">
+        <ul ref={tabRef} role="tablist" css={tabListStyle({theme})} onClick={onClick}>
+          <Flex
+            justifyContent="spaceBetween"
+            alignItems="center"
+            height="100%"
+            padding="0.5rem"
+            paddingInline="0.5rem"
+            gap="0.5rem"
+          >
+            {children.map((tabItem, index) => (
+              <Tab key={index} label={tabItem.props.label} content={tabItem.props.content} index={index} />
+            ))}
+          </Flex>
+          {tabRef.current && tabIndicatorWidth !== 0 && (
+            <li css={indicatorStyle({theme, tabIndicatorWidth, activeTabIndex})} />
+          )}
+        </ul>
+        <section
+          role="tabpanel"
+          id={`tabpanel-${children[activeTabIndex].props.label}`}
+          aria-labelledby={`tab-${children[activeTabIndex].props.label}`}
         >
-          {children.map((tabItem, index) => (
-            <li
-              ref={tabRef}
-              key={tabItem.props.label}
-              role="tab"
-              id={`tab-${tabItem.props.label}`}
-              css={tabItemStyle}
-              aria-selected={isActive(index)}
-              onClick={() => {
-                if (tabItem.props.onClick) {
-                  tabItem.props.onClick();
-                }
-                setActiveTabIndex(index);
-              }}
-              aria-controls={`tabpanel-${tabItem.props.label}`}
-            >
-              <Text css={tabTextStyle({theme, selected: isActive(index)})} size={isActive(index) ? 'bodyBold' : 'body'}>
-                {tabItem.props.label}
-              </Text>
-            </li>
-          ))}
-        </Flex>
-        {tabRef.current && tabWidth !== 0 && <div css={indicatorStyle({theme, tabWidth, activeTabIndex})} />}
-      </ul>
-      <section
-        role="tabpanel"
-        id={`tabpanel-${children[activeTabIndex].props.label}`}
-        aria-labelledby={`tab-${children[activeTabIndex].props.label}}`}
-      >
-        {children[activeTabIndex].props.content}
-      </section>
-    </Flex>
+          {children[activeTabIndex].props.content}
+        </section>
+      </Flex>
+    </TabContext.Provider>
   );
 };
 
