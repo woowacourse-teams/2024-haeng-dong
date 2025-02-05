@@ -22,7 +22,7 @@ const useRequestGetUserInfo = ({enableInitialData = true}: UseRequestGetUserInfo
 
   const {data, ...rest} = useSuspenseQuery({
     queryKey: [QUERY_KEYS.userInfo],
-    queryFn: () => requestGetUserInfo(),
+    queryFn: () => requestGetUserInfo({errorHandlingStrategy: enableInitialData ? 'ignore' : 'errorBoundary'}),
     // quernFn은 ErrorCatcher 구독을 하지 않으며 오류가 났을 경우 로그인 화면을 띄워야하므로 initialData를 설정했습니다.
     initialData: enableInitialData ? initialData : undefined,
     initialDataUpdatedAt: enableInitialData ? 0 : undefined,

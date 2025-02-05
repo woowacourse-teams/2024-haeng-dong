@@ -11,10 +11,12 @@ import useRequestGetCreatedEvents from '@hooks/queries/event/useRequestGetCreate
 import VStack from '@components/Design/components/Stack/VStack';
 import {CreatedEventView} from '@components/Design/components/CreatedEventItem/CreatedEventView';
 import EventEmptyFallback from '@pages/fallback/EventEmptyFallback';
+import {IconHeundeut} from '@components/Design/components/Icons/Icons/IconHeundeut';
+import {IconSetting} from '@components/Design/components/Icons/Icons/IconSetting';
 
 import useUserInfoContext from '@hooks/useUserInfoContext';
 
-import {FixedButton, MainLayout, Text} from '@components/Design';
+import {FixedButton, MainLayout, Text, TopNav} from '@components/Design';
 import {AccountView} from '@components/AccountView';
 
 import getImageUrl from '@utils/getImageUrl';
@@ -94,9 +96,30 @@ const MainPage = () => {
     navigate(ROUTER_URLS.createUserEvent);
   };
 
+  const navigateSettingPage = () => {
+    navigate(ROUTER_URLS.setting);
+  };
+
   return (
     <MainLayout backgroundColor="gray">
-      {/* top nav 추가해야 함 */}
+      <TopNav
+        left={
+          <>
+            <TopNav.Icon routePath="/" aria-label="행동대장 로고" component={<IconHeundeut />} />
+            <TopNav.Text routePath="/" textSize="subTitle" isEmphasis={true}>
+              행동대장
+            </TopNav.Text>
+          </>
+        }
+        right={
+          <TopNav.Icon
+            routePath="/"
+            aria-label="행동대장 로고"
+            component={<IconSetting size={24} />}
+            onClick={navigateSettingPage}
+          />
+        }
+      />
       <VStack gap="0.5rem" p="1rem" css={{width: '100%'}}>
         <ErrorBoundary fallback={<MainPageError />}>
           <Suspense fallback={<MainPageLoading />}>
