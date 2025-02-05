@@ -17,6 +17,7 @@ import {IconSetting} from '@components/Design/components/Icons/Icons/IconSetting
 import useUserInfoContext from '@hooks/useUserInfoContext';
 
 import {FixedButton, MainLayout, Text, TopNav} from '@components/Design';
+import {AccountView} from '@components/AccountView';
 
 import getImageUrl from '@utils/getImageUrl';
 
@@ -43,7 +44,7 @@ const UserInfoSection = () => {
 };
 
 const AccountSection = () => {
-  const {accountNumber} = useUserInfoContext();
+  const {bankName, accountNumber} = useUserInfoContext();
   const navigate = useNavigate();
 
   const navigateEditAccountPage = () => {
@@ -52,9 +53,7 @@ const AccountSection = () => {
 
   return (
     <ContentItem labels={<ContentItem.Label>기본 계좌번호</ContentItem.Label>} onEditClick={navigateEditAccountPage}>
-      <Text textColor="black" size="bodyBold">
-        {accountNumber === '' ? '기본 계좌번호를 설정하여\n 행사마다 입력하는 번거로움을 줄이세요' : accountNumber}
-      </Text>
+      <AccountView bankName={bankName} accountNumber={accountNumber} />
     </ContentItem>
   );
 };
