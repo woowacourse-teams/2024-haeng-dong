@@ -4,7 +4,7 @@ import {Flex, Text} from '@components/Design';
 
 import getImageUrl from '@utils/getImageUrl';
 
-const MyPageLoading = () => {
+const MainPageLoading = () => {
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center" gap="1.5rem">
       <Image src={getImageUrl('runningDog', 'webp')} fallbackSrc={getImageUrl('runningDog', 'png')} width={200} />
@@ -16,4 +16,4 @@ const MyPageLoading = () => {
   );
 };
 
-export default MyPageLoading;
+export default MainPageLoading;
