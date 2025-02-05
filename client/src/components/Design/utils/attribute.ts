@@ -42,3 +42,30 @@ export const attributeWithUnit = (attributes: Partial<Record<AttributeKey, strin
     return stringValueWithUnit(value);
   });
 };
+
+export const ariaProps = (props: React.HTMLAttributes<HTMLElement>) => {
+  const ariaAttributes = Object.entries(props).reduce(
+    (acc, [key, value]) => {
+      if (key.startsWith('aria-')) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, unknown>,
+  );
+
+  return ariaAttributes;
+};
+
+export const nonAriaProps = (props: React.HTMLAttributes<HTMLElement>) => {
+  const nonAriaAttributes = Object.entries(props).reduce(
+    (acc, [key, value]) => {
+      if (!key.startsWith('aria-')) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, unknown>,
+  );
+  return nonAriaAttributes;
+};
