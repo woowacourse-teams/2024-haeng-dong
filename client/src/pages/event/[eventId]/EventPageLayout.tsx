@@ -31,8 +31,6 @@ const EventPageLayout = () => {
   const navigate = useNavigate();
   const {trackShareEvent} = useAmplitude();
 
-  const navigate = useNavigate();
-
   const handleClickNavigateIconByUserStatus = () => {
     navigate(isGuest ? ROUTER_URLS.landing : ROUTER_URLS.main);
   };
