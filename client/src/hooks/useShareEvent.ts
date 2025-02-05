@@ -1,5 +1,6 @@
 import getEventIdByUrl from '@utils/getEventIdByUrl';
 import getEventPageUrlByEnvironment from '@utils/getEventPageUrlByEnvironment';
+import getImageUrl from '@utils/getImageUrl';
 
 type UserShareEventProps = {
   eventName: string;
@@ -28,8 +29,7 @@ const useShareEvent = ({eventName, allMembers}: UserShareEventProps) => {
       content: {
         title: shareInfo.title,
         description: shareInfo.text,
-        imageUrl:
-          'https://wooteco-crew-wiki.s3.ap-northeast-2.amazonaws.com/%EC%9B%A8%EB%94%94%286%EA%B8%B0%29/g583lirp8yg.jpg',
+        imageUrl: getImageUrl('share-image', 'png'),
         link: {
           mobileWebUrl: url,
           webUrl: url,
