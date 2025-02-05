@@ -1,24 +1,19 @@
 package haengdong.application;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static haengdong.support.fixture.Fixture.BILL1;
 import static haengdong.support.fixture.Fixture.EVENT1;
 import static haengdong.support.fixture.Fixture.EVENT2;
 import static haengdong.support.fixture.Fixture.EVENT_MEMBER_1;
 import static haengdong.support.fixture.Fixture.EVENT_MEMBER_2;
 import static haengdong.support.fixture.Fixture.EVENT_MEMBER_3;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import haengdong.user.domain.Nickname;
-import java.util.List;
-import org.assertj.core.groups.Tuple;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import haengdong.common.exception.HaengdongException;
 import haengdong.event.application.EventMemberService;
 import haengdong.event.application.request.MemberSaveAppRequest;
 import haengdong.event.application.request.MemberUpdateAppRequest;
@@ -36,7 +31,12 @@ import haengdong.event.domain.event.Event;
 import haengdong.event.domain.event.EventRepository;
 import haengdong.event.domain.event.member.EventMember;
 import haengdong.event.domain.event.member.EventMemberRepository;
-import haengdong.common.exception.HaengdongException;
+import haengdong.user.domain.Nickname;
+import java.util.List;
+import org.assertj.core.groups.Tuple;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 class EventEventMemberServiceTest extends ServiceTestSupport {
 
@@ -291,7 +291,7 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> eventMemberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
+                .hasMessage("존재하지 않는 참여자입니다.");
     }
 
     @DisplayName("수정하려는 행사 참여 인원 이름이 이미 존재하는 경우 예외가 발생한다.")
@@ -310,7 +310,33 @@ class EventEventMemberServiceTest extends ServiceTestSupport {
 
         assertThatThrownBy(() -> eventMemberService.updateMembers(event1.getToken(), membersUpdateAppRequest))
                 .isInstanceOf(HaengdongException.class)
-                .hasMessage("업데이트 요청된 참여자 ID 목록과 기존 행사 참여자 ID 목록이 일치하지 않습니다.");
+                .hasMessage("행사에 중복된 참여자 이름이 존재합니다.");
+    }
+
+    @DisplayName("요청 받지 못한 이벤트의 참여자 ID는 삭제된다.")
+    @Test
+    void validateUpdatedMembersExist() {
+        Event event = Event.createByGuest("행동대장 회식", "1231415jaksdf", 1L);
+        eventRepository.save(event);
+        EventMember eventMember1 = new EventMember(event, "고구마");
+        EventMember eventMember2 = new EventMember(event, "감자");
+        EventMember eventMember3 = new EventMember(event, "당근");
+        EventMember eventMember4 = new EventMember(event, "양파");
+        List<EventMember> eventMembers = List.of(eventMember1, eventMember2, eventMember3, eventMember4);
+        eventMemberRepository.saveAll(eventMembers);
+        MembersUpdateAppRequest membersUpdateAppRequest = new MembersUpdateAppRequest(
+                List.of(
+                        new MemberUpdateAppRequest(eventMember1.getId(),  new Nickname("토다리"), true),
+                        new MemberUpdateAppRequest(eventMember2.getId(), new Nickname("소하"), false)
+                )
+        );
+
+        eventMemberService.updateMembers(event.getToken(), membersUpdateAppRequest);
+
+        List<EventMember> foundEventMembers = eventMemberRepository.findAllByEvent(event);
+        assertThat(foundEventMembers).hasSize(2)
+                .doesNotContain(eventMember3, eventMember4)
+                .contains(eventMember1, eventMember2);
     }
 
     @DisplayName("참여자 간 서로의 이름으로 수정하려는 경우 예외가 발생한다.")
