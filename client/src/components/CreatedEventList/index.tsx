@@ -3,6 +3,8 @@ import {useCreatedEventsPageContext} from '@pages/main/events/CreatedEvent.conte
 import {CreatedEvent} from 'types/serviceType';
 import {CreatedEventItem} from '@components/Design/components/CreatedEventItem/CreatedEventItem';
 
+import useAmplitude from '@hooks/useAmplitude';
+
 import {FixedButton, Flex, Input} from '@components/Design';
 
 type CreatedEventListProps = {
@@ -17,10 +19,11 @@ export const CreatedEventList = ({createdEvents, eventName, onSearch, placeholde
   const setViewMode = () => handleMode('view');
 
   const {deleteEvents} = useRequestDeleteEvents();
+  const {trackDeleteEvent} = useAmplitude();
 
   const onDeleteClick = async () => {
     const selectedEventsId = selectedEvents.map(event => event.eventId);
-    await deleteEvents({eventIds: selectedEventsId});
+    await deleteEvents({eventIds: selectedEventsId}, {onSuccess: () => trackDeleteEvent('multi')});
     handleMode('view');
   };
 

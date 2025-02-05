@@ -10,8 +10,10 @@ import toast from './useToast/toast';
 import useRequestDeleteMember from './queries/member/useRequestDeleteMember';
 import useRequestPutMembers from './queries/member/useRequestPutMembers';
 import useRequestGetReports from './queries/report/useRequestGetReports';
+import useAmplitude from './useAmplitude';
 
 const useEventMember = (): ReturnUseEventMember => {
+  const {trackChangeDepositStatus, trackChangeMemberName} = useAmplitude();
   const {reports: initialReports} = useRequestGetReports();
   const {deleteAsyncMember} = useRequestDeleteMember();
   const {putAsyncMember} = useRequestPutMembers();
@@ -72,6 +74,21 @@ const useEventMember = (): ReturnUseEventMember => {
     [setReports],
   );
 
+  // 서버 상태와 현재 상태가 달라진 개수를 얻는 함수
+  const getChangedCountByProperty = (property: keyof Report) => {
+    const initialReportsMap = new Map<number, Report>(initialReports.map(report => [report.memberId, report]));
+
+    let changedCount = 0;
+    reports.forEach(report => {
+      const initialReport = initialReportsMap.get(report.memberId);
+      if (initialReport && initialReport[property] !== report[property]) {
+        changedCount++;
+      }
+    });
+
+    return changedCount;
+  };
+
   // 삭제할 member를 따로 deleteMembers 상태에서 id만 저장
   const handleDeleteMember = useCallback((memberId: number) => {
     setDeleteMembers(prev => [memberId, ...prev]);
@@ -80,6 +97,16 @@ const useEventMember = (): ReturnUseEventMember => {
   }, []);
 
   const updateMembersOnServer = useCallback(async () => {
+    const changedDepositCount = getChangedCountByProperty('isDeposited');
+    if (changedDepositCount > 0) {
+      trackChangeDepositStatus(changedDepositCount);
+    }
+
+    const changedMemberCount = getChangedCountByProperty('memberName');
+    if (changedMemberCount > 0) {
+      trackChangeMemberName(changedMemberCount);
+    }
+
     // DELETE 요청 선행
     // deleteMembers에 값이 하나라도 전재하면 반복문을 통해 DELETE api 요청
     if (deleteMembers.length > 0) {
