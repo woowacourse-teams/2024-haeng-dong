@@ -35,6 +35,7 @@ const useEventPageLayout = () => {
     isAdmin,
     event,
     eventSummary,
+    allMembers: members,
   };
 };
 
