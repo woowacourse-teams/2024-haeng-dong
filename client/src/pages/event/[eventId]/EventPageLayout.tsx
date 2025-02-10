@@ -25,7 +25,7 @@ export type EventPageContextProps = Event & {
 };
 
 const EventPageLayout = () => {
-  const {event, eventId, eventSummary} = useEventPageLayout();
+  const {event, eventId, eventSummary, allMembers} = useEventPageLayout();
   const {isGuest} = event.userInfo;
 
   const navigate = useNavigate();
@@ -36,7 +36,10 @@ const EventPageLayout = () => {
   };
 
   const isMobile = isMobileDevice();
-  const {kakaoShare, copyShare} = useShareEvent({eventName: event.eventName});
+  const {kakaoShare, copyShare} = useShareEvent({
+    eventName: event.eventName,
+    allMembers: allMembers.map(member => member.name),
+  });
 
   const trackLinkShare = async () => {
     trackShareEvent({...eventSummary, shareMethod: 'link'});
