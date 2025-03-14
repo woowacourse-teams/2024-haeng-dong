@@ -15,6 +15,7 @@ export default merge(common, {
     chunkFilename: '[id].chunk.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    publicPath: '/',
   },
   devtool: 'eval-source-map',
   devServer: {
