@@ -11,8 +11,8 @@ const __dirname = path.dirname(__filename);
 export default merge(common, {
   mode: 'production',
   output: {
-    filename: '[name].[hash].js',
-    chunkFilename: '[id].[hash].chunk.js',
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[id].[contenthash].chunk.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
     publicPath: '/',
