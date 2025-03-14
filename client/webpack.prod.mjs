@@ -31,6 +31,9 @@ export default merge(common, {
     //   },
     // }),
   ],
+  cache: {
+    type: 'filesystem',
+  },
   optimization: {
     minimize: true,
     minimizer: [
