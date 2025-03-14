@@ -31,5 +31,4 @@ export default merge(common, {
     }),
     new ForkTsCheckerWebpackPlugin(),
   ],
-  
 });
