@@ -26,6 +26,19 @@ jobs:
         with:
           node-version: "20.15.1"
 
+      # 웹팩 캐싱(패키지락과 프로드웹팩컨픽이 바뀌지 않으면 캐시 사용)
+      - name: Cache Webpack
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.cache
+          key: ${{ runner.os }}-webpack-${{ hashFiles('package-lock.json', 'webpack.prod.mjs') }}
+          restore-keys: |
+            ${{ runner.os }}-webpack-
+            
+      # 5. Prod 환경으로 빌드
+      - name: Build for Prod environment
+        run: npm run build
+
       # 3. 의존성 설치
       - name: Install Dependencies
         run: npm install
@@ -40,9 +53,14 @@ jobs:
           echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> .env.prod
           echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.prod
 
-      # 5. Prod 환경으로 빌드
-      - name: Build for Prod environment
-        run: npm run build
+      # 노드모듈스 캐싱
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       # 6. AWS 인증 설정
       - name: Configure AWS credentials
