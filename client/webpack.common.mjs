@@ -1,6 +1,5 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import {ModifySourcePlugin, ConcatOperation} from 'modify-source-webpack-plugin';
 import {fileURLToPath} from 'url';
 
@@ -37,6 +36,9 @@ export default {
         test: /\.tsx?$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
+        options: {
+          transpileOnly: true,
+        },
       },
       {
         test: /\.svg$/,
@@ -51,7 +53,6 @@ export default {
                     active: false, // viewBox 유지
                   },
                 ],
-                icon: true, // `symbol` 방식으로 출력
               },
             },
           },
@@ -69,14 +70,6 @@ export default {
       hash: true,
       favicon: path.resolve(__dirname, 'public/favicon.ico'),
     }),
-    new ForkTsCheckerWebpackPlugin(),
-    new ModifySourcePlugin({
-      rules: [
-        {
-          test: /\.tsx$/i,
-          operations: [new ConcatOperation('start', '/** @jsxImportSource @emotion/react */\n\n')],
-        },
-      ],
-    }),
+   
   ],
 };
