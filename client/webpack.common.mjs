@@ -70,6 +70,5 @@ export default {
       hash: true,
       favicon: path.resolve(__dirname, 'public/favicon.ico'),
     }),
-   
   ],
 };

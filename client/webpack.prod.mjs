@@ -5,6 +5,7 @@ import common from './webpack.common.mjs';
 import {fileURLToPath} from 'url';
 // import {sentryWebpackPlugin} from '@sentry/webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,6 +23,7 @@ export default merge(common, {
     new Dotenv({
       path: '.env.prod',
     }),
+    new ForkTsCheckerWebpackPlugin(),
     // sentryWebpackPlugin({
     //   authToken: process.env.SENTRY_AUTH_TOKEN,
     //   org: 'wtc-o6',
