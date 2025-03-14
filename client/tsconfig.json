@@ -20,7 +20,7 @@
     // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["jest", "@testing-library/jest-dom", "node", "cypress"],
+    "types": ["jest", "@testing-library/jest-dom", "node", "cypress", "@emotion/react/types/css-prop"],
     "esModuleInterop": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
