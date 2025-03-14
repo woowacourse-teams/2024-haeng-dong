@@ -16,9 +16,8 @@ export default merge(common, {
     chunkFilename: '[id].[contenthash].chunk.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    publicPath: '/',
   },
-  devtool: 'source-map',
+  devtool: 'nosources-source-map',
   plugins: [
     new Dotenv({
       path: '.env.prod',
