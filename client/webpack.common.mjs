@@ -37,6 +37,9 @@ export default {
         test: /\.tsx?$/,
         loader: 'ts-loader',
         exclude: /node_modules/,
+        options: {
+          transpileOnly: true,
+        },
       },
       {
         test: /\.svg$/,
@@ -51,7 +54,6 @@ export default {
                     active: false, // viewBox 유지
                   },
                 ],
-                icon: true, // `symbol` 방식으로 출력
               },
             },
           },
@@ -70,13 +72,5 @@ export default {
       favicon: path.resolve(__dirname, 'public/favicon.ico'),
     }),
     new ForkTsCheckerWebpackPlugin(),
-    new ModifySourcePlugin({
-      rules: [
-        {
-          test: /\.tsx$/i,
-          operations: [new ConcatOperation('start', '/** @jsxImportSource @emotion/react */\n\n')],
-        },
-      ],
-    }),
   ],
 };
