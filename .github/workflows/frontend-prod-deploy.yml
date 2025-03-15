@@ -48,10 +48,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      # 5. Prod 환경으로 빌드
-      - name: Build for Prod environment
-        run: npm run build
-
       # 4. 환경변수 파일 github secret에서 가져와서 생성
       - name: Create environments from github secrets
         run: |
@@ -61,6 +57,10 @@ jobs:
           echo "IMAGE_URL=${{ secrets.IMAGE_URL }}" >> .env.prod
           echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> .env.prod
           echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.prod
+
+      # 5. Prod 환경으로 빌드
+      - name: Build for Prod environment
+        run: npm run build
 
       # 6. AWS 인증 설정
       - name: Configure AWS credentials
