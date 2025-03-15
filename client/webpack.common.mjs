@@ -1,6 +1,7 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-// import {ModifySourcePlugin, ConcatOperation} from 'modify-source-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import {ModifySourcePlugin, ConcatOperation} from 'modify-source-webpack-plugin';
 import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
