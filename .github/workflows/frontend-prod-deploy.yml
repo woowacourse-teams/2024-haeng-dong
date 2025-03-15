@@ -44,13 +44,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-webpack-
             
-      # 5. Prod 환경으로 빌드
-      - name: Build for Prod environment
-        run: npm run build
-
       # 3. 의존성 설치
       - name: Install Dependencies
         run: npm install
+
+      # 5. Prod 환경으로 빌드
+      - name: Build for Prod environment
+        run: npm run build
 
       # 4. 환경변수 파일 github secret에서 가져와서 생성
       - name: Create environments from github secrets

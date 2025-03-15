@@ -8,7 +8,6 @@ const NetworkStateCatcher = () => {
   };
 
   const handleNetworkOffline = () => {
-    // TODO: (@weadie) 토스트 높이는 z-index 이슈가 해결되면 반영할 예정입니다.
     toast.error('네트워크 연결 상태를 확인해주세요.', {
       isAutoClosed: false,
       position: 'bottom',
