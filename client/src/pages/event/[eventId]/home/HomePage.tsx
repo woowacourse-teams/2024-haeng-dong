@@ -4,9 +4,11 @@ import StepList from '@components/StepList/Steps';
 import Reports from '@components/Reports/Reports';
 import useRequestGetImages from '@hooks/queries/images/useRequestGetImages';
 import {IconPictureSquare} from '@components/Design/components/Icons/Icons/IconPictureSquare';
+import {Banner} from '@components/Design/components/Banner';
 
 import useEventDataContext from '@hooks/useEventDataContext';
 import useAmplitude from '@hooks/useAmplitude';
+import useBanner from '@hooks/useBanner';
 
 import {useTotalExpenseAmountStore} from '@store/totalExpenseAmountStore';
 
@@ -20,13 +22,20 @@ import {receiptStyle} from './HomePage.style';
 
 const HomePage = () => {
   const {trackCheckStepList} = useAmplitude();
-  const {isAdmin, eventName, steps} = useEventDataContext();
+  const {isAdmin, eventName, steps, bankName, accountNumber} = useEventDataContext();
   const isInHomePage = useMatch(ROUTER_URLS.home) !== null;
 
   const {totalExpenseAmount} = useTotalExpenseAmountStore();
   const {images} = useRequestGetImages();
   const navigate = useNavigate();
   const eventId = getEventIdByUrl();
+
+  const {isShowAccountBanner, onDeleteAccount} = useBanner({
+    eventId,
+    bankName,
+    accountNumber,
+    steps,
+  });
 
   return (
     <div css={receiptStyle}>
@@ -41,6 +50,13 @@ const HomePage = () => {
           )
         }
       />
+      {isShowAccountBanner && (
+        <Banner
+          onDelete={onDeleteAccount}
+          title="주최자가 계좌번호를 등록하지 않았어요"
+          description="계좌번호 복사는 불가능해요. 금액만 복사 할 수 있어요."
+        />
+      )}
       <Tabs>
         <Tab label="참여자 별 정산" content={<Reports />} />
         <Tab
