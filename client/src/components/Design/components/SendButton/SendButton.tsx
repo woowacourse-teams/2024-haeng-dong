@@ -18,7 +18,7 @@ const SendButton = ({isDeposited = false, canSend = true, ...buttonProps}: BankS
     <button css={sendButtonStyle(theme, isDeposited)} disabled={isDeposited} {...buttonProps}>
       <Flex justifyContent="center" alignItems="center">
         <Text size="tiny" textColor="black">
-          {canSend ? (isDeposited ? '송금완료' : '송금하기') : '금액복사'}
+          {isDeposited ? '송금완료' : canSend ? '송금하기' : '금액복사'}
         </Text>
       </Flex>
     </button>

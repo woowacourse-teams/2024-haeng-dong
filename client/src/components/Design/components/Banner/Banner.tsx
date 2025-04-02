@@ -38,9 +38,11 @@ const Banner = ({title, description, buttonText, onDelete, ...buttonProps}: Bann
           )}
         </div>
       </Flex>
-      <Button variants="tertiary" size="small" {...buttonProps}>
-        {buttonText}
-      </Button>
+      {buttonText && (
+        <Button variants="tertiary" size="small" {...buttonProps}>
+          {buttonText}
+        </Button>
+      )}
     </Flex>
   );
 };
