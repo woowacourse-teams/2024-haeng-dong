@@ -3,6 +3,7 @@ import {merge} from 'webpack-merge';
 import Dotenv from 'dotenv-webpack';
 import common from './webpack.common.mjs';
 import {fileURLToPath} from 'url';
+import webpack from 'webpack';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +30,9 @@ export default merge(common, {
   plugins: [
     new Dotenv({
       path: '.env.dev',
+    }),
+    new webpack.DefinePlugin({
+      'process.env.BRANCH_NAME': JSON.stringify(process.env.BRANCH_NAME ?? ''),
     }),
   ],
 });
