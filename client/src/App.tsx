@@ -13,6 +13,7 @@ import NetworkStateCatcher from '@utils/NetworkStateCatcher';
 
 import {GlobalStyle} from './GlobalStyle';
 import UnPredictableErrorBoundary from './UnPredictableErrorBoundary';
+console.log('cloudfront cache invalidation test');
 
 const App: React.FC = () => {
   return (
