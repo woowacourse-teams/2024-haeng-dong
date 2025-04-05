@@ -87,18 +87,21 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
 
-      # 6. Dev 환경으로 빌드
+      # 6. 환경변수 파일 github secret에서 가져와서 생성
+      - name: Create environments from github secrets
+        run: |
+          echo "API_BASE_URL=${{ secrets.API_BASE_URL }}" >> .env.dev
+          echo "AMPLITUDE_KEY=${{ secrets.AMPLITUDE_KEY }}" >> .env.dev
+          echo "KAKAO_JAVASCRIPT_KEY=${{ secrets.KAKAO_JAVASCRIPT_KEY }}" >> .env.dev
+          echo "IMAGE_URL=${{ secrets.IMAGE_URL }}" >> .env.dev
+          echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> .env.dev
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.dev
+
+      # 7. Dev 환경으로 빌드
       - name: Build dev environment
         run: BRANCH_NAME=${{ env.BRANCH_NAME }} npm run build-dev
-        env:
-          API_BASE_URL: ${{ secrets.API_BASE_URL }}
-          AMPLITUDE_KEY: ${{ secrets.AMPLITUDE_KEY }}
-          KAKAO_JAVASCRIPT_KEY: ${{ secrets.KAKAO_JAVASCRIPT_KEY }}
-          IMAGE_URL: ${{ secrets.IMAGE_URL }}
-          KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-      # 7. AWS 인증 설정
+      # 8. AWS 인증 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -106,7 +109,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # 8. S3에 업로드
+      # 9. S3에 업로드
       - name: Deploy to S3
         env:
           BRANCH_NAME: ${{ env.BRANCH_NAME }}
@@ -115,7 +118,7 @@ jobs:
           aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }}/dev/${BRANCH_NAME}/ \
             --delete
 
-      # 9. CloudFront 캐시 무효화
+      # 10. CloudFront 캐시 무효화
       - name: Invalidate CloudFront Cache
         env:
           BRANCH_NAME: ${{ env.BRANCH_NAME }}
@@ -125,7 +128,7 @@ jobs:
             --distribution-id ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/dev/${BRANCH_NAME}/*"
 
-      # 10. 배포 주소 PR에 코멘트 작성
+      # 11. 배포 주소 PR에 코멘트 작성
       - name: Comment on PR
         env:
           BRANCH_NAME: ${{ env.BRANCH_NAME }}

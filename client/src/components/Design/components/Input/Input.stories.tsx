@@ -11,6 +11,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     inputType: {
+      // TODO: (@cookie) 스토리북 라디오버튼 보이도록 설정해야 함
       control: {type: 'radio'},
     },
   },
