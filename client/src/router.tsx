@@ -40,164 +40,169 @@ const EventPageLoading = lazy(() => import('@pages/fallback/EventPageLoading'));
 const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event-name/EditEventNamePage'));
 const BillDetailPage = lazy(() => import('@pages/event/[eventId]/home/bill-detail/BillDetailPage'));
 
-const router = createBrowserRouter([
-  {
-    path: '',
-    element: (
-      <Suspense>
-        <App />
-      </Suspense>
-    ),
-    children: [
-      {
-        index: true,
-        path: ROUTER_URLS.landing,
-        element: <LandingPage />,
-      },
-      {
-        path: ROUTER_URLS.createGuestEvent,
-        element: <CreateGuestEventFunnel />,
-      },
-      {
-        path: ROUTER_URLS.createUserEvent,
-        element: <CreateUserEventFunnel />,
-      },
-      {
-        path: ROUTER_URLS.login,
-        element: <LoginPage />,
-      },
-      {
-        path: ROUTER_URLS.createdEvents,
-        element: <CreatedEventsPage />,
-      },
-      {
-        path: ROUTER_URLS.kakaoLoginRedirectUri,
-        element: <LoginRedirectPage />,
-        errorElement: <LoginFailFallback />,
-      },
-      {
-        path: ROUTER_URLS.event,
-        element: (
-          <Suspense fallback={<EventPageLoading />}>
-            <EventLoader />
-          </Suspense>
-        ),
-        children: [
-          {
-            path: ROUTER_URLS.editAccount,
-            element: <EditAccountPage />,
-          },
-          {
-            path: '',
-            element: <EventPageLayout />,
-            children: [
-              {
-                path: ROUTER_URLS.eventManage,
-                element: (
-                  <AuthGate>
-                    <AdminPage />
-                  </AuthGate>
-                ),
-              },
-              {
-                path: ROUTER_URLS.home,
-                element: <HomePage />,
-              },
-              {
-                path: ROUTER_URLS.guestEventLogin,
-                element: <GuestEventLogin />,
-              },
-              {
-                path: ROUTER_URLS.userEventLogin,
-                element: <UserEventLogin />,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: ROUTER_URLS.main,
-        element: (
-          <Suspense>
-            <UserInfoLoader />
-          </Suspense>
-        ),
-        children: [
-          {
-            index: true,
-            element: <MainPage />,
-          },
-          {
-            path: ROUTER_URLS.editUserAccount,
-            element: <EditUserAccountPage />,
-          },
-          {
-            path: ROUTER_URLS.editUserNickname,
-            element: <EditUserNicknamePage />,
-          },
-        ],
-      },
-      {
-        path: ROUTER_URLS.setting,
-        element: (
-          <Suspense>
-            <UserInfoLoader />
-          </Suspense>
-        ),
-        children: [
-          {
-            index: true,
-            element: <SettingPage />,
-          },
-          {
-            path: ROUTER_URLS.withdraw,
-            element: <WithdrawPage />,
-          },
-        ],
-      },
-      {
-        path: ROUTER_URLS.addBill,
-        element: <AddBillFunnel />,
-      },
-      {
-        path: ROUTER_URLS.members,
-        element: <MembersPage />,
-      },
-      {
-        path: ROUTER_URLS.editBill,
-        element: <EditBillPage />,
-      },
-      {
-        path: ROUTER_URLS.editEventName,
-        element: <EditEventName />,
-      },
-      {
-        path: ROUTER_URLS.images,
-        element: <ImagesPage />,
-      },
-      {
-        path: ROUTER_URLS.addImages,
-        element: <AddImagesPage />,
-      },
-      {
-        path: ROUTER_URLS.send,
-        element: <SendPage />,
-        errorElement: <SendErrorPage />,
-      },
-      {
-        path: ROUTER_URLS.billDetail,
-        element: <BillDetailPage />,
-      },
-      {
-        path: ROUTER_URLS.qrCode,
-        element: <QRCodePage />,
-      },
-    ],
-  },
-  {
-    path: '*',
-    element: <ErrorPage />,
-  },
-]);
+const branchName = process.env.BRANCH_NAME;
+
+const router = createBrowserRouter(
+  [
+    {
+      path: '',
+      element: (
+        <Suspense>
+          <App />
+        </Suspense>
+      ),
+      children: [
+        {
+          index: true,
+          path: ROUTER_URLS.landing,
+          element: <LandingPage />,
+        },
+        {
+          path: ROUTER_URLS.createGuestEvent,
+          element: <CreateGuestEventFunnel />,
+        },
+        {
+          path: ROUTER_URLS.createUserEvent,
+          element: <CreateUserEventFunnel />,
+        },
+        {
+          path: ROUTER_URLS.login,
+          element: <LoginPage />,
+        },
+        {
+          path: ROUTER_URLS.createdEvents,
+          element: <CreatedEventsPage />,
+        },
+        {
+          path: ROUTER_URLS.kakaoLoginRedirectUri,
+          element: <LoginRedirectPage />,
+          errorElement: <LoginFailFallback />,
+        },
+        {
+          path: ROUTER_URLS.event,
+          element: (
+            <Suspense fallback={<EventPageLoading />}>
+              <EventLoader />
+            </Suspense>
+          ),
+          children: [
+            {
+              path: ROUTER_URLS.editAccount,
+              element: <EditAccountPage />,
+            },
+            {
+              path: '',
+              element: <EventPageLayout />,
+              children: [
+                {
+                  path: ROUTER_URLS.eventManage,
+                  element: (
+                    <AuthGate>
+                      <AdminPage />
+                    </AuthGate>
+                  ),
+                },
+                {
+                  path: ROUTER_URLS.home,
+                  element: <HomePage />,
+                },
+                {
+                  path: ROUTER_URLS.guestEventLogin,
+                  element: <GuestEventLogin />,
+                },
+                {
+                  path: ROUTER_URLS.userEventLogin,
+                  element: <UserEventLogin />,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          path: ROUTER_URLS.main,
+          element: (
+            <Suspense>
+              <UserInfoLoader />
+            </Suspense>
+          ),
+          children: [
+            {
+              index: true,
+              element: <MainPage />,
+            },
+            {
+              path: ROUTER_URLS.editUserAccount,
+              element: <EditUserAccountPage />,
+            },
+            {
+              path: ROUTER_URLS.editUserNickname,
+              element: <EditUserNicknamePage />,
+            },
+          ],
+        },
+        {
+          path: ROUTER_URLS.setting,
+          element: (
+            <Suspense>
+              <UserInfoLoader />
+            </Suspense>
+          ),
+          children: [
+            {
+              index: true,
+              element: <SettingPage />,
+            },
+            {
+              path: ROUTER_URLS.withdraw,
+              element: <WithdrawPage />,
+            },
+          ],
+        },
+        {
+          path: ROUTER_URLS.addBill,
+          element: <AddBillFunnel />,
+        },
+        {
+          path: ROUTER_URLS.members,
+          element: <MembersPage />,
+        },
+        {
+          path: ROUTER_URLS.editBill,
+          element: <EditBillPage />,
+        },
+        {
+          path: ROUTER_URLS.editEventName,
+          element: <EditEventName />,
+        },
+        {
+          path: ROUTER_URLS.images,
+          element: <ImagesPage />,
+        },
+        {
+          path: ROUTER_URLS.addImages,
+          element: <AddImagesPage />,
+        },
+        {
+          path: ROUTER_URLS.send,
+          element: <SendPage />,
+          errorElement: <SendErrorPage />,
+        },
+        {
+          path: ROUTER_URLS.billDetail,
+          element: <BillDetailPage />,
+        },
+        {
+          path: ROUTER_URLS.qrCode,
+          element: <QRCodePage />,
+        },
+      ],
+    },
+    {
+      path: '*',
+      element: <ErrorPage />,
+    },
+  ],
+  {basename: branchName ? `/${branchName}/` : '/'},
+);
 
 export default router;

@@ -6,6 +6,7 @@ import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const branchName = process.env.BRANCH_NAME;
 
 export default merge(common, {
   mode: 'development',
@@ -14,7 +15,7 @@ export default merge(common, {
     chunkFilename: '[id].chunk.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    publicPath: '/',
+    publicPath: branchName ? `/${branchName}/` : '/',
   },
   devtool: 'eval-source-map',
   devServer: {
