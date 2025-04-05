@@ -41,7 +41,7 @@ const EditEventName = lazy(() => import('@pages/event/[eventId]/admin/edit-event
 const BillDetailPage = lazy(() => import('@pages/event/[eventId]/home/bill-detail/BillDetailPage'));
 
 const branchName = process.env.BRANCH_NAME;
-console.log(branchName);
+alert(branchName);
 
 const router = createBrowserRouter(
   [
