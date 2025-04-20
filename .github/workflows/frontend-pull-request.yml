@@ -45,6 +45,98 @@ jobs:
       - name: Run Cypress tests
         run: npm run cypress-run
 
+  feature-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./client
+
+    # pull request base ref가 fe-dev일 때만 feature-deploy 작업 수행
+    if: github.base_ref == 'fe-dev'
+
+    steps:
+      # 1. Git 리포지토리 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Node js 20.15.1 버전으로 셋팅
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.15.1"
+
+      # 3. feature 브랜치 이름 추출 (feature/#123 -> feature123)
+      - name: Extract and format branch name
+        run: |
+          echo "BRANCH_NAME=$(echo '${{ github.head_ref }}' | sed 's#[/#]##g')" >> $GITHUB_ENV
+
+      # 4. 의존성이 캐시에 있는지 확인
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-v1
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      # 5. 의존성 설치
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      # 6. 환경변수 파일 github secret에서 가져와서 생성
+      - name: Create environments from github secrets
+        run: |
+          echo "API_BASE_URL=${{ secrets.API_BASE_URL }}" >> .env.dev
+          echo "AMPLITUDE_KEY=${{ secrets.AMPLITUDE_KEY }}" >> .env.dev
+          echo "KAKAO_JAVASCRIPT_KEY=${{ secrets.KAKAO_JAVASCRIPT_KEY }}" >> .env.dev
+          echo "IMAGE_URL=${{ secrets.IMAGE_URL }}" >> .env.dev
+          echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> .env.dev
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.dev
+
+      # 7. Dev 환경으로 빌드
+      - name: Build dev environment
+        run: BRANCH_NAME=${{ env.BRANCH_NAME }} npm run build-dev
+
+      # 8. AWS 인증 설정
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # 9. S3에 업로드
+      - name: Deploy to S3
+        env:
+          BRANCH_NAME: ${{ env.BRANCH_NAME }}
+
+        run: |
+          aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }}/dev/${BRANCH_NAME}/ \
+            --delete
+
+      # 10. CloudFront 캐시 무효화
+      - name: Invalidate CloudFront Cache
+        env:
+          BRANCH_NAME: ${{ env.BRANCH_NAME }}
+
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/${BRANCH_NAME}/*"
+
+      # 11. 배포 주소 PR에 코멘트 작성
+      - name: Comment on PR
+        env:
+          BRANCH_NAME: ${{ env.BRANCH_NAME }}
+
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: "🚀 **Deploy Link**: ${{ secrets.DEV_BASE_URL }}/${{ env.BRANCH_NAME }}/"
+
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
