@@ -37,7 +37,6 @@ const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankN
     setAccountNumberErrorMessage(errorMessage);
 
     const canEdit = canEditAccountNumber(newAccountNumber);
-
     if (canEdit) setAccountNumber(newAccountNumber);
   };
 
@@ -52,8 +51,12 @@ const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankN
     setIsPasting(true);
 
     const newAccountNumber = `${accountNumber}${event.clipboardData.getData('text')}`;
-    handleAccount(newAccountNumber);
+    const validAccountNumber = newAccountNumber
+      .replace(/[^\d\s\-]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
 
+    setAccountNumber(validAccountNumber);
     setTimeout(() => setIsPasting(false), 0);
   };
 
