@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import validateAccountNumber, {cleanedFormatAccountNumber} from '@utils/validate/validateAccountNumber';
 import {BankAccount, BankName} from 'types/serviceType';
@@ -26,7 +26,7 @@ const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankN
 
   const [accountNumberErrorMessage, setAccountNumberErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
-  const [isPasting, setIsPasting] = useState(false);
+  const isPasting = useRef(false);
 
   const selectBank = (name: BankName) => {
     setBankName(name);
@@ -41,14 +41,14 @@ const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankN
   };
 
   const handleAccountOnTyping = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (isPasting) return;
+    if (isPasting.current) return;
 
     const newAccountNumber = event.target.value;
     handleAccount(newAccountNumber);
   };
 
   const handleAccountOnPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-    setIsPasting(true);
+    isPasting.current = true;
 
     const newAccountNumber = `${accountNumber}${event.clipboardData.getData('text')}`;
     const validAccountNumber = newAccountNumber
@@ -57,7 +57,9 @@ const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankN
       .trim();
 
     setAccountNumber(validAccountNumber);
-    setTimeout(() => setIsPasting(false), 0);
+    setTimeout(() => {
+      isPasting.current = false;
+    }, 0);
   };
 
   const enrollAccount = async () => {
