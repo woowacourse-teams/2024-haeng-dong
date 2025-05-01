@@ -52,8 +52,8 @@ const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankN
 
     const newAccountNumber = `${accountNumber}${event.clipboardData.getData('text')}`;
     const validAccountNumber = newAccountNumber
-      .replace(/[^\d\s\-]/g, '')
-      .replace(/\s+/g, ' ')
+      .replace(/[^\d\s\-]/g, '') // 숫자 공백 하이픈(-)이 아닌 문자 ''으로 대체
+      .replace(/\s+/g, ' ') // 공백이 여러 개 연속이라면 공백 한 개로 대체
       .trim();
 
     setAccountNumber(validAccountNumber);
