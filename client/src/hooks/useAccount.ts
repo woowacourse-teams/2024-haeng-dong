@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import validateAccountNumber, {cleanedFormatAccountNumber} from '@utils/validate/validateAccountNumber';
 import {BankAccount, BankName} from 'types/serviceType';
@@ -26,7 +26,7 @@ const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankN
 
   const [accountNumberErrorMessage, setAccountNumberErrorMessage] = useState<string | null>(null);
   const [canSubmit, setCanSubmit] = useState(false);
-  const [isPasting, setIsPasting] = useState(false);
+  const isPasting = useRef(false);
 
   const selectBank = (name: BankName) => {
     setBankName(name);
@@ -37,24 +37,29 @@ const useAccount = ({accountNumber: defaultAccountNumber, bankName: defaultBankN
     setAccountNumberErrorMessage(errorMessage);
 
     const canEdit = canEditAccountNumber(newAccountNumber);
-
     if (canEdit) setAccountNumber(newAccountNumber);
   };
 
   const handleAccountOnTyping = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (isPasting) return;
+    if (isPasting.current) return;
 
     const newAccountNumber = event.target.value;
     handleAccount(newAccountNumber);
   };
 
   const handleAccountOnPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-    setIsPasting(true);
+    isPasting.current = true;
 
     const newAccountNumber = `${accountNumber}${event.clipboardData.getData('text')}`;
-    handleAccount(newAccountNumber);
+    const validAccountNumber = newAccountNumber
+      .replace(/[^\d\s\-]/g, '') // 숫자 공백 하이픈(-)이 아닌 문자 ''으로 대체
+      .replace(/\s+/g, ' ') // 공백이 여러 개 연속이라면 공백 한 개로 대체
+      .trim();
 
-    setTimeout(() => setIsPasting(false), 0);
+    setAccountNumber(validAccountNumber);
+    setTimeout(() => {
+      isPasting.current = false;
+    }, 0);
   };
 
   const enrollAccount = async () => {
