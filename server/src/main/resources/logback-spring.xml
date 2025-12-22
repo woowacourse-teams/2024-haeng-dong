@@ -90,7 +90,8 @@
     </springProfile>
 
     <springProfile name="prod">
-        <root level="ERROR">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
             <appender-ref ref="ERROR-ROLLING"/>
         </root>
     </springProfile>
