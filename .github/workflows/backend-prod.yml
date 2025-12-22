@@ -124,6 +124,7 @@ jobs:
 
             if [ $ATTEMPT -gt $MAX_ATTEMPTS ]; then
               echo "Health check failed after $MAX_ATTEMPTS attempts. Rolling back..."
+              sudo docker logs haengdong-backend-$NEXT_PORT
               sudo docker rm -f haengdong-backend-$NEXT_PORT
               exit 1
             fi
@@ -195,3 +196,4 @@ jobs:
           echo "Removing unused Docker images..."
           sudo docker image prune -af --filter "until=24h"
           echo "Unused Docker images older than 24 hours have been removed."
+  
