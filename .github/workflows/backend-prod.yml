@@ -57,10 +57,7 @@ jobs:
 
   deploy:
     needs: build
-    strategy:
-      matrix:
-        runner: [ prod-1 , prod-2 ]
-    runs-on: [ self-hosted, '${{ matrix.runner }}' ]
+    runs-on: self-hosted
     steps:
       - name: Create Docker network if not exists
         run: |
@@ -137,10 +134,16 @@ jobs:
           NGINX_CONTAINER_NAME="nginx-proxy"
           NETWORK_NAME="haengdong_network"
           NEXT_PORT=$NEXT_PORT
+          NGINX_TEMPLATE_PATH=".github/workflows/nginx.conf.template"
+          OUTPUT_CONF_PATH="./nginx-conf/default.conf"
 
           echo "Next port is $NEXT_PORT"
-
           echo "Checking if Nginx container exists..."
+
+          mkdir -p ./nginx-conf
+          echo "Generating default.conf from template..."
+          sed "s/\\\${NEXT_PORT}/$NEXT_PORT/g" $NGINX_TEMPLATE_PATH > $OUTPUT_CONF_PATH
+
           if sudo docker ps -a --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
 
             # Nginx 컨테이너가 실행 중인지 확인
@@ -152,74 +155,14 @@ jobs:
               echo "Nginx container started."
             fi
 
-            # nginx-conf 디렉토리 생성
-            mkdir -p ./nginx-conf
-
-            # default.conf 파일 생성 또는 업데이트
-            echo "Creating or updating default.conf..."
-            echo "
-            server {
-                listen 80 reuseport;
-
-                location / {
-                    proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
-                    proxy_set_header Host \$host;
-                    proxy_set_header X-Real-IP \$remote_addr;
-                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                    proxy_set_header X-Forwarded-Proto \$scheme;
-                    client_max_body_size 300M;
-                }
-            }
-            server {
-                listen 9100;
-
-                location /actuator {
-                proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
-                proxy_set_header Host \$host;
-                proxy_set_header X-Real-IP \$remote_addr;
-                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto \$scheme;
-              }
-            }" > ./nginx-conf/default.conf
-
             # Nginx 컨테이너 내부에서 설정 리로드
             echo "Reloading Nginx configuration..."
-            sudo docker cp ./nginx-conf/default.conf $NGINX_CONTAINER_NAME:/etc/nginx/conf.d/default.conf
+            sudo docker cp $OUTPUT_CONF_PATH $NGINX_CONTAINER_NAME:/etc/nginx/conf.d/default.conf
             sudo docker exec $NGINX_CONTAINER_NAME nginx -s reload
             echo "Nginx configuration reloaded."
 
           else
             echo "Nginx container not found. Creating a new Nginx container..."
-
-            # nginx-conf 디렉토리 생성
-            mkdir -p ./nginx-conf
-
-            # default.conf 파일 생성
-            echo "Creating default.conf..."
-            echo "
-            server {
-                listen 80 reuseport;
-
-                location / {
-                    proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
-                    proxy_set_header Host \$host;
-                    proxy_set_header X-Real-IP \$remote_addr;
-                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                    proxy_set_header X-Forwarded-Proto \$scheme;
-                    client_max_body_size 300M;
-                }
-            }
-            server {
-                listen 9100;
-
-                location /actuator {
-                proxy_pass http://haengdong-backend-$NEXT_PORT:8080;
-                proxy_set_header Host \$host;
-                proxy_set_header X-Real-IP \$remote_addr;
-                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto \$scheme;
-              }
-            }" > ./nginx-conf/default.conf
 
             # 새로운 Nginx 컨테이너 실행
             sudo docker run -d \
