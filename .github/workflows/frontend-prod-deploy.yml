@@ -19,6 +19,9 @@ jobs:
       # 1. Git 리포지토리 체크아웃
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CONFIG_SUBMODULE_TOKEN }}
+          submodules: true  # 👈 이게 없으면 서브모듈 폴더가 비어있는 채로 빌드됩니다!
 
       # 2. Node.js 20.15.1 version으로 셋팅
       - name: Set up Node.js

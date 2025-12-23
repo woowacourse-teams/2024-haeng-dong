@@ -19,7 +19,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         default_batch_fetch_size: 30
@@ -34,8 +34,8 @@ cors:
 security:
   jwt:
     token:
-      secret-key: skdmeejEKJdkDjklDlkj123DKLJ3kDkeDkDKQMEOD1D90D8dE
-      expire-length: 604800000 # 1주일
+      secret-key: akdcyqkqhrkawcy12KKM@D345dj@dkmwe3245kadsklsdkld
+      expire-length: 604800000
 
 cookie:
   http-only: false
@@ -78,17 +78,30 @@ kakao:
   base-uri: https://kauth.kakao.com
   token-request-uri: /oauth/token
   unlink-request-uri: https://kapi.kakao.com/v1/user/unlink
-  client-id: 52f24834ff7304ed2c47294b3f57b053
-  admin-key: c42ffca79ff02f756be1b3f65472350e
+  client-id: cb2f396f1f09ecf3d5cd74565c3526e7
+  admin-key: 61ae31d6cadbf43154b54ca760ec1c64
   oauth-code-uri: https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid
 
 ---
 
 spring:
   config:
-    import: classpath:config/application-prod.yml
     activate:
       on-profile: prod
+  datasource:
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 5000
+      jdbc-url: ${DB_URL}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:none}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 ---
 
