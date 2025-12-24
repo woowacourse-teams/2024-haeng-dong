@@ -23,9 +23,6 @@ jobs:
     steps:
       - name: CheckOut
         uses: actions/checkout@v4
-        with:
-          token: ${{secrets.CONFIG_SUBMODULE_TOKEN}}
-          submodules: true
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -70,8 +67,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: 'release'
-          submodules: true # Also checkout submodules in deploy job
-          token: ${{secrets.CONFIG_SUBMODULE_TOKEN}}
 
       - name: Create Docker network if not exists
         run: |
@@ -112,6 +107,12 @@ jobs:
             --network $NETWORK_NAME \
             -p $NEXT_PORT:8080 \
             -e SPRING_PROFILES_ACTIVE=prod \
+            -e DB_URL="${{ secrets.DB_URL }}" \
+            -e DB_USERNAME="${{ secrets.DB_USERNAME }}" \
+            -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            -e JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
+            -e KAKAO_CLIENT_ID="${{ secrets.KAKAO_CLIENT_ID }}" \
+            -e KAKAO_ADMIN_KEY="${{ secrets.KAKAO_ADMIN_KEY }}" \
             -v log-volume:/app/logs \
             ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
@@ -141,15 +142,16 @@ jobs:
 
       - name: Recreate Nginx container to point to new container port
         run: |
-          # --- Comprehensive Cleanup ---
-          # Find and remove any container currently using port 80
+          # ---
+          # Comprehensive Cleanup ---
+          # 1. Find and remove any container currently using port 80
           CONFLICT_CONTAINER_ID_80=$(sudo docker ps -aq --filter "publish=80")
           if [ -n "$CONFLICT_CONTAINER_ID_80" ]; then
             echo "Found conflicting container $CONFLICT_CONTAINER_ID_80 on port 80. Removing it."
             sudo docker rm -f $CONFLICT_CONTAINER_ID_80
           fi
 
-          # Find and remove any container with the target name, just in case
+          # 2. Find and remove any container with the target name, just in case
           NGINX_CONTAINER_NAME="nginx-proxy"
           CONFLICT_CONTAINER_ID_NAME=$(sudo docker ps -aq --filter "name=$NGINX_CONTAINER_NAME")
           if [ -n "$CONFLICT_CONTAINER_ID_NAME" ]; then
@@ -157,7 +159,8 @@ jobs:
             sudo docker rm -f $CONFLICT_CONTAINER_ID_NAME
           fi
           
-          # --- Deployment ---
+          # ---
+          # Deployment ---
           NETWORK_NAME="haengdong_network"
 
           # Prepare the new config file using absolute paths
