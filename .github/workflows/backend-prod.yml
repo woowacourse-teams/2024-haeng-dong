@@ -134,26 +134,8 @@ jobs:
 
       - name: Recreate Nginx container to point to new container port
         run: |
-          # --- Comprehensive Cleanup ---
-          # 1. Find and remove any container currently using port 80
-          CONFLICT_CONTAINER_ID_80=$(sudo docker ps -aq --filter "publish=80")
-          if [ -n "$CONFLICT_CONTAINER_ID_80" ]; then
-            echo "Found conflicting container $CONFLICT_CONTAINER_ID_80 on port 80. Removing it."
-            sudo docker rm -f $CONFLICT_CONTAINER_ID_80
-          fi
-
-          # 2. Find and remove any container with the target name, just in case
-          NGINX_CONTAINER_NAME="nginx-proxy"
-          CONFLICT_CONTAINER_ID_NAME=$(sudo docker ps -aq --filter "name=$NGINX_CONTAINER_NAME")
-          if [ -n "$CONFLICT_CONTAINER_ID_NAME" ]; then
-            echo "Found conflicting container $CONFLICT_CONTAINER_ID_NAME with name $NGINX_CONTAINER_NAME. Removing it."
-            sudo docker rm -f $CONFLICT_CONTAINER_ID_NAME
-          fi
-          
-          # --- Deployment ---
-          NETWORK_NAME="haengdong_network"
-
-          # Prepare the new config file using absolute paths to avoid ambiguity
+          # This step now always recreates the container for maximum reliability.
+          # First, prepare the new config file based on the template.
           NEXT_PORT=$NEXT_PORT
           NGINX_TEMPLATE_PATH="${{ github.workspace }}/.github/workflows/nginx.conf.template"
           OUTPUT_DIR="${{ github.workspace }}/nginx-conf"
@@ -162,11 +144,15 @@ jobs:
           mkdir -p $OUTPUT_DIR
           sed "s/\\\${NEXT_PORT}/$NEXT_PORT/g" $NGINX_TEMPLATE_PATH > $OUTPUT_CONF_PATH
 
-          # Run the new Nginx container
+          # Then, forcefully remove the old container by name and run the new one.
+          # This ensures all settings, ports, and volumes are correctly applied.
+          NGINX_CONTAINER_NAME="nginx-proxy"
+          sudo docker rm -f $NGINX_CONTAINER_NAME || true
+          
           echo "Running new Nginx container..."
           sudo docker run -d \
             --name $NGINX_CONTAINER_NAME \
-            --network $NETWORK_NAME \
+            --network "haengdong_network" \
             -p 80:80 \
             -p 443:443 \
             -p 9100:9100 \
