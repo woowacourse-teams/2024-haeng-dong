@@ -134,11 +134,15 @@ jobs:
 
       - name: Recreate Nginx container to point to new container port
         run: |
+          # Find and forcefully remove any container currently using port 80 to prevent conflicts
+          CONFLICT_CONTAINER_ID=$(sudo docker ps -aq --filter "publish=80")
+          if [ -n "$CONFLICT_CONTAINER_ID" ]; then
+            echo "Found conflicting container $CONFLICT_CONTAINER_ID on port 80. Removing it."
+            sudo docker rm -f $CONFLICT_CONTAINER_ID
+          fi
+
           NGINX_CONTAINER_NAME="nginx-proxy"
           NETWORK_NAME="haengdong_network"
-
-          # Stop and remove the existing Nginx container to ensure the port is free
-          sudo docker rm -f $NGINX_CONTAINER_NAME || true
 
           # Prepare the new config file based on the template
           NEXT_PORT=$NEXT_PORT
