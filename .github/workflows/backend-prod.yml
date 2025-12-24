@@ -1,3 +1,4 @@
+# Trigger a new workflow run
 name: backend-push
 
 on:
@@ -22,9 +23,6 @@ jobs:
     steps:
       - name: CheckOut
         uses: actions/checkout@v4
-        with:
-          token: ${{secrets.CONFIG_SUBMODULE_TOKEN}}
-          submodules: true
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -69,8 +67,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: 'release'
-          submodules: true
-          token: ${{ secrets.CONFIG_SUBMODULE_TOKEN }}
 
       - name: Create Docker network if not exists
         run: |
@@ -111,6 +107,12 @@ jobs:
             --network $NETWORK_NAME \
             -p $NEXT_PORT:8080 \
             -e SPRING_PROFILES_ACTIVE=prod \
+            -e DB_URL="${{ secrets.DB_URL }}" \
+            -e DB_USERNAME="${{ secrets.DB_USERNAME }}" \
+            -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            -e JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
+            -e KAKAO_CLIENT_ID="${{ secrets.KAKAO_CLIENT_ID }}" \
+            -e KAKAO_ADMIN_KEY="${{ secrets.KAKAO_ADMIN_KEY }}" \
             -v log-volume:/app/logs \
             ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
