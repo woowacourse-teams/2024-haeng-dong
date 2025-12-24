@@ -23,9 +23,6 @@ jobs:
     steps:
       - name: CheckOut
         uses: actions/checkout@v4
-        with:
-          token: ${{secrets.CONFIG_SUBMODULE_TOKEN}}
-          submodules: true
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -99,17 +96,6 @@ jobs:
           echo "Next container will run on port $NEXT_PORT."
           echo "NEXT_PORT=$NEXT_PORT" >> $GITHUB_ENV
           echo "CURRENT_PORT=$CURRENT_PORT" >> $GITHUB_ENV
-
-      - name: Debug Secrets (Temporary)
-        run: |
-          echo "--- DEBUGGING SECRETS ---"
-          echo "DB_URL is: ${{ secrets.DB_URL }}"
-          echo "DB_USERNAME is: ${{ secrets.DB_USERNAME }}"
-          echo "DB_PASSWORD is: ${{ secrets.DB_PASSWORD }}"
-          echo "JWT_SECRET_KEY is: ${{ secrets.JWT_SECRET_KEY }}"
-          echo "KAKAO_CLIENT_ID is: ${{ secrets.KAKAO_CLIENT_ID }}"
-          echo "KAKAO_ADMIN_KEY is: ${{ secrets.KAKAO_ADMIN_KEY }}"
-          echo "--- END DEBUGGING ---"
 
       - name: Run new container on the alternate port
         run: |
