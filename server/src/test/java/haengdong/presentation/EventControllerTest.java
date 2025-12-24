@@ -72,8 +72,8 @@ class EventControllerTest extends ControllerTestSupport {
         EventGuestSaveRequest eventSaveRequest = new EventGuestSaveRequest("토다리", "nick", "0987");
         String requestBody = objectMapper.writeValueAsString(eventSaveRequest);
         String eventId = "망쵸토큰";
-        EventAppResponse eventAppResponse = new EventAppResponse(eventId, 1L);
-        given(eventService.saveEventGuest(any(EventGuestAppRequest.class))).willReturn(eventAppResponse);
+        given(eventService.saveEventGuest(any(EventGuestAppRequest.class)))
+                .willReturn(new EventAppResponse(eventId, 1L));
         given(authService.createGuestToken(1L)).willReturn("jwtToken");
         given(authService.getTokenName()).willReturn("accessToken");
 

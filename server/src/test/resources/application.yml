@@ -13,3 +13,10 @@ spring:
         default_batch_fetch_size: 30
         format_sql: true
     show-sql: true
+
+cookie:
+  http-only: false
+  secure: false
+  path: /
+  same-site: none
+  max-age: 7D
