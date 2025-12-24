@@ -1,6 +1,3 @@
-# ===============================================
-#          Default Profile (local H2) & Common Settings
-# ===============================================
 spring:
   datasource:
     driver-class-name: org.h2.Driver
@@ -11,12 +8,15 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 300MB
+
   lifecycle:
     timeout-per-shutdown-phase: "10s"
+
   h2:
     console:
       enabled: true
       path: /h2-console
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -34,6 +34,7 @@ cors:
 security:
   jwt:
     token:
+      secret-key: akdcyqkqhrkawcy12KKM@D345dj@dkmwe3245kadsklsdkld
       expire-length: 604800000
 
 cookie:
@@ -55,6 +56,7 @@ management:
         include: health, metrics, logfile, prometheus
     health:
       show-details: always
+
   endpoint:
     prometheus:
       enabled: true
@@ -76,47 +78,41 @@ kakao:
   base-uri: https://kauth.kakao.com
   token-request-uri: /oauth/token
   unlink-request-uri: https://kapi.kakao.com/v1/user/unlink
+  client-id: cb2f396f1f09ecf3d5cd74565c3526e7
+  admin-key: 61ae31d6cadbf43154b54ca760ec1c64
   oauth-code-uri: https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid
 
 ---
 
-# ===============================================
-#             Production Profile
-# ===============================================
 spring:
   config:
     activate:
       on-profile: prod
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
     hikari:
       connection-timeout: 60000
       validation-timeout: 5000
-      maximum-pool-size: 10
+      primary:
+        jdbc-url: ${DB_URL}
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      secondary:
+        jdbc-url: ${DB_URL}
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
+        driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: validate # Hardcoded for safety
+      ddl-auto: ${DDL_AUTO:none}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-  h2:
-    console:
-      enabled: false # Disable H2 console in prod
 
-security:
-  jwt:
-    token:
-      secret-key: ${JWT_SECRET_KEY}
+---
 
-kakao:
-  client-id: ${KAKAO_CLIENT_ID}
-  admin-key: ${KAKAO_ADMIN_KEY}
-
-# --- Prod-specific Overrides ---
-cookie:
-  http-only: true
-  secure: true
-  domain: haengdong.pro
+spring:
+  config:
+    import: classpath:config/application-dev.yml
+    activate:
+      on-profile: dev
