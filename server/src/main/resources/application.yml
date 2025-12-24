@@ -1,5 +1,3 @@
-# Trigger a new workflow run
-
 spring:
   servlet:
     multipart:
@@ -29,8 +27,7 @@ cors:
   allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
 
 # Common properties are defined above. Profile-specific properties will be imported.
-# Secrets are intentionally left out of this file.
-
+# Secrets are intentionally left out of this file, assuming they are in the imported profiles.
 ---
 
 spring:
