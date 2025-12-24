@@ -113,6 +113,9 @@ jobs:
             -e DB_USERNAME="${{ secrets.DB_USERNAME }}" \
             -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
             -e DDL_AUTO="${{ secrets.DDL_AUTO }}" \
+            -e JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
+            -e KAKAO_CLIENT_ID="${{ secrets.KAKAO_CLIENT_ID }}" \
+            -e KAKAO_ADMIN_KEY="${{ secrets.KAKAO_ADMIN_KEY }}" \
             -v log-volume:/app/logs \
             ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 
