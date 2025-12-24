@@ -153,11 +153,13 @@ jobs:
           # --- Deployment ---
           NETWORK_NAME="haengdong_network"
 
-          # Prepare the new config file based on the template
+          # Prepare the new config file using absolute paths to avoid ambiguity
           NEXT_PORT=$NEXT_PORT
-          NGINX_TEMPLATE_PATH=".github/workflows/nginx.conf.template"
-          OUTPUT_CONF_PATH="./nginx-conf/default.conf"
-          mkdir -p ./nginx-conf
+          NGINX_TEMPLATE_PATH="${{ github.workspace }}/.github/workflows/nginx.conf.template"
+          OUTPUT_DIR="${{ github.workspace }}/nginx-conf"
+          OUTPUT_CONF_PATH="$OUTPUT_DIR/default.conf"
+          
+          mkdir -p $OUTPUT_DIR
           sed "s/\\\${NEXT_PORT}/$NEXT_PORT/g" $NGINX_TEMPLATE_PATH > $OUTPUT_CONF_PATH
 
           # Run the new Nginx container
@@ -168,7 +170,7 @@ jobs:
             -p 80:80 \
             -p 443:443 \
             -p 9100:9100 \
-            -v $(pwd)/nginx-conf:/etc/nginx/conf.d \
+            -v $OUTPUT_DIR:/etc/nginx/conf.d \
             -v /etc/letsencrypt:/etc/letsencrypt:ro \
             -v /var/www/certbot:/var/www/certbot:ro \
             nginx
