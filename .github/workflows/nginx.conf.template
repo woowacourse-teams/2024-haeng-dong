@@ -1,67 +1,18 @@
-# 메인 애플리케이션을 위한 HTTPS 서버 블록
-server {
-    listen 443 ssl reuseport;
-    listen [::]:443 ssl reuseport;
-    server_name haengdong.pro; # 실제 도메인으로 변경하세요
-
-    # SSL 인증서 경로 (Let's Encrypt 표준 경로)
-    ssl_certificate /etc/letsencrypt/live/haengdong.pro/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/haengdong.pro/privkey.pem;
-
-    # 권장 SSL 설정
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers 'TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:ECDHE-RSA-AES128-GCM-SHA256';
-    ssl_prefer_server_ciphers off;
-
-    # CORS Preflight 요청 처리를 위한 location 블록
-    location / {
-        # Add CORS headers to all responses to ensure cross-origin requests are handled correctly.
-        add_header 'Access-Control-Allow-Origin' 'https://haengdong.pro' always;
-        add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
-        add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
-        add_header 'Access-Control-Allow-Credentials' 'true' always;
-
-        # Immediately respond to OPTIONS preflight requests
-        if ($request_method = 'OPTIONS') {
-            return 204;
-        }
-
-        proxy_pass http://haengdong-backend-${NEXT_PORT}:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto https; # HTTPS로 요청이 왔음을 백엔드에 알림
-        client_max_body_size 300M;
-    }
-}
-
-# 모든 HTTP 요청을 HTTPS로 리디렉션하는 서버 블록
+# 임시 Nginx 설정 (Certbot 인증용)
+# 이 설정은 80번 포트만 사용하여 Certbot의 acme-challenge 요청을 처리합니다.
 server {
     listen 80 reuseport;
     listen [::]:80 reuseport;
-    server_name haengdong.pro; # 실제 도메인으로 변경하세요
+    server_name haengdong.pro;
 
-    # Let's Encrypt 인증서 갱신을 위한 경로
+    # Let's Encrypt 인증서 발급/갱신을 위한 경로
     location /.well-known/acme-challenge/ {
         root /var/www/certbot;
         allow all;
     }
 
-    # 그 외 모든 HTTP 요청은 HTTPS로 리디렉션
+    # 그 외 모든 요청은 임시로 404 Not Found 처리
     location / {
-        return 301 https://$host$request_uri;
-    }
-}
-
-# 액추에이터를 위한 서버 블록
-server {
-    listen 9100;
-
-    location /actuator {
-        proxy_pass http://haengdong-backend-${NEXT_PORT}:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        return 404;
     }
 }
