@@ -114,7 +114,7 @@ jobs:
           SLEEP_INTERVAL=2
           ATTEMPT=1
           while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
-            HEALTH_STATUS=$(curl -s http://localhost:$NEXT_PORT/actuator/health | sed -n 's/.*"status":"\([^"']\*\)".*/\1/p')
+            HEALTH_STATUS=$(curl -s http://localhost:$NEXT_PORT/actuator/health | grep -o '"status":"[^"]*"' | cut -d':' -f2 | tr -d '"')
             if [ "$HEALTH_STATUS" = "UP" ]; then
               echo "Health check passed on attempt $ATTEMPT."
               break
