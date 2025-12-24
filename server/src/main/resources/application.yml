@@ -1,22 +1,17 @@
-# ===============================================
-#          Default Profile (local H2) & Common Settings
-# ===============================================
 spring:
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:database
-    username: sa
-    password:
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 300MB
+
   lifecycle:
     timeout-per-shutdown-phase: "10s"
+
   h2:
     console:
       enabled: true
       path: /h2-console
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -31,51 +26,21 @@ cors:
   max-age: 3600
   allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
 
-# Note: Secret-related placeholders are removed from here
-# They will be provided by the profile-specific configuration file.
-security:
-  jwt:
-    token:
-      expire-length: 604800000
+# Common properties are defined above. Profile-specific properties will be imported.
+# Secrets are intentionally left out of this file.
 
-cookie:
-  http-only: false
-  secure: false
-  path: /
-  same-site: none
-  max-age: 7D
+---
 
-image:
-  bucket: haeng-dong
-  directory: image/
-  base-url: https://d3a4djq153056h.cloudfront.net/
+spring:
+  config:
+    import: classpath:config/application-prod.yml
+    activate:
+      on-profile: prod
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, metrics, logfile, prometheus
-    health:
-      show-details: always
-  endpoint:
-    prometheus:
-      enabled: true
+---
 
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
-  tomcat:
-    mbeanregistry:
-      enabled: true
-    threads:
-      max: 50
-  shutdown: graceful
-
-kakao:
-  base-uri: https://kauth.kakao.com
-  token-request-uri: /oauth/token
-  unlink-request-uri: https://kapi.kakao.com/v1/user/unlink
-  oauth-code-uri: https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid
+spring:
+  config:
+    import: classpath:config/application-dev.yml
+    activate:
+      on-profile: dev
