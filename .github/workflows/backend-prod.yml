@@ -93,6 +93,7 @@ jobs:
 
       - name: Run new container on the alternate port
         run: |
+          sudo docker rm -f haengdong-backend-$NEXT_PORT || true
           NETWORK_NAME="haengdong_network"
           echo "Running new container on port $NEXT_PORT..."
           sudo docker run -d \
