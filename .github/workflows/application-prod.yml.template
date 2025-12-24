@@ -2,9 +2,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${{ secrets.DB_URL }}
-    username: ${{ secrets.DB_USERNAME }}
-    password: ${{ secrets.DB_PASSWORD }}
+    url: __DB_URL__
+    username: __DB_USERNAME__
+    password: __DB_PASSWORD__
     hikari:
       connection-timeout: 60000
       validation-timeout: 5000
@@ -21,7 +21,7 @@ cors:
 security:
   jwt:
     token:
-      secret-key: ${{ secrets.JWT_SECRET_KEY }}
+      secret-key: __JWT_SECRET_KEY__
       expire-length: 604800000
 cookie:
   http-only: true
@@ -30,5 +30,5 @@ cookie:
   path: /
   max-age: 7D
 kakao:
-  client-id: ${{ secrets.KAKAO_CLIENT_ID }}
-  admin-key: ${{ secrets.KAKAO_ADMIN_KEY }}
+  client-id: __KAKAO_CLIENT_ID__
+  admin-key: __KAKAO_ADMIN_KEY__

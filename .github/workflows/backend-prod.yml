@@ -112,12 +112,12 @@ jobs:
           
           # Replace placeholders with secrets safely by using shell variables
           cp $TEMPLATE_PATH $OUTPUT_PATH
-          sed -i "s|\${{ secrets.DB_URL }}|$DB_URL|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.DB_USERNAME }}|$DB_USERNAME|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.DB_PASSWORD }}|$DB_PASSWORD|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.JWT_SECRET_KEY }}|$JWT_SECRET_KEY|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.KAKAO_CLIENT_ID }}|$KAKAO_CLIENT_ID|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.KAKAO_ADMIN_KEY }}|$KAKAO_ADMIN_KEY|g" $OUTPUT_PATH
+          sed -i "s|__DB_URL__|$DB_URL|g" $OUTPUT_PATH
+          sed -i "s|__DB_USERNAME__|$DB_USERNAME|g" $OUTPUT_PATH
+          sed -i "s|__DB_PASSWORD__|$DB_PASSWORD|g" $OUTPUT_PATH
+          sed -i "s|__JWT_SECRET_KEY__|$JWT_SECRET_KEY|g" $OUTPUT_PATH
+          sed -i "s|__KAKAO_CLIENT_ID__|$KAKAO_CLIENT_ID|g" $OUTPUT_PATH
+          sed -i "s|__KAKAO_ADMIN_KEY__|$KAKAO_ADMIN_KEY|g" $OUTPUT_PATH
           
           echo "Finished creating application-prod.yml"
 
