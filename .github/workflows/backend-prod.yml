@@ -120,10 +120,10 @@ jobs:
             --network $NETWORK_NAME \
             -p $NEXT_PORT:8080 \
             -e SPRING_PROFILES_ACTIVE=prod \
-            -e DB_URL="${{ secrets.DB_URL }}" \
-            -e DB_USERNAME="${{ secrets.DB_USERNAME }}" \
-            -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
-            -e JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
+            -e SPRING_DATASOURCE_URL="${{ secrets.DB_URL }}" \
+            -e SPRING_DATASOURCE_USERNAME="${{ secrets.DB_USERNAME }}" \
+            -e SPRING_DATASOURCE_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            -e SECURITY_JWT_TOKEN_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
             -e KAKAO_CLIENT_ID="${{ secrets.KAKAO_CLIENT_ID }}" \
             -e KAKAO_ADMIN_KEY="${{ secrets.KAKAO_ADMIN_KEY }}" \
             -v log-volume:/app/logs \
