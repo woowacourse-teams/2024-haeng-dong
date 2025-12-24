@@ -98,19 +98,26 @@ jobs:
           echo "CURRENT_PORT=$CURRENT_PORT" >> $GITHUB_ENV
 
       - name: Create application-prod.yml from template
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_ADMIN_KEY: ${{ secrets.KAKAO_ADMIN_KEY }}
         run: |
           echo "Creating application-prod.yml from template..."
           TEMPLATE_PATH="${{ github.workspace }}/.github/workflows/application-prod.yml.template"
           OUTPUT_PATH="${{ github.workspace }}/application-prod.yml"
           
-          # Replace placeholders with secrets
+          # Replace placeholders with secrets safely by using shell variables
           cp $TEMPLATE_PATH $OUTPUT_PATH
-          sed -i "s|\${{ secrets.DB_URL }}|${{ secrets.DB_URL }}|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.DB_USERNAME }}|${{ secrets.DB_USERNAME }}|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.DB_PASSWORD }}|${{ secrets.DB_PASSWORD }}|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.JWT_SECRET_KEY }}|${{ secrets.JWT_SECRET_KEY }}|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.KAKAO_CLIENT_ID }}|${{ secrets.KAKAO_CLIENT_ID }}|g" $OUTPUT_PATH
-          sed -i "s|\${{ secrets.KAKAO_ADMIN_KEY }}|${{ secrets.KAKAO_ADMIN_KEY }}|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.DB_URL }}|$DB_URL|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.DB_USERNAME }}|$DB_USERNAME|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.DB_PASSWORD }}|$DB_PASSWORD|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.JWT_SECRET_KEY }}|$JWT_SECRET_KEY|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.KAKAO_CLIENT_ID }}|$KAKAO_CLIENT_ID|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.KAKAO_ADMIN_KEY }}|$KAKAO_ADMIN_KEY|g" $OUTPUT_PATH
           
           echo "Finished creating application-prod.yml"
 
