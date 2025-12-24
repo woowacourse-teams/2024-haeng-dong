@@ -132,33 +132,32 @@ jobs:
             fi
           done
 
-      - name: Update or create Nginx container to point to new container port
+      - name: Recreate Nginx container to point to new container port
         run: |
           NGINX_CONTAINER_NAME="nginx-proxy"
           NETWORK_NAME="haengdong_network"
+
+          # Stop and remove the existing Nginx container to ensure the port is free
+          sudo docker rm -f $NGINX_CONTAINER_NAME || true
+
+          # Prepare the new config file based on the template
           NEXT_PORT=$NEXT_PORT
           NGINX_TEMPLATE_PATH=".github/workflows/nginx.conf.template"
           OUTPUT_CONF_PATH="./nginx-conf/default.conf"
           mkdir -p ./nginx-conf
           sed "s/\\\${NEXT_PORT}/$NEXT_PORT/g" $NGINX_TEMPLATE_PATH > $OUTPUT_CONF_PATH
-          if sudo docker ps -a --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
-            if ! sudo docker ps --filter "name=$NGINX_CONTAINER_NAME" --format "{{.Names}}" | grep -w $NGINX_CONTAINER_NAME; then
-              sudo docker start $NGINX_CONTAINER_NAME
-            fi
-            sudo docker cp $OUTPUT_CONF_PATH $NGINX_CONTAINER_NAME:/etc/nginx/conf.d/default.conf
-            sudo docker exec $NGINX_CONTAINER_NAME nginx -s reload
-          else
-            sudo docker run -d \
-              --name $NGINX_CONTAINER_NAME \
-              --network $NETWORK_NAME \
-              -p 80:80 \
-              -p 443:443 \
-              -p 9100:9100 \
-              -v $(pwd)/nginx-conf:/etc/nginx/conf.d \
-              -v /etc/letsencrypt:/etc/letsencrypt:ro \
-              -v /var/www/certbot:/var/www/certbot:ro \
-              nginx
-          fi
+
+          # Run the new Nginx container
+          sudo docker run -d \
+            --name $NGINX_CONTAINER_NAME \
+            --network $NETWORK_NAME \
+            -p 80:80 \
+            -p 443:443 \
+            -p 9100:9100 \
+            -v $(pwd)/nginx-conf:/etc/nginx/conf.d \
+            -v /etc/letsencrypt:/etc/letsencrypt:ro \
+            -v /var/www/certbot:/var/www/certbot:ro \
+            nginx
 
       - name: Stop and remove the old container
         run: |
