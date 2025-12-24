@@ -59,8 +59,16 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+      - name: Clean workspace before checkout
+        run: |
+          echo "Cleaning up previous workspace..."
+          rm -rf ${{ github.workspace }}/*
+          rm -rf ${{ github.workspace }}/.git
+
       - name: CheckOut
         uses: actions/checkout@v4
+        with:
+          ref: 'release'
 
       - name: Create Docker network if not exists
         run: |
