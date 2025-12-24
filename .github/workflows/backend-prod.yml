@@ -97,22 +97,36 @@ jobs:
           echo "NEXT_PORT=$NEXT_PORT" >> $GITHUB_ENV
           echo "CURRENT_PORT=$CURRENT_PORT" >> $GITHUB_ENV
 
+      - name: Create application-prod.yml from template
+        run: |
+          echo "Creating application-prod.yml from template..."
+          TEMPLATE_PATH="${{ github.workspace }}/.github/workflows/application-prod.yml.template"
+          OUTPUT_PATH="${{ github.workspace }}/application-prod.yml"
+          
+          # Replace placeholders with secrets
+          cp $TEMPLATE_PATH $OUTPUT_PATH
+          sed -i "s|\${{ secrets.DB_URL }}|${{ secrets.DB_URL }}|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.DB_USERNAME }}|${{ secrets.DB_USERNAME }}|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.DB_PASSWORD }}|${{ secrets.DB_PASSWORD }}|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.JWT_SECRET_KEY }}|${{ secrets.JWT_SECRET_KEY }}|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.KAKAO_CLIENT_ID }}|${{ secrets.KAKAO_CLIENT_ID }}|g" $OUTPUT_PATH
+          sed -i "s|\${{ secrets.KAKAO_ADMIN_KEY }}|${{ secrets.KAKAO_ADMIN_KEY }}|g" $OUTPUT_PATH
+          
+          echo "Finished creating application-prod.yml"
+
       - name: Run new container on the alternate port
         run: |
           sudo docker rm -f haengdong-backend-$NEXT_PORT || true
           NETWORK_NAME="haengdong_network"
+          PROD_CONFIG_PATH="${{ github.workspace }}/application-prod.yml"
+
           echo "Running new container on port $NEXT_PORT..."
           sudo docker run -d \
             --name haengdong-backend-$NEXT_PORT \
             --network $NETWORK_NAME \
             -p $NEXT_PORT:8080 \
             -e SPRING_PROFILES_ACTIVE=prod \
-            -e SPRING_DATASOURCE_URL="${{ secrets.DB_URL }}" \
-            -e SPRING_DATASOURCE_USERNAME="${{ secrets.DB_USERNAME }}" \
-            -e SPRING_DATASOURCE_PASSWORD="${{ secrets.DB_PASSWORD }}" \
-            -e SECURITY_JWT_TOKEN_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
-            -e KAKAO_CLIENT_ID="${{ secrets.KAKAO_CLIENT_ID }}" \
-            -e KAKAO_ADMIN_KEY="${{ secrets.KAKAO_ADMIN_KEY }}" \
+            -v $PROD_CONFIG_PATH:/app/config/application-prod.yml \
             -v log-volume:/app/logs \
             ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_BE_PROD }}
 

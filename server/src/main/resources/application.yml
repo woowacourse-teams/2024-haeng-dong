@@ -1,5 +1,5 @@
 # ===============================================
-#          Default Profile (local H2)
+#          Default Profile (local H2) & Common Settings
 # ===============================================
 spring:
   datasource:
@@ -27,15 +27,15 @@ spring:
         jdbc.time_zone: Asia/Seoul
     show-sql: true
 
-# --- Common Settings (for all profiles) ---
 cors:
   max-age: 3600
   allowed-origins: http://localhost:3000, https://haengdong.pro, https://dev.haengdong.pro, https://app.haengdong.pro
 
+# Note: Secret-related placeholders are removed from here
+# They will be provided by the profile-specific configuration file.
 security:
   jwt:
     token:
-      secret-key: ${JWT_SECRET_KEY}
       expire-length: 604800000
 
 cookie:
@@ -78,40 +78,4 @@ kakao:
   base-uri: https://kauth.kakao.com
   token-request-uri: /oauth/token
   unlink-request-uri: https://kapi.kakao.com/v1/user/unlink
-  client-id: ${KAKAO_CLIENT_ID}
-  admin-key: ${KAKAO_ADMIN_KEY}
   oauth-code-uri: https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid
-
----
-
-# ===============================================
-#             Production Profile
-# ===============================================
-spring:
-  config:
-    activate:
-      on-profile: prod
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    hikari:
-      connection-timeout: 60000
-      validation-timeout: 5000
-      maximum-pool-size: 10
-  jpa:
-    hibernate:
-      ddl-auto: validate # Hardcoded for safety
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-  h2:
-    console:
-      enabled: false # Disable H2 console in prod
-
-# --- Prod-specific Overrides ---
-cookie:
-  http-only: true
-  secure: true
-  domain: haengdong.pro

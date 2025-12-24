@@ -1,0 +1,34 @@
+# This is a template file. The placeholders will be replaced by the workflow.
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${{ secrets.DB_URL }}
+    username: ${{ secrets.DB_USERNAME }}
+    password: ${{ secrets.DB_PASSWORD }}
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 5000
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+cors:
+  max-age: 3600
+  allowed-origins: https://haengdong.pro, https://app.haengdong.pro
+security:
+  jwt:
+    token:
+      secret-key: ${{ secrets.JWT_SECRET_KEY }}
+      expire-length: 604800000
+cookie:
+  http-only: true
+  secure: true
+  domain: haengdong.pro
+  path: /
+  max-age: 7D
+kakao:
+  client-id: ${{ secrets.KAKAO_CLIENT_ID }}
+  admin-key: ${{ secrets.KAKAO_ADMIN_KEY }}
