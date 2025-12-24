@@ -79,10 +79,11 @@ jobs:
       - name: Check running container and determine the next port
         id: check-port
         run: |
+          set -x
           echo "Checking if any container is running on ports 8080 or 8081..."
           CURRENT_PORT=$(sudo docker ps --format "{{.Names}}" | grep "haengdong-backend" | grep -o '8080\|8081' || echo "")
           echo "CURRENT_PORT on port $CURRENT_PORT."
-          if [ "$CURRENT_PORT" == "8081" ]; then
+          if [ "$CURRENT_PORT" = "8081" ]; then
             NEXT_PORT=8080
           else
             NEXT_PORT=8081
