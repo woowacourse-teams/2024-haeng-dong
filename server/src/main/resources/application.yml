@@ -41,7 +41,7 @@ cookie:
   http-only: false
   secure: false
   path: /
-  same-site: none
+  same-site: lax
   max-age: 7D
 
 image:
@@ -83,6 +83,11 @@ kakao:
   oauth-code-uri: https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid
 
 ---
+
+cookie:
+  http-only: true
+  secure: true
+  same-site: none
 
 spring:
   config:
