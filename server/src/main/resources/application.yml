@@ -88,6 +88,7 @@ cookie:
   http-only: true
   secure: true
   same-site: none
+  domain: haengdong.pro
 
 spring:
   config:
